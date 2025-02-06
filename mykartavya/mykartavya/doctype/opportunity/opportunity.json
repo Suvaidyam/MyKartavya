@@ -5,17 +5,163 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_zvhi"
+  "opportunity_name",
+  "opportunity_description",
+  "start_date",
+  "end_date",
+  "karma_points",
+  "need_reward",
+  "is_team_opportunity",
+  "category",
+  "featured_opportunity",
+  "global_activity",
+  "value_type",
+  "work_value_points",
+  "goal",
+  "contribution_type",
+  "minimum_hours",
+  "buffer_minutes",
+  "hours",
+  "minutes",
+  "max_hours",
+  "reward_activity"
  ],
  "fields": [
   {
-   "fieldname": "section_break_zvhi",
-   "fieldtype": "Section Break"
+   "fieldname": "opportunity_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Opportunity Name",
+   "length": 255,
+   "reqd": 1
+  },
+  {
+   "fieldname": "opportunity_description",
+   "fieldtype": "Text Editor",
+   "label": "Opportunity Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "karma_points",
+   "fieldtype": "Int",
+   "label": "Karma Points",
+   "reqd": 1
+  },
+  {
+   "fieldname": "need_reward",
+   "fieldtype": "Select",
+   "label": "Need Reward",
+   "options": "Yes\nNo",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_team_opportunity",
+   "fieldtype": "Check",
+   "label": "Is Team Opportunity"
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "featured_opportunity",
+   "fieldtype": "Select",
+   "label": "Featured Opportunity",
+   "options": "Yes\nNo",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "global_activity",
+   "fieldtype": "Check",
+   "label": "Global Activity"
+  },
+  {
+   "fieldname": "value_type",
+   "fieldtype": "Select",
+   "label": "Value Type",
+   "options": "General\nOther Options"
+  },
+  {
+   "fieldname": "work_value_points",
+   "fieldtype": "Int",
+   "label": "Work Value Points",
+   "reqd": 1
+  },
+  {
+   "fieldname": "goal",
+   "fieldtype": "Link",
+   "label": "Goal",
+   "options": "Goal",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contribution_type",
+   "fieldtype": "Link",
+   "label": "Contribution Type",
+   "options": "Contribution Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "minimum_hours",
+   "fieldtype": "Float",
+   "label": "Minimum Hours",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "buffer_minutes",
+   "fieldtype": "Int",
+   "label": "Buffer Minutes",
+   "reqd": 1
+  },
+  {
+   "fieldname": "hours",
+   "fieldtype": "Float",
+   "label": "Hours",
+   "reqd": 1
+  },
+  {
+   "fieldname": "minutes",
+   "fieldtype": "Int",
+   "label": "Minutes",
+   "reqd": 1
+  },
+  {
+   "fieldname": "max_hours",
+   "fieldtype": "Float",
+   "label": "Max Hours",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "reward_activity",
+   "fieldtype": "Check",
+   "label": "Reward Activity"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-06 12:30:27.526677",
+ "modified": "2025-02-06 14:10:13.930368",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity",

@@ -1,0 +1,177 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-06 14:11:01.719905",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "ngo_name",
+  "website",
+  "contact_person_name",
+  "email_id",
+  "mobile_number",
+  "official_contact_number",
+  "ngo_head_name",
+  "ngo_head_email_id",
+  "ngo_head_mobile_number",
+  "ngo_head_office_number",
+  "designation",
+  "area__sector_of_work",
+  "india_headquarter_address",
+  "city",
+  "state",
+  "postalzip_code",
+  "brief_description_about_the_ngo",
+  "are_you_registered_with_bigtech",
+  "do_you_have",
+  "upload_ngo_logo"
+ ],
+ "fields": [
+  {
+   "fieldname": "ngo_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "NGO Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "website",
+   "fieldtype": "Data",
+   "label": "Website",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contact_person_name",
+   "fieldtype": "Data",
+   "label": "Contact Person Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Email ID",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mobile_number",
+   "fieldtype": "Data",
+   "label": "Mobile Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "official_contact_number",
+   "fieldtype": "Data",
+   "label": "Official Contact Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ngo_head_name",
+   "fieldtype": "Data",
+   "label": "NGO Head Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ngo_head_email_id",
+   "fieldtype": "Data",
+   "label": "NGO Head Email ID",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ngo_head_mobile_number",
+   "fieldtype": "Data",
+   "label": "NGO Head Mobile Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ngo_head_office_number",
+   "fieldtype": "Data",
+   "label": "NGO Head Office Number"
+  },
+  {
+   "fieldname": "designation",
+   "fieldtype": "Data",
+   "label": "Designation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "area__sector_of_work",
+   "fieldtype": "Select",
+   "label": "Area / Sector of Work",
+   "options": "Education\nHealthcare\nEnvironment\nWomen Empowerment\nChild Welfare\nOther",
+   "reqd": 1
+  },
+  {
+   "fieldname": "india_headquarter_address",
+   "fieldtype": "Small Text",
+   "label": "India Headquarter Address",
+   "reqd": 1
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City",
+   "reqd": 1
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Data",
+   "label": "State",
+   "reqd": 1
+  },
+  {
+   "fieldname": "postalzip_code",
+   "fieldtype": "Data",
+   "label": "Postal/Zip Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "brief_description_about_the_ngo",
+   "fieldtype": "Text Editor",
+   "label": "Brief Description about the NGO",
+   "reqd": 1
+  },
+  {
+   "fieldname": "are_you_registered_with_bigtech",
+   "fieldtype": "Select",
+   "label": "Are you registered With BigTech?",
+   "options": "Yes\nNo",
+   "reqd": 1
+  },
+  {
+   "fieldname": "do_you_have",
+   "fieldtype": "Select",
+   "label": "Do you have?",
+   "options": "FCRA\nNGDRS",
+   "reqd": 1
+  },
+  {
+   "fieldname": "upload_ngo_logo",
+   "fieldtype": "Attach Image",
+   "label": "Upload NGO Logo"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-06 14:31:15.097412",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "NGOs",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
