@@ -1,0 +1,153 @@
+{
+    "doctype": "DocType",
+    "name": "Companies Registration",
+    "module": "Mykartavya",
+    "custom": 1,
+    "autoname": "format:COMP-REG-{####}",
+    "naming_rule": "Expression",
+    "is_submittable": 0,
+    "show_name_in_global_search": 1,
+    "is_tree": 0,
+    "track_changes": 1,
+    "track_views": 1,
+    "fields": [
+        {
+            "fieldname": "company_name",
+            "label": "Company Name",
+            "fieldtype": "Data",
+            "unique": 1,
+            "reqd": 1,
+            "in_global_search": 1
+        },
+        {
+            "fieldname": "company_registration",
+            "label": "Company Registration Date",
+            "fieldtype": "Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "contact_section",
+            "label": "Contact Information",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "contact_name",
+            "label": "Contact Name",
+            "fieldtype": "Data",
+            "reqd": 1
+        },
+        {
+            "fieldname": "contact_email",
+            "label": "Contact Email",
+            "fieldtype": "Data",
+            "options": "Email",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "designation",
+            "label": "Designation",
+            "fieldtype": "Data",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "mobile_number",
+            "label": "Mobile Number",
+            "fieldtype": "Data",
+            "options": "Phone",
+            "reqd": 1
+        },
+        {
+            "fieldname": "contact_phone",
+            "label": "Contact Phone",
+            "fieldtype": "Data",
+            "options": "Phone",
+            "reqd": 1
+        },
+        {
+            "fieldname": "address_section",
+            "label": "Address Information",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "address",
+            "label": "India Headquarter Address",
+            "fieldtype": "Small Text",
+            "reqd": 1
+        },
+        {
+            "fieldname": "city",
+            "label": "City",
+            "fieldtype": "Data",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "state",
+            "label": "State",
+            "fieldtype": "Data",
+            "reqd": 1
+        },
+        {
+            "fieldname": "pincode",
+            "label": "Postal/Zip Code",
+            "fieldtype": "Data",
+            "length": 6,
+            "reqd": 1
+        },
+        {
+            "fieldname": "company_details_section",
+            "label": "Company Details",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "number_of_employees",
+            "label": "Number of Employees",
+            "fieldtype": "Int",
+            "reqd": 1,
+            "default": "1"
+        },
+        {
+            "fieldname": "clear_vision",
+            "label": "Does your organization have a clear vision/end goal?",
+            "fieldtype": "Select",
+            "options": "Yes\nNo",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_3",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "volunteering_csr_activities",
+            "label": "How much do your volunteering and CSR activities cost?",
+            "fieldtype": "Float",
+            "reqd": 1
+        },
+        {
+            "fieldname": "employee_engagement",
+            "label": "How much of your volunteering and employee engagement activities covered?",
+            "fieldtype": "Float",
+            "reqd": 1
+        }
+    ],
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1,
+            "submit": 0,
+            "cancel": 0,
+            "amend": 0
+        }
+    ]
+}

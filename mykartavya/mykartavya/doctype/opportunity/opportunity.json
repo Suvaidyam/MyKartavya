@@ -1,25 +1,24 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-02-06 11:17:31.376828",
+ "creation": "2025-02-06 12:30:27.526677",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "ngo"
+  "section_break_zvhi"
  ],
  "fields": [
   {
-   "fieldname": "ngo",
-   "fieldtype": "Data",
-   "label": "Ngo"
+   "fieldname": "section_break_zvhi",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-06 11:17:49.402051",
+ "modified": "2025-02-06 12:30:27.526677",
  "modified_by": "Administrator",
  "module": "Mykartavya",
- "name": "NGOs",
+ "name": "Opportunity",
  "owner": "Administrator",
  "permissions": [
   {
