@@ -1,0 +1,281 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-02-06 12:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "need_certificate",
+  "title",
+  "activity_description",
+  "activity_published_date_starts",
+  "publish_date",
+  "activation_deadline",
+  "start_date",
+  "end_date",
+  "reporting_deadline",
+  "auto_approve_volunteers",
+  "is_team_activity",
+  "require_feedback_images",
+  "category",
+  "is_featured",
+  "is_global",
+  "value_type",
+  "work_value_points",
+  "goal",
+  "contribution_type",
+  "karma_points",
+  "unlimited_vacancies",
+  "minimum_hours",
+  "buffer_minutes",
+  "hours",
+  "minutes",
+  "max_hours",
+  "ngo",
+  "location_section",
+  "country",
+  "state",
+  "city",
+  "address"
+ ],
+ "fields": [
+  {
+   "fieldname": "need_certificate",
+   "fieldtype": "Select",
+   "label": "Need Certificate",
+   "options": "Yes\nNo",
+   "reqd": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "length": 255,
+   "reqd": 1
+  },
+  {
+   "fieldname": "activity_description",
+   "fieldtype": "Text Editor",
+   "label": "Activity Description",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "activity_published_date_starts",
+   "fieldtype": "Check",
+   "label": "Activity Starts on Published Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "publish_date",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Activity Publish Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "activation_deadline",
+   "fieldtype": "Datetime",
+   "label": "Activation Deadline",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reporting_deadline",
+   "fieldtype": "Datetime",
+   "label": "Reporting Deadline",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "auto_approve_volunteers",
+   "fieldtype": "Check",
+   "label": "Auto Approve Volunteers"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_team_activity",
+   "fieldtype": "Check",
+   "label": "Team Activity"
+  },
+  {
+   "default": "0",
+   "fieldname": "require_feedback_images",
+   "fieldtype": "Check",
+   "label": "Required Feedback Images"
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "is_featured",
+   "fieldtype": "Select",
+   "label": "Featured Activity",
+   "options": "Yes\nNo",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_global",
+   "fieldtype": "Check",
+   "label": "Global Activity"
+  },
+  {
+   "fieldname": "value_type",
+   "fieldtype": "Select",
+   "label": "Value Type",
+   "options": "General\nSkills"
+  },
+  {
+   "fieldname": "work_value_points",
+   "fieldtype": "Int",
+   "label": "Work Value Points",
+   "reqd": 1
+  },
+  {
+   "fieldname": "goal",
+   "fieldtype": "Link",
+   "label": "Goal",
+   "options": "Goal",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contribution_type",
+   "fieldtype": "Link",
+   "label": "Contribution Type",
+   "options": "Contribution Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "karma_points",
+   "fieldtype": "Int",
+   "label": "Karma Points",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "unlimited_vacancies",
+   "fieldtype": "Check",
+   "label": "Unlimited Vacancies"
+  },
+  {
+   "fieldname": "minimum_hours",
+   "fieldtype": "Float",
+   "label": "Minimum Hours",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "buffer_minutes",
+   "fieldtype": "Int",
+   "label": "Buffer Minutes",
+   "reqd": 1
+  },
+  {
+   "fieldname": "hours",
+   "fieldtype": "Float",
+   "label": "Hours",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "minutes",
+   "fieldtype": "Int",
+   "label": "Minutes",
+   "reqd": 1
+  },
+  {
+   "fieldname": "max_hours",
+   "fieldtype": "Float",
+   "label": "Max Hours",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ngo",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "NGO",
+   "options": "NGOs",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:!doc.is_global",
+   "fieldname": "location_section",
+   "fieldtype": "Section Break",
+   "label": "Location"
+  },
+  {
+   "depends_on": "eval:!doc.is_global",
+   "fieldname": "country",
+   "fieldtype": "Date",
+   "label": "Country",
+   "mandatory_depends_on": "eval:!doc.is_global",
+   "options": "Country"
+  },
+  {
+   "depends_on": "eval:!doc.is_global",
+   "fieldname": "state",
+   "fieldtype": "Date",
+   "label": "State",
+   "options": "State"
+  },
+  {
+   "depends_on": "eval:!doc.is_global",
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City",
+   "options": "City"
+  },
+  {
+   "depends_on": "eval:!doc.is_global",
+   "fieldname": "address",
+   "fieldtype": "Text Editor",
+   "label": "Address"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-06 11:19:49.302713",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Activity",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
