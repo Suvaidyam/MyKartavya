@@ -12,18 +12,18 @@ EXTRA_TEST_RECORD_DEPENDENCIES = []  # eg. ["User"]
 IGNORE_TEST_RECORD_DEPENDENCIES = []  # eg. ["User"]
 
 
-class UnitTestCompanyAdmin(UnitTestCase):
+class UnitTestCompany(UnitTestCase):
 	"""
-	Unit tests for CompanyAdmin.
+	Unit tests for Company.
 	Use this class for testing individual functions and methods.
 	"""
 
 	pass
 
 
-class IntegrationTestCompanyAdmin(IntegrationTestCase):
+class IntegrationTestCompany(IntegrationTestCase):
 	"""
-	Integration tests for CompanyAdmin.
+	Integration tests for Company.
 	Use this class for testing interactions between multiple components.
 	"""
 
