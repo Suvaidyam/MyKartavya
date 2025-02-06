@@ -1,0 +1,59 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2025-02-06 19:10:32.010856",
+  "name": "NGO Admin",
+  "role_profile": "NGO Admin",
+  "roles": [
+   {
+    "role": "NGO Admin"
+   },
+   {
+    "role": "Volunteer"
+   }
+  ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2025-02-06 19:11:55.309487",
+  "name": "MyKartvya Admin",
+  "role_profile": "MyKartvya Admin",
+  "roles": [
+   {
+    "role": "Volunteer"
+   },
+   {
+    "role": "MyKartvya Admin"
+   }
+  ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2025-02-06 19:12:37.965545",
+  "name": "Company Admin",
+  "role_profile": "Company Admin",
+  "roles": [
+   {
+    "role": "Company Admin"
+   },
+   {
+    "role": "Volunteer"
+   }
+  ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2025-02-06 19:13:01.359855",
+  "name": "Volunteer",
+  "role_profile": "Volunteer",
+  "roles": [
+   {
+    "role": "Volunteer"
+   }
+  ]
+ }
+]
