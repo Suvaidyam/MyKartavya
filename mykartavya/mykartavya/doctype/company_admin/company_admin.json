@@ -1,0 +1,99 @@
+{
+    "doctype": "DocType",
+    "name": "Company Admin",
+    "module": "Mykartavya",
+    "custom": 1,
+    "autoname": "format:COMP-ADM-{####}",
+    "naming_rule": "Expression",
+    "is_submittable": 0,
+    "show_name_in_global_search": 1,
+    "is_tree": 0,
+    "track_changes": 1,
+    "track_views": 1,
+    "fields": [
+        {
+            "fieldname": "company_name",
+            "label": "Company Name",
+            "fieldtype": "Data",
+            "length": 100,
+            "reqd": 1,
+            "in_list_view": 1,
+            "in_global_search": 1
+        },
+        {
+            "fieldname": "program_section",
+            "label": "Program Details",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "volunteering_program_name",
+            "label": "Volunteering Program Name",
+            "fieldtype": "Data",
+            "length": 100
+        },
+        {
+            "fieldname": "volunteering_program_email",
+            "label": "Volunteering Program Email",
+            "fieldtype": "Data",
+            "length": 100,
+            "options": "Email"
+        },
+        {
+            "fieldname": "address_section",
+            "label": "Address Details",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "india_headquarters_address",
+            "label": "India Headquarters Address",
+            "fieldtype": "Text"
+        },
+        {
+            "fieldname": "country",
+            "label": "Country",
+            "fieldtype": "Data",
+            "options": "Country",
+            "reqd": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "state",
+            "label": "State",
+            "fieldtype": "Data",
+            "options": "State",
+            "reqd": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "city",
+            "label": "City",
+            "fieldtype": "Data",
+            "options": "City",
+            "reqd": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "pincode",
+            "label": "Pincode",
+            "fieldtype": "Data",
+            "length": 6,
+            "options": "Numeric"
+        }
+    ],
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1,
+            "submit": 0,
+            "cancel": 0,
+            "amend": 0
+        }
+    ]
+}
