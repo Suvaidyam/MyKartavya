@@ -1,6 +1,6 @@
 import frappe
+from frappe import _
 from frappe.model.document import Document
-from frappe.utils import getdate, today
 import re
 
 class CompaniesRegistration(Document):
@@ -12,8 +12,9 @@ class CompaniesRegistration(Document):
         self.validate_percentages()
         
     def validate_company_registration_date(self):
-        if getdate(self.company_registration) > getdate(today()):
-            frappe.throw(_("Company Registration Date cannot be in the future"))
+        # Example of the translation function
+        if self.company_registration > frappe.utils.nowdate():
+             frappe.throw(_("Company Registration Date cannot be in the future"))
             
     def validate_contact_details(self):
         # Validate email format
