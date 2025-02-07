@@ -3,7 +3,6 @@
 
 import frappe
 from frappe.model.document import Document
-from frappe import _
 import re
 from datetime import datetime
 import os
@@ -13,13 +12,13 @@ class Company(Document):
         self.validate_company_name()
         self.validate_registration_dates()
         self.validate_contact_details()
-        self.validate_address()
+        # self.validate_address()
         self.validate_organization_details()
         self.validate_company_logo()
         
     def validate_company_name(self):
         if len(self.company_name) > 100:
-            frappe.throw(_("Company Name cannot exceed 100 characters"))
+            frappe.throw("Company Name cannot exceed 100 characters")
             
         # Check for uniqueness
         existing = frappe.db.exists("Company", {
@@ -27,78 +26,78 @@ class Company(Document):
             "name": ("!=", self.name)
         })
         if existing:
-            frappe.throw(_("Company Name must be unique"))
+            frappe.throw("Company Name must be unique")
             
     def validate_registration_dates(self):
         if self.registration_type == "Self Registration":
             if self.company_registration_date:
                 if self.company_registration_date > datetime.now().date():
-                    frappe.throw(_("Company Registration Date cannot be a future date"))
+                    frappe.throw("Company Registration Date cannot be a future date")
         else:  # Admin Registration
             if self.company_registration_year:
                 try:
                     year = int(self.company_registration_year)
                     current_year = datetime.now().year
                     if not (1800 <= year <= current_year):
-                        frappe.throw(_("Company Registration Year must be between 1800 and current year"))
+                        frappe.throw("Company Registration Year must be between 1800 and current year")
                 except ValueError:
-                    frappe.throw(_("Invalid Company Registration Year format"))
+                    frappe.throw("Invalid Company Registration Year format")
                     
     def validate_contact_details(self):
         # Validate names
         if len(self.first_name) > 100:
-            frappe.throw(_("First Name cannot exceed 100 characters"))
+            frappe.throw("First Name cannot exceed 100 characters")
             
         if len(self.last_name) > 100:
-            frappe.throw(_("Last Name cannot exceed 100 characters"))
+            frappe.throw("Last Name cannot exceed 100 characters")
             
         if len(self.designation) > 100:
-            frappe.throw(_("Designation cannot exceed 100 characters"))
+            frappe.throw("Designation cannot exceed 100 characters")
             
         # Email validation
         email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         if not re.match(email_pattern, self.email):
-            frappe.throw(_("Invalid Email format"))
+            frappe.throw("Invalid Email format")
             
         # Phone number validation
         if self.phone and not re.match(r'^\d{10,15}$', self.phone):
-            frappe.throw(_("Phone number must be between 10 and 15 digits"))
+            frappe.throw("Phone number must be between 10 and 15 digits")
             
         # Mobile number validation
         if not re.match(r'^\d{10}$', self.mobile_number):
-            frappe.throw(_("Mobile Number must be exactly 10 digits"))
+            frappe.throw("Mobile Number must be exactly 10 digits")
             
         # Validate volunteering incharge details if Admin Registration
         if self.registration_type == "Admin Registration":
             if self.volunteering_incharge_email and not re.match(email_pattern, self.volunteering_incharge_email):
-                frappe.throw(_("Invalid Volunteering InCharge Email format"))
+                frappe.throw("Invalid Volunteering InCharge Email format")
                 
             if self.volunteering_incharge_phone and not re.match(r'^\d{10,15}$', self.volunteering_incharge_phone):
-                frappe.throw(_("Volunteering InCharge Phone must be between 10 and 15 digits"))
+                frappe.throw("Volunteering InCharge Phone must be between 10 and 15 digits")
                     
     def validate_address(self):
         if self.pincode:
             if not re.match(r'^\d{6}$', self.pincode):
-                frappe.throw(_("Pincode must be exactly 6 digits"))
+                frappe.throw("Pincode must be exactly 6 digits")
                 
         # Validate state belongs to country
         if self.state and self.country:
             state = frappe.get_doc("State", self.state)
             if state.country != self.country:
-                frappe.throw(_("Selected State does not belong to the selected Country"))
+                frappe.throw("Selected State does not belong to the selected Country")
                 
     def validate_organization_details(self):
         if self.registration_type == "Self Registration":
             if self.number_of_employees is not None and self.number_of_employees < 1:
-                frappe.throw(_("Number of Employees must be at least 1"))
+                frappe.throw("Number of Employees must be at least 1")
                 
             if self.volunteering_csr_activities is not None:
                 if not (0 <= self.volunteering_csr_activities <= 100):
-                    frappe.throw(_("Volunteering CSR Activities Cost must be between 0 and 100"))
+                    frappe.throw("Volunteering CSR Activities Cost must be between 0 and 100")
                     
             if self.employee_engagement is not None:
                 if not (0 <= self.employee_engagement <= 100):
-                    frappe.throw(_("Employee Engagement Coverage must be between 0 and 100"))
+                    frappe.throw("Employee Engagement Coverage must be between 0 and 100")
                     
     def validate_company_logo(self):
         if self.registration_type == "Admin Registration" and self.company_logo:
@@ -109,7 +108,7 @@ class Company(Document):
             # Validate file format
             allowed_formats = ['.jpg', '.jpeg', '.png', '.svg', '.webp']
             if file_extension not in allowed_formats:
-                frappe.throw(_("Company Logo must be in JPG, PNG, SVG, WEBP, or JPEG format"))
+                frappe.throw("Company Logo must be in JPG, PNG, SVG, WEBP, or JPEG format")
                 
             # Validate file size (1MB to 5MB)
             file_size = frappe.get_doc("File", {"file_url": self.company_logo}).file_size
@@ -117,7 +116,7 @@ class Company(Document):
             max_size = 5 * 1024 * 1024  # 5MB in bytes
             
             if not (min_size <= file_size <= max_size):
-                frappe.throw(_("Company Logo file size must be between 1MB and 5MB"))
+                frappe.throw("Company Logo file size must be between 1MB and 5MB")
                 
     def before_save(self):
         # Strip whitespace from text fields
