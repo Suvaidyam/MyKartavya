@@ -55,5 +55,17 @@
     "role": "Volunteer"
    }
   ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2025-02-07 11:35:20.435334",
+  "name": "Incharge Volunteer",
+  "role_profile": "Incharge Volunteer",
+  "roles": [
+   {
+    "role": "Incharge Volunteer"
+   }
+  ]
  }
 ]
