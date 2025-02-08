@@ -26,4 +26,4 @@ class NGOs(Document):
             frappe.throw(_("NGO Head Office Number must be between 10 and 15 digits"))
             
         if self.official_contact_number and not re.match(r'^\d{10,15}$', self.official_contact_number):
-            frappe.throw(_("Official Contact Number must be between 10 and 15 digits"))
+            frappe.throw(_("Official Contact Number must be between 10 and 15 digits")) 
