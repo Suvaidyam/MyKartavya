@@ -19,6 +19,8 @@ app_license = "mit"
 fixtures=[
     'Role',
     'Role Profile',
+    'Builder Page'
+
     ]
 
 # Each item in the list will be shown as an app in the apps page
