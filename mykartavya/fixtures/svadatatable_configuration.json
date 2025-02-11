@@ -1,0 +1,27 @@
+[
+ {
+  "child_confs": [],
+  "child_doctypes": [
+   {
+    "allow_import": 0,
+    "connection_type": "Direct",
+    "crud_permissions": "[\"read\",\"write\",\"create\",\"delete\"]",
+    "dn_reference_field": null,
+    "dt_reference_field": null,
+    "extend_condition": 0,
+    "extended_condition": "{}",
+    "html_field": "volunteer",
+    "link_doctype": "Volunteer",
+    "link_fieldname": "company",
+    "listview_settings": "[{\"fieldname\":\"first_name\",\"label\":\"First Name\",\"width\":\"2\"},{\"fieldname\":\"last_name\",\"label\":\"Last Name\",\"width\":\"2\"},{\"fieldname\":\"country\",\"label\":\"Country\",\"width\":\"2\"},{\"fieldname\":\"state\",\"label\":\"State\",\"width\":\"2\"},{\"fieldname\":\"city\",\"label\":\"City\",\"width\":\"2\"}]",
+    "referenced_link_doctype": null,
+    "template": "Tasks"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "SVADatatable Configuration",
+  "modified": "2025-02-11 18:06:25.844480",
+  "name": "Company",
+  "parent_doctype": "Company"
+ }
+]

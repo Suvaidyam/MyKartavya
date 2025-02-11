@@ -17,7 +17,8 @@
   "address_section",
   "country",
   "state",
-  "city"
+  "city",
+  "company"
  ],
  "fields": [
   {
@@ -106,16 +107,22 @@
   },
   {
    "fieldname": "city",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "label": "City",
-   "options": "City",
+   "options": "District",
    "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-06 14:48:15.226521",
+ "modified": "2025-02-11 18:05:58.534575",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer",

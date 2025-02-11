@@ -19,8 +19,8 @@ app_license = "mit"
 fixtures=[
     'Role',
     'Role Profile',
-    'Builder Page'
-
+    'Builder Page',
+    'SVADatatable Configuration'
     ]
 
 # Each item in the list will be shown as an app in the apps page
@@ -33,12 +33,11 @@ fixtures=[
 # 		"has_permission": "mykartavya.api.permission.has_app_permission"
 # 	}
 # ]
-
 # Includes in <head>
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/mykartavya/css/mykartavya.css"
+# app_include_css = "/assets/mykartavya/css/test.css"
 # app_include_js = "/assets/mykartavya/js/mykartavya.js"
 
 # include js, css files in header of web template
