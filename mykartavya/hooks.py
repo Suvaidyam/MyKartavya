@@ -20,7 +20,8 @@ fixtures=[
     'Role',
     'Role Profile',
     'Builder Page',
-    'SVADatatable Configuration'
+    'SVADatatable Configuration',
+    "Workflow", "Workflow State", "Workflow Action"
     ]
 
 doc_events = {
