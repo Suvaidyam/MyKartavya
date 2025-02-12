@@ -1,0 +1,80 @@
+[
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-02-12 23:04:12.008870",
+  "name": "qbrqiuhegb",
+  "permitted_roles": [
+   {
+    "role": "Administrator"
+   }
+  ],
+  "reference_doctype": "Company",
+  "reference_name": "COMP-Suvaidyam-0004",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "Administrator",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-02-12 23:05:48.980978",
+  "name": "oqsvpc4348",
+  "permitted_roles": [
+   {
+    "role": "Accounts User"
+   },
+   {
+    "role": "Administrator"
+   }
+  ],
+  "reference_doctype": "Company",
+  "reference_name": "COMP-Dhawani-0001",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-02-12 23:06:23.211957",
+  "name": "35uadtqh87",
+  "permitted_roles": [
+   {
+    "role": "Accounts User"
+   },
+   {
+    "role": "Administrator"
+   }
+  ],
+  "reference_doctype": "Company",
+  "reference_name": "COMP-Dhawaniris-0001",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-02-12 23:06:32.841439",
+  "name": "h4nsgpsmff",
+  "permitted_roles": [
+   {
+    "role": "All"
+   }
+  ],
+  "reference_doctype": "Company",
+  "reference_name": "COMP-Dhawani-0001",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Rejected"
+ }
+]
