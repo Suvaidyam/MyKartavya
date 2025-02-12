@@ -131,18 +131,6 @@
  {
   "docstatus": 0,
   "doctype": "Role Profile",
-  "modified": "2024-09-18 10:19:42.357254",
-  "name": "Admin",
-  "role_profile": "Admin",
-  "roles": [
-   {
-    "role": "Admin"
-   }
-  ]
- },
- {
-  "docstatus": 0,
-  "doctype": "Role Profile",
   "modified": "2025-02-06 19:10:32.010856",
   "name": "NGO Admin",
   "role_profile": "NGO Admin",
@@ -182,6 +170,18 @@
    },
    {
     "role": "Volunteer"
+   }
+  ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2024-09-18 10:19:42.357254",
+  "name": "Admin",
+  "role_profile": "Admin",
+  "roles": [
+   {
+    "role": "Admin"
    }
   ]
  },

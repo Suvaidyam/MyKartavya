@@ -44,7 +44,6 @@
    "in_list_view": 1,
    "label": "Registration Type",
    "options": "Self Registration\nAdmin Registration",
-   "read_only": 1,
    "reqd": 1
   },
   {
@@ -247,7 +246,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-11 14:24:53.243409",
+ "modified": "2025-02-12 17:34:19.538870",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Company",
