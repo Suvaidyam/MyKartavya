@@ -8,6 +8,7 @@ from datetime import datetime
 import os
 
 class Company(Document):
+    pass
     def validate(self):
         self.validate_company_name()
         self.validate_registration_dates()
@@ -28,20 +29,27 @@ class Company(Document):
         if existing:
             frappe.throw("Company Name must be unique")
             
+
     def validate_registration_dates(self):
         if self.registration_type == "Self Registration":
             if self.company_registration_date:
+                # Ensure company_registration_date is converted from string to date
+                if isinstance(self.company_registration_date, str):
+                    self.company_registration_date = datetime.strptime(self.company_registration_date, "%Y-%m-%d").date()
+
                 if self.company_registration_date > datetime.now().date():
                     frappe.throw("Company Registration Date cannot be a future date")
+
         else:  # Admin Registration
             if self.company_registration_year:
                 try:
                     year = int(self.company_registration_year)
                     current_year = datetime.now().year
                     if not (1800 <= year <= current_year):
-                        frappe.throw("Company Registration Year must be between 1800 and current year")
+                        frappe.throw("Company Registration Year must be between 1800 and the current year")
                 except ValueError:
                     frappe.throw("Invalid Company Registration Year format")
+
                     
     def validate_contact_details(self):
         # Validate names
@@ -131,3 +139,12 @@ class Company(Document):
                 
         if self.india_headquarters_address:
             self.india_headquarters_address = self.india_headquarters_address.strip()
+
+   
+ 
+
+def after_insert(doc, method):
+    if doc.registration_type == "Admin Registration":
+        frappe.db.set_value("Company", doc.name, "workflow_state", "Approved")
+        frappe.db.commit()  
+__all__ = ["after_insert"]

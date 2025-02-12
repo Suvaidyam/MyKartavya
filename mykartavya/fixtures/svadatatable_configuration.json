@@ -11,7 +11,7 @@
     "extend_condition": 0,
     "extended_condition": "{}",
     "html_field": "volunteer",
-    "link_doctype": "Volunteer",
+    "link_doctype": "SVA User",
     "link_fieldname": "company",
     "listview_settings": "[{\"fieldname\":\"first_name\",\"label\":\"First Name\",\"width\":\"2\"},{\"fieldname\":\"last_name\",\"label\":\"Last Name\",\"width\":\"2\"},{\"fieldname\":\"country\",\"label\":\"Country\",\"width\":\"2\"},{\"fieldname\":\"state\",\"label\":\"State\",\"width\":\"2\"},{\"fieldname\":\"city\",\"label\":\"City\",\"width\":\"2\"}]",
     "referenced_link_doctype": null,
@@ -20,7 +20,7 @@
   ],
   "docstatus": 0,
   "doctype": "SVADatatable Configuration",
-  "modified": "2025-02-11 18:06:25.844480",
+  "modified": "2025-02-12 23:11:05.689857",
   "name": "Company",
   "parent_doctype": "Company"
  }
