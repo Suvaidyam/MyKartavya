@@ -26,12 +26,9 @@ fixtures=[
 
 doc_events = {
     "Company": {
-        "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert"
+        "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert",
     }
 }
-
-
-
 
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [

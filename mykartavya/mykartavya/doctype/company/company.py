@@ -2,6 +2,8 @@
 # For license information, please see license.txt
 
 import frappe
+import random
+import string
 from frappe.model.document import Document
 import re
 from datetime import datetime
@@ -140,11 +142,57 @@ class Company(Document):
         if self.india_headquarters_address:
             self.india_headquarters_address = self.india_headquarters_address.strip()
 
-   
- 
 
 def after_insert(doc, method):
     if doc.registration_type == "Admin Registration":
+        # Approve the company
         frappe.db.set_value("Company", doc.name, "workflow_state", "Approved")
-        frappe.db.commit()  
-__all__ = ["after_insert"]
+        frappe.db.commit()
+         
+    send_message(doc.email)
+    insert_sva_user(doc)    
+
+def get_role_profile():
+    role_profile = frappe.get_all("Role Profile", fields=["name"], limit=1)
+    return role_profile[0]["name"] if role_profile else None
+
+def insert_sva_user(doc):
+    """Helper function to insert an SVA User"""
+    email = doc.email
+    first_name = doc.company_name
+    last_name=doc.last_name
+    password = generate_random_password()  
+    role_profile = get_role_profile()
+    
+    sva_user = frappe.get_doc({
+        "doctype": "SVA User",
+        "email": email,
+        "first_name": first_name,
+        "last_name":last_name,
+        "password": password,
+        "confirm_password": password,
+        "company_name": doc.company_name,
+        "role_profile": role_profile ,
+    })
+    sva_user.insert(ignore_permissions=True)
+    frappe.db.commit()  
+
+    frappe.msgprint(f"SVA User {sva_user.email} created successfully!", alert=True)
+
+def generate_random_password(length=8):
+    characters = string.ascii_letters + string.digits
+    return ''.join(random.choice(characters) for _ in range(length))
+
+def send_message(email):
+    if not email:
+        frappe.throw("Email is required for sending notifications.")
+
+    message = f"Hello, {email}! Your Admin Registration has been created successfully."
+
+    frappe.sendmail(
+        recipients=email,
+        subject="Admin Registration Successful",
+        message=message
+    )
+
+    # frappe.msgprint(f"Message sent to {email}")
