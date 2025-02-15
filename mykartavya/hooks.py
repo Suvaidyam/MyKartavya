@@ -8,18 +8,24 @@ app_license = "mit"
 # Apps
 # ------------------
 
-# required_apps = [
-    
-#     "Frappe Builder",
-#     "Frappe Theme",
-#     "Sva Frappe"
-
-# ]
+required_apps = [
+    "Suvaidyam/sva_frappe","Suvaidyam/frappe_theme" ,"builder"
+]
 
 fixtures=[
-    'Role',
-    'Role Profile',
+    # 'Role',
+    # 'Role Profile',
+    # 'Builder Page',
+    'Property Setter',
+    # 'SVADatatable Configuration',
+    # "Workflow", "Workflow State", "Workflow Action"
     ]
+
+doc_events = {
+    "Company": {
+        "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert",
+    }
+}
 
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [
@@ -31,12 +37,11 @@ fixtures=[
 # 		"has_permission": "mykartavya.api.permission.has_app_permission"
 # 	}
 # ]
-
 # Includes in <head>
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/mykartavya/css/mykartavya.css"
+# app_include_css = "/assets/mykartavya/css/test.css"
 # app_include_js = "/assets/mykartavya/js/mykartavya.js"
 
 # include js, css files in header of web template

@@ -2,14 +2,233 @@
  {
   "docstatus": 0,
   "doctype": "Role Profile",
+  "modified": "2025-02-08 13:40:41.742026",
+  "name": "Volunteer Incharge",
+  "role_profile": "Volunteer Incharge",
+  "roles": [
+   {
+    "parent": "Volunteer Incharge",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Volunteer Incharge"
+   }
+  ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2024-09-07 18:09:01.501425",
+  "name": "Program Manager",
+  "role_profile": "Program Manager",
+  "roles": [
+   {
+    "parent": "Program Manager",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Program Manager"
+   }
+  ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2024-09-05 16:13:11.325884",
+  "name": "Led",
+  "role_profile": "Led",
+  "roles": [
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Blogger"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Dashboard Manager"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Head Office (PMU)"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Inbox User"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Knowledge Base Contributor"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Knowledge Base Editor"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Maintenance Manager"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Maintenance User"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Newsletter Manager"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Prepared Report User"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Purchase Manager"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Purchase Master Manager"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Purchase User"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Report Manager"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Sales Master Manager"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Sales User"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Script Manager"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Translator"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Website Manager"
+   },
+   {
+    "parent": "Led",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Workspace Manager"
+   }
+  ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2024-09-07 18:08:31.059455",
+  "name": "Agent",
+  "role_profile": "Agent",
+  "roles": [
+   {
+    "parent": "Agent",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Agent"
+   }
+  ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2024-09-07 18:08:44.541788",
+  "name": "Team Lead",
+  "role_profile": "Team Lead",
+  "roles": [
+   {
+    "parent": "Team Lead",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Team Lead"
+   }
+  ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
   "modified": "2025-02-06 19:10:32.010856",
   "name": "NGO Admin",
   "role_profile": "NGO Admin",
   "roles": [
    {
+    "parent": "NGO Admin",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
     "role": "NGO Admin"
    },
    {
+    "parent": "NGO Admin",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
     "role": "Volunteer"
    }
   ]
@@ -22,9 +241,15 @@
   "role_profile": "MyKartvya Admin",
   "roles": [
    {
+    "parent": "MyKartvya Admin",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
     "role": "Volunteer"
    },
    {
+    "parent": "MyKartvya Admin",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
     "role": "MyKartvya Admin"
    }
   ]
@@ -37,10 +262,31 @@
   "role_profile": "Company Admin",
   "roles": [
    {
+    "parent": "Company Admin",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
     "role": "Company Admin"
    },
    {
+    "parent": "Company Admin",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
     "role": "Volunteer"
+   }
+  ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2024-09-18 10:19:42.357254",
+  "name": "Admin",
+  "role_profile": "Admin",
+  "roles": [
+   {
+    "parent": "Admin",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
+    "role": "Admin"
    }
   ]
  },
@@ -52,6 +298,9 @@
   "role_profile": "Volunteer",
   "roles": [
    {
+    "parent": "Volunteer",
+    "parentfield": "roles",
+    "parenttype": "Role Profile",
     "role": "Volunteer"
    }
   ]

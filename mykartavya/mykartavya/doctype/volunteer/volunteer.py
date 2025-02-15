@@ -1,4 +1,5 @@
 import frappe
+from frappe import _ 
 from frappe.model.document import Document
 import re
 
@@ -43,18 +44,29 @@ class Volunteer(Document):
         # Update the mobile number to contain only digits
         self.mobile_number = mobile
         
-    def validate_state_city(self):
-        # Validate that state belongs to selected country
-        if self.state and self.country:
-            state = frappe.get_doc("State", self.state)
-            if state.country != self.country:
-                frappe.throw(_("Selected State does not belong to the selected Country"))
+    # def validate_state_city(self):
+    #     # Validate that state belongs to selected country
+    #     if self.state and self.country:
+    #         state = frappe.get_doc("State", self.state)
+    #         if state.country != self.country:
+    #             frappe.throw(_("Selected State does not belong to the selected Country"))
                 
-        # Validate that city belongs to selected state
-        if self.city and self.state:
-            city = frappe.get_doc("City", self.city)
-            if city.state != self.state:
-                frappe.throw(_("Selected City does not belong to the selected State"))
+    #     # Validate that city belongs to selected state
+    #     if self.city and self.state:
+    #         city = frappe.get_doc("City", self.city)
+    #         if city.state != self.state:
+    #             frappe.throw(_("Selected City does not belong to the selected State"))
+
+    def validate_state_city(self):
+        # Fetch state document and get custom country field
+        state_country = frappe.db.get_value("State", self.state, "custom_country")
+
+        if not state_country:
+            frappe.throw(f"State {self.state} does not have a country associated with it.")
+
+        if state_country != self.country:
+            frappe.throw(f"The selected state {self.state} does not belong to {self.country}.")
+
                 
     def before_save(self):
         # Ensure all text fields are properly stripped of leading/trailing spaces

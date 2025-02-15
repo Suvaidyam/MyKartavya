@@ -2,12 +2,15 @@
 # For license information, please see license.txt
 
 import frappe
+import random
+import string
 from frappe.model.document import Document
 import re
 from datetime import datetime
 import os
 
 class Company(Document):
+    pass
     def validate(self):
         self.validate_company_name()
         self.validate_registration_dates()
@@ -28,20 +31,27 @@ class Company(Document):
         if existing:
             frappe.throw("Company Name must be unique")
             
+
     def validate_registration_dates(self):
         if self.registration_type == "Self Registration":
             if self.company_registration_date:
+                # Ensure company_registration_date is converted from string to date
+                if isinstance(self.company_registration_date, str):
+                    self.company_registration_date = datetime.strptime(self.company_registration_date, "%Y-%m-%d").date()
+
                 if self.company_registration_date > datetime.now().date():
                     frappe.throw("Company Registration Date cannot be a future date")
+
         else:  # Admin Registration
             if self.company_registration_year:
                 try:
                     year = int(self.company_registration_year)
                     current_year = datetime.now().year
                     if not (1800 <= year <= current_year):
-                        frappe.throw("Company Registration Year must be between 1800 and current year")
+                        frappe.throw("Company Registration Year must be between 1800 and the current year")
                 except ValueError:
                     frappe.throw("Invalid Company Registration Year format")
+
                     
     def validate_contact_details(self):
         # Validate names
@@ -131,3 +141,58 @@ class Company(Document):
                 
         if self.india_headquarters_address:
             self.india_headquarters_address = self.india_headquarters_address.strip()
+
+
+def after_insert(doc, method):
+    if doc.registration_type == "Admin Registration":
+        # Approve the company
+        frappe.db.set_value("Company", doc.name, "workflow_state", "Approved")
+        frappe.db.commit()
+         
+    send_message(doc.email)
+    insert_sva_user(doc)    
+
+def get_role_profile():
+    role_profile = frappe.get_all("Role Profile", fields=["name"], limit=1)
+    return role_profile[0]["name"] if role_profile else None
+
+def insert_sva_user(doc):
+    """Helper function to insert an SVA User"""
+    email = doc.email
+    first_name = doc.company_name
+    last_name=doc.last_name
+    password = generate_random_password()  
+    role_profile = get_role_profile()
+    
+    sva_user = frappe.get_doc({
+        "doctype": "SVA User",
+        "email": email,
+        "first_name": first_name,
+        "last_name":last_name,
+        "password": password,
+        "confirm_password": password,
+        "company_name": doc.company_name,
+        "role_profile": role_profile ,
+    })
+    sva_user.insert(ignore_permissions=True)
+    frappe.db.commit()  
+
+    frappe.msgprint(f"SVA User {sva_user.email} created successfully!", alert=True)
+
+def generate_random_password(length=8):
+    characters = string.ascii_letters + string.digits
+    return ''.join(random.choice(characters) for _ in range(length))
+
+def send_message(email):
+    if not email:
+        frappe.throw("Email is required for sending notifications.")
+
+    message = f"Hello, {email}! Your Admin Registration has been created successfully."
+
+    frappe.sendmail(
+        recipients=email,
+        subject="Admin Registration Successful",
+        message=message
+    )
+
+    # frappe.msgprint(f"Message sent to {email}")
