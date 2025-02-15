@@ -149,7 +149,7 @@ def after_insert(doc, method):
         frappe.db.set_value("Company", doc.name, "workflow_state", "Approved")
         frappe.db.commit()
          
-    send_message(doc.email)
+    # send_message(doc.email)
     insert_sva_user(doc)    
 
 def get_role_profile():
