@@ -13,11 +13,11 @@ required_apps = [
 ]
 
 fixtures=[
-    'Role',
-    'Role Profile',
+    # 'Role',
+    # 'Role Profile',
     'Builder Page',
-    'SVADatatable Configuration',
-    "Workflow", "Workflow State", "Workflow Action"
+    # 'SVADatatable Configuration',
+    # "Workflow", "Workflow State", "Workflow Action"
     ]
 
 doc_events = {
