@@ -8,13 +8,9 @@ app_license = "mit"
 # Apps
 # ------------------
 
-# required_apps = [
-    
-#     "Frappe Builder",
-#     "Frappe Theme",
-#     "Sva Frappe"
-
-# ]
+required_apps = [
+    "Suvaidyam/sva_frappe","Suvaidyam/frappe_theme" ,"builder"
+]
 
 fixtures=[
     'Role',
