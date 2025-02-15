@@ -12,18 +12,18 @@ EXTRA_TEST_RECORD_DEPENDENCIES = []  # eg. ["User"]
 IGNORE_TEST_RECORD_DEPENDENCIES = []  # eg. ["User"]
 
 
-class UnitTestVolunteer(UnitTestCase):
+class UnitTestSDG(UnitTestCase):
 	"""
-	Unit tests for Volunteer.
+	Unit tests for SDG.
 	Use this class for testing individual functions and methods.
 	"""
 
 	pass
 
 
-class IntegrationTestVolunteer(IntegrationTestCase):
+class IntegrationTestSDG(IntegrationTestCase):
 	"""
-	Integration tests for Volunteer.
+	Integration tests for SDG.
 	Use this class for testing interactions between multiple components.
 	"""
 

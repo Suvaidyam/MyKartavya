@@ -252,11 +252,9 @@
    "label": "Location Details"
   },
   {
-   "depends_on": "eval:!doc.is_global",
    "fieldname": "country",
    "fieldtype": "Link",
    "label": "Country",
-   "mandatory_depends_on": "eval:!doc.is_global",
    "options": "Country"
   },
   {
@@ -282,7 +280,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-08 12:35:57.584898",
+ "modified": "2025-02-15 15:06:31.332167",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",

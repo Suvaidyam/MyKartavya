@@ -4,7 +4,7 @@ from frappe.utils import get_datetime, now_datetime
 
 class Activity(Document):
     def validate(self):
-        self.validate_dates()
+        # self.validate_dates()
         self.validate_hours()
         self.validate_points()
         self.handle_activity_published_date_starts()
@@ -67,14 +67,14 @@ class Activity(Document):
         if self.activity_published_date_starts:
             self.auto_approve_volunteers = 1
             
-    def before_save(self):
-        # Handle location fields based on is_global
-        if self.is_global:
-            self.country = None
-            self.state = None
-            self.city = None
-            self.address = None
-        else:
-            # Validate country is provided for non-global activities
-            if not self.country:
-                frappe.throw(_("Country is mandatory for non-global activities"))
+    # def before_save(self):
+    #     # Handle location fields based on is_global
+    #     if self.is_global:
+    #         self.country = None
+    #         self.state = None
+    #         self.city = None
+    #         self.address = None
+    #     else:
+    #         # Validate country is provided for non-global activities
+    #         if not self.country:
+    #             frappe.throw(_("Country is mandatory for non-global activities"))
