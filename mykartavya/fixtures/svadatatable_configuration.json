@@ -2,10 +2,26 @@
  {
   "charts": [],
   "child_confs": [],
-  "child_doctypes": [],
+  "child_doctypes": [
+   {
+    "action_label": "Approval",
+    "connection_type": "Direct",
+    "crud_permissions": "[\"read\",\"write\",\"create\",\"delete\"]",
+    "dn_reference_field": null,
+    "dt_reference_field": null,
+    "extend_condition": 0,
+    "extended_condition": "{}",
+    "html_field": "volunteer",
+    "link_doctype": "SVA User",
+    "link_fieldname": "custom_company",
+    "listview_settings": "[{\"fieldname\":\"role_profile\",\"label\":\"Role Profile\",\"width\":\"2\"},{\"fieldname\":\"custom_company\",\"label\":\"Company\",\"width\":\"2\"},{\"fieldname\":\"email\",\"label\":\"Email\",\"width\":\"2\"},{\"fieldname\":\"status\",\"label\":\"Status\",\"width\":\"2\"},{\"fieldname\":\"full_name\",\"label\":\"Full Name\",\"width\":\"2\"}]",
+    "referenced_link_doctype": null,
+    "template": "Tasks"
+   }
+  ],
   "docstatus": 0,
   "doctype": "SVADatatable Configuration",
-  "modified": "2025-02-15 15:34:18.237782",
+  "modified": "2025-02-15 17:53:32.122453",
   "name": "Company",
   "number_cards": [],
   "parent_doctype": "Company"
