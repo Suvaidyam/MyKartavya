@@ -157,7 +157,7 @@ def after_insert(doc, method):
 
 def get_role_profile(registration_type):
     """Get appropriate role profile based on registration type"""
-    role_profile_name = "Company Admin" if registration_type == "Admin Registration" else "Company User"
+    role_profile_name = "Company Admin" if registration_type == "Admin Registration" else "Company Admin"
     role_profile = frappe.db.exists("Role Profile", role_profile_name)
     
     if not role_profile:
