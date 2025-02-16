@@ -168,6 +168,7 @@ def get_role_profile(registration_type):
 def insert_sva_user(doc):
     """Create SVA User with appropriate role profile and company link"""
     try:
+        # Create Company Admin user
         email = doc.email
         first_name = doc.first_name
         last_name = doc.last_name
@@ -194,10 +195,39 @@ def insert_sva_user(doc):
         frappe.db.commit()
         
         frappe.msgprint(
-            f"SVA User created successfully!\nEmail: {email}\nRole Profile: {role_profile}",
+            f"Company Admin SVA User created successfully!\nEmail: {email}\nRole Profile: {role_profile}",
             alert=True
         )
         
+        # Create Volunteer Incharge user if Admin Registration
+        if doc.registration_type == "Admin Registration":
+            incharge_email = doc.volunteering_incharge_email
+            incharge_password = generate_random_password()
+            
+            # Check if incharge user already exists
+            if frappe.db.exists("SVA User", {"email": incharge_email}):
+                frappe.throw(f"SVA User with email {incharge_email} already exists")
+            
+            incharge_user = frappe.get_doc({
+                "doctype": "SVA User",
+                "email": incharge_email,
+                "first_name": doc.volunteering_incharge_name,
+                "last_name": "",  # Since we only have full name
+                "password": incharge_password,
+                "confirm_password": incharge_password,
+                "custom_company": doc.name,
+                "role_profile": "Volunteer Incharge",
+                "enabled": 1
+            })
+            
+            incharge_user.insert(ignore_permissions=True)
+            frappe.db.commit()
+            
+            frappe.msgprint(
+                f"Volunteer Incharge SVA User created successfully!\nEmail: {incharge_email}\nRole Profile: Volunteer Incharge",
+                alert=True
+            )
+            
     except Exception as e:
         frappe.log_error(f"Failed to create SVA User: {str(e)}")
         frappe.throw(f"Failed to create SVA User: {str(e)}")

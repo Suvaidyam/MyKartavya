@@ -1,275 +1,275 @@
 {
- "actions": [],
- "autoname": "field:company_name",
- "creation": "2024-02-06 18:29:15",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "registration_type",
-  "company_name",
-  "company_registration_date",
-  "company_registration_year",
-  "contact_section",
-  "first_name",
-  "last_name",
-  "email",
-  "designation",
-  "column_break_1",
-  "phone",
-  "mobile_number",
-  "address_section",
-  "india_headquarters_address",
-  "country",
-  "state",
-  "city",
-  "pincode",
-  "org_section",
-  "number_of_employees",
-  "clear_vision",
-  "vol_section",
-  "volunteering_incharge_name",
-  "volunteering_incharge_email",
-  "volunteering_incharge_phone",
-  "volunteering_csr_activities",
-  "employee_engagement",
-  "company_logo",
-  "volunteer_details_tab",
-  "volunteer"
- ],
- "fields": [
-  {
-   "default": "Admin Registration",
-   "fieldname": "registration_type",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Registration Type",
-   "options": "Self Registration\nAdmin Registration",
-   "reqd": 1
-  },
-  {
-   "fieldname": "company_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Company Name",
-   "length": 100,
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "company_registration_date",
-   "fieldtype": "Date",
-   "label": "Company Registration Date",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "fieldname": "company_registration_year",
-   "fieldtype": "Data",
-   "label": "Company Registration Year",
-   "length": 4,
-   "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'"
-  },
-  {
-   "fieldname": "contact_section",
-   "fieldtype": "Section Break",
-   "label": "Contact Information"
-  },
-  {
-   "fieldname": "first_name",
-   "fieldtype": "Data",
-   "label": "First Name",
-   "length": 100,
-   "reqd": 1
-  },
-  {
-   "fieldname": "last_name",
-   "fieldtype": "Data",
-   "label": "Last Name",
-   "length": 100,
-   "reqd": 1
-  },
-  {
-   "fieldname": "email",
-   "fieldtype": "Data",
-   "label": "Email",
-   "length": 100,
-   "options": "Email",
-   "reqd": 1
-  },
-  {
-   "fieldname": "designation",
-   "fieldtype": "Data",
-   "label": "Designation",
-   "length": 100,
-   "reqd": 1
-  },
-  {
-   "fieldname": "column_break_1",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "phone",
-   "fieldtype": "Data",
-   "label": "Phone",
-   "length": 15
-  },
-  {
-   "fieldname": "mobile_number",
-   "fieldtype": "Data",
-   "label": "Mobile Number",
-   "length": 10,
-   "reqd": 1
-  },
-  {
-   "fieldname": "address_section",
-   "fieldtype": "Section Break",
-   "label": "Address Information"
-  },
-  {
-   "fieldname": "india_headquarters_address",
-   "fieldtype": "Small Text",
-   "label": "India Headquarters Address",
-   "reqd": 1
-  },
-  {
-   "fieldname": "country",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Country",
-   "options": "Country",
-   "reqd": 1
-  },
-  {
-   "fieldname": "state",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "State",
-   "options": "State",
-   "reqd": 1
-  },
-  {
-   "fieldname": "city",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "City",
-   "options": "District",
-   "reqd": 1
-  },
-  {
-   "fieldname": "pincode",
-   "fieldtype": "Data",
-   "label": "Pincode",
-   "length": 6,
-   "reqd": 1
-  },
-  {
-   "fieldname": "org_section",
-   "fieldtype": "Section Break",
-   "label": "Organization Details"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "number_of_employees",
-   "fieldtype": "Int",
-   "label": "Number of Employees",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "clear_vision",
-   "fieldtype": "Select",
-   "label": "Clear Vision",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
-   "options": "Yes\nNo"
-  },
-  {
-   "fieldname": "vol_section",
-   "fieldtype": "Section Break",
-   "label": "Volunteering Program Details"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "fieldname": "volunteering_incharge_name",
-   "fieldtype": "Data",
-   "label": "Volunteering InCharge Name",
-   "length": 100,
-   "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "fieldname": "volunteering_incharge_email",
-   "fieldtype": "Data",
-   "label": "Volunteering InCharge Email",
-   "length": 100,
-   "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "options": "Email"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "fieldname": "volunteering_incharge_phone",
-   "fieldtype": "Data",
-   "label": "Volunteering InCharge Phone",
-   "length": 15,
-   "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "volunteering_csr_activities",
-   "fieldtype": "Percent",
-   "label": "Volunteering CSR Activities Cost",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "employee_engagement",
-   "fieldtype": "Percent",
-   "label": "Employee Engagement Coverage",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "fieldname": "company_logo",
-   "fieldtype": "Attach Image",
-   "label": "Company Logo"
-  },
-  {
-   "fieldname": "volunteer_details_tab",
-   "fieldtype": "Tab Break",
-   "label": "Volunteer Details"
-  },
-  {
-   "fieldname": "volunteer",
-   "fieldtype": "HTML",
-   "label": "Volunteer"
-  }
- ],
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2025-02-15 17:57:37.947660",
- "modified_by": "Administrator",
- "module": "Mykartavya",
- "name": "Company",
- "naming_rule": "By fieldname",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
- "show_title_field_in_link": 1,
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "title_field": "company_name",
- "track_changes": 1
+    "actions": [],
+    "autoname": "field:company_name",
+    "creation": "2024-02-06 18:29:15",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "registration_type",
+        "company_name",
+        "company_registration_date",
+        "company_registration_year",
+        "contact_section",
+        "first_name",
+        "last_name",
+        "email",
+        "designation",
+        "column_break_1",
+        "phone",
+        "mobile_number",
+        "address_section",
+        "india_headquarters_address",
+        "country",
+        "state",
+        "city",
+        "pincode",
+        "org_section",
+        "number_of_employees",
+        "clear_vision",
+        "vol_section",
+        "volunteering_incharge_name",
+        "volunteering_incharge_email",
+        "volunteering_incharge_phone",
+        "volunteering_csr_activities",
+        "employee_engagement",
+        "company_logo",
+        "volunteer_details_tab",
+        "volunteer"
+    ],
+    "fields": [
+        {
+            "default": "Admin Registration",
+            "fieldname": "registration_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Registration Type",
+            "options": "Self Registration\nAdmin Registration",
+            "reqd": 1
+        },
+        {
+            "fieldname": "company_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Company Name",
+            "length": 100,
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Self Registration'",
+            "fieldname": "company_registration_date",
+            "fieldtype": "Date",
+            "label": "Company Registration Date",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "fieldname": "company_registration_year",
+            "fieldtype": "Data",
+            "label": "Company Registration Year",
+            "length": 4,
+            "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'"
+        },
+        {
+            "fieldname": "contact_section",
+            "fieldtype": "Section Break",
+            "label": "Contact Information"
+        },
+        {
+            "fieldname": "first_name",
+            "fieldtype": "Data",
+            "label": "First Name",
+            "length": 100,
+            "reqd": 1
+        },
+        {
+            "fieldname": "last_name",
+            "fieldtype": "Data",
+            "label": "Last Name",
+            "length": 100,
+            "reqd": 1
+        },
+        {
+            "fieldname": "email",
+            "fieldtype": "Data",
+            "label": "Email",
+            "length": 100,
+            "options": "Email",
+            "reqd": 1
+        },
+        {
+            "fieldname": "designation",
+            "fieldtype": "Data",
+            "label": "Designation",
+            "length": 100,
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "phone",
+            "fieldtype": "Data",
+            "label": "Phone",
+            "length": 15
+        },
+        {
+            "fieldname": "mobile_number",
+            "fieldtype": "Data",
+            "label": "Mobile Number",
+            "length": 10,
+            "reqd": 1
+        },
+        {
+            "fieldname": "address_section",
+            "fieldtype": "Section Break",
+            "label": "Address Information"
+        },
+        {
+            "fieldname": "india_headquarters_address",
+            "fieldtype": "Small Text",
+            "label": "India Headquarters Address",
+            "reqd": 1
+        },
+        {
+            "fieldname": "country",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Country",
+            "options": "Country",
+            "reqd": 1
+        },
+        {
+            "fieldname": "state",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "State",
+            "options": "State",
+            "reqd": 1
+        },
+        {
+            "fieldname": "city",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "City",
+            "options": "District",
+            "reqd": 1
+        },
+        {
+            "fieldname": "pincode",
+            "fieldtype": "Data",
+            "label": "Pincode",
+            "length": 6,
+            "reqd": 1
+        },
+        {
+            "fieldname": "org_section",
+            "fieldtype": "Section Break",
+            "label": "Organization Details"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Self Registration'",
+            "fieldname": "number_of_employees",
+            "fieldtype": "Int",
+            "label": "Number of Employees",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Self Registration'",
+            "fieldname": "clear_vision",
+            "fieldtype": "Select",
+            "label": "Clear Vision",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
+            "options": "Yes\nNo"
+        },
+        {
+            "fieldname": "vol_section",
+            "fieldtype": "Section Break",
+            "label": "Volunteering Program Details"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "fieldname": "volunteering_incharge_name",
+            "fieldtype": "Data",
+            "label": "Volunteering InCharge Name",
+            "length": 100,
+            "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "fieldname": "volunteering_incharge_email",
+            "fieldtype": "Data",
+            "label": "Volunteering InCharge Email",
+            "length": 100,
+            "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "options": "Email"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "fieldname": "volunteering_incharge_phone",
+            "fieldtype": "Data",
+            "label": "Volunteering InCharge Phone",
+            "length": 15,
+            "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Self Registration'",
+            "fieldname": "volunteering_csr_activities",
+            "fieldtype": "Percent",
+            "label": "Volunteering CSR Activities Cost",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Self Registration'",
+            "fieldname": "employee_engagement",
+            "fieldtype": "Percent",
+            "label": "Employee Engagement Coverage",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "fieldname": "company_logo",
+            "fieldtype": "Attach Image",
+            "label": "Company Logo"
+        },
+        {
+            "fieldname": "volunteer_details_tab",
+            "fieldtype": "Tab Break",
+            "label": "Volunteer Details"
+        },
+        {
+            "fieldname": "volunteer",
+            "fieldtype": "HTML",
+            "label": "Volunteer"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2025-02-15 17:57:37.947660",
+    "modified_by": "Administrator",
+    "module": "Mykartavya",
+    "name": "Company",
+    "naming_rule": "By fieldname",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "show_title_field_in_link": 1,
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "title_field": "company_name",
+    "track_changes": 1
 }
