@@ -6,30 +6,43 @@
  "engine": "InnoDB",
  "field_order": [
   "basic_details_section",
+  "status",
   "need_certificate",
   "title",
   "activity_description",
+  "activity_image",
   "activity_published_date_starts",
   "publish_date",
-  "activation_deadline",
   "start_date",
   "end_date",
+  "application_deadline",
   "reporting_deadline",
-  "column_break_1",
+  "timing_section",
+  "start_time_hr",
+  "start_time_min",
+  "start_time_meridiem",
+  "column_break_time1",
+  "end_time_hr",
+  "end_time_min",
+  "end_time_meridiem",
+  "activity_settings_section",
   "auto_approve_volunteers",
   "is_team_activity",
   "require_feedback_images",
+  "company",
   "is_featured",
   "is_global",
   "category_section",
-  "category",
   "value_type",
-  "work_value_points",
+  "skill",
+  "work_value_rupees",
   "goal",
   "contribution_type",
   "karma_points",
   "column_break_2",
   "unlimited_vacancies",
+  "vacancy",
+  "buffer_vacancy",
   "minimum_hours",
   "buffer_minutes",
   "hours",
@@ -37,6 +50,10 @@
   "max_hours",
   "organization_section",
   "ngo",
+  "reward_section",
+  "reward_for_activity",
+  "reward_description",
+  "reward_image",
   "location_section",
   "country",
   "state",
@@ -48,6 +65,14 @@
    "fieldname": "basic_details_section",
    "fieldtype": "Section Break",
    "label": "Basic Details"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Draft\nPublished\nOngoing\nEnded",
+   "reqd": 1
   },
   {
    "fieldname": "need_certificate",
@@ -71,6 +96,12 @@
    "reqd": 1
   },
   {
+   "fieldname": "activity_image",
+   "fieldtype": "Attach Image",
+   "label": "Activity Image",
+   "reqd": 1
+  },
+  {
    "default": "0",
    "fieldname": "activity_published_date_starts",
    "fieldtype": "Check",
@@ -81,12 +112,6 @@
    "fieldtype": "Datetime",
    "in_list_view": 1,
    "label": "Activity Publish Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "activation_deadline",
-   "fieldtype": "Datetime",
-   "label": "Activation Deadline",
    "reqd": 1
   },
   {
@@ -104,14 +129,72 @@
    "reqd": 1
   },
   {
+   "fieldname": "application_deadline",
+   "fieldtype": "Datetime",
+   "label": "Application Deadline",
+   "reqd": 1
+  },
+  {
    "fieldname": "reporting_deadline",
    "fieldtype": "Datetime",
    "label": "Reporting Deadline",
    "reqd": 1
   },
   {
-   "fieldname": "column_break_1",
+   "fieldname": "timing_section",
+   "fieldtype": "Section Break",
+   "label": "Activity Timing"
+  },
+  {
+   "fieldname": "start_time_hr",
+   "fieldtype": "Select",
+   "label": "Start Hour",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_time_min",
+   "fieldtype": "Select",
+   "label": "Start Minute",
+   "options": "0\n15\n30\n45",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_time_meridiem",
+   "fieldtype": "Select",
+   "label": "Start Meridiem",
+   "options": "AM\nPM",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_time1",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "end_time_hr",
+   "fieldtype": "Select",
+   "label": "End Hour",
+   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_time_min",
+   "fieldtype": "Select",
+   "label": "End Minute",
+   "options": "0\n15\n30\n45",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_time_meridiem",
+   "fieldtype": "Select",
+   "label": "End Meridiem",
+   "options": "AM\nPM",
+   "reqd": 1
+  },
+  {
+   "fieldname": "activity_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Activity Settings"
   },
   {
    "default": "0",
@@ -132,6 +215,14 @@
    "label": "Required Feedback Images"
   },
   {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
    "fieldname": "is_featured",
    "fieldtype": "Select",
    "label": "Featured Activity",
@@ -150,23 +241,22 @@
    "label": "Category & Value Details"
   },
   {
-   "fieldname": "category",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Category",
-   "options": "Category",
-   "reqd": 1
-  },
-  {
    "fieldname": "value_type",
    "fieldtype": "Select",
    "label": "Value Type",
    "options": "General\nSkills"
   },
   {
-   "fieldname": "work_value_points",
+   "depends_on": "eval:doc.value_type=='Skills'",
+   "fieldname": "skill",
+   "fieldtype": "Link",
+   "label": "Skills",
+   "options": "Skills"
+  },
+  {
+   "fieldname": "work_value_rupees",
    "fieldtype": "Int",
-   "label": "Work Value Points",
+   "label": "Work Value (In Rupees)",
    "reqd": 1
   },
   {
@@ -178,9 +268,9 @@
   },
   {
    "fieldname": "contribution_type",
-   "fieldtype": "Link",
+   "fieldtype": "Select",
    "label": "Contribution Type",
-   "options": "Contribution Type",
+   "options": "User Input\nFixed",
    "reqd": 1
   },
   {
@@ -198,6 +288,18 @@
    "fieldname": "unlimited_vacancies",
    "fieldtype": "Check",
    "label": "Unlimited Vacancies"
+  },
+  {
+   "depends_on": "eval:!doc.unlimited_vacancies",
+   "fieldname": "vacancy",
+   "fieldtype": "Int",
+   "label": "Vacancies"
+  },
+  {
+   "depends_on": "eval:!doc.unlimited_vacancies",
+   "fieldname": "buffer_vacancy",
+   "fieldtype": "Int",
+   "label": "Buffer Vacancies"
   },
   {
    "fieldname": "minimum_hours",
@@ -246,15 +348,43 @@
    "reqd": 1
   },
   {
+   "fieldname": "reward_section",
+   "fieldtype": "Section Break",
+   "label": "Reward Details"
+  },
+  {
+   "default": "0",
+   "fieldname": "reward_for_activity",
+   "fieldtype": "Check",
+   "label": "Reward for Activity?",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.reward_for_activity",
+   "fieldname": "reward_description",
+   "fieldtype": "Text Editor",
+   "label": "Reward Description",
+   "mandatory_depends_on": "eval:doc.reward_for_activity"
+  },
+  {
+   "depends_on": "eval:doc.reward_for_activity",
+   "fieldname": "reward_image",
+   "fieldtype": "Attach Image",
+   "label": "Reward Image",
+   "mandatory_depends_on": "eval:doc.reward_for_activity"
+  },
+  {
    "depends_on": "eval:!doc.is_global",
    "fieldname": "location_section",
    "fieldtype": "Section Break",
    "label": "Location Details"
   },
   {
+   "depends_on": "eval:!doc.is_global",
    "fieldname": "country",
    "fieldtype": "Link",
    "label": "Country",
+   "mandatory_depends_on": "eval:!doc.is_global",
    "options": "Country"
   },
   {
@@ -280,7 +410,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-15 15:06:31.332167",
+ "modified": "2025-02-16 21:49:13.940013",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
