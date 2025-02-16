@@ -21,7 +21,8 @@ fixtures=[
     # 'Property Setter',
     # 'SVADatatable Configuration',
     # "Workflow", "Workflow State", "Workflow Action"
-    ]
+]
+
 
 doc_events = {
     "Company": {
