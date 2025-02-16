@@ -16,8 +16,10 @@ fixtures=[
     # 'Role',
     # 'Role Profile',
     # 'Builder Page',
-    'Property Setter',
-    'SVADatatable Configuration',
+    # 'SDG',
+    # 'Skills',
+    # 'Property Setter',
+    # 'SVADatatable Configuration',
     # "Workflow", "Workflow State", "Workflow Action"
     ]
 

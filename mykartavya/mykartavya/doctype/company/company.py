@@ -148,51 +148,105 @@ def after_insert(doc, method):
         # Approve the company
         frappe.db.set_value("Company", doc.name, "workflow_state", "Approved")
         frappe.db.commit()
-         
-    # send_message(doc.email)
-    insert_sva_user(doc)    
+    
+    # Create SVA User for both registration types
+    insert_sva_user(doc)
+    
+    # Send welcome email
+    send_message(doc)
 
-def get_role_profile():
-    role_profile = frappe.get_all("Role Profile", fields=["name"], limit=1)
-    return role_profile[0]["name"] if role_profile else None
+def get_role_profile(registration_type):
+    """Get appropriate role profile based on registration type"""
+    role_profile_name = "Company Admin" if registration_type == "Admin Registration" else "Company User"
+    role_profile = frappe.db.exists("Role Profile", role_profile_name)
+    
+    if not role_profile:
+        frappe.throw(f"Role Profile '{role_profile_name}' not found. Please create it first.")
+    
+    return role_profile_name
 
 def insert_sva_user(doc):
-    """Helper function to insert an SVA User"""
-    email = doc.email
-    first_name = doc.company_name
-    last_name=doc.last_name
-    password = generate_random_password()  
-    role_profile = get_role_profile()
+    """Create SVA User with appropriate role profile and company link"""
+    try:
+        email = doc.email
+        first_name = doc.first_name
+        last_name = doc.last_name
+        password = generate_random_password()
+        role_profile = get_role_profile(doc.registration_type)
+        
+        # Check if user already exists
+        if frappe.db.exists("SVA User", {"email": email}):
+            frappe.throw(f"SVA User with email {email} already exists")
+        
+        sva_user = frappe.get_doc({
+            "doctype": "SVA User",
+            "email": email,
+            "first_name": first_name,
+            "last_name": last_name,
+            "password": password,
+            "confirm_password": password,
+            "custom_company": doc.name, 
+            "role_profile": role_profile,
+            "enabled": 1
+        })
+        
+        sva_user.insert(ignore_permissions=True)
+        frappe.db.commit()
+        
+        frappe.msgprint(
+            f"SVA User created successfully!\nEmail: {email}\nRole Profile: {role_profile}",
+            alert=True
+        )
+        
+    except Exception as e:
+        frappe.log_error(f"Failed to create SVA User: {str(e)}")
+        frappe.throw(f"Failed to create SVA User: {str(e)}")
+
+def generate_random_password(length=10):
+    """Generate a stronger random password"""
+    # Include at least one of each: uppercase, lowercase, digit, and special character
+    characters = string.ascii_letters + string.digits + "!@#$%^&*"
+    password = [
+        random.choice(string.ascii_uppercase),
+        random.choice(string.ascii_lowercase),
+        random.choice(string.digits),
+        random.choice("!@#$%^&*")
+    ]
     
-    sva_user = frappe.get_doc({
-        "doctype": "SVA User",
-        "email": email,
-        "first_name": first_name,
-        "last_name":last_name,
-        "password": password,
-        "confirm_password": password,
-        "company_name": doc.company_name,
-        "role_profile": role_profile ,
-    })
-    sva_user.insert(ignore_permissions=True)
-    frappe.db.commit()  
+    # Fill the rest with random characters
+    for _ in range(length - 4):
+        password.append(random.choice(characters))
+    
+    # Shuffle the password
+    random.shuffle(password)
+    return ''.join(password)
 
-    frappe.msgprint(f"SVA User {sva_user.email} created successfully!", alert=True)
-
-def generate_random_password(length=8):
-    characters = string.ascii_letters + string.digits
-    return ''.join(random.choice(characters) for _ in range(length))
-
-def send_message(email):
-    if not email:
+def send_message(doc):
+    """Send welcome email to the new company user"""
+    if not doc.email:
         frappe.throw("Email is required for sending notifications.")
 
-    message = f"Hello, {email}! Your Admin Registration has been created successfully."
+    registration_type = "Admin" if doc.registration_type == "Admin Registration" else "Self"
+    message = f"""
+    Dear {doc.first_name} {doc.last_name},
+    
+    Welcome to our platform! Your {registration_type} Registration has been completed successfully.
+    
+    Company Name: {doc.company_name}
+    Registration Type: {doc.registration_type}
+    
+    You can now log in to your account using your email address: {doc.email}
+    
+    Best regards,
+    The Team
+    """
 
-    frappe.sendmail(
-        recipients=email,
-        subject="Admin Registration Successful",
-        message=message
-    )
-
-    # frappe.msgprint(f"Message sent to {email}")
+    try:
+        frappe.sendmail(
+            recipients=doc.email,
+            subject=f"Welcome - {registration_type} Registration Successful",
+            message=message,
+            delayed=False
+        )
+    except Exception as e:
+        frappe.log_error(f"Failed to send welcome email: {str(e)}")

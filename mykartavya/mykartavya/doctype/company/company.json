@@ -1,6 +1,6 @@
 {
  "actions": [],
- "autoname": "format:COMP-{company_name}-{####}",
+ "autoname": "field:company_name",
  "creation": "2024-02-06 18:29:15",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -246,11 +246,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-15 15:20:14.950876",
+ "modified": "2025-02-15 17:57:37.947660",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Company",
- "naming_rule": "Expression",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -266,8 +266,10 @@
    "write": 1
   }
  ],
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
+ "title_field": "company_name",
  "track_changes": 1
 }
