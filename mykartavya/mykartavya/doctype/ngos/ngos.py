@@ -118,9 +118,9 @@ class NGOs(Document):
 
 
 def after_insert(doc, method):
-    if doc.registration_type == "Admin Registration":
+    if doc.registration_type == "Self Registration":
         # Approve the NGO
-        frappe.db.set_value("NGOs", doc.name, "workflow_state", "Approved")
+        frappe.db.set_value("NGOs", doc.name, "workflow_state", "Pending Approval")
         frappe.db.commit()
     # Create SVA User
     insert_sva_user(doc)
