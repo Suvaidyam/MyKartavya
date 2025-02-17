@@ -1,6 +1,6 @@
 {
  "actions": [],
- "allow_rename": 1,
+ "autoname": "format:CT-{####}",
  "creation": "2025-02-06 11:16:09.449093",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -11,15 +11,18 @@
   {
    "fieldname": "type",
    "fieldtype": "Data",
-   "label": "Type"
+   "in_list_view": 1,
+   "label": "Type",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-06 11:16:20.510899",
+ "modified": "2025-02-17 13:29:45.966953",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Contribution Type",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
@@ -35,7 +38,9 @@
    "write": 1
   }
  ],
+ "show_title_field_in_link": 1,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "type"
 }

@@ -1,7 +1,6 @@
 {
  "actions": [],
  "allow_import": 1,
- "allow_rename": 1,
  "autoname": "field:skill_name",
  "creation": "2025-02-12 14:55:10.943947",
  "doctype": "DocType",
@@ -28,7 +27,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-12 15:27:00.698952",
+ "modified": "2025-02-17 13:29:36.875826",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Skills",
@@ -49,6 +48,7 @@
    "write": 1
   }
  ],
+ "show_title_field_in_link": 1,
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": [],
