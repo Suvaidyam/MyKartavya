@@ -24,14 +24,14 @@ fixtures=[
 ]
 
 
-doc_events = {
-    "Company": {
-        "after_insert": "mykartavya.controllers.company.after_insert",
-    },
-    "NGOs": {
-        "after_insert": "mykartavya.controllers.ngos.after_insert",
-    }
-}
+# doc_events = {
+#     "Company": {
+#         "after_insert": "mykartavya.controllers.company.after_insert",
+#     },
+#     "NGOs": {
+#         "after_insert": "mykartavya.controllers.ngos.after_insert",
+#     }
+# }
 
 doc_events = {
     "NGOs": {
