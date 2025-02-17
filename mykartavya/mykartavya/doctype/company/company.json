@@ -39,7 +39,7 @@
   "company_logo",
   "volunteer_details_tab",
   "volunteer",
-  "volunteer_tab",
+  "section_break_tfdt",
   "volunteer_company_mapper"
  ],
  "fields": [
@@ -250,11 +250,6 @@
    "label": "Volunteer"
   },
   {
-   "fieldname": "volunteer_tab",
-   "fieldtype": "Tab Break",
-   "label": "Volunteer"
-  },
-  {
    "fieldname": "volunteer_company_mapper",
    "fieldtype": "HTML",
    "label": "Volunteer "
@@ -274,11 +269,15 @@
   {
    "fieldname": "column_break_rsml",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_tfdt",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-17 11:52:14.393262",
+ "modified": "2025-02-17 15:15:15.095013",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Company",
