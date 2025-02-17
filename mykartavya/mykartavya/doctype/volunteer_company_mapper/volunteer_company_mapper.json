@@ -1,0 +1,93 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:company_name",
+ "creation": "2025-02-17 11:16:38.963799",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "volunteer",
+  "volunteer_email",
+  "volunteer_name",
+  "column_break_axkh",
+  "company",
+  "company_name",
+  "role_profile"
+ ],
+ "fields": [
+  {
+   "fieldname": "volunteer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Volunteer",
+   "link_filters": "[[\"SVA User\",\"role_profile\",\"=\",\"Volunteer\"]]",
+   "options": "SVA User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "company.company_name",
+   "fieldname": "company_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Company Name",
+   "unique": 1
+  },
+  {
+   "fetch_from": "volunteer.email",
+   "fieldname": "volunteer_email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Volunteer Email",
+   "options": "Email"
+  },
+  {
+   "fetch_from": "volunteer.full_name",
+   "fieldname": "volunteer_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Volunteer Name"
+  },
+  {
+   "fieldname": "column_break_axkh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "volunteer.role_profile",
+   "fieldname": "role_profile",
+   "fieldtype": "Data",
+   "label": "Role Profile"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-17 12:38:30.323824",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Volunteer Company Mapper",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

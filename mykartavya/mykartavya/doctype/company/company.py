@@ -153,7 +153,7 @@ def after_insert(doc, method):
     insert_sva_user(doc)
     
     # Send welcome email
-    send_message(doc)
+    # send_message(doc)
 
 def get_role_profile(registration_type):
     """Get appropriate role profile based on registration type"""
@@ -172,6 +172,7 @@ def insert_sva_user(doc):
         email = doc.email
         first_name = doc.first_name
         last_name = doc.last_name
+        mobile_number=doc.mobile_number
         password = generate_random_password()
         role_profile = get_role_profile(doc.registration_type)
         
@@ -185,6 +186,7 @@ def insert_sva_user(doc):
             "first_name": first_name,
             "last_name": last_name,
             "password": password,
+            "mobile_number": mobile_number,
             "confirm_password": password,
             "custom_company": doc.name, 
             "role_profile": role_profile,
@@ -214,6 +216,7 @@ def insert_sva_user(doc):
                 "first_name": doc.volunteering_incharge_name,
                 "last_name": "",  # Since we only have full name
                 "password": incharge_password,
+                "mobile_number": doc.volunteering_incharge_email,
                 "confirm_password": incharge_password,
                 "custom_company": doc.name,
                 "role_profile": "Volunteer Incharge",
