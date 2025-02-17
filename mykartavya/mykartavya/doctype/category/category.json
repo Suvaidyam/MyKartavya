@@ -1,25 +1,28 @@
 {
  "actions": [],
- "allow_rename": 1,
+ "autoname": "format:C-{####}",
  "creation": "2025-02-06 11:14:36.322237",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "test"
+  "category"
  ],
  "fields": [
   {
-   "fieldname": "test",
+   "fieldname": "category",
    "fieldtype": "Data",
-   "label": "Test"
+   "in_list_view": 1,
+   "label": "Category",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-06 11:14:51.671631",
+ "modified": "2025-02-17 13:30:01.669218",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Category",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
@@ -35,7 +38,9 @@
    "write": 1
   }
  ],
+ "show_title_field_in_link": 1,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "category"
 }

@@ -410,7 +410,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-16 21:49:13.940013",
+ "modified": "2025-02-17 13:27:43.621708",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
@@ -430,8 +430,10 @@
    "write": 1
   }
  ],
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
+ "title_field": "title",
  "track_changes": 1
 }

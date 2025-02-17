@@ -17,13 +17,55 @@
     "listview_settings": "[{\"fieldname\":\"role_profile\",\"label\":\"Role Profile\",\"width\":\"2\"},{\"fieldname\":\"custom_company\",\"label\":\"Company\",\"width\":\"2\"},{\"fieldname\":\"email\",\"label\":\"Email\",\"width\":\"2\"},{\"fieldname\":\"status\",\"label\":\"Status\",\"width\":\"2\"},{\"fieldname\":\"full_name\",\"label\":\"Full Name\",\"width\":\"2\"}]",
     "referenced_link_doctype": null,
     "template": "Tasks"
+   },
+   {
+    "action_label": "Approval",
+    "connection_type": "Direct",
+    "crud_permissions": "[\"read\",\"write\",\"create\",\"delete\"]",
+    "dn_reference_field": null,
+    "dt_reference_field": null,
+    "extend_condition": 0,
+    "extended_condition": "{}",
+    "html_field": "volunteer_company_mapper",
+    "link_doctype": "Volunteer Company Mapper",
+    "link_fieldname": "company",
+    "listview_settings": "[{\"fieldname\":\"volunteer\",\"label\":\"Volunteer\",\"width\":\"2\"},{\"fieldname\":\"volunteer_email\",\"label\":\"Volunteer Email\",\"width\":\"2\"},{\"fieldname\":\"volunteer_name\",\"label\":\"Volunteer Name\",\"width\":\"2\"},{\"fieldname\":\"company_name\",\"label\":\"Company Name\",\"width\":\"2\"}]",
+    "referenced_link_doctype": null,
+    "template": "Tasks"
    }
   ],
   "docstatus": 0,
   "doctype": "SVADatatable Configuration",
-  "modified": "2025-02-15 17:53:32.122453",
+  "modified": "2025-02-17 11:42:33.916887",
   "name": "Company",
   "number_cards": [],
   "parent_doctype": "Company"
+ },
+ {
+  "charts": [],
+  "child_confs": [],
+  "child_doctypes": [
+   {
+    "action_label": "Approval",
+    "connection_type": "Direct",
+    "crud_permissions": "[\"read\",\"write\",\"create\",\"delete\"]",
+    "dn_reference_field": null,
+    "dt_reference_field": null,
+    "extend_condition": 0,
+    "extended_condition": "{}",
+    "html_field": "custom_company_mapper",
+    "link_doctype": "Volunteer Company Mapper",
+    "link_fieldname": "volunteer",
+    "listview_settings": "[{\"fieldname\":\"volunteer\",\"label\":\"Volunteer\",\"width\":\"2\"},{\"fieldname\":\"volunteer_email\",\"label\":\"Volunteer Email\",\"width\":\"2\"},{\"fieldname\":\"volunteer_name\",\"label\":\"Volunteer Name\",\"width\":\"2\"},{\"fieldname\":\"company_name\",\"label\":\"Company Name\",\"width\":\"2\"}]",
+    "referenced_link_doctype": null,
+    "template": "Tasks"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "SVADatatable Configuration",
+  "modified": "2025-02-17 11:33:23.552189",
+  "name": "SVA User",
+  "number_cards": [],
+  "parent_doctype": "SVA User"
  }
 ]
