@@ -196,3 +196,4 @@ def generate_random_password(length=10):
     # Shuffle the password
     random.shuffle(password)
     return ''.join(password)
+
