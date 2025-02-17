@@ -20,7 +20,7 @@ fixtures=[
     # 'Skills',
     # 'Property Setter',
     # 'SVADatatable Configuration',
-    # "Workflow", "Workflow State", "Workflow Action"
+    "Workflow", "Workflow State", "Workflow Action"
 ]
 
 
@@ -29,6 +29,14 @@ doc_events = {
         "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert",
     }
 }
+
+doc_events = {
+    "NGOs": {
+        "after_insert": "mykartavya.mykartavya.doctype.ngos.ngos.validate_workflow"
+    }
+}
+
+
 
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [

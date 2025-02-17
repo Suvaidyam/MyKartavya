@@ -2,15 +2,6 @@
  {
   "docstatus": 0,
   "doctype": "Workflow State",
-  "icon": "",
-  "modified": "2025-02-12 13:36:02.230546",
-  "name": "Draft",
-  "style": "",
-  "workflow_state_name": "Draft"
- },
- {
-  "docstatus": 0,
-  "doctype": "Workflow State",
   "icon": "question-sign",
   "modified": "2025-02-07 22:34:01.193315",
   "name": "Pending",
@@ -43,5 +34,14 @@
   "name": "Approved",
   "style": "Success",
   "workflow_state_name": "Approved"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2025-02-12 13:36:02.230546",
+  "name": "Draft",
+  "style": "",
+  "workflow_state_name": "Draft"
  }
 ]
