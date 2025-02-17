@@ -110,3 +110,9 @@ class NGOs(Document):
             
             if len(set(goals)) != len(goals):
                 frappe.throw(_("Priority Goals must be unique. Please select different goals for each priority level."))
+
+def validate_workflow(doc, method):
+     if doc.registration_type == "Self Registration":
+        frappe.db.set_value("NGOs", doc.name, "workflow_state", "Pending Approval" )
+        frappe.db.commit()
+     
