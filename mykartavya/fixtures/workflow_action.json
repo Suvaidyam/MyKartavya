@@ -4,6 +4,60 @@
   "completed_by_role": null,
   "docstatus": 0,
   "doctype": "Workflow Action",
+  "modified": "2025-02-16 20:50:54.679808",
+  "name": "9enpg29olk",
+  "permitted_roles": [
+   {
+    "role": "Administrator"
+   }
+  ],
+  "reference_doctype": "Company",
+  "reference_name": "Suvaidaym",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-02-16 21:06:32.012651",
+  "name": "n7qkcvmm6r",
+  "permitted_roles": [
+   {
+    "role": "Administrator"
+   }
+  ],
+  "reference_doctype": "Company",
+  "reference_name": "Suvaidaymsss",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-02-16 21:11:49.630343",
+  "name": "t0jvr3ngif",
+  "permitted_roles": [
+   {
+    "role": "Administrator"
+   }
+  ],
+  "reference_doctype": "Company",
+  "reference_name": "Suvaidaymssss",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
   "modified": "2025-02-12 23:04:12.008870",
   "name": "qbrqiuhegb",
   "permitted_roles": [
@@ -76,5 +130,41 @@
   "status": "Open",
   "user": null,
   "workflow_state": "Rejected"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-02-17 13:41:46.174699",
+  "name": "l0v0ar5oh9",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "NGOs",
+  "reference_name": "Suv",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Draft"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-02-17 13:43:47.904766",
+  "name": "84n8ai6aah",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "NGOs",
+  "reference_name": "Suvaidyam",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Draft"
  }
 ]
