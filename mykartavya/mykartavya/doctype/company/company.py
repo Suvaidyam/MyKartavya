@@ -249,32 +249,3 @@ def generate_random_password(length=10):
     random.shuffle(password)
     return ''.join(password)
 
-# def send_message(self):
-#     """Send welcome email to the new company user"""
-#     if not self.email:
-#         frappe.throw("Email is required for sending notifications.")
-
-#     registration_type = "Admin" if self.registration_type == "Admin Registration" else "Self"
-#     message = f"""
-#     Dear {self.first_name} {self.last_name},
-    
-#     Welcome to our platform! Your {registration_type} Registration has been completed successfully.
-    
-#     Company Name: {self.company_name}
-#     Registration Type: {self.registration_type}
-    
-#     You can now log in to your account using your email address: {self.email}
-    
-#     Best regards,
-#     The Team
-#     """
-
-#     try:
-#         frappe.sendmail(
-#             recipients=self.email,
-#             subject=f"Welcome - {registration_type} Registration Successful",
-#             message=message,
-#             delayed=False
-#         )
-#     except Exception as e:
-#         frappe.log_error(f"Failed to send welcome email: {str(e)}")
