@@ -147,7 +147,9 @@ def insert_sva_user(doc):
 
         password = generate_random_password()
         role_profile = get_role_profile(doc.registration_type)  # Pass registration_type to get_role_profile
-        
+        state=doc.state
+        city=doc.city
+        country=doc.country
         # Check if user already exists
         if frappe.db.exists("SVA User", {"email": email}):
             frappe.throw(f"SVA User with email {email} already exists")
@@ -161,6 +163,9 @@ def insert_sva_user(doc):
             "mobile_number": mobile_number,
             "confirm_password": password,
             "role_profile": role_profile,
+            "custom_country":country,
+            "custom_state":state,
+            "custom_city":city,
             "enabled": 1
         })
         
