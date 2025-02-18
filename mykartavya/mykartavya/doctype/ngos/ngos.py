@@ -114,19 +114,17 @@ class NGOs(Document):
             if len(set(goals)) != len(goals):
                 frappe.throw(_("Priority Goals must be unique. Please select different goals for each priority level."))
 
-    
+def after_insert(doc, method):
+    if doc.registration_type == "Self Registration":
+        # Approve the NGO
+        frappe.db.set_value("NGOs", doc.name, "workflow_state", "Pending Approval")
+        frappe.db.commit()
+    # Create SVA User
+    insert_sva_user(doc)
 
-    def after_insert(self):
-        if self.registration_type == "Admin Registration":
-            # Approve the NGO
-            frappe.db.set_value("NGOs", self.name , "workflow_state", "Approved")
-            frappe.db.commit()
-        # Create SVA User
-        insert_sva_user(self)
-
-def get_role_profile():
+def get_role_profile(registration_type):
     """Get appropriate role profile based on registration type"""
-    role_profile_name = "NGO Admin"
+    role_profile_name = "NGO Admin" if registration_type == "Admin Registration" else "Other Role Profile"
     role_profile = frappe.db.exists("Role Profile", role_profile_name)
     
     if not role_profile:
@@ -134,21 +132,21 @@ def get_role_profile():
     
     return role_profile_name
 
-def insert_sva_user(self):
+def insert_sva_user(doc):
     """Create SVA User with appropriate role profile and NGO link"""
     try:
         # Get user details based on registration type
-        if self.registration_type == "Admin Registration":
-            first_name = self.ngo_name
-            email = self.email
-            mobile_number = self.official_contact_number
-        else:  # Self Registration
-            first_name = self.ngo_head_name
-            email = self.ngo_head_email
-            mobile_number = self.ngo_head_mobile
+        if doc.registration_type == "Admin Registration":
+            first_name = doc.ngo_name
+            email = doc.email
+            mobile_number = doc.official_contact_number
+        else:  # doc Registration
+            first_name = doc.ngo_head_name
+            email = doc.ngo_head_email
+            mobile_number = doc.ngo_head_mobile
 
         password = generate_random_password()
-        role_profile = get_role_profile(self.registration_type)
+        role_profile = get_role_profile(doc.registration_type)  # Pass registration_type to get_role_profile
         
         # Check if user already exists
         if frappe.db.exists("SVA User", {"email": email}):
@@ -196,4 +194,3 @@ def generate_random_password(length=10):
     # Shuffle the password
     random.shuffle(password)
     return ''.join(password)
-
