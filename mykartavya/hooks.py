@@ -33,6 +33,9 @@ doc_events = {
     }
 }
 
+override_doctype_class = {
+    "User": "mykartavya.override.CustomUser"
+}
 
 
 

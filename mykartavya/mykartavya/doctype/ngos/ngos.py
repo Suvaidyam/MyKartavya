@@ -114,9 +114,6 @@ class NGOs(Document):
             if len(set(goals)) != len(goals):
                 frappe.throw(_("Priority Goals must be unique. Please select different goals for each priority level."))
 
-    
-
-
 def after_insert(doc, method):
     if doc.registration_type == "Self Registration":
         # Approve the NGO
