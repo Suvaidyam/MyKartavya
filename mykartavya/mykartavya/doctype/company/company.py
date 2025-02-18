@@ -209,9 +209,6 @@ def insert_sva_user(doc):
         if doc.registration_type == "Admin Registration":
             incharge_email = doc.volunteering_incharge_email
             incharge_password = generate_random_password()
-            country=doc.country
-            state=doc.state
-            city=doc.city
             
             # Check if incharge user already exists
             if frappe.db.exists("SVA User", {"email": incharge_email}):
