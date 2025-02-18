@@ -104,11 +104,12 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.registration_type=='Self Registration'",
    "fieldname": "designation",
    "fieldtype": "Data",
    "label": "Designation",
    "length": 100,
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
   },
   {
    "fieldname": "column_break_1",
@@ -277,7 +278,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-17 15:15:15.095013",
+ "modified": "2025-02-18 12:23:34.857875",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Company",
