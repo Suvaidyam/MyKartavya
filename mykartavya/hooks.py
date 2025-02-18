@@ -24,19 +24,17 @@ fixtures=[
 ]
 
 
-# doc_events = {
-#     "Company": {
-#         "after_insert": "mykartavya.controllers.company.after_insert",
-#     },
-#     "NGOs": {
-#         "after_insert": "mykartavya.controllers.ngos.after_insert",
-#     }
-# }
-
 doc_events = {
+    "Company": {
+        "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert",
+    },
     "NGOs": {
-        "after_insert": "mykartavya.mykartavya.doctype.ngos.ngos.validate_workflow"
+        "after_insert": "mykartavya.mykartavya.doctype.ngos.ngos.after_insert"
     }
+}
+
+override_doctype_class = {
+    "User": "mykartavya.override.CustomUser"
 }
 
 
@@ -277,3 +275,7 @@ doc_events = {
 
 
 website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'},]
+
+allow_guest_to_view = [
+    "mykartavya.mykartavya.doctype.volunteer_company_mapper.volunteer_company_mapper.verify_email"
+]
