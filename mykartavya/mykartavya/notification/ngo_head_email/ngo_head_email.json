@@ -1,0 +1,29 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "creation": "2025-02-19 17:17:09.132532",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "NGOs",
+ "enabled": 1,
+ "event": "New",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "",
+ "message_type": "HTML",
+ "minutes_offset": 0,
+ "modified": "2025-02-19 17:38:03.243443",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "NGO Head Email",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_document_field": "ngo_head_email"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "subject": "NGO Head Email"
+}

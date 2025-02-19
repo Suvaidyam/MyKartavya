@@ -60,10 +60,13 @@ class Company(Document):
             
         if len(self.last_name) > 100:
             frappe.throw("Last Name cannot exceed 100 characters")
-            
+
+        if not self.designation:
+            self.designation = ""   
+
         if len(self.designation) > 100:
             frappe.throw("Designation cannot exceed 100 characters")
-            
+
         # Email validation
         email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         if not re.match(email_pattern, self.email):
@@ -133,7 +136,10 @@ class Company(Document):
         self.company_name = self.company_name.strip()
         self.first_name = self.first_name.strip()
         self.last_name = self.last_name.strip()
-        self.designation = self.designation.strip()
+        if self.designation:
+            self.designation = self.designation.strip()
+        else:
+            self.designation = "" 
         
         if self.registration_type == "Admin Registration":
             if self.volunteering_incharge_name:
