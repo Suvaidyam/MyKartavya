@@ -119,12 +119,12 @@ def after_insert(doc, method):
         # Approve the NGO
         frappe.db.set_value("NGOs", doc.name, "workflow_state", "Pending Approval")
         frappe.db.commit()
-    # Create SVA User
-    insert_sva_user(doc)
+    # Create both NGO Admin and Volunteer users
+    create_ngo_users(doc)
 
-def get_role_profile(registration_type):
-    """Get appropriate role profile based on registration type"""
-    role_profile_name = "NGO Admin" if registration_type == "Admin Registration" else "Other Role Profile"
+def get_role_profile(role_type):
+    """Get appropriate role profile"""
+    role_profile_name = role_type
     role_profile = frappe.db.exists("Role Profile", role_profile_name)
     
     if not role_profile:
@@ -132,24 +132,39 @@ def get_role_profile(registration_type):
     
     return role_profile_name
 
-def insert_sva_user(doc):
-    """Create SVA User with appropriate role profile and NGO link"""
+def create_ngo_users(doc):
+    """Create both NGO Admin and Volunteer users"""
     try:
-        # Get user details based on registration type
-        if doc.registration_type == "Admin Registration":
-            first_name = doc.ngo_name
-            email = doc.email
-            mobile_number = doc.official_contact_number
-        else:  # doc Registration
-            first_name = doc.ngo_head_name
-            email = doc.ngo_head_email
-            mobile_number = doc.ngo_head_mobile
+        # Create NGO Admin user
+        if doc.ngo_name and doc.email and doc.official_contact_number:
+            create_sva_user(
+                first_name=doc.ngo_name,
+                email=doc.email,
+                mobile_number=doc.official_contact_number,
+                role_profile="NGO Admin",
+                doc=doc
+            )
 
+        # Create Volunteer user
+        if doc.ngo_head_name and doc.ngo_head_email and doc.ngo_head_mobile:
+            create_sva_user(
+                first_name=doc.ngo_head_name,
+                email=doc.ngo_head_email,
+                mobile_number=doc.ngo_head_mobile,
+                role_profile="Volunteer",
+                doc=doc
+            )
+            
+    except Exception as e:
+        frappe.log_error(f"Failed to create SVA Users: {str(e)}")
+        frappe.throw(f"Failed to create SVA Users: {str(e)}")
+
+def create_sva_user(first_name, email, mobile_number, role_profile, doc):
+    """Create individual SVA User with appropriate role profile and NGO link"""
+    try:
         password = generate_random_password()
-        role_profile = get_role_profile(doc.registration_type)  # Pass registration_type to get_role_profile
-        state=doc.state
-        city=doc.city
-        country=doc.country
+        role_profile_name = get_role_profile(role_profile)
+        
         # Check if user already exists
         if frappe.db.exists("SVA User", {"email": email}):
             frappe.throw(f"SVA User with email {email} already exists")
@@ -158,14 +173,15 @@ def insert_sva_user(doc):
             "doctype": "SVA User",
             "email": email,
             "first_name": first_name,
-            "last_name": "",  # Since we only have full name
-            "password": password,
+            "last_name": "",
+            "new_password": password,
             "mobile_number": mobile_number,
-            "confirm_password": password,
-            "role_profile": role_profile,
-            "custom_country":country,
-            "custom_state":state,
-            "custom_city":city,
+            "role_profile": role_profile_name,
+            "custom_country": doc.country,
+            "custom_state": doc.state,
+            "custom_city": doc.city,
+            "custom_ngo": doc.name,
+            "custom_volunteer_type":'NGO Member',
             "enabled": 1
         })
         
@@ -173,13 +189,13 @@ def insert_sva_user(doc):
         frappe.db.commit()
         
         frappe.msgprint(
-            f"NGO Admin SVA User created successfully!\nEmail: {email}\nRole Profile: {role_profile}",
+            f"{role_profile} SVA User created successfully!\nEmail: {email}\nRole Profile: {role_profile_name}",
             alert=True
         )
             
     except Exception as e:
-        frappe.log_error(f"Failed to create SVA User: {str(e)}")
-        frappe.throw(f"Failed to create SVA User: {str(e)}")
+        frappe.log_error(f"Failed to create {role_profile} SVA User: {str(e)}")
+        frappe.throw(f"Failed to create {role_profile} SVA User: {str(e)}")
 
 def generate_random_password(length=10):
     """Generate a stronger random password"""

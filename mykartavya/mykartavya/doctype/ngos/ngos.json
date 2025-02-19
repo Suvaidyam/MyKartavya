@@ -1,356 +1,416 @@
 {
- "actions": [],
- "autoname": "field:ngo_name",
- "creation": "2025-02-16 08:12:35",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "basic_information_section",
-  "registration_type",
-  "ngo_name",
-  "website",
-  "official_contact_number",
-  "email",
-  "designation",
-  "state",
-  "city",
-  "description",
-  "license_type",
-  "location_information_section",
-  "country",
-  "location",
-  "priority_goals_section",
-  "first_priority_goal",
-  "second_priority_goal",
-  "third_priority_goal",
-  "contacts_section",
-  "contact_person_name",
-  "ngo_head_name",
-  "ngo_head_email",
-  "ngo_head_mobile",
-  "ngo_head_office_number",
-  "area_of_work",
-  "address",
-  "pincode",
-  "registration_details_section",
-  "registered_with_bigtech",
-  "ngo_logo"
- ],
- "fields": [
-  {
-   "fieldname": "basic_information_section",
-   "fieldtype": "Section Break",
-   "label": "Basic Information"
-  },
-  {
-   "default": "Admin Registration",
-   "fieldname": "registration_type",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Registration Type",
-   "options": "Self Registration\nAdmin Registration",
-   "reqd": 1
-  },
-  {
-   "fieldname": "ngo_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "NGO Name",
-   "length": 255,
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "website",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "NGO Website",
-   "length": 255,
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
-   "options": "URL"
-  },
-  {
-   "fieldname": "official_contact_number",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Official Contact Number",
-   "options": "Phone",
-   "reqd": 1
-  },
-  {
-   "fieldname": "email",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Email",
-   "options": "Email",
-   "reqd": 1
-  },
-  {
-   "fieldname": "designation",
-   "fieldtype": "Data",
-   "label": "Designation",
-   "length": 100,
-   "reqd": 1
-  },
-  {
-   "fieldname": "state",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "State",
-   "options": "State",
-   "reqd": 1
-  },
-  {
-   "fieldname": "city",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "City",
-   "options": "District",
-   "reqd": 1
-  },
-  {
-   "fieldname": "description",
-   "fieldtype": "Text Editor",
-   "label": "Description",
-   "length": 2000,
-   "reqd": 1
-  },
-  {
-   "fieldname": "license_type",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "License Type",
-   "options": "FCRA\nNon-FCRA",
-   "reqd": 1
-  },
-  {
-   "fieldname": "location_information_section",
-   "fieldtype": "Section Break",
-   "label": "Location Information"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "fieldname": "country",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Country",
-   "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "options": "Country"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "fieldname": "location",
-   "fieldtype": "Data",
-   "label": "Location",
-   "length": 500,
-   "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'"
-  },
-  {
-   "fieldname": "priority_goals_section",
-   "fieldtype": "Section Break",
-   "label": "Priority Goals"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "fieldname": "first_priority_goal",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "First Priority Goal",
-   "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "options": "SDG"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "fieldname": "second_priority_goal",
-   "fieldtype": "Link",
-   "label": "Second Priority Goal",
-   "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "options": "SDG"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "fieldname": "third_priority_goal",
-   "fieldtype": "Link",
-   "label": "Third Priority Goal",
-   "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "options": "SDG"
-  },
-  {
-   "fieldname": "contacts_section",
-   "fieldtype": "Section Break",
-   "label": "Contacts"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "contact_person_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Contact Person Name",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "ngo_head_name",
-   "fieldtype": "Data",
-   "label": "NGO Head Name",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "ngo_head_email",
-   "fieldtype": "Data",
-   "label": "NGO Head Email",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
-   "options": "Email"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "ngo_head_mobile",
-   "fieldtype": "Data",
-   "label": "NGO Head Mobile",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
-   "options": "Phone"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "ngo_head_office_number",
-   "fieldtype": "Data",
-   "label": "NGO Head Office Number",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
-   "options": "Phone"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "area_of_work",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Area of Work",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
-   "options": "\nEducation\nSkills\nEnvironment\nFinancial Inclusion\nAccessibility and Inclusion\nDisaster Management\nHealthcare"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "address",
-   "fieldtype": "Small Text",
-   "label": "Address",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "pincode",
-   "fieldtype": "Data",
-   "label": "Postal Code",
-   "length": 6,
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
-  },
-  {
-   "fieldname": "registration_details_section",
-   "fieldtype": "Section Break",
-   "label": "Registration Details"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "registered_with_bigtech",
-   "fieldtype": "Select",
-   "label": "Registered with BigTech",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
-   "options": "Yes\nNo"
-  },
-  {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
-   "fieldname": "ngo_logo",
-   "fieldtype": "Attach Image",
-   "label": "NGO Logo",
-   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
-  }
- ],
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2025-02-18 17:56:33.500529",
- "modified_by": "Administrator",
- "module": "Mykartavya",
- "name": "NGOs",
- "naming_rule": "By fieldname",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "MyKartvya Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Company Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "NGO Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Volunteer Incharge",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Volunteer",
-   "share": 1,
-   "write": 1
-  }
- ],
- "show_title_field_in_link": 1,
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": [],
- "title_field": "ngo_name",
- "track_changes": 1
+    "actions": [],
+    "autoname": "format:NGO-{####}",
+    "creation": "2025-02-16 08:12:35",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "basic_information_section",
+        "registration_type",
+        "ngo_name",
+        "column_break_1",
+        "website",
+        "official_contact_number",
+        "column_break_2",
+        "email",
+        "designation",
+        "section_break_1",
+        "state",
+        "city",
+        "column_break_3",
+        "description",
+        "license_type",
+        "location_information_section",
+        "country",
+        "column_break_4",
+        "location",
+        "priority_goals_section",
+        "first_priority_goal",
+        "column_break_5",
+        "second_priority_goal",
+        "column_break_6",
+        "third_priority_goal",
+        "contacts_section",
+        "contact_person_name",
+        "ngo_head_name",
+        "column_break_7",
+        "ngo_head_email",
+        "ngo_head_mobile",
+        "column_break_8",
+        "ngo_head_office_number",
+        "area_of_work",
+        "section_break_2",
+        "address",
+        "column_break_9",
+        "pincode",
+        "registration_details_section",
+        "registered_with_bigtech",
+        "ngo_logo",
+        "users_details_tab",
+        "ngo_user"
+    ],
+    "fields": [
+        {
+            "fieldname": "basic_information_section",
+            "fieldtype": "Section Break",
+            "label": "Basic Information",
+            "collapsible": 0
+        },
+        {
+            "default": "Admin Registration",
+            "fieldname": "registration_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Registration Type",
+            "options": "Self Registration\nAdmin Registration",
+            "reqd": 1
+        },
+        {
+            "fieldname": "ngo_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "NGO Name",
+            "length": 255,
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Self Registration'",
+            "fieldname": "website",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "NGO Website",
+            "length": 255,
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
+            "options": "URL"
+        },
+        {
+            "fieldname": "official_contact_number",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Official Contact Number",
+            "options": "Phone",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "email",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Email",
+            "options": "Email",
+            "reqd": 1
+        },
+        {
+            "fieldname": "designation",
+            "fieldtype": "Data",
+            "label": "Designation",
+            "length": 100,
+            "reqd": 1
+        },
+        {
+            "fieldname": "section_break_1",
+            "fieldtype": "Section Break",
+            "label": "Location Details"
+        },
+        {
+            "fieldname": "state",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "State",
+            "options": "State",
+            "reqd": 1
+        },
+        {
+            "fieldname": "city",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "City",
+            "options": "District",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_3",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Text Editor",
+            "label": "Description",
+            "length": 2000,
+            "reqd": 1
+        },
+        {
+            "fieldname": "license_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "License Type",
+            "options": "FCRA\nNon-FCRA",
+            "reqd": 1
+        },
+        {
+            "fieldname": "location_information_section",
+            "fieldtype": "Section Break",
+            "label": "Location Information"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "fieldname": "country",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Country",
+            "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "options": "Country"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "location",
+            "fieldtype": "Data",
+            "label": "Location",
+            "length": 500,
+            "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'"
+        },
+        {
+            "fieldname": "priority_goals_section",
+            "fieldtype": "Section Break",
+            "label": "Priority Goals"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "fieldname": "first_priority_goal",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "First Priority Goal",
+            "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "options": "SDG"
+        },
+        {
+            "fieldname": "column_break_5",
+            "fieldtype": "Column Break"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "fieldname": "second_priority_goal",
+            "fieldtype": "Link",
+            "label": "Second Priority Goal",
+            "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "options": "SDG"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "fieldname": "third_priority_goal",
+            "fieldtype": "Link",
+            "label": "Third Priority Goal",
+            "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'",
+            "options": "SDG"
+        },
+        {
+            "fieldname": "contacts_section",
+            "fieldtype": "Section Break",
+            "label": "Contacts"
+        },
+        {
+            "fieldname": "contact_person_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Contact Person Name",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
+        },
+        {
+            "fieldname": "ngo_head_name",
+            "fieldtype": "Data",
+            "label": "NGO Head Name",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
+        },
+        {
+            "fieldname": "column_break_7",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "ngo_head_email",
+            "fieldtype": "Data",
+            "label": "NGO Head Email",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
+            "options": "Email"
+        },
+        {
+            "fieldname": "ngo_head_mobile",
+            "fieldtype": "Data",
+            "label": "NGO Head Mobile",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
+            "options": "Phone"
+        },
+        {
+            "fieldname": "column_break_8",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "ngo_head_office_number",
+            "fieldtype": "Data",
+            "label": "NGO Head Office Number",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
+            "options": "Phone"
+        },
+        {
+            "fieldname": "area_of_work",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Area of Work",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
+            "options": "\nEducation\nSkills\nEnvironment\nFinancial Inclusion\nAccessibility and Inclusion\nDisaster Management\nHealthcare"
+        },
+        {
+            "fieldname": "section_break_2",
+            "fieldtype": "Section Break",
+            "label": "Address Information"
+        },
+        {
+            "fieldname": "address",
+            "fieldtype": "Small Text",
+            "label": "Address",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
+        },
+        {
+            "fieldname": "column_break_9",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "pincode",
+            "fieldtype": "Data",
+            "label": "Postal Code",
+            "length": 6,
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
+        },
+        {
+            "fieldname": "registration_details_section",
+            "fieldtype": "Section Break",
+            "label": "Registration Details"
+        },
+        {
+            "depends_on": "eval:doc.registration_type=='Self Registration'",
+            "fieldname": "registered_with_bigtech",
+            "fieldtype": "Select",
+            "label": "Registered with BigTech",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'",
+            "options": "Yes\nNo"
+        },
+        {
+            "fieldname": "ngo_logo",
+            "fieldtype": "Attach Image",
+            "label": "NGO Logo",
+            "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
+        },
+        {
+            "fieldname": "users_details_tab",
+            "fieldtype": "Tab Break",
+            "label": "Users Details"
+        },
+        {
+            "fieldname": "ngo_user",
+            "fieldtype": "HTML",
+            "label": "NGO User"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2025-02-19 13:16:25.722452",
+    "modified_by": "Administrator",
+    "module": "Mykartavya",
+    "name": "NGOs",
+    "naming_rule": "Expression",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "MyKartvya Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Company Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "NGO Admin",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Volunteer Incharge",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Volunteer",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "show_title_field_in_link": 1,
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "title_field": "ngo_name",
+    "track_changes": 1
 }

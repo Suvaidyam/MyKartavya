@@ -61,8 +61,11 @@ class Company(Document):
         if len(self.last_name) > 100:
             frappe.throw("Last Name cannot exceed 100 characters")
             
-        if len(self.designation) > 100:
-            frappe.throw("Designation cannot exceed 100 characters")
+        # Handle designation field more carefully
+        if hasattr(self, 'designation') and self.designation is not None:
+            designation_str = str(self.designation).strip()
+            if len(designation_str) > 100:
+                frappe.throw("Designation cannot exceed 100 characters")
             
         # Email validation
         email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -133,7 +136,8 @@ class Company(Document):
         self.company_name = self.company_name.strip()
         self.first_name = self.first_name.strip()
         self.last_name = self.last_name.strip()
-        self.designation = self.designation.strip()
+        if self.designation:
+            self.designation = self.designation.strip()
         
         if self.registration_type == "Admin Registration":
             if self.volunteering_incharge_name:
@@ -173,27 +177,27 @@ def insert_sva_user(doc):
         mobile_number = doc.mobile_number
         password = generate_random_password()
         role_profile = get_role_profile(doc.registration_type)
-        country=doc.country
-        state=doc.state
-        city=doc.city
+        country = doc.country
+        state = doc.state
+        city = doc.city
         
         # Check if user already exists
         if frappe.db.exists("SVA User", {"email": email}):
             frappe.throw(f"SVA User with email {email} already exists")
         
+        # Create user with matching password fields
         sva_user = frappe.get_doc({
             "doctype": "SVA User",
             "email": email,
             "first_name": first_name,
             "last_name": last_name,
-            "password": password,
+            "new_password": password,  # Changed from password to new_password
             "mobile_number": mobile_number,
-            "confirm_password": password,
             "custom_company": doc.name, 
             "role_profile": role_profile,
-            "custom_country":country,
-            "custom_state":state,
-            "custom_city":city,
+            "custom_country": country,
+            "custom_state": state,
+            "custom_city": city,
             "enabled": 1
         })
         
@@ -219,13 +223,12 @@ def insert_sva_user(doc):
                 "email": incharge_email,
                 "first_name": doc.volunteering_incharge_name,
                 "last_name": "",
-                "password": incharge_password,
+                "new_password": incharge_password,  # Changed from password to new_password
                 "mobile_number": doc.volunteering_incharge_phone,
-                "confirm_password": incharge_password,
                 "custom_company": doc.name,
-                "custom_country":country,
-                "custom_state":state,
-                "custom_city":city,
+                "custom_country": country,
+                "custom_state": state,
+                "custom_city": city,
                 "role_profile": "Volunteer Incharge",
                 "enabled": 1
             })

@@ -276,9 +276,9 @@ override_doctype_class = {
 # }
 
 
-default_home_page = "modules"
-module_order = ["mykartavya"]
-force_module_order = ["mykartavya"]
+# default_home_page = "modules"
+# module_order = ["mykartavya"]
+# force_module_order = ["mykartavya"]
 
 
 

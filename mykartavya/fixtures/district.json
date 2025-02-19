@@ -3901,18 +3901,6 @@
  },
  {
   "custom_country_code": "in",
-  "district_code": "326",
-  "district_name": "Jalpaiguri",
-  "docstatus": 0,
-  "doctype": "District",
-  "modified": "2025-02-19 10:53:47.969499",
-  "name": "326",
-  "state": "ST-28",
-  "status": "Active",
-  "zone": null
- },
- {
-  "custom_country_code": "in",
   "district_code": "327",
   "district_name": "Koch Bihar",
   "docstatus": 0,
@@ -7604,6 +7592,18 @@
   "modified": "2025-02-19 10:54:07.992411",
   "name": "634",
   "state": "ST-29",
+  "status": "Active",
+  "zone": null
+ },
+ {
+  "custom_country_code": "in",
+  "district_code": "326",
+  "district_name": "Jalpaiguri",
+  "docstatus": 0,
+  "doctype": "District",
+  "modified": "2025-02-19 10:53:47.969499",
+  "name": "326",
+  "state": "ST-28",
   "status": "Active",
   "zone": null
  }
