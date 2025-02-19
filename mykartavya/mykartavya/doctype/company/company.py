@@ -173,6 +173,9 @@ def insert_sva_user(doc):
         mobile_number = doc.mobile_number
         password = generate_random_password()
         role_profile = get_role_profile(doc.registration_type)
+        country=doc.country
+        state=doc.state
+        city=doc.city
         
         # Check if user already exists
         if frappe.db.exists("SVA User", {"email": email}):
@@ -188,6 +191,9 @@ def insert_sva_user(doc):
             "confirm_password": password,
             "custom_company": doc.name, 
             "role_profile": role_profile,
+            "custom_country":country,
+            "custom_state":state,
+            "custom_city":city,
             "enabled": 1
         })
         
@@ -217,6 +223,9 @@ def insert_sva_user(doc):
                 "mobile_number": doc.volunteering_incharge_phone,
                 "confirm_password": incharge_password,
                 "custom_company": doc.name,
+                "custom_country":country,
+                "custom_state":state,
+                "custom_city":city,
                 "role_profile": "Volunteer Incharge",
                 "enabled": 1
             })
