@@ -1,5 +1,4 @@
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -128,18 +127,19 @@
             <div class="card-body">
                 <div class=" ">Welcome to the NGO Platform</div>
             
-                <p>Dear <strong> {{doc.first_name}}</strong>,</p>
+                <p>Dear <strong> {{doc.ngo_name}}</strong>,</p>
                 <p>We are excited to inform you that a new NGO has been successfully registered on our platform.</p>
 
                 <p><strong>NGO Details:</strong></p>
                 <ul>
-              
-                    <li><strong>{{ doc.first_name }}</strong> </li>
-             
+                    <li><strong>Founder:</strong> </li>
+                    <li><strong>Registration Number:</strong>{{doc}}</li>
+                    <li><strong>Registration Type:</strong> {{doc.registration_type}}</li>
+                    <li><strong>Designation:</strong> {{doc.designation}}</li>
                 </ul>
 
                 <div class="button-container">
-                    <a href="{{ url }}" class="verify-button">Verify Details</a>
+                    <a href="{{url}}" class="verify-button">Verify Details</a>
                 </div>
             </div>
         </div>
