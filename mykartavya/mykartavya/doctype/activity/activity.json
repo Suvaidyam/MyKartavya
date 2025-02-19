@@ -29,7 +29,7 @@
   "auto_approve_volunteers",
   "is_team_activity",
   "require_feedback_images",
-  "company",
+  "category",
   "is_featured",
   "is_global",
   "category_section",
@@ -215,14 +215,6 @@
    "label": "Required Feedback Images"
   },
   {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Company",
-   "options": "Company",
-   "reqd": 1
-  },
-  {
    "fieldname": "is_featured",
    "fieldtype": "Select",
    "label": "Featured Activity",
@@ -406,11 +398,19 @@
    "fieldname": "address",
    "fieldtype": "Text Editor",
    "label": "Address"
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "Category",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-17 13:27:43.621708",
+ "modified": "2025-02-18 18:06:22.381834",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
@@ -426,6 +426,66 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "MyKartvya Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Company Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "NGO Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Volunteer Incharge",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Volunteer",
    "share": 1,
    "write": 1
   }
