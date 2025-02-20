@@ -5,8 +5,7 @@
  "engine": "InnoDB",
  "field_order": [
   "date",
-  "duration",
-  "images"
+  "duration"
  ],
  "fields": [
   {
@@ -19,18 +18,13 @@
   {
    "fieldname": "duration",
    "fieldtype": "Duration",
+   "in_list_view": 1,
    "label": "Duration"
-  },
-  {
-   "fieldname": "images",
-   "fieldtype": "Attach",
-   "label": "Images",
-   "options": "File"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2025-02-19 18:21:53.030534",
+ "modified": "2025-02-20 15:09:07.549040",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity Log",
