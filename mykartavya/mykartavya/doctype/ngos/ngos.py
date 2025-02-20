@@ -180,7 +180,7 @@ def create_sva_user(first_name, email, mobile_number, role_profile, doc):
             "custom_country": doc.country,
             "custom_state": doc.state,
             "custom_city": doc.city,
-            "custom_ngos": doc.name,
+            "custom_ngo": doc.name,
             "enabled": 1
         })
         
