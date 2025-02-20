@@ -83,7 +83,6 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval:doc.completion_wf_state === 'Approved'",
    "fieldname": "rating",
    "fieldtype": "Rating",
    "label": "Rating",
@@ -104,7 +103,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-20 11:35:03.248521",
+ "modified": "2025-02-20 11:37:42.191206",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",
