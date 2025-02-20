@@ -29,7 +29,7 @@
   "auto_approve_volunteers",
   "is_team_activity",
   "require_feedback_images",
-  "category",
+  "company",
   "is_featured",
   "is_global",
   "category_section",
@@ -400,17 +400,17 @@
    "label": "Address"
   },
   {
-   "fieldname": "category",
+   "fieldname": "company",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Category",
-   "options": "Category",
+   "label": "Company",
+   "options": "Company",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-18 18:06:22.381834",
+ "modified": "2025-02-20 11:05:33.802374",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
