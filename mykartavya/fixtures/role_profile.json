@@ -2,129 +2,15 @@
  {
   "docstatus": 0,
   "doctype": "Role Profile",
-  "modified": "2025-02-08 13:40:41.742026",
+  "modified": "2025-02-15 12:36:12.358820",
   "name": "Volunteer Incharge",
   "role_profile": "Volunteer Incharge",
   "roles": [
    {
     "role": "Volunteer Incharge"
-   }
-  ]
- },
- {
-  "docstatus": 0,
-  "doctype": "Role Profile",
-  "modified": "2024-09-07 18:09:01.501425",
-  "name": "Program Manager",
-  "role_profile": "Program Manager",
-  "roles": [
-   {
-    "role": "Program Manager"
-   }
-  ]
- },
- {
-  "docstatus": 0,
-  "doctype": "Role Profile",
-  "modified": "2024-09-05 16:13:11.325884",
-  "name": "Led",
-  "role_profile": "Led",
-  "roles": [
-   {
-    "role": "Accounts Manager"
    },
    {
-    "role": "Accounts User"
-   },
-   {
-    "role": "Blogger"
-   },
-   {
-    "role": "Dashboard Manager"
-   },
-   {
-    "role": "Head Office (PMU)"
-   },
-   {
-    "role": "Inbox User"
-   },
-   {
-    "role": "Knowledge Base Contributor"
-   },
-   {
-    "role": "Knowledge Base Editor"
-   },
-   {
-    "role": "Maintenance Manager"
-   },
-   {
-    "role": "Maintenance User"
-   },
-   {
-    "role": "Newsletter Manager"
-   },
-   {
-    "role": "Prepared Report User"
-   },
-   {
-    "role": "Purchase Manager"
-   },
-   {
-    "role": "Purchase Master Manager"
-   },
-   {
-    "role": "Purchase User"
-   },
-   {
-    "role": "Report Manager"
-   },
-   {
-    "role": "Sales Manager"
-   },
-   {
-    "role": "Sales Master Manager"
-   },
-   {
-    "role": "Sales User"
-   },
-   {
-    "role": "Script Manager"
-   },
-   {
-    "role": "System Manager"
-   },
-   {
-    "role": "Translator"
-   },
-   {
-    "role": "Website Manager"
-   },
-   {
-    "role": "Workspace Manager"
-   }
-  ]
- },
- {
-  "docstatus": 0,
-  "doctype": "Role Profile",
-  "modified": "2024-09-07 18:08:31.059455",
-  "name": "Agent",
-  "role_profile": "Agent",
-  "roles": [
-   {
-    "role": "Agent"
-   }
-  ]
- },
- {
-  "docstatus": 0,
-  "doctype": "Role Profile",
-  "modified": "2024-09-07 18:08:44.541788",
-  "name": "Team Lead",
-  "role_profile": "Team Lead",
-  "roles": [
-   {
-    "role": "Team Lead"
+    "role": "Volunteer"
    }
   ]
  },
@@ -170,18 +56,6 @@
    },
    {
     "role": "Volunteer"
-   }
-  ]
- },
- {
-  "docstatus": 0,
-  "doctype": "Role Profile",
-  "modified": "2024-09-18 10:19:42.357254",
-  "name": "Admin",
-  "role_profile": "Admin",
-  "roles": [
-   {
-    "role": "Admin"
    }
   ]
  },

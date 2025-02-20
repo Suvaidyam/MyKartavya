@@ -1,40 +1,46 @@
 {
  "actions": [],
- "autoname": "format:COMP-{company_name}-{####}",
+ "autoname": "field:company_name",
  "creation": "2024-02-06 18:29:15",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "registration_type",
   "company_name",
+  "column_break_cfmi",
   "company_registration_date",
   "company_registration_year",
   "contact_section",
   "first_name",
   "last_name",
   "email",
-  "designation",
   "column_break_1",
+  "designation",
   "phone",
   "mobile_number",
   "address_section",
   "india_headquarters_address",
+  "column_break_gsdu",
   "country",
   "state",
   "city",
   "pincode",
   "org_section",
   "number_of_employees",
+  "column_break_rjla",
   "clear_vision",
   "vol_section",
   "volunteering_incharge_name",
   "volunteering_incharge_email",
   "volunteering_incharge_phone",
+  "column_break_rsml",
   "volunteering_csr_activities",
   "employee_engagement",
   "company_logo",
   "volunteer_details_tab",
-  "volunteer"
+  "volunteer",
+  "section_break_tfdt",
+  "volunteer_company_mapper"
  ],
  "fields": [
   {
@@ -98,11 +104,12 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.registration_type=='Self Registration'",
    "fieldname": "designation",
    "fieldtype": "Data",
    "label": "Designation",
    "length": 100,
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
   },
   {
    "fieldname": "column_break_1",
@@ -242,15 +249,40 @@
    "fieldname": "volunteer",
    "fieldtype": "HTML",
    "label": "Volunteer"
+  },
+  {
+   "fieldname": "volunteer_company_mapper",
+   "fieldtype": "HTML",
+   "label": "Volunteer "
+  },
+  {
+   "fieldname": "column_break_cfmi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_gsdu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_rjla",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_rsml",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_tfdt",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-12 17:34:19.538870",
+ "modified": "2025-02-18 18:02:06.678006",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Company",
- "naming_rule": "Expression",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -264,10 +296,72 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "MyKartvya Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Company Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "NGO Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Volunteer Incharge",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Volunteer",
+   "share": 1,
+   "write": 1
   }
  ],
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
+ "title_field": "company_name",
  "track_changes": 1
 }

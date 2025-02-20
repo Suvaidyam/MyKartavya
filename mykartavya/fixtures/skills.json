@@ -1,0 +1,234 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Accounting",
+  "rate_per_hour": 900,
+  "skill_name": "Accounting"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Medical Assistant",
+  "rate_per_hour": 800,
+  "skill_name": "Medical Assistant"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Monitoring and Evaluation",
+  "rate_per_hour": 800,
+  "skill_name": "Monitoring and Evaluation"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Physiologist",
+  "rate_per_hour": 1200,
+  "skill_name": "Physiologist"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Project Planning & Management",
+  "rate_per_hour": 1000,
+  "skill_name": "Project Planning & Management"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Research",
+  "rate_per_hour": 1200,
+  "skill_name": "Research"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Scientist",
+  "rate_per_hour": 1500,
+  "skill_name": "Scientist"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Social Media Professional",
+  "rate_per_hour": 1000,
+  "skill_name": "Social Media Professional"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Software Development",
+  "rate_per_hour": 1200,
+  "skill_name": "Software Development"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Teacher",
+  "rate_per_hour": 900,
+  "skill_name": "Teacher"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Video Creation",
+  "rate_per_hour": 1200,
+  "skill_name": "Video Creation"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Video Editing",
+  "rate_per_hour": 1200,
+  "skill_name": "Video Editing"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Web Design",
+  "rate_per_hour": 1000,
+  "skill_name": "Web Design"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Lawyer",
+  "rate_per_hour": 1300,
+  "skill_name": "Lawyer"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Graphic Design",
+  "rate_per_hour": 800,
+  "skill_name": "Graphic Design"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Financial Management",
+  "rate_per_hour": 1100,
+  "skill_name": "Financial Management"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Animation Designer",
+  "rate_per_hour": 900,
+  "skill_name": "Animation Designer"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Content Writing",
+  "rate_per_hour": 1100,
+  "skill_name": "Content Writing"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Creative Writing",
+  "rate_per_hour": 1100,
+  "skill_name": "Creative Writing"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Data Entry",
+  "rate_per_hour": 500,
+  "skill_name": "Data Entry"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Dentist",
+  "rate_per_hour": 1300,
+  "skill_name": "Dentist"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Development Professional",
+  "rate_per_hour": 1000,
+  "skill_name": "Development Professional"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Digital Media",
+  "rate_per_hour": 800,
+  "skill_name": "Digital Media"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Digital Media Professional",
+  "rate_per_hour": 1000,
+  "skill_name": "Digital Media Professional"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Digital Photography",
+  "rate_per_hour": 900,
+  "skill_name": "Digital Photography"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Doctor",
+  "rate_per_hour": 1500,
+  "skill_name": "Doctor"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Documentation",
+  "rate_per_hour": 500,
+  "skill_name": "Documentation"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Event Coordinator",
+  "rate_per_hour": 700,
+  "skill_name": "Event Coordinator"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Skills",
+  "modified": "2025-02-15 11:01:32",
+  "name": "Web Development",
+  "rate_per_hour": 950,
+  "skill_name": "Web Development"
+ }
+]

@@ -1,0 +1,112 @@
+{
+    "actions": [],
+    "autoname": "format:VCM-{####}",
+    "creation": "2025-02-17 11:16:38.963799",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "volunteer_email",
+        "is_email_verified",
+        "section_break_details",
+        "volunteer",
+        "volunteer_name",
+        "column_break_axkh",
+        "company",
+        "company_name",
+        "role_profile"
+    ],
+    "fields": [
+        {
+            "fieldname": "volunteer_email",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Volunteer Email",
+            "options": "Email",
+            "reqd": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "is_email_verified",
+            "fieldtype": "Check",
+            "hidden": 1,
+            "label": "Is Email Verified",
+            "read_only": 1
+        },
+        {
+            "fieldname": "section_break_details",
+            "fieldtype": "Section Break",
+            "label": "Details",
+            "depends_on": "eval:doc.is_email_verified==1"
+        },
+        {
+            "fieldname": "volunteer",
+            "fieldtype": "Link",
+            "label": "Volunteer",
+            "link_filters": "[[\"SVA User\",\"role_profile\",\"=\",\"Volunteer\"]]",
+            "options": "SVA User",
+            "depends_on": "eval:doc.is_email_verified==1",
+            "read_only": 1
+        },
+        {
+            "depends_on": "eval:doc.is_email_verified==1",
+            "fieldname": "company",
+            "fieldtype": "Link",
+            "label": "Company",
+            "options": "Company",
+            "read_only": 1
+        },
+        {
+            "depends_on": "eval:doc.is_email_verified==1",
+            "fetch_from": "company.company_name",
+            "fieldname": "company_name",
+            "fieldtype": "Data",
+            "label": "Company Name",
+            "read_only": 1
+        },
+        {
+            "depends_on": "eval:doc.is_email_verified==1",
+            "fieldname": "volunteer_name",
+            "fieldtype": "Data",
+            "label": "Volunteer Name",
+            "read_only": 1
+        },
+        {
+            "depends_on": "eval:doc.is_email_verified==1",
+            "fieldname": "column_break_axkh",
+            "fieldtype": "Column Break"
+        },
+        {
+            "depends_on": "eval:doc.is_email_verified==1",
+            "fetch_from": "volunteer.role_profile",
+            "fieldname": "role_profile",
+            "fieldtype": "Data",
+            "label": "Role Profile",
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2025-02-18 11:25:20.178797",
+    "modified_by": "Administrator",
+    "module": "Mykartavya",
+    "name": "Volunteer Company Mapper",
+    "naming_rule": "Expression",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+}

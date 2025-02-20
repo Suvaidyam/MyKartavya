@@ -1,0 +1,29 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "creation": "2025-02-19 17:12:18.196718",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Company",
+ "enabled": 1,
+ "event": "New",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<pre><code>&lt;!DOCTYPE html&gt;\n</code></pre>\n\n<p><html lang=\"en\"></p>\n\n<p><head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Welcome to The Bridgespan Group</title>\n    <style>\n        * {\n            font-family: sans-serif;\n            padding: 0;\n            margin: 0;\n            box-sizing: border-box;\n        }</p>\n\n<pre><code>    body {\n        background-color: #f4f5f7;\n        margin: 0;\n        padding: 0;\n    }\n\n    .center-container {\n        text-align: center;\n        background-color: #e7e8e9;\n        padding: 30px 0;\n    }\n\n    .card {\n        background-color: white;\n        border-radius: 8px;\n        width: 90%;\n        max-width: 600px;\n        margin: 0 auto;\n        overflow: hidden;\n        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\n    }\n\n    .top-header {\n        position: relative;\n        width: 100%;\n        height: 160px;\n        display: flex;\n        justify-content: center;\n        align-items: center;\n    }\n\n    .head-image {\n        max-height: 100%;\n        max-width: 100%;\n    }\n\n    .header-text {\n        color: white;\n        font-size: 22px;\n        font-weight: bold;\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%);\n        z-index: 10;\n    }\n\n    .card-body {\n        padding: 20px;\n        text-align: left;\n        font-size: 14px;\n        color: #333;\n    }\n\n    .card-body p,\n    .card-body ul {\n        margin-bottom: 15px;\n    }\n\n    .card-body ul {\n        list-style-type: none;\n        padding-left: 20px;\n    }\n\n    .card-body li {\n        margin-bottom: 5px;\n    }\n\n    .button-container {\n        text-align: center;\n        margin-top: 20px;\n    }\n\n    .verify-button {\n        display: inline-block;\n        width: 164px;\n        height: 36px;\n        color: #ffffff;\n        background-color: #255B97;\n        border-radius: 8px;\n        text-decoration: none;\n        font-weight: 700;\n        font-size: 16px;\n        line-height: 36px;\n    }\n\n    footer {\n        background-color: #f4f5f7;\n        padding: 20px;\n        font-size: 12px;\n        color: #888;\n    }\n\n    footer a {\n        color: #255B97;\n        text-decoration: none;\n    }\n\n&lt;/style&gt;\n</code></pre>\n\n<p></head></p>\n\n<p><body>\n    <div class=\"center-container\">\n        <!-- HEADER -->\n        <div class=\"card\">\n            <!-- Head -->\n            <div class=\"top-header\">\n                <img src=\"https://mykartavya.org/images/mykartavya-logo.png\" alt=\"The Bridgespan Group\" class=\"head-image\">\n            </div>\n            <!-- Body -->\n            <div class=\"card-body\">\n                <div class=\" \">Welcome to the NGO Platform</div></p>\n\n<pre><code>            &lt;p&gt;Dear &lt;strong&gt; {{doc.first_name}}&lt;/strong&gt;,&lt;/p&gt;\n            &lt;p&gt;We are excited to inform you that a new NGO has been successfully registered on our platform.&lt;/p&gt;\n\n            &lt;p&gt;&lt;strong&gt;NGO Details:&lt;/strong&gt;&lt;/p&gt;\n            &lt;ul&gt;\n\n                &lt;li&gt;&lt;strong&gt;{{ doc.first_name }}&lt;/strong&gt; &lt;/li&gt;\n\n            &lt;/ul&gt;\n\n            {% if reset_url %}\n            &lt;p&gt;Click the button below to reset your password:&lt;/p&gt;\n            &lt;div class=\"button-container\"&gt;\n                &lt;a href=\"{{ reset_url }}\" class=\"verify-button\"&gt;Reset Password&lt;/a&gt;\n            &lt;/div&gt;\n        {% else %}\n            &lt;p&gt;Error: Unable to generate reset URL. Please check if the email is valid or try again later.&lt;/p&gt;\n        {% endif %}\n\n\n        &lt;/div&gt;\n    &lt;/div&gt;\n&lt;/div&gt;\n\n&lt;footer&gt;\n    &lt;p&gt;&amp;copy; 2025 The Bridgespan Group | &lt;a href=\"#\"&gt;Privacy Policy&lt;/a&gt;&lt;/p&gt;\n&lt;/footer&gt;\n</code></pre>\n\n<p></body></p>\n\n<p></html></p>\n",
+ "message_type": "HTML",
+ "minutes_offset": 0,
+ "modified": "2025-02-19 17:35:50.226482",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Company volunteering_incharge_email",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_document_field": "volunteering_incharge_email"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "subject": "Company volunteering_incharge_email"
+}

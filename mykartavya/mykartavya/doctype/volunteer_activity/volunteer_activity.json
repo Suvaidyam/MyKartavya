@@ -1,0 +1,129 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:VA-{#####}",
+ "creation": "2025-02-19 18:13:49.675773",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "volunteer",
+  "activity",
+  "enrollment_wf_state",
+  "duration",
+  "completion_wf_state",
+  "images",
+  "karma_points",
+  "certificate",
+  "rating",
+  "remarks",
+  "volunteer_activity_log"
+ ],
+ "fields": [
+  {
+   "fieldname": "volunteer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Volunteer",
+   "mandatory_depends_on": "eval:1",
+   "options": "User",
+   "read_only_depends_on": "eval:!doc.__islocal",
+   "reqd": 1
+  },
+  {
+   "fieldname": "activity",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Activity",
+   "options": "Activity",
+   "read_only_depends_on": "eval:!doc.__islocal",
+   "reqd": 1
+  },
+  {
+   "fieldname": "enrollment_wf_state",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Enrollment Status",
+   "options": "Applied\nApproved\nRejected\nWithdrawn",
+   "reqd": 1
+  },
+  {
+   "fieldname": "duration",
+   "fieldtype": "Duration",
+   "in_list_view": 1,
+   "label": "Duration",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "completion_wf_state",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Completion Status",
+   "options": "Pending\nSubmitted\nApproved\nRejected",
+   "reqd": 1
+  },
+  {
+   "fieldname": "images",
+   "fieldtype": "Table",
+   "label": "Images",
+   "options": "Activity Images"
+  },
+  {
+   "fieldname": "karma_points",
+   "fieldtype": "Int",
+   "label": "Karma Points",
+   "non_negative": 1,
+   "read_only_depends_on": "eval:doc.completion_wf_state !== 'Approved'",
+   "reqd": 1
+  },
+  {
+   "fieldname": "certificate",
+   "fieldtype": "Attach",
+   "label": "Certificate",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rating",
+   "fieldtype": "Rating",
+   "label": "Rating",
+   "options": "5"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks",
+   "length": 500
+  },
+  {
+   "fieldname": "volunteer_activity_log",
+   "fieldtype": "Table",
+   "label": "Volunteer Activity Log",
+   "options": "Volunteer Activity Log"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-20 11:37:42.191206",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Volunteer Activity",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -8,28 +8,36 @@ app_license = "mit"
 # Apps
 # ------------------
 
-# required_apps = [
-    
-#     "Frappe Builder",
-#     "Frappe Theme",
-#     "Sva Frappe"
-
-# ]
+required_apps = [
+    "Suvaidyam/sva_frappe","Suvaidyam/frappe_theme" ,"builder"
+]
 
 fixtures=[
-    'Role',
-    'Role Profile',
-    'Builder Page',
-    'SVADatatable Configuration',
-    "Workflow", "Workflow State", "Workflow Action"
-    ]
+    # 'Role',
+    # 'Role Profile',
+    # 'Builder Page',
+    # 'SDG',
+    # 'Skills',
+    # 'Property Setter',
+    # 'SVADatatable Configuration',
+    # "Workflow", "Workflow State", "Workflow Action",
+    # "State",
+    "District"
+]
+
 
 doc_events = {
     "Company": {
-        "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert"
+        "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert",
+    },
+    "NGOs": {
+        "after_insert": "mykartavya.mykartavya.doctype.ngos.ngos.after_insert"
     }
 }
 
+override_doctype_class = {
+    "User": "mykartavya.override.CustomUser"
+}
 
 
 
@@ -268,4 +276,14 @@ doc_events = {
 # }
 
 
-website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'},]
+default_home_page = "modules"
+module_order = ["mykartavya"]
+force_module_order = ["mykartavya"]
+
+
+
+website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'}, {'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'},]
+
+allow_guest_to_view = [
+    "mykartavya.mykartavya.doctype.volunteer_company_mapper.volunteer_company_mapper.verify_email"
+]

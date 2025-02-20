@@ -1,239 +1,300 @@
 {
-    "actions": [],
-    "allow_rename": 0,
-    "autoname": "format:OPP-{opportunity_name}-{####}",
-    "creation": "2024-02-06 14:45:32.000000",
-    "doctype": "DocType",
-    "engine": "InnoDB",
-    "field_order": [
-        "basic_details_section",
-        "opportunity_name",
-        "opportunity_description",
-        "start_date",
-        "end_date",
-        "column_break_1",
-        "need_reward",
-        "reward_activity",
-        "is_team_opportunity",
-        "is_featured",
-        "is_global",
-        "category_value_section",
-        "category",
-        "value_type",
-        "work_value_points",
-        "karma_points",
-        "column_break_2",
-        "goal",
-        "contribution_type",
-        "time_details_section",
-        "minimum_hours",
-        "buffer_minutes",
-        "hours",
-        "minutes",
-        "column_break_3",
-        "max_hours",
-        "organization_section",
-        "ngo"
-    ],
-    "fields": [
-        {
-            "fieldname": "basic_details_section",
-            "fieldtype": "Section Break",
-            "label": "Basic Details"
-        },
-        {
-            "fieldname": "opportunity_name",
-            "fieldtype": "Data",
-            "in_list_view": 1,
-            "label": "Opportunity Name",
-            "length": 255,
-            "reqd": 1
-        },
-        {
-            "fieldname": "opportunity_description",
-            "fieldtype": "Text Editor",
-            "label": "Opportunity Description",
-            "reqd": 1
-        },
-        {
-            "fieldname": "start_date",
-            "fieldtype": "Date",
-            "in_list_view": 1,
-            "label": "Start Date",
-            "reqd": 1
-        },
-        {
-            "fieldname": "end_date",
-            "fieldtype": "Date",
-            "in_list_view": 1,
-            "label": "End Date",
-            "reqd": 1
-        },
-        {
-            "fieldname": "column_break_1",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "need_reward",
-            "fieldtype": "Select",
-            "label": "Need Reward",
-            "options": "Yes\nNo",
-            "reqd": 1
-        },
-        {
-            "default": "0",
-            "fieldname": "reward_activity",
-            "fieldtype": "Check",
-            "label": "Reward Activity"
-        },
-        {
-            "default": "0",
-            "fieldname": "is_team_opportunity",
-            "fieldtype": "Check",
-            "label": "Is Team Opportunity?"
-        },
-        {
-            "fieldname": "is_featured",
-            "fieldtype": "Select",
-            "label": "Featured Opportunity",
-            "options": "Yes\nNo",
-            "reqd": 1
-        },
-        {
-            "default": "0",
-            "fieldname": "is_global",
-            "fieldtype": "Check",
-            "label": "Global Activity"
-        },
-        {
-            "fieldname": "category_value_section",
-            "fieldtype": "Section Break",
-            "label": "Category & Value Details"
-        },
-        {
-            "fieldname": "category",
-            "fieldtype": "Link",
-            "in_list_view": 1,
-            "label": "Category",
-            "options": "Category",
-            "reqd": 1
-        },
-        {
-            "fieldname": "value_type",
-            "fieldtype": "Select",
-            "label": "Value Type",
-            "options": "General\nSkills\nMentoring\nTeaching\nConsulting"
-        },
-        {
-            "fieldname": "work_value_points",
-            "fieldtype": "Int",
-            "label": "Work Value Points",
-            "reqd": 1
-        },
-        {
-            "fieldname": "karma_points",
-            "fieldtype": "Int",
-            "label": "Karma Points",
-            "reqd": 1
-        },
-        {
-            "fieldname": "column_break_2",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "goal",
-            "fieldtype": "Link",
-            "label": "Goal",
-            "options": "Goal",
-            "reqd": 1
-        },
-        {
-            "fieldname": "contribution_type",
-            "fieldtype": "Link",
-            "label": "Contribution Type",
-            "options": "Contribution Type",
-            "reqd": 1
-        },
-        {
-            "fieldname": "time_details_section",
-            "fieldtype": "Section Break",
-            "label": "Time Details"
-        },
-        {
-            "fieldname": "minimum_hours",
-            "fieldtype": "Float",
-            "label": "Minimum Hours",
-            "precision": "2",
-            "reqd": 1
-        },
-        {
-            "fieldname": "buffer_minutes",
-            "fieldtype": "Int",
-            "label": "Buffer Minutes",
-            "reqd": 1
-        },
-        {
-            "fieldname": "hours",
-            "fieldtype": "Float",
-            "label": "Hours",
-            "precision": "2",
-            "reqd": 1
-        },
-        {
-            "fieldname": "minutes",
-            "fieldtype": "Int",
-            "label": "Minutes",
-            "reqd": 1
-        },
-        {
-            "fieldname": "column_break_3",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "max_hours",
-            "fieldtype": "Float",
-            "label": "Max Hours",
-            "precision": "2",
-            "reqd": 1
-        },
-        {
-            "fieldname": "organization_section",
-            "fieldtype": "Section Break",
-            "label": "Organization Details"
-        },
-        {
-            "fieldname": "ngo",
-            "fieldtype": "Link",
-            "in_list_view": 1,
-            "label": "NGO",
-            "options": "NGOs",
-            "reqd": 1
-        }
-    ],
-    "index_web_pages_for_search": 1,
-    "links": [],
-    "modified": "2024-02-06 14:45:32.000000",
-    "modified_by": "Administrator",
-    "module": "Mykartavya",
-    "name": "Opportunity",
-    "naming_rule": "Expression",
-    "owner": "Administrator",
-    "permissions": [
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "System Manager",
-            "share": 1,
-            "write": 1
-        }
-    ],
-    "sort_field": "modified",
-    "sort_order": "DESC",
-    "states": [],
-    "track_changes": 1
+ "actions": [],
+ "autoname": "format:OPP-{opportunity_name}-{####}",
+ "creation": "2024-02-06 14:45:32",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_details_section",
+  "opportunity_name",
+  "opportunity_description",
+  "start_date",
+  "end_date",
+  "column_break_1",
+  "need_reward",
+  "reward_activity",
+  "is_team_opportunity",
+  "is_featured",
+  "is_global",
+  "category_value_section",
+  "category",
+  "value_type",
+  "work_value_points",
+  "karma_points",
+  "column_break_2",
+  "goal",
+  "contribution_type",
+  "time_details_section",
+  "minimum_hours",
+  "buffer_minutes",
+  "hours",
+  "minutes",
+  "column_break_3",
+  "max_hours",
+  "organization_section",
+  "ngo"
+ ],
+ "fields": [
+  {
+   "fieldname": "basic_details_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Details"
+  },
+  {
+   "fieldname": "opportunity_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Opportunity Name",
+   "length": 255,
+   "reqd": 1
+  },
+  {
+   "fieldname": "opportunity_description",
+   "fieldtype": "Text Editor",
+   "label": "Opportunity Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "need_reward",
+   "fieldtype": "Select",
+   "label": "Need Reward",
+   "options": "Yes\nNo",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "reward_activity",
+   "fieldtype": "Check",
+   "label": "Reward Activity"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_team_opportunity",
+   "fieldtype": "Check",
+   "label": "Is Team Opportunity?"
+  },
+  {
+   "fieldname": "is_featured",
+   "fieldtype": "Select",
+   "label": "Featured Opportunity",
+   "options": "Yes\nNo",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_global",
+   "fieldtype": "Check",
+   "label": "Global Activity"
+  },
+  {
+   "fieldname": "category_value_section",
+   "fieldtype": "Section Break",
+   "label": "Category & Value Details"
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "value_type",
+   "fieldtype": "Select",
+   "label": "Value Type",
+   "options": "General\nSkills\nMentoring\nTeaching\nConsulting"
+  },
+  {
+   "fieldname": "work_value_points",
+   "fieldtype": "Int",
+   "label": "Work Value Points",
+   "reqd": 1
+  },
+  {
+   "fieldname": "karma_points",
+   "fieldtype": "Int",
+   "label": "Karma Points",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "goal",
+   "fieldtype": "Link",
+   "label": "Goal",
+   "options": "Goal",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contribution_type",
+   "fieldtype": "Link",
+   "label": "Contribution Type",
+   "options": "Contribution Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "time_details_section",
+   "fieldtype": "Section Break",
+   "label": "Time Details"
+  },
+  {
+   "fieldname": "minimum_hours",
+   "fieldtype": "Float",
+   "label": "Minimum Hours",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "buffer_minutes",
+   "fieldtype": "Int",
+   "label": "Buffer Minutes",
+   "reqd": 1
+  },
+  {
+   "fieldname": "hours",
+   "fieldtype": "Float",
+   "label": "Hours",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "minutes",
+   "fieldtype": "Int",
+   "label": "Minutes",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "max_hours",
+   "fieldtype": "Float",
+   "label": "Max Hours",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "organization_section",
+   "fieldtype": "Section Break",
+   "label": "Organization Details"
+  },
+  {
+   "fieldname": "ngo",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "NGO",
+   "options": "NGOs",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-18 18:04:18.715424",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Opportunity",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "MyKartvya Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Company Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "NGO Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Volunteer Incharge",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Volunteer",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "opportunity_name",
+ "track_changes": 1
 }
