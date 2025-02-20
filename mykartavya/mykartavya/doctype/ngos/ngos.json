@@ -34,7 +34,9 @@
   "pincode",
   "registration_details_section",
   "registered_with_bigtech",
-  "ngo_logo"
+  "ngo_logo",
+  "users_tab",
+  "users"
  ],
  "fields": [
   {
@@ -182,7 +184,6 @@
    "label": "Contacts"
   },
   {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
    "fieldname": "contact_person_name",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -190,14 +191,12 @@
    "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
   },
   {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
    "fieldname": "ngo_head_name",
    "fieldtype": "Data",
    "label": "NGO Head Name",
    "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
   },
   {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
    "fieldname": "ngo_head_email",
    "fieldtype": "Data",
    "label": "NGO Head Email",
@@ -205,7 +204,6 @@
    "options": "Email"
   },
   {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
    "fieldname": "ngo_head_mobile",
    "fieldtype": "Data",
    "label": "NGO Head Mobile",
@@ -213,7 +211,6 @@
    "options": "Phone"
   },
   {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
    "fieldname": "ngo_head_office_number",
    "fieldtype": "Data",
    "label": "NGO Head Office Number",
@@ -221,7 +218,6 @@
    "options": "Phone"
   },
   {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
    "fieldname": "area_of_work",
    "fieldtype": "Select",
    "in_list_view": 1,
@@ -230,14 +226,12 @@
    "options": "\nEducation\nSkills\nEnvironment\nFinancial Inclusion\nAccessibility and Inclusion\nDisaster Management\nHealthcare"
   },
   {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
    "fieldname": "address",
    "fieldtype": "Small Text",
    "label": "Address",
    "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
   },
   {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
    "fieldname": "pincode",
    "fieldtype": "Data",
    "label": "Postal Code",
@@ -263,11 +257,21 @@
    "fieldtype": "Attach Image",
    "label": "NGO Logo",
    "mandatory_depends_on": "eval:doc.registration_type=='Self Registration'"
+  },
+  {
+   "fieldname": "users_tab",
+   "fieldtype": "Tab Break",
+   "label": "Users"
+  },
+  {
+   "fieldname": "users",
+   "fieldtype": "HTML",
+   "label": "Users"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-19 18:44:01.626592",
+ "modified": "2025-02-20 11:50:10.531064",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "NGOs",
