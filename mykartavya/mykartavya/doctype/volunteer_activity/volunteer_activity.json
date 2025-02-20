@@ -61,6 +61,7 @@
   {
    "fieldname": "images",
    "fieldtype": "Table",
+   "hidden": 1,
    "label": "Images",
    "options": "Activity Images"
   },
@@ -98,7 +99,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-20 15:07:28.832760",
+ "modified": "2025-02-20 15:27:15.812359",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",
