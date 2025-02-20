@@ -282,7 +282,7 @@ force_module_order = ["mykartavya"]
 
 
 
-website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'},]
+website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'}, {'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'},]
 
 allow_guest_to_view = [
     "mykartavya.mykartavya.doctype.volunteer_company_mapper.volunteer_company_mapper.verify_email"
