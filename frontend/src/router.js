@@ -9,6 +9,32 @@ const routes = [
     component: () => import('@/pages/Home.vue'),
   },
   {
+    path: '/verify',
+    name: 'Verify',
+    component: () => import('@/pages/Verifyotp.vue'),
+  },
+  {
+    path: '/test',
+    name: 'Try',
+    component: () => import('@/pages/Try.vue'),
+  },
+  {
+    path: '/mykarma',
+    name: 'Mykarma',
+    component: () => import('@/pages/Mykarma.vue'),
+  },
+  {
+    path: '/volunteering',
+    name: 'Volunteering',
+    component: () => import('@/pages/Volunteering.vue'),
+  },
+  {
+    path: '/empower',
+    name: 'Empower',
+    component: () => import('@/pages/Empower.vue'),
+  },
+
+  {
     name: 'Login',
     path: '/account/login',
     component: () => import('@/pages/Login.vue'),
