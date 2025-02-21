@@ -39,6 +39,24 @@ const routes = [
     path: '/account/login',
     component: () => import('@/pages/Login.vue'),
   },
+
+  {
+    name: 'Contact',
+    path: '/contact',
+    component: () => import('@/pages/Contact.vue'),
+  },
+
+  {
+    name: 'Profile',
+    path: '/profile',
+    component: () => import('@/pages/Profile.vue'),
+  },
+
+  {
+    name: 'Updateprofile',
+    path: '/updateprofile',
+    component: () => import('@/pages/Updateprofile.vue'),
+  },
 ]
 
 let router = createRouter({
