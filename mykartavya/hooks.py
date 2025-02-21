@@ -280,9 +280,9 @@ override_doctype_class = {
 add_to_apps_screen = [
 	{
 		"name": "mykartavya",
-		"logo": "/assets/mykartavya/logo.png",
+		"logo": "/assets/mykartavya/images/logo.png",
 		"title": "Mykartavya",
-		"route": "/mykartavya",
+		"route": "/apps/mykartavya",
 	}
 ]
 
