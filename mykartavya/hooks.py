@@ -23,7 +23,8 @@ fixtures=[
     # "Workflow", "Workflow State", "Workflow Action",
     # "State",
     # "District"
-    "Builder Client Script"
+    "Builder Client Script",
+    "Website Settings"
 ]
 
 
