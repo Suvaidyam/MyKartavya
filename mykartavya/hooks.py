@@ -282,7 +282,7 @@ add_to_apps_screen = [
 		"name": "mykartavya",
 		"logo": "/assets/mykartavya/images/logo.png",
 		"title": "Mykartavya",
-		"route": "/apps/mykartavya",
+		"route": "/app/sva-user",
 	}
 ]
 
