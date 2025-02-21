@@ -11,20 +11,38 @@
  {
   "docstatus": 0,
   "doctype": "Workflow State",
-  "icon": "remove",
-  "modified": "2025-02-07 22:34:01.202450",
-  "name": "Rejected",
-  "style": "Danger",
-  "workflow_state_name": "Rejected"
- },
- {
-  "docstatus": 0,
-  "doctype": "Workflow State",
   "icon": "",
   "modified": "2025-02-12 13:31:45.619818",
   "name": "Pending Approval",
   "style": "",
   "workflow_state_name": "Pending Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2025-02-12 13:36:02.230546",
+  "name": "Draft",
+  "style": "",
+  "workflow_state_name": "Draft"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2025-02-21 13:52:00.391587",
+  "name": "Withdrawn",
+  "style": "",
+  "workflow_state_name": "Withdrawn"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "remove",
+  "modified": "2025-02-07 22:34:01.202450",
+  "name": "Rejected",
+  "style": "Danger",
+  "workflow_state_name": "Rejected"
  },
  {
   "docstatus": 0,
@@ -39,9 +57,9 @@
   "docstatus": 0,
   "doctype": "Workflow State",
   "icon": "",
-  "modified": "2025-02-12 13:36:02.230546",
-  "name": "Draft",
+  "modified": "2025-02-21 13:51:01.509109",
+  "name": "Applied",
   "style": "",
-  "workflow_state_name": "Draft"
+  "workflow_state_name": "Applied"
  }
 ]
