@@ -22,15 +22,15 @@
     </header>
     <main class="flex flex-col items-center text-center mt-16 ">
       <h1 class="text-[33px] font-normal font-poppins">Your Journey of Kindness Starts Here</h1>
-      <div class="text-center mt-10">
+      <div class="text-center mt-6">
       <div class="flex justify-center space-x-4">
-        <button class="border px-4 py-2 bg-white rounded-full text-orange-500 border-orange-500">📊 Track Your Impact</button>
-        <button class="border px-4 py-2 bg-white rounded-full text-orange-500 border-orange-500">➕ Join Activities Anywhere</button>
-        <button class="border px-4 py-2 bg-white rounded-full text-orange-500 border-orange-500">👥 Connect with a Community</button>
+        <button class="border px-4 py-2 bg-white rounded-full text-black border-orange-500 flex gap-1"><img src="..//assets/Frame.png" alt=""> Track Your Impact</button>
+        <button class="border px-4 py-2 bg-white rounded-full text-black border-orange-500 flex gap-1" ><img src="..//assets/Frame (2).png" alt=""> Join Activities Anywhere</button>
+        <button class="border px-4 py-2 bg-white rounded-full text-black  flex gap-1" style="border-color: #F185BB; border-width: 1px;"><img src="..//assets/Frame (1).png" alt=""> Connect with a Community</button>
       </div>
     </div>
       
-        <div class="mt-8 bg-white p-6  rounded-sm w-[443px]">
+        <div class="mt-[36px] bg-white p-6  rounded-sm w-[443px]">
           <h2 class="text-[20px] font-normal mb-4">Login to your account</h2>
           <input type="email" placeholder="sample@example.com" class="w-full p-2 border rounded-sm mb-4 text-[14px]" style="color: #6E7073;">
           <router-link to="/verify"> <button class="w-full  text-white py-2 rounded-sm text-[14px]" style="background: #FF5722;">GET OTP</button></router-link>

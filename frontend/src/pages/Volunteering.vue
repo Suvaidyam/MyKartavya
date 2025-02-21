@@ -7,33 +7,91 @@
     
     <section class="flex flex-col lg:flex-row px-8">
       <aside class="lg:w-1/4 p-4 border-r border-gray-200">
-        <h2 class="text-lg font-semibold mb-4">Filter by</h2>
-        <div class="mb-2">
-          <h3 class="font-semibold">SDGs</h3>
-          <label class="block"><input type="checkbox" /> All</label>
-          <label class="block"><input type="checkbox" /> SDG 2 - Zero Hunger</label>
-          <label class="block"><input type="checkbox" /> SDG 3 - Good Health and Well-Being</label>
-        </div>
-        <div class="mb-2">
-          <h3 class="font-semibold">Volunteering Hours</h3>
-          <label class="block"><input type="radio" name="hours" /> Low to High</label>
-          <label class="block"><input type="radio" name="hours" /> High to Low</label>
-        </div>
-        <div class="mb-2">
-          <h3 class="font-semibold">Activity Type</h3>
-          <label class="block"><input type="radio" name="activity" /> Online</label>
-          <label class="block"><input type="radio" name="activity" /> On Ground</label>
-          <label class="block"><input type="radio" name="activity" /> Both</label>
-        </div>
-        <div class="mb-2">
-          <h3 class="font-semibold">Karma Points</h3>
-          <label class="block"><input type="radio" name="karma" /> Low to High</label>
-          <label class="block"><input type="radio" name="karma" /> High to Low</label>
-        </div>
-        <div>
-          <h3 class="font-semibold">ARKs in my Region</h3>
-          <label class="block"><input type="checkbox" /> Enable</label>
-        </div>
+             <div class="  bg-white">
+    <h3 class="text-lg font-semibold mb-3">Filter by</h3>
+    
+    <!-- SDGs Section -->
+    <div class="mb-4 border-b pb-2 border-t pt-2">
+      <h4 class="text-sm font-medium mb-2">SDGs</h4>
+      <div class="space-y-2">
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" class="form-checkbox text-blue-600 rounded-none w-[16px] h-[16px]">
+          <span class="flex items-center text-[12px] font-normal">
+            <img src="https://s3-alpha-sig.figma.com/img/b5a4/c147/de603d02122da2ec416251eb5a233b3b?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=io0Rs41TAHazIwR96pCa0tXjCmgozwhbjnK78OWgWheTyjA1Q3QLKtYEaHlJ9TzHcTBieo2nzCAnST8ktkJyn8yEBwbZXqDsKaz5534s5peFCDIU1JaxMA0yu2c~1xQ0NlJCBMCao8m3CAK2AI3YmEWBtfUo9iJ2NHhIXRzxZe7n5RwyT6vxUQtYxvDhkF-39c3IxMIKFRModJ88pYUxKq1tbFrp6pqyOeo1DhKKT-ctXG~zkFjDYYeHq-6b0B0jbtanomHyPM8KITXmOZ7NRzP4~ydafPOBazJ4C3P7Djtl5SI10o7E4kT-SThJjA6-mOkjEvQ~dk2mTav9Cv2UjQ__" class="w-5 h-5 mr-2 rounded-full"> All
+          </span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" class="form-checkbox text-blue-600 rounded-none" style="width: 16px;">
+          <span class="flex items-center text-[12px] font-normal">
+            <img src="https://s3-alpha-sig.figma.com/img/688e/7a94/d05534c49dbbe9c0c94efb71c7fef84c?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=PKSCpduGi4nGd0xrbSSnUggnzY2ho41KjA25PdkPdBLjaMIvy2scTN9ABxLruAszf6SBEeHDp~Yp3FlNe-uhnA7i5HrtalOt4mT9dLsmyTVWMgeVM3g1eJKZEmwViHmomvQT8-E6~4lJaeP3vawIU6UCw52~j1S4jYJvEjU6PEzGxcW~blARM1xDKP5ZYXEJ7ahvkfX5LsZ~C1zm8eIorDgfYuXdavz8o2CmegIeSoi~4PihZQrrrgbVBzXMGcwkP~ASLpYwpbIF1LmsnL-SfCOJvuLU1Nileoxk8PgqRwq5BfRrnc4Oj20hV6TPRlpzS2hksr20NqyVsmDr~gFvAg__" class="w-5 h-5 mr-2 rounded-full"> SDG 2 : Zero Hunger
+          </span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" class="form-checkbox text-blue-600 rounded-none">
+          <span class="flex items-center text-[12px] font-normal">
+            <img src="https://s3-alpha-sig.figma.com/img/d120/bed3/febd06259385c0ecc84a6409acf5219a?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=sdKHWPai49TZS-fLOlE4HotvTA4RBW6TCAurXKGN92TqtPj43qSo~Uo2J~48HjjMy-E5pp3n2U4YRRbHQ7nU9-mMcZji16cWZRcn2qOdLkfZl~l1lLQEnpcJkFTnkeW37Fv-aAbCgHAKzKYHJbwMWd9RrFDqWkHX-sLEMMbiBeKr~yqt~9mY7OVyHy0ALenJxcjpn3go3ifAQ65nU6UfHaLugAHQq3F865WT8Rqz567XNG~53fPprksasn0GUcc-oOT-5DziWYLerrcV2C3PVGze79Gw975PQIIN4yWCoEgy6a3komk6E05L3uH5INkQhFAy4L-YCweNj5DUAp0mTw__" class="w-5 h-5 mr-2 rounded-full"> SDG 3 : Good Health and <br>Well-Being
+          </span>
+        </label>
+      </div>
+    </div>
+    
+    <!-- Volunteering Hours -->
+    <div class="mb-4 border-b pb-2">
+      <h4 class="text-sm font-medium mb-2">Volunteering Hours</h4>
+      <div class="space-y-2">
+        <label class="flex items-center space-x-2">
+          <input type="radio" name="volunteering" class="form-radio text-blue-600">
+          <span class="text-[12px] font-normal">Low to High</span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="radio" name="volunteering" class="form-radio text-blue-600">
+          <span class="text-[12px] font-normal">High to Low</span>
+        </label>
+      </div>
+    </div>
+    
+    <!-- Activity Type -->
+    <div class="mb-4 border-b pb-2">
+      <h4 class="text-sm font-medium mb-2">Activity Type</h4>
+      <div class="space-y-2">
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" class="form-checkbox text-blue-600 rounded-none">
+          <span class="text-[12px] font-normal">Online</span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" class="form-checkbox text-blue-600 rounded-none">
+          <span class="text-[12px] font-normal">On Ground</span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" class="form-checkbox text-blue-600 rounded-none">
+          <span class="text-[12px] font-normal">Both</span>
+        </label>
+      </div>
+    </div>
+    
+    <!-- Karma Points -->
+    <div class="mb-4 border-b pb-2">
+      <h4 class="text-sm font-medium mb-2">Karma Points</h4>
+      <div class="space-y-2">
+        <label class="flex items-center space-x-2">
+          <input type="radio" name="karma" class="form-radio text-blue-600">
+          <span class="text-[12px] font-normal">Low to High</span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="radio" name="karma" class="form-radio text-blue-600">
+          <span class="text-[12px] font-normal">High to Low</span>
+        </label>
+      </div>
+    </div>
+    
+    <!-- ARKs in my Region -->
+    <div>
+      <label class="flex items-center space-x-2">
+        <input type="radio" name="arks" class="form-radio text-blue-600">
+        <span class="text-[12px] font-normal">ARKs in my Region</span>
+      </label>
+    </div>
+  </div>
       </aside>
 
       <main class="lg:w-3/4 p-4">

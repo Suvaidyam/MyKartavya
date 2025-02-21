@@ -9,75 +9,75 @@
     <h3 class="text-lg font-semibold mb-3">Filter by</h3>
     
     <!-- SDGs Section -->
-    <div class="mb-4">
+    <div class="mb-4 border-b pb-2 border-t pt-2">
       <h4 class="text-sm font-medium mb-2">SDGs</h4>
       <div class="space-y-2">
         <label class="flex items-center space-x-2">
           <input type="checkbox" class="form-checkbox text-blue-600 rounded-none w-[16px] h-[16px]">
-          <span class="flex items-center">
+          <span class="flex items-center text-[12px] font-normal">
             <img src="https://s3-alpha-sig.figma.com/img/b5a4/c147/de603d02122da2ec416251eb5a233b3b?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=io0Rs41TAHazIwR96pCa0tXjCmgozwhbjnK78OWgWheTyjA1Q3QLKtYEaHlJ9TzHcTBieo2nzCAnST8ktkJyn8yEBwbZXqDsKaz5534s5peFCDIU1JaxMA0yu2c~1xQ0NlJCBMCao8m3CAK2AI3YmEWBtfUo9iJ2NHhIXRzxZe7n5RwyT6vxUQtYxvDhkF-39c3IxMIKFRModJ88pYUxKq1tbFrp6pqyOeo1DhKKT-ctXG~zkFjDYYeHq-6b0B0jbtanomHyPM8KITXmOZ7NRzP4~ydafPOBazJ4C3P7Djtl5SI10o7E4kT-SThJjA6-mOkjEvQ~dk2mTav9Cv2UjQ__" class="w-5 h-5 mr-2 rounded-full"> All
           </span>
         </label>
         <label class="flex items-center space-x-2">
           <input type="checkbox" class="form-checkbox text-blue-600 rounded-none" style="width: 16px;">
-          <span class="flex items-center">
+          <span class="flex items-center text-[12px] font-normal">
             <img src="https://s3-alpha-sig.figma.com/img/688e/7a94/d05534c49dbbe9c0c94efb71c7fef84c?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=PKSCpduGi4nGd0xrbSSnUggnzY2ho41KjA25PdkPdBLjaMIvy2scTN9ABxLruAszf6SBEeHDp~Yp3FlNe-uhnA7i5HrtalOt4mT9dLsmyTVWMgeVM3g1eJKZEmwViHmomvQT8-E6~4lJaeP3vawIU6UCw52~j1S4jYJvEjU6PEzGxcW~blARM1xDKP5ZYXEJ7ahvkfX5LsZ~C1zm8eIorDgfYuXdavz8o2CmegIeSoi~4PihZQrrrgbVBzXMGcwkP~ASLpYwpbIF1LmsnL-SfCOJvuLU1Nileoxk8PgqRwq5BfRrnc4Oj20hV6TPRlpzS2hksr20NqyVsmDr~gFvAg__" class="w-5 h-5 mr-2 rounded-full"> SDG 2 : Zero Hunger
           </span>
         </label>
         <label class="flex items-center space-x-2">
           <input type="checkbox" class="form-checkbox text-blue-600 rounded-none">
-          <span class="flex items-center">
-            <img src="https://s3-alpha-sig.figma.com/img/d120/bed3/febd06259385c0ecc84a6409acf5219a?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=sdKHWPai49TZS-fLOlE4HotvTA4RBW6TCAurXKGN92TqtPj43qSo~Uo2J~48HjjMy-E5pp3n2U4YRRbHQ7nU9-mMcZji16cWZRcn2qOdLkfZl~l1lLQEnpcJkFTnkeW37Fv-aAbCgHAKzKYHJbwMWd9RrFDqWkHX-sLEMMbiBeKr~yqt~9mY7OVyHy0ALenJxcjpn3go3ifAQ65nU6UfHaLugAHQq3F865WT8Rqz567XNG~53fPprksasn0GUcc-oOT-5DziWYLerrcV2C3PVGze79Gw975PQIIN4yWCoEgy6a3komk6E05L3uH5INkQhFAy4L-YCweNj5DUAp0mTw__" class="w-5 h-5 mr-2 rounded-full"> SDG 3 : Good Health and Well-Being
+          <span class="flex items-center text-[12px] font-normal">
+            <img src="https://s3-alpha-sig.figma.com/img/d120/bed3/febd06259385c0ecc84a6409acf5219a?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=sdKHWPai49TZS-fLOlE4HotvTA4RBW6TCAurXKGN92TqtPj43qSo~Uo2J~48HjjMy-E5pp3n2U4YRRbHQ7nU9-mMcZji16cWZRcn2qOdLkfZl~l1lLQEnpcJkFTnkeW37Fv-aAbCgHAKzKYHJbwMWd9RrFDqWkHX-sLEMMbiBeKr~yqt~9mY7OVyHy0ALenJxcjpn3go3ifAQ65nU6UfHaLugAHQq3F865WT8Rqz567XNG~53fPprksasn0GUcc-oOT-5DziWYLerrcV2C3PVGze79Gw975PQIIN4yWCoEgy6a3komk6E05L3uH5INkQhFAy4L-YCweNj5DUAp0mTw__" class="w-5 h-5 mr-2 rounded-full"> SDG 3 : Good Health and <br>Well-Being
           </span>
         </label>
       </div>
     </div>
     
     <!-- Volunteering Hours -->
-    <div class="mb-4">
+    <div class="mb-4 border-b pb-2">
       <h4 class="text-sm font-medium mb-2">Volunteering Hours</h4>
       <div class="space-y-2">
         <label class="flex items-center space-x-2">
           <input type="radio" name="volunteering" class="form-radio text-blue-600">
-          <span>Low to High</span>
+          <span class="text-[12px] font-normal">Low to High</span>
         </label>
         <label class="flex items-center space-x-2">
           <input type="radio" name="volunteering" class="form-radio text-blue-600">
-          <span>High to Low</span>
+          <span class="text-[12px] font-normal">High to Low</span>
         </label>
       </div>
     </div>
     
     <!-- Activity Type -->
-    <div class="mb-4">
+    <div class="mb-4 border-b pb-2">
       <h4 class="text-sm font-medium mb-2">Activity Type</h4>
       <div class="space-y-2">
         <label class="flex items-center space-x-2">
-          <input type="checkbox" class="form-checkbox text-blue-600">
-          <span>Online</span>
+          <input type="checkbox" class="form-checkbox text-blue-600 rounded-none">
+          <span class="text-[12px] font-normal">Online</span>
         </label>
         <label class="flex items-center space-x-2">
-          <input type="checkbox" class="form-checkbox text-blue-600">
-          <span>On Ground</span>
+          <input type="checkbox" class="form-checkbox text-blue-600 rounded-none">
+          <span class="text-[12px] font-normal">On Ground</span>
         </label>
         <label class="flex items-center space-x-2">
-          <input type="checkbox" class="form-checkbox text-blue-600">
-          <span>Both</span>
+          <input type="checkbox" class="form-checkbox text-blue-600 rounded-none">
+          <span class="text-[12px] font-normal">Both</span>
         </label>
       </div>
     </div>
     
     <!-- Karma Points -->
-    <div class="mb-4">
+    <div class="mb-4 border-b pb-2">
       <h4 class="text-sm font-medium mb-2">Karma Points</h4>
       <div class="space-y-2">
         <label class="flex items-center space-x-2">
           <input type="radio" name="karma" class="form-radio text-blue-600">
-          <span>Low to High</span>
+          <span class="text-[12px] font-normal">Low to High</span>
         </label>
         <label class="flex items-center space-x-2">
           <input type="radio" name="karma" class="form-radio text-blue-600">
-          <span>High to Low</span>
+          <span class="text-[12px] font-normal">High to Low</span>
         </label>
       </div>
     </div>
@@ -86,7 +86,7 @@
     <div>
       <label class="flex items-center space-x-2">
         <input type="radio" name="arks" class="form-radio text-blue-600">
-        <span>ARKs in my Region</span>
+        <span class="text-[12px] font-normal">ARKs in my Region</span>
       </label>
     </div>
   </div>
@@ -98,7 +98,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h12M3 18h6"/></svg>
 
      </div>
-      <section>
+      <section class="p-6 border rounded-[12px]">
         <h2 class="text-[16px] font-medium mb-2">Current Commitments</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div class="card bg-white">
@@ -140,7 +140,7 @@
         </div>
       </section>
 
-      <section>
+      <section class="p-6 border rounded-[12px] mt-4">
         <h2 class="text-xl font-semibold my-4">Available Commitments</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
@@ -396,10 +396,10 @@
         <li>Swati Mathwal - 176 Points</li>
       </ul> -->
       <div class="bg-white rounded-lg shadow-md p-6 w-full mt-4">
-    <h2 class="text-2xl font-bold text-center mb-4">Top Performers</h2>
+    <h2 class="text-[16px] font-medium text-center mb-4">Top Performers</h2>
     <div class="flex justify-center mb-6">
       <div class="relative">
-        <img src="..//assets/download (1).jpeg" alt="Trophy" class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10" />
+        <img src="..//assets/icons8-queen-48.png" alt="Trophy" class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10" />
         <div class="bg-yellow-300 rounded-full w-32 h-32 flex items-center justify-center">
           <img src="..//assets/download (2).jpeg" alt="Anaya Singh" class="rounded-full w-24 h-24" />
         </div>
@@ -409,11 +409,11 @@
     <div class="flex justify-around mb-6">
       <div class="flex flex-col items-center">
         <img src="..//assets/download (2).jpeg" alt="Jayant Bhandari" class="rounded-full w-16 h-16" />
-        <p>Jayant Bhandari<br><span class="text-sm">90 Points<br>60 hr</span></p>
+        <p>Jayant Bhandari<br><span class="text-[10px] font-normal">90 Points 60 hr</span></p>
       </div>
       <div class="flex flex-col items-center">
         <img src="..//assets/download (3).jpeg" alt="Swati Mathwal" class="rounded-full w-16 h-16" />
-        <p>Swati Mathwal<br><span class="text-sm">60 Points<br>30 hr</span></p>
+        <p>Swati Mathwal<br><span class="text-[10px] font-normal">60 Points <span>30 hr</span></span></p>
       </div>
     </div>
     
@@ -428,22 +428,28 @@
       </thead>
       <tbody>
         <tr v-for="(user, index) in users" :key="index" class="border-t">
-          <td>{{ user.name }}</td>
-          <td>{{ user.time }} hr</td>
-          <td>{{ user.points }} Points</td>
-          <td>{{ user.rank }}</td>
+          <td class="text-[12px] font-medium">{{ user.name }}</td>
+          <td class="text-[12px] font-normal">{{ user.time }} hr</td>
+          <td class="text-[12px] font-normal">{{ user.points }} Points</td>
+          <td class="text-[12px] font-normal">{{ user.rank }}</td>
         </tr>
       </tbody>
     </table>
     
-    <h3 class="text-lg font-semibold mt-6">SDGs Impacted</h3>
-    <div class="grid grid-cols-1 gap-4 mt-4">
-      <div v-for="sdg in sdgs" :key="sdg.title" class="border p-4 rounded-lg">
-        <h4 class="font-bold">{{ sdg.title }} : {{ sdg.description }}</h4>
-        <p>Time Donated : {{ sdg.time }}</p>
-        <p>Money Saved : ₹ {{ sdg.moneySaved }}</p>
+     <div class="p-6 bg-white w-full max-w-lg">
+    <div class="flex justify-between items-center">
+      <h2 class="text-[16px] font-medium">SDGs Impacted</h2>
+      <a href="#" class="text-orange-500 text-[10px] font-medium">VIEW ALL</a>
+    </div>
+    <div v-for="(sdg, index) in sdgs" :key="index" class="flex items-start space-x-4 mt-4">
+      <img :src="sdg.icon" :alt="sdg.title" class="w-10 h-10 rounded-[4px]" />
+      <div>
+        <h3 class="text-[14px] font-normal">{{ sdg.title }}</h3>
+        <p class="text-gray-500 text-sm">Time Donated : {{ sdg.time }}</p>
+        <p class="text-gray-500 text-sm">Money Saved : ₹ {{ sdg.money }}</p>
       </div>
     </div>
+  </div>
   </div>
     </aside>
   </div>
@@ -466,14 +472,36 @@ const users = ref([
   { name: "Shefali Chawla", time: 8, points: 23, rank: 9 },
 ]);
 
-const sdgs = ref([
-  { title: "SDG 2", description: ": Zero Hunger", time: "1 hr", moneySaved: 188 },
-  { title: "SDG 10", description: ": Reduced Inequalities", time: "1 hr", moneySaved: 188 },
-  { title: "SDG 4", description: ": Quality Education", time: "1 hr", moneySaved: 188 },
+// const sdgs = ref([
+//   { title: "SDG 2", description: ": Zero Hunger", time: "1 hr", moneySaved: 188 },
+//   { title: "SDG 10", description: ": Reduced Inequalities", time: "1 hr", moneySaved: 188 },
+//   { title: "SDG 4", description: ": Quality Education", time: "1 hr", moneySaved: 188 },
+// ]);
+import { reactive } from 'vue';
+
+const sdgs = reactive([
+  {
+    title: "SDG 2 : Zero Hunger",
+    time: "1 hr",
+    money: 188,
+    icon: "https://s3-alpha-sig.figma.com/img/688e/7a94/d05534c49dbbe9c0c94efb71c7fef84c?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=PKSCpduGi4nGd0xrbSSnUggnzY2ho41KjA25PdkPdBLjaMIvy2scTN9ABxLruAszf6SBEeHDp~Yp3FlNe-uhnA7i5HrtalOt4mT9dLsmyTVWMgeVM3g1eJKZEmwViHmomvQT8-E6~4lJaeP3vawIU6UCw52~j1S4jYJvEjU6PEzGxcW~blARM1xDKP5ZYXEJ7ahvkfX5LsZ~C1zm8eIorDgfYuXdavz8o2CmegIeSoi~4PihZQrrrgbVBzXMGcwkP~ASLpYwpbIF1LmsnL-SfCOJvuLU1Nileoxk8PgqRwq5BfRrnc4Oj20hV6TPRlpzS2hksr20NqyVsmDr~gFvAg__",
+  },
+  {
+    title: "SDG 10 : Reduced Inequalities",
+    time: "1 hr",
+    money: 188,
+    icon: "https://s3-alpha-sig.figma.com/img/8ebb/1242/da0ac058e973ebc925e2d13e2fbaf884?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=IdmPwMcY5k8KKGOhvyiJFUUUdzecnG-153B6gknvsxN5buBj7MmENA7cbgis0qsIhr5d1cmVXq7pF5LrZGZ-wA8X4ijYW1dRlgLLy-lWOD0WqRLsCVtOn~fLTj2~wtvG8rVictpONmOq0Eb8o5c7LaOVFRn13y80bSwBmXGn5gxFGftdCXBLRkSyNvRjRwezAkzUlThrjKgFgdzZ7YLJ80IErFuHW2qKqMj~TsQCCWUfgo1VUaB-cmToKktLGsUKJdoTaxtv~N51o-DtkHK~ofmTtLhvW6K3DbT9b8O3lXag953qmy2TVwHh1rLIAuXsDivkn5bpvixoFrHfeSn7FQ__",
+  },
+  {
+    title: "SDG 4 : Quality Education",
+    time: "1 hr",
+    money: 188,
+    icon: "https://s3-alpha-sig.figma.com/img/a66d/8876/39878f7d0022333404d9f475a657fc6e?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=l4cKNOSziFMmTJF1dWr3oSk0BfbVYmbbWJTt3flheevA5~CVJX6zZNZ4gQN-hTE2QkRtt6dc04nRS98to0xOMiGfae90cGaRwmCA-08j-uXkUFdbIEcBcnENHZclEMP1xjaeFTqqAXAPT~OBJmpgvHly9MY9MDH~DJg0GvkmxilQ5BjewrkkFk2eojfu0om2e7eBl3YehhCxJ3EHspDrQpngOk31~a~7g0qGILAOD8ekVgO0TPO1g0A1U7enUcFrXu0D0wC5MrCuUaBLgtKffhU1zOTv3MHlOHBD1GWXL49~EeJsRm05JoAPShba5hyffH8eOIdrIrutWGNwTHVLHw__",
+  },
 ]);
 </script>
 
-<style>
+<style scoped>
 .card {
   transition: transform 0.2s;
 }
