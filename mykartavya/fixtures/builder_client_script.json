@@ -4,7 +4,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-15 15:17:53.998054",
   "name": "CSS-d9f94",
-  "public_url": "/files/page_styles/CSS-d9f94-be1e3603a1.css?v=c1f469c2bb",
+  "public_url": "/files/page_styles/CSS-d9f94-be1e3603a1.css?v=f5d5c840c2",
   "script": "/* Write your CSS here */\n/** {*/\n/*            margin: 0;*/\n/*            padding: 0;*/\n/*            box-sizing: border-box;*/\n/*        }*/\n\n/*        .slider-container {*/\n/*            width: 80%;*/\n/*            max-width: 1400px;*/\n/*            margin: auto;*/\n/*            overflow: hidden;*/\n/*            position: relative;*/\n/*        }*/\n\n/*        .slider {*/\n/*            display: flex;*/\n/*            transition: transform 0.5s ease-in-out;*/\n/*        }*/\n\n/*        .slider img {*/\n/*            width: 100%;*/\n/*            border-radius: 10px;*/\n/*        }*/\n\n/*        .prev,*/\n/*        .next {*/\n/*            position: absolute;*/\n/*            top: 50%;*/\n/*            transform: translateY(-50%);*/\n/*            background-color: rgba(0, 0, 0, 0.5);*/\n/*            color: white;*/\n/*            border: none;*/\n/*            padding: 10px;*/\n/*            cursor: pointer;*/\n/*        }*/\n\n/*        .prev {*/\n/*            left: 10px;*/\n/*        }*/\n\n/*        .next {*/\n/*            right: 10px;*/\n/*        }*/\n        \n        \n body {\n            font-family: Arial, sans-serif;\n            text-align: center;\n            background-color: #f8f8f8;\n        }\n\n        .slider-container {\n            display: flex;\n            align-items: center;\n            justify-content: center;\n            gap: 20px;\n            margin: 20px auto;\n            max-width: 1400px;\n        }\n\n        .testimonial-container {\n            position: relative;\n            width: 1308px;\n            /* 3 cards of 436px each */\n            overflow: hidden;\n            padding: 20px 0;\n        }\n\n        .testimonial-wrapper {\n            display: flex;\n            transition: transform 0.5s ease-in-out;\n            gap: 10px;\n        }\n\n        .testimonial {\n            flex: 0 0 436px;\n            background: white;\n            padding: 20px;\n            border-radius: 10px;\n            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);\n            text-align: center;\n        }\n\n        /*.testimonial img {*/\n        /*    width: 80px;*/\n        /*    height: 80px;*/\n        /*    border-radius: 50%;*/\n        /*    margin-bottom: 10px;*/\n        /*}*/\n\n        /*.testimonial p {*/\n        /*    font-size: 16px;*/\n        /*}*/\n\n        /*.testimonial h3 {*/\n        /*    color: #e74c3c;*/\n        /*}*/\n\n        .nav-button {\n            cursor: pointer;\n            font-size: 24px;\n            background: rgba(0, 0, 0, 0.2);\n            color: white;\n            padding: 15px;\n            border-radius: 50%;\n            border: none;\n        }\n        \n        ",
   "script_type": "CSS"
  },
@@ -13,7 +13,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-15 14:44:58.028814",
   "name": "JavaScript-a0fc1",
-  "public_url": "/files/page_scripts/JavaScript-a0fc1-8fe32930d6.js?v=b2081c9db9",
+  "public_url": "/files/page_scripts/JavaScript-a0fc1-8fe32930d6.js?v=a9870d3c18",
   "script": "// // Write your script here\n//         let index = 0;\n//         const slides = document.querySelectorAll(\".slider img\");\n\n//         function showSlide(i) {\n//             if (i >= slides.length) index = 0;\n//             if (i < 0) index = slides.length - 1;\n//             document.querySelector(\".slider\").style.transform = `translateX(${-index * 100}%)`;\n//         }\n//         function nextSlide() {\n//             index++;\n//             showSlide(index);\n//         }\n//         function prevSlide() {\n//             index--;\n//             showSlide(index);\n//         }\n        \n        \n        \nlet index = 0;\n        const wrapper = document.querySelector(\".testimonial-wrapper\");\n        const totalSlides = document.querySelectorAll(\".testimonial\").length;\n        const cardWidth = 436;\n        const visibleSlides = 3;\n        const maxIndex = totalSlides - visibleSlides;\n\n        function changeTestimonial(direction) {\n            index += direction;\n\n            if (index < 0) {\n                index = maxIndex;\n            } else if (index > maxIndex) {\n                index = 0;\n            }\n\n            wrapper.style.transform = `translateX(-${index * (cardWidth + 10)}px)`;\n        }",
   "script_type": "JavaScript"
  },
@@ -22,7 +22,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-13 14:48:23.175009",
   "name": "JavaScript-dca7d",
-  "public_url": "/files/page_scripts/JavaScript-dca7d-1cf9ba63cf.js?v=9bd119082d",
+  "public_url": "/files/page_scripts/JavaScript-dca7d-1cf9ba63cf.js?v=51097b0d6d",
   "script": "// Write your script here\nlet index = 0;\n        const slides = document.querySelectorAll(\".slider img\");\n\n        function showSlide(i) {\n            if (i >= slides.length) index = 0;\n            if (i < 0) index = slides.length - 1;\n            document.querySelector(\".slider\").style.transform = `translateX(${-index * 100}%)`;\n        }\n        function nextSlide() {\n            index++;\n            showSlide(index);\n        }\n        function prevSlide() {\n            index--;\n            showSlide(index);\n        }",
   "script_type": "JavaScript"
  },
@@ -31,7 +31,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-13 15:03:56.551266",
   "name": "CSS-bccf0",
-  "public_url": "/files/page_styles/CSS-bccf0-e083307af8.css?v=c239e4f24c",
+  "public_url": "/files/page_styles/CSS-bccf0-e083307af8.css?v=b50d91036a",
   "script": "/* Write your CSS here */\n * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n\n\n.slider-container {\n            width: 100%;\n            max-width: 1400px;\n            margin: auto;\n            overflow: hidden;\n            position: relative;\n        }\n\n        .slider {\n            display: flex;\n            transition: transform 0.5s ease-in-out;\n        }\n\n        .slider img {\n            width: 100%;\n            /*border-radius: 10px;*/\n        }\n\n        .prev,\n        .next {\n            position: absolute;\n            top: 50%;\n            transform: translateY(-50%);\n            /*background-color: rgba(0, 0, 0, 0.5);*/\n            color: white;\n            border: none;\n            padding: 10px;\n            cursor: pointer;\n        }\n\n        .prev {\n            left: 10px;\n        }\n\n        .next {\n            right: 10px;\n        }",
   "script_type": "CSS"
  }
