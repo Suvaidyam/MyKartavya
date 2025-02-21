@@ -142,6 +142,7 @@ def create_ngo_users(doc):
                 email=doc.email,
                 mobile_number=doc.official_contact_number,
                 role_profile="NGO Admin",
+                # custom_designation=doc.designation,
                 doc=doc
             )
 
@@ -151,7 +152,9 @@ def create_ngo_users(doc):
                 first_name=doc.ngo_head_name,
                 email=doc.ngo_head_email,
                 mobile_number=doc.ngo_head_mobile,
+                # custom_designation=doc.designation,
                 role_profile="Volunteer",
+                custom_volunteer_type="NGO Member",
                 doc=doc
             )
             

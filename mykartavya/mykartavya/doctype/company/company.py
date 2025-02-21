@@ -202,6 +202,7 @@ def insert_sva_user(doc):
             "custom_state":state,
             "custom_city":city,
             "custom_designation":designation,
+            "custom_volunteer_type":"Employee",
             "enabled": 1
         })
         
