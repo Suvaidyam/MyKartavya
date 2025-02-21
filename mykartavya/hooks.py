@@ -22,7 +22,8 @@ fixtures=[
     # 'SVADatatable Configuration',
     # "Workflow", "Workflow State", "Workflow Action",
     # "State",
-    "District"
+    # "District"
+    "Builder Client Script"
 ]
 
 

@@ -4,8 +4,8 @@
             <path fill="currentColor" d="M8.5 3a5.5 5.5 0 0 1 4.383 8.823l4.147 4.147a.75.75 0 0 
        1-.976 1.133l-.084-.073l-4.147-4.147A5.5 5.5 0 1 1 8.5 3m0 1.5a4 4 0 1 0 0 8a4 4 0 0 0 0-8" />
         </svg>
-        <a href="#" class="text-black-500 hover:underline">Register as Company</a>
-        <a href="#" class="text-black-500 hover:underline">Register as NGO</a>
+        <a href="#" class="text-black-500  text-[12px]">Register as Company</a>
+        <a href="#" class="text-black-500  text-[12px]">Register as NGO</a>
     </div>
 
     <!-- Header -->
@@ -24,32 +24,32 @@
     </header>
 
     <!-- Main Content -->
-    <div class="text-center mt-10">
-      <h1 class="text-2xl font-semibold text-gray-900">Your Journey of Kindness Starts Here</h1>
+    <div class="text-center mt-10 flex flex-col justify-center items-center ">
+      <h1 class="text-[33px] font-normal font-poppins text-gray-900">Your Journey of Kindness Starts Here</h1>
       <div class="flex justify-center space-x-4 mt-4">
-        <button class="border px-4 py-2 rounded-full text-orange-500 border-orange-500">📊 Track Your Impact</button>
-        <button class="border px-4 py-2 rounded-full text-orange-500 border-orange-500">➕ Join Activities Anywhere</button>
-        <button class="border px-4 py-2 rounded-full text-orange-500 border-orange-500">👥 Connect with a Community</button>
+        <button class="border px-4 py-2 bg-white  rounded-full text-orange-500 border-orange-500">📊 Track Your Impact</button>
+        <button class="border px-4 py-2 bg-white  rounded-full text-orange-500 border-orange-500">➕ Join Activities Anywhere</button>
+        <button class="border px-4 py-2 bg-white  rounded-full text-orange-500 border-orange-500">👥 Connect with a Community</button>
       </div>
     </div>
 
     <!-- OTP Verification Box -->
-    <div class="bg-white p-6 mt-8 rounded-sm w-96">
-      <h2 class="text-lg font-semibold text-gray-900 text-center">OTP Verification</h2>
-      <p class="text-gray-600 text-center mt-1">
+    <div class="bg-white p-6 mt-8 rounded-sm w-[443px]">
+      <h2 class="text-[20px] font-medium font-poppins text-gray-900 text-center">OTP Verification</h2>
+      <p class="text-gray-600 text-center mt-1 text-[12px] font-normal">
         We've shared a 4-digit OTP on <span class="text-orange-500 font-semibold">sample@gmail.com</span>
       </p>
 
       <!-- OTP Input -->
       <div class="flex justify-center space-x-4 mt-4">
-        <input type="text" maxlength="1" class="w-12 h-12 border rounded text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
-        <input type="text" maxlength="1" class="w-12 h-12 border rounded text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
-        <input type="text" maxlength="1" class="w-12 h-12 border rounded text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
-        <input type="text" maxlength="1" class="w-12 h-12 border rounded text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+        <input type="text" maxlength="1" class="w-[40px] h-[40px]  rounded-[4px] text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+        <input type="text" maxlength="1" class="w-[40px] h-[40px]  rounded-[4px]  text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+        <input type="text" maxlength="1" class="w-[40px] h-[40px]  rounded-[4px]  text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+        <input type="text" maxlength="1" class="w-[40px] h-[40px]  rounded-[4px]  text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
       </div>
 
       <!-- Verify Button -->
-      <router-link to="/mykarma"> <button class="w-full bg-orange-500 text-white py-2 text-[12px] mt-6 rounded-sm hover:bg-orange-600">VERIFY</button></router-link>
+      <router-link to="/mykarma"> <button class="w-full h-10 bg-orange-500 text-white py-2 text-[12px] mt-6 rounded-sm hover:bg-orange-600">VERIFY</button></router-link>
 
       <!-- Resend OTP -->
       <p class="text-center text-[14px] text-gray-600 mt-4">
