@@ -1,153 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to The Bridgespan Group</title>
+    <title>Welcome to MyKartavya - NGO Creation Notification</title>
     <style>
-        * {
-            font-family: sans-serif;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            background-color: #f4f5f7;
             margin: 0;
             padding: 0;
+            background-color: #f9f9f9;
+            font-family: 'Arial', sans-serif;
         }
-
-        .center-container {
-            text-align: center;
-            background-color: #e7e8e9;
-            padding: 30px 0;
-        }
-
-        .card {
-            background-color: white;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 600px;
+        .email-container {
+            max-width: 750px;
             margin: 0 auto;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
-
-        .top-header {
-            position: relative;
-            width: 100%;
-            height: 160px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .head-image {
-            max-height: 100%;
-            max-width: 100%;
-        }
-
-        .header-text {
+        .header {
+            background-color: #56c7e2;
+            padding: 40px;
+            text-align: center;
             color: white;
-            font-size: 22px;
+            border-radius: 8px 8px 0 0;
+        }
+        .header img {
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 28px;
             font-weight: bold;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
+            margin: 0;
         }
-
-        .card-body {
-            padding: 20px;
+        .content {
+            padding: 25px;
             text-align: left;
-            font-size: 14px;
-            color: #333;
+            color: #555;
         }
-
-        .card-body p,
-        .card-body ul {
+        .greeting {
+            font-size: 20px;
             margin-bottom: 15px;
         }
-
-        .card-body ul {
-            list-style-type: none;
-            padding-left: 20px;
-        }
-
-        .card-body li {
-            margin-bottom: 5px;
-        }
-
-        .button-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .verify-button {
-            display: inline-block;
-            width: 164px;
-            height: 36px;
-            color: #ffffff;
-            background-color: #255B97;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
+        .main-text {
             font-size: 16px;
-            line-height: 36px;
+            line-height: 1.7;
+            margin-bottom: 20px;
         }
-
-        footer {
-            background-color: #f4f5f7;
+        .info-box {
+            background-color: #e1f7f5;
             padding: 20px;
-            font-size: 12px;
-            color: #888;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 6px solid #03979d;
         }
-
-        footer a {
-            color: #255B97;
+        .info-box p {
+            margin: 12px 0;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #03979d;
+            color: white;
+            padding: 16px 28px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        .cta-button:hover {
+            background-color: #027a73;
+        }
+        .footer {
+            background-color: #e1f7f5;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            border-radius: 0 0 8px 8px;
+        }
+        .footer a {
+            color: #03979d;
             text-decoration: none;
         }
-
     </style>
 </head>
-
 <body>
-    <div class="center-container">
-        <!-- HEADER -->
-        <div class="card">
-            <!-- Head -->
-            <div class="top-header">
-                <img src="https://mykartavya.org/images/mykartavya-logo.png" alt="The Bridgespan Group" class="head-image">
-            </div>
-            <!-- Body -->
-            <div class="card-body">
-                <div class=" ">Welcome to the NGO Platform</div>
-            
-                <p>Dear <strong> {{doc.ngo_name}}</strong>,</p>
-                <p>We are excited to inform you that a new NGO has been successfully registered on our platform.</p>
+    <div class="email-container">
+        <div class="header">
+            <img src="https://mykartavya.org/images/mykartavya-logo.png" alt="MyKartavya">
+            <h1>Welcome to MyKartavya - NGO </h1>
+        </div>
 
-                <p><strong>NGO Details:</strong></p>
-                <ul>
-                    <li><strong>Founder:</strong> </li>
-                    <li><strong>Registration Number:</strong>{{doc}}</li>
-                    <li><strong>Registration Type:</strong> {{doc.registration_type}}</li>
-                    <li><strong>Designation:</strong> {{doc.designation}}</li>
-                </ul>
+        <div class="content">
+            <p class="greeting">Dear {{doc.first_name}},</p>
+            <p class="main-text">
+                We are thrilled to inform you that your NGO has been successfully created on the MyKartavya platform.
+                As the head of this NGO, you will have full access to manage volunteer operations and help drive your mission forward.
+            </p>
 
-                <div class="button-container">
-                    <a href="{{url}}" class="verify-button">Verify Details</a>
-                </div>
+            <!-- Info Box -->
+            <div class="info-box">
+                <p><strong>NGO Name:</strong> {{doc.ngo_name}}</p>
+                <p><strong>NGO Head:</strong> {{doc.first_name}} {{doc.last_name}}</p>
+                <p><strong>Email:</strong> <a href="mailto:{{doc.ngo_head_email}}" style="color: #03979d;">{{doc.ngo_head_email}}</a></p>
+                <p><strong>NGO Status:</strong> {{doc.status}}</p>
             </div>
+
+            <!-- Call to Action Button -->
+            <a href="{{url}}" class="cta-button">Access NGO Dashboard</a>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 MyKartavya. All rights reserved.</p>
+            <p>If you have any questions, please don't hesitate to <a href="mailto:support@mykartavya.org">Contact Support</a>.</p>
         </div>
     </div>
-
-    <footer>
-        <p>&copy; 2025 The Bridgespan Group | <a href="#">Privacy Policy</a></p>
-    </footer>
 </body>
-
 </html>

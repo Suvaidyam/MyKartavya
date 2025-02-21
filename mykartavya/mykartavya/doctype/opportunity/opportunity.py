@@ -67,7 +67,6 @@ class Opportunity(Document):
     def before_save(self):
         # Strip whitespace from text fields
         self.opportunity_name = self.opportunity_name.strip()
-        
-        # Convert description to clean HTML if needed
+        # Remove HTML tags from description if needed
         if self.opportunity_description:
-            self.opportunity_description = frappe.utils.clean_html(self.opportunity_description)
+            self.opportunity_description = frappe.utils.strip_html(self.opportunity_description)
