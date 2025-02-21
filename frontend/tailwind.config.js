@@ -8,10 +8,10 @@ module.exports = {
   theme: {
     extend: {
       backgroundColor: {
-        "primary": "#FFFFFF",
-        "secondary": "#F5F5F5",
-        "tertiary": "#E23D90",
-        "Quaternary": "#D9D9D9"
+        "primary": "var(--primary-color)",
+        "secondary": "var(--secondary-color)",
+        "tertiary": "var(--tertiary-color)",
+        "quaternary": "var(--quaternary-color)"
       },
       textColor: {
         "primary": "#FFFFFF",
@@ -19,7 +19,7 @@ module.exports = {
         "tertiary": "#FF7C3A",
         "Quaternary": "#E23D90"
       },
-      fontSize: {
+      Text: {
         "primary": "47px",
         "secondary": "33px",
         "tertiary": "23px",
@@ -29,7 +29,11 @@ module.exports = {
         "Octonary": "14px",
         "Nonary": "12px",
         "Denary": "10px"
+      },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
       }
+
     },
 
   },
