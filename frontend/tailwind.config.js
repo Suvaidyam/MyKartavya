@@ -13,23 +13,24 @@ module.exports = {
         "tertiary": "var(--tertiary-color)",
         "quaternary": "var(--quaternary-color)"
       },
-      textColor: {
-        "primary": "#FFFFFF",
-        "secondary": "#FF5722",
-        "tertiary": "#FF7C3A",
-        "Quaternary": "#E23D90"
+      colors: {
+      primary: "var(--primary-color)",
+      secondary: "var(--secondary-color)",
+      tertiary: "var(--tertiary-color)",
+      quaternary: "var(--quaternary-color)",
       },
-      Text: {
-        "primary": "47px",
-        "secondary": "33px",
-        "tertiary": "23px",
-        "Quaternary": "19px",
-        "Quinary": "16px",
-        "Senary": "14px",
-        "Octonary": "14px",
-        "Nonary": "12px",
-        "Denary": "10px"
+      fontSize: {
+        heading1: "47px",
+        heading2: "33px",
+        heading3: "23px",
+        heading4: "19px",
+        bodyh1: "16px",
+        bodyh2: "14px",
+        button: "14px",
+        caption: "12px",
+        qverline: "10px",
       },
+      
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
       }

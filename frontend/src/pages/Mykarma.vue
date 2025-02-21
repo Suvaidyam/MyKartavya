@@ -94,7 +94,7 @@
 
     <main class="w-full lg:w-3/4 p-4">
      <div class="flex justify-between">
-       <h1 class="text-2xl font-semibold mb-4">My Karma</h1>
+       <h1 class="text-2xl font-semibold mb-4 ">My Karma</h1>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h12M3 18h6"/></svg>
 
      </div>
