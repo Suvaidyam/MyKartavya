@@ -1,14 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/assets/mykartavya/frontend/vite.svg" />
+    <link rel="icon" href="/assets/mykartavya/frontend/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue</title>
-    <script type="module" crossorigin src="/assets/mykartavya/frontend/assets/index-CNEpj-qj.js"></script>
+    <title>Frappe UI App</title>
+    <script type="module" crossorigin src="/assets/mykartavya/frontend/assets/index-BjTP7bd0.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/mykartavya/frontend/assets/index-8_D65bxx.css">
   </head>
   <body>
     <div id="app"></div>
-		<script>window.csrf_token = '{{ frappe.session.csrf_token }}';</script>
+    <div id="modals"></div>
+    <div id="popovers"></div>
+
+    <script>
+      window.csrf_token = '{{ frappe.session.csrf_token }}'
+    </script>
   </body>
 </html>
