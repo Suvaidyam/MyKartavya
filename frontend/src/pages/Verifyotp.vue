@@ -26,26 +26,26 @@
     <!-- Main Content -->
     <div class="text-center mt-10 flex flex-col justify-center items-center ">
       <h1 class="text-[33px] font-normal font-poppins text-gray-900">Your Journey of Kindness Starts Here</h1>
-      <div class="flex justify-center space-x-4 mt-4">
-        <button class="border px-4 py-2 bg-white  rounded-full text-orange-500 border-orange-500">📊 Track Your Impact</button>
-        <button class="border px-4 py-2 bg-white  rounded-full text-orange-500 border-orange-500">➕ Join Activities Anywhere</button>
-        <button class="border px-4 py-2 bg-white  rounded-full text-orange-500 border-orange-500">👥 Connect with a Community</button>
+     <div class="flex justify-center space-x-4 mt-6">
+        <button class="border px-4 py-2 bg-white rounded-full text-black border-orange-500 flex gap-1"><img src="..//assets/Frame.png" alt=""> Track Your Impact</button>
+        <button class="border px-4 py-2 bg-white rounded-full text-black border-orange-500 flex gap-1" ><img src="..//assets/Frame (2).png" alt=""> Join Activities Anywhere</button>
+        <button class="border px-4 py-2 bg-white rounded-full text-black  flex gap-1" style="border-color: #F185BB; border-width: 1px;"><img src="..//assets/Frame (1).png" alt=""> Connect with a Community</button>
       </div>
     </div>
 
     <!-- OTP Verification Box -->
-    <div class="bg-white p-6 mt-8 rounded-sm w-[443px]">
+    <div class="bg-white p-6 mt-[36px] rounded-sm w-[443px]">
       <h2 class="text-[20px] font-medium font-poppins text-gray-900 text-center">OTP Verification</h2>
       <p class="text-gray-600 text-center mt-1 text-[12px] font-normal">
         We've shared a 4-digit OTP on <span class="text-orange-500 font-semibold">sample@gmail.com</span>
       </p>
 
       <!-- OTP Input -->
-      <div class="flex justify-center space-x-4 mt-4">
-        <input type="text" maxlength="1" class="w-[40px] h-[40px]  rounded-[4px] text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
-        <input type="text" maxlength="1" class="w-[40px] h-[40px]  rounded-[4px]  text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
-        <input type="text" maxlength="1" class="w-[40px] h-[40px]  rounded-[4px]  text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
-        <input type="text" maxlength="1" class="w-[40px] h-[40px]  rounded-[4px]  text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+    <div class="flex justify-center space-x-4 mt-4">
+        <input type="text" maxlength="1" class="w-10 h-10  rounded-[4px] text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+        <input type="text" maxlength="1" class="w-10 h-10 border rounded-[4px] text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+        <input type="text" maxlength="1" class="w-10 h-10 border rounded-[4px] text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+        <input type="text" maxlength="1" class="w-10 h-10 border rounded-[4px] text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
       </div>
 
       <!-- Verify Button -->
