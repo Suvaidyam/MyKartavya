@@ -15,7 +15,7 @@ required_apps = [
 fixtures=[
     # 'Role',
     # 'Role Profile',
-    # 'Builder Page',
+    'Builder Page',
     # 'SDG',
     # 'Skills',
     # 'Property Setter',
@@ -277,10 +277,14 @@ override_doctype_class = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
-
-default_home_page = "modules"
-module_order = ["mykartavya"]
-force_module_order = ["mykartavya"]
+add_to_apps_screen = [
+	{
+		"name": "mykartavya",
+		"logo": "/assets/mykartavya/logo.png",
+		"title": "Mykartavya",
+		"route": "/mykartavya",
+	}
+]
 
 
 
