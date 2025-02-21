@@ -19,9 +19,7 @@
         <a href="#" class="text-gray-700">Kindness & Volunteering</a>
         <a href="#" class="text-gray-700">FAQs</a>
       </nav>
-     
     </header>
-    
     <main class="flex flex-col items-center text-center mt-16">
       <h1 class="text-2xl font-semibold">Your Journey of Kindness Starts Here</h1>
       <div class="flex space-x-4 mt-4">
