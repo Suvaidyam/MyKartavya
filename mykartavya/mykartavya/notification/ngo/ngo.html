@@ -95,7 +95,7 @@
         </div>
 
         <div class="content">
-            <p class="greeting">Dear {{doc.first_name}},</p>
+            <p class="greeting">Dear {{doc.ngo_name}},</p>
             <p class="main-text">
                 Congratulations! Your NGO has been successfully registered on MyKartavya. We are thrilled to have you on board in creating a positive impact on society. Here are your NGO details:
             </p>
@@ -103,8 +103,8 @@
             <!-- Info Box -->
             <div class="info-box">
                 <p><strong>NGO Name:</strong> {{doc.ngo_name}}</p>
-                <p><strong>Registration Status:</strong> {{doc.status}}</p>
-                <p><strong>Registered By:</strong> {{doc.first_name}} (Admin)</p>
+                <p><strong>Registration Status:</strong> {{doc.workflow_state}}</p>
+                <p><strong>Registered By:</strong> {{doc.ngo_name}} ({{doc.registration_type}})</p>
             </div>
 
             <!-- Call to Action Button -->
