@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to MyKartavya - SVA User Registration</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #ffffff; font-family: Arial, sans-serif;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td align="center" style="padding: 20px;">
+                <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; width: 100%; background-color: #ffffff; border: 1px solid #eaeaea;">
+                    <!-- Header -->
+                    <tr>
+                        <td style="padding: 40px 30px; text-align: center; border-bottom: 3px solid #000000;">
+                            <img src="https://mykartavya.org/images/mykartavya-logo.png" alt="MyKartavya" style="max-width: 180px;">
+                        </td>
+                    </tr>
+
+                    <!-- Welcome Text -->
+                    <tr>
+                        <td style="padding: 40px 30px; text-align: left;">
+                            <h1 style="margin: 0 0 20px 0; font-size: 24px; color: #000000;">Welcome to MyKartavya</h1>
+                            <p id="datetime" style="margin: 0; color: #666666; font-size: 16px;"></p>
+                        </td>
+                    </tr>
+
+                    <!-- Main Content -->
+                    <tr>
+                        <td style="padding: 0 30px 40px;">
+                            <p style="font-size: 16px; line-height: 1.5; color: #333333;">
+                                Dear {{doc.first_name}},
+                            </p>
+                            <p style="font-size: 16px; line-height: 1.5; color: #333333;">
+                                Your SVA User registration has been successfully received. Your User ID: #SVA{{random_id}}
+                            </p>
+                            
+                            <!-- Status Box -->
+                            <table width="100%" cellpadding="20" cellspacing="0" border="0" style="background-color: #f8f9fa; margin: 20px 0;">
+                                <tr>
+                                    <td>
+                                        <p style="margin: 0; font-size: 14px; color: #333333;">
+                                            <strong>Status:</strong> {{doc.status}}<br>
+                                            <strong>Registered By:</strong> {{doc.first_name}}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- CTA Button -->
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td align="center" style="padding: 30px 0;">
+                                        <a href="{{url}}" style="background-color: #000000; color: #ffffff; padding: 15px 30px; text-decoration: none; font-weight: bold; display: inline-block;">Complete Registration</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding: 30px; background-color: #f8f9fa; text-align: center; font-size: 12px; color: #666666;">
+                            <p style="margin: 0 0 10px 0;">© 2025 MyKartavya. All rights reserved.</p>
+                            <p style="margin: 0;">support@mykartavya.org</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+<script>
+    function updateDateTime() {
+        const now = new Date();
+        const options = {
+            timeZone: "Asia/Kolkata",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false
+        };
+        const formattedDateTime = new Intl.DateTimeFormat("en-IN", options).format(now);
+        document.getElementById("datetime").innerHTML = `Date : ${formattedDateTime}`;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        updateDateTime();
+    });
+</script>
+
+    </script>
+</body> 
+</html>

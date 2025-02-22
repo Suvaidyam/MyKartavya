@@ -182,6 +182,7 @@ def insert_sva_user(doc):
         country=doc.country
         state=doc.state
         city=doc.city
+        designation= doc.designation
         
         # Check if user already exists
         if frappe.db.exists("SVA User", {"email": email}):
@@ -200,6 +201,8 @@ def insert_sva_user(doc):
             "custom_country":country,
             "custom_state":state,
             "custom_city":city,
+            "custom_designation":designation,
+            "custom_volunteer_type":"Employee",
             "enabled": 1
         })
         
@@ -233,6 +236,7 @@ def insert_sva_user(doc):
                 "custom_state":state,
                 "custom_city":city,
                 "role_profile": "Volunteer Incharge",
+                "custom_designation":designation,
                 "enabled": 1
             })
             

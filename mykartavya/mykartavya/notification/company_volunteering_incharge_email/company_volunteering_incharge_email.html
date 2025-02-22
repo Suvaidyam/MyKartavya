@@ -1,153 +1,122 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to The Bridgespan Group</title>
+    <title>Welcome to MyKartavya - Volunteer In-Charge Appointment</title>
     <style>
-        * {
-            font-family: sans-serif;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            background-color: #f4f5f7;
             margin: 0;
             padding: 0;
+            background-color: #f4f6f9;
+            font-family: 'Arial', sans-serif;
         }
-
-        .center-container {
-            text-align: center;
-            background-color: #e7e8e9;
-            padding: 30px 0;
-        }
-
-        .card {
-            background-color: white;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 600px;
+        .email-container {
+            max-width: 750px;
             margin: 0 auto;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-
-        .top-header {
-            position: relative;
-            width: 100%;
-            height: 160px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .head-image {
-            max-height: 100%;
-            max-width: 100%;
-        }
-
-        .header-text {
+        .header {
+            background-color:#72a3bb;
+            padding: 35px;
+            text-align: center;
             color: white;
-            font-size: 22px;
-            font-weight: bold;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
+            border-radius: 8px 8px 0 0;
         }
-
-        .card-body {
+        .header img {
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 30px;
+            font-weight: 600;
+        }
+        .content {
             padding: 20px;
             text-align: left;
-            font-size: 14px;
             color: #333;
         }
-
-        .card-body p,
-        .card-body ul {
-            margin-bottom: 15px;
+        .greeting {
+            font-size: 18px;
+            margin-bottom: 10px;
         }
-
-        .card-body ul {
-            list-style-type: none;
-            padding-left: 20px;
-        }
-
-        .card-body li {
-            margin-bottom: 5px;
-        }
-
-        .button-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .verify-button {
-            display: inline-block;
-            width: 164px;
-            height: 36px;
-            color: #ffffff;
-            background-color: #255B97;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
+        .main-text {
             font-size: 16px;
-            line-height: 36px;
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
-
-        footer {
-            background-color: #f4f5f7;
-            padding: 20px;
-            font-size: 12px;
-            color: #888;
+        .info-box {
+            background-color: #e0f7fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 6px solid #00796b;
         }
-
-        footer a {
-            color: #255B97;
+        .info-box p {
+            margin: 10px 0;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #00796b;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 25px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        .cta-button:hover {
+            background-color: #004d40;
+        }
+        .footer {
+            background-color: #e0f7fa;
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            border-radius: 0 0 8px 8px;
+        }
+        .footer a {
+            color: #00796b;
             text-decoration: none;
         }
-
     </style>
 </head>
-
 <body>
-    <div class="center-container">
-        <!-- HEADER -->
-        <div class="card">
-            <!-- Head -->
-            <div class="top-header">
-                <img src="https://mykartavya.org/images/mykartavya-logo.png" alt="The Bridgespan Group" class="head-image">
-            </div>
-            <!-- Body -->
-            <div class="card-body">
-                <div class=" ">Welcome to the NGO Platform</div>
-            
-                <p>Dear <strong> {{doc.first_name}}</strong>,</p>
-                <p>We are excited to inform you that a new NGO has been successfully registered on our platform.</p>
+    <div class="email-container">
+        <div class="header">
+            <img src="https://mykartavya.org/images/mykartavya-logo.png" alt="MyKartavya">
+            <h1>Welcome to MyKartavya - Volunteer In-Charge Appointment</h1>
+        </div>
 
-                <p><strong>NGO Details:</strong></p>
-                <ul>
-              
-                    <li><strong>{{ doc.first_name }}</strong> </li>
-             
-                </ul>
+        <div class="content">
+            <p class="greeting">Dear {{doc.first_name}},</p>
+            <p class="main-text">
+                We are pleased to announce that you have been appointed as the Volunteer In-Charge for your company's community service activities on the MyKartavya platform.
+                Your role will be pivotal in organizing volunteer efforts and ensuring smooth communication between volunteers and the organization.
+            </p>
 
-                <div class="button-container">
-                    <a href="{{ url }}" class="verify-button">Verify Details</a>
-                </div>
+            <!-- Info Box -->
+            <div class="info-box">
+                <p><strong>Company Name:</strong> {{doc.company_name}}</p>
+                <p><strong>Volunteer In-Charge:</strong> {{doc.first_name}} {{doc.last_name}}</p>
+                <p><strong>Role:</strong> Volunteer In-Charge</p>
+                <p><strong>Status:</strong> Active</p>
             </div>
+
+            <!-- Call to Action Button -->
+            <a href="{{url}}" class="cta-button">View Volunteer Dashboard</a>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 MyKartavya. All rights reserved.</p>
+            <p>If you need any assistance, feel free to <a href="mailto:support@mykartavya.org">Contact Support</a>.</p>
         </div>
     </div>
-
-    <footer>
-        <p>&copy; 2025 The Bridgespan Group | <a href="#">Privacy Policy</a></p>
-    </footer>
 </body>
-
 </html>

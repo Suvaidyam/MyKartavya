@@ -1,2 +1,22 @@
 @import './assets/Inter/inter.css';
 @import 'frappe-ui/src/style.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --primary-color: #FF5722;
+    --secondary-color: #F5F5F5;
+    --tertiary-color: #E23D90;
+    --quaternary-color: #D9D9D9;
+    --primary-color: #FFFFFF;
+    --secondary-color: #FF5722;
+    --tertiary-color: #FF7C3A;
+    --quaternary-color: #E23D90;
+
+}

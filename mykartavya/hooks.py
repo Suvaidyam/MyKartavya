@@ -15,14 +15,16 @@ required_apps = [
 fixtures=[
     # 'Role',
     # 'Role Profile',
-    # 'Builder Page',
+    'Builder Page',
     # 'SDG',
     # 'Skills',
     # 'Property Setter',
     # 'SVADatatable Configuration',
     # "Workflow", "Workflow State", "Workflow Action",
     # "State",
-    "District"
+    # "District"
+    "Builder Client Script",
+    "Website Settings"
 ]
 
 
@@ -60,7 +62,7 @@ override_doctype_class = {
 
 # include js, css files in header of web template
 # web_include_css = "/assets/mykartavya/css/mykartavya.css"
-# web_include_js = "/assets/mykartavya/js/mykartavya.js"
+# web_include_js = "/assets/mykartavya/js/login.js"
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "mykartavya/public/scss/website"
@@ -275,10 +277,14 @@ override_doctype_class = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
-
-default_home_page = "modules"
-module_order = ["mykartavya"]
-force_module_order = ["mykartavya"]
+add_to_apps_screen = [
+	{
+		"name": "mykartavya",
+		"logo": "/assets/mykartavya/images/logo.png",
+		"title": "Mykartavya",
+		"route": "/app/sva-user",
+	}
+]
 
 
 
