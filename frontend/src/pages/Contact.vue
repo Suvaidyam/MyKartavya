@@ -2,8 +2,8 @@
     <div class="min-h-screen bg-pink-50 py-12 px-4 sm:px-6 lg:px-8">
       <div class="max-w-[1920px] mx-auto">
         <div class="text-center mb-12">
-          <h1 class="text-[47px] font-semibold text-gray-900">Contact Us</h1>
-          <p class="mt-2 text-[16px] text-gray-600">Got any query? Write to us</p>
+          <h1 class="text-heading1 font-medium text-gray-900">Contact Us</h1>
+          <p class="mt-2 text-bodyh1 text-gray-600">Got any query? Write to us</p>
         </div>
   
         <div class="bg-white rounded-sm shadow-lg overflow-hidden">
@@ -12,54 +12,53 @@
             <div class="p-8">
               <form @submit.prevent="handleSubmit" class="space-y-6">
                 <div>
-                  <label for="name" class="block text-[14px] font-medium text-gray-700">Your name</label>
+                  <label for="name" class="block text-bodyh2 font-medium text-gray-700">Your name</label>
                   <input
                     type="text"
                     id="name"
                     v-model="formData.name"
                     placeholder="Enter your name"
-                    class="mt-1 block  w-full px-3 py-2 border border-gray-300  text-[14px] rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    class="mt-1 block  w-full px-3 py-2 border border-gray-300  text-bodyh2 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
   
                 <div>
-                  <label for="email" class="block text-[14px] font-medium text-gray-700">Email address</label>
+                  <label for="email" class="block text-bodyh2] font-medium text-gray-700">Email address</label>
                   <input
                     type="email"
                     id="email"
                     v-model="formData.email"
                     placeholder="sample@mail.com"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 text-[14px] rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 text-bodyh2 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
   
                 <div>
-                  <label for="organisation" class="block text-[14px] font-medium text-gray-700">Organisation</label>
+                  <label for="organisation" class="block text-bodyh2 font-medium text-gray-700">Organisation</label>
                   <input
                     type="text"
                     id="organisation"
                     v-model="formData.organisation"
                     placeholder="Enter your organisation name"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 text-[14px] rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 text-bodyh2 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
   
                 <div>
-                  <label for="query" class="block text-[14px] font-medium text-gray-700">Your query</label>
+                  <label for="query" class="block text-bodyh2 font-medium text-gray-700">Your query</label>
                   <textarea
                     id="query"
                     v-model="formData.query"
                     rows="4"
                     placeholder="Write to us"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 text-[14px] rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 text-bodyh2 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                   ></textarea>
                 </div>
   
                 <div class="flex justify-end">
                   <button
                     type="submit"
-                    class=" bg-orange-500 py-3 px-4 border border-transparent rounded-sm shadow-sm text-[14px] font-medium text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 "
-                  >
+                    class=" bg-secondary py-3 w-full md:w-auto px-4 rounded-sm shadow-sm text-bodyh2 font-medium text-white hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500" >
                     SUBMIT
                   </button>
                 </div>
