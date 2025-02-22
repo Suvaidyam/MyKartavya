@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[1920px]">
+  <div class="max-w-[1920px] mx-auto">
     <div class="sticky top-0 z-40">
       <Navbar/>
     </div>
@@ -103,7 +103,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div class="card bg-white">
           <router-link to="/empower">  <img src="https://s3-alpha-sig.figma.com/img/2878/a4c5/9c959de9c3b9d28a480e8fc8a4b1bd81?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=deepSM9~pkpevq~2swFyA4g0zXUcOIZPg5bJaXVkcmNHwIVlwtQXJawLkEvr0pX3TeNueL4NtGlBtDG~zjxi8~C3mdRVPemZZudl8iw762tyT0kEi9Bk~9VwXQL299RLLLCnWeZYJo2pjXO-LuRi5aIUSu6rLnhmt3tjg7~pk5d8ICtHc2dOAKj~y80StIzWEII1KaRnoaoIQ8tDNap8Irp-3yBAItf~HCCc16FR8mdsShP0NlfshhwZxB6tEXVhfTPVj5bqC358wSr1CXqzQjbEfFqOTyETJm9zxc7OV6si2QRhJgtEzlXmgjtRGYUUy4~tv4w7SiEbkpBKNyQ0Wg__" alt="Empower the needy" class="rounded-md" /></router-link>
-            <h3 class="font-bold">Empower the Needy</h3>
+            <h3 class="text-bodyh1 font-medium">Empower the Needy</h3>
             <p class="text-sm">01 Oct, 2024 - 30 Nov, 2024</p>
             <p class="text-sm">50 hr</p>
                  <div class="mt-3">
@@ -115,7 +115,7 @@
           </div>
           <div class="card bg-white  ">
             <img src="https://s3-alpha-sig.figma.com/img/cf5a/e80b/5af50b803bdf150f87177ec61c0cb866?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=MPpLXDxR-7Mz0MQFkWnhmSyObJfI4z4VDZvVlueNBg~iGyZFVOD41q4Obqn7xoJuNxtdnzdLoQHn-qaElsaJFs9z-X2lGggHiaMCvvlfwSFQfr4jp4jPMxMMiERwFoWsqkayneYb5Gf2nc~A3tnVdm~dAgpfaTz~~be6qrDjoPDGsbdLlL1rxX6Baf55bS7rqJ~TKLD9~ami6kHY0Mf0hvePEZg7AQkUQGUvomCWkbEpcRQgpFg1-LKxxFXeIm~5Fk-epyZpdcG8L5IpcwSpaEFA~sC6HiOHhY51niQwbTdFZpSSLuRGHlnRg4LOwc0BsQK2v0aaGJD7R5oocLJaZw__" alt="Empower the needy" class="rounded-md" />
-            <h3 class="font-bold">Circle of Care</h3>
+            <h3 class="text-bodyh1 font-medium">Circle of Care</h3>
             <p class="text-sm">01 Oct, 2024 - 30 Nov, 2024</p>
                <p class="text-sm">50 hr</p>
             <div class="mt-3">
@@ -127,7 +127,7 @@
           </div>
           <div class="card bg-white  ">
             <img src="https://s3-alpha-sig.figma.com/img/840e/b3d9/2603778c83ebba0e8b1228b22d0dd7c9?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=bAt2RfM575loI0HINy4bP87zAgzxw5TYGm0ie4-zNgTk3NuinlA6jCy0~cFhpFRwCLFCdUyxX66c~R1-YP1gYHeE1wWCB5q0-3WXqeAIKuvPuHSqLCbndOH9FYaRIYkAcbOwn6yO~dKGHj3cfsjl3yJokZWxe288flUZlFLzvlrNfDG5AlcZDAyrImMDHvc00Z1BUKUwNF077DEUjqP3TGrhsecQAiSfMdSFNo7pgmdHy5xaxxk32aiGuX8AQL2vKj4ZEf5afaYHZ0pFo2D7DmyNU4eiuQcZGToi1TNIIqIMIRKweKg5TKv8AMlCV60rSj0RgD6ziU1b2lrLFJXUIw__" alt="Empower the needy" class="rounded-md" />
-            <h3 class="font-bold">Beat the Sugar</h3>
+            <h3 class="text-bodyh1 font-medium">Beat the Sugar</h3>
             <p class="text-sm">01 Oct, 2024 - 30 Nov, 2024</p>
             <p class="text-sm">50 hr</p>
             <div class="mt-3">
@@ -148,7 +148,7 @@
                                 <img src="https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__"
                                     alt="Children" class="w-full h-40 object-cover" />
                                 <div
-                                    class="absolute top-0 left-0 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
+                                    class="absolute top-2 left-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
                                     On-Ground
                                 </div>
                                 <div
@@ -162,7 +162,7 @@
                                 </div>
                             </div>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Empower the needy</h3>
+                                <h3 class="text-bodyh1 font-medium text-gray-900">Empower the needy</h3>
                                 <p class="text-gray-600 text-sm mt-1">
                                     This Women’s Entrepreneurship Day, let’s empower underserved women running small
                                     business...
@@ -195,7 +195,7 @@
                                 <img src="https://s3-alpha-sig.figma.com/img/4925/6686/2536992c32f72f58b66a7769a6226fd1?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=a67iRkNKrfuO9FTJtxqySKsKg5XqiMxUz1NxW8eM5WfcZVDQT8QkUooHVg1CSh78LVVcG10OAmc-t2OIopz4itRPsaOYaYfvfebE0Ry30XoFWYamZZvFhpaeEW5vNaaf63K1bWbYtve9-3TOHs~5sl8vbA0ZEQxUn0sLDpGWgHkVloOodLSsRoMYFWdiq83kUNufCZeuByWzxJwewyIbkG~N~B5Z844DNOvbTdlZau~nJOb3qlqbRGYMvE~o0-FZfbLnvJ4w6npXKXS7I--Wd-~d4S7c1yAs73wi2UnUX4UjkBTsSyyNE-zj20h~vk9AvWr~sO61Ulh57uWYG~RmFQ__"
                                     alt="Children" class="w-full h-40 object-cover" />
                                 <div
-                                    class="absolute top-0 left-0 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
+                                    class="absolute top-2 left-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
                                     On-Ground
                                 </div>
                                 <div
@@ -209,7 +209,7 @@
                                 </div>
                             </div>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Empower the needy</h3>
+                                <h3 class="text-bodyh1 font-medium text-gray-900">Empower the needy</h3>
                                 <p class="text-gray-600 text-sm mt-1">
                                     This Women’s Entrepreneurship Day, let’s empower underserved women running small
                                     business...
@@ -242,7 +242,7 @@
                                 <img src="https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__"
                                     alt="Children" class="w-full h-40 object-cover" />
                                 <div
-                                    class="absolute top-0 left-0 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
+                                    class="absolute top-2 left-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
                                     On-Ground
                                 </div>
                                 <div
@@ -256,7 +256,7 @@
                                 </div>
                             </div>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Empower the needy</h3>
+                                <h3 class="text-bodyh1 font-medium text-gray-900">Empower the needy</h3>
                                 <p class="text-gray-600 text-sm mt-1">
                                     This Women’s Entrepreneurship Day, let’s empower underserved women running small
                                     business...
@@ -289,7 +289,7 @@
                                 <img src="https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__"
                                     alt="Children" class="w-full h-40 object-cover" />
                                 <div
-                                    class="absolute top-0 left-0 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
+                                    class="absolute top-2 left-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
                                     On-Ground
                                 </div>
                                 <div

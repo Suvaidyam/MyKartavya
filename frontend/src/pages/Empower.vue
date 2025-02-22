@@ -1,7 +1,10 @@
 <template>
   <div class=" h-screen w-full">
     <!-- NAVBAR -->
-    <Navbar/>
+     <div class="sticky top-0 z-20">
+
+       <Navbar/>
+     </div>
     <!-- NAVBAR END -->
      <!-- baner section image -->
      <section>
@@ -30,14 +33,204 @@
      </section>
      <!-- banner section image end -->
       <!-- main section start  -->
-       <section class="w-full bg-gray-700 flex ">
-        <div class="w-[70%]">
-          sdfasd
-        </div>
-
-        <div>
-          asdfasdfasd
-        </div>
+       <section class="w-full bg-gray-700  ">
+     <div class="p-6 md:p-10 bg-gray-100 ">
+    <!-- Main Content -->
+    <div class=" grid gap-6 lg:grid-cols-3">
+      <!-- Left Section -->
+      <div class="lg:col-span-2  ">
+          <p class="text-gray-700 mb-4">
+                        <span class="text-[40px] text-black">T</span>his Women’s Entrepreneurship Day, let’s empower
+                        underserved women running small businesses or working in our communities by sharing positive
+                        reviews of their businesses on our social media platforms. By highlighting their names and
+                        services, we can increase their visibility, boost their confidence, and foster growth.This small
+                        act of kindness can have a significant impact, bringing hope and faith to these women as they
+                        navigate their entrepreneurial journeys. Together, we can create a supportive network that
+                        uplifts and inspires!
+                    </p>
+                    <h2 class="text-heading4 font-medium mt-6">Volunteer Role</h2>
+                    <p class="text-gray-700 mt-2">
+                        Volunteers are encouraged to identify a small business or an underserved woman in their
+                        community and capture a photo or video showcasing her work. Along with the visual, write a
+                        positive review that highlights her efforts and talents on your social media platforms. This
+                        simple gesture can significantly boost her business, while also encouraging her personally and
+                        fostering self-confidence.By sharing these stories, we not only promote their work but also
+                        inspire others to recognize the value of supporting women entrepreneurs. Let’s come together to
+                        uplift and empower these remarkable women, helping them shine in their communities!
+                    </p>
+                    <div class="mt-4">
+                        <p class="font-semibold " style="word-spacing: 1%;">Share your experience along with pictures on
+                            your social media handles and tag us on social media using @MyKaratvaya @NASSCOMfdn</p>
+                        <!-- <p class="text-gray-600">@MyKartavya @NASSCOMfdn</p> -->
+                        <p>Use hashtag #MyKartavya #DoGoodFeelGood #LittleActMatters #womenempowerment#letsgrowtogether
+                        </p>
+                    </div>
+                  <div class="mt-4 flex items-center gap-2">
+                    <span class="text-gray-500">Share activity with others:</span>
+                    <div class="flex gap-3">
+                        <i class="fab fa-facebook text-blue-600"></i>
+                        <i class="fab fa-x-twitter text-blue-400"></i>
+                        <i class="fab fa-linkedin text-blue-700"></i>
+                    </div>
+                    </div> 
+      </div>
+      
+      <!-- Right Section - Timeline -->
+       <div>
+        <Stepper/>
+       </div>
+   
+    </div>
+    
+    <!-- Related Opportunities -->
+    <div class=" mt-10">
+      <h2 class="text-heading4 font-medium">Related Opportunities</h2>
+      <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center ">
+        <div class=" bg-white rounded-lg shadow-lg overflow-hidden">
+                            <div class="relative">
+                                <img src="https://s3-alpha-sig.figma.com/img/2878/a4c5/9c959de9c3b9d28a480e8fc8a4b1bd81?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=deepSM9~pkpevq~2swFyA4g0zXUcOIZPg5bJaXVkcmNHwIVlwtQXJawLkEvr0pX3TeNueL4NtGlBtDG~zjxi8~C3mdRVPemZZudl8iw762tyT0kEi9Bk~9VwXQL299RLLLCnWeZYJo2pjXO-LuRi5aIUSu6rLnhmt3tjg7~pk5d8ICtHc2dOAKj~y80StIzWEII1KaRnoaoIQ8tDNap8Irp-3yBAItf~HCCc16FR8mdsShP0NlfshhwZxB6tEXVhfTPVj5bqC358wSr1CXqzQjbEfFqOTyETJm9zxc7OV6si2QRhJgtEzlXmgjtRGYUUy4~tv4w7SiEbkpBKNyQ0Wg__"
+                                    alt="Children" class=" object-cover" />
+                                <div
+                                    class="absolute top-2 left-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
+                                    On-Ground
+                                </div>
+                                <div
+                                    class="absolute top-2 right-2 bg-white text-gray-800 text-xs px-2 py-1 rounded-full shadow">
+                                    <span class="font-semibold">40 Points</span>
+                                </div>
+                                <div
+                                    class="absolute left-2 bottom-2 flex items-center space-x-2 text-sm text-gray-700 font-medium mb-2">
+                                    <span class="bg-white text-black px-2 py-1 rounded text-xs">SDG 10 : Reduced
+                                        Inequalities</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-bodyh1 font-medium text-gray-900">Empower the needy</h3>
+                                <p class="text-gray-600 text-sm mt-1">
+                                    This Women’s Entrepreneurship Day, let’s empower underserved women running small
+                                    business...
+                                </p>
+                                <div class="flex items-center text-sm text-gray-500 mt-3">
+                                    <span class="flex items-center"><i class="far fa-calendar-alt mr-1"></i> 01 Oct,
+                                        2024 - 30 Nov, 2024</span>
+                                    <span class="ml-auto flex items-center"><i class="far fa-clock mr-1"></i> 50
+                                        hr</span>
+                                </div>
+                                <div class="flex items-center mt-3">
+                                    <div class="flex -space-x-2">
+                                        <img src="..//assets/download (3).jpeg" alt="User 1"
+                                            class="w-8 h-8 rounded-full border-2 border-white" />
+                                        <img src="..//assets/download (2).jpeg" alt="User 2"
+                                            class="w-8 h-8 rounded-full border-2 border-white" />
+                                        <img src="..//assets/download (2).jpeg" alt="User 2"
+                                            class="w-8 h-8 rounded-full border-2 border-white" />
+                                        <div
+                                            class="w-8 h-8 bg-gray-200 text-gray-600 flex items-center justify-center rounded-full text-sm font-medium border-2 border-white">
+                                            +5
+                                        </div>
+                                    </div>
+                                    <button class="ml-auto text-orange-600 font-semibold text-sm">ACT NOW →</button>
+                                </div>
+                            </div>
+                        </div>
+        <div class=" bg-white rounded-lg shadow-lg overflow-hidden">
+                            <div class="relative">
+                                <img src="https://s3-alpha-sig.figma.com/img/4925/6686/2536992c32f72f58b66a7769a6226fd1?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=a67iRkNKrfuO9FTJtxqySKsKg5XqiMxUz1NxW8eM5WfcZVDQT8QkUooHVg1CSh78LVVcG10OAmc-t2OIopz4itRPsaOYaYfvfebE0Ry30XoFWYamZZvFhpaeEW5vNaaf63K1bWbYtve9-3TOHs~5sl8vbA0ZEQxUn0sLDpGWgHkVloOodLSsRoMYFWdiq83kUNufCZeuByWzxJwewyIbkG~N~B5Z844DNOvbTdlZau~nJOb3qlqbRGYMvE~o0-FZfbLnvJ4w6npXKXS7I--Wd-~d4S7c1yAs73wi2UnUX4UjkBTsSyyNE-zj20h~vk9AvWr~sO61Ulh57uWYG~RmFQ__"
+                                    alt="Children" class=" object-cover" />
+                                <div
+                                    class="absolute top-2 left-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
+                                    On-Ground
+                                </div>
+                                <div
+                                    class="absolute top-2 right-2 bg-white text-gray-800 text-xs px-2 py-1 rounded-full shadow">
+                                    <span class="font-semibold">40 Points</span>
+                                </div>
+                                <div
+                                    class="absolute left-2 bottom-2 flex items-center space-x-2 text-sm text-gray-700 font-medium mb-2">
+                                    <span class="bg-white text-black px-2 py-1 rounded text-xs">SDG 10 : Reduced
+                                        Inequalities</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-bodyh1 font-medium text-gray-900">Bright Bites</h3>
+                                <p class="text-gray-600 text-sm mt-1">
+                                    This Women’s Entrepreneurship Day, let’s empower underserved women running small
+                                    business...
+                                </p>
+                                <div class="flex items-center text-sm text-gray-500 mt-3">
+                                    <span class="flex items-center"><i class="far fa-calendar-alt mr-1"></i> 01 Oct,
+                                        2024 - 30 Nov, 2024</span>
+                                    <span class="ml-auto flex items-center"><i class="far fa-clock mr-1"></i> 50
+                                        hr</span>
+                                </div>
+                                <div class="flex items-center mt-3">
+                                    <div class="flex -space-x-2">
+                                        <img src="..//assets/download (3).jpeg" alt="User 1"
+                                            class="w-8 h-8 rounded-full border-2 border-white" />
+                                        <img src="..//assets/download (2).jpeg" alt="User 2"
+                                            class="w-8 h-8 rounded-full border-2 border-white" />
+                                        <img src="..//assets/download (2).jpeg" alt="User 2"
+                                            class="w-8 h-8 rounded-full border-2 border-white" />
+                                        <div
+                                            class="w-8 h-8 bg-gray-200 text-gray-600 flex items-center justify-center rounded-full text-sm font-medium border-2 border-white">
+                                            +5
+                                        </div>
+                                    </div>
+                                    <button class="ml-auto text-orange-600 font-semibold text-sm">ACT NOW →</button>
+                                </div>
+                            </div>
+                        </div>
+        <div class=" bg-white rounded-lg shadow-lg overflow-hidden">
+                            <div class="relative">
+                                <img src="https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__"
+                                    alt="Children" class=" object-cover" />
+                                <div
+                                    class="absolute top-2 left-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
+                                    On-Ground
+                                </div>
+                                <div
+                                    class="absolute top-2 right-2 bg-white text-gray-800 text-xs px-2 py-1 rounded-full shadow">
+                                    <span class="font-semibold">40 Points</span>
+                                </div>
+                                <div
+                                    class="absolute left-2 bottom-2 flex items-center space-x-2 text-sm text-gray-700 font-medium mb-2">
+                                    <span class="bg-white text-black px-2 py-1 rounded text-xs">SDG 10 : Reduced
+                                        Inequalities</span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-bodyh1 font-medium text-gray-900">Beat the sugar</h3>
+                                <p class="text-gray-600 text-sm mt-1">
+                                    This Women’s Entrepreneurship Day, let’s empower underserved women running small
+                                    business...
+                                </p>
+                                <div class="flex items-center text-sm text-gray-500 mt-3">
+                                    <span class="flex items-center"><i class="far fa-calendar-alt mr-1"></i> 01 Oct,
+                                        2024 - 30 Nov, 2024</span>
+                                    <span class="ml-auto flex items-center"><i class="far fa-clock mr-1"></i> 50
+                                        hr</span>
+                                </div>
+                                <div class="flex items-center mt-3">
+                                    <div class="flex -space-x-2">
+                                        <img src="..//assets/download (3).jpeg" alt="User 1"
+                                            class="w-8 h-8 rounded-full border-2 border-white" />
+                                        <img src="..//assets/download (2).jpeg" alt="User 2"
+                                            class="w-8 h-8 rounded-full border-2 border-white" />
+                                        <img src="..//assets/download (2).jpeg" alt="User 2"
+                                            class="w-8 h-8 rounded-full border-2 border-white" />
+                                        <div
+                                            class="w-8 h-8 bg-gray-200 text-gray-600 flex items-center justify-center rounded-full text-sm font-medium border-2 border-white">
+                                            +5
+                                        </div>
+                                    </div>
+                                    <button class="ml-auto text-orange-600 font-semibold text-sm">ACT NOW →</button>
+                                </div>
+                            </div>
+                        </div>
+          
+      </div>
+    </div>
+  </div>
 
 
        </section>
@@ -49,52 +242,10 @@
 
 <script setup>
 import Navbar from  '../components/Navbar.vue';
-import { ref } from 'vue';
-import { RefreshCw as RefreshCwIcon, Check as CheckIcon, AlertCircle as AlertCircleIcon } from 'lucide-vue-next';
+import Stepper from '../components/Stepper.vue';
 
-const currentStep = ref(0);
-const showPopup = ref(false);
 
-const steps = ref([
-  {
-    title: 'Activity Approval',
-    description: 'Is your application to volunteer for the activity approved?',
-    button: 'Request for Approval',
-    completed: false,
-  },
-  {
-    title: 'Get Started',
-    description: 'Click the button below once you are ready to start the activity',
-    button: 'Start Activity',
-    completed: false,
-  },
-  {
-    title: 'Activity Report',
-    description: 'Click the button below once you have finished the activity & submit a small report',
-    button: 'Submit Report',
-    completed: false,
-  },
-  {
-    title: 'Feedback & Karma Points',
-    description: 'Click the button to register the feedback & collect your karma points',
-    button: 'Submit Feedback',
-    completed: false,
-  },
-]);
 
-const nextStep = (index) => {
-  if (index === currentStep.value) {
-    steps.value[index].completed = true;
-    currentStep.value++;
-  } else {
-    showPopup.value = true;
-  }
-};
-
-const resetSteps = () => {
-  steps.value.forEach((step) => (step.completed = false));
-  currentStep.value = 0;
-};
 // export default {
 //   name: "Dashboard",
 // };

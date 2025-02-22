@@ -104,7 +104,7 @@
                                 <img src="https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__"
                                     alt="Children" class="w-full h-40 object-cover" />
                                 <div
-                                    class="absolute top-0 left-0 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
+                                    class="absolute top-2 left-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
                                     On-Ground
                                 </div>
                                 <div
@@ -118,7 +118,7 @@
                                 </div>
                             </div>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Empower the needy</h3>
+                                <h3 class="text-bodyh1 font-medium text-gray-900">Empower the needy</h3>
                                 <p class="text-gray-600 text-sm mt-1">
                                     This Women’s Entrepreneurship Day, let’s empower underserved women running small
                                     business...
@@ -142,7 +142,7 @@
                                 <img src="https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__"
                                     alt="Children" class="w-full h-40 object-cover" />
                                 <div
-                                    class="absolute top-0 left-0 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
+                                    class="absolute top-2 left-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
                                     On-Ground
                                 </div>
                                 <div
@@ -156,7 +156,7 @@
                                 </div>
                             </div>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Empower the needy</h3>
+                                <h3 class="text-bodyh1 font-medium text-gray-900">Empower the needy</h3>
                                 <p class="text-gray-600 text-sm mt-1">
                                     This Women’s Entrepreneurship Day, let’s empower underserved women running small
                                     business...
@@ -180,7 +180,7 @@
                                 <img src="https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__"
                                     alt="Children" class="w-full h-40 object-cover" />
                                 <div
-                                    class="absolute top-0 left-0 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
+                                    class="absolute top-2 left-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
                                     On-Ground
                                 </div>
                                 <div
@@ -194,7 +194,7 @@
                                 </div>
                             </div>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Empower the needy</h3>
+                                <h3 class="text-bodyh1 font-medium text-gray-900">Empower the needy</h3>
                                 <p class="text-gray-600 text-sm mt-1">
                                     This Women’s Entrepreneurship Day, let’s empower underserved women running small
                                     business...
@@ -218,7 +218,7 @@
                                 <img src="https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__"
                                     alt="Children" class="w-full h-40 object-cover" />
                                 <div
-                                    class="absolute top-0 left-0 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
+                                    class="absolute top-2 left-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg">
                                     On-Ground
                                 </div>
                                 <div
@@ -232,7 +232,7 @@
                                 </div>
                             </div>
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Empower the needy</h3>
+                                <h3 class="text-bodyh1 font-medium text-gray-900">Empower the needy</h3>
                                 <p class="text-gray-600 text-sm mt-1">
                                     This Women’s Entrepreneurship Day, let’s empower underserved women running small
                                     business...
