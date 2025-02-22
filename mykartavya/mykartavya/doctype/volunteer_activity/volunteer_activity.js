@@ -292,35 +292,41 @@ frappe.ui.form.on("Volunteer Activity", {
                 imageContainer.html(`
                     <div style="
                         text-align: center;
-                        padding: 60px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 40px;
                         color: #6b7280;
                         background: linear-gradient(145deg, #ffffff, #f8fafc);
-                        border-radius: 20px;
+                        border-radius: 16px;
                         box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+                        max-width: 400px;
+                        margin: 0 auto;
                     ">
                         <div style="
                             background: #f1f5f9;
-                            width: 80px;
-                            height: 80px;
+                            width: 60px;
+                            height: 60px;
                             border-radius: 50%;
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            margin: 0 auto 20px;
+                            margin: 0 auto 16px;
                             box-shadow: inset 0 2px 6px rgba(0,0,0,0.06);
                         ">
-                            ${frappe.utils.icon('image', 'lg')}
+                            ${frappe.utils.icon('image', 'md')}
                         </div>
                         <p style="
                             margin: 0;
-                            font-size: 18px;
+                            font-size: 16px;
                             font-weight: 600;
                             color: #334155;
                             letter-spacing: -0.01em;
                         ">No images uploaded yet</p>
                         <p style="
-                            margin: 8px 0 0;
-                            font-size: 14px;
+                            margin: 6px 0 0;
+                            font-size: 13px;
                             color: #64748b;
                         ">Upload images to get started</p>
                     </div>
