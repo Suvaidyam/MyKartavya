@@ -13,18 +13,14 @@
   "activity_image",
   "activity_published_date_starts",
   "publish_date",
+  "application_deadline",
   "start_date",
   "end_date",
-  "application_deadline",
   "reporting_deadline",
   "timing_section",
   "start_time_hr",
-  "start_time_min",
-  "start_time_meridiem",
   "column_break_time1",
   "end_time_hr",
-  "end_time_min",
-  "end_time_meridiem",
   "activity_settings_section",
   "auto_approve_volunteers",
   "is_team_activity",
@@ -58,7 +54,8 @@
   "country",
   "state",
   "city",
-  "address"
+  "address",
+  "amended_from"
  ],
  "fields": [
   {
@@ -147,23 +144,9 @@
   },
   {
    "fieldname": "start_time_hr",
-   "fieldtype": "Select",
-   "label": "Start Hour",
-   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12",
-   "reqd": 1
-  },
-  {
-   "fieldname": "start_time_min",
-   "fieldtype": "Select",
-   "label": "Start Minute",
-   "options": "0\n15\n30\n45",
-   "reqd": 1
-  },
-  {
-   "fieldname": "start_time_meridiem",
-   "fieldtype": "Select",
-   "label": "Start Meridiem",
-   "options": "AM\nPM",
+   "fieldtype": "Duration",
+   "label": "Start Time",
+   "options": " ",
    "reqd": 1
   },
   {
@@ -172,23 +155,9 @@
   },
   {
    "fieldname": "end_time_hr",
-   "fieldtype": "Select",
-   "label": "End Hour",
-   "options": "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12",
-   "reqd": 1
-  },
-  {
-   "fieldname": "end_time_min",
-   "fieldtype": "Select",
-   "label": "End Minute",
-   "options": "0\n15\n30\n45",
-   "reqd": 1
-  },
-  {
-   "fieldname": "end_time_meridiem",
-   "fieldtype": "Select",
-   "label": "End Meridiem",
-   "options": "AM\nPM",
+   "fieldtype": "Duration",
+   "label": "End Time",
+   "options": " ",
    "reqd": 1
   },
   {
@@ -372,12 +341,12 @@
    "label": "Location Details"
   },
   {
-   "depends_on": "eval:!doc.is_global",
    "fieldname": "country",
    "fieldtype": "Link",
    "label": "Country",
    "mandatory_depends_on": "eval:!doc.is_global",
-   "options": "Country"
+   "options": "Country",
+   "reqd": 1
   },
   {
    "depends_on": "eval:!doc.is_global",
@@ -404,13 +373,23 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Company",
-   "options": "Company",
-   "reqd": 1
+   "options": "Company"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Activity",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2025-02-20 11:05:33.802374",
+ "modified": "2025-02-22 19:17:17.571690",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",

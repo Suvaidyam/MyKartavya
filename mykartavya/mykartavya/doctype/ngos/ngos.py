@@ -190,6 +190,10 @@ def create_sva_user(first_name, email, mobile_number, role_profile, doc,custom_d
         })
         
         sva_user.insert(ignore_permissions=True)
+
+        if sva_user.custom_volunteer_type == "NGO Member":
+            frappe.db.set_value("SVA User", sva_user.name, "workflow_state", "Approved")
+
         frappe.db.commit()
         
         frappe.msgprint(
