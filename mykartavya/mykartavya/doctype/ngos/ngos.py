@@ -142,7 +142,7 @@ def create_ngo_users(doc):
                 email=doc.email,
                 mobile_number=doc.official_contact_number,
                 role_profile="NGO Admin",
-                # custom_designation=doc.designation,
+                custom_designation=doc.designation,
                 doc=doc
             )
 
@@ -152,7 +152,7 @@ def create_ngo_users(doc):
                 first_name=doc.ngo_head_name,
                 email=doc.ngo_head_email,
                 mobile_number=doc.ngo_head_mobile,
-                # custom_designation=doc.designation,
+                custom_designation=doc.designation,
                 role_profile="Volunteer",
                 custom_volunteer_type="NGO Member",
                 doc=doc
@@ -162,7 +162,7 @@ def create_ngo_users(doc):
         frappe.log_error(f"Failed to create SVA Users: {str(e)}")
         frappe.throw(f"Failed to create SVA Users: {str(e)}")
 
-def create_sva_user(first_name, email, mobile_number, role_profile, doc):
+def create_sva_user(first_name, email, mobile_number, role_profile, doc,custom_designation=None):
     """Create individual SVA User with appropriate role profile and NGO link"""
     try:
         password = generate_random_password()
@@ -184,6 +184,8 @@ def create_sva_user(first_name, email, mobile_number, role_profile, doc):
             "custom_state": doc.state,
             "custom_city": doc.city,
             "custom_ngo": doc.name,
+            "custom_designation": custom_designation,
+            "custom_volunteer_type":"NGO Member",
             "enabled": 1
         })
         

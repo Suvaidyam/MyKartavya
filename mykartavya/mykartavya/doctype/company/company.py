@@ -200,7 +200,7 @@ def insert_sva_user(doc):
             "role_profile": role_profile,
             "custom_country":country,
             "custom_state":state,
-            "custom_city":city,
+            "custom_city":city, 
             "custom_designation":designation,
             "custom_volunteer_type":"Employee",
             "enabled": 1
