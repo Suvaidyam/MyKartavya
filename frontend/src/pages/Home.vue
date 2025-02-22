@@ -8,18 +8,9 @@
         <a href="#" class="text-black-500 text-[12px]">Register as Company</a>
         <a href="#" class="text-black-500 text-[12px]">Register as NGO</a>
     </div>
-    <header class="w-full bg-white h-16 flex justify-start gap-[163px]  px-8 items-center">
-      <div class=" ">
-        <img src="..//assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-11">
-      </div>
-      <nav class="space-x-4">
-        <a href="#" class="text-gray-700">Home</a>
-        <a href="#" class="text-gray-700">About Us</a>
-        <a href="#" class="text-gray-700">Features</a>
-        <a href="#" class="text-gray-700">Kindness & Volunteering</a>
-        <a href="#" class="text-gray-700">FAQs</a>
-      </nav>
-    </header>
+  <div class="w-full">
+    <Navbar/>
+  </div>
     <main class="flex flex-col items-center text-center mt-16 ">
       <h1 class="text-[33px] font-normal font-poppins">Your Journey of Kindness Starts Here</h1>
       <div class="text-center mt-6">
@@ -55,6 +46,7 @@
 </template>
 
 <script setup>
+import Navbar from '../components/Navbar.vue'
 // No additional logic needed for this static UI
 </script>
 
