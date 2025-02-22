@@ -2,18 +2,19 @@
     <aside class="w-60 min-w-60 hidden lg:block p-4 border-r border-gray-200">
         <div class="  bg-white">
             <div class="flex justify-between items-center mb-3">
-                <h3 class="text-lg font-semibold">Filter by</h3>
-                <button :disabled="clear_all_disabled" class="text-sm text-gray-500" @click="clear_all()">Clear All</button>
+                <h3 class="text-lg font-medium">Filter by</h3>
+                <button :disabled="clear_all_disabled" :class="[clear_all_disabled?'text-gray-500':'text-[#E86C13]','text-sm']" @click="clear_all()">Clear
+                    All</button>
             </div>
             <div class="flex flex-col">
                 <div v-for="item in filter_by" class="flex flex-col border-t">
-                    <h4 class="text-sm font-semibold mb-2 pt-2">{{ item.name }}</h4>
-                    <div class="flex flex-col gap-2 pb-2">
-                        <div v-for="el in item.options" class="flex px-2 items-center gap-1 text-sm">
+                    <h4 class="text-[14px] font-medium mb-2 pt-2">{{ item.name }}</h4>
+                    <div class="flex flex-col gap-3 pb-2">
+                        <div v-for="el in item.options" class="flex px-2 items-center gap-2 text-sm">
                             <input v-model="filter[item.key]" :value="el" :type="item.type" :name="item.key"
-                                :class="[item.type == 'checkbox' ? 'rounded-sm' : 'rounded-full', '']"
+                                :class="[item.type == 'checkbox' ? 'rounded-sm' : 'rounded-full', 'focus:ring-[#E86C13] checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary']"
                                 :id="`${item.key}-${el.toLowerCase().replace(' ', '-')}`">
-                            <label :for="`${item.key}-${el.toLowerCase().replace(' ', '-')}`">{{ el }}</label>
+                            <label class="text-[12px] font-normal" :for="`${item.key}-${el.toLowerCase().replace(' ', '-')}`">{{ el }}</label>
                         </div>
                     </div>
                 </div>
@@ -25,12 +26,16 @@
         <div class="flex gap-1 flex-wrap">
             <Menu v-for="item in filter_by" as="div" class="relative inline-block text-left">
                 <div>
-                    <MenuButton
-                        class="inline-flex w-full justify-center gap-x-1.5 truncate rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50">
+                    <MenuButton :class="[
+                        (Array.isArray(filter[item.key]) ? filter[item.key].length > 0 : filter[item.key])
+                            ? 'ring-[#E86C13] text-[#E86C13]'
+                            : 'ring-gray-300',
+                        'inline-flex w-full justify-center gap-x-1.5 truncate rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-inset hover:bg-gray-50'
+                    ]">
                         {{ item.name }}
-                        <FeatherIcon class="size-4 text-gray-700" name="chevron-down" />
-                        <!-- <ChevronDownIcon class="-mr-1 size-5 text-gray-400" aria-hidden="true" /> -->
+                        <FeatherIcon class="size-4" name="chevron-down" />
                     </MenuButton>
+
                 </div>
 
                 <transition enter-active-class="transition ease-out duration-100"
@@ -41,14 +46,16 @@
                         class="absolute p-1 left-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden">
                         <div v-for="el in item.options" class="flex px-2 py-1 items-center gap-2 text-sm">
                             <input v-model="filter[item.key]" :value="el" :type="item.type" :name="item.key"
-                                :class="[item.type == 'checkbox' ? 'rounded-sm' : 'rounded-full', '']"
+                                :class="[item.type == 'checkbox' ? 'rounded-sm' : 'rounded-full', 'focus:ring-[#E86C13] checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary']"
                                 :id="`${item.key}-${el.toLowerCase().replace(' ', '-')}`">
                             <label :for="`${item.key}-${el.toLowerCase().replace(' ', '-')}`">{{ el }}</label>
                         </div>
                     </MenuItems>
                 </transition>
             </Menu>
-            <button v-if="!clear_all_disabled" class="border truncate rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-700" @click="clear_all()">Clear All</button>
+            <button v-if="!clear_all_disabled"
+                class="border truncate rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-700"
+                @click="clear_all()">Clear All</button>
         </div>
     </div>
 </template>

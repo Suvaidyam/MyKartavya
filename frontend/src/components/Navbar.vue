@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex items-center justify-between bg-white p-4 shadow-md px-[36px]">
+  <nav class="flex items-center justify-between bg-white h-[60px] shadow-md px-[36px]">
     <router-link to="/" class="flex items-center space-x-4">
       <img src="..//assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
     </router-link>
@@ -7,20 +7,19 @@
       <router-link to="/mykarma">My Karma</router-link>
       <router-link to="/volunteering">Volunteering Opportunities</router-link>
     </div>
-    <div class="flex items-center space-x-4 justify-center">
+    <div class="flex items-center gap-3 justify-center">
       <Tooltip text="Settings" :hover-delay="1" :placement="'top'">
         <button class="hidden md:block text-gray-600 hover:text-black">
-          <i class="fas fa-cog"></i>
+          <FeatherIcon name="settings" class="size-5 text-gray-700"/>
         </button>
       </Tooltip>
       <!--  -->
-      <div class="relative">
         <Notifications />
-      </div>
       <Dropdown :options="dropdown">
-        <Button class="rounded-full h-8 w-8">
+        <Button class="w-9 h-9 min-w-9 min-h-9 rounded-full">
           <template #icon>
-            <img src="..//assets/download (3).jpeg" alt="Profile" class="h-8 w-8 rounded-full" />
+            <Avatar class="w-9 h-9 min-w-9 min-h-9" :shape="'circle'" :ref_for="true" image="https://avatars.githubusercontent.com/u/499550?s=60&v=4"
+              label="EY" size="md" />
           </template>
         </Button>
       </Dropdown>
@@ -30,7 +29,7 @@
 
 <script setup>
 import { ref, onMounted, h } from 'vue';
-import { Dropdown, Button, FeatherIcon,Tooltip } from 'frappe-ui';
+import { Dropdown, Button, FeatherIcon,Avatar, Tooltip } from 'frappe-ui';
 import { inject } from 'vue';
 import Notifications from './Notifications.vue';
 import { useRouter } from 'vue-router';
@@ -62,7 +61,7 @@ const mobileDropdown = [
     label: 'Settings',
     onClick: () => { },
     icon: () => h(FeatherIcon, { name: 'settings' }),
-  }, 
+  },
 ];
 
 const dropdown = ref([...baseDropdown]);
