@@ -1,5 +1,7 @@
 frappe.ui.form.on("Activity", {
     refresh(frm) {
+            
+
         let today = new Date(frappe.datetime.get_today());
         let fields = [
             { name: "publish_date", min: today },

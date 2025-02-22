@@ -148,7 +148,6 @@ class Company(Document):
         if self.india_headquarters_address:
             self.india_headquarters_address = self.india_headquarters_address.strip()
     
-
 def after_insert(doc, method):
     if doc.registration_type == "Admin Registration":
         # Approve the company
@@ -179,10 +178,10 @@ def insert_sva_user(doc):
         mobile_number = doc.mobile_number
         password = generate_random_password()
         role_profile = get_role_profile(doc.registration_type)
-        country=doc.country
-        state=doc.state
-        city=doc.city
-        designation= doc.designation
+        country = doc.country
+        state = doc.state
+        city = doc.city
+        designation = doc.designation
         
         # Check if user already exists
         if frappe.db.exists("SVA User", {"email": email}):
@@ -198,15 +197,17 @@ def insert_sva_user(doc):
             "confirm_password": password,
             "custom_company": doc.name, 
             "role_profile": role_profile,
-            "custom_country":country,
-            "custom_state":state,
-            "custom_city":city, 
-            "custom_designation":designation,
-            "custom_volunteer_type":"Employee",
+            "custom_country": country,
+            "custom_state": state,
+            "custom_city": city, 
+            "custom_designation": designation,
+            "custom_volunteer_type": "Employee",   
             "enabled": 1
         })
         
         sva_user.insert(ignore_permissions=True)
+        if sva_user.custom_volunteer_type == "Employee":
+            frappe.db.set_value("SVA User", sva_user.name, "workflow_state", "Approved")
         frappe.db.commit()
         
         frappe.msgprint(
@@ -232,15 +233,18 @@ def insert_sva_user(doc):
                 "mobile_number": doc.volunteering_incharge_phone,
                 "confirm_password": incharge_password,
                 "custom_company": doc.name,
-                "custom_country":country,
-                "custom_state":state,
-                "custom_city":city,
+                "custom_country": country,
+                "custom_state": state,
+                "custom_city": city,
                 "role_profile": "Volunteer Incharge",
-                "custom_designation":designation,
+                "custom_designation": designation,
+                "custom_volunteer_type": "Employee",   
                 "enabled": 1
             })
             
             incharge_user.insert(ignore_permissions=True)
+            if incharge_user.custom_volunteer_type == "Employee":
+             frappe.db.set_value("SVA User", incharge_user.name, "workflow_state", "Approved")
             frappe.db.commit()
             
             frappe.msgprint(
@@ -267,4 +271,3 @@ def generate_random_password(length=10):
     
     random.shuffle(password)
     return ''.join(password)
-
