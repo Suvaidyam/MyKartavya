@@ -3,9 +3,9 @@
     <div class="sticky top-0 z-40">
       <Navbar />
     </div>
-    <div class="  flex flex-col lg:flex-row p-5">
+    <div class="  flex flex-col lg:flex-row px-5">
       <Filters />
-      <div class="flex flex-col xl:flex-row px-4 gap-3">
+      <div class="flex flex-col xl:flex-row px-4 gap-3 pt-3">
         <main class="w-full xl:w-3/4 ">
           <div class="flex justify-between">
             <h1 class="text-2xl font-semibold mb-4 ">My Karma</h1>
@@ -17,7 +17,7 @@
           </div>
           <section class="p-6 border rounded-[12px]">
             <h2 class="text-[16px] font-medium mb-2">Current Commitments</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               <div class="card bg-white">
                 <router-link to="/empower"> <img
                     src="https://s3-alpha-sig.figma.com/img/2878/a4c5/9c959de9c3b9d28a480e8fc8a4b1bd81?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=deepSM9~pkpevq~2swFyA4g0zXUcOIZPg5bJaXVkcmNHwIVlwtQXJawLkEvr0pX3TeNueL4NtGlBtDG~zjxi8~C3mdRVPemZZudl8iw762tyT0kEi9Bk~9VwXQL299RLLLCnWeZYJo2pjXO-LuRi5aIUSu6rLnhmt3tjg7~pk5d8ICtHc2dOAKj~y80StIzWEII1KaRnoaoIQ8tDNap8Irp-3yBAItf~HCCc16FR8mdsShP0NlfshhwZxB6tEXVhfTPVj5bqC358wSr1CXqzQjbEfFqOTyETJm9zxc7OV6si2QRhJgtEzlXmgjtRGYUUy4~tv4w7SiEbkpBKNyQ0Wg__"
@@ -65,7 +65,7 @@
 
           <section class="p-6 border rounded-[12px] mt-4">
             <h2 class="text-xl font-semibold my-4">Available Commitments</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               <div v-for="item in available_commitments" class="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
                 <div class="relative">
                   <img

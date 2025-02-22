@@ -2,8 +2,8 @@
     <Menu as="div" class="relative inline-block text-left">
         <div>
             <Tooltip text="Notifications" :hover-delay="1" :placement="'top'">
-                <MenuButton class="text-gray-600 hover:text-black">
-                    <i class="fas fa-bell"></i>
+                <MenuButton class="text-gray-600 flex items-center justify-center hover:text-black">
+                    <FeatherIcon name="bell" class="size-5 text-gray-700"/>
                 </MenuButton>
             </Tooltip>
         </div>
@@ -30,5 +30,5 @@
 
 <script setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { Tooltip } from 'frappe-ui';
+import { Tooltip,FeatherIcon } from 'frappe-ui';
 </script>
