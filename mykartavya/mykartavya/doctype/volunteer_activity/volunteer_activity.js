@@ -87,24 +87,49 @@ frappe.ui.form.on("Volunteer Activity", {
                 restrictions: {
                     allowed_file_types: ['image/*']
                 },
-                on_success: (file) => {
-                    const files = Array.isArray(file) ? file : [file];
-                    files.forEach(file => {
-                        let row = frappe.model.add_child(frm.doc, 'Activity Images', 'images');
-                        row.image = file.file_url;
-                        row.file_name = file.file_name;
-                    });
-                    frm.refresh_field('images');
-                    renderImageCards();
-                    frm.dirty();
-                    frm.save().then(() => {
-                        frappe.show_alert({
-                            message: __('Images uploaded and saved successfully'),
-                            indicator: 'green'
+                on_success: (files) => {
+                    // Ensure files is always an array
+                    const uploadedFiles = Array.isArray(files) ? files : [files];
+
+                    // Create a promise to ensure all files are processed
+                    Promise.all(uploadedFiles.map(file => {
+                        return new Promise((resolve) => {
+                            // Add each file to child table
+                            let row = frappe.model.add_child(frm.doc, 'Activity Images', 'images');
+                            row.image = file.file_url;
+                            row.file_name = file.file_name;
+                            resolve();
                         });
-                    }).catch(err => {
-                        console.error('Error saving:', err);
-                        frappe.throw(__('Error saving images to child table'));
+                    })).then(() => {
+                        frm.refresh_field('images');
+
+                        // Save the form and handle the refresh properly
+                        frm.save().then(() => {
+                            // Force sync the document with server
+                            frappe.model.sync_docinfo(frm.doc);
+
+                            // Reload the document to ensure we have the latest data
+                            frm.reload_doc().then(() => {
+                                // Single verification and alert for all files
+                                if (frm.doc.images.length !== uploadedFiles.length) {
+                                    frappe.show_alert({
+                                        message: __('Warning: Some images may not have been properly linked. Please check the attachments.'),
+                                        indicator: 'orange'
+                                    });
+                                } else {
+                                    frappe.show_alert({
+                                        message: __(`Successfully uploaded ${uploadedFiles.length} images`),
+                                        indicator: 'green'
+                                    });
+                                }
+
+                                // After reload, render the images
+                                renderImageCards();
+                            });
+                        }).catch(err => {
+                            console.error('Error saving:', err);
+                            frappe.throw(__('Error saving images to child table'));
+                        });
                     });
                 }
             });
