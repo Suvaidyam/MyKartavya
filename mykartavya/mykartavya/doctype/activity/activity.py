@@ -6,7 +6,7 @@ from datetime import datetime, time
 
 class Activity(Document):
     def validate(self):
-        # self.validate_dates() 
+        self.validate_dates() 
         self.validate_hours()
         self.validate_points()
         self.validate_time()
@@ -18,10 +18,11 @@ class Activity(Document):
     
     def validate_dates(self):
         current_datetime = now_datetime()
+        print("===current_datetime",current_datetime)
         
         # Validate publish date
         if get_datetime(self.publish_date) < current_datetime:
-            frappe.throw(_("Activity Publish Date cannot be in the past"))
+                frappe.throw(_("Activity Publish Date cannot be in the past"))
             
         # Validate application deadline
         if get_datetime(self.application_deadline) <= get_datetime(self.publish_date):
