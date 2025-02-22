@@ -38,12 +38,28 @@ class VolunteerActivity(Document):
 	def on_update(self):
 		"""Handle workflow state changes and related actions."""
 		try:
+			# Set enrollment_wf_state based on workflow_state
+			if self.workflow_state == "Approved":
+				self.enrollment_wf_state = "Approved"
+			elif self.workflow_state == "Rejected":
+				self.enrollment_wf_state = "Rejected"
+			
+			# Handle completion workflow state changes
+			if self.completion_wf_state == "Approved" and not self.karma_points:
+				# Get activity document and set karma points
+				activity = frappe.get_doc("Activity", self.activity)
+				self.karma_points = activity.karma_points
+				frappe.db.set_value("Volunteer Activity", self.name, "karma_points", self.karma_points)
+			elif self.completion_wf_state == "Rejected" and self.karma_points:
+				# Reset karma points if completion is rejected
+				self.karma_points = 0
+				frappe.db.set_value("Volunteer Activity", self.name, "karma_points", 0)
+			
+			# Existing logic for updating workflow state
 			if self.enrollment_wf_state == "Approved":
 				frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Approved")
-				# TODO: Add additional approval actions here
 			elif self.enrollment_wf_state == "Rejected":
 				frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Rejected")
-				# TODO: Add additional rejection actions here
 		except Exception as e:
 			frappe.log_error(f"Error updating workflow state: {str(e)}")
 			raise
@@ -83,10 +99,11 @@ class VolunteerActivity(Document):
 			
 			# Store the total duration in seconds
 			self.duration = total_seconds
-			
+
 			# If total percent reaches 100, update completion status to Submitted
 			if total_percent >= 100 and self.completion_wf_state == "Pending":
 				self.completion_wf_state = "Submitted"
+				# self.workflow_state = "Submitted"
 				# Create a comment log
 				frappe.get_doc({
 					"doctype": "Comment",
@@ -95,5 +112,4 @@ class VolunteerActivity(Document):
 					"reference_name": self.name,
 					"content": "Activity completion reached 100%. Status updated to Submitted."
 				}).insert(ignore_permissions=True)
-				
 				frappe.msgprint("Activity completion has reached 100%. Status updated to Submitted.")
