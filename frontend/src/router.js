@@ -21,7 +21,7 @@ const routes = [
   {
     path: '/mykarma',
     name: 'Mykarma',
-    component: () => import('@/pages/Mykarma.vue'),
+    component: () => import('@/pages/Mykarma/Mykarma.vue'),
   },
   {
     path: '/volunteering',

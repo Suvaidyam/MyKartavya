@@ -9,6 +9,7 @@
     "copy-html-entry": "cp ../mykartavya/public/frontend/index.html ../mykartavya/www/frontend.html"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.23",
     "feather-icons": "^4.29.2",
     "frappe-ui": "^0.1.72",
     "lucide-vue-next": "^0.475.0",
