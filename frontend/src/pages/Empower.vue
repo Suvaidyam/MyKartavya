@@ -1,92 +1,100 @@
 <template>
-  <div class=" h-screen w-full">
-    <!-- NAVBAR -->
-     <div class="sticky top-0 z-20">
+    <div class=" h-screen w-full">
+        <!-- NAVBAR -->
+        <div class="sticky top-0 z-20">
 
-       <Navbar/>
-     </div>
-    <!-- NAVBAR END -->
-     <!-- baner section image -->
-     <section>
-      <div class="relative w-full  ">
-      <img src="https://s3-alpha-sig.figma.com/img/5fe6/fe04/058446e1c3ea035d2efd21a222ccb475?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=P-8K1XloauUtT7UVndu4L199Efq0NENaBmmYHpVZpgONi2Uxpbz6sP03gkJBPdo4LkhBZ1fbOgLHSF5Eq3RNvLCuSsdvhVTynPV2e7NlZ9TZqQFww3WueaAI-fXncdfG4xbhgvymccrF-Z0mLImqTne-4fbkk7I4tpHnChzjvmrENAMzsmMxFnhphfuatDa7~5RIlmLt84tmjiz2IBgoSZ3ZhV4WoGL7DQWE6OvV3uJ7JjoFHdUr9mNkWYKbcOJ~q0ehkwRR8XCYap4lG-BdlaOmQdG6ro1QlcixF~YEzhnDfvP1M4Gk00B~4lHnip9Hbzqkwml0NoehBoFPs-zkRQ__" class="w-full h-[456px] object-cover" />
-      </div>
-      <div class="absolute left-8 top-48 bg-white shadow-lg rounded-xl p-4 md:p-6 z-10 w-[448px]">
-      <h3 class="text-lg font-semibold">Empower the needy</h3>
-      <span class="text-red-500 text-sm">Online</span>
-      <div class="flex items-center mt-2 text-gray-600 text-sm">
-      <CalendarIcon class="w-4 h-4 mr-1" />
-      <span>01 Oct, 2024 - 30 Nov, 2024</span>
-      </div>
-      <div class="flex items-center mt-2 text-gray-600 text-sm">
-      <ClockIcon class="w-4 h-4 mr-1" />
-      <span>50 hr</span>
-      <span class="ml-auto text-red-500 flex items-center">
-      <HeartIcon class="w-4 h-4 mr-1" /> 40 Points
-      </span>
-      </div>
-      <div class="w-full bg-gray-200 rounded-full h-2.5 mt-4">
-      <div class="bg-green-500 h-2.5 rounded-full" style="width: 60%"></div>
-      </div>
-      <p class="text-sm text-gray-600 mt-2">60% completed</p>
-      </div>
-     </section>
-     <!-- banner section image end -->
-      <!-- main section start  -->
-       <section class="w-full bg-gray-700  ">
-     <div class="p-6 md:p-10 bg-gray-100 ">
-    <!-- Main Content -->
-    <div class=" grid gap-6 lg:grid-cols-3">
-      <!-- Left Section -->
-      <div class="lg:col-span-2  ">
-          <p class="text-gray-700 mb-4">
-                        <span class="text-[40px] text-black">T</span>his Women’s Entrepreneurship Day, let’s empower
-                        underserved women running small businesses or working in our communities by sharing positive
-                        reviews of their businesses on our social media platforms. By highlighting their names and
-                        services, we can increase their visibility, boost their confidence, and foster growth.This small
-                        act of kindness can have a significant impact, bringing hope and faith to these women as they
-                        navigate their entrepreneurial journeys. Together, we can create a supportive network that
-                        uplifts and inspires!
-                    </p>
-                    <h2 class="text-heading4 font-medium mt-6">Volunteer Role</h2>
-                    <p class="text-gray-700 mt-2">
-                        Volunteers are encouraged to identify a small business or an underserved woman in their
-                        community and capture a photo or video showcasing her work. Along with the visual, write a
-                        positive review that highlights her efforts and talents on your social media platforms. This
-                        simple gesture can significantly boost her business, while also encouraging her personally and
-                        fostering self-confidence.By sharing these stories, we not only promote their work but also
-                        inspire others to recognize the value of supporting women entrepreneurs. Let’s come together to
-                        uplift and empower these remarkable women, helping them shine in their communities!
-                    </p>
-                    <div class="mt-4">
-                        <p class="font-semibold " style="word-spacing: 1%;">Share your experience along with pictures on
-                            your social media handles and tag us on social media using @MyKaratvaya @NASSCOMfdn</p>
-                        <!-- <p class="text-gray-600">@MyKartavya @NASSCOMfdn</p> -->
-                        <p>Use hashtag #MyKartavya #DoGoodFeelGood #LittleActMatters #womenempowerment#letsgrowtogether
+            <Navbar />
+        </div>
+        <!-- NAVBAR END -->
+        <!-- baner section image -->
+        <section>
+            <div class="relative w-full  ">
+                <img src="https://s3-alpha-sig.figma.com/img/5fe6/fe04/058446e1c3ea035d2efd21a222ccb475?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=P-8K1XloauUtT7UVndu4L199Efq0NENaBmmYHpVZpgONi2Uxpbz6sP03gkJBPdo4LkhBZ1fbOgLHSF5Eq3RNvLCuSsdvhVTynPV2e7NlZ9TZqQFww3WueaAI-fXncdfG4xbhgvymccrF-Z0mLImqTne-4fbkk7I4tpHnChzjvmrENAMzsmMxFnhphfuatDa7~5RIlmLt84tmjiz2IBgoSZ3ZhV4WoGL7DQWE6OvV3uJ7JjoFHdUr9mNkWYKbcOJ~q0ehkwRR8XCYap4lG-BdlaOmQdG6ro1QlcixF~YEzhnDfvP1M4Gk00B~4lHnip9Hbzqkwml0NoehBoFPs-zkRQ__"
+                    class="w-full h-[456px] object-cover" />
+            </div>
+            <div class="absolute left-8 top-48 bg-white shadow-lg rounded-xl p-4 md:p-6 z-10 w-[448px]">
+                <h3 class="text-lg font-semibold">Empower the needy</h3>
+                <span class="text-red-500 text-sm">Online</span>
+                <div class="flex items-center mt-2 text-gray-600 text-sm">
+                    <CalendarIcon class="w-4 h-4 mr-1" />
+                    <span><i class="far fa-calendar-alt mr-1"></i>01 Oct, 2024 - 30 Nov, 2024</span>
+                </div>
+                <div class="flex items-center mt-2 text-gray-600 text-sm">
+                    <ClockIcon class="w-4 h-4 mr-1" />
+                    <span><i class="far fa-clock mr-1"></i>50 hr</span>
+                    <span class="ml-auto text-red-500 flex items-center">
+                        <HeartIcon class="w-4 h-4 mr-1" /> 40 Points
+                    </span>
+                    
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mt-4">
+                    <div class="bg-green-500 h-2.5 rounded-full" style="width: 60%"></div>
+                </div>
+                <p class="text-sm text-gray-600 mt-2">60% completed</p>
+            </div>
+        </section>
+        <!-- banner section image end -->
+        <!-- main section start  -->
+        <section class="w-full bg-gray-700  ">
+            <div class="p-6 md:p-10 bg-gray-100 ">
+                <!-- Main Content -->
+                <div class=" grid gap-6 lg:grid-cols-3">
+                    <!-- Left Section -->
+                    <div class="lg:col-span-2  ">
+                        <p class="text-gray-700 mb-4">
+                            <span class="text-[40px] text-black">T</span>his Women’s Entrepreneurship Day, let’s empower
+                            underserved women running small businesses or working in our communities by sharing positive
+                            reviews of their businesses on our social media platforms. By highlighting their names and
+                            services, we can increase their visibility, boost their confidence, and foster growth.This
+                            small
+                            act of kindness can have a significant impact, bringing hope and faith to these women as
+                            they
+                            navigate their entrepreneurial journeys. Together, we can create a supportive network that
+                            uplifts and inspires!
                         </p>
+                        <h2 class="text-heading4 font-medium mt-6">Volunteer Role</h2>
+                        <p class="text-gray-700 mt-2">
+                            Volunteers are encouraged to identify a small business or an underserved woman in their
+                            community and capture a photo or video showcasing her work. Along with the visual, write a
+                            positive review that highlights her efforts and talents on your social media platforms. This
+                            simple gesture can significantly boost her business, while also encouraging her personally
+                            and
+                            fostering self-confidence.By sharing these stories, we not only promote their work but also
+                            inspire others to recognize the value of supporting women entrepreneurs. Let’s come together
+                            to
+                            uplift and empower these remarkable women, helping them shine in their communities!
+                        </p>
+                        <div class="mt-4">
+                            <p class="font-semibold " style="word-spacing: 1%;">Share your experience along with
+                                pictures on
+                                your social media handles and tag us on social media using @MyKaratvaya @NASSCOMfdn</p>
+                            <!-- <p class="text-gray-600">@MyKartavya @NASSCOMfdn</p> -->
+                            <p>Use hashtag #MyKartavya #DoGoodFeelGood #LittleActMatters
+                                #womenempowerment#letsgrowtogether
+                            </p>
+                        </div>
+                        <div class="mt-4 flex items-center gap-2">
+                            <span class="text-gray-500">Share activity with others:</span>
+                            <div class="flex gap-3">
+                                <i class="fab fa-facebook text-blue-600"></i>
+                                <i class="fab fa-x-twitter text-blue-400"></i>
+                                <i class="fab fa-linkedin text-blue-700"></i>
+                            </div>
+                        </div>
                     </div>
-                  <div class="mt-4 flex items-center gap-2">
-                    <span class="text-gray-500">Share activity with others:</span>
-                    <div class="flex gap-3">
-                        <i class="fab fa-facebook text-blue-600"></i>
-                        <i class="fab fa-x-twitter text-blue-400"></i>
-                        <i class="fab fa-linkedin text-blue-700"></i>
+
+                    <!-- Right Section - Timeline -->
+                    <div>
+                        <Stepper />
                     </div>
-                    </div> 
-      </div>
-      
-      <!-- Right Section - Timeline -->
-       <div>
-        <Stepper/>
-       </div>
-   
-    </div>
-    
-    <!-- Related Opportunities -->
-    <div class=" mt-10">
-      <h2 class="text-heading4 font-medium">Related Opportunities</h2>
-      <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center ">
-        <div class=" bg-white rounded-lg shadow-lg overflow-hidden">
+
+                </div>
+
+                <!-- Related Opportunities -->
+                <div class=" mt-10">
+                    <h2 class="text-heading4 font-medium">Related Opportunities</h2>
+                    <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center ">
+                        <div class=" bg-white rounded-lg shadow-lg overflow-hidden">
                             <div class="relative">
                                 <img src="https://s3-alpha-sig.figma.com/img/2878/a4c5/9c959de9c3b9d28a480e8fc8a4b1bd81?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=deepSM9~pkpevq~2swFyA4g0zXUcOIZPg5bJaXVkcmNHwIVlwtQXJawLkEvr0pX3TeNueL4NtGlBtDG~zjxi8~C3mdRVPemZZudl8iw762tyT0kEi9Bk~9VwXQL299RLLLCnWeZYJo2pjXO-LuRi5aIUSu6rLnhmt3tjg7~pk5d8ICtHc2dOAKj~y80StIzWEII1KaRnoaoIQ8tDNap8Irp-3yBAItf~HCCc16FR8mdsShP0NlfshhwZxB6tEXVhfTPVj5bqC358wSr1CXqzQjbEfFqOTyETJm9zxc7OV6si2QRhJgtEzlXmgjtRGYUUy4~tv4w7SiEbkpBKNyQ0Wg__"
                                     alt="Children" class=" object-cover" />
@@ -133,7 +141,7 @@
                                 </div>
                             </div>
                         </div>
-        <div class=" bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class=" bg-white rounded-lg shadow-lg overflow-hidden">
                             <div class="relative">
                                 <img src="https://s3-alpha-sig.figma.com/img/4925/6686/2536992c32f72f58b66a7769a6226fd1?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=a67iRkNKrfuO9FTJtxqySKsKg5XqiMxUz1NxW8eM5WfcZVDQT8QkUooHVg1CSh78LVVcG10OAmc-t2OIopz4itRPsaOYaYfvfebE0Ry30XoFWYamZZvFhpaeEW5vNaaf63K1bWbYtve9-3TOHs~5sl8vbA0ZEQxUn0sLDpGWgHkVloOodLSsRoMYFWdiq83kUNufCZeuByWzxJwewyIbkG~N~B5Z844DNOvbTdlZau~nJOb3qlqbRGYMvE~o0-FZfbLnvJ4w6npXKXS7I--Wd-~d4S7c1yAs73wi2UnUX4UjkBTsSyyNE-zj20h~vk9AvWr~sO61Ulh57uWYG~RmFQ__"
                                     alt="Children" class=" object-cover" />
@@ -180,7 +188,7 @@
                                 </div>
                             </div>
                         </div>
-        <div class=" bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class=" bg-white rounded-lg shadow-lg overflow-hidden">
                             <div class="relative">
                                 <img src="https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__"
                                     alt="Children" class=" object-cover" />
@@ -227,17 +235,17 @@
                                 </div>
                             </div>
                         </div>
-          
-      </div>
-    </div>
-  </div>
+
+                    </div>
+                </div>
+            </div>
 
 
-       </section>
+        </section>
 
         <!-- main section end  -->
 
-  </div>
+    </div>
 </template>
 
 <script setup>

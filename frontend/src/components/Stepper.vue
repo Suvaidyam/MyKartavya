@@ -1,58 +1,146 @@
 <template>
-    <div>
-           <div class="bg-white  rounded-lg   ">
-    
-   <div class="bg-white p-6 rounded-lg w-full relative">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-heading4 font-medium">Timeline</h2>
-                            <button @click="resetSteps" class="text-pink-500 flex items-center text-bodyh2 font-normal px-4 py-1 rounded-sm border">
-                                Refresh
-                                <RefreshCwIcon class="w-4 h-4 ml-1" />
-                            </button>
-                        </div>
+  <div>
+    <div class="bg-white rounded-lg">
+      <div class="bg-white p-6 rounded-lg w-full relative">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-heading4 font-medium">Timeline</h2>
+          <button @click="resetSteps"
+            class="text-pink-500 flex items-center text-bodyh2 font-normal px-4 py-1 rounded-sm border">
+            Refresh
+            <RefreshCwIcon class="w-4 h-4 ml-1" />
+          </button>
+        </div>
+        <div class="relative border-gray-300 pl-6">
+          <div v-for="(step, index) in steps" :key="index" class="mb-6 relative border-l">
+            <div class="absolute -left-3 w-6 h-6 rounded-full flex items-center justify-center"
+              :class="step.completed ? 'bg-green-500 text-white' : 'bg-orange-500 text-white '">
+              <CheckIcon v-if="step.completed" class="w-4 h-4" />
+              <img src="..//assets/Frame (3).png" v-else alt="" class="w-4 h-4">
+            </div>
+            <div :class="index > currentStep ? 'blur-sm opacity-50 pointer-events-none ' : ''">
+              <p class="text-sm font-semibold text-gray-900 m-4">STEP {{ index + 1 }}</p>
+              <h3 class="text-lg font-semibold m-4">{{ step.title }}</h3>
+              <p class="text-gray-600 text-sm ml-4 mt-0">{{ step.description }}</p>
 
-                        <div class="relative border-l-2 border-gray-300 pl-6">
-                            <div v-for="(step, index) in steps" :key="index" class="mb-6 relative">
-                                <div class="absolute -left-3 w-6 h-6 rounded-full flex items-center justify-center"
-                                    :class="step.completed ? 'bg-green-500 text-white' : 'bg-orange-500 text-white'">
-                                    <CheckIcon v-if="step.completed" class="w-4 h-4" />
-                                    <AlertCircleIcon v-else class="w-4 h-4" />
-                                </div>
-                                <div :class="index > currentStep ? 'blur-sm opacity-50 pointer-events-none ' : ''">
-                                    <p class="text-sm font-semibold text-gray-900 m-4">STEP {{ index + 1 }}</p>
-                                    <h3 class="text-lg font-semibold m-4">{{ step.title }}</h3>
-                                    <p class="text-gray-600 text-sm m-4">{{ step.description }}</p>
+              <button v-if="step.button" @click="nextStep(index)"
+                class="mt-2 h-[28px] w-[147px] rounded-sm text-caption font-medium text-white ml-2"
+                :class="index === steps.length - 1 ? 'bg-orange-500' : 'bg-orange-500'">
+                {{ step.button }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Activity modal for step start -->
+        <div v-if="activityReportPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div class="bg-white rounded-lg shadow-lg p-6 w-[500px]">
+            <div class="flex justify-between items-center border-b pb-2 mb-4">
+              <h2 class="text-lg font-semibold">Activity Completion</h2>
+              <button @click="$emit('close')" class="text-gray-500 hover:text-gray-700">&times;</button>
+            </div>
+            <div class="mb-4">
+              <label class="block font-medium mb-1">How much time you donated while working on the activity?</label>
+              <div class="flex gap-2">
+                <input type="number" v-model="hours" placeholder="Hours" class="w-20 border rounded p-2">
+                <input type="number" v-model="minutes" placeholder="Minutes" class="w-20 border rounded p-2">
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="block font-medium mb-1">How much percent work has completed?</label>
+              <div class="flex items-center gap-2">
+                <input type="range" min="0" max="100" v-model="progress" class="w-full accent-green-500">
+                <span class="w-12 text-center">{{ progress }}%</span>
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="block font-medium mb-2">Upload Media</label>
+              <div class="border-dashed border-2 border-gray-300 p-6 rounded-lg text-center relative">
+                <input type="file" multiple @change="uploadFiles"
+                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                <div class="flex flex-col items-center text-gray-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-10 h-10">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V3m0 0l-3.5 3.5M12 3l3.5 3.5" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M6 14.25v4.5a1.5 1.5 0 001.5 1.5h9a1.5 1.5 0 001.5-1.5v-4.5" />
+                  </svg>
+                  <p class="mt-2">Drag & drop files or <span class="text-orange-500 cursor-pointer">Browse</span></p>
+                  <p class="text-sm">Supported formats: JPEG, PNG</p>
+                </div>
+              </div>
+              <div class="flex gap-2 mt-3">
+                <img v-for="(image, index) in uploadedImages" :key="index" :src="image"
+                  class="w-16 h-16 rounded object-cover">
+              </div>
+            </div>
 
-                                    <button v-if="step.button" @click="nextStep(index)"
-                                        class="mt-2 h-[28px] w-[147px] rounded-sm text-button font-medium text-white"
-                                        :class="index === steps.length - 1 ? 'bg-orange-500' : 'bg-orange-500'">
-                                        {{ step.button }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+            <button @click="submitReport"
+              class="w-full bg-orange-500 text-white py-2 rounded text-center font-semibold hover:bg-orange-600">MARK AS
+              COMPLETE</button>
+          </div>
+        </div>
+        <!-- Popup Modal for Activity Report -->
+        <div v-if="feedbackPointsPopup"
+          class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+          <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h3 class="text-lg font-semibold mb-4">Submit Your Activity Report</h3>
+            <p class="text-gray-600">Please upload a summary of your activity.</p>
+            <textarea class="border rounded w-full p-2 mt-2" rows="4"
+              placeholder="Write your report here..."></textarea>
+            <div class="flex justify-end mt-4">
+              <!-- <button @click="activityReportPopup = false" class="px-4 py-2 bg-gray-300 rounded mr-2">Cancel</button> -->
+              <button @click="submitFeedback" class="px-4 py-2 bg-orange-500 text-white rounded">Submit</button>
+            </div>
+          </div>
+        </div>
+        <!-- Activity modal for step end -->
 
-                        <!-- Popup Modal -->
-                        <div v-if="showPopup"
-                            class="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-                            <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
-                                <AlertCircleIcon class="w-10 h-10 text-orange-500 mb-2" />
-                                <p class="text-gray-700 font-semibold">Finish the current step to move forward!</p>
-                                <button @click="showPopup = false"
-                                    class="mt-3 px-4 py-2 bg-orange-500 text-white rounded">OK</button>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Popup Modal for Step Restriction -->
+        <div v-if="showPopup" class="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+          <!-- <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+            <AlertCircleIcon class="w-10 h-10 text-orange-500 mb-2" />
+            <p class="text-gray-700 font-semibold">Finish the current step to move forward!</p>
+            <button @click="showPopup = false" class="mt-3 px-4 py-2 bg-orange-500 text-white rounded">OK</button>
+          </div> -->
+          <div class="bg-white rounded-lg shadow-lg w-full max-w-md">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center border-b p-4">
+              <h2 class="text-lg font-semibold">Share Feedback</h2>
+              <button @click="isOpen = false" class="text-gray-500 hover:text-gray-700 text-xl">&times;</button>
+            </div>
+            <!-- Modal Content -->
+            <div class="p-4">
+              <label class="block font-medium mb-2 text-gray-700">How would you rate your experience with the
+                activity?</label>
+              <div class="flex justify-center gap-6 my-3">
+                <button v-for="(emoji, index) in emojis" :key="index" @click="selectedEmoji = emoji"
+                  class="text-3xl focus:outline-none transition duration-200"
+                  :class="selectedEmoji === emoji ? 'text-orange-500' : 'text-gray-400'">
+                  {{ emoji.icon }}
+                </button>
+              </div>
+              <label class="block font-medium mb-2 text-gray-700">Comments (Optional)</label>
+              <textarea v-model="comments" class="w-full border rounded p-2 h-20 resize-none"></textarea>
+            </div>
+            <!-- Submit Button -->
+            <div class="p-4">
+              <button @click="showPopup = false"
+                class="w-full bg-orange-500 text-white py-2 rounded font-semibold hover:bg-orange-600">
+                SUBMIT FEEDBACK
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 </template>
-
 <script setup>
 import { ref } from 'vue';
 import { RefreshCw as RefreshCwIcon, Check as CheckIcon, AlertCircle as AlertCircleIcon } from 'lucide-vue-next';
 const currentStep = ref(0);
 const showPopup = ref(false);
-
+const activityReportPopup = ref(false);
+const feedbackPointsPopup = ref(false)
 const steps = ref([
   {
     title: 'Activity Approval',
@@ -79,19 +167,46 @@ const steps = ref([
     completed: false,
   },
 ]);
-
 const nextStep = (index) => {
-  if (index === currentStep.value) {
+  if (index === 2) {
+    // Open popup for Activity Report
+    activityReportPopup.value = true;
+  } else if (index === currentStep.value) {
     steps.value[index].completed = true;
     currentStep.value++;
   } else {
     showPopup.value = true;
   }
 };
-
+const submitReport = () => {
+  activityReportPopup.value = false;
+  steps.value[2].completed = true;
+  currentStep.value++;
+};
 const resetSteps = () => {
   steps.value.forEach((step) => (step.completed = false));
   currentStep.value = 0;
 };
-
+const hours = ref('');
+const minutes = ref('');
+const progress = ref(30);
+const uploadedImages = ref([]);
+const uploadFiles = (event) => {
+  const files = event.target.files;
+  for (let file of files) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      uploadedImages.value.push(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  }
+};
+const emojis = ref([
+  { icon: "😞", label: "Bad" },
+  { icon: "😐", label: "Neutral" },
+  { icon: "😊", label: "Good" },
+  { icon: "🙂", label: "Great" }
+]);
+const selectedEmoji = ref(null);
+const comments = ref("");
 </script>
