@@ -6,6 +6,7 @@ import App from './App.vue'
 import { session } from './data/session'
 import FeatherIcon from 'feather-icons'
 import Auth from './libs/controllers/auth'
+import call from './libs/controllers/call'
 
 import {
   Button,
@@ -24,6 +25,7 @@ app.use(router)
 app.use(resourcesPlugin)
 app.use(FeatherIcon)
 app.provide('session', session)
+app.provide('call', call)
 app.provide('auth', auth)
 app.component('Button', Button)
 app.component('Card', Card)

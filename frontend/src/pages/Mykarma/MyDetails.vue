@@ -2,11 +2,12 @@
   <aside class=" w-full xl:w-1/4 bg-white rounded-md pt-3 lg:mt-0">
     <div class="px-3">
       <div class="flex items-center mb-4 border-b border-gray-100 p-3">
-        <img src="../../assets/download (2).jpeg" alt="Profile Picture"
+        <img v-if="auth.user_image" :src="user_image" alt="Profile Picture"
           class="rounded-full w-[60px] h-[60px] object-cover mr-4" />
+          <div class="w-[60px] mr-4 text-2xl h-[60px] flex items-center justify-center rounded-full bg-gray-100 " v-else>{{ auth.cookie.full_name.charAt(0) }}</div>
         <div>
-          <h2 class="text-[14px] font-medium">Aayush Kumar</h2>
-          <p class="text-[#666666] text-xs font-normal">aayush.kumar@mail.com</p>
+          <h2 class="text-[14px] font-medium">{{ auth.cookie.full_name }}</h2>
+          <p class="text-[#666666] text-xs font-normal">{{ auth.cookie.user_id }}</p>
           <button class="text-[10px] font-medium mt-2" style="color: #FF5722;">Edit Profile</button>
         </div>
       </div>
@@ -105,7 +106,9 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref,inject } from "vue";
+
+const auth = inject("auth");
 const sdgs = ref([
   {
     title: "SDG 2 : Zero Hunger",
