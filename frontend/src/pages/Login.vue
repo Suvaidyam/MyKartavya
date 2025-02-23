@@ -58,6 +58,8 @@
 <script setup>
 import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 const call = inject('call')
 const router = useRouter()
@@ -72,10 +74,11 @@ const get_otp = async () => {
   const response = await call('mykartavya.email.send_otp', { email: email.value });
   if (response.status === "success") {
     loading.value = false;
+    toast.success('OTP sent successfully');
     router.push({ name: 'Verify', query: { email: email.value } });
   }else{
     loading.value = false;
-    alert('Something went wrong');
+    toast.error('Something went wrong');
   }
 };
 </script>

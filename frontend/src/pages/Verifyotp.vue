@@ -64,6 +64,8 @@
 <script setup>
 import { ref, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 const call = inject('call')
 const router = useRouter()
@@ -79,20 +81,21 @@ const getOTP = async () => {
   }
 
   try {
-    const response = await call('mykartavya.email.verify_otp', { email: email.value })
+    const response = await call('mykartavya.email.send_otp', { email: email.value })
     if (response.status === "success") {
-      alert('OTP sent successfully')
+      toast.success('OTP sent successfully')
+    } else {
+      toast.error('Failed to send OTP')
     }
   } catch (error) {
-    console.error('Error sending OTP:', error)
-    alert('Failed to send OTP')
+    toast.error('Failed to send OTP')
   }
 }
 
 const verifyOTP = async () => {
   const otpValue = otp.value.join('')
   if (otpValue.length !== 6) { // Changed to 6
-    alert('Please enter a complete 6-digit OTP')
+    toast.error('Please enter 6 digit OTP')
     return
   }
   try {
@@ -100,14 +103,16 @@ const verifyOTP = async () => {
     const response = await call('mykartavya.email.verify_otp', { email: route.query.email, otp: otpValue });
     if (response.status === "success") {
       loading.value = false
+      toast.success('OTP verified successfully')
       router.push('/')
     }else{
+      toast.error('Failed to verify OTP')
       loading.value = false
     }
   } catch (error) {
     loading.value = false
     console.error('Error verifying OTP:', error)
-    alert('Failed to verify OTP')
+    toast.error('Failed to verify OTP')
   }
 }
 
