@@ -104,6 +104,7 @@ const verifyOTP = async () => {
     if (response.status === "success") {
       loading.value = false
       toast.success('OTP verified successfully')
+      window.location.reload()
       router.push('/')
     }else{
       toast.error('Failed to verify OTP')

@@ -1,16 +1,18 @@
 <template>
-  <div v-if="['/login','/verify'].includes(route.fullPath)" class="hidden md:flex space-x-4 justify-end px-10 bg-orange-100 h-8 items-center w-full">
+  <div v-if="['/login', '/verify'].includes(route.fullPath)"
+    class="hidden md:flex space-x-4 justify-end px-10 bg-orange-100 h-8 items-center w-full">
     <FeatherIcon name="search" class="size-4 cursor-pointer text-gray-700" />
     <a class="text-[#000000] font-normal text-[12px]">Register as Company</a>
     <a class="text-[#000000] font-normal text-[12px]">Register as NGO</a>
   </div>
-  <nav v-if="['/','/volunteering','/profile','/empower','/updateprofile','/'].includes(route.fullPath)" class="flex items-center justify-between bg-white h-[60px] shadow-md px-[36px]">
+  <nav v-if="['/', '/volunteering', '/profile', '/empower', '/updateprofile', '/'].includes(route.fullPath)"
+    class="flex items-center justify-between bg-white h-[60px] shadow-md px-[36px]">
     <router-link to="/" class="flex items-center space-x-4">
-      <img src="..//assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
+      <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
     </router-link>
     <div class="hidden md:flex space-x-8 text-gray-700">
-      <router-link to="/" class="text-sm">My Karma</router-link>
-      <router-link to="/volunteering" class="text-sm">Volunteering Opportunities</router-link>
+      <router-link to="/" :class="[route.fullPath=='/'?'font-medium':'font-normal','text-sm']">My Karma</router-link>
+      <router-link to="/volunteering" :class="[route.fullPath=='/volunteering'?'font-medium':'font-normal','text-sm']">Volunteering Opportunities</router-link>
     </div>
     <div class="flex items-center gap-5 justify-center">
       <!--  -->
@@ -44,8 +46,8 @@
       <Dropdown :options="dropdown">
         <Button class="w-9 h-9 min-w-9 min-h-9 rounded-full">
           <template #icon>
-            <Avatar class="w-9 h-9 min-w-9 min-h-9" :shape="'circle'" :ref_for="true"
-              :image="auth?.user_image" :label="auth?.cookie?.full_name" size="md" />
+            <Avatar class="w-9 h-9 min-w-9 min-h-9" :shape="'circle'" :ref_for="true" :image="auth?.user_image"
+              :label="auth?.cookie?.full_name" size="md" />
           </template>
         </Button>
       </Dropdown>
@@ -54,16 +56,50 @@
   <!--  -->
   <nav v-else class="flex items-center justify-between bg-white h-[60px] shadow-md px-[36px]">
     <router-link to="/" class="flex items-center space-x-4">
-      <img src="..//assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
+      <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
     </router-link>
     <div class="hidden md:flex space-x-8 text-gray-700">
-      <router-link to="/" class="text-sm">Home</router-link>
-      <router-link to="/about-us" class="text-sm">About Us</router-link>
-      <router-link to="/features" class="text-sm">Features</router-link>
-      <router-link to="/kindness-volunteering" class="text-sm">Kindness & Volunteering</router-link>
-      <router-link to="/faqs" class="text-sm">FAQs</router-link>
+      <router-link to="/landing" :class="[route.fullPath=='/landing'?'font-medium':'font-normal','text-sm']">Home</router-link>
+      <router-link to="/about-us" :class="[route.fullPath=='/about-us'?'font-medium':'font-normal','text-sm']">About Us</router-link>
+      <router-link to="/features" :class="[route.fullPath=='/features'?'font-medium':'font-normal','text-sm']">Features</router-link>
+      <router-link to="/kindness-volunteering" :class="[route.fullPath=='/kindness-volunteering'?'font-medium':'font-normal','text-sm']">Kindness & Volunteering</router-link>
+      <router-link to="/faqs" :class="[route.fullPath=='/faqs'?'font-medium':'font-normal','text-sm']">FAQs</router-link>
     </div>
     <div class="flex items-center gap-5 justify-center">
+      <Dropdown class="block md:hidden" :options="[
+        {
+          label: 'Home',
+          onClick: () => { },
+          icon: () => h(FeatherIcon, { name: 'home' }),
+        },
+        {
+          label: 'About Us',
+          onClick: () => { },
+          icon: () => h(FeatherIcon, { name: 'users' }),
+        },
+        {
+          label: 'Features',
+          onClick: () => { },
+          icon: () => h(FeatherIcon, { name: 'layers' }),
+        },
+        {
+          label: 'Kindness & Volunteering',
+          onClick: () => { },
+          icon: () => h(FeatherIcon, { name: 'heart' }),
+        },
+        {
+          label: 'FAQs',
+          onClick: () => { },
+          icon: () => h(FeatherIcon, { name: 'message-circle' }),
+        },
+      ]">
+        <Button>
+          <template #icon>
+            <FeatherIcon name="menu" class="h-4 w-4" />
+          </template>
+        </Button>
+      </Dropdown>
+      <router-link v-if="route.fullPath=='/landing'" to="/login" class="h-9 flex items-center justify-center bg-secondary rounded-sm px-4 text-white text-base font-medium">Continue as volunteer</router-link>
     </div>
   </nav>
 </template>
@@ -73,7 +109,7 @@ import { ref, onMounted, h } from 'vue';
 import { Dropdown, Button, FeatherIcon, Avatar, Tooltip } from 'frappe-ui';
 import { inject } from 'vue';
 import Notifications from './Notifications.vue';
-import { useRouter,useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const session = inject('session');
 const auth = inject('auth');
