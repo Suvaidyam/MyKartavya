@@ -6,7 +6,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('@/pages/Home.vue'),
+    component: () => import('@/pages/Mykarma/Mykarma.vue'),
   },
   {
     path: '/verify',
@@ -17,11 +17,6 @@ const routes = [
     path: '/test',
     name: 'Try',
     component: () => import('@/pages/Try.vue'),
-  },
-  {
-    path: '/mykarma',
-    name: 'Mykarma',
-    component: () => import('@/pages/Mykarma/Mykarma.vue'),
   },
   {
     path: '/volunteering',
@@ -36,7 +31,7 @@ const routes = [
 
   {
     name: 'Login',
-    path: '/account/login',
+    path: '/login',
     component: () => import('@/pages/Login.vue'),
   },
 
