@@ -11,6 +11,12 @@ const routes = [
     meta: { requiresAuth: true }  
   },
   {
+    path: '/landing',
+    name: 'LandingPage',
+    component: () => import('@/pages/Home.vue'),
+    meta: { requiresAuth: false }  
+  },
+  {
     path: '/verify',
     name: 'Verify',
     component: () => import('@/pages/Verifyotp.vue'),
