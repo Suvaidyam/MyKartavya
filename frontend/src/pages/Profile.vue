@@ -1,21 +1,23 @@
 <template>
-    <div class="max-w-[1920px] mx-auto bg-gray-50 min-h-screen">
-        <div class="relative">
-            <div class="w-full h-48 overflow-hidden">
-                <img src="../assets/Rectangle.png" alt="Banner" class="w-full h-full object-cover" />
-            </div>
-            <div class="absolute left-8 -bottom-8">
-                <div class="w-32 h-32 rounded-full border-4 border-white overflow-hidden">
-                    <img src="../assets/Ellipse 9.png" alt="Profile" class="w-full h-full object-cover" />
+    <div class="max-w-[1920px] pt-[82px] pb-8 px-10 mx-auto bg-gray-50 min-h-screen">
+        <div class="h-[291px] rounded-b-md bg-white">
+            <div class="relative">
+                <div class="w-full h-[152px]">
+                    <img src="../assets/Rectangle.png" alt="Banner" class="w-full h-full object-cover" />
+                </div>
+                <div class="absolute left-8 -bottom-8">
+                    <div class="w-32 h-32 rounded-full border-4 border-white overflow-hidden">
+                        <img src="../assets/Ellipse 9.png" alt="Profile" class="w-full h-full object-cover" />
+                    </div>
                 </div>
             </div>
+            <div class="pt-10 px-4">
+                <h1 class="text-3xl font-medium">Aayush Kumar</h1>
+                <p class="text-bodyh1 text-gray-600 mt-1">aayush.kumar@mail.com</p>
+                <button class="text-lg text-orange-500 font-normal mt-2">EDIT PROFILE</button>
+            </div>
         </div>
-        <div class="pt-20 px-8 pb-6">
-            <h1 class="text-2xl font-semibold">Aayush Kumar</h1>
-            <p class="text-bodyh1 text-gray-600 mt-1">aayush.kumar@mail.com</p>
-            <button class="text-caption text-orange-500 font-medium mt-2">EDIT PROFILE</button>
-        </div>
-        <div class="px-4 md:px-8 pb-8">
+        <div class="pt-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white rounded-lg p-6 shadow-sm">
                     <h2 class="text-xl font-semibold mb-6">Personal Info</h2>

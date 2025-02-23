@@ -1,119 +1,107 @@
 <template>
-    <aside class=" w-full xl:w-1/4 bg-white rounded-md  lg:mt-0">
-          <div class="flex items-center mb-4 border border-gray-100 p-3 rounded-md">
-            <img src="..//assets/download (2).jpeg" alt="Profile Picture"
-              class="rounded-full w-[60px] h-[60px] object-cover mr-4" />
-            <div>
-              <h2 class="text-[14px] font-medium">Aayush Kumar</h2>
-              <p class="text-gray-600 text-[12px]">aayush.kumar@mail.com</p>
-              <button class="text-[10px] font-semibold mt-2" style="color: #FF5722;">Edit Profile</button>
-            </div>
-          </div>
-
-          <h3 class="text-[19px] font-medium  mb-4">Total Karma Points</h3>
-          <p class="text-[47px] font-bold mb-4 text-red-500">1,823</p>
-
-          <div class="grid grid-cols-2 gap-4">
-            <div class="border border-gray-300 rounded-lg p-4 text-center">
-              <span class="block text-green-500 text-xl">🫶</span>
-              <h4 class="font-medium text-[10px]" style="color: #666666;">Act of Random Kindness</h4>
-              <p class="text-lg">98</p>
-            </div>
-
-            <div class="border border-gray-300 rounded-lg p-4 text-center">
-              <span class="block text-yellow-500 text-xl">✅</span>
-              <h4 class="font-medium text-[10px]" style="color: #666666;">Completed Opportunities</h4>
-              <p class="text-lg">12</p>
-            </div>
-
-            <div class="border border-gray-300 rounded-lg p-4 text-center">
-              <span class="block text-blue-500 text-xl">⏳</span>
-              <h4 class="font-medium text-[10px]" style="color: #666666;">Time Donated</h4>
-              <p class="text-lg">76 hrs</p>
-            </div>
-
-            <div class="border border-gray-300 rounded-lg p-4 text-center">
-              <span class="block text-purple-500 text-xl">💰</span>
-              <h4 class="font-medium text-[10px]" style="color: #666666;">Money Saved</h4>
-              <p class="text-lg">₹ 1,765</p>
-            </div>
-          </div>
-          <!-- <h2 class="text-lg font-semibold mb-4">User Info</h2>
-      <div class="bg-white p-4 rounded-lg shadow-md">
-        <p class="font-bold">Aayush Kumar</p>
-        <p class="text-sm">aayush.kumar@mail.com</p>
-        <div class="mt-2">
-          <p>Total Karma Points: 1,823</p>
-          <p>Act of Random Kindness: 98</p>
-          <p>Completed Opportunities: 12</p>
-          <p>Time Donated: 76 hrs</p>
-          <p>Money Saved: ₹1,765</p>
+  <aside class=" w-full xl:w-1/4 bg-white rounded-md pt-3 lg:mt-0">
+    <div class="px-3">
+      <div class="flex items-center mb-4 border-b border-gray-100 p-3">
+        <img src="../../assets/download (2).jpeg" alt="Profile Picture"
+          class="rounded-full w-[60px] h-[60px] object-cover mr-4" />
+        <div>
+          <h2 class="text-[14px] font-medium">Aayush Kumar</h2>
+          <p class="text-[#666666] text-xs font-normal">aayush.kumar@mail.com</p>
+          <button class="text-[10px] font-medium mt-2" style="color: #FF5722;">Edit Profile</button>
         </div>
       </div>
-      <h2 class="text-lg font-semibold mt-4">Top Performers</h2>
-      <ul>
-        <li>Anaya Singh - 189 Points</li>
-        <li>Jayant Bhandari - 182 Points</li>
-        <li>Swati Mathwal - 176 Points</li>
-      </ul> -->
-          <div class="bg-white rounded-lg shadow-md p-3 w-full mt-4">
-            <h2 class="text-[16px] font-medium text-center mb-4">Top Performers</h2>
-            <div class="flex justify-center mb-6">
-              <div class="relative">
-                <img src="../../assets/icons8-queen-48.png" alt="Trophy"
-                  class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10" />
-                <div class="bg-yellow-300 rounded-full w-32 h-32 flex items-center justify-center">
-                  <img src="../../assets/download (2).jpeg" alt="Anaya Singh" class="rounded-full w-24 h-24" />
-                </div>
-              </div>
-            </div>
 
-            <div class="flex justify-around mb-6">
-              <div class="flex flex-col items-center">
-                <img src="../../assets/download (2).jpeg" alt="Jayant Bhandari" class="rounded-full w-16 h-16" />
-                <p>Jayant Bhandari<br><span class="text-[10px] font-normal">90 Points 60 hr</span></p>
-              </div>
-              <div class="flex flex-col items-center">
-                <img src="../../assets/download (3).jpeg" alt="Swati Mathwal" class="rounded-full w-16 h-16" />
-                <p>Swati Mathwal<br><span class="text-[10px] font-normal">60 Points <span>30 hr</span></span></p>
-              </div>
-            </div>
+      <div class="border-b">
+        <h3 class="text-[19px] font-medium">Total Karma Points</h3>
+        <p class="text-[47px] font-semibold text-red-500">1,823</p>
+      </div>
 
-            <table class="w-full text-left">
-              <thead>
-                <tr>
-                  <th class="text-[10px]">Name</th>
-                  <th class="text-[10px]">Time</th>
-                  <th class="text-[10px]">Karma Points</th>
-                  <th class="text-[10px]">Rank</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(user, index) in users" :key="index" class="border-t">
-                  <td class="text-[12px] font-medium">{{ user.name }}</td>
-                  <td class="text-[12px] font-normal">{{ user.time }} hr</td>
-                  <td class="text-[12px] font-normal">{{ user.points }} Points</td>
-                  <td class="text-[12px] font-normal">{{ user.rank }}</td>
-                </tr>
-              </tbody>
-            </table>
+      <div class="grid grid-cols-2 gap-4 pt-3">
+        <div class="border border-gray-300 rounded-lg p-4 text-center">
+          <span class="block text-green-500 text-xl">🫶</span>
+          <h4 class="font-medium text-[10px]" style="color: #666666;">Act of Random Kindness</h4>
+          <p class="text-lg">98</p>
+        </div>
 
-            <div class=" bg-white w-full max-w-lg">
-              <div class="flex justify-between items-center">
-                <h2 class="text-[16px] font-medium pt-3">SDGs Impacted</h2>
-                <a href="#" class="text-orange-500 text-[10px] font-medium">VIEW ALL</a>
-              </div>
-              <div v-for="(sdg, index) in sdgs" :key="index" class="flex items-start space-x-4 mt-4">
-                <img :src="sdg.icon" :alt="sdg.title" class="w-10 h-10 rounded-[4px]" />
-                <div>
-                  <h3 class="text-[14px] font-normal">{{ sdg.title }}</h3>
-                  <p class="text-gray-500 text-sm">Time Donated : {{ sdg.time }}</p>
-                  <p class="text-gray-500 text-sm">Money Saved : ₹ {{ sdg.money }}</p>
-                </div>
-              </div>
-            </div>
+        <div class="border border-gray-300 rounded-lg p-4 text-center">
+          <span class="block text-yellow-500 text-xl">✅</span>
+          <h4 class="font-medium text-[10px]" style="color: #666666;">Completed Opportunities</h4>
+          <p class="text-lg">12</p>
+        </div>
+
+        <div class="border border-gray-300 rounded-lg p-4 text-center">
+          <span class="block text-blue-500 text-xl">⏳</span>
+          <h4 class="font-medium text-[10px]" style="color: #666666;">Time Donated</h4>
+          <p class="text-lg">76 hrs</p>
+        </div>
+
+        <div class="border border-gray-300 rounded-lg p-4 text-center">
+          <span class="block text-purple-500 text-xl">💰</span>
+          <h4 class="font-medium text-[10px]" style="color: #666666;">Money Saved</h4>
+          <p class="text-lg">₹ 1,765</p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg px-3 w-full mt-4">
+      <h2 class="text-[16px] font-medium ">Top Performers</h2>
+      <div class="flex justify-center py-6">
+        <div class="relative">
+          <img src="../../assets/icons8-queen-48.png" alt="Trophy"
+            class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-3/4 z-10" />
+          <div class="bg-yellow-300 rounded-full w-[71px] h-[71px] flex items-center justify-center">
+            <img src="../../assets/download (2).jpeg" alt="Anaya Singh" class="rounded-full w-[71px] h-[71px]" />
           </div>
-        </aside>
+        </div>
+      </div>
+
+      <div class="flex justify-around mb-6">
+        <div class="flex flex-col items-center">
+          <img src="../../assets/download (2).jpeg" alt="Jayant Bhandari" class="rounded-full w-[50px] h-[50px]" />
+          <p class="text-xs font-medium pt-2">Jayant Bhandari</p>
+          <p class="text-[10px] font-normal pt-2">90 Points 60 hr</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="../../assets/download (3).jpeg" alt="Swati Mathwal" class="rounded-full w-[50px] h-[50px]" />
+          <p class="text-xs font-medium pt-2">Swati Mathwal</p>
+          <p class="text-[10px] font-normal pt-2">60 Points 30 hr</p>
+        </div>
+      </div>
+
+      <table class="w-full text-left">
+        <thead>
+          <tr>
+            <th class="text-[10px]">Name</th>
+            <th class="text-[10px]">Time</th>
+            <th class="text-[10px]">Karma Points</th>
+            <th class="text-[10px]">Rank</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(user, index) in users" :key="index" class="border-t">
+            <td class="text-[12px] font-medium">{{ user.name }}</td>
+            <td class="text-[12px] font-normal">{{ user.time }} hr</td>
+            <td class="text-[12px] font-normal">{{ user.points }} Points</td>
+            <td class="text-[12px] font-normal">{{ user.rank }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class=" bg-white w-full max-w-lg">
+        <div class="flex justify-between items-center">
+          <h2 class="text-[16px] font-medium pt-3">SDGs Impacted</h2>
+          <a href="#" class="text-orange-500 text-[10px] font-medium">VIEW ALL</a>
+        </div>
+        <div v-for="(sdg, index) in sdgs" :key="index" class="flex items-start space-x-4 mt-4">
+          <img :src="sdg.icon" :alt="sdg.title" class="w-10 h-10 rounded-[4px]" />
+          <div>
+            <h3 class="text-[14px] font-normal">{{ sdg.title }}</h3>
+            <p class="text-gray-500 text-sm">Time Donated : {{ sdg.time }}</p>
+            <p class="text-gray-500 text-sm">Money Saved : ₹ {{ sdg.money }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
 </template>
 
 <script setup>

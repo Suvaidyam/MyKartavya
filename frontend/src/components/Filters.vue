@@ -1,5 +1,5 @@
 <template>
-    <aside class="w-60 min-w-60 hidden lg:block p-4 border-r border-gray-200">
+    <aside class="w-[270px] min-w-[270px] hidden lg:block p-4 border-r border-gray-200">
         <div class="  bg-white">
             <div class="flex justify-between items-center mb-3">
                 <h3 class="text-lg font-medium">Filter by</h3>
@@ -22,7 +22,7 @@
         </div>
     </aside>
     <!-- mobile -->
-    <div class="w-full block lg:hidden px-4 pb-3">
+    <div class="w-full block lg:hidden px-4 pt-3">
         <div class="flex gap-1 flex-wrap">
             <Menu v-for="item in filter_by" as="div" class="relative inline-block text-left">
                 <div>

@@ -1,27 +1,22 @@
 <template>
-    <div class="max-w-[1920px] mx-auto p-4 bg-gray-50">
-        <div class="relative">
-            <div class="w-full h-48 bg-gray-200  overflow-hidden">
-                <img src="../assets/Rectangle.png" alt="Profile Banner" class="w-full h-full object-cover" />
-            </div>
-            <div class="absolute left-8 -bottom-8">
-                <div class="w-24 h-24 rounded-full border-4 border-white overflow-hidden">
-                    <img src="../assets/Ellipse 9.png " alt="Profile Image" class="w-full h-full object-cover" />
+    <div class="max-w-[1920px] mx-auto px-10 pt-[82px] pb-4 bg-gray-50">
+      <div class="h-[261px] rounded-b-md bg-white">
+            <div class="relative">
+                <div class="w-full h-[152px]">
+                    <img src="../assets/Rectangle.png" alt="Banner" class="w-full h-full object-cover" />
+                </div>
+                <div class="absolute left-8 -bottom-8">
+                    <div class="w-32 h-32 rounded-full border-4 border-white overflow-hidden">
+                        <img src="../assets/Ellipse 9.png" alt="Profile" class="w-full h-full object-cover" />
+                    </div>
                 </div>
             </div>
+            <div class="pt-10 px-4">
+                <h1 class="text-3xl font-medium">Aayush Kumar</h1>
+                <p class="text-bodyh1 text-gray-600 mt-1">aayush.kumar@mail.com</p>
+            </div>
         </div>
-      <div class="bg-white shadow p-6 mb-6">
-        <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
-          <div class="flex-shrink-0">
-             
-          </div>
-          <div class="py-4">
-            <h1 class="text-[24px] py font-semibold text-gray-700">Aayush Kumar</h1>
-            <p class=" text-[16px] text-gray-500">aayush.kumar@gmail.com</p>
-          </div>
-        </div>
-      </div>
-        <div class="bg-white rounded-lg shadow p-6">
+        <div class="bg-white rounded-lg shadow mt-4 p-6">
         <h2 class="text-xl font-semibold text-gray-700 mb-4">Personal Info</h2>
           <form @submit.prevent="onSubmit">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
