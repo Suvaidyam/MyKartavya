@@ -15,10 +15,10 @@ required_apps = [
 fixtures=[
     # 'Role',
     # 'Role Profile',
-    # 'Builder Page',
+    'Builder Page',
     # 'SDG',
     # 'Skills',
-    'Property Setter',
+    # 'Property Setter',
     # 'SVADatatable Configuration',
     # "Workflow", "Workflow State", "Workflow Action",
     # "State",
