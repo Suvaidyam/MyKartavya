@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-pink-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen bg-pink-50  pt-[62px] pb-12 px-4 sm:px-6 lg:px-8">
       <div class="max-w-[1920px] mx-auto">
         <div class="text-center mb-12">
           <h1 class="text-heading1 font-medium text-gray-900">Contact Us</h1>

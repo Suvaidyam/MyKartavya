@@ -1,11 +1,5 @@
 <template>
     <div class=" h-screen w-full">
-        <!-- NAVBAR -->
-        <div class="sticky top-0 z-20">
-
-            <Navbar />
-        </div>
-        <!-- NAVBAR END -->
         <!-- baner section image -->
         <section>
             <div class="relative w-full  ">
@@ -13,24 +7,29 @@
                     class="w-full h-[456px] object-cover" />
             </div>
             <div class="absolute left-8 top-48 bg-white shadow-lg rounded-xl p-4 md:p-6 z-10 w-[448px]">
-                <h3 class="text-lg font-semibold">Empower the needy</h3>
-                <span class="text-red-500 text-sm">Online</span>
-                <div class="flex items-center mt-2 text-gray-600 text-sm">
-                    <CalendarIcon class="w-4 h-4 mr-1" />
-                    <span><i class="far fa-calendar-alt mr-1"></i>01 Oct, 2024 - 30 Nov, 2024</span>
+                <div class="border-b pb-2">
+                    <h3 class="text-3xl font-normal">Empower the needy</h3>
+                    <span class="text-red-500 text-xs font-medium">Online</span>
                 </div>
-                <div class="flex items-center mt-2 text-gray-600 text-sm">
-                    <ClockIcon class="w-4 h-4 mr-1" />
-                    <span><i class="far fa-clock mr-1"></i>50 hr</span>
-                    <span class="ml-auto text-red-500 flex items-center">
-                        <HeartIcon class="w-4 h-4 mr-1" /> 40 Points
-                    </span>
-                    
+                <div class="flex items-center pt-3 gap-3 text-[#0B0B0B] text-sm">
+                    <div class="flex items-center">
+                        <FeatherIcon class="w-4 h-4 mr-1" name="calendar" />
+                        <p>01 Oct, 2024 - 30 Nov, 2024</p>
+                    </div>
                 </div>
-                <div class="w-full bg-gray-200 rounded-full h-2.5 mt-4">
-                    <div class="bg-green-500 h-2.5 rounded-full" style="width: 60%"></div>
+                <div class="flex border-b pb-3 items-center pt-3 gap-3 justify-between text-[#0B0B0B] text-sm">
+                    <div class="flex items-center">
+                        <FeatherIcon class="w-4 h-4 mr-1" name="clock" />
+                        <p>50 hr</p>
+                    </div>
+                    <div class="flex">
+                        40 Points
+                    </div>
                 </div>
-                <p class="text-sm text-gray-600 mt-2">60% completed</p>
+                <div class="w-full bg-gray-200 rounded-full h-[5px] mt-3">
+                    <div class="bg-green-500 h-[5px] rounded-full" style="width: 60%"></div>
+                </div>
+                <p class="text-sm text-[#0B0B0B] mt-2">60% completed</p>
             </div>
         </section>
         <!-- banner section image end -->
@@ -103,7 +102,7 @@
                                     On-Ground
                                 </div>
                                 <div
-                                    class="absolute top-2 right-2 bg-white text-gray-800 text-xs px-2 py-1 rounded-full shadow">
+                                    class="absolute top-2 right-2 bg-white text-[#0B0B0B] text-xs px-2 py-1 rounded-full shadow">
                                     <span class="font-semibold">40 Points</span>
                                 </div>
                                 <div
@@ -150,7 +149,7 @@
                                     On-Ground
                                 </div>
                                 <div
-                                    class="absolute top-2 right-2 bg-white text-gray-800 text-xs px-2 py-1 rounded-full shadow">
+                                    class="absolute top-2 right-2 bg-white text-[#0B0B0B] text-xs px-2 py-1 rounded-full shadow">
                                     <span class="font-semibold">40 Points</span>
                                 </div>
                                 <div
@@ -197,7 +196,7 @@
                                     On-Ground
                                 </div>
                                 <div
-                                    class="absolute top-2 right-2 bg-white text-gray-800 text-xs px-2 py-1 rounded-full shadow">
+                                    class="absolute top-2 right-2 bg-white text-[#0B0B0B] text-xs px-2 py-1 rounded-full shadow">
                                     <span class="font-semibold">40 Points</span>
                                 </div>
                                 <div
@@ -249,9 +248,9 @@
 </template>
 
 <script setup>
-import Navbar from  '../components/Navbar.vue';
+import Navbar from '../components/Navbar.vue';
 import Stepper from '../components/Stepper.vue';
-
+import {FeatherIcon} from 'frappe-ui';
 
 
 // export default {

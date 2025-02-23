@@ -1,8 +1,5 @@
 <template>
-  <div class=" ">
-    <div>
-      <Navbar />
-    </div>
+  <div class=" pt-[62px]">
     <section class="flex flex-col lg:flex-row px-5">
       <Filters />
       <main class="lg:w-3/4 p-4">
