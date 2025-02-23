@@ -45,7 +45,7 @@
         <Button class="w-9 h-9 min-w-9 min-h-9 rounded-full">
           <template #icon>
             <Avatar class="w-9 h-9 min-w-9 min-h-9" :shape="'circle'" :ref_for="true"
-              :image="auth.user_image" :label="auth.cookie.full_name" size="md" />
+              :image="auth?.user_image" :label="auth?.cookie?.full_name" size="md" />
           </template>
         </Button>
       </Dropdown>
