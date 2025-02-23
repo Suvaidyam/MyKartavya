@@ -1,10 +1,11 @@
 import './index.css'
 
-import { createApp } from 'vue'
+import { createApp ,reactive} from 'vue'
 import router from './router'
 import App from './App.vue'
 import { session } from './data/session'
 import FeatherIcon from 'feather-icons'
+import Auth from './libs/controllers/auth'
 
 import {
   Button,
@@ -16,13 +17,14 @@ import {
 } from 'frappe-ui'
 
 let app = createApp(App)
-
+const auth = reactive(new Auth());
 setConfig('resourceFetcher', frappeRequest)
 
 app.use(router)
 app.use(resourcesPlugin)
 app.use(FeatherIcon)
 app.provide('session', session)
+app.provide('auth', auth)
 app.component('Button', Button)
 app.component('Card', Card)
 app.component('Input', Input)

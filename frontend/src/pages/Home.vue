@@ -44,6 +44,13 @@
 </div>
 </template>
 <script setup>
+import { ref ,inject} from 'vue';
+
+const auth = inject('auth');
+
+// if(auth.isLoggedIn){
+//   router.push('/');
+// }
 // No additional logic needed for this static UI
 </script>
 <style>

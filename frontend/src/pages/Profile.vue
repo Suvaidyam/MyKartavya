@@ -7,13 +7,16 @@
                 </div>
                 <div class="absolute left-8 -bottom-8">
                     <div class="w-32 h-32 rounded-full border-4 border-white overflow-hidden">
-                        <img src="../assets/Ellipse 9.png" alt="Profile" class="w-full h-full object-cover" />
+                        <img v-if="auth.user_image" :src="auth.user_image" alt="Profile" class="w-full h-full object-cover" />
+                        <div v-else class="w-full h-full bg-gray-200 flex items-center justify-center text-[40px] text-gray-600">
+                            {{ auth.cookie.full_name.charAt(0) }}
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="pt-10 px-4">
-                <h1 class="text-3xl font-medium">Aayush Kumar</h1>
-                <p class="text-bodyh1 text-gray-600 mt-1">aayush.kumar@mail.com</p>
+                <h1 class="text-3xl font-medium">{{ auth.cookie.full_name }}</h1>
+                <p class="text-bodyh1 text-gray-600 mt-1">{{ auth.cookie.user_id }}</p>
                 <button class="text-lg text-orange-500 font-normal mt-2">EDIT PROFILE</button>
             </div>
         </div>
@@ -176,44 +179,40 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'ProfilePage',
-    data() {
-        return {
-            certificates: [
-                {
-                    id: 1,
-                    title: 'Empower the needy',
-                    date: '12 Nov, 2024',
-                    image: '/cert1.jpg'
-                },
-                {
-                    id: 2,
-                    title: 'Beat the sugar',
-                    date: '14 Nov, 2024',
-                    image: '/cert2.jpg'
-                },
-                {
-                    id: 3,
-                    title: 'Bright Bites',
-                    date: '14 Nov, 2024',
-                    image: '/cert3.jpg'
-                },
-                {
-                    id: 4,
-                    title: 'Creation of a digital interface',
-                    date: '16 Nov, 2024',
-                    image: '/placeholder4.jpg'
-                },
-                {
-                    id: 5,
-                    title: 'Data Management System',
-                    date: '18 Nov, 2024',
-                    image: '/placeholder5.jpg'
-                }
-            ]
-        }
+<script setup>
+import { ref ,inject} from 'vue';
+
+const auth = inject('auth');
+const certificates = ref([
+    {
+        id: 1,
+        title: 'Empower the needy',
+        date: '12 Nov, 2024',
+        image: '/cert1.jpg'
+    },
+    {
+        id: 2,
+        title: 'Beat the sugar',
+        date: '14 Nov, 2024',
+        image: '/cert2.jpg'
+    },
+    {
+        id: 3,
+        title: 'Bright Bites',
+        date: '14 Nov, 2024',
+        image: '/cert3.jpg'
+    },
+    {
+        id: 4,
+        title: 'Creation of a digital interface',
+        date: '16 Nov, 2024',
+        image: '/placeholder4.jpg'
+    },
+    {
+        id: 5,
+        title: 'Data Management System',
+        date: '18 Nov, 2024',
+        image: '/placeholder5.jpg'
     }
-}
+]);
 </script>
