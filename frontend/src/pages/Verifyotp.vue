@@ -114,7 +114,7 @@ const verifyOTP = async () => {
       // router.push('/mykarma');
       window.location.reload();
     } else {
-      toast.error('Failed to verify OTP');
+      toast.error(response.message);
     }
   } else {
     try {

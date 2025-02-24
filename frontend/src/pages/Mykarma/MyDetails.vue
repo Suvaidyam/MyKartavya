@@ -10,7 +10,8 @@
         <div>
           <h2 class="text-[14px] font-medium">{{ auth.cookie.full_name }}</h2>
           <p class="text-[#666666] text-xs font-normal">{{ auth.cookie.user_id }}</p>
-          <button class="text-[11px] font-medium mt-2" style="color: #FF5722;">EDIT PROFILE</button>
+          <router-link to="/updateprofile" class="text-[11px] font-medium mt-2" style="color: #FF5722;">EDIT
+            PROFILE</router-link>
         </div>
       </div>
 
@@ -45,9 +46,9 @@
         </div>
       </div>
     </div>
-    <div class=" rounded-lg   w-full mt-4">
+    <div class="rounded-lg px-3 xl:px-0  w-full mt-4">
       <div
-        class="max-w-lg mx-auto rounded-t-xl px-6 py-4 relative overflow-hidden bg-gradient-to-b from-yellow-200 to-white">
+        class="rounded-t-xl px-6 py-4 relative overflow-hidden bg-gradient-to-b from-yellow-200 to-white">
         <!-- Background Image at the Top -->
         <div class="absolute top-0 left-0 w-full h-1/2 bg-cover bg-center"
           style="background-image: url('https://s3-alpha-sig.figma.com/img/314c/a6b6/6925cd67aa6829da55ab83120e89377c?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=MhdrmLTxP5LK4rgkhzgJrHhoB~dBaDieMGshleVZQuk6XQS9~32eIJdgogQD5QKflTfZ9BS0M02FYnwrvvcyRbBnaC9x4vq4iPEOeqtO6Xczb3zP1i0Rs0KmERk-qxGP8BX1JjVrOnXi1R5TzDv5p3-hqQaWeK~0oHJVYljIoXZtirUl5pt8w8Vh2G7OVUe3eu2XDuzN86DG6r2XRZzpflid2W1KWnnPFKCaavteAVUmMa7tW~j0Wq3tL0lqSfhl6~iEdkiocozghhGiE44DZfHTdIHS1qOjhTpeZv15dk23nfnSaoltbGxvbB-IvnYpa9nkCEH~svtuisP0SuBjFQ__');">
@@ -64,8 +65,9 @@
           <div class="relative">
             <div
               class="bg-orange-400 rounded-full w-20 h-20 flex items-center justify-center border-4 border-[#f17940]">
-              <img src="https://s3-alpha-sig.figma.com/img/12cd/3413/2ef9687c557520a96af542610c485c5d?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KclQc3FF9OzuW1fuMp8vjuu4QlDbwQ21IVr5l096zMiYcuDpYXSUhaU0IfBJPtz6Egs~JoIjg8yWazRrePBYTUkUDO~uiMqqj~b~gbjjsRKhQbRk4VhDZ9aoNarS8KT5Q~38afg9ZQZbxzYWvdML~Kad-0WKZ5QBRX1WEZkgV-7dRAwkyr9FW4ihSZchKsVAFvrH39jpPpS9lXhz5CT5rK2K29Ruq3wbOMhr-dsEFjzlXNgdN-9I8kRGaiyOQ4piNuXpt9dcjYCMQoUB~lTqnMtHAH8A~XulLWlh7KJmKCBUkQLoxO0P5RJEZxkQlUkWZU6t1eOHIWWNasK~TwannA__" alt="Anaya Singh"
-                class="rounded-full w-full h-full object-cover" />
+              <img
+                src="https://s3-alpha-sig.figma.com/img/12cd/3413/2ef9687c557520a96af542610c485c5d?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KclQc3FF9OzuW1fuMp8vjuu4QlDbwQ21IVr5l096zMiYcuDpYXSUhaU0IfBJPtz6Egs~JoIjg8yWazRrePBYTUkUDO~uiMqqj~b~gbjjsRKhQbRk4VhDZ9aoNarS8KT5Q~38afg9ZQZbxzYWvdML~Kad-0WKZ5QBRX1WEZkgV-7dRAwkyr9FW4ihSZchKsVAFvrH39jpPpS9lXhz5CT5rK2K29Ruq3wbOMhr-dsEFjzlXNgdN-9I8kRGaiyOQ4piNuXpt9dcjYCMQoUB~lTqnMtHAH8A~XulLWlh7KJmKCBUkQLoxO0P5RJEZxkQlUkWZU6t1eOHIWWNasK~TwannA__"
+                alt="Anaya Singh" class="rounded-full w-full h-full object-cover" />
             </div>
             <span
               class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
@@ -114,54 +116,54 @@
         </div>
 
       </div>
-
-          <table class="w-full">
-          <thead class="bg-gray-50 p-2">
-            <tr>
-              <th class="text-[10px] font-normal py-2 text-gray-700">Name</th>
-              <th class="text-[10px] font-normal py-2 px-4 text-gray-700">Time</th>
-              <th class="text-[10px] font-normal py-2 text-gray-700">Karma Points</th>
-              <th class="text-[10px] font-normal py-2 text-gray-700">Rank</th>
-            </tr>
-
-          </thead>
-          <tbody>
-            <tr v-for="(user, index) in users" :key="index" class="border-t border-[#b0b3b0] bg-white ">
-              <td class="text-[12px]  font-medium flex  items-center px-3">
-                <div class="w-10 h-8 flex  items-center ">
-                  <img
-                    src="https://s3-alpha-sig.figma.com/img/12cd/3413/2ef9687c557520a96af542610c485c5d?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KclQc3FF9OzuW1fuMp8vjuu4QlDbwQ21IVr5l096zMiYcuDpYXSUhaU0IfBJPtz6Egs~JoIjg8yWazRrePBYTUkUDO~uiMqqj~b~gbjjsRKhQbRk4VhDZ9aoNarS8KT5Q~38afg9ZQZbxzYWvdML~Kad-0WKZ5QBRX1WEZkgV-7dRAwkyr9FW4ihSZchKsVAFvrH39jpPpS9lXhz5CT5rK2K29Ruq3wbOMhr-dsEFjzlXNgdN-9I8kRGaiyOQ4piNuXpt9dcjYCMQoUB~lTqnMtHAH8A~XulLWlh7KJmKCBUkQLoxO0P5RJEZxkQlUkWZU6t1eOHIWWNasK~TwannA__"
-                    alt="Abhinav"class="w-6 h-6  rounded-full">
-
+      <table class="w-full">
+        <thead class="bg-gray-50">
+          <tr class="px-2">
+            <th class="text-[10px] pl-1 font-normal text-gray-700 text-left">Name</th>
+            <th class="text-[10px] font-normal text-gray-700 text-center">Time</th>
+            <th class="text-[10px] font-normal text-gray-700 text-center">Karma Points</th>
+            <th class="text-[10px] font-normal text-gray-700 text-center">Rank</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(user, index) in users" :key="index" class="border-t border-[#b0b3b0] bg-white">
+            <td class="text-[12px] font-medium flex items-center">
+              <div class="w-10 h-8 flex items-center pl-1">
+                <img v-if="user.avatar" :src="user.avatar" :alt="user.name" class="w-6 h-6 rounded-full object-cover" />
+                <div v-else class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center">
+                  {{ user.name.charAt(0) }}
                 </div>
-                <span class="text-gray-800 font-medium">{{ user.name }}</span>
-              </td>
-              <td class="text-[12px] font-normal">{{ user.time }} hr</td>
-              <td class="text-[12px] font-normal">{{ user.points }} Points</td>
-              <td class="text-[12px] font-normal">
-                <span class="w-4 h-4 ">
-                <i class="fa fa-caret-up text-green-600 " aria-hidden="true"></i>
-                </span>
-                {{ user.rank }}</td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
+              </div>
+              <span class="text-gray-800 font-medium text-[10px]">{{ user.name }}</span>
+            </td>
+            <td class="text-[10px] font-normal text-center ">{{ user.time }} hr</td>
+            <td class="text-[10px] font-normal text-center ">{{ user.points }} Points</td>
+            <td class="text-[10px] font-normal text-center  flex justify-center items-center gap-1">
+              <i class="fa fa-caret-up text-green-600" aria-hidden="true"></i>
+              {{ user.rank }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-      <div class=" bg-white w-full max-w-lg px-4 border-t border-[#b0b3b0] ">
-        <div class="flex justify-between items-center">
-          <h2 class="text-[16px] font-medium pt-6">SDGs Impacted</h2>
-          <a href="#" class="text-orange-500 text-[10px] font-medium">VIEW ALL</a>
-        </div>
-        <div v-for="(sdg, index) in sdgs" :key="index" class="flex items-center space-x-4 pt-4">
-          <img :src="sdg.icon" :alt="sdg.title" class="w-10 h-10 rounded-[4px]" />
-          <div>
-            <h3 class="text-[14px] font-normal">{{ sdg.title }}</h3>
-            <p class="text-gray-500  fornt-normal text-[12px]">Time Donated : <span class="text-gray-800 ">{{ sdg.time }}</span></p>
-            <p class="text-gray-500 fornt-normal text-[12px]">Money Saved : <span class="text-gray-800 "> ₹ {{ sdg.money }}</span></p>
-          </div>
+    </div>
+
+    <div class=" bg-white w-full px-4 border-t border-[#b0b3b0] ">
+      <div class="flex justify-between items-center">
+        <h2 class="text-[16px] font-medium pt-6">SDGs Impacted</h2>
+        <a href="#" class="text-orange-500 text-[10px] font-medium">VIEW ALL</a>
+      </div>
+      <div v-for="(sdg, index) in sdgs" :key="index" class="flex items-center space-x-4 pt-4">
+        <img :src="sdg.icon" :alt="sdg.title" class="w-10 h-10 rounded-[4px]" />
+        <div>
+          <h3 class="text-[14px] font-normal">{{ sdg.title }}</h3>
+          <p class="text-gray-500  fornt-normal text-[12px]">Time Donated : <span class="text-gray-800 ">{{ sdg.time
+          }}</span></p>
+          <p class="text-gray-500 fornt-normal text-[12px]">Money Saved : <span class="text-gray-800 "> ₹ {{ sdg.money
+          }}</span></p>
         </div>
       </div>
+    </div>
   </aside>
 </template>
 
