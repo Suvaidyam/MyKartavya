@@ -67,7 +67,7 @@ const email = ref('');
 const loading = ref(false);
 const get_otp = async () => {
   if (email.value === '') {
-    alert('Please enter email');
+    toast.error('Email is required');
     return;
   }
   loading.value = true;
