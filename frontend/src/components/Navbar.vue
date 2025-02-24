@@ -5,8 +5,9 @@
     <a class="text-[#000000] font-normal text-[12px]">Register as Company</a>
     <a class="text-[#000000] font-normal text-[12px]">Register as NGO</a>
   </div>
+<div class="bg-white h-[60px] shadow-md">
   <nav v-if="['/', '/volunteering', '/profile', '/empower', '/updateprofile', '/'].includes(route.fullPath)"
-    class="flex items-center justify-between bg-white h-[60px] shadow-md px-[36px]">
+    class="flex items-center justify-between w-full px-[36px] max-w-[1920px] mx-auto h-full">
     <router-link to="/" class="flex items-center space-x-4">
       <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
     </router-link>
@@ -54,7 +55,7 @@
     </div>
   </nav>
   <!--  -->
-  <nav v-else class="flex items-center justify-between bg-white h-[60px] shadow-md px-[36px]">
+  <nav v-else class="flex items-center justify-between h-full px-[36px] max-w-[1920px] mx-auto">
     <router-link to="/" class="flex items-center space-x-4">
       <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
     </router-link>
@@ -102,6 +103,7 @@
       <router-link v-if="route.fullPath=='/landing'" to="/login" class="h-9 flex items-center justify-center bg-secondary rounded-sm px-4 text-white text-base font-medium">Continue as volunteer</router-link>
     </div>
   </nav>
+</div>
 </template>
 
 <script setup>
