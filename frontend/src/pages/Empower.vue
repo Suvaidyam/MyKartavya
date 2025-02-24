@@ -273,20 +273,14 @@
                     </div>
                 </div>
             </div>
-
-
         </section>
-
         <!-- main section end  -->
 
     </div>
 </template>
 
 <script setup>
-import Navbar from '../components/Navbar.vue';
 import Stepper from '../components/Stepper.vue';
-import {FeatherIcon} from 'frappe-ui';
-import { h } from 'vue';
 import { Facebook, Twitter, Linkedin, MessageCircle,Share2 } from 'lucide-vue-next';
 
 const icons = [

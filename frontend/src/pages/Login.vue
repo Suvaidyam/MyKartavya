@@ -71,12 +71,13 @@
 
 <script setup>
 import { ref, inject, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter ,useRoute} from 'vue-router'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
 const call = inject('call')
 const router = useRouter()
+const route = useRoute()
 const email = ref('')
 const loading = ref(false)
 const g_url = ref('')
@@ -87,9 +88,15 @@ const get_otp = async () => {
     toast.error('Email is required')
     return
   }
+  let url = ''
+  if(route.query.full_name){
+    url = 'register_send_otp'
+  }else{
+    url = 'send_otp'
+  }
   try {
     loading.value = true
-    const response = await call('mykartavya.email.send_otp', {
+    const response = await call(`mykartavya.email.${url}`, {
       email: email.value,
     })
     if (response.status === 'success') {

@@ -44,8 +44,8 @@ def send_otp(email):
         frappe.logger().debug(f"Attempting to send OTP to email: {email}")
 
         # Check if user exists with more detailed logging
-        user_exists = frappe.db.exists("User", email)
-        frappe.logger().debug(f"User exists check result: {user_exists}")
+        user_exists = frappe.db.exists("SVA User", {'email': email})
+        frappe.logger().debug(f"SVA User exists check result: {user_exists}")
         
         if not user_exists:
             raise OTPError(_("No user found with this email address"))
@@ -139,6 +139,11 @@ def send_otp_email(email, otp, type="login"):
         else:
             # Default HTML message
             action_text = "Login" if type == "login" else "Complete Registration"
+            url = ''
+            if type == "register":
+                full_path = f"frontend/verify?email={email}full_name={'Test'}"
+            else:
+                full_path = f"frontend/verify?email={email}"
             message = f"""
             <!DOCTYPE html>
             <html lang="en">
@@ -207,7 +212,7 @@ def send_otp_email(email, otp, type="login"):
                     <div class="otp">{otp}</div>
                     <p>This OTP will expire in 10 minutes.</p>
                     <p>If you didn't request this OTP, please ignore this email.</p>
-                    <a href="#" class="button">{action_text} Now</a>
+                    <a href="{full_path}" class="button">{action_text} Now</a>
                     <div class="footer">
                         <p>Thank you for using our service!</p>
                         <p>If you have any questions, feel free to contact us.</p>
@@ -318,10 +323,10 @@ def register_send_otp(email):
         frappe.logger().debug(f"Attempting to send OTP to email: {email}")
 
         # Check if user already exists
-        user_exists = frappe.db.exists("User", email)
+        user_exists = frappe.db.exists("SVA User", {'email': email})
         if user_exists:
-            frappe.logger().warning(f"User with email {email} already exists.")
-            raise OTPError(_("User with this email already exists"))
+            frappe.logger().warning(f"SVA User with email {email} already exists.")
+            raise OTPError(_("SVA User with this email already exists"))
 
         # Handle OTP attempts and rate limiting
         attempts_key = get_attempt_cache_key(email)
@@ -433,16 +438,15 @@ def register_verify_otp(email, otp, full_name):
         else:
             last_name = ""
         user = frappe.get_doc({
-            "doctype": "User",
+            "doctype": "SVA User",
             "email": email,
             "first_name": first_name,
-            "last_name": last_name,
-            "send_welcome_email": 0,
-            "user_type": "Website User"
+            "last_name": last_name, 
+            "role_profiles":  "Volunteer" 
         })
-        user.append("role_profiles", {"role_profile": "Volunteer"})
-        user.insert(ignore_permissions=True)
-        frappe.logger().info(f"User {email} registered successfully")
+        # user.append("role_profiles", {"role_profile": "Volunteer"})
+        user.insert(ignore_permissions=True, ignore_mandatory=True)
+        frappe.logger().info(f"SVA User {email} registered successfully")
 
         # Log user in
         frappe.local.login_manager.login_as(email)
