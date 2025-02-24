@@ -84,7 +84,7 @@ const get_otp = async () => {
       router.push({ name: 'Verify', query: { email: email.value, full_name: full_name.value } });
     } else {
       loading.value = false;
-      toast.error('Something went wrong');
+      toast.error(response.message);
     }
   } catch (error) {
     toast.error('Something went wrong');
