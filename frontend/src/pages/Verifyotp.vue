@@ -27,14 +27,21 @@
         <h2 class="text-[20px] font-medium font-poppins text-gray-900 text-center">OTP Verification</h2>
         <p class="text-gray-600 text-center mt-1 text-[12px] font-normal">
           We've shared a 6-digit OTP on <span class="text-orange-500 font-semibold">{{ email || 'sample@gmail.com'
-          }}</span>
+            }}</span>
         </p>
 
         <!-- OTP Input -->
         <div class="flex justify-center space-x-2 mt-4">
-          <input v-for="(digit, index) in 6" :key="index" v-model="otp[index]" type="text" maxlength="1"
+          <!-- <input v-for="(digit, index) in 6" :key="index" v-model="otp[index]" type="text" maxlength="1"
             class="w-10 h-10 border rounded-[4px] text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
-            @input="moveToNext($event, index)">
+            @input="moveToNext($event, index)"> -->
+          <div style="display: flex; flex-direction: row">
+            <v-otp-input ref="otpInput" input-classes="otp-input" :conditionalClass="['one', 'two', 'three', 'four','five','six']"
+              separator="-" :num-inputs="6" v-model:value="bindValue"
+              :should-auto-focus="true" :should-focus-order="true" @on-change="handleOnChange"
+              input-type="number"
+              @on-complete="handleOnComplete" :placeholder="['*', '*', '*', '*','*','*']" />
+          </div>
         </div>
 
         <!-- Verify Button -->
@@ -72,12 +79,12 @@ const router = useRouter()
 const route = useRoute()
 const loading = ref(false)
 const email = ref(route.query.email || '')
-const otp = ref(['', '', '', '', '', '']) // Changed to 6 digits
+const bindValue = ref('') // Fix for OTP binding
 
 const getOTP = async () => {
   if (!email.value) {
-    alert('Please enter email')
-    return
+    toast.error('Please enter an email');
+    return;
   }
 
   try {
@@ -93,39 +100,64 @@ const getOTP = async () => {
 }
 
 const verifyOTP = async () => {
-  const otpValue = otp.value.join('')
-  if (otpValue.length !== 6) { // Changed to 6
-    toast.error('Please enter 6 digit OTP')
-    return
+  if (bindValue.value.length !== 6) {
+    toast.error('Please enter a 6-digit OTP');
+    return;
+  }
+  if (!email.value) {
+    router.push('/login');
+    return;
   }
   try {
     loading.value = true
-    const response = await call('mykartavya.email.verify_otp', { email: route.query.email, otp: otpValue });
+    const response = await call('mykartavya.email.verify_otp', { email: email.value, otp: bindValue.value });
+    loading.value = false;
+
     if (response.status === "success") {
-      loading.value = false
       toast.success('OTP verified successfully')
-      window.location.reload()
-      router.push('/')
-    }else{
-      toast.error('Failed to verify OTP')
-      loading.value = false
+      router.push('/mykarma');
+    } else {
+      toast.error('Invalid OTP, please try again');
     }
   } catch (error) {
-    loading.value = false
-    console.error('Error verifying OTP:', error)
-    toast.error('Failed to verify OTP')
+    loading.value = false;
+    console.error('Error verifying OTP:', error);
+    toast.error('Failed to verify OTP');
   }
 }
 
 const resendOTP = () => {
-  getOTP()
-}
-
-const moveToNext = (event, currentIndex) => {
-  const value = event.target.value
-  if (value && currentIndex < 5) { // Changed to 5 (0-5 = 6 digits)
-    const nextInput = event.target.parentElement.children[currentIndex + 1]
-    nextInput.focus()
-  }
+  getOTP();
 }
 </script>
+
+<style>
+.otp-input {
+  width: 40px;
+  min-width:40px !important;
+  height: 40px;
+  padding: 5px;
+  margin: 0 10px;
+  font-size: 20px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+.otp-input:focus {
+  border-color: #D45A08;
+}
+/* Background colour of an input field with value */
+.otp-input.is-complete {
+  background-color: #e4e4e4;
+}
+.otp-input::-webkit-inner-spin-button,
+.otp-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input::placeholder {
+  font-size: 15px;
+  text-align: center;
+  font-weight: 600;
+}
+</style>
