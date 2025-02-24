@@ -47,6 +47,12 @@ const routes = [
     meta: { requiresAuth: false }
   },
   {
+    name: 'Register',
+    path: '/register',
+    component: () => import('@/pages/Register.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
     name: 'Contact',
     path: '/contact',
     component: () => import('@/pages/Contact.vue'),
@@ -64,6 +70,30 @@ const routes = [
     component: () => import('@/pages/Updateprofile.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    name: 'KindnessVolunteering',
+    path: '/kindness-volunteering',
+    component: () => import('@/pages/Kindness & Volunteering.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
+    name: 'FAQs',
+    path: '/faqs',
+    component: () => import('@/pages/FAQs.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
+    name: 'Features',
+    path: '/features',
+    component: () => import('@/pages/Features.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
+    name: 'AboutUs',
+    path: '/about-us',
+    component: () => import('@/pages/About Us.vue'),
+    meta: { requiresAuth: false }
+  }
 ]
 
 const router = createRouter({
