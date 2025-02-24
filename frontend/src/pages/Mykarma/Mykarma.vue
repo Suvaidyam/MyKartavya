@@ -1,8 +1,8 @@
 <template>
-  <div class="max-w-[1920px] pt-[62px] mx-auto">
-    <div class="flex flex-col lg:flex-row px-5">
+  <div class="max-w-[1920px] w-full pt-[62px] mx-auto">
+    <div class="w-full flex flex-col lg:flex-row px-5">
       <Filters />
-      <div class="flex flex-col xl:flex-row">
+      <div class="w-full flex flex-col xl:flex-row">
         <main class="w-full xl:w-3/4 px-3 py-3 bg-gray-50">
           <div class="flex justify-between mb-2">
             <h1 class="text-[23px] font-normal">My Karma</h1>
