@@ -40,7 +40,7 @@
         </button>
         <p class="text-sm mt-4 text-gray-600">
           Don't have an account?
-          <a href="#" class="text-orange-500">Sign up</a>
+          <router-link to="/register" class="text-orange-500">Sign up</router-link>
         </p>
         <div class="flex items-center my-4">
           <hr class="flex-grow border-t border-gray-300" />
