@@ -325,8 +325,8 @@ def register_send_otp(email):
         # Check if user already exists
         user_exists = frappe.db.exists("SVA User", {'email': email})
         if user_exists:
-            frappe.logger().warning(f"SVA User with email {email} already exists.")
-            raise OTPError(_("SVA User with this email already exists"))
+            frappe.logger().warning(f"User with email {email} already exists.")
+            raise OTPError(_("User with this email already exists"))
 
         # Handle OTP attempts and rate limiting
         attempts_key = get_attempt_cache_key(email)
