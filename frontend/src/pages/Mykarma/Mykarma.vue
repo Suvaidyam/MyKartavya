@@ -85,7 +85,6 @@
 <script setup>
 import { ref } from "vue";
 import Filters from "../../components/Filters.vue";
-import Navbar from '../../components/Navbar.vue';
 import MyDetails from './MyDetails.vue';
 
 const available_commitments = ref([
