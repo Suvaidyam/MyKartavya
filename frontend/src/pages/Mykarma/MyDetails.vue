@@ -4,11 +4,13 @@
       <div class="flex items-center mb-4 border-b border-gray-100 py-2">
         <img v-if="auth.user_image" :src="user_image" alt="Profile Picture"
           class="rounded-full w-[60px] h-[60px] object-cover mr-4" />
-          <div class="w-[60px] min-w-[60px] mr-4 text-2xl h-[60px] flex items-center justify-center rounded-full bg-gray-100 " v-else>{{ auth.cookie.full_name.charAt(0) }}</div>
+        <div
+          class="w-[60px] min-w-[60px] mr-4 text-2xl h-[60px] flex items-center justify-center rounded-full bg-gray-100 "
+          v-else>{{ auth.cookie.full_name.charAt(0) }}</div>
         <div>
           <h2 class="text-[14px] font-medium">{{ auth.cookie.full_name }}</h2>
           <p class="text-[#666666] text-xs font-normal">{{ auth.cookie.user_id }}</p>
-          <button class="text-[10px] font-medium mt-2" style="color: #FF5722;">Edit Profile</button>
+          <button class="text-[11px] font-medium mt-2" style="color: #FF5722;">EDIT PROFILE</button>
         </div>
       </div>
 
@@ -43,70 +45,128 @@
         </div>
       </div>
     </div>
-    <div class="bg-white rounded-lg px-3 w-full mt-4">
-      <h2 class="text-[16px] font-medium ">Top Performers</h2>
-      <div class="flex justify-center py-6">
-        <div class="relative">
-          <img src="../../assets/icons8-queen-48.png" alt="Trophy"
-            class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-3/4 z-10" />
-          <div class="bg-yellow-300 rounded-full w-[71px] h-[71px] flex items-center justify-center">
-            <img src="../../assets/download (2).jpeg" alt="Anaya Singh" class="rounded-full w-[71px] h-[71px]" />
+    <div class=" rounded-lg   w-full mt-4">
+      <div
+        class="max-w-lg mx-auto rounded-t-xl px-6 py-4 relative overflow-hidden bg-gradient-to-b from-yellow-200 to-white">
+        <!-- Background Image at the Top -->
+        <div class="absolute top-0 left-0 w-full h-1/2 bg-cover bg-center"
+          style="background-image: url('https://s3-alpha-sig.figma.com/img/314c/a6b6/6925cd67aa6829da55ab83120e89377c?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=MhdrmLTxP5LK4rgkhzgJrHhoB~dBaDieMGshleVZQuk6XQS9~32eIJdgogQD5QKflTfZ9BS0M02FYnwrvvcyRbBnaC9x4vq4iPEOeqtO6Xczb3zP1i0Rs0KmERk-qxGP8BX1JjVrOnXi1R5TzDv5p3-hqQaWeK~0oHJVYljIoXZtirUl5pt8w8Vh2G7OVUe3eu2XDuzN86DG6r2XRZzpflid2W1KWnnPFKCaavteAVUmMa7tW~j0Wq3tL0lqSfhl6~iEdkiocozghhGiE44DZfHTdIHS1qOjhTpeZv15dk23nfnSaoltbGxvbB-IvnYpa9nkCEH~svtuisP0SuBjFQ__');">
+        </div>
+        <h2 class="text-md font-semibold text-gray-800  pb-10  relative z-10">Top Performers</h2>
+
+        <!-- Crown Icon -->
+        <div class="absolute top-12 left-1/2 transform -translate-x-1/2">
+          <img src="../../assets/icons8-queen-48.png" alt="Crown" class="w-8 h-8" />
+        </div>
+
+        <!-- Top Performer -->
+        <div class="flex flex-col items-center">
+          <div class="relative">
+            <div
+              class="bg-orange-400 rounded-full w-20 h-20 flex items-center justify-center border-4 border-[#f17940]">
+              <img src="https://s3-alpha-sig.figma.com/img/12cd/3413/2ef9687c557520a96af542610c485c5d?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KclQc3FF9OzuW1fuMp8vjuu4QlDbwQ21IVr5l096zMiYcuDpYXSUhaU0IfBJPtz6Egs~JoIjg8yWazRrePBYTUkUDO~uiMqqj~b~gbjjsRKhQbRk4VhDZ9aoNarS8KT5Q~38afg9ZQZbxzYWvdML~Kad-0WKZ5QBRX1WEZkgV-7dRAwkyr9FW4ihSZchKsVAFvrH39jpPpS9lXhz5CT5rK2K29Ruq3wbOMhr-dsEFjzlXNgdN-9I8kRGaiyOQ4piNuXpt9dcjYCMQoUB~lTqnMtHAH8A~XulLWlh7KJmKCBUkQLoxO0P5RJEZxkQlUkWZU6t1eOHIWWNasK~TwannA__" alt="Anaya Singh"
+                class="rounded-full w-full h-full object-cover" />
+            </div>
+            <span
+              class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
+              1
+            </span>
+          </div>
+          <p class="text-xs font-medium pt-2">Anaya Singh</p>
+          <p class="text-[10px] font-normal pt-2">189 Points 174 hr</p>
+        </div>
+
+        <!-- Second and Third Place -->
+        <div class="flex justify-between -mt-10 ">
+          <!-- 2nd Place -->
+          <div class="flex flex-col items-center">
+            <div class="relative">
+              <div
+                class="bg-purple-400 rounded-full w-16 h-16 flex items-center justify-center border-4 border-[#995dc5]">
+                <img src="../../assets/download (2).jpeg" alt="Jayant Bhandari"
+                  class="rounded-full w-full h-full object-cover" />
+              </div>
+              <span
+                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-purple-500 text-white text-xs px-2 py-1 rounded-full">
+                2
+              </span>
+            </div>
+            <p class="text-xs font-medium pt-2">Jayant Bhandari</p>
+            <p class="text-[10px] font-normal pt-2">60 Points 30 hr</p>
+          </div>
+
+          <!-- 3rd Place -->
+          <div class="flex flex-col items-center">
+            <div class="relative">
+              <div
+                class="bg-blue-400 rounded-full w-16 h-16 flex items-center justify-center border-4 border-[#4c89f8]">
+                <img src="../../assets/download (3).jpeg" alt="Swati Mathwal"
+                  class="rounded-full w-full h-full object-cover" />
+              </div>
+              <span
+                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+                3
+              </span>
+            </div>
+            <p class="text-xs font-medium pt-2">Swati Mathwal</p>
+            <p class="text-[10px] font-normal pt-2">60 Points 30 hr</p>
           </div>
         </div>
+
       </div>
 
-      <div class="flex justify-around mb-6">
-        <div class="flex flex-col items-center">
-          <img src="../../assets/download (2).jpeg" alt="Jayant Bhandari" class="rounded-full w-[50px] h-[50px]" />
-          <p class="text-xs font-medium pt-2">Jayant Bhandari</p>
-          <p class="text-[10px] font-normal pt-2">90 Points 60 hr</p>
-        </div>
-        <div class="flex flex-col items-center">
-          <img src="../../assets/download (3).jpeg" alt="Swati Mathwal" class="rounded-full w-[50px] h-[50px]" />
-          <p class="text-xs font-medium pt-2">Swati Mathwal</p>
-          <p class="text-[10px] font-normal pt-2">60 Points 30 hr</p>
-        </div>
-      </div>
+          <table class="w-full">
+          <thead class="bg-gray-50 p-2">
+            <tr>
+              <th class="text-[10px] font-normal py-2 text-gray-700">Name</th>
+              <th class="text-[10px] font-normal py-2 px-4 text-gray-700">Time</th>
+              <th class="text-[10px] font-normal py-2 text-gray-700">Karma Points</th>
+              <th class="text-[10px] font-normal py-2 text-gray-700">Rank</th>
+            </tr>
 
-      <table class="w-full text-left">
-        <thead>
-          <tr>
-            <th class="text-[10px]">Name</th>
-            <th class="text-[10px]">Time</th>
-            <th class="text-[10px]">Karma Points</th>
-            <th class="text-[10px]">Rank</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(user, index) in users" :key="index" class="border-t">
-            <td class="text-[12px] font-medium">{{ user.name }}</td>
-            <td class="text-[12px] font-normal">{{ user.time }} hr</td>
-            <td class="text-[12px] font-normal">{{ user.points }} Points</td>
-            <td class="text-[12px] font-normal">{{ user.rank }}</td>
-          </tr>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <tr v-for="(user, index) in users" :key="index" class="border-t border-[#b0b3b0] bg-white ">
+              <td class="text-[12px]  font-medium flex  items-center px-3">
+                <div class="w-10 h-8 flex  items-center ">
+                  <img
+                    src="https://s3-alpha-sig.figma.com/img/12cd/3413/2ef9687c557520a96af542610c485c5d?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KclQc3FF9OzuW1fuMp8vjuu4QlDbwQ21IVr5l096zMiYcuDpYXSUhaU0IfBJPtz6Egs~JoIjg8yWazRrePBYTUkUDO~uiMqqj~b~gbjjsRKhQbRk4VhDZ9aoNarS8KT5Q~38afg9ZQZbxzYWvdML~Kad-0WKZ5QBRX1WEZkgV-7dRAwkyr9FW4ihSZchKsVAFvrH39jpPpS9lXhz5CT5rK2K29Ruq3wbOMhr-dsEFjzlXNgdN-9I8kRGaiyOQ4piNuXpt9dcjYCMQoUB~lTqnMtHAH8A~XulLWlh7KJmKCBUkQLoxO0P5RJEZxkQlUkWZU6t1eOHIWWNasK~TwannA__"
+                    alt="Abhinav"class="w-6 h-6  rounded-full">
 
-      <div class=" bg-white w-full max-w-lg">
+                </div>
+                <span class="text-gray-800 font-medium">{{ user.name }}</span>
+              </td>
+              <td class="text-[12px] font-normal">{{ user.time }} hr</td>
+              <td class="text-[12px] font-normal">{{ user.points }} Points</td>
+              <td class="text-[12px] font-normal">
+                <span class="w-4 h-4 ">
+                <i class="fa fa-caret-up text-green-600 " aria-hidden="true"></i>
+                </span>
+                {{ user.rank }}</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+      <div class=" bg-white w-full max-w-lg px-4 border-t border-[#b0b3b0] ">
         <div class="flex justify-between items-center">
-          <h2 class="text-[16px] font-medium pt-3">SDGs Impacted</h2>
+          <h2 class="text-[16px] font-medium pt-6">SDGs Impacted</h2>
           <a href="#" class="text-orange-500 text-[10px] font-medium">VIEW ALL</a>
         </div>
-        <div v-for="(sdg, index) in sdgs" :key="index" class="flex items-start space-x-4 mt-4">
+        <div v-for="(sdg, index) in sdgs" :key="index" class="flex items-center space-x-4 pt-4">
           <img :src="sdg.icon" :alt="sdg.title" class="w-10 h-10 rounded-[4px]" />
           <div>
             <h3 class="text-[14px] font-normal">{{ sdg.title }}</h3>
-            <p class="text-gray-500 text-sm">Time Donated : {{ sdg.time }}</p>
-            <p class="text-gray-500 text-sm">Money Saved : ₹ {{ sdg.money }}</p>
+            <p class="text-gray-500  fornt-normal text-[12px]">Time Donated : <span class="text-gray-800 ">{{ sdg.time }}</span></p>
+            <p class="text-gray-500 fornt-normal text-[12px]">Money Saved : <span class="text-gray-800 "> ₹ {{ sdg.money }}</span></p>
           </div>
         </div>
       </div>
-    </div>
   </aside>
 </template>
 
 <script setup>
-import { ref,inject } from "vue";
+import { ref, inject } from "vue";
 
 const auth = inject("auth");
 const sdgs = ref([
@@ -139,4 +199,20 @@ const users = ref([
   { name: "Anaya Kushwah", time: 9, points: 36, rank: 8 },
   { name: "Shefali Chawla", time: 8, points: 23, rank: 9 },
 ]);
+
+// const fetchDoctorsData = async () => {
+//     try {
+//         const response = await axios.get(
+//             "api/method/appointments_management.controllers.api.doctors_data"
+//         );
+//         doctors.value = response.data.message || [];
+//         allDoctors.value = doctors.value;
+//     } catch (error) {
+//         console.error("Error fetching doctors data:", error);
+//     }
+// };
+
+
+
+
 </script>

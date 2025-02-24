@@ -17,10 +17,10 @@
             <div class="pt-10 px-4">
                 <h1 class="text-3xl font-medium">{{ auth.cookie.full_name }}</h1>
                 <p class="text-bodyh1 text-gray-600 mt-1">{{ auth.cookie.user_id }}</p>
-                <button class="text-lg text-orange-500 font-normal mt-2">EDIT PROFILE</button>
+                <router-link to="/updateprofile" class="text-lg text-orange-500 font-normal mt-2">EDIT PROFILE</router-link>
             </div>
         </div>
-        <div class="pt-4">
+        <div class="pt-4" >
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white rounded-lg p-6 shadow-sm">
                     <h2 class="text-xl font-semibold mb-6">Personal Info</h2>
@@ -34,7 +34,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">9876543210</div>
+                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.mobile_number }}</div>
                                 <div class="text-caption text-gray-500">Phone No.</div>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">Gurugram, Haryana, India</div>
+                                <div class="text-bodyh2 text-gray-900">   {{ svaUserData?.custom_state }},{{ svaUserData?.custom_city }}, {{ svaUserData?.custom_country }}</div>
                                 <div class="text-caption text-gray-500">Location</div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">04-06-2024</div>
+                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.custom_date_of_birth }}</div>
                                 <div class="text-caption text-gray-500">Date of Birth</div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">165</div>
+                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.custom_employee_id }}</div>
                                 <div class="text-caption text-gray-500">Employee ID</div>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">NGO Worker</div>
+                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.custom_ngo }}</div>
                                 <div class="text-caption text-gray-500">Title</div>
                             </div>
                         </div>
@@ -180,9 +180,12 @@
 </template>
 
 <script setup>
-import { ref ,inject} from 'vue';
+import { ref ,inject,onMounted} from 'vue';
 
 const auth = inject('auth');
+const call = inject('call')
+const svaUserData=ref(null)
+
 const certificates = ref([
     {
         id: 1,
@@ -215,4 +218,19 @@ const certificates = ref([
         image: '/placeholder5.jpg'
     }
 ]);
+
+const get = async () => {
+  try {
+    const response = await call('mykartavya.controllers.api.sva_user_data');
+    svaUserData.value = response[0];
+  } catch (err) {
+    // Handle the error here
+    console.error('Error fetching data:', err);
+  }
+};
+
+onMounted(get) 
+
+
+
 </script>
