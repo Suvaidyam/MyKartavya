@@ -111,17 +111,10 @@ import 'vue3-toastify/dist/index.css'
 
 const call = inject('call')
 const router = useRouter()
-const email = ref('888')
+const email = ref('')
 const loading = ref(false)
 const g_url = ref('')
 const m_url = ref('')
-
-const Google_login = () => {
-  console.log('object2', g_url.value)
-}
-const micro_login = () => {
-  console.log('object', m_url.value)
-}
 
 const get_otp = async () => {
   if (email.value === '') {
