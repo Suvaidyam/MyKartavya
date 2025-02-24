@@ -27,7 +27,7 @@
         <h2 class="text-[20px] font-medium font-poppins text-gray-900 text-center">OTP Verification</h2>
         <p class="text-gray-600 text-center mt-1 text-[12px] font-normal">
           We've shared a 6-digit OTP on <span class="text-orange-500 font-semibold">{{ email || 'sample@gmail.com'
-            }}</span>
+          }}</span>
         </p>
 
         <!-- OTP Input -->
@@ -36,11 +36,10 @@
             class="w-10 h-10 border rounded-[4px] text-center text-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
             @input="moveToNext($event, index)"> -->
           <div style="display: flex; flex-direction: row">
-            <v-otp-input ref="otpInput" input-classes="otp-input" :conditionalClass="['one', 'two', 'three', 'four','five','six']"
-              separator="-" :num-inputs="6" v-model:value="bindValue"
-              :should-auto-focus="true" :should-focus-order="true" @on-change="handleOnChange"
-              input-type="number"
-              @on-complete="handleOnComplete" :placeholder="['*', '*', '*', '*','*','*']" />
+            <v-otp-input ref="otpInput" input-classes="otp-input"
+              :conditionalClass="['one', 'two', 'three', 'four', 'five', 'six']" separator="-" :num-inputs="6"
+              v-model:value="bindValue" :should-auto-focus="true" :should-focus-order="true" @on-change="handleOnChange"
+              input-type="number" @on-complete="handleOnComplete" :placeholder="['*', '*', '*', '*', '*', '*']" />
           </div>
         </div>
 
@@ -108,21 +107,33 @@ const verifyOTP = async () => {
     router.push('/login');
     return;
   }
-  try {
-    loading.value = true
-    const response = await call('mykartavya.email.verify_otp', { email: email.value, otp: bindValue.value });
-    loading.value = false;
-
+  if (route.query.full_name) {
+    const response = await call('mykartavya.email.register_verify_otp', { email: email.value, otp: bindValue.value, full_name: route.query.full_name });
     if (response.status === "success") {
-      toast.success('OTP verified successfully')
-      router.push('/mykarma');
+      toast.success('OTP verified successfully');
+      // router.push('/mykarma');
+      window.location.reload();
     } else {
-      toast.error('Invalid OTP, please try again');
+      toast.error('Failed to verify OTP');
     }
-  } catch (error) {
-    loading.value = false;
-    console.error('Error verifying OTP:', error);
-    toast.error('Failed to verify OTP');
+  } else {
+    try {
+      loading.value = true
+      const response = await call('mykartavya.email.verify_otp', { email: email.value, otp: bindValue.value });
+      loading.value = false;
+
+      if (response.status === "success") {
+        toast.success('OTP verified successfully')
+        // router.push('/mykarma');
+        window.location.reload();
+      } else {
+        toast.error('Invalid OTP, please try again');
+      }
+    } catch (error) {
+      loading.value = false;
+      console.error('Error verifying OTP:', error);
+      toast.error('Failed to verify OTP');
+    }
   }
 }
 
@@ -134,7 +145,7 @@ const resendOTP = () => {
 <style>
 .otp-input {
   width: 40px;
-  min-width:40px !important;
+  min-width: 40px !important;
   height: 40px;
   padding: 5px;
   margin: 0 10px;
@@ -143,21 +154,24 @@ const resendOTP = () => {
   border: 1px solid rgba(0, 0, 0, 0.3);
   text-align: center;
 }
+
 .otp-input:focus {
   border-color: #D45A08;
 }
+
 /* Background colour of an input field with value */
 .otp-input.is-complete {
   background-color: #e4e4e4;
 }
+
 .otp-input::-webkit-inner-spin-button,
 .otp-input::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 input::placeholder {
   font-size: 15px;
-  text-align: center;
   font-weight: 600;
 }
 </style>

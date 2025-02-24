@@ -47,6 +47,12 @@ const routes = [
     meta: { requiresAuth: false }
   },
   {
+    name: 'Register',
+    path: '/register',
+    component: () => import('@/pages/Register.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
     name: 'Contact',
     path: '/contact',
     component: () => import('@/pages/Contact.vue'),
