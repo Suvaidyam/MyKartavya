@@ -55,7 +55,7 @@
                             <input v-model="allChecked" type="checkbox"
                                 class="rounded-sm focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="all-sdgs">
-                            <label class="text-[12px] font-normal" for="all-sdgs">All</label>
+                            <label class="text-[12px] font-normal" for="all-sdgs"> </label>
                         </div>
                         <div v-for="el in item.options" class="flex px-2 py-1 items-center gap-2 text-sm">
                             <input v-model="filter[item.key]" :value="el" :type="item.type" :name="item.key"
@@ -74,24 +74,27 @@
 </template>
 
 <script setup>
-import { Menu, MenuButton, MenuItems } from '@headlessui/vue'
-import { ref, computed,watch } from 'vue'
-import { FeatherIcon } from 'frappe-ui'
+import { Menu, MenuButton, MenuItems } from '@headlessui/vue';
+import { ref, computed, watch, onMounted,inject } from 'vue';
+import { FeatherIcon } from 'frappe-ui';
 
-const clear_all_disabled = ref(true)
+const call = inject('call')
+
+const clear_all_disabled = ref(true);
 const filter = ref({
     sdgs: [],
     volunteering_hours: '',
     activity_type: [],
     karma_points: ''
-})
+});
 
-const filter_by = [
+const sdgData = ref([]);
+const filter_by = ref([
     {
         name: 'SDGs',
         type: 'checkbox',
         key: 'sdgs',
-        options: ['SDG 2 : Zero Hunger', 'SDG 3 : Good Health and Well-Being']
+        options: [] ,
     },
     {
         name: 'Volunteering Hours',
@@ -111,29 +114,50 @@ const filter_by = [
         key: 'karma_points',
         options: ['Low to High', 'High to Low', 'ARKs in my Region']
     },
-]
+]);
+
+const fetchSDGs = async () => {
+    try {
+        const response = await call('mykartavya.controllers.api.sdg_data');
+        sdgData.value = response;  
+        const sdgsFilter = filter_by.value.find(f => f.key === 'sdgs');
+        if (sdgsFilter) {
+            sdgsFilter.options = response.map(sdg => sdg.name);  
+        }
+    } catch (err) {
+        console.error('Error fetching SDG data:', err);
+    }
+};
+
 
 // Computed property for "All" checkbox state
 const allChecked = computed({
-    get: () => filter.value.sdgs.length === filter_by[0].options.length,
+    get: () => {
+        const sdgFilter = filter_by.value.find(f => f.key === 'sdgs');
+        return sdgFilter && filter.value.sdgs.length === sdgFilter.options.length;
+    },
     set: (value) => {
-        filter.value.sdgs = value ? [...filter_by[0].options] : []
+        const sdgFilter = filter_by.value.find(f => f.key === 'sdgs');
+        filter.value.sdgs = value && sdgFilter ? [...sdgFilter.options] : [];
     }
-})
+});
 
+// Clear all filters
 const clear_all = () => {
     filter.value = {
         sdgs: [],
         volunteering_hours: '',
         activity_type: [],
         karma_points: ''
-    }
-}
+    };
+};
 
 // Watch filter changes for Clear All button state
 watch(filter, (val) => {
-    clear_all_disabled.value = Object.values(val).every(v => 
+    clear_all_disabled.value = Object.values(val).every(v =>
         Array.isArray(v) ? v.length === 0 : v === ''
-    )
-}, { deep: true, immediate: true })
+    );
+}, { deep: true, immediate: true });
+
+onMounted(fetchSDGs);
 </script>
