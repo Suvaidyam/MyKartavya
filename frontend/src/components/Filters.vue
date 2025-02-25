@@ -51,7 +51,7 @@
                     leave-active-class="transition ease-in duration-75"
                     leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                     <MenuItems
-                        class="absolute p-1 h-72 overflow-auto left-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden">
+                        class="absolute p-1 max-h-72 overflow-auto left-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden">
                         <div v-if="item.key === 'sdgs'" class="flex px-2 items-center py-1 gap-2 text-sm">
                             <input v-model="allChecked" type="checkbox"
                                 class="rounded-sm focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
@@ -82,12 +82,10 @@ import { FeatherIcon } from 'frappe-ui';
 const call = inject('call')
 
 const clear_all_disabled = ref(true);
-const filter = ref({
-    sdgs: [],
-    volunteering_hours: '',
-    activity_type: [],
-    karma_points: ''
+const props = defineProps({
+    filter: Object,
 });
+const filter = ref(props.filter);
 
 const sdgData = ref([]);
 const filter_by = ref([
