@@ -65,8 +65,13 @@
                 </div>
                 <!--  -->
                 <div class="flex items-center -space-x-3 pt-4">
-                    <img v-for="el in JSON.parse(item.volunteers)" :key="index" :src="el.user_image" :alt="'User ' + (index + 1)"
-                        class="w-8 h-8 rounded-full border-2 border-white" />
+                    <div v-for="(el,index) in JSON.parse(item.volunteers)" :key="index">
+                        <img v-if="el.user_image"  :src="el.user_image" :alt="'User ' + (index + 1)"
+                            class="w-8 h-8 rounded-full border-2 border-white" />
+                        <div v-else class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-[#e86c13] text-sm" >
+                            {{ el.full_name.charAt(0) }}
+                        </div>
+                    </div>
                     <p
                         class="pl-4 text-sm text-center">
                         +{{ JSON.parse(item.volunteers).length }}
