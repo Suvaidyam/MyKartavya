@@ -2,10 +2,10 @@
   <div class=" pt-[62px]">
     <section class="flex flex-col lg:flex-row px-5">
       <Filters />
-      <main class="lg:w-3/4 p-4">
-        <h2 class="text-lg font-semibold mb-4">Kindness & Volunteering</h2>
+      <main class="w-full py-3 lg:pl-[270px]">
+        <h2 class="text-lg font-semibold mb-4 px-3">Kindness & Volunteering</h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="px-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
           <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="relative">

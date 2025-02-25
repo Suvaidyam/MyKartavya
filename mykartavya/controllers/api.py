@@ -46,7 +46,42 @@ def update_sva_user(data):
 
         # Update the document with new data
         user_doc.update(data)
-        user_doc.save()
+        user_doc.save(ignore_permissions=True)  
         frappe.db.commit()  # Commit the changes to the database
         return {"success": True, "message": "User updated successfully"}
     return {"success": False, "message": "User not found"}
+
+@frappe.whitelist(allow_guest=True)
+def country_data():
+    country = frappe.get_all(
+        "Country", 
+        fields=["*"]   
+    )
+    return country
+
+@frappe.whitelist(allow_guest=True)
+def state_data(country):
+    state = frappe.get_all(
+        "State", 
+        filters={"country": country},
+        fields=["*"]   
+    )
+    return state
+   
+
+@frappe.whitelist(allow_guest=True)
+def city_data(state):
+    city = frappe.get_all(
+        "District", 
+        filters={"state": state},
+        fields=["*"]   
+    )
+    return city
+    
+@frappe.whitelist(allow_guest=True)
+def company_data():
+    company = frappe.get_all(
+        "Company", 
+        fields=["*"]   
+    )
+    return company
