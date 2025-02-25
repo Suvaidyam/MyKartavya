@@ -1,5 +1,6 @@
 <template>
-    <aside class="w-[270px] min-w-[270px] fixed overflow-auto h-screen pb-[62px] hidden lg:block border-r border-gray-200">
+    <aside
+        class="w-[270px] min-w-[270px] fixed overflow-auto h-screen pb-[62px] hidden lg:block border-r border-gray-200">
         <div class="bg-white relative px-4">
             <div class="flex sticky top-0 bg-white z-20 justify-between items-center py-3">
                 <h3 class="text-lg font-medium">Filter by</h3>
@@ -75,7 +76,7 @@
 
 <script setup>
 import { Menu, MenuButton, MenuItems } from '@headlessui/vue';
-import { ref, computed, watch, onMounted,inject } from 'vue';
+import { ref, computed, watch, onMounted, inject } from 'vue';
 import { FeatherIcon } from 'frappe-ui';
 
 const call = inject('call')
@@ -94,7 +95,7 @@ const filter_by = ref([
         name: 'SDGs',
         type: 'checkbox',
         key: 'sdgs',
-        options: [] ,
+        options: [],
     },
     {
         name: 'Volunteering Hours',
@@ -119,10 +120,10 @@ const filter_by = ref([
 const fetchSDGs = async () => {
     try {
         const response = await call('mykartavya.controllers.api.sdg_data');
-        sdgData.value = response;  
+        sdgData.value = response;
         const sdgsFilter = filter_by.value.find(f => f.key === 'sdgs');
         if (sdgsFilter) {
-            sdgsFilter.options = response.map(sdg => sdg.name);  
+            sdgsFilter.options = response.map(sdg => sdg.name);
         }
     } catch (err) {
         console.error('Error fetching SDG data:', err);
@@ -164,15 +165,19 @@ onMounted(fetchSDGs);
 
 <style scoped>
 ::-webkit-scrollbar {
-  width: 4px; /* Thin width */
-  height: 4px;
+    width: 4px;
+    /* Thin width */
+    height: 4px;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #b0b3b0; /* Scrollbar color */
-  border-radius: 8px;
+    background: #b0b3b0;
+    /* Scrollbar color */
+    border-radius: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f0f0f0; /* Track color */
+    background: #f0f0f0;
+    /* Track color */
 }
 </style>

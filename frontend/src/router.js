@@ -47,7 +47,7 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/empower',
+    path: '/activity/:name',
     name: 'Empower',
     component: () => import('@/pages/Mykarma/Empower.vue'),
     meta: { requiresAuth: true }

@@ -39,7 +39,7 @@
               </option>
             </select>
             <!-- Validation Error -->
-            <p v-if="errors[key]" class="text-red-500 text-sm mt-1">{{ errors[key] }}</p>
+            <p v-if="errors[key]" class="text-red-500 text-[11px] mt-1">{{ errors[key] }}</p>
           </div>
 
           <!-- Password Fields -->
@@ -112,8 +112,22 @@ const router = useRouter();
 
 // Form fields and data
 const fields = ref({
-  first_name: { label: "First Name", type: "text", placeholder: "Enter your first name", required: true },
-  last_name: { label: "Last Name", type: "text", placeholder: "Enter your last name", required: true },
+  first_name: { 
+    label: "First Name", 
+    type: "text", 
+    placeholder: "Enter your first name", 
+    required: false,
+    pattern: /^[A-Za-z]+$/,  
+    error_message: "Please enter a valid first name (letters only)"
+  },
+  last_name: { 
+    label: "Last Name", 
+    type: "text", 
+    placeholder: "Enter your last name", 
+    required: false,
+    pattern: /^[A-Za-z]+$/,  
+    error_message: "Please enter a valid last name (letters only)"
+  },
   mobile_number: { 
     label: "Phone No.", 
     type: "text", 
@@ -136,6 +150,7 @@ const fields = ref({
   },
   title: { label: "Title", type: "text", placeholder: "Enter your title", required: false }
 });
+
 
 const formData = ref({
   first_name: "",
@@ -213,6 +228,16 @@ const validateForm = () => {
       valid = false;
     }
 
+    // First and Last Name Validation (only letters)
+    if (key === "first_name" && field.pattern && !field.pattern.test(value)) {
+      errors.value[key] = field.error_message;
+      valid = false;
+    }
+
+    if ( key === "last_name" && field.pattern && !field.pattern.test(value)) {
+      errors.value[key] = field.error_message;
+      valid = false;
+    }
     // Date of Birth Validation
     if (key === "custom_date_of_birth" && field.min && value) {
       const dob = new Date(value);
@@ -224,6 +249,8 @@ const validateForm = () => {
       }
     }
   }
+
+  // Return whether the form is valid or not
   return valid;
 };
 
@@ -237,7 +264,8 @@ const onSubmit = async () => {
     });
 
     if (res.success) {
-      toast.success("Profile updated successfully!");
+      toast.success("Profile updated successfully!",{"autoClose": 3000});
+      setTimeout(() => router.back(-1), 3000)
     } else {
       toast.error(res.message || "Failed to update profile.");
     }
