@@ -43,11 +43,55 @@
     </section>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue'
+
+<!-- <script setup>
+import { ref, computed, onMounted, inject } from 'vue'
 import VolunteerCard from "./VolunteerCard.vue";
 
+const call = inject('call')
+
 const activeTab = ref('kindness') // Default active tab
+const volunteerCards = ref([]) // Reactive state for storing fetched data
+
+const kindness = async () => {
+    try {
+        const response = await call('mykartavya.controllers.api.get_activity_data', {
+            type: 'kindness'
+        });
+        console.log(response);
+        if (response?.values) {
+            volunteerCards.value = response.values; // Ensure reactive update
+        }
+    } catch (err) {
+        console.error('Error fetching Kindness data:', err);
+    }
+};
+
+onMounted(() => {
+    kindness();
+});
+
+const displayedCards = computed(() => {
+    return volunteerCards.value.filter(card => card.type === activeTab.value);
+});
+</script> -->
+
+<script setup>
+import { ref, computed ,onMounted,inject } from 'vue'
+import VolunteerCard from "./VolunteerCard.vue";
+const call = inject('call')
+
+
+const activeTab = ref('kindness') // Default active tab
+const kindnes = async () => {
+    try {
+        const response = await call('mykartavya.controllers.api.get_activity_data', {
+        });
+        console.log(response);
+    } catch (err) {
+        console.error('Error fetching Kindness data:', err);
+    }
+};
 
 const volunteerCards = [
     {
@@ -88,6 +132,9 @@ const volunteerCards = [
     },
 ];
 
+onMounted(() => {
+    kindnes()
+})
 const displayedCards = computed(() => {
     return volunteerCards.filter(card => card.type === activeTab.value)
 })
