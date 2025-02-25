@@ -188,96 +188,7 @@
             class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center"
           >
             <!-- Loop through the opportunities array -->
-            <div
-              v-for="opportunity in opportunities"
-              :key="opportunity.id"
-              class="bg-white rounded-lg shadow-lg overflow-hidden"
-            >
-              <div class="relative">
-                <img
-                  :src="opportunity.image"
-                  :alt="opportunity.title"
-                  class="object-cover"
-                />
-                <div
-                  class="absolute top-2 left-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-br-lg"
-                >
-                  {{ opportunity.type }}
-                </div>
-                <div
-                  class="absolute top-2 right-2 bg-white text-[#0B0B0B] text-xs px-2 py-1 rounded-full shadow"
-                >
-                  <span class="font-semibold"
-                    >{{ opportunity.points }} Points</span
-                  >
-                </div>
-                <div
-                  class="absolute left-2 bottom-2 flex items-center space-x-2 text-sm text-gray-700 font-medium mb-2"
-                >
-                  <span class="bg-white text-black px-2 py-1 rounded text-xs">{{
-                    opportunity.sdg
-                  }}</span>
-                </div>
-              </div>
-              <div class="p-4">
-                <h3 class="text-bodyh1 font-medium" style="color: #0b0b0b">
-                  {{ opportunity.title }}
-                </h3>
-                <p
-                  class="text-caption font-normal mt-1 font-poppins"
-                  style="color: #666666"
-                >
-                  {{ opportunity.description }}
-                </p>
-                <div class="flex items-center text-sm text-gray-500 mt-3">
-                  <span
-                    class="flex items-center gap-1 text-caption font-normal"
-                    style="color: #0b0b0b"
-                  >
-                    <FeatherIcon
-                      name="calendar"
-                      class="size-4 text-[#666666]"
-                    />
-
-                    {{ opportunity.dateRange }}
-                  </span>
-                  <p
-                    class="ml-auto gap-1 flex items-center text-caption font-normal"
-                    style="color: #0b0b0b"
-                  >
-                    <FeatherIcon name="clock" class="size-4 text-[#666666]" />
-
-                    {{ opportunity.hours }}
-                  </p>
-                </div>
-                <div class="flex items-center mt-3">
-                  <div class="flex -space-x-2">
-                    <img
-                      v-for="(user, index) in opportunity.users.slice(0, 3)"
-                      :key="index"
-                      :src="user.avatar"
-                      :alt="`User ${index + 1}`"
-                      class="w-8 h-8 rounded-full border-2 border-white"
-                    />
-                    <div
-                      v-if="opportunity.users.length > 3"
-                      class="w-8 h-8 bg-gray-200 text-gray-600 flex items-center justify-center rounded-full text-sm font-medium border-2 border-white"
-                    >
-                      +{{ opportunity.users.length - 3 }}
-                    </div>
-                  </div>
-                  <button
-                    class="ml-auto text-orange-600 font-semibold text-sm flex gap-1"
-                  >
-                    ACT NOW
-                    <FeatherIcon
-                      name="arrow-up-right"
-                      class="size-4 text-secondary"
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
+            <Card v-for="(item, key) in opportunities" :key="key" :item="item"/>
           </div>
         </div>
       </div>
@@ -289,6 +200,7 @@
 <script setup>
 import { FeatherIcon } from 'frappe-ui'
 import Stepper from '../../components/Stepper.vue'
+import Card from '../../components/Card.vue'
 import {
   Facebook,
   Twitter,
@@ -306,67 +218,43 @@ const icons = [
 
 // Sample data for the opportunities
 const opportunities = [
-  {
-    id: 1,
-    title: 'Empower the needy',
-    description:
-      "This Women's Entrepreneurship Day, let's empower underserved women running small business...",
-    image:
-      'https://s3-alpha-sig.figma.com/img/2878/a4c5/9c959de9c3b9d28a480e8fc8a4b1bd81?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=deepSM9~pkpevq~2swFyA4g0zXUcOIZPg5bJaXVkcmNHwIVlwtQXJawLkEvr0pX3TeNueL4NtGlBtDG~zjxi8~C3mdRVPemZZudl8iw762tyT0kEi9Bk~9VwXQL299RLLLCnWeZYJo2pjXO-LuRi5aIUSu6rLnhmt3tjg7~pk5d8ICtHc2dOAKj~y80StIzWEII1KaRnoaoIQ8tDNap8Irp-3yBAItf~HCCc16FR8mdsShP0NlfshhwZxB6tEXVhfTPVj5bqC358wSr1CXqzQjbEfFqOTyETJm9zxc7OV6si2QRhJgtEzlXmgjtRGYUUy4~tv4w7SiEbkpBKNyQ0Wg__',
-    type: 'On-Ground',
-    points: 40,
-    sdg: 'SDG 10 : Reduced Inequalities',
-    dateRange: '01 Oct, 2024 - 30 Nov, 2024',
-    hours: '50 hr',
-    users: [
-      { avatar: '../assets/download (3).jpeg' },
-      { avatar: '../assets/download (2).jpeg' },
-      { avatar: '../assets/download (2).jpeg' },
-      { avatar: '../assets/download (3).jpeg' },
-      { avatar: '../assets/download (2).jpeg' },
-    ],
-  },
-  {
-    id: 2,
-    title: 'Bright Bites',
-    description:
-      "This Women's Entrepreneurship Day, let's empower underserved women running small business...",
-    image:
-      'https://s3-alpha-sig.figma.com/img/4925/6686/2536992c32f72f58b66a7769a6226fd1?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=a67iRkNKrfuO9FTJtxqySKsKg5XqiMxUz1NxW8eM5WfcZVDQT8QkUooHVg1CSh78LVVcG10OAmc-t2OIopz4itRPsaOYaYfvfebE0Ry30XoFWYamZZvFhpaeEW5vNaaf63K1bWbYtve9-3TOHs~5sl8vbA0ZEQxUn0sLDpGWgHkVloOodLSsRoMYFWdiq83kUNufCZeuByWzxJwewyIbkG~N~B5Z844DNOvbTdlZau~nJOb3qlqbRGYMvE~o0-FZfbLnvJ4w6npXKXS7I--Wd-~d4S7c1yAs73wi2UnUX4UjkBTsSyyNE-zj20h~vk9AvWr~sO61Ulh57uWYG~RmFQ__',
-    type: 'On-Ground',
-    points: 40,
-    sdg: 'SDG 10 : Reduced Inequalities',
-    dateRange: '01 Oct, 2024 - 30 Nov, 2024',
-    hours: '50 hr',
-    users: [
-      { avatar: '../assets/download (3).jpeg' },
-      { avatar: '../assets/download (2).jpeg' },
-      { avatar: '../assets/download (2).jpeg' },
-      { avatar: '../assets/download (3).jpeg' },
-      { avatar: '../assets/download (2).jpeg' },
-    ],
-  },
-  {
-    id: 3,
-    title: 'Beat the sugar',
-    description:
-      "This Women's Entrepreneurship Day, let's empower underserved women running small business...",
-    image:
-      'https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__',
-    type: 'On-Ground',
-    points: 40,
-    sdg: 'SDG 10 : Reduced Inequalities',
-    dateRange: '01 Oct, 2024 - 30 Nov, 2024',
-    hours: '50 hr',
-    users: [
-      { avatar: '../assets/download (3).jpeg' },
-      { avatar: '../assets/download (2).jpeg' },
-      { avatar: '../assets/download (2).jpeg' },
-      { avatar: '../assets/download (3).jpeg' },
-      { avatar: '../assets/download (2).jpeg' },
-    ],
-  },
-]
+    {
+        title: "Empower the needy",
+        description: "This Women's Entrepreneurship Day, let's empower underserved women running small business...",
+        imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/6e7658be113e45c6ebd642254271143711c13b0ad07a139abdbfab63bf2ddbf5?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
+        points: 40,
+        date: "01 Oct, 2024 - 30 Nov, 2024",
+        hours: 50,
+        badgeImages: [
+            "https://cdn.builder.io/api/v1/image/assets/TEMP/4ed16c519bd231fdc9d60d18b5d2869c31f31c288c2bf89a4eb380c4d5cc6f38?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
+            "https://cdn.builder.io/api/v1/image/assets/TEMP/b5f182cab2bfd27bd6d0f069df140507432c9e26b80cceb6617736e4d9abe104?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
+        ],
+        participantImages: "https://cdn.builder.io/api/v1/image/assets/TEMP/4f0a4b03a995968b7fb45aed9d55c85a98731404933e0f8df35d0577a4f9fa43?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
+        type: 'volunteering'
+    },
+    {
+        title: "Beat the sugar",
+        description: "This Women's Entrepreneurship Day, let's empower underserved women running small business...",
+        imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/052447d3d0fe1f3d08a65bb3ad1fb91046f6ead1491391ba0ef111ec7467d291?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
+        points: 40,
+        date: "01 Oct, 2024 - 30 Nov, 2024",
+        hours: 50,
+        badgeImages: ["https://cdn.builder.io/api/v1/image/assets/TEMP/3d16b0307333e566cc2ef90c0bc6b00ce94492a0d9be4e0c69930ae3ac2883b8?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"],
+        participantImages: "https://cdn.builder.io/api/v1/image/assets/TEMP/4f0a4b03a995968b7fb45aed9d55c85a98731404933e0f8df35d0577a4f9fa43?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
+        type: 'volunteering'
+    },
+    {
+        title: "Bright Bites",
+        description: "This Women's Entrepreneurship Day, let's empower underserved women running small business...",
+        imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/a71a02d4cd85b8c849242002a44c53a82815b7b4141547a94ec1d9f6295626fb?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
+        points: 40,
+        date: "01 Oct, 2024 - 30 Nov, 2024",
+        hours: 50,
+        badgeImages: ["https://cdn.builder.io/api/v1/image/assets/TEMP/3d16b0307333e566cc2ef90c0bc6b00ce94492a0d9be4e0c69930ae3ac2883b8?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"],
+        participantImages: "https://cdn.builder.io/api/v1/image/assets/TEMP/4f0a4b03a995968b7fb45aed9d55c85a98731404933e0f8df35d0577a4f9fa43?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
+        type: 'kindness'
+    },
+];
 </script>
 
 <style>

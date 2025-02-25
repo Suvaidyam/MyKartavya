@@ -37,7 +37,7 @@
 
         <div class="mt-5 max-md:max-w-full">
             <div class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
-                <VolunteerCard v-for="(card, index) in displayedCards" :key="index" v-bind="card" />
+                <Card v-for="(item, key) in displayedCards" :key="key" :item="item"/>
             </div>
         </div>
     </section>
@@ -45,7 +45,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import VolunteerCard from "./VolunteerCard.vue";
+import Card from "../../components/Card.vue";
 
 const activeTab = ref('kindness') // Default active tab
 
