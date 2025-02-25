@@ -11,69 +11,63 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/all-volunteer',
-    name: 'Allvolutters',
-    component: () => import('@/pages/Mykarma/Allvolutters.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
     path: '/landing',
     name: 'LandingPage',
     component: () => import('@/pages/Home.vue'),
     meta: { requiresAuth: false }
   },
   {
-    path: '/verify',
-    name: 'Verify',
-    component: () => import('@/pages/Verifyotp.vue'),
-    meta: { requiresAuth: false }
-  },
-  {
-    path: '/test',
-    name: 'Try',
-    component: () => import('@/pages/Try.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/volunteering',
-    name: 'Volunteering',
-    component: () => import('@/pages/Volunteering.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/empower',
-    name: 'Empower',
-    component: () => import('@/pages/Empower.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
     name: 'Login',
     path: '/login',
-    component: () => import('@/pages/Login.vue'),
+    component: () => import('@/pages/Auth/Login.vue'),
     meta: { requiresAuth: false }
   },
   {
     name: 'Register',
     path: '/register',
-    component: () => import('@/pages/Register.vue'),
+    component: () => import('@/pages/Auth/Register.vue'),
     meta: { requiresAuth: false }
+  },
+  {
+    path: '/verify',
+    name: 'Verify',
+    component: () => import('@/pages/Auth/Verifyotp.vue'),
+    meta: { requiresAuth: false }  
+  },
+  {
+    path: '/all-volunteer',
+    name: 'Allvolutters',
+    component: () => import('@/pages/Mykarma/Allvolutters.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/volunteering-opportunities',
+    name: 'VolunteeringOpportunities',
+    component: () => import('@/pages/VolunteeringOpportunities/VolunteeringOpportunities.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/empower',
+    name: 'Empower',
+    component: () => import('@/pages/Mykarma/Empower.vue'),
+    meta: { requiresAuth: true }
   },
   {
     name: 'Contact',
     path: '/contact',
-    component: () => import('@/pages/Contact.vue'),
+    component: () => import('@/pages/Public/Contact.vue'),
     meta: { requiresAuth: true }
   },
   {
     name: 'Profile',
     path: '/profile',
-    component: () => import('@/pages/Profile.vue'),
+    component: () => import('@/pages/Profile/Profile.vue'),
     meta: { requiresAuth: true }
   },
   {
     name: 'Updateprofile',
     path: '/updateprofile',
-    component: () => import('@/pages/Updateprofile.vue'),
+    component: () => import('@/pages/Profile/Updateprofile.vue'),
     meta: { requiresAuth: true }
   },
   {
@@ -91,19 +85,19 @@ const routes = [
   {
     name: 'FAQs',
     path: '/faqs',
-    component: () => import('@/pages/FAQs.vue'),
+    component: () => import('@/pages/Public/FAQs.vue'),
     meta: { requiresAuth: false }
   },
   {
     name: 'Features',
     path: '/features',
-    component: () => import('@/pages/Features.vue'),
+    component: () => import('@/pages/Public/Features.vue'),
     meta: { requiresAuth: false }
   },
   {
     name: 'AboutUs',
     path: '/about-us',
-    component: () => import('@/pages/About Us.vue'),
+    component: () => import('@/pages/Public/About Us.vue'),
     meta: { requiresAuth: false }
   }
 ]
