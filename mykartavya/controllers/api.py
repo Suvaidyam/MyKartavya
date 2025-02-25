@@ -74,3 +74,22 @@ def company_data():
         fields=["*"]   
     )
     return company
+
+@frappe.whitelist(allow_guest=True)
+def get_activity_data():
+    doc = frappe.get_all(
+        "Activity", 
+        fields=["title","karma_points","start_date","end_date","hours","reward_description","reward_image"]   
+    )
+    return doc
+
+@frappe.whitelist(allow_guest=True)
+def actvolunteer_data():
+    doc = frappe.get_all(
+        "Volunteer Activity", 
+        fields=["*"]   
+    )
+    return doc
+
+
+

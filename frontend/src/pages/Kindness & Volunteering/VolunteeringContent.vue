@@ -44,10 +44,22 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed ,onMounted,inject } from 'vue'
 import Card from "../../components/Card.vue";
 
+const call = inject('call')
+
+
 const activeTab = ref('kindness') // Default active tab
+const kindnes = async () => {
+    try {
+        const response = await call('mykartavya.controllers.api.get_activity_data', {
+        });
+        console.log(response);
+    } catch (err) {
+        console.error('Error fetching Kindness data:', err);
+    }
+};
 
 const volunteerCards = [
     {
@@ -88,6 +100,9 @@ const volunteerCards = [
     },
 ];
 
+onMounted(() => {
+    kindnes()
+})
 const displayedCards = computed(() => {
     return volunteerCards.filter(card => card.type === activeTab.value)
 })

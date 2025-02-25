@@ -5,7 +5,8 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "sdg"
+  "sdg",
+  "sdg_image"
  ],
  "fields": [
   {
@@ -15,11 +16,17 @@
    "label": "SDG ",
    "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "sdg_image",
+   "fieldtype": "Attach Image",
+   "label": "SDG Image",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-18 17:57:08.488949",
+ "modified": "2025-02-25 16:25:49.223606",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "SDG",
