@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as s}from"./index-DXiSVU94.js";const c={class:"pt-[62px] flex justify-center items-center h-screen"},a={__name:"Features",setup(o){return(r,_)=>(s(),t("div",c,"Features Coming Soon.."))}},p=e(a,[["__scopeId","data-v-c4e0aa88"]]);export{p as default};
