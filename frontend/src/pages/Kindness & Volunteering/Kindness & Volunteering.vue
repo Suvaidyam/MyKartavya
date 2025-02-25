@@ -10,15 +10,9 @@
 </template>
 
 <script setup>
-<<<<<<< HEAD
 import { ref } from "vue";
 import Filters from "../../components/Filters.vue";
 import VolunteeringContent from "./VolunteeringContent.vue";
-=======
-import { ref } from 'vue'
-import Filters from '../../components/Filters.vue'
-import MyDetails from './MyDetails.vue'
->>>>>>> dev_bittu
 
 const available_commitments = ref([
   {
