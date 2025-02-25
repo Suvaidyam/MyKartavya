@@ -50,10 +50,15 @@ import Card from "../../components/Card.vue";
 const call = inject('call')
 const activity = ref([])
 
+const props = defineProps({
+    filter: Object,
+});
+const filter = ref(props.filter);
 const activeTab = ref('kindness') // Default active tab
-const kindnes = async () => {
+const kindnes = async (filter) => {
     try {
         const response = await call('mykartavya.controllers.api.get_activity_data', {
+            'filter': filter ?? {}
         });
         activity.value = response
     } catch (err) {
@@ -111,4 +116,9 @@ watch(()=>activeTab.value, (newVal) => {
         kindnes()
     }
 }, {immediate: true})
+watch(()=>filter.value, (newVal) => {
+    if(newVal){
+        kindnes(newVal)
+    }
+}, {immediate: true, deep: true})
 </script>
