@@ -58,12 +58,12 @@
   <nav v-else class="flex items-center justify-between h-full px-[36px] max-w-[1920px] mx-auto">
     <router-link to="/" class="flex items-center space-x-4">
       <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
-    </router-link>
+    </router-link> 
     <div class="hidden md:flex space-x-8 text-gray-700">
       <router-link to="/landing" :class="[route.fullPath=='/landing'?'font-medium':'font-normal','text-sm']">Home</router-link>
       <router-link to="/about-us" :class="[route.fullPath=='/about-us'?'font-medium':'font-normal','text-sm']">About Us</router-link>
       <router-link to="/features" :class="[route.fullPath=='/features'?'font-medium':'font-normal','text-sm']">Features</router-link>
-      <router-link to="/kindness-volunteering" :class="[route.fullPath=='/kindness-volunteering'?'font-medium':'font-normal','text-sm']">Kindness & Volunteering</router-link>
+      <router-link to="/kindness-volunteering" :class="[route.fullPath.split('/')[1]=='kindness-volunteering'?'font-medium':'font-normal','text-sm']">Kindness & Volunteering</router-link>
       <router-link to="/faqs" :class="[route.fullPath=='/faqs'?'font-medium':'font-normal','text-sm']">FAQs</router-link>
     </div>
     <div class="flex items-center gap-5 justify-center">

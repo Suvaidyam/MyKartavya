@@ -1,9 +1,9 @@
 <template>
-  <div class="max-w-[1920px] w-full pt-[62px] mx-auto">
+  <div class="max-w-[1920px] w-full pt-[62px] mx-auto bg-gray-50">
     <div class="w-full flex flex-col lg:flex-row px-5">
       <Filters />
-      <div class="w-full lg:pl-[270px]">
-        <MyDetails />
+      <div class="w-full lg:pl-[270px] flex flex-col xl:flex-row">
+        <VolunteeringContent :available_commitments="available_commitments" class="px-3"/>
       </div>
     </div>
   </div>
@@ -12,7 +12,7 @@
 <script setup>
 import { ref } from "vue";
 import Filters from "../../components/Filters.vue";
-import MyDetails from './MyDetails.vue';
+import VolunteeringContent from "./VolunteeringContent.vue";
 
 const available_commitments = ref([
   {
