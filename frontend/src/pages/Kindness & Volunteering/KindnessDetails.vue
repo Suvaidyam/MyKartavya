@@ -65,9 +65,9 @@
 
           <div class="font-poppins text-button">
             <button
-              class="bg-secondary w-[112px] h-[32px] rounded-[4px] flex justify-center items-center text-white hover:bg-opacity-90 transition-colors"
+              class="bg-secondary min-w-[112px] px-2 h-[32px] rounded-[4px] flex justify-center items-center text-white hover:bg-opacity-90 transition-colors"
             >
-              Act Now
+            {{ route.params.type === 'kindness' ? 'ACT NOW' : 'I WANT TO HELP' }}
               <FeatherIcon name="arrow-up-right" class="size-4 ml-1" />
             </button>
           </div>
@@ -259,7 +259,7 @@
                     <button
                       class="ml-auto text-orange-600 font-semibold text-sm flex items-center hover:text-orange-700 transition-colors"
                     >
-                      ACT NOW
+                      {{ route.params.type === 'kindness' ? 'ACT NOW' : 'I WANT TO HELP' }}
                       <FeatherIcon name="arrow-up-right" class="size-4 ml-1" />
                     </button>
                   </div>
@@ -275,6 +275,7 @@
   
   <script setup>
 import { FeatherIcon } from 'frappe-ui'
+import { useRoute } from 'vue-router'
 import {
   Facebook,
   Twitter,
@@ -284,6 +285,8 @@ import {
 } from 'lucide-vue-next'
 import { ref } from 'vue'
 
+const route = useRoute()
+console.log(route)
 const icons = [
   { name: 'Facebook', svg: Facebook },
   { name: 'X', svg: Twitter },
