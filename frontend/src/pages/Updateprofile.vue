@@ -34,6 +34,26 @@
             />
           </div>
           
+          <!-- Password Fields -->
+          <div>
+            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Password</label>
+            <input
+              v-model="formData.password"
+              type="password"
+              placeholder="Enter your password"
+              class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
+            />
+          </div>
+          <div>
+            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Confirm Password</label>
+            <input
+              v-model="formData.confirm_password"
+              type="password"
+              placeholder="Confirm your password"
+              class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
+            />
+          </div>
+          
           <!-- CV Upload -->
           <div>
             <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Add CV</label>
@@ -79,6 +99,8 @@
 
 <script setup>
 import { ref, inject, onMounted } from "vue";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 // Inject API call function
 const call = inject("call");
@@ -112,6 +134,8 @@ const formData = ref({
   title: "",
   custom_employee_id: "",
   linkedin: "",
+  password: "",
+  confirm_password: ""
 });
 
 // Refs for File Inputs
@@ -121,14 +145,10 @@ const portfolioInput = ref(null);
 // Fetch details from API
 const getDetails = async () => {
   let res = await call("mykartavya.controllers.api.sva_user_data");
-  if (res) {
-    formData.value = res[0]; // Populate form with fetched data
+  if (res && res.length > 0) {
+    formData.value = res[0];  // Populate form with fetched data
   }
 };
-
-onMounted(() => {
-  getDetails();
-});
 
 // File selection handlers
 const onCvSelected = (event) => {
@@ -142,10 +162,31 @@ const onPortfolioSelected = (event) => {
 };
 
 // Form Submission
-const onSubmit = () => {
-  console.log("Form data:", formData.value);
-  alert("Form submitted!");
+const onSubmit = async () => {
+  if (formData.value.password !== formData.value.confirm_password) {
+    toast.error("Password and Confirm Password do not match.");
+    return;
+  }
+
+  try {
+    let res = await call("mykartavya.controllers.api.update_sva_user", {
+      data: JSON.stringify(formData.value)
+    });
+    
+    if (res.success) {
+      toast.success("Profile updated successfully!");
+    } else {
+      toast.error(res.message || "Failed to update profile. Please try again.");
+    }
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    toast.error("An error occurred while updating the profile."); 
+  }
 };
+
+onMounted(() => {
+  getDetails();
+});
 </script>
 
 <style scoped></style>

@@ -9,7 +9,6 @@ def sdg_data():
     )
     return sdg
 
-
 @frappe.whitelist(allow_guest=False)
 def sva_user_data():
     user = frappe.session.user
@@ -20,3 +19,34 @@ def sva_user_data():
     )
     return doc
 
+@frappe.whitelist()
+def update_sva_user(data):
+    data = frappe.parse_json(data)
+    user_email = frappe.session.user  # Logged-in user's email or user_id (depending on your setup)
+
+    # Fetch the user document using the email (or user_id if applicable)
+    user_doc = frappe.get_doc("SVA User", {"email": user_email})
+
+    if user_doc:
+        # Validate and update state and city
+        state_value = data.get("custom_state")
+        city_value = data.get("custom_city")
+
+        if state_value:
+            state_record = frappe.get_value("State", {"state_name": state_value}, "name")
+            if not state_record:
+                return {"success": False, "message": f"State '{state_value}' not found."}
+            data["custom_state"] = state_record
+
+        if city_value:
+            city_record = frappe.get_value("District", {"district_name": city_value}, "name")
+            if not city_record:
+                return {"success": False, "message": f"City '{city_value}' not found."}
+            data["custom_city"] = city_record
+
+        # Update the document with new data
+        user_doc.update(data)
+        user_doc.save()
+        frappe.db.commit()  # Commit the changes to the database
+        return {"success": True, "message": "User updated successfully"}
+    return {"success": False, "message": "User not found"}

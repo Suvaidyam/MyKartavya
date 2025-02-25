@@ -34,7 +34,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.mobile_number || '...'  }}</div>
+                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.mobile_number || '---'  }}</div>
                                 <div class="text-caption text-gray-500">Phone No.</div>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">   {{ svaUserData?.custom_state || '...'  }},{{ svaUserData?.custom_city || '...'  }}, {{ svaUserData?.custom_country }}</div>
+                                <div class="text-bodyh2 text-gray-900">   {{ svaUserData?.custom_state || '---'  }},{{ svaUserData?.custom_city || '---'  }}, {{ svaUserData?.custom_country }}</div>
                                 <div class="text-caption text-gray-500">Location</div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.custom_date_of_birth || '...'  }}</div>
+                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.custom_date_of_birth || '---'  }}</div>
                                 <div class="text-caption text-gray-500">Date of Birth</div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.custom_employee_id || '...'  }}</div>
+                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.custom_employee_id || '---'  }}</div>
                                 <div class="text-caption text-gray-500">Employee ID</div>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.custom_ngo || '...'  }}</div>
+                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.custom_ngo || '---'  }}</div>
                                 <div class="text-caption text-gray-500">Title</div>
                             </div>
                         </div>
