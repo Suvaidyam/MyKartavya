@@ -9,6 +9,11 @@ def sdg_data():
     )
     return sdg
 
+@frappe.whitelist(allow_guest=True)
+def get_login_details(): 
+    url=frappe.get_single('Social Login'),
+    return(url)
+
 @frappe.whitelist(allow_guest=False)
 def sva_user_data():
     user = frappe.session.user
