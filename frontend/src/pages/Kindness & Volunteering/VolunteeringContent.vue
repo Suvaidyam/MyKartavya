@@ -37,25 +37,25 @@
 
         <div class="mt-5 max-md:max-w-full">
             <div class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
-                <Card v-for="(item, key) in displayedCards" :key="key" :item="item"/>
+                <Card v-for="item in activity" :key="item.name" :item="item"/>
             </div>
         </div>
     </section>
 </template>
 
 <script setup>
-import { ref, computed ,onMounted,inject } from 'vue'
+import { ref, computed ,onMounted,inject, watch } from 'vue'
 import Card from "../../components/Card.vue";
 
 const call = inject('call')
-
+const activity = ref([])
 
 const activeTab = ref('kindness') // Default active tab
 const kindnes = async () => {
     try {
         const response = await call('mykartavya.controllers.api.get_activity_data', {
         });
-        console.log(response);
+        activity.value = response
     } catch (err) {
         console.error('Error fetching Kindness data:', err);
     }
@@ -106,4 +106,9 @@ onMounted(() => {
 const displayedCards = computed(() => {
     return volunteerCards.filter(card => card.type === activeTab.value)
 })
+watch(()=>activeTab.value, (newVal) => {
+    if(newVal){
+        kindnes()
+    }
+}, {immediate: true})
 </script>

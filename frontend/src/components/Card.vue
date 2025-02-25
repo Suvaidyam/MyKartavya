@@ -1,8 +1,8 @@
 <template>
-    <div v-if="type!='group'" class="card bg-white">
+    <div v-if="type != 'group'" class="card bg-white">
         <router-link :to="`/activity/${item.title.toLowerCase().replace(/\s+/g, '-')}`">
             <div class="relative">
-                <img :src="item.image" :alt="item.title" class="w-full rounded-md h-40 object-cover" />
+                <img :src="item.activity_image" :alt="item.title" class="w-full rounded-md h-40 object-cover" />
                 <div
                     class="absolute top-2 left-2 bg-orange-500 text-white font-medium text-xs flex items-center px-3 h-6 rounded-br-lg">
                     {{ item.status ?? 'Online' }}
@@ -11,7 +11,7 @@
                     class="absolute top-2 right-2 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
                     <span class="font-medium text-xs">{{ item.points }} Points</span>
                 </div>
-                
+
             </div>
         </router-link>
         <div class="flex flex-col gap-2 pt-2">
@@ -27,19 +27,18 @@
         </div>
     </div>
     <!--  -->
-    <article v-else class="flex flex-col w-full">
+    <article v-else class="flex flex-col w-full pb-2">
         <div class="flex relative flex-col py-3 pr-3 w-full rounded-xl aspect-[1.557]">
-            <img :src="item.imageSrc" alt="" class="object-cover rounded-md absolute inset-0 size-full" />
+            <img :src="item.activity_image" alt="" class="object-cover rounded-md absolute inset-0 size-full" />
             <div
                 class="flex relative justify-between text-xs font-medium tracking-normal leading-none text-justify text-neutral-950">
                 <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/4138a280b3a136bb112c9be5ef23c1ce3a12d516daa8cede29ad404bcb75a31b?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
                     alt="" class="object-contain shrink-0 max-w-full aspect-[4.03] w-[101px]" />
-                <div
-                    class="flex flex-col rounded-lg px-2 justify-center h-6  bg-white border border-solid">
+                <div class="flex flex-col rounded-lg px-2 justify-center h-6  bg-white border border-solid">
                     <div class="flex gap-1 items-center w-full">
                         <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c49a0afe7089e38e103d66c4c361731bed25ed9dfbe5b58de7105c730d3c6d93?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
                             alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                        <span class="self-stretch my-auto">{{ item.points }} Points</span>
+                        <span class="self-stretch my-auto">{{ item.karma_points }} Points</span>
                     </div>
                 </div>
             </div>
@@ -57,18 +56,23 @@
             {{ item.description }}
         </p>
 
-        <div class="flex gap-5 justify-between mt-4">
+        <div class="flex gap-5 justify-between mt-2">
             <div class="flex flex-col text-justify">
                 <div class="flex gap-1 items-center text-xs tracking-normal text-neutral-950">
                     <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/206e5d29b5523c409dbfe316e887c82aeb672c336764aad169ece16b133845e4?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
                         alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                     <time class="self-stretch my-auto">{{ item.date }}</time>
                 </div>
-                <div class="flex gap-1 items-center self-start mt-4 text-xs tracking-normal text-stone-500">
-                    <img :src="item.participantImages" alt=""
-                        class="object-contain shrink-0 self-stretch my-auto aspect-[2.16] w-[65px]" />
-                    <span class="self-stretch my-auto">+5 more</span>
+                <!--  -->
+                <div class="flex items-center -space-x-3 pt-4">
+                    <img v-for="el in JSON.parse(item.volunteers)" :key="index" :src="el.user_image" :alt="'User ' + (index + 1)"
+                        class="w-8 h-8 rounded-full border-2 border-white" />
+                    <p
+                        class="pl-4 text-sm text-center">
+                        +{{ JSON.parse(item.volunteers).length }}
+                    </p>
                 </div>
+                <!--  -->
             </div>
             <div class="flex flex-col self-start">
                 <div class="flex gap-1 items-center self-end text-xs tracking-normal text-justify text-neutral-950">
@@ -96,8 +100,8 @@ import { ref } from 'vue';
 const props = defineProps({
     type: {
         type: String,
-        required: true,
-        default:'group',
+        required: false,
+        default: 'group',
     },
     item: {
         type: Object,
