@@ -6,14 +6,14 @@
     <a class="text-[#000000] font-normal text-[12px]">Register as NGO</a>
   </div>
 <div class="bg-white h-[60px] shadow-md">
-  <nav v-if="['/', '/volunteering', '/profile', '/empower', '/updateprofile', '/'].includes(route.fullPath)"
+  <nav v-if="['/', '/volunteering-opportunities', '/profile', '/empower', '/updateprofile', '/'].includes(route.fullPath)"
     class="flex items-center justify-between w-full px-[36px] max-w-[1920px] mx-auto h-full">
     <router-link to="/" class="flex items-center space-x-4">
       <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
     </router-link>
     <div class="hidden md:flex space-x-8 text-gray-700">
       <router-link to="/" :class="[route.fullPath=='/'?'font-medium':'font-normal','text-sm']">My Karma</router-link>
-      <router-link to="/volunteering" :class="[route.fullPath=='/volunteering'?'font-medium':'font-normal','text-sm']">Volunteering Opportunities</router-link>
+      <router-link to="/volunteering-opportunities" :class="[route.fullPath=='/volunteering-opportunities'?'font-medium':'font-normal','text-sm']">Volunteering Opportunities</router-link>
     </div>
     <div class="flex items-center gap-5 justify-center">
       <!--  -->
