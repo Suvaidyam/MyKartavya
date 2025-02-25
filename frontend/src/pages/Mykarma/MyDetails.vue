@@ -249,9 +249,10 @@
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'
-
+import { ref, inject, onMounted } from 'vue'
 const auth = inject('auth')
+const call = inject('call')
+const users = ref([])
 const sdgs = ref([
   {
     title: 'SDG 2 : Zero Hunger',
@@ -272,7 +273,7 @@ const sdgs = ref([
     icon: 'https://s3-alpha-sig.figma.com/img/a66d/8876/39878f7d0022333404d9f475a657fc6e?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=l4cKNOSziFMmTJF1dWr3oSk0BfbVYmbbWJTt3flheevA5~CVJX6zZNZ4gQN-hTE2QkRtt6dc04nRS98to0xOMiGfae90cGaRwmCA-08j-uXkUFdbIEcBcnENHZclEMP1xjaeFTqqAXAPT~OBJmpgvHly9MY9MDH~DJg0GvkmxilQ5BjewrkkFk2eojfu0om2e7eBl3YehhCxJ3EHspDrQpngOk31~a~7g0qGILAOD8ekVgO0TPO1g0A1U7enUcFrXu0D0wC5MrCuUaBLgtKffhU1zOTv3MHlOHBD1GWXL49~EeJsRm05JoAPShba5hyffH8eOIdrIrutWGNwTHVLHw__',
   },
 ])
-const users = ref([
+const users1 = ref([
   { name: 'You', time: 5, points: 12, rank: 10 },
   { name: 'Abhinav', time: 22, points: 55, rank: 3 },
   { name: 'Aishwarya Naidu', time: 20, points: 52, rank: 4 },
@@ -282,6 +283,24 @@ const users = ref([
   { name: 'Anaya Kushwah', time: 9, points: 36, rank: 8 },
   { name: 'Shefali Chawla', time: 8, points: 23, rank: 9 },
 ])
+
+const get = async () => {
+  let res = await call(`mykartavya.controllers.api.get_top_users`)
+  console.log('object====', res)
+
+  users.value = res.value.map((item) => ({
+    name: item.name,
+    time: item.duration,
+    points: item.karma_points,
+    rank: 1,
+  }))
+}
+onMounted(() => {
+  get()
+})
+if (users) {
+  console.log(users)
+}
 
 // const fetchDoctorsData = async () => {
 //     try {
