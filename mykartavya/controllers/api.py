@@ -15,7 +15,7 @@ def sva_user_data():
     doc = frappe.get_all(
         "SVA User", 
         filters={"email": user}, 
-        fields=["name","mobile_number","full_name","first_name","last_name","email","user_image","custom_employee_id","custom_date_of_birth","custom_background_image","custom_company.company_name as custom_company","custom_country","custom_state.state_name as custom_state","custom_city.district_name as custom_city"]
+        fields=["name","mobile_number","full_name","first_name","last_name","email","user_image","custom_employee_id","custom_date_of_birth","custom_background_image","custom_company","custom_country","custom_state","custom_city"]
     )
     return doc
 
@@ -28,22 +28,6 @@ def update_sva_user(data):
     user_doc = frappe.get_doc("SVA User", {"email": user_email})
 
     if user_doc:
-        # Validate and update state and city
-        state_value = data.get("custom_state")
-        city_value = data.get("custom_city")
-
-        if state_value:
-            state_record = frappe.get_value("State", {"state_name": state_value}, "name")
-            if not state_record:
-                return {"success": False, "message": f"State '{state_value}' not found."}
-            data["custom_state"] = state_record
-
-        if city_value:
-            city_record = frappe.get_value("District", {"district_name": city_value}, "name")
-            if not city_record:
-                return {"success": False, "message": f"City '{city_value}' not found."}
-            data["custom_city"] = city_record
-
         # Update the document with new data
         user_doc.update(data)
         user_doc.save(ignore_permissions=True)  
@@ -63,7 +47,7 @@ def country_data():
 def state_data(country):
     state = frappe.get_all(
         "State", 
-        filters={"country": country},
+        filters={"custom_country": country},
         fields=["*"]   
     )
     return state
