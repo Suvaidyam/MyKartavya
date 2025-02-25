@@ -3,7 +3,7 @@
     <!-- Banner section -->
     <section>
       <div
-        class="relative w-full h-[300px] md:h-[456px] back-img flex items-center px-4 md:px-20"
+        class="relative w-full h-[300px] md:h-[456px] sm:h-[456px] back-img flex items-center px-4 md:px-20"
       >
         <div
           class="w-full max-w-sm bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-4 justify-center"
@@ -76,13 +76,13 @@
     </section>
 
     <!-- Main section -->
-    <section class="w-full bg-gray-100">
+    <section class="w-full bg-white">
       <div class="p-4 md:p-6 lg:p-10">
         <div class="flex flex-col lg:flex-row gap-4">
           <!-- Left Section -->
           <div class="w-full lg:w-[65xp]">
             <p
-              class="mb-4 text-sm md:text-bodyh2 font-normal font-poppins text-justify"
+              class="mb-4 text-[10px] md:text-bodyh2 font-normal font-poppins text-justify"
               style="color: #666666"
             >
               <span class="text-3xl md:text-[47px] text-black">T</span>his
@@ -160,7 +160,7 @@
                   v-for="icon in icons"
                   :key="icon.name"
                   :aria-label="icon.name"
-                  class="p-2 bg-white rounded-full hover:bg-gray-300 transition-colors"
+                  class="p-1 bg-white rounded-full border border-gray-500 transition-colors"
                 >
                   <component :is="icon.svg" class="w-5 h-5 text-gray-600" />
                 </button>
