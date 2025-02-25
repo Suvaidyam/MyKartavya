@@ -57,7 +57,10 @@
                         +5
                       </div>
                     </div>
-                    <button class="ml-auto text-orange-600 font-semibold text-sm">ACT NOW →</button>
+                    <button class="ml-auto text-orange-600 flex items-center justify-center font-semibold text-sm">ACT NOW 
+                      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/cb34dd02beac2ec2e17320d59938a8e4f1f75c978b7f31db85369770609c9c38?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
+                        alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -112,9 +115,9 @@ const available_commitments = ref([
     hours: 50,
     status: 'On-Ground',
     participant_users: [
-      '/assets/download (3).jpeg',
-      '/assets/download (2).jpeg',
-      '/assets/download (2).jpeg',
+      '../../assets/download (3).jpeg',
+      '../../assets/download (2).jpeg',
+      '../../assets/download (1).jpeg',
     ],
   },
 ]);
@@ -124,6 +127,7 @@ const available_commitments = ref([
 .card {
   transition: transform 0.2s;
 }
+
 .card:hover {
   transform: scale(1.05);
 }
