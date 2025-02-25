@@ -1,5 +1,6 @@
 import frappe
 from frappe import _
+from mykartavya.controllers.activity import Activity
 
 @frappe.whitelist(allow_guest=True)
 def sdg_data():
@@ -109,5 +110,6 @@ def get_top_users():
     
     return users
 
-
-
+@frappe.whitelist(allow_guest=True)
+def get_activity_data():
+    return Activity.acts_data()
