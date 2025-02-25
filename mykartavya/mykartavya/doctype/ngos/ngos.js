@@ -11,7 +11,7 @@ frappe.ui.form.on("NGOs", {
                 }
                 return f;  
             });
-        };
+        }; 
     },
 });
 
