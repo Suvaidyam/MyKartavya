@@ -1,7 +1,7 @@
 <template>
-    <aside class="w-[270px] min-w-[270px] hidden lg:block p-4 border-r border-gray-200">
-        <div class="bg-white">
-            <div class="flex justify-between items-center mb-3">
+    <aside class="w-[270px] min-w-[270px] fixed overflow-auto h-screen pb-[62px] hidden lg:block border-r border-gray-200">
+        <div class="bg-white relative px-4">
+            <div class="flex sticky top-0 bg-white z-20 justify-between items-center py-3">
                 <h3 class="text-lg font-medium">Filter by</h3>
                 <button :disabled="clear_all_disabled"
                     :class="[clear_all_disabled ? 'text-gray-500' : 'text-[#E86C13]', 'text-sm']" @click="clear_all()">
@@ -50,12 +50,12 @@
                     leave-active-class="transition ease-in duration-75"
                     leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                     <MenuItems
-                        class="absolute p-1 left-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden">
-                        <div v-if="item.key === 'sdgs'" class="flex px-2 py-1 items-center gap-2 text-sm">
+                        class="absolute p-1 h-72 overflow-auto left-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden">
+                        <div v-if="item.key === 'sdgs'" class="flex px-2 items-center py-1 gap-2 text-sm">
                             <input v-model="allChecked" type="checkbox"
                                 class="rounded-sm focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="all-sdgs">
-                            <label class="text-[12px] font-normal" for="all-sdgs"> </label>
+                            <label class="text-[12px] font-normal" for="all-sdgs">All</label>
                         </div>
                         <div v-for="el in item.options" class="flex px-2 py-1 items-center gap-2 text-sm">
                             <input v-model="filter[item.key]" :value="el" :type="item.type" :name="item.key"
@@ -161,3 +161,18 @@ watch(filter, (val) => {
 
 onMounted(fetchSDGs);
 </script>
+
+<style scoped>
+::-webkit-scrollbar {
+  width: 4px; /* Thin width */
+  height: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: #b0b3b0; /* Scrollbar color */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Track color */
+}
+</style>
