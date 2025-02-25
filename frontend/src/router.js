@@ -8,19 +8,25 @@ const routes = [
     path: '/',
     name: 'Home',
     component: () => import('@/pages/Mykarma/Mykarma.vue'),
-    meta: { requiresAuth: true }  
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/all-volunteer',
+    name: 'Allvolutters',
+    component: () => import('@/pages/Mykarma/Allvolutters.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: '/landing',
     name: 'LandingPage',
     component: () => import('@/pages/Home.vue'),
-    meta: { requiresAuth: false }  
+    meta: { requiresAuth: false }
   },
   {
     path: '/verify',
     name: 'Verify',
     component: () => import('@/pages/Verifyotp.vue'),
-    meta: { requiresAuth: false }  
+    meta: { requiresAuth: false }
   },
   {
     path: '/test',
@@ -110,7 +116,7 @@ const router = createRouter({
 // Navigation guard
 router.beforeEach(async (to, from, next) => {
   let isLoggedIn = session.isLoggedIn
-  
+
   // Check user authentication status
   try {
     await userResource.promise
