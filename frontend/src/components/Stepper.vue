@@ -64,6 +64,86 @@
         </div>
         <!-- Activity modal for step start -->
         <div
+          v-if="showCertificate"
+          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+        >
+          <div
+            class="w-[384px] h-[296px] bg-white rounded-[12px] flex flex-col justify-end items-center py-[20px] gap-[21px] font-poppins"
+          >
+            <div>
+              <h2 class="font-[500] text-[#0B0B0B] text-[23px]">
+                You’ve earn 50 karma points
+              </h2>
+            </div>
+            <button
+              @click="showCertificate = false"
+              class="py-[10.5px] px-[22px] rounded-[4px] text-[14px] border border-[#FF5722] text-[#666666]"
+            >
+              View Certificate
+            </button>
+          </div>
+        </div>
+
+        <div
+          v-if="showPopup"
+          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+        >
+          <!-- <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
+            <AlertCircleIcon class="w-10 h-10 text-orange-500 mb-2" />
+            <p class="text-gray-700 font-semibold">Finish the current step to move forward!</p>
+            <button @click="showPopup = false" class="mt-3 px-4 py-2 bg-orange-500 text-white rounded">OK</button>
+          </div> -->
+          <div class="bg-white rounded-lg shadow-lg w-full max-w-md">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center border-b p-4">
+              <h2 class="text-lg font-semibold">Share Feedback</h2>
+              <button
+                @click="showPopup = false"
+                class="text-gray-500 hover:text-gray-700 text-xl"
+              >
+                &times;
+              </button>
+            </div>
+            <!-- Modal Content -->
+            <div class="p-4">
+              <label class="block font-medium mb-2 text-gray-700"
+                >How would you rate your experience with the activity?</label
+              >
+              <div class="flex justify-center gap-6 my-3">
+                <button
+                  v-for="(emoji, index) in emojis"
+                  :key="index"
+                  @click="selectedEmoji = emoji"
+                  class="text-3xl focus:outline-none transition duration-200"
+                  :class="
+                    selectedEmoji === emoji
+                      ? 'text-orange-500'
+                      : 'text-gray-400'
+                  "
+                >
+                  {{ emoji.icon }}
+                </button>
+              </div>
+              <label class="block font-medium mb-2 text-gray-700"
+                >Comments (Optional)</label
+              >
+              <textarea
+                v-model="comments"
+                class="w-full border rounded p-2 h-20 resize-none"
+              ></textarea>
+            </div>
+            <!-- Submit Button -->
+            <div class="p-4">
+              <button
+                @click=";(showPopup = false), (showCertificate = true)"
+                class="w-full bg-orange-500 text-white py-2 rounded font-semibold hover:bg-orange-600"
+              >
+                SUBMIT FEEDBACK
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
           v-if="activityReportPopup"
           class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
         >
@@ -198,65 +278,6 @@
         <!-- Activity modal for step end -->
 
         <!-- Popup Modal for Step Restriction -->
-        <div
-          v-if="showPopup"
-          class="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50"
-        >
-          <!-- <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
-            <AlertCircleIcon class="w-10 h-10 text-orange-500 mb-2" />
-            <p class="text-gray-700 font-semibold">Finish the current step to move forward!</p>
-            <button @click="showPopup = false" class="mt-3 px-4 py-2 bg-orange-500 text-white rounded">OK</button>
-          </div> -->
-          <div class="bg-white rounded-lg shadow-lg w-full max-w-md">
-            <!-- Modal Header -->
-            <div class="flex justify-between items-center border-b p-4">
-              <h2 class="text-lg font-semibold">Share Feedback</h2>
-              <button
-                @click="isOpen = false"
-                class="text-gray-500 hover:text-gray-700 text-xl"
-              >
-                &times;
-              </button>
-            </div>
-            <!-- Modal Content -->
-            <div class="p-4">
-              <label class="block font-medium mb-2 text-gray-700"
-                >How would you rate your experience with the activity?</label
-              >
-              <div class="flex justify-center gap-6 my-3">
-                <button
-                  v-for="(emoji, index) in emojis"
-                  :key="index"
-                  @click="selectedEmoji = emoji"
-                  class="text-3xl focus:outline-none transition duration-200"
-                  :class="
-                    selectedEmoji === emoji
-                      ? 'text-orange-500'
-                      : 'text-gray-400'
-                  "
-                >
-                  {{ emoji.icon }}
-                </button>
-              </div>
-              <label class="block font-medium mb-2 text-gray-700"
-                >Comments (Optional)</label
-              >
-              <textarea
-                v-model="comments"
-                class="w-full border rounded p-2 h-20 resize-none"
-              ></textarea>
-            </div>
-            <!-- Submit Button -->
-            <div class="p-4">
-              <button
-                @click="showPopup = false"
-                class="w-full bg-orange-500 text-white py-2 rounded font-semibold hover:bg-orange-600"
-              >
-                SUBMIT FEEDBACK
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -270,6 +291,7 @@ import {
 } from 'lucide-vue-next'
 const currentStep = ref(0)
 const showPopup = ref(false)
+const showCertificate = ref(false)
 const activityReportPopup = ref(false)
 const feedbackPointsPopup = ref(false)
 const steps = ref([
@@ -317,6 +339,7 @@ const submitReport = () => {
   steps.value[2].completed = true
   currentStep.value++
 }
+
 const resetSteps = () => {
   steps.value.forEach((step) => (step.completed = false))
   currentStep.value = 0
