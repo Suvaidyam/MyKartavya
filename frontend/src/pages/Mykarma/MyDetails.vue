@@ -177,7 +177,7 @@
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="users.length > 0">
           <tr
             v-for="(user, index) in users"
             :key="index"
@@ -186,8 +186,8 @@
             <td class="text-[12px] font-medium flex items-center">
               <div class="w-10 h-8 flex items-center pl-1">
                 <img
-                  v-if="user.avatar"
-                  :src="user.avatar"
+                  v-if="user.user_image"
+                  :src="user.user_image"
                   :alt="user.name"
                   class="w-6 h-6 rounded-full object-cover"
                 />
@@ -195,24 +195,31 @@
                   v-else
                   class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center"
                 >
-                  {{ user.name.charAt(0) }}
+                  {{ user.full_name.charAt(0) }}
                 </div>
               </div>
               <span class="text-gray-800 font-medium text-[10px]">{{
-                user.name
+                user.full_name
               }}</span>
             </td>
             <td class="text-[10px] font-normal text-center">
-              {{ user.time }} hr
+              {{ user.duration / 60 / 60 }} hr
             </td>
             <td class="text-[10px] font-normal text-center">
-              {{ user.points }} Points
+              {{ user.karma_points }} Points
             </td>
             <td
               class="text-[10px] font-normal text-center flex justify-center items-center gap-1"
             >
               <i class="fa fa-caret-up text-green-600" aria-hidden="true"></i>
               {{ user.rank }}
+            </td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td colspan="4" class="text-center text-gray-500 py-4">
+              No data available
             </td>
           </tr>
         </tbody>
@@ -253,6 +260,7 @@ import { ref, inject, onMounted } from 'vue'
 const auth = inject('auth')
 const call = inject('call')
 const users = ref([])
+const users_top_3 = ref()
 const sdgs = ref([
   {
     title: 'SDG 2 : Zero Hunger',
@@ -273,42 +281,13 @@ const sdgs = ref([
     icon: 'https://s3-alpha-sig.figma.com/img/a66d/8876/39878f7d0022333404d9f475a657fc6e?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=l4cKNOSziFMmTJF1dWr3oSk0BfbVYmbbWJTt3flheevA5~CVJX6zZNZ4gQN-hTE2QkRtt6dc04nRS98to0xOMiGfae90cGaRwmCA-08j-uXkUFdbIEcBcnENHZclEMP1xjaeFTqqAXAPT~OBJmpgvHly9MY9MDH~DJg0GvkmxilQ5BjewrkkFk2eojfu0om2e7eBl3YehhCxJ3EHspDrQpngOk31~a~7g0qGILAOD8ekVgO0TPO1g0A1U7enUcFrXu0D0wC5MrCuUaBLgtKffhU1zOTv3MHlOHBD1GWXL49~EeJsRm05JoAPShba5hyffH8eOIdrIrutWGNwTHVLHw__',
   },
 ])
-const users1 = ref([
-  { name: 'You', time: 5, points: 12, rank: 10 },
-  { name: 'Abhinav', time: 22, points: 55, rank: 3 },
-  { name: 'Aishwarya Naidu', time: 20, points: 52, rank: 4 },
-  { name: 'Parul Tushar', time: 16, points: 44, rank: 5 },
-  { name: 'Saurabh Madan', time: 11, points: 41, rank: 6 },
-  { name: 'Gunjan Lal', time: 10, points: 39, rank: 7 },
-  { name: 'Anaya Kushwah', time: 9, points: 36, rank: 8 },
-  { name: 'Shefali Chawla', time: 8, points: 23, rank: 9 },
-])
 
 const get = async () => {
   let res = await call(`mykartavya.controllers.api.get_top_users`)
-
-  users.value = res?.map((item) => ({
-    name: item.name,
-    time: item.duration,
-    points: item.karma_points,
-    rank: 1,
-  }))
+  users.value = res
+  users_top_3.value = res.slice(0, 3)
 }
 onMounted(() => {
   get()
 })
-if (users) {
-}
-
-// const fetchDoctorsData = async () => {
-//     try {
-//         const response = await axios.get(
-//             "api/method/appointments_management.controllers.api.doctors_data"
-//         );
-//         doctors.value = response.data.message || [];
-//         allDoctors.value = doctors.value;
-//     } catch (error) {
-//         console.error("Error fetching doctors data:", error);
-//     }
-// };
 </script>
