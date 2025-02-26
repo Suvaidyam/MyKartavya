@@ -8,6 +8,7 @@ import FeatherIcon from 'feather-icons'
 import Auth from './libs/controllers/auth'
 import call from './libs/controllers/call'
 import VOtpInput from "vue3-otp-input";
+import {formatDate}  from './libs/utils';
 
 import {
   Button,
@@ -32,5 +33,6 @@ app.component('Button', Button)
 app.component('Card', Card)
 app.component('Input', Input)
 app.component('v-otp-input', VOtpInput)
+app.provide("formatDate",formatDate);
 
 app.mount('#app')

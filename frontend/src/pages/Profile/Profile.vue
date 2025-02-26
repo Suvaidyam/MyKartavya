@@ -74,7 +74,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">24 years</div>
+                                <div class="text-bodyh2 text-gray-900">{{ age }} years</div>
                                 <div class="text-caption text-gray-500">Age</div>
                             </div>
                         </div>
@@ -180,7 +180,7 @@
 </template>
 
 <script setup>
-import { ref ,inject,onMounted} from 'vue';
+import { ref ,inject,onMounted,computed} from 'vue';
 
 const auth = inject('auth');
 const call = inject('call')
@@ -228,9 +228,20 @@ const get = async () => {
     console.error('Error fetching data:', err);
   }
 };
+const age = computed(() => {
+  if (!svaUserData.value?.custom_date_of_birth) return '---';
+  
+  const dob = new Date(svaUserData.value.custom_date_of_birth);
+  const today = new Date();
+  
+  let age = today.getFullYear() - dob.getFullYear();
+  const monthDiff = today.getMonth() - dob.getMonth();
+  
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+    age--;
+  }
+  return age;
+});
 
 onMounted(get) 
-
-
-
 </script>
