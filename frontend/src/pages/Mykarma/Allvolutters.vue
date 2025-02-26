@@ -1,10 +1,7 @@
 <template>
   <div
-    class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-xl"
-  >
-    <div
-      class="bg-gradient-to-r from-blue-50 to-indigo-50 py-3 px-4 border-b border-gray-200"
-    >
+    class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-xl">
+    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 py-3 px-4 border-b border-gray-200">
       <h2 class="text-lg font-semibold text-gray-800">
         Performance Leaderboard
       </h2>
@@ -15,142 +12,80 @@
         <table class="min-w-full">
           <thead>
             <tr class="bg-gray-50 border-b-2 border-gray-200">
-              <th
-                class="text-left py-3 px-4 text-sm font-medium text-gray-600 uppercase tracking-wider"
-              >
+              <th class="text-left py-3 px-4 text-sm font-medium text-gray-600 uppercase tracking-wider">
                 Name
               </th>
-              <th
-                class="text-left py-3 px-4 text-sm font-medium text-gray-600 uppercase tracking-wider"
-              >
-                <div
-                  class="flex items-center cursor-pointer hover:text-blue-600 transition-colors duration-200"
-                  @click="sortBy('time')"
-                >
+              <th class="text-left py-3 px-4 text-sm font-medium text-gray-600 uppercase tracking-wider">
+                <div class="flex items-center cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                  @click="sortBy('time')">
                   Time
-                  <svg
-                    class="w-4 h-4 ml-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-                    ></path>
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
                   </svg>
                 </div>
               </th>
-              <th
-                class="text-left py-3 px-4 text-sm font-medium text-gray-600 uppercase tracking-wider"
-              >
-                <div
-                  class="flex items-center cursor-pointer hover:text-blue-600 transition-colors duration-200"
-                  @click="sortBy('karmaPoints')"
-                >
+              <th class="text-left py-3 px-4 text-sm font-medium text-gray-600 uppercase tracking-wider">
+                <div class="flex items-center cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                  @click="sortBy('karmaPoints')">
                   Karma Points
-                  <svg
-                    class="w-4 h-4 ml-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-                    ></path>
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
                   </svg>
                 </div>
               </th>
-              <th
-                class="text-left py-3 px-4 text-sm font-medium text-gray-600 uppercase tracking-wider"
-              >
-                <div
-                  class="flex items-center cursor-pointer hover:text-blue-600 transition-colors duration-200"
-                  @click="sortBy('rank')"
-                >
+              <th class="text-left py-3 px-4 text-sm font-medium text-gray-600 uppercase tracking-wider">
+                <div class="flex items-center cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                  @click="sortBy('rank')">
                   Rank
-                  <svg
-                    class="w-4 h-4 ml-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-                    ></path>
+                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
                   </svg>
                 </div>
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="(user, index) in sortedUsers"
-              :key="index"
+            <tr v-for="(user, index) in sortedUsers" :key="index"
               class="border-b border-gray-200 hover:bg-blue-50 transition-colors duration-150"
-              :class="{ 'bg-blue-50': user.name === 'You' }"
-            >
+              :class="{ 'bg-blue-50': user.name === 'You' }">
               <td class="py-3 px-4">
                 <div class="flex items-center">
                   <div
                     class="w-8 h-8 flex items-center justify-center rounded-full text-white font-medium mr-3 transition-transform duration-200 hover:scale-110 shadow-sm"
-                    :style="{ backgroundColor: getInitialColor(user.initial) }"
-                  >
+                    :style="{ backgroundColor: getInitialColor(user.initial) }">
                     {{ user.initial }}
                   </div>
                   <span class="font-medium text-gray-800">{{ user.name }}</span>
-                  <span
-                    v-if="user.name === 'You'"
-                    class="ml-2 px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full"
-                    >You</span
-                  >
+                  <span v-if="user.name === 'You'"
+                    class="ml-2 px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">You</span>
                 </div>
               </td>
               <td class="py-3 px-4 text-gray-600">
                 <div class="flex items-center">
-                  <svg
-                    class="w-4 h-4 mr-1 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                    ></path>
+                  <svg class="w-4 h-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
                   {{ user.time }}
                 </div>
               </td>
               <td class="py-3 px-4">
                 <div class="flex items-center">
-                  <div
-                    class="w-full max-w-xs bg-gray-200 rounded-full h-2.5 mr-2"
-                  >
-                    <div
-                      class="bg-blue-600 h-2.5 rounded-full transition-all duration-500"
-                      :style="{
-                        width: `${(user.karmaPoints / maxKarmaPoints) * 100}%`,
-                      }"
-                    ></div>
+                  <div class="w-full max-w-xs bg-gray-200 rounded-full h-2.5 mr-2">
+                    <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" :style="{
+                      width: `${(user.karmaPoints / maxKarmaPoints) * 100}%`,
+                    }"></div>
                   </div>
                   <span class="text-gray-700 font-medium">{{
                     user.karmaPoints
-                  }}</span>
+                    }}</span>
                 </div>
               </td>
               <td class="py-3 px-4">
@@ -161,8 +96,7 @@
                     'bg-blue-100 text-blue-800':
                       user.rank > 3 && user.rank <= 10,
                     'bg-gray-100 text-gray-800': user.rank > 10,
-                  }"
-                >
+                  }">
                   {{ user.rank }}
                 </div>
               </td>
@@ -173,17 +107,15 @@
 
       <div class="mt-6 flex justify-between items-center border-t pt-4">
         <div class="font-medium flex items-center">
-          <span
-            class="inline-block w-3 h-3 rounded-full bg-yellow-400 mr-2"
-          ></span>
+          <span class="inline-block w-3 h-3 rounded-full bg-yellow-400 mr-2"></span>
           OOO: Impacted
         </div>
       </div>
     </div>
   </div>
 </template>
-  
-  <script setup>
+
+<script setup>
 import { ref, computed } from 'vue'
 
 const sortOption = ref({ field: 'rank', asc: true })
