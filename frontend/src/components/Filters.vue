@@ -10,7 +10,8 @@
                 </button>
             </div>
             <div class="flex flex-col">
-                <div v-for="item in filter_by" class="flex flex-col border-t">
+                <FilterLoader v-if="loader" />
+                <div v-else v-for="item in filter_by" class="flex flex-col border-t">
                     <h4 class="text-[14px] font-medium mb-2 pt-2">{{ item.name }}</h4>
                     <div class="flex flex-col gap-3 pb-2">
                         <div v-if="item.key === 'sdgs'" class="flex px-2 items-center gap-2 text-sm">
@@ -78,9 +79,10 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/vue';
 import { ref, computed, watch, onMounted, inject } from 'vue';
 import { FeatherIcon } from 'frappe-ui';
+import FilterLoader from './FilterLoader.vue';
 
 const call = inject('call')
-
+const loader = ref(false);
 const clear_all_disabled = ref(true);
 const props = defineProps({
     filter: Object,
@@ -116,14 +118,19 @@ const filter_by = ref([
 ]);
 
 const fetchSDGs = async () => {
+    loader.value = true;
     try {
         const response = await call('mykartavya.controllers.api.sdg_data');
         sdgData.value = response;
         const sdgsFilter = filter_by.value.find(f => f.key === 'sdgs');
         if (sdgsFilter) {
             sdgsFilter.options = response.map(sdg => sdg.name);
+            setTimeout(() => {
+                loader.value = false;
+            }, 500);
         }
     } catch (err) {
+        loader.value = false;
         console.error('Error fetching SDG data:', err);
     }
 };
