@@ -107,7 +107,7 @@ const filter_by = ref([
         name: 'Activity Type',
         type: 'checkbox',
         key: 'activity_type',
-        options: ['Online', 'On Ground', 'Both']
+        options: ['Online', 'On-Ground', 'Both']
     },
     {
         name: 'Karma Points',
