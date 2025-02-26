@@ -9,6 +9,7 @@
   "status",
   "need_certificate",
   "title",
+  "activity_type",
   "activity_description",
   "activity_image",
   "activity_published_date_starts",
@@ -391,12 +392,20 @@
    "fieldtype": "Link",
    "label": "SDGs",
    "options": "SDG"
+  },
+  {
+   "fieldname": "activity_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Activity Type",
+   "options": "\nOn-Ground\nOnline",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-25 16:46:54.951189",
+ "modified": "2025-02-26 15:39:48.696761",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",

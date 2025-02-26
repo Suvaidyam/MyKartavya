@@ -44,13 +44,17 @@
 
           <!-- Password Fields -->
           <div>
-            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Password</label>
+            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Password
+              <span class="text-red-500 pt-2">*</span>
+            </label>
             <input v-model="formData.password" type="password" placeholder="Enter your password"
               class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
             <p v-if="errors.password" class="text-red-500 text-sm mt-1">{{ errors.password }}</p>
           </div>
           <div>
-            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Confirm Password</label>
+            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Confirm Password 
+              <span class="text-red-500 pt-2">*</span>
+            </label>
             <input v-model="formData.confirm_password" type="password" placeholder="Confirm your password"
               class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
             <p v-if="errors.confirm_password" class="text-red-500 text-sm mt-1">{{ errors.confirm_password }}</p>
