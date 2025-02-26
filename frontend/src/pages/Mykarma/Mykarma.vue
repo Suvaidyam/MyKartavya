@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-[1920px] w-full pt-[62px] mx-auto">
     <div class="w-full flex flex-col lg:flex-row px-5">
-      <Filters />
+      <Filters :filter="filter" />
       <div class="w-full lg:pl-[270px] flex flex-col xl:flex-row">
         <main class="w-full xl:w-3/4 px-3 py-3 bg-gray-50">
           <!-- Current Commitments Section -->
@@ -14,10 +14,18 @@
               </svg>
             </button>
           </div>
-          <section class="p-4 border rounded-[12px] bg-white">
+          <section class="p-4 border rounded-[12px] bg-white h-[400px]">
             <h2 class="text-lg font-medium mb-2">Current Commitments</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              <Card v-for="(item, key) in current_commitments" :key="key" :item="item" type="card" />
+            <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <CardLoader />
+              <CardLoader />
+              <CardLoader />
+            </div>
+            <div v-else class="h-full w-full">
+              <div v-if="current_commitments.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card" />
+              </div>
+              <NotFound v-else />
             </div>
           </section>
 
@@ -57,8 +65,10 @@
                         +5
                       </div>
                     </div>
-                    <button class="ml-auto text-orange-600 flex items-center justify-center font-semibold text-sm">ACT NOW 
-                      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/cb34dd02beac2ec2e17320d59938a8e4f1f75c978b7f31db85369770609c9c38?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
+                    <button class="ml-auto text-orange-600 flex items-center justify-center font-semibold text-sm">ACT
+                      NOW
+                      <img
+                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/cb34dd02beac2ec2e17320d59938a8e4f1f75c978b7f31db85369770609c9c38?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
                         alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                     </button>
                   </div>
@@ -74,35 +84,23 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import Filters from '@/components/Filters.vue'; // Adjust path as needed
-import MyDetails from './MyDetails.vue';       // Adjust path as needed
-import Card from '@/components/Card.vue';      // Adjust path as needed
+import { onMounted, ref, inject, watch } from 'vue';
+import Filters from '@/components/Filters.vue';
+import MyDetails from './MyDetails.vue';
+import Card from '@/components/Card.vue';
+import CardLoader from '@/components/CardLoader.vue';
+import NotFound from '../../components/NotFound.vue';
 
 // Data for Current Commitments
-const current_commitments = ref([
-  {
-    title: 'Empower the needy',
-    image: 'https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__',
-    form_date: '01 Oct, 2024',
-    to_date: '30 Nov, 2024',
-    status: 'On-Ground',
-    points: 40,
-    hours: 50,
-    progress: 60,
-  },
-  {
-    title: 'Circle of Care (National...',
-    image: 'https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__',
-    form_date: '07 Oct, 2024',
-    to_date: '30 Nov, 2024',
-    status: 'Online',
-    points: 80,
-    hours: 80,
-    progress: 75,
-  },
-]);
-
+const filter = ref({
+  sdgs: [],
+  volunteering_hours: '',
+  activity_type: [],
+  karma_points: ''
+})
+const loader = ref(false)
+const current_commitments = ref([]);
+const call = inject('call');
 // Data for Available Commitments
 const available_commitments = ref([
   {
@@ -121,8 +119,30 @@ const available_commitments = ref([
     ],
   },
 ]);
+const commitments = async (filter) => {
+  loader.value = true
+  try {
+    const response = await call('mykartavya.controllers.api.get_activity_data', {
+      'filter': filter ?? {}
+    });
+    current_commitments.value = response
+    setTimeout(() => {
+      loader.value = false
+    }, 1000)
+  } catch (err) {
+    loader.value = false
+    console.error('Error fetching Kindness data:', err);
+  }
+};
+onMounted(() => {
+  commitments()
+})
+watch(() => filter.value, (newVal) => {
+  if (newVal) {
+    commitments(newVal)
+  }
+}, { deep: true, immediate: true })
 </script>
-
 <style scoped>
 .card {
   transition: transform 0.2s;

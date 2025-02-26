@@ -286,9 +286,8 @@ const users1 = ref([
 
 const get = async () => {
   let res = await call(`mykartavya.controllers.api.get_top_users`)
-  console.log('object====', res)
 
-  users.value = res.value.map((item) => ({
+  users.value = res?.map((item) => ({
     name: item.name,
     time: item.duration,
     points: item.karma_points,
@@ -299,7 +298,6 @@ onMounted(() => {
   get()
 })
 if (users) {
-  console.log(users)
 }
 
 // const fetchDoctorsData = async () => {

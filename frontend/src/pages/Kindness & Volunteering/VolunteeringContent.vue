@@ -1,5 +1,5 @@
 <template>
-    <section class="mt-2 w-full">
+    <section class="mt-2 w-full h-full">
         <header class="flex flex-wrap gap-5 justify-between w-full max-md:mr-0.5 max-md:max-w-full">
             <div class="flex flex-col leading-none">
                 <h1 class="self-start mt-1 text-2xl text-center text-neutral-950">
@@ -16,17 +16,15 @@
         <nav
             class="flex flex-col justify-center items-start py-px mt-4 text-base tracking-normal leading-none bg-white border-b-2 border-solid border-b-[color:var(--Stroke,#D9D9D9)] max-md:pr-5 max-md:mr-0.5 max-md:max-w-full">
             <div class="flex flex-wrap gap-4 items-center max-w-full min-h-9 w-[519px]">
-                <a href="#"
-                    @click.prevent="activeTab = 'kindness'"
-                    class="flex gap-1 items-center self-stretch p-2 my-auto bg-white border-b-2 border-solid min-w-60 text-stone-500"
+                <a @click.prevent="activeTab = 'kindness'"
+                    class="flex gap-1 items-center self-stretch cursor-pointers p-2 my-auto bg-white border-b-2 border-solid min-w-60 text-stone-500"
                     :class="{ 'border-b-[color:var(--S2,#FF7C3A)] text-neutral-950': activeTab === 'kindness', 'border-b-[color:var(--Primary,#FFF)]': activeTab !== 'kindness' }">
                     <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/e19184eebc4a59cfdb05175c1ea1d1c4b671b0eb0457754baf6d25cefb636347?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
                         alt="" class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square" />
                     <span>Acts of Random Kindness</span>
                 </a>
-                <a href="#"
-                    @click.prevent="activeTab = 'volunteering'"
-                    class="flex gap-1 items-center self-stretch p-2 my-auto bg-white border-b-2 border-solid min-w-60 text-stone-500"
+                <a @click.prevent="activeTab = 'volunteering'"
+                    class="flex gap-1 items-center self-stretch cursor-pointers p-2 my-auto bg-white border-b-2 border-solid min-w-60 text-stone-500"
                     :class="{ 'border-b-[color:var(--S2,#FF7C3A)] text-neutral-950': activeTab === 'volunteering', 'border-b-[color:var(--Primary,#FFF)]': activeTab !== 'volunteering' }">
                     <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/5df16569a7fc25da6cc37b22e0be591bf7cdc731ac26089af74b0ead24bbac7b?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
                         alt="" class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square" />
@@ -35,90 +33,65 @@
             </div>
         </nav>
 
-        <div class="mt-5 max-md:max-w-full">
-            <div class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
-                <Card v-for="item in activity" :key="item.name" :item="item"/>
+        <div class="mt-5 w-full h-4/5">
+            <div v-if="loader" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
+                <CardLoader />
+                <CardLoader />
+                <CardLoader />
+            </div>
+            <div v-else class="h-full">
+                <div v-if="activity.length > 0" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
+                    <Card v-for="item in activity" :key="item.name" :item="item" />
+                </div>
+                <NotFound v-else />
             </div>
         </div>
     </section>
 </template>
 
 <script setup>
-import { ref, computed ,onMounted,inject, watch } from 'vue'
+import { ref, computed, onMounted, inject, watch } from 'vue'
 import Card from "../../components/Card.vue";
+import CardLoader from "../../components/CardLoader.vue";
+import NotFound from '../../components/NotFound.vue';
 
 const call = inject('call')
 const activity = ref([])
+const loader = ref(false)
 
 const props = defineProps({
     filter: Object,
 });
 const filter = ref(props.filter);
-const activeTab = ref('kindness') // Default active tab
+const activeTab = ref('kindness')
 const kindnes = async (filter) => {
+    loader.value = true
     try {
         const response = await call('mykartavya.controllers.api.get_activity_data', {
             'filter': filter ?? {}
         });
         activity.value = response
+        setTimeout(() => {
+            loader.value = false
+        }, 1000)
     } catch (err) {
+        loader.value = false
         console.error('Error fetching Kindness data:', err);
     }
 };
 
-const volunteerCards = [
-    {
-        title: "Empower the needy",
-        description: "This Women's Entrepreneurship Day, let's empower underserved women running small business...",
-        imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/6e7658be113e45c6ebd642254271143711c13b0ad07a139abdbfab63bf2ddbf5?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
-        points: 40,
-        date: "01 Oct, 2024 - 30 Nov, 2024",
-        hours: 50,
-        badgeImages: [
-            "https://cdn.builder.io/api/v1/image/assets/TEMP/4ed16c519bd231fdc9d60d18b5d2869c31f31c288c2bf89a4eb380c4d5cc6f38?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
-            "https://cdn.builder.io/api/v1/image/assets/TEMP/b5f182cab2bfd27bd6d0f069df140507432c9e26b80cceb6617736e4d9abe104?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
-        ],
-        participantImages: "https://cdn.builder.io/api/v1/image/assets/TEMP/4f0a4b03a995968b7fb45aed9d55c85a98731404933e0f8df35d0577a4f9fa43?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
-        type: 'volunteering'
-    },
-    {
-        title: "Beat the sugar",
-        description: "This Women's Entrepreneurship Day, let's empower underserved women running small business...",
-        imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/052447d3d0fe1f3d08a65bb3ad1fb91046f6ead1491391ba0ef111ec7467d291?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
-        points: 40,
-        date: "01 Oct, 2024 - 30 Nov, 2024",
-        hours: 50,
-        badgeImages: ["https://cdn.builder.io/api/v1/image/assets/TEMP/3d16b0307333e566cc2ef90c0bc6b00ce94492a0d9be4e0c69930ae3ac2883b8?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"],
-        participantImages: "https://cdn.builder.io/api/v1/image/assets/TEMP/4f0a4b03a995968b7fb45aed9d55c85a98731404933e0f8df35d0577a4f9fa43?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
-        type: 'volunteering'
-    },
-    {
-        title: "Bright Bites",
-        description: "This Women's Entrepreneurship Day, let's empower underserved women running small business...",
-        imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/a71a02d4cd85b8c849242002a44c53a82815b7b4141547a94ec1d9f6295626fb?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
-        points: 40,
-        date: "01 Oct, 2024 - 30 Nov, 2024",
-        hours: 50,
-        badgeImages: ["https://cdn.builder.io/api/v1/image/assets/TEMP/3d16b0307333e566cc2ef90c0bc6b00ce94492a0d9be4e0c69930ae3ac2883b8?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"],
-        participantImages: "https://cdn.builder.io/api/v1/image/assets/TEMP/4f0a4b03a995968b7fb45aed9d55c85a98731404933e0f8df35d0577a4f9fa43?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193",
-        type: 'kindness'
-    },
-];
-
 onMounted(() => {
-    kindnes()
+    kindnes(filter.value)
 })
-const displayedCards = computed(() => {
-    return volunteerCards.filter(card => card.type === activeTab.value)
-})
-watch(()=>activeTab.value, (newVal) => {
-    if(newVal){
-        kindnes()
+
+watch(() => activeTab.value, (newVal) => {
+    if (newVal) {
+        kindnes(filter.value)
     }
-}, {immediate: true})
-watch(()=>filter.value, (newVal) => {
-    if(newVal){
+}, { immediate: true })
+watch(() => filter.value, (newVal) => {
+    if (newVal) {
         kindnes(newVal)
     }
-}, {immediate: true, deep: true})
+}, { immediate: true, deep: true })
 </script>
