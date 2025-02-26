@@ -50,7 +50,7 @@
               </p>
 
               <button
-                v-if="step.button"
+                v-if="!step.completed"
                 @click="nextStep(index)"
                 class="mt-2 h-[28px] w-[147px] rounded-sm text-caption font-medium text-white ml-2"
                 :class="
@@ -71,6 +71,13 @@
             class="w-[384px] h-[296px] bg-white rounded-[12px] flex flex-col justify-end items-center py-[20px] gap-[21px] font-poppins"
           >
             <div>
+              <div class="flex justify-center relative pb-6">
+                <img src="../assets/karmapointinside.png" alt="" />
+
+                <div class="flex justify-center absolute bottom-1.5">
+                  <img src="../assets/karmapoint.png" alt="" />
+                </div>
+              </div>
               <h2 class="font-[500] text-[#0B0B0B] text-[23px]">
                 You’ve earn 50 karma points
               </h2>
@@ -85,20 +92,15 @@
         </div>
 
         <div
-          v-if="showPopup"
+          v-if="show_Feedback"
           class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
         >
-          <!-- <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center">
-            <AlertCircleIcon class="w-10 h-10 text-orange-500 mb-2" />
-            <p class="text-gray-700 font-semibold">Finish the current step to move forward!</p>
-            <button @click="showPopup = false" class="mt-3 px-4 py-2 bg-orange-500 text-white rounded">OK</button>
-          </div> -->
           <div class="bg-white rounded-lg shadow-lg w-full max-w-md">
             <!-- Modal Header -->
             <div class="flex justify-between items-center border-b p-4">
               <h2 class="text-lg font-semibold">Share Feedback</h2>
               <button
-                @click="showPopup = false"
+                @click=";(show_Feedback = false)((steps[3].completed = false))"
                 class="text-gray-500 hover:text-gray-700 text-xl"
               >
                 &times;
@@ -118,7 +120,7 @@
                   :class="
                     selectedEmoji === emoji
                       ? 'text-orange-500'
-                      : 'text-gray-400'
+                      : 'text-gray-400 opacity-30'
                   "
                 >
                   {{ emoji.icon }}
@@ -135,7 +137,7 @@
             <!-- Submit Button -->
             <div class="p-4">
               <button
-                @click=";(showPopup = false), (showCertificate = true)"
+                @click="submit_your_feedback"
                 class="w-full bg-orange-500 text-white py-2 rounded font-semibold hover:bg-orange-600"
               >
                 SUBMIT FEEDBACK
@@ -167,11 +169,13 @@
                   v-model="hours"
                   placeholder="Hours"
                   class="w-20 border rounded p-2"
+                  @input="hours = Math.max(0, hours)"
                 />
                 <input
                   type="number"
                   v-model="minutes"
                   placeholder="Minutes"
+                  @input="minutes = Math.max(0, minutes)"
                   class="w-20 border rounded p-2"
                 />
               </div>
@@ -256,6 +260,7 @@
             <h3 class="text-lg font-semibold mb-4">
               Submit Your Activity Report
             </h3>
+            feedbackPointsPopup
             <p class="text-gray-600">
               Please upload a summary of your activity.
             </p>
@@ -290,10 +295,11 @@ import {
   AlertCircle as AlertCircleIcon,
 } from 'lucide-vue-next'
 const currentStep = ref(0)
-const showPopup = ref(false)
+const show_Feedback = ref(false)
 const showCertificate = ref(false)
 const activityReportPopup = ref(false)
 const feedbackPointsPopup = ref(false)
+// const isshowbtn = ref(true)
 const steps = ref([
   {
     title: 'Activity Approval',
@@ -324,20 +330,36 @@ const steps = ref([
   },
 ])
 const nextStep = (index) => {
+  if (index === 3) {
+    show_Feedback.value = true
+    console.log('object', steps.value[3].completed)
+    // steps.value[3].completed = true
+  }
   if (index === 2) {
     // Open popup for Activity Report
     activityReportPopup.value = true
   } else if (index === currentStep.value) {
     steps.value[index].completed = true
     currentStep.value++
-  } else {
-    showPopup.value = true
   }
 }
 const submitReport = () => {
   activityReportPopup.value = false
   steps.value[2].completed = true
   currentStep.value++
+  console.log(
+    'object',
+    hours.value,
+    minutes.value,
+    uploadedImages.value,
+    progress.value
+  )
+}
+const submit_your_feedback = () => {
+  show_Feedback.value = false
+  showCertificate.value = true
+  console.log('object', selectedEmoji, comments.value)
+  steps.value[3].completed = true
 }
 
 const resetSteps = () => {
