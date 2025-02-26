@@ -29,10 +29,10 @@
  {
   "docstatus": 0,
   "doctype": "Builder Client Script",
-  "modified": "2025-02-26 14:08:16.861953",
+  "modified": "2025-02-26 16:18:30.265988",
   "name": "CSS-bccf0",
-  "public_url": "/files/page_styles/CSS-bccf0-e083307af8.css?v=d161aa53ce",
-  "script": "/* Write your CSS here */\n * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n\n\n.slider-container {\n            width: 100%;\n            max-width: 1400px;\n            margin: auto;\n            overflow: hidden;\n            position: relative;\n        }\n\n        .slider {\n            display: flex;\n            transition: transform 0.5s ease-in-out;\n        }\n\n        .slider img {\n            width: 100%;\n            /*border-radius: 10px;*/\n        }\n\n        .prev,\n        .next {\n            position: absolute;\n            top: 50%;\n            transform: translateY(-50%);\n            /*background-color: rgba(0, 0, 0, 0.5);*/\n            color: white;\n            border: none;\n            padding: 10px;\n            cursor: pointer;\n        }\n\n        .prev {\n            left: 10px;\n        }\n\n        .next {\n            right: 10px;\n        }\n        \n        .foots{\n             border-top: 1px solid white;\n        }",
+  "public_url": "/files/page_styles/CSS-bccf0-e083307af8.css?v=8f88bb9ad4",
+  "script": "/* Write your CSS here */\n * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n\n\n.slider-container {\n            width: 100%;\n            max-width: 1400px;\n            margin: auto;\n            overflow: hidden;\n            position: relative;\n        }\n\n        .slider {\n            display: flex;\n            transition: transform 0.5s ease-in-out;\n        }\n\n        .slider img {\n            width: 100%;\n            /*border-radius: 10px;*/\n        }\n\n        .prev,\n        .next {\n            position: absolute;\n            top: 50%;\n            transform: translateY(-50%);\n            /*background-color: rgba(0, 0, 0, 0.5);*/\n            color: white;\n            border: none;\n            padding: 10px;\n            cursor: pointer;\n        }\n\n        .prev {\n            left: 10px;\n        }\n\n        .next {\n            right: 10px;\n        }\n        \n        .foots{\n             border-top: 1px solid white;\n        }\n        \n        \n        ::-webkit-scrollbar {\n    width: 4px;\n    /* Thin width */\n    height: 4px;\n}\n \n::-webkit-scrollbar-thumb {\n    background: #b0b3b0;\n    /* Scrollbar color */\n    border-radius: 8px;\n}\n \n::-webkit-scrollbar-track {\n    background: #f0f0f0;\n    /* Track color */\n}",
   "script_type": "CSS"
  }
 ]
