@@ -195,7 +195,7 @@
                   v-else
                   class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center"
                 >
-                  {{ user.full_name.charAt(0) }}
+                  {{ user.full_name?.charAt(0) }}
                 </div>
               </div>
               <span class="text-gray-800 font-medium text-[10px]">{{

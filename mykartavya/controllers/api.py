@@ -107,3 +107,8 @@ def get_top_users():
 @frappe.whitelist(allow_guest=True)
 def get_activity_data(filter):
     return Activity.acts_data(filter)
+
+@frappe.whitelist(allow_guest=True)
+def activity_details(name):
+    doc = frappe.get_doc("Activity", name)
+    return doc

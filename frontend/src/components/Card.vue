@@ -1,6 +1,6 @@
 <template>
     <div v-if="type != 'group'" class="card bg-white">
-        <router-link :to="`/activity/${item.title.toLowerCase().replace(/\s+/g, '-')}`">
+        <router-link :to="`/activity/${item.name}`">
             <div class="relative">
                 <img :src="item.activity_image" :alt="item.title" class="w-full rounded-md h-40 object-cover" />
                 <div
@@ -18,7 +18,7 @@
             <h3 class="text-bodyh1 font-medium truncate">{{ item.title }}</h3>
             <div class="flex gap-2 items-center">
                 <FeatherIcon name="calendar" class="size-4" />
-                <p class="text-xs font-normal">{{ item?.start_date?.split(' ')[0] }} - {{ item?.end_date?.split(' ')[0] }}</p>
+                <p class="text-xs font-normal"> {{formatDate(item.start_date)}} - {{formatDate(item.end_date)}} </p>
             </div>
             <div class="flex gap-2 items-center">
                 <FeatherIcon name="clock" class="size-4" />
@@ -67,7 +67,7 @@
                 <div class="flex gap-1 items-center text-xs tracking-normal text-neutral-950">
                     <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/206e5d29b5523c409dbfe316e887c82aeb672c336764aad169ece16b133845e4?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
                         alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                    <time class="self-stretch my-auto">{{ item.date }}</time>
+                    <time class="self-stretch my-auto">{{formatDate(item.start_date)}} - {{formatDate(item.end_date)}} </time>
                 </div>
                 <!--  -->
                 <div class="flex items-center -space-x-3 pt-4">
@@ -106,8 +106,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
+
 import {FeatherIcon} from 'frappe-ui';
+const formatDate=inject('formatDate');
 const props = defineProps({
     type: {
         type: String,

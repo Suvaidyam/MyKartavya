@@ -2,15 +2,13 @@
   <div class="h-screen w-full">
     <!-- banner section image -->
     <section>
-      <div class="w-full h-[456px] md:h-[456px] back-img flex items-center mt-10 px-4 md:px-20">
+      <div v-if="activities" class="w-full h-[456px] md:h-[456px] back-img flex items-center mt-10 px-4 md:px-20">
         <div
           class="max-w-sm w-[448px] h-[312px] bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-4 justify-center">
           <div class="border-b pb-2">
-            <div class="text-gray-500 text-caption font-normal">
-              My Karma / Kindness & Volunteering / Empower the needy
-            </div>
+          
             <h2 class="text-heading3 font-normal font-poppins mt-1">
-              Empower the needy
+              {{ activities.title }}
             </h2>
             <span class="text-secondary font-medium text-caption">Online</span>
           </div>
@@ -20,17 +18,17 @@
             <FeatherIcon name="calendar" class="size-4 text-[#666666]" />
 
             <span class="flex items-center text-bodyh2 font-normal mr-4" style="color: #0b0b0b">
-              01 Oct, 2024 - 30 Nov, 2024
+              {{formatDate(activities.start_date)}} - {{formatDate(activities.end_date)}} 
             </span>
           </div>
           <div class="flex items-center text-gray-600 text-bodyh2 font-normal justify-between border-b pb-2">
             <span class="flex justify-center gap-1" style="color: #0b0b0b">
               <FeatherIcon name="clock" class="size-4 text-[#666666]" />
-              50 hr
+              {{ activities.hours }} hr 
             </span>
             <span class="flex items-center gap-2 justify-center" style="color: #0b0b0b">
               <FeatherIcon name="database" class="size-4 text-secondary" />
-              <span class="text-bodyh2 font-normal"> 40 Points</span>
+              <span class="text-bodyh2 font-normal"> {{activities.karma_points}}</span>
             </span>
           </div>
           <div class="flex space-x-2 border-b pb-2">
@@ -137,7 +135,7 @@
           </div>
           <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
             <!-- Loop through the opportunities array -->
-            <Card v-for="(item, key) in opportunities" :key="key" :item="item" />
+            <Card v-for="(item, key) in relatedactivity" :key="key" :item="item" />
           </div>
         </div>
       </div>
@@ -147,9 +145,11 @@
 </template>
 
 <script setup>
+import { inject, ref,onMounted } from 'vue'
 import { FeatherIcon } from 'frappe-ui'
 import Stepper from '../../components/Stepper.vue'
 import Card from '../../components/Card.vue'
+// import CardLoader from "../../components/CardLoader.vue";
 import {
   Facebook,
   Twitter,
@@ -157,6 +157,8 @@ import {
   MessageCircle,
   Share2,
 } from 'lucide-vue-next'
+import { useRoute } from 'vue-router'
+ 
 
 const icons = [
   { name: 'Facebook', svg: Facebook },
@@ -164,9 +166,23 @@ const icons = [
   { name: 'LinkedIn', svg: Linkedin },
   { name: 'WhatsApp', svg: MessageCircle },
 ]
+const call=inject('call');
+const activities=ref([]);
+const route = useRoute();
+const formatDate = inject('formatDate');
 
+
+const activity = async () => {
+  try {
+        const response = await call('mykartavya.controllers.api.activity_details',{'name':route.params.name});
+            activities.value = response
+          
+    } catch (err) {
+        console.error('Error fetching activity data:', err);
+    }
+};
 // Sample data for the opportunities
-const opportunities = [
+const relatedactivity = [
   {
     "name": "ACT-Bright Bites-0001",
     "status": "Draft",
@@ -187,6 +203,8 @@ const opportunities = [
     "volunteers": "[{\"name\": \"USER-25-0005\", \"full_name\": \"Rahul Sah\", \"email\": \"rahul.sah@gmail.com\", \"user_image\": null},{\"name\": \"USER-25-0004\", \"full_name\": \"Rahul Sah\", \"email\": \"rkrahul00011@gmail.com\", \"user_image\": null}]"
   }
 ];
+
+onMounted(activity)
 </script>
 
 <style>
