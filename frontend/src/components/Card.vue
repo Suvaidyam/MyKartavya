@@ -9,19 +9,25 @@
                 </div>
                 <div
                     class="absolute top-2 right-2 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
-                    <span class="font-medium text-xs">{{ item.points }} Points</span>
+                    <span class="font-medium text-xs">{{ item.karma_points }} Points</span>
                 </div>
 
             </div>
         </router-link>
         <div class="flex flex-col gap-2 pt-2">
-            <h3 class="text-bodyh1 font-medium">{{ item.title }}</h3>
-            <p class="text-xs font-normal">{{ item.form_date }} - {{ item.to_date }}</p>
-            <p class="text-xs font-normal">{{ item.hours }} hr</p>
+            <h3 class="text-bodyh1 font-medium truncate">{{ item.title }}</h3>
+            <div class="flex gap-2 items-center">
+                <FeatherIcon name="calendar" class="size-4" />
+                <p class="text-xs font-normal">{{ item?.start_date?.split(' ')[0] }} - {{ item?.end_date?.split(' ')[0] }}</p>
+            </div>
+            <div class="flex gap-2 items-center">
+                <FeatherIcon name="clock" class="size-4" />
+                <p class="text-xs font-normal">{{ item.hours }} hr</p>
+            </div>
         </div>
         <div class="mt-3">
             <div class="w-full bg-gray-200 rounded-full h-[5px]">
-                <div class="bg-green-500 h-[5px] rounded-full" :style="{ width: `${item.progress}%` }"></div>
+                <div class="bg-[#4CAF50] h-[5px] rounded-full" :style="{ width: `${item.progress}%` }"></div>
             </div>
             <p class="text-xs font-normal pt-1 text-gray-600 mt-1">{{ item.progress }}% completed</p>
         </div>
@@ -48,7 +54,7 @@
             </div>
         </div>
 
-        <h3 class="self-start mt-3 text-base font-medium tracking-normal text-neutral-950">
+        <h3 class="self-start truncate mt-3 text-base font-medium tracking-normal text-neutral-950">
             {{ item.title }}
         </h3>
 
@@ -65,7 +71,7 @@
                 </div>
                 <!--  -->
                 <div class="flex items-center -space-x-3 pt-4">
-                    <div v-for="(el,index) in JSON.parse(item.volunteers)" :key="index">
+                    <div v-for="(el,index) in JSON?.parse(item.volunteers)" :key="index">
                         <img v-if="el.user_image"  :src="el.user_image" :alt="'User ' + (index + 1)"
                             class="w-8 h-8 rounded-full border-2 border-white" />
                         <div v-else class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-[#e86c13] text-sm" >
@@ -101,7 +107,7 @@
 
 <script setup>
 import { ref } from 'vue';
-
+import {FeatherIcon} from 'frappe-ui';
 const props = defineProps({
     type: {
         type: String,
