@@ -17,9 +17,11 @@
           <CardLoader />
           <CardLoader />
         </div>
-        <div v-else class="px-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card v-for="item in kindness_volunteering" :key="item.name" :item="item" type="card" />
-          <!-- Repeat similar blocks for other opportunities -->
+        <div v-else class="h-full w-full px-3">
+          <div v-if="kindness_volunteering.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <Card v-for="item in kindness_volunteering" :key="item.name" :item="item" type="card" />
+          </div>
+          <NotFound v-else />
         </div>
       </main>
     </section>
@@ -33,6 +35,7 @@ import Card from '../../components/Card.vue';
 import Filters from '../../components/Filters.vue';
 import Loader from '../../components/Loader.vue';
 import CardLoader from '../../components/CardLoader.vue';
+import NotFound from '../../components/NotFound.vue';
 
 const filter = ref({
   sdgs: [],

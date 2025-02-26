@@ -21,8 +21,11 @@
               <CardLoader />
               <CardLoader />
             </div>
-            <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card" />
+            <div v-else class="h-full w-full">
+              <div v-if="current_commitments.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card" />
+              </div>
+              <NotFound v-else />
             </div>
           </section>
 
@@ -86,6 +89,7 @@ import Filters from '@/components/Filters.vue';
 import MyDetails from './MyDetails.vue';
 import Card from '@/components/Card.vue';
 import CardLoader from '@/components/CardLoader.vue';
+import NotFound from '../../components/NotFound.vue';
 
 // Data for Current Commitments
 const filter = ref({

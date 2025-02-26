@@ -33,14 +33,17 @@
             </div>
         </nav>
 
-        <div class="mt-5 w-full h-full">
+        <div class="mt-5 w-full h-4/5">
             <div v-if="loader" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
                 <CardLoader />
                 <CardLoader />
                 <CardLoader />
             </div>
-            <div v-else class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
-                <Card v-for="item in activity" :key="item.name" :item="item" />
+            <div v-else class="h-full">
+                <div v-if="activity.length > 0" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
+                    <Card v-for="item in activity" :key="item.name" :item="item" />
+                </div>
+                <NotFound v-else />
             </div>
         </div>
     </section>
@@ -50,6 +53,7 @@
 import { ref, computed, onMounted, inject, watch } from 'vue'
 import Card from "../../components/Card.vue";
 import CardLoader from "../../components/CardLoader.vue";
+import NotFound from '../../components/NotFound.vue';
 
 const call = inject('call')
 const activity = ref([])
@@ -77,12 +81,12 @@ const kindnes = async (filter) => {
 };
 
 onMounted(() => {
-    kindnes()
+    kindnes(filter.value)
 })
 
 watch(() => activeTab.value, (newVal) => {
     if (newVal) {
-        kindnes()
+        kindnes(filter.value)
     }
 }, { immediate: true })
 watch(() => filter.value, (newVal) => {
