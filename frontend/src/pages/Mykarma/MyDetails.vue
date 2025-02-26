@@ -2,16 +2,11 @@
   <aside class="w-full xl:w-1/4 bg-white rounded-md pt-3 lg:mt-0">
     <div class="px-3">
       <div class="flex items-center mb-4 border-b border-gray-100 py-2">
-        <img
-          v-if="auth.user_image"
-          :src="user_image"
-          alt="Profile Picture"
-          class="rounded-full w-[60px] h-[60px] object-cover mr-4"
-        />
+        <img v-if="auth.user_image" :src="user_image" alt="Profile Picture"
+          class="rounded-full w-[60px] h-[60px] object-cover mr-4" />
         <div
           class="w-[60px] min-w-[60px] mr-4 text-2xl h-[60px] flex items-center justify-center rounded-full bg-gray-100"
-          v-else
-        >
+          v-else>
           {{ auth.cookie.full_name.charAt(0) }}
         </div>
         <div>
@@ -19,12 +14,8 @@
           <p class="text-[#666666] text-xs font-normal">
             {{ auth.cookie.user_id }}
           </p>
-          <router-link
-            to="/updateprofile"
-            class="text-[11px] font-medium mt-2"
-            style="color: #ff5722"
-            >EDIT PROFILE</router-link
-          >
+          <router-link to="/updateprofile" class="text-[11px] font-medium mt-2" style="color: #ff5722">EDIT
+            PROFILE</router-link>
         </div>
       </div>
 
@@ -34,78 +25,71 @@
       </div>
 
       <div class="grid grid-cols-2 gap-4 pt-3">
-        <div class="border border-gray-300 rounded-lg p-4 text-center">
-          <span class="block text-green-500 text-xl">🫶</span>
-          <h4 class="font-medium text-[10px]" style="color: #666666">
+        <div class="border border-gray-300 rounded-lg px-4 py-3  text-center">
+          <span class="block text-blue-500 text-xl pb-1">
+            <img src="../../assets/Act.png" alt="" class="mx-auto" />
+          </span>
+          <h4 class="font-medium text-[10px] pb-1" style="color: #666666">
             Act of Random Kindness
           </h4>
-          <p class="text-lg">98</p>
+          <p class="text-lg text-black">98</p>
         </div>
-
-        <div class="border border-gray-300 rounded-lg p-4 text-center">
-          <span class="block text-yellow-500 text-xl">✅</span>
-          <h4 class="font-medium text-[10px]" style="color: #666666">
+        <div class="border border-gray-300 rounded-lg px-4 py-3  text-center">
+          <span class="block text-blue-500 text-xl pb-1">
+            <img src="../../assets/opportunity.png  " alt="" class="mx-auto" />
+          </span>
+          <h4 class="font-medium text-[10px]  pb-1" style="color: #666666">
             Completed Opportunities
           </h4>
-          <p class="text-lg">12</p>
+          <p class="text-lg text-black">12</p>
         </div>
-
-        <div class="border border-gray-300 rounded-lg p-4 text-center">
-          <span class="block text-blue-500 text-xl">⏳</span>
-          <h4 class="font-medium text-[10px]" style="color: #666666">
+        <div class="border border-gray-300 rounded-lg px-4 py-3 text-center">
+          <span class="block text-blue-500 text-xl pb-1">
+            <img src="../../assets/donate.png" alt="" class="mx-auto" />
+          </span>
+          <h4 class="font-medium text-[10px] pb-1" style="color: #666666">
             Time Donated
           </h4>
-          <p class="text-lg">76 hrs</p>
+          <p class="text-lg text-black">76 hrs</p>
         </div>
 
-        <div class="border border-gray-300 rounded-lg p-4 text-center">
-          <span class="block text-purple-500 text-xl">💰</span>
-          <h4 class="font-medium text-[10px]" style="color: #666666">
+        <div class="border border-gray-300 rounded-lg px-4 py-3  text-center">
+          <span class="block text-blue-500 text-xl pb-1">
+            <img src="../../assets/money.png" alt="" class="mx-auto" />
+          </span>
+          <h4 class="font-medium text-[10px] pb-1" style="color: #666666">
             Money Saved
           </h4>
-          <p class="text-lg">₹ 1,765</p>
+          <p class="text-lg text-black">₹ 1,765</p>
         </div>
       </div>
     </div>
     <div class="rounded-lg px-3 xl:px-0 w-full mt-4">
-      <div
-        class="rounded-t-xl px-6 py-4 relative overflow-hidden bg-gradient-to-b from-yellow-200 to-white"
-      >
+      <div class="rounded-t-xl px-6 py-4 relative overflow-hidden bg-gradient-to-b from-yellow-200 to-white">
         <!-- Background Image at the Top -->
-        <div
-          class="absolute top-0 left-0 w-full h-1/2 bg-cover bg-center"
-          style="
+        <div class="absolute top-0 left-0 w-full h-1/2 bg-cover bg-center" style="
             background-image: url('https://s3-alpha-sig.figma.com/img/314c/a6b6/6925cd67aa6829da55ab83120e89377c?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=MhdrmLTxP5LK4rgkhzgJrHhoB~dBaDieMGshleVZQuk6XQS9~32eIJdgogQD5QKflTfZ9BS0M02FYnwrvvcyRbBnaC9x4vq4iPEOeqtO6Xczb3zP1i0Rs0KmERk-qxGP8BX1JjVrOnXi1R5TzDv5p3-hqQaWeK~0oHJVYljIoXZtirUl5pt8w8Vh2G7OVUe3eu2XDuzN86DG6r2XRZzpflid2W1KWnnPFKCaavteAVUmMa7tW~j0Wq3tL0lqSfhl6~iEdkiocozghhGiE44DZfHTdIHS1qOjhTpeZv15dk23nfnSaoltbGxvbB-IvnYpa9nkCEH~svtuisP0SuBjFQ__');
-          "
-        ></div>
+          "></div>
         <h2 class="text-md font-semibold text-gray-800 pb-10 relative z-10">
           Top Performers
         </h2>
 
         <!-- Crown Icon -->
         <div class="absolute top-12 left-1/2 transform -translate-x-1/2">
-          <img
-            src="../../assets/icons8-queen-48.png"
-            alt="Crown"
-            class="w-8 h-8"
-          />
+          <img src="../../assets/icons8-queen-48.png" alt="Crown" class="w-8 h-8" />
         </div>
 
         <!-- Top Performer -->
         <div class="flex flex-col items-center">
           <div class="relative">
             <div
-              class="bg-orange-400 rounded-full w-20 h-20 flex items-center justify-center border-4 border-[#f17940]"
-            >
+              class="bg-orange-400 rounded-full w-20 h-20 flex items-center justify-center border-4 border-[#f17940]">
               <img
                 src="https://s3-alpha-sig.figma.com/img/12cd/3413/2ef9687c557520a96af542610c485c5d?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KclQc3FF9OzuW1fuMp8vjuu4QlDbwQ21IVr5l096zMiYcuDpYXSUhaU0IfBJPtz6Egs~JoIjg8yWazRrePBYTUkUDO~uiMqqj~b~gbjjsRKhQbRk4VhDZ9aoNarS8KT5Q~38afg9ZQZbxzYWvdML~Kad-0WKZ5QBRX1WEZkgV-7dRAwkyr9FW4ihSZchKsVAFvrH39jpPpS9lXhz5CT5rK2K29Ruq3wbOMhr-dsEFjzlXNgdN-9I8kRGaiyOQ4piNuXpt9dcjYCMQoUB~lTqnMtHAH8A~XulLWlh7KJmKCBUkQLoxO0P5RJEZxkQlUkWZU6t1eOHIWWNasK~TwannA__"
-                alt="Anaya Singh"
-                class="rounded-full w-full h-full object-cover"
-              />
+                alt="Anaya Singh" class="rounded-full w-full h-full object-cover" />
             </div>
             <span
-              class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full"
-            >
+              class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
               1
             </span>
           </div>
@@ -119,17 +103,12 @@
           <div class="flex flex-col items-center">
             <div class="relative">
               <div
-                class="bg-purple-400 rounded-full w-16 h-16 flex items-center justify-center border-4 border-[#995dc5]"
-              >
-                <img
-                  src="../../assets/download (2).jpeg"
-                  alt="Jayant Bhandari"
-                  class="rounded-full w-full h-full object-cover"
-                />
+                class="bg-purple-400 rounded-full w-16 h-16 flex items-center justify-center border-4 border-[#995dc5]">
+                <img src="../../assets/download (2).jpeg" alt="Jayant Bhandari"
+                  class="rounded-full w-full h-full object-cover" />
               </div>
               <span
-                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-purple-500 text-white text-xs px-2 py-1 rounded-full"
-              >
+                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-purple-500 text-white text-xs px-2 py-1 rounded-full">
                 2
               </span>
             </div>
@@ -141,17 +120,12 @@
           <div class="flex flex-col items-center">
             <div class="relative">
               <div
-                class="bg-blue-400 rounded-full w-16 h-16 flex items-center justify-center border-4 border-[#4c89f8]"
-              >
-                <img
-                  src="../../assets/download (3).jpeg"
-                  alt="Swati Mathwal"
-                  class="rounded-full w-full h-full object-cover"
-                />
+                class="bg-blue-400 rounded-full w-16 h-16 flex items-center justify-center border-4 border-[#4c89f8]">
+                <img src="../../assets/download (3).jpeg" alt="Swati Mathwal"
+                  class="rounded-full w-full h-full object-cover" />
               </div>
               <span
-                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full"
-              >
+                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
                 3
               </span>
             </div>
@@ -178,29 +152,18 @@
           </tr>
         </thead>
         <tbody v-if="users.length > 0">
-          <tr
-            v-for="(user, index) in users"
-            :key="index"
-            class="border-t border-[#b0b3b0] bg-white"
-          >
+          <tr v-for="(user, index) in users" :key="index" class="border-t border-[#b0b3b0] bg-white">
             <td class="text-[12px] font-medium flex items-center">
               <div class="w-10 h-8 flex items-center pl-1">
-                <img
-                  v-if="user.user_image"
-                  :src="user.user_image"
-                  :alt="user.name"
-                  class="w-6 h-6 rounded-full object-cover"
-                />
-                <div
-                  v-else
-                  class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center"
-                >
+                <img v-if="user.user_image" :src="user.user_image" :alt="user.name"
+                  class="w-6 h-6 rounded-full object-cover" />
+                <div v-else class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center">
                   {{ user.full_name?.charAt(0) }}
                 </div>
               </div>
               <span class="text-gray-800 font-medium text-[10px]">{{
                 user.full_name
-              }}</span>
+                }}</span>
             </td>
             <td class="text-[10px] font-normal text-center">
               {{ user.duration / 60 / 60 }} hr
@@ -208,9 +171,7 @@
             <td class="text-[10px] font-normal text-center">
               {{ user.karma_points }} Points
             </td>
-            <td
-              class="text-[10px] font-normal text-center flex justify-center items-center gap-1"
-            >
+            <td class="text-[10px] font-normal text-center flex justify-center items-center gap-1">
               <i class="fa fa-caret-up text-green-600" aria-hidden="true"></i>
               {{ user.rank }}
             </td>
@@ -229,17 +190,9 @@
     <div class="bg-white w-full px-4 border-t border-[#b0b3b0]">
       <div class="flex justify-between items-center">
         <h2 class="text-[16px] font-medium pt-6">SDGs Impacted</h2>
-        <router-link
-          to="/all-volunteer"
-          class="text-orange-500 text-[10px] font-medium"
-          >VIEW ALL</router-link
-        >
+        <router-link to="/all-volunteer" class="text-orange-500 text-[10px] font-medium">VIEW ALL</router-link>
       </div>
-      <div
-        v-for="(sdg, index) in sdgs"
-        :key="index"
-        class="flex items-center space-x-4 pt-4"
-      >
+      <div v-for="(sdg, index) in sdgs" :key="index" class="flex items-center space-x-4 pt-4">
         <img :src="sdg.icon" :alt="sdg.title" class="w-10 h-10 rounded-[4px]" />
         <div>
           <h3 class="text-[14px] font-normal">{{ sdg.title }}</h3>
