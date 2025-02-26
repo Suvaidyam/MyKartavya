@@ -5,7 +5,7 @@
                 <img :src="item.activity_image" :alt="item.title" class="w-full rounded-md h-40 object-cover" />
                 <div
                     class="absolute top-2 left-2 bg-orange-500 text-white font-medium text-xs flex items-center px-3 h-6 rounded-br-lg">
-                    {{ item.status ?? 'Online' }}
+                    {{ item.activity_type }}
                 </div>
                 <div
                     class="absolute top-2 right-2 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">

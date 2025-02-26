@@ -39,7 +39,9 @@
                     <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card"
                       class="w-[245px] min-w-[245px]" />
                   </div>
-                  <NotFound v-else />
+                  <div class="w-full h-[330px]" v-else>
+                    <NotFound />
+                  </div>
                 </div>
                 <div v-if="current_commitments.length > 0" class="flex justify-center">
                   <button class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary">View
@@ -50,49 +52,21 @@
           </section>
 
           <!-- Available Commitments Section -->
-          <section class="p-4 mt-5 border rounded-[12px] bg-white">
-            <h2 class="text-lg font-medium pb-3">Available Commitments</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              <div v-for="(item, key) in available_commitments" :key="key"
-                class="max-w-md mx-auto bg-white rounded-lg overflow-hidden">
-                <div class="relative">
-                  <img :src="item.image" :alt="item.title" class="w-full rounded-md h-40 object-cover" />
-                  <div
-                    class="absolute top-2 left-2 bg-orange-500 text-white font-medium text-xs flex items-center px-3 h-6 rounded-br-lg">
-                    {{ item.status }}
-                  </div>
-                  <div
-                    class="absolute top-2 right-2 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
-                    <span class="font-medium text-xs">{{ item.points }} Points</span>
-                  </div>
-                  <div
-                    class="absolute left-2 bottom-2 flex items-center space-x-2 text-sm text-gray-700 font-medium mb-2">
-                    <span class="bg-white text-black px-2 py-1 rounded text-xs">{{ item.sdg }}</span>
-                  </div>
-                </div>
-                <div class="py-2">
-                  <div class="flex flex-col gap-2 pt-2">
-                    <h3 class="text-bodyh1 font-medium">{{ item.title }}</h3>
-                    <p class="text-xs font-normal">{{ item.time }}</p>
-                    <p class="text-xs font-normal">{{ item.hours }} hr</p>
-                  </div>
-                  <div class="flex items-center mt-3">
-                    <div class="flex -space-x-2">
-                      <img v-for="(user, idx) in item.participant_users" :key="idx" :src="user" :alt="`User ${idx + 1}`"
-                        class="w-8 h-8 rounded-full border-2 border-white" />
-                      <div
-                        class="w-8 h-8 bg-gray-200 text-gray-600 flex items-center justify-center rounded-full text-sm font-medium border-2 border-white">
-                        +5
-                      </div>
-                    </div>
-                    <button class="ml-auto text-orange-600 flex items-center justify-center font-semibold text-sm">ACT
-                      NOW
-                      <img
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/cb34dd02beac2ec2e17320d59938a8e4f1f75c978b7f31db85369770609c9c38?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-                        alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                    </button>
-                  </div>
-                </div>
+          <section class="px-4 mt-5 border rounded-[12px] bg-white overflow-y-auto min-h-[330px] max-h-[660px]">
+            <div class="w-full h-12 flex items-center bg-white sticky top-0 z-10">
+              <h2 class="text-lg font-medium">Available Commitments</h2>
+            </div>
+            <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <CardLoader />
+              <CardLoader />
+              <CardLoader />
+            </div>
+            <div v-else class="w-full pb-4">
+              <div v-if="current_commitments.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card" />
+              </div>
+              <div class="w-full h-[330px]" v-else>
+                <NotFound />
               </div>
             </div>
           </section>
