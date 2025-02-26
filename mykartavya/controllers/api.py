@@ -93,22 +93,16 @@ def actvolunteer_data():
     return doc
 @frappe.whitelist(allow_guest=True)
 def get_top_users():
-    users = []
     
-    urs = frappe.get_all("SVA User", fields=["email"],limit_page_length=10)
     
-    for ur in urs:
-        activities = frappe.get_all(
-            "Volunteer Activity",
-            fields=["*"],
-            filters={"volunteer": ur["email"]},
-            order_by="karma_points DESC" ,
-            limit_page_length=10
-        )
-        
-        users.extend(activities)
-    
-    return users
+    activities = frappe.get_list(
+        "Volunteer Activity",
+        fields=["volunteer.full_name","karma_points","duration","volunteer.user_image"],
+        order_by="karma_points DESC" ,
+        limit_page_length=10
+    )
+
+    return activities
 
 @frappe.whitelist(allow_guest=True)
 def get_activity_data(filter):
