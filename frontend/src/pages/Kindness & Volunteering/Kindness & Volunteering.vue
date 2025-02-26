@@ -1,6 +1,6 @@
 <template>
-  <div class="max-w-[1920px] w-full pt-[62px] mx-auto bg-gray-50">
-    <div class="w-full flex flex-col lg:flex-row px-5">
+  <div class="max-w-[1920px] w-full h-screen pt-[62px] mx-auto bg-gray-50">
+    <div class="w-full h-full flex flex-col lg:flex-row px-5">
       <Filters :filter="filter"/>
       <div class="w-full lg:pl-[270px] flex flex-col xl:flex-row">
         <VolunteeringContent :filter="filter" :available_commitments="available_commitments" class="px-3"/>
@@ -57,9 +57,6 @@ const available_commitments = ref([
   },
 ])
 
-// watch(()=>filter.value, (newVal, oldVal)=>{
-//   filter.value = newVal
-// }, {deep: true, immediate: true})
 </script>
 
 <style scoped>
