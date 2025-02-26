@@ -14,10 +14,10 @@
               </svg>
             </button>
           </div>
-          <section class="p-4 border rounded-[12px] bg-white h-[410px]">
+          <section class="p-4 border rounded-[12px] bg-white h-[390px]">
             <div class="w-full h-full">
-              <div class="flex justify-between items-center w-full pb-2">
-                <h2 class="text-lg font-medium mb-2">Current Commitments</h2>
+              <div class="flex justify-between items-center w-full">
+                <h2 class="text-lg font-medium">Current Commitments</h2>
                 <div class="flex items-center">
                   <FeatherIcon @click="scrollLeft"
                     :class="['size-5 cursor-pointer', isLeftDisabled ? 'text-gray-500 disabled' : 'text-gray-700']"
@@ -33,24 +33,18 @@
                 <CardLoader />
                 <CardLoader />
               </div>
-              <div v-else ref="scrollContainer" class="py-4 w-full overflow-x-scroll">
-                <div v-if="current_commitments.length > 0" class="flex items-center gap-4">
-                  <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card"
-                    class="w-[245px] min-w-[245px]" />
-                  <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card"
-                    class="w-[245px] min-w-[245px]" />
-                  <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card"
-                    class="w-[245px] min-w-[245px]" />
-                  <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card"
-                    class="w-[245px] min-w-[245px]" />
-                  <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card"
-                    class="w-[245px] min-w-[245px]" />
+              <div v-else class="w-full">
+                <div ref="scrollContainer" class="py-4 w-full overflow-x-scroll">
+                  <div v-if="current_commitments.length > 0" class="flex items-center gap-4">
+                    <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card"
+                      class="w-[245px] min-w-[245px]" />
+                  </div>
+                  <NotFound v-else />
                 </div>
-                <NotFound v-else />
-              </div>
-              <div class="flex justify-center">
-                <button class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary">View
-                  All</button>
+                <div v-if="current_commitments.length > 0" class="flex justify-center">
+                  <button class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary">View
+                    All</button>
+                </div>
               </div>
             </div>
           </section>
