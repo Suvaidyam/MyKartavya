@@ -27,9 +27,9 @@
         </div>
         <div class="mt-3">
             <div class="w-full bg-gray-200 rounded-full h-[5px]">
-                <div class="bg-[#4CAF50] h-[5px] rounded-full" :style="{ width: `${item.progress}%` }"></div>
+                <div class="bg-[#4CAF50] h-[5px] rounded-full" :style="{ width: `${item?.progress ?? 0}%` }"></div>
             </div>
-            <p class="text-xs font-normal pt-1 text-gray-600 mt-1">{{ item.progress }}% completed</p>
+            <p class="text-xs font-normal pt-1 text-gray-600 mt-1">{{ item?.progress ?? 0 }}% completed</p>
         </div>
     </div>
     <!--  -->

@@ -1,8 +1,8 @@
 <template>
-  <div class=" pt-[62px]">
-    <section class="flex flex-col lg:flex-row px-5">
-      <Filters :filter="filter"/>
-      <main class="w-full py-3 lg:pl-[270px]">
+  <div class=" pt-[62px] h-screen">
+    <section class="flex flex-col lg:flex-row px-5 h-full">
+      <Filters :filter="filter" />
+      <main class="w-full h-full py-3 lg:pl-[270px]">
         <div class="flex justify-between items-center pb-3">
           <h2 class="text-lg font-semibold mb-4 px-3">Kindness & Volunteering</h2>
           <button class="border rounded-md px-2 py-1.5 h-8 w-8 bg-white">
@@ -12,8 +12,13 @@
             </svg>
           </button>
         </div>
-        <div class="px-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card v-for="(item, key) in current_commitments" :key="key" :item="item" type="card"/>
+        <div v-if="loader" class="px-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <CardLoader />
+          <CardLoader />
+          <CardLoader />
+        </div>
+        <div v-else class="px-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Card v-for="item in kindness_volunteering" :key="item.name" :item="item" type="card" />
           <!-- Repeat similar blocks for other opportunities -->
         </div>
       </main>
@@ -23,9 +28,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, onMounted, inject } from 'vue';
 import Card from '../../components/Card.vue';
 import Filters from '../../components/Filters.vue';
+import Loader from '../../components/Loader.vue';
+import CardLoader from '../../components/CardLoader.vue';
 
 const filter = ref({
   sdgs: [],
@@ -33,49 +40,34 @@ const filter = ref({
   activity_type: [],
   karma_points: ''
 })
-const current_commitments = ref([
-  {
-    title: 'Empower the needy',
-    activity_image: 'https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__',
-    end_date: '01-10-2024',
-    start_date: '30-10-2024',
-    status: 'On-Ground',
-    points: 40,
-    hours: 50,
-    progress: 60,
-  },
-  {
-    title: 'Circle of Care (National...',
-    activity_image: 'https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__',
-    end_date: '07-10-2024',
-    start_date: '30-10-2024',
-    status: 'Online',
-    points: 80,
-    hours: 80,
-    progress: 75,
-  },
-  {
-    title: 'Circle of Care (National...',
-    activity_image: 'https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__',
-    end_date: '07-10-2024',
-    start_date: '30-10-2024',
-    status: 'Online',
-    points: 80,
-    hours: 80,
-    progress: 75,
-  },
-  {
-    title: 'Circle of Care (National...',
-    activity_image: 'https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__',
-    end_date: '07-10-2024',
-    start_date: '30-10-2024',
-    status: 'Online',
-    points: 80,
-    hours: 80,
-    progress: 75,
-  },
-]);
+const call = inject('call')
+const kindness_volunteering = ref([])
+const loader = ref(false)
 
+const volunteering_opportunities = async (filter) => {
+  loader.value = true
+  try {
+    const response = await call('mykartavya.controllers.api.get_activity_data', {
+      'filter': filter ?? {}
+    });
+    kindness_volunteering.value = response
+    setTimeout(() => {
+      loader.value = false
+    }, 1000)
+  } catch (err) {
+    loader.value = false
+    console.error('Error fetching Kindness data:', err);
+  }
+};
+onMounted(() => {
+  volunteering_opportunities()
+})
+
+watch(() => filter.value, (newVal) => {
+  if (newVal) {
+    volunteering_opportunities(newVal)
+  }
+}, { immediate: true, deep: true })
 </script>
 
 <style scoped>

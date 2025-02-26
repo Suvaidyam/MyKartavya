@@ -16,10 +16,10 @@
           </div>
           <section class="p-4 border rounded-[12px] bg-white h-[400px]">
             <h2 class="text-lg font-medium mb-2">Current Commitments</h2>
-            <div v-if="loader" class="w-full h-full flex justify-center items-center">
-                <div class="w-12 h-12">
-                    <Loader />
-                </div>
+            <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <CardLoader />
+              <CardLoader />
+              <CardLoader />
             </div>
             <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card" />
@@ -82,10 +82,10 @@
 
 <script setup>
 import { onMounted, ref, inject, watch } from 'vue';
-import Filters from '@/components/Filters.vue'; 
-import MyDetails from './MyDetails.vue';       
-import Card from '@/components/Card.vue'; 
-import Loader from '@/components/Loader.vue';     
+import Filters from '@/components/Filters.vue';
+import MyDetails from './MyDetails.vue';
+import Card from '@/components/Card.vue';
+import CardLoader from '@/components/CardLoader.vue';
 
 // Data for Current Commitments
 const filter = ref({
@@ -116,28 +116,28 @@ const available_commitments = ref([
   },
 ]);
 const commitments = async (filter) => {
-    loader.value = true
-    try {
-        const response = await call('mykartavya.controllers.api.get_activity_data', {
-            'filter': filter ?? {}
-        });
-        current_commitments.value = response
-        setTimeout(() => {
-            loader.value = false
-        }, 1000)
-    } catch (err) {
-        loader.value = false
-        console.error('Error fetching Kindness data:', err);
-    }
+  loader.value = true
+  try {
+    const response = await call('mykartavya.controllers.api.get_activity_data', {
+      'filter': filter ?? {}
+    });
+    current_commitments.value = response
+    setTimeout(() => {
+      loader.value = false
+    }, 1000)
+  } catch (err) {
+    loader.value = false
+    console.error('Error fetching Kindness data:', err);
+  }
 };
 onMounted(() => {
   commitments()
 })
 watch(() => filter.value, (newVal) => {
-    if (newVal) {
-        commitments(newVal)
-    }
-}, { deep: true , immediate: true})
+  if (newVal) {
+    commitments(newVal)
+  }
+}, { deep: true, immediate: true })
 </script>
 <style scoped>
 .card {
