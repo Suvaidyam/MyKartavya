@@ -34,10 +34,10 @@
         </nav>
 
         <div class="mt-5 w-full h-full">
-            <div v-if="loader" class="w-full h-full flex justify-center items-center">
-                <div class="w-12 h-12">
-                    <Loader />
-                </div>
+            <div v-if="loader" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
+                <CardLoader />
+                <CardLoader />
+                <CardLoader />
             </div>
             <div v-else class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
                 <Card v-for="item in activity" :key="item.name" :item="item" />
@@ -49,7 +49,7 @@
 <script setup>
 import { ref, computed, onMounted, inject, watch } from 'vue'
 import Card from "../../components/Card.vue";
-import Loader from "../../components/Loader.vue";
+import CardLoader from "../../components/CardLoader.vue";
 
 const call = inject('call')
 const activity = ref([])
