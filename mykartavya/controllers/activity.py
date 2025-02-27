@@ -3,71 +3,35 @@ import frappe
 class Activity:
     def current_commitments(filter={}):
         user = frappe.session.user
-        sql_query = """
-            SELECT 
-                act.*
-            FROM `tabActivity` as act
-            LEFT JOIN `tabVolunteer Activity` as vc ON vc.activity = act.name
-        """
-        
-        conditions = ["vc.volunteer = %s"]  # Ensure filtering by the logged-in user
+        filters = {}
         order_by = ""
-        values = [user]  # Start with the user value
-
-        if filter: 
-            # Filtering conditions
+        if filter:
             if "activity_type" in filter and filter["activity_type"]:
-                activity_types = ", ".join(f"'{at}'" for at in filter["activity_type"])
-                conditions.append(f"act.activity_type IN ({activity_types})")
-                
-            if "karma_points" in filter and filter["karma_points"]:
-                try:
-                    karma_points = int(filter["karma_points"])
-                    conditions.append("act.karma_points = %s")
-                    values.append(karma_points)
-                except (ValueError, TypeError):
-                    pass  # Skip if it's not a valid integer (e.g., "Low to High")
+                filters["activity_type"] = ["in", filter["activity_type"]]
                 
             if "sdgs" in filter and filter["sdgs"]:
-                sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
-                conditions.append(f"act.sdgs IN ({sdgs_values})")
+                filters["sdgs"] = ["in", filter["sdgs"]]
                 
             if "volunteering_hours" in filter and filter["volunteering_hours"]:
-                try:
-                    volunteering_hours = float(filter["volunteering_hours"])
-                    conditions.append("act.volunteering_hours = %s")
-                    values.append(volunteering_hours)
-                except (ValueError, TypeError):
-                    pass  # Skip if it's not a valid float (e.g., "Low to High")
+                ordering = "ASC" if filter["volunteering_hours"] == "Low to High" else "DESC"
+                order_by = f"hours {ordering}"
 
-            # Sorting preferences
-            order_clauses = []
-            if "volunteering_hours" in filter:
-                if filter["volunteering_hours"] == "Low to High":
-                    order_clauses.append("act.volunteering_hours ASC")
-                elif filter["volunteering_hours"] == "High to Low":
-                    order_clauses.append("act.volunteering_hours DESC")
-
-            if "karma_points" in filter:
-                if filter["karma_points"] == "Low to High":
-                    order_clauses.append("act.karma_points ASC")
-                elif filter["karma_points"] == "High to Low":
-                    order_clauses.append("act.karma_points DESC")
-
-            if order_clauses:
-                order_by = " ORDER BY " + ", ".join(order_clauses)
-
-        # Construct WHERE clause
-        sql_query += " WHERE " + " AND ".join(conditions)
-        sql_query += " GROUP BY act.name"
-        sql_query += order_by  
-
-        try:
-            acts = frappe.db.sql(sql_query, values=values, as_dict=True)
-            return acts
-        except Exception as e:
-            frappe.log_error(f"SQL Error: {e}\nQuery:\n{sql_query}")
-            raise
+            if "karma_points" in filter and filter["karma_points"]:
+                ordering = "ASC" if filter["karma_points"] == "Low to High" else "DESC"
+                order_by = f"karma_points {ordering}"
+        activity_v = frappe.get_list("Volunteer Activity", filters={"volunteer": user}, fields=["activity","duration","com_percent"])
+        activity = []
+        if activity_v:
+            activity = [act["activity"] for act in activity_v]
+            filters["name"] = ["in", activity]
+        
+        activity_data = frappe.get_all("Activity", filters=filters, fields=["*"], order_by=order_by)
+        if len(activity_data) > 0:
+            for act in activity_data:
+                item = next((a for a in activity_v if a["activity"] == act["name"]), None)
+                act["duration"] = item["duration"]
+                act["completion_percent"] = item["com_percent"]
+        return activity_data
         
     def available_commitments(filter={}):
         sql_query = """
