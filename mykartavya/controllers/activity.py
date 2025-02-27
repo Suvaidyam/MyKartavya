@@ -51,7 +51,7 @@ class Activity:
         """
         conditions = []
         order_by = ""
-
+        conditions.append("act.end_date >= CURRENT_DATE") 
         if filter: 
             if "activity_type" in filter and filter["activity_type"]:
                 activity_types = ", ".join(f"'{at}'" for at in filter["activity_type"])

@@ -10,9 +10,9 @@
         >
           <div class="border-b pb-2">
             <h2 class="text-2xl md:text-heading3 font-normal font-poppins mt-1">
-              Empower the needy
+              Empower the needy{{activitiesavilable.activity_type}}
             </h2>
-            <span class="text-secondary font-medium text-caption">Online</span>
+            <span class="text-secondary font-medium text-caption">{{activitiesavilable.activity_type}}</span>
           </div>
 
           <div class="flex items-center" style="color: #666666">
@@ -21,7 +21,7 @@
               class="text-sm md:text-bodyh2 font-normal ml-2"
               style="color: #0b0b0b"
             >
-              01 Oct, 2024 - 30 Nov, 2024
+            {{formatDate(activitiesavilable.start_date)}} - {{formatDate(activitiesavilable.end_date)}}
             </span>
           </div>
 
@@ -30,11 +30,11 @@
           >
             <div class="flex items-center" style="color: #0b0b0b">
               <FeatherIcon name="clock" class="size-4" />
-              <span class="ml-2">50 hr</span>
+              <span class="ml-2"> {{activitiesavilable.hours}}hr</span>
             </div>
             <span class="flex items-center gap-2" style="color: #0b0b0b">
               <FeatherIcon name="database" class="size-4" />
-              <span>40 Points</span>
+              <span>{{activitiesavilable.karma_points}}</span>
             </span>
           </div>
 
@@ -64,12 +64,15 @@
           </div>
 
           <div class="font-poppins text-button">
+            <router-link :to="`/activity/${activitiesavilable.name}`">
             <button
               class="bg-secondary min-w-[112px] px-2 h-[32px] rounded-[4px] flex justify-center items-center text-white hover:bg-opacity-90 transition-colors"
             >
-            {{ route.params.type === 'kindness' ? 'ACT NOW' : 'I WANT TO HELP' }}
+            ACT NOW
+            <!-- {{ route.params.type === 'kindness' ? 'ACT NOW' : 'I WANT TO HELP' }} -->
               <FeatherIcon name="arrow-up-right" class="size-4 ml-1" />
             </button>
+          </router-link>
           </div>
         </div>
       </div>
@@ -274,6 +277,7 @@
 </template>
   
   <script setup>
+  import { inject, ref,onMounted } from 'vue'
 import { FeatherIcon } from 'frappe-ui'
 import { useRoute } from 'vue-router'
 import {
@@ -283,16 +287,27 @@ import {
   MessageCircle,
   Share2,
 } from 'lucide-vue-next'
-import { ref } from 'vue'
-
-const route = useRoute()
-console.log(route)
 const icons = [
   { name: 'Facebook', svg: Facebook },
   { name: 'X', svg: Twitter },
   { name: 'LinkedIn', svg: Linkedin },
   { name: 'WhatsApp', svg: MessageCircle },
 ]
+
+const call=inject('call');
+const activitiesavilable=ref([]);
+const route = useRoute();
+const formatDate = inject('formatDate');
+
+const avilableactivity = async () => {
+  try {
+        const response = await call('mykartavya.controllers.api.activity_details',{'name':route.params.name});
+            activitiesavilable.value = response
+          
+    } catch (err) {
+        console.error('Error fetching activity data:', err);
+    }
+};
 
 const cards = ref([
   {
@@ -353,6 +368,8 @@ const cards = ref([
     additionalUsers: 5,
   },
 ])
+
+onMounted(avilableactivity)
 </script>
   
   <style scoped>
