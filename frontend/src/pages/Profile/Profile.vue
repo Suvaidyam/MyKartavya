@@ -48,7 +48,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">   {{ svaUserData?.custom_state || '---'  }},{{ svaUserData?.custom_city || '---'  }}, {{ svaUserData?.custom_country }}</div>
+                                <div class="text-bodyh2 text-gray-900">   {{ svaUserData?.state || '---'  }},{{ svaUserData?.city || '---'  }}, {{ svaUserData?.custom_country }}</div>
                                 <div class="text-caption text-gray-500">Location</div>
                             </div>
                         </div>

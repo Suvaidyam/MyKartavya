@@ -52,7 +52,7 @@
             <p v-if="errors.password" class="text-red-500 text-sm mt-1">{{ errors.password }}</p>
           </div>
           <div>
-            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Confirm Password 
+            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Confirm Password
               <span class="text-red-500 pt-2">*</span>
             </label>
             <input v-model="formData.confirm_password" type="password" placeholder="Confirm your password"
@@ -116,40 +116,37 @@ const router = useRouter();
 
 // Form fields and data
 const fields = ref({
-  first_name: { 
-    label: "First Name", 
-    type: "text", 
-    placeholder: "Enter your first name", 
+  first_name: {
+    label: "First Name",
+    type: "text",
     required: false,
-    pattern: /^[A-Za-z]+$/,  
+    pattern: /^[A-Za-z]+$/,
     error_message: "Please enter a valid first name (letters only)"
   },
-  last_name: { 
-    label: "Last Name", 
-    type: "text", 
-    placeholder: "Enter your last name", 
+  last_name: {
+    label: "Last Name",
+    type: "text",
     required: false,
-    pattern: /^[A-Za-z]+$/,  
+    pattern: /^[A-Za-z]+$/,
     error_message: "Please enter a valid last name (letters only)"
   },
-  mobile_number: { 
-    label: "Phone No.", 
-    type: "text", 
-    placeholder: "Enter phone number", 
+  mobile_number: {
+    label: "Phone No.",
+    type: "text",
     required: true,
     pattern: /^[0-9]{10}$/,  // Validates a 10-digit phone number
-    error_message: "Please enter a valid 10-digit phone number"
+    error_message: "Invalid phone number "
   },
   custom_country: { label: "Country", type: "select", required: true },
   custom_state: { label: "State", type: "select", required: true },
   custom_city: { label: "City", type: "select", required: true },
   custom_company: { label: "Company", type: "select", required: false },
-  custom_date_of_birth: { 
-    label: "Date of Birth", 
-    type: "date", 
+  custom_date_of_birth: {
+    label: "Date of Birth",
+    type: "date",
     required: true,
-    min: "1900-01-01",  
-    max: new Date().toISOString().split("T")[0], 
+    min: "1900-01-01",
+    max: new Date().toISOString().split("T")[0],
     error_message: "Please select a valid date of birth"
   },
   title: { label: "Title", type: "text", placeholder: "Enter your title", required: false }
@@ -225,11 +222,22 @@ const validateForm = () => {
       errors.value[key] = `${field.label} is required.`;
       valid = false;
     }
-
     // Phone Number Validation
-    if (key === "mobile_number" && field.pattern && !field.pattern.test(value)) {
-      errors.value[key] = field.error_message;
-      valid = false;
+    if (key === "mobile_number") {
+      // Trim the value to ensure no extra spaces
+      const trimmedValue = value.trim();
+
+      // Check if the mobile number doesn't match the 10-digit pattern
+      if (!field.pattern.test(trimmedValue)) {
+        if (trimmedValue.length === 0) {
+          errors.value[key] = "Phone number is required.";
+        } else if (trimmedValue.length !== 10) {
+          errors.value[key] = "Phone number must be exactly 10 digits.";
+        } else {
+          errors.value[key] = field.error_message;  // Default error message for invalid phone number
+        }
+        valid = false;
+      }
     }
 
     // First and Last Name Validation (only letters)
@@ -238,7 +246,7 @@ const validateForm = () => {
       valid = false;
     }
 
-    if ( key === "last_name" && field.pattern && !field.pattern.test(value)) {
+    if (key === "last_name" && field.pattern && !field.pattern.test(value)) {
       errors.value[key] = field.error_message;
       valid = false;
     }
@@ -247,9 +255,16 @@ const validateForm = () => {
       const dob = new Date(value);
       const minDate = new Date(field.min);
       const maxDate = new Date(field.max);
-      if (dob < minDate || dob > maxDate) {
-        errors.value[key] = field.error_message;
+
+      // Calculate the date 18 years ago from today
+      const today = new Date();
+      // const age18Date = new Date(today.setFullYear(today.getFullYear() - 18));
+
+      // Check if the date of birth is after the date 18 years ago or in the future be at least 18 years old and
+      if (dob || dob > maxDate) {
+        errors.value[key] = "You cannot select a future date.";
         valid = false;
+
       }
     }
   }
@@ -268,7 +283,7 @@ const onSubmit = async () => {
     });
 
     if (res.success) {
-      toast.success("Profile updated successfully!",{"autoClose": 3000});
+      toast.success("Profile updated successfully!", { "autoClose": 3000 });
       setTimeout(() => router.back(-1), 3000)
     } else {
       toast.error(res.message || "Failed to update profile.");

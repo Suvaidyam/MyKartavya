@@ -78,7 +78,7 @@ const routes = [
   },
   {
     name: 'KVDeatails',
-    path: '/kindness-volunteering/:type',
+    path: '/kindness-volunteering/:name',
     component: () => import('@/pages/Kindness & Volunteering/KindnessDetails.vue'),
     meta: { requiresAuth: false } 
   },

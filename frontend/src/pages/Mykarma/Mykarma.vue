@@ -43,7 +43,7 @@
                     <NotFound />
                   </div>
                 </div>
-                <div v-if="current_commitments.length > 0" class="flex justify-center">
+                <div v-if="current_commitments.length > 0 && (!isLeftDisabled || !isRightDisabled)" class="flex justify-center">
                   <button class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary">View
                     All</button>
                 </div>
