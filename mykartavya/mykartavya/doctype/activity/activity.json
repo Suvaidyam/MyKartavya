@@ -398,14 +398,14 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Activity Type",
-   "options": "\nOn-Ground\nOnline",
+   "options": "\nOn-Ground\nOnline\nHybrid",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-26 15:39:48.696761",
+ "modified": "2025-02-27 07:35:12.607136",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
