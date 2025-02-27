@@ -10,7 +10,7 @@
         >
           <div class="border-b pb-2">
             <h2 class="text-2xl md:text-heading3 font-normal font-poppins mt-1">
-              Empower the needy{{activitiesavilable.activity_type}}
+              {{ activitiesavilable.title}}
             </h2>
             <span class="text-secondary font-medium text-caption">{{activitiesavilable.activity_type}}</span>
           </div>
