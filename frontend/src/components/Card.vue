@@ -18,7 +18,7 @@
             <h3 class="text-bodyh1 font-medium truncate">{{ item.title }}</h3>
             <div class="flex gap-2 items-center">
                 <FeatherIcon name="calendar" class="size-4" />
-                <p class="text-xs font-normal"> {{formatDate(item.start_date)}} - {{formatDate(item.end_date)}} </p>
+                <p class="text-xs font-normal"> {{ formatDate(item.start_date) }} - {{ formatDate(item.end_date) }} </p>
             </div>
             <div class="flex gap-2 items-center">
                 <FeatherIcon name="clock" class="size-4" />
@@ -27,9 +27,9 @@
         </div>
         <div class="mt-3">
             <div class="w-full bg-gray-200 rounded-full h-[5px]">
-                <div class="bg-[#4CAF50] h-[5px] rounded-full" :style="{ width: `${item?.progress ?? 0}%` }"></div>
+                <div class="bg-[#4CAF50] h-[5px] rounded-full" :style="{ width: `${item?.completion_percent ?? 0}%` }"></div>
             </div>
-            <p class="text-xs font-normal pt-1 text-gray-600 mt-1">{{ item?.progress ?? 0 }}% completed</p>
+            <p class="text-xs font-normal pt-1 text-gray-600 mt-1">{{ item?.completion_percent ?? 0 }}% completed</p>
         </div>
     </div>
     <!--  -->
@@ -38,8 +38,7 @@
             <img :src="item.activity_image" alt="" class="object-cover rounded-md absolute inset-0 size-full" />
             <div
                 class="flex relative justify-between text-xs font-medium tracking-normal leading-none text-justify text-neutral-950">
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/4138a280b3a136bb112c9be5ef23c1ce3a12d516daa8cede29ad404bcb75a31b?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-                    alt="" class="object-contain shrink-0 max-w-full aspect-[4.03] w-[101px]" />
+                <div class="px-3 h-6 bg-secondary text-white flex items-center justify-center">{{ item.activity_type }}</div>
                 <div class="flex flex-col rounded-lg px-2 justify-center h-6  bg-white border border-solid">
                     <div class="flex gap-1 items-center w-full">
                         <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c49a0afe7089e38e103d66c4c361731bed25ed9dfbe5b58de7105c730d3c6d93?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
@@ -67,19 +66,20 @@
                 <div class="flex gap-1 items-center text-xs tracking-normal text-neutral-950">
                     <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/206e5d29b5523c409dbfe316e887c82aeb672c336764aad169ece16b133845e4?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
                         alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                    <time class="self-stretch my-auto">{{formatDate(item.start_date)}} - {{formatDate(item.end_date)}} </time>
+                    <time class="self-stretch my-auto">{{ formatDate(item.start_date) }} - {{ formatDate(item.end_date) }}
+                    </time>
                 </div>
                 <!--  -->
                 <div class="flex items-center -space-x-3 pt-4">
-                    <div v-for="(el,index) in JSON?.parse(item.volunteers)" :key="index">
-                        <img v-if="el.user_image"  :src="el.user_image" :alt="'User ' + (index + 1)"
+                    <div v-for="(el, index) in JSON?.parse(item.volunteers)" :key="index">
+                        <img v-if="el.user_image" :src="el.user_image" :alt="'User ' + (index + 1)"
                             class="w-8 h-8 rounded-full border-2 border-white" />
-                        <div v-else class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-[#e86c13] text-sm" >
-                            {{ el.full_name.charAt(0) }}
+                        <div v-else
+                            class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-[#e86c13] text-sm">
+                            {{ el.full_name?.charAt(0) }}
                         </div>
                     </div>
-                    <p
-                        class="pl-4 text-sm text-center">
+                    <p class="pl-4 text-sm text-center">
                         +{{ JSON.parse(item.volunteers).length }}
                     </p>
                 </div>
@@ -91,14 +91,11 @@
                         alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                     <span class="self-stretch my-auto">{{ item.hours }} hr</span>
                 </div>
-                <button
+                <router-link :to="`/kindness-volunteering/${item.type}`"
                     class="flex gap-1 items-center mt-6 text-sm font-medium tracking-normal text-right text-orange-600 uppercase hover:text-orange-700">
-                    <router-link :to="`/kindness-volunteering/${item.type}`" class="self-stretch my-auto">
-                        {{ item.type === 'kindness' ? 'Act now' : 'I want to help' }}
-                    </router-link>
-                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/cb34dd02beac2ec2e17320d59938a8e4f1f75c978b7f31db85369770609c9c38?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-                        alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                </button>
+                    {{ item.type === 'kindness' ? 'I want to help' : 'Act now' }}
+                    <FeatherIcon name="arrow-up-right" class="size-4" />
+                </router-link>
             </div>
         </div>
     </article>
@@ -108,8 +105,8 @@
 <script setup>
 import { inject, ref } from 'vue';
 
-import {FeatherIcon} from 'frappe-ui';
-const formatDate=inject('formatDate');
+import { FeatherIcon } from 'frappe-ui';
+const formatDate = inject('formatDate');
 const props = defineProps({
     type: {
         type: String,

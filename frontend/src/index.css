@@ -5,6 +5,26 @@
 body {
     font-family: 'Poppins', sans-serif;
 }
+::-webkit-scrollbar {
+    width: 4px;
+    /* Thin width */
+    height: 5px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #b0b3b0;
+    /* Scrollbar color */
+    border-radius: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    /* Track color */
+  }
+  
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

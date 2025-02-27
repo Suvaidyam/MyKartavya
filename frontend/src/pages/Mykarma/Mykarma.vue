@@ -62,8 +62,8 @@
               <CardLoader />
             </div>
             <div v-else class="w-full pb-4">
-              <div v-if="current_commitments.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card" />
+              <div v-if="available_commitments.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <Card v-for="item in available_commitments" :key="item.name" :item="item"/>
               </div>
               <div class="w-full h-[330px]" v-else>
                 <NotFound />
@@ -93,8 +93,9 @@ const filter = ref({
   activity_type: [],
   karma_points: ''
 });
-const loader = ref(false);
 const current_commitments = ref([]);
+const available_commitments = ref([]);
+const loader = ref(false);
 const call = inject('call');
 const scrollContainer = ref(null);
 
@@ -102,10 +103,10 @@ const scrollContainer = ref(null);
 const isLeftDisabled = ref(true);
 const isRightDisabled = ref(false);
 
-const commitments = async (filter) => {
+const cur_commitments = async (filter) => {
   loader.value = true;
   try {
-    const response = await call('mykartavya.controllers.api.get_activity_data', {
+    const response = await call('mykartavya.controllers.api.current_commitments', {
       'filter': filter ?? {}
     });
     current_commitments.value = response;
@@ -118,24 +119,23 @@ const commitments = async (filter) => {
     console.error('Error fetching Kindness data:', err);
   }
 };
+const avai_commitments = async (filter) => {
+  loader.value = true;
+  try {
+    const response = await call('mykartavya.controllers.api.available_commitments', {
+      'filter': filter ?? {}
+    });
+    available_commitments.value = response;
+    setTimeout(() => {
+      loader.value = false;
+      checkScrollButtons(); // Check button states after loading
+    }, 1000);
+  } catch (err) {
+    loader.value = false;
+    console.error('Error fetching Kindness data:', err);
+  }
+};
 
-const available_commitments = ref([
-  {
-    title: 'Empower the needy',
-    description: 'This Women’s Entrepreneurship Day, let’s empower underserved women running small business.',
-    image: 'https://s3-alpha-sig.figma.com/img/4eef/bb3e/cb7e638434524a3fd3e9120880f4b9fe?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=HwfLpSHiSVsMn66x9wvOo7BzqaiJTMqiCXYE4iX6OZRxbGnsOOjDHT1xbXHQ8MGlWrapbOLLAJT4hPBAqtzqpmw~4pEA79VY1IRA4LBryMZuR~jzsZuF2gnKgKDZo06cKb14LKJ~YxaLbBbYME8qKc5AhBK8U6PceEklz7Flfgr2Q5ihmTKS5RFGImqVvd0O648b7Ajd5DaxAAmiZXKtlb8jFHRrpsyJ8~qyPLvnVqBh3OwySpBNL7WiRUtkaJIMNRGN6YCi~3QpupbFYfmiT6i8n4ME1gzkU3zSC9o3jjQzXVS-KuofZkXgG8UbRNzBzkR3Srz6AzFz1Fv4drkr~g__',
-    points: 40,
-    sdg: 'SDG 10 : Reduced Inequalities',
-    time: '01 Oct, 2024 - 30 Nov, 2024',
-    hours: 50,
-    status: 'On-Ground',
-    participant_users: [
-      '../../assets/download (3).jpeg',
-      '../../assets/download (2).jpeg',
-      '../../assets/download (1).jpeg',
-    ],
-  },
-]);
 // Scroll settings
 const cardWidth = 245;
 const scrollStep = cardWidth;
@@ -176,13 +176,15 @@ watchEffect(() => {
 });
 
 onMounted(() => {
-  commitments();
+  cur_commitments();
+  avai_commitments();
 });
 
 // Watch filter changes
-watch(() => filter.value, (newVal) => {
-  if (newVal) {
-    commitments(newVal);
+watch(() => filter.value, (newVal,oldVal) => {
+  if (newVal == oldVal) {
+    cur_commitments(newVal);
+    avai_commitments(newVal);
   }
 }, { deep: true, immediate: true });
 </script>
