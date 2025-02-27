@@ -1,14 +1,12 @@
 import frappe
 from frappe import _
 from mykartavya.controllers.activity import Activity
+from mykartavya.controllers.filter import Filters
+from mykartavya.controllers.profile import Profile
 
 @frappe.whitelist(allow_guest=True)
 def sdg_data():
-    sdg = frappe.get_all(
-        "SDG", 
-        fields=["*"]   
-    )
-    return sdg
+    return Filters.sdg_data()
 
 @frappe.whitelist(allow_guest=True)
 def get_login_details(): 
@@ -17,30 +15,51 @@ def get_login_details():
 
 @frappe.whitelist(allow_guest=False)
 def sva_user_data():
-    user = frappe.session.user
-    doc = frappe.get_all(
-        "SVA User", 
-        filters={"email": user}, 
-        fields=["name","mobile_number","full_name","first_name","last_name","email","user_image","custom_employee_id","custom_date_of_birth","custom_background_image","custom_company","custom_country","custom_state","custom_city"]
-    )
-    return doc
+    return Profile.sva_user_data()
 
 @frappe.whitelist()
 def update_sva_user(data):
-    data = frappe.parse_json(data)
-    user_email = frappe.session.user  # Logged-in user's email or user_id (depending on your setup)
+    return Profile.update_sva_user(data)
 
-    # Fetch the user document using the email (or user_id if applicable)
-    user_doc = frappe.get_doc("SVA User", {"email": user_email})
+@frappe.whitelist(allow_guest=True)
+def get_activity_data():
+    doc = frappe.get_all(
+        "Activity", 
+        fields=["title","karma_points","start_date","end_date","hours","reward_description","reward_image"]   
+    )
+    return doc
 
-    if user_doc:
-        # Update the document with new data
-        user_doc.update(data)
-        user_doc.save(ignore_permissions=True)  
-        frappe.db.commit()  # Commit the changes to the database
-        return {"success": True, "message": "User updated successfully"}
-    return {"success": False, "message": "User not found"}
+@frappe.whitelist(allow_guest=True)
+def actvolunteer_data():
+    doc = frappe.get_all(
+        "Volunteer Activity", 
+        fields=["*"]   
+    )
+    return doc
+@frappe.whitelist(allow_guest=True)
+def get_top_users():
+    activities = frappe.get_list(
+        "Volunteer Activity",
+        fields=["volunteer.full_name","karma_points","duration","volunteer.user_image"],
+        order_by="karma_points DESC" ,
+        limit_page_length=10
+    )
 
+    return activities
+
+@frappe.whitelist(allow_guest=True)
+def current_commitments(filter={}):
+    return Activity.current_commitments(filter)
+
+@frappe.whitelist(allow_guest=True)
+def available_commitments(filter={}):
+    return Activity.available_commitments(filter)
+
+@frappe.whitelist(allow_guest=True)
+def activity_details(name):
+    return Activity.activity_details(name)
+
+# master data
 @frappe.whitelist(allow_guest=True)
 def country_data():
     country = frappe.get_all(
@@ -75,40 +94,3 @@ def company_data():
         fields=["*"]   
     )
     return company
-
-@frappe.whitelist(allow_guest=True)
-def get_activity_data():
-    doc = frappe.get_all(
-        "Activity", 
-        fields=["title","karma_points","start_date","end_date","hours","reward_description","reward_image"]   
-    )
-    return doc
-
-@frappe.whitelist(allow_guest=True)
-def actvolunteer_data():
-    doc = frappe.get_all(
-        "Volunteer Activity", 
-        fields=["*"]   
-    )
-    return doc
-@frappe.whitelist(allow_guest=True)
-def get_top_users():
-    
-    
-    activities = frappe.get_list(
-        "Volunteer Activity",
-        fields=["volunteer.full_name","karma_points","duration","volunteer.user_image"],
-        order_by="karma_points DESC" ,
-        limit_page_length=10
-    )
-
-    return activities
-
-@frappe.whitelist(allow_guest=True)
-def get_activity_data(filter):
-    return Activity.acts_data(filter)
-
-@frappe.whitelist(allow_guest=True)
-def activity_details(name):
-    doc = frappe.get_doc("Activity", name)
-    return doc
