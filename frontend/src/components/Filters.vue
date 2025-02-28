@@ -18,12 +18,21 @@
                             <input v-model="allChecked" type="checkbox"
                                 class="rounded-sm focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="all-sdgs">
-                            <label class="text-[12px] font-normal" for="all-sdgs">All</label>
+                            <label class="text-[12px] font-normal flex gap-2 items-center" for="all-sdgs">
+                                All
+                            </label>
                         </div>
-                        <div v-for="el in item.options" class="flex px-2 items-center gap-2 text-sm">
+                        <div v-for="el in item.options" class="flex px-2 items-center gap-2  text-sm">
                             <input v-model="filter[item.key]" :value="el" :type="item.type" :name="item.key"
                                 :class="[item.type == 'checkbox' ? 'rounded-sm' : 'rounded-full', 'focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary']"
                                 :id="`${item.key}-${el.toLowerCase().replace(' ', '-')}`">
+                            <div class="w-10 h-8 flex items-center px-1  ">
+                                <img v-if="el.sdg_image" :src="sdg_image" :alt="el.name"
+                                class="w-6 h-6 rounded-full object-cover" />
+                                <div v-else class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center">
+                                {{ el?.charAt(0) }}
+                                </div>
+                            </div>
                             <label class="text-[12px] font-normal"
                                 :for="`${item.key}-${el.toLowerCase().replace(' ', '-')}`">{{ el }}</label>
                         </div>
