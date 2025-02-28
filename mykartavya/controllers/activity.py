@@ -114,11 +114,10 @@ class Activity:
     def volunteer_act_count():
         sql_query = """
             SELECT 
-                va.activity,
                 COUNT(DISTINCT va.volunteer) AS volunteer_count,
-                SUM(a.work_value_rupees) AS total_work_value_rupees,
+                SUM(a.work_value_rupees) AS total_rupees,
                 SUM(a.hours) AS total_hours,
-                COUNT(DISTINCT a.ngo) AS total_ngo_count
+                COUNT(DISTINCT a.ngo) AS total_ngo 
             FROM `tabVolunteer Activity` AS va
             JOIN `tabActivity` AS a ON va.activity = a.name
             GROUP BY va.activity;
