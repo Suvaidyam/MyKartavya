@@ -12,9 +12,11 @@ class Profile:
 
     def update_sva_user(data):
         data = frappe.parse_json(data)
+        data['password'] = 'admin@123'
+        data['confirm_password'] = 'admin@123'
         user_email = frappe.session.user   
-        user_doc = frappe.get_doc("SVA User", {"email": user_email})
-
+        user_doc = frappe.get_doc("SVA User", {"email": user_email},ignore_permissions=True)
+        # return data
         if user_doc:
             user_doc.update(data)
             user_doc.save(ignore_permissions=True)  

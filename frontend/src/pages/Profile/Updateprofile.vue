@@ -41,25 +41,6 @@
             <!-- Validation Error -->
             <p v-if="errors[key]" class="text-red-500 text-[11px] mt-1">{{ errors[key] }}</p>
           </div>
-
-          <!-- Password Fields -->
-          <div>
-            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Password
-              <span class="text-red-500 pt-2">*</span>
-            </label>
-            <input v-model="formData.password" type="password" placeholder="Enter your password"
-              class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
-            <p v-if="errors.password" class="text-red-500 text-sm mt-1">{{ errors.password }}</p>
-          </div>
-          <div>
-            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Confirm Password
-              <span class="text-red-500 pt-2">*</span>
-            </label>
-            <input v-model="formData.confirm_password" type="password" placeholder="Confirm your password"
-              class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
-            <p v-if="errors.confirm_password" class="text-red-500 text-sm mt-1">{{ errors.confirm_password }}</p>
-          </div>
-
           <!-- CV Upload -->
           <div>
             <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Add CV</label>
@@ -261,11 +242,11 @@ const validateForm = () => {
       // const age18Date = new Date(today.setFullYear(today.getFullYear() - 18));
 
       // Check if the date of birth is after the date 18 years ago or in the future be at least 18 years old and
-      if (dob || dob > maxDate) {
-        errors.value[key] = "You cannot select a future date.";
-        valid = false;
+      // if (dob || dob > maxDate) {
+      //   errors.value[key] = "You cannot select a future date.";
+      //   valid = false;
 
-      }
+      // }
     }
   }
 
