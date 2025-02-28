@@ -99,7 +99,7 @@ class VolunteerActivity(Document):
 			
 			# Store the total duration in seconds
 			self.duration = total_seconds
-
+			self.com_percent = total_percent
 			# If total percent reaches 100, update completion status to Submitted
 			if total_percent >= 100 and self.completion_wf_state == "Pending":
 				self.completion_wf_state = "Submitted"

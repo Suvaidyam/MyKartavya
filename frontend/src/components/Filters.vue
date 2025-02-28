@@ -11,7 +11,7 @@
             </div>
             <div class="flex flex-col">
                 <FilterLoader v-if="loader" />
-                <div v-for="item in filter_by" class="flex flex-col border-t">
+                <div v-else v-for="item in filter_by" class="flex flex-col border-t">
                     <h4 class="text-[14px] font-medium mb-2 pt-2">{{ item.name }}</h4>
                     <div class="flex flex-col gap-3 pb-2">
                         <div v-if="item.key === 'sdgs'" class="flex px-2 items-center gap-2 text-sm">
