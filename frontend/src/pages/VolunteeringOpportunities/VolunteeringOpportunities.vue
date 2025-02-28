@@ -50,7 +50,7 @@ const loader = ref(false)
 const volunteering_opportunities = async (filter) => {
   loader.value = true
   try {
-    const response = await call('mykartavya.controllers.api.get_activity_data', {
+    const response = await call('mykartavya.controllers.api.available_commitments', {
       'filter': filter ?? {}
     });
     kindness_volunteering.value = response
