@@ -1,1 +1,0 @@
-import{_ as e,c as s,o as t}from"./index-Bz-WKddl.js";const c={class:"pt-[62px] flex justify-center items-center h-screen"},o={__name:"FAQs",setup(_){return(n,a)=>(t(),s("div",c,"FAQs Coming Soon.."))}},p=e(o,[["__scopeId","data-v-f62fa1b1"]]);export{p as default};
