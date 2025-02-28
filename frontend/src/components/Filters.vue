@@ -11,7 +11,7 @@
             </div>
             <div class="flex flex-col">
                 <FilterLoader v-if="loader" />
-                <div v-else v-for="item in filter_by" class="flex flex-col border-t">
+                <div v-for="item in filter_by" class="flex flex-col border-t">
                     <h4 class="text-[14px] font-medium mb-2 pt-2">{{ item.name }}</h4>
                     <div class="flex flex-col gap-3 pb-2">
                         <div v-if="item.key === 'sdgs'" class="flex px-2 items-center gap-2 text-sm">
@@ -22,22 +22,25 @@
                                 All
                             </label>
                         </div>
-                        <div v-for="el in item.options" class="flex px-2 items-center gap-2  text-sm">
-                            <input v-model="filter[item.key]" :value="el" :type="item.type" :name="item.key"
+
+                        <div v-for="el in item.options" class="flex px-2 items-center gap-2 text-sm">
+                            <input v-model="filter[item.key]" :value="el.name" :type="item.type" :name="item.key"
                                 :class="[item.type == 'checkbox' ? 'rounded-sm' : 'rounded-full', 'focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary']"
-                                :id="`${item.key}-${el.toLowerCase().replace(' ', '-')}`">
-                            <div class="w-10 h-8 flex items-center px-1  ">
-                                <img v-if="el.sdg_image" :src="sdg_image" :alt="el.name"
-                                class="w-6 h-6 rounded-full object-cover" />
-                                <div v-else class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center">
-                                {{ el?.charAt(0) }}
+                                :id="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">
+                            <div v-if="item.key === 'sdgs'" class=" flex items-center">
+                                <img v-if="el.sdg_image" :src="el.sdg_image" :alt="el"
+                                    class="w-5 h-5 rounded-full object-cover" />
+                                <div v-else
+                                    class="w-5 h-5 text-[12px] font-norma rounded-full bg-gray-100 flex items-center justify-center">
+                                    {{ el?.name?.charAt(0) }}
                                 </div>
                             </div>
                             <label class="text-[12px] font-normal"
-                                :for="`${item.key}-${el.toLowerCase().replace(' ', '-')}`">{{ el }}</label>
+                                :for="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">{{ el.name }}</label>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </aside>
@@ -69,10 +72,10 @@
                             <label class="text-[12px] font-normal" for="all-sdgs">All</label>
                         </div>
                         <div v-for="el in item.options" class="flex px-2 py-1 items-center gap-2 text-sm">
-                            <input v-model="filter[item.key]" :value="el" :type="item.type" :name="item.key"
+                            <input v-model="filter[item.key]" :value="el.name" :type="item.type" :name="item.key"
                                 :class="[item.type == 'checkbox' ? 'rounded-sm' : 'rounded-full', 'focus:ring-[#E86C13] checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary']"
-                                :id="`${item.key}-${el.toLowerCase().replace(' ', '-')}`">
-                            <label :for="`${item.key}-${el.toLowerCase().replace(' ', '-')}`">{{ el }}</label>
+                                :id="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">
+                            <label :for="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">{{ el.name }}</label>
                         </div>
                     </MenuItems>
                 </transition>
@@ -110,19 +113,19 @@ const filter_by = ref([
         name: 'Volunteering Hours',
         type: 'radio',
         key: 'volunteering_hours',
-        options: ['Low to High', 'High to Low']
+        options: [{name:'Low to High'},{name:'High to Low'}]
     },
     {
         name: 'Activity Type',
         type: 'checkbox',
         key: 'activity_type',
-        options: ['Online', 'On-Ground', 'Both']
+        options: [{name:'Online'},{name:'On-Ground'},{name:'Both'}]
     },
     {
         name: 'Karma Points',
         type: 'radio',
         key: 'karma_points',
-        options: ['Low to High', 'High to Low', 'ARKs in my Region']
+        options: [{name:'Low to High'},{name:'High to Low'}]
     },
 ]);
 
@@ -133,7 +136,11 @@ const fetchSDGs = async () => {
         sdgData.value = response;
         const sdgsFilter = filter_by.value.find(f => f.key === 'sdgs');
         if (sdgsFilter) {
-            sdgsFilter.options = response.map(sdg => sdg.name);
+            // sdgsFilter.options = response.map(sdg => sdg.name);
+            sdgsFilter.options = response.map(sdg => ({
+                name: sdg.name,
+                sdg_image: sdg.sdg_image  
+            }));
             setTimeout(() => {
                 loader.value = false;
             }, 500);
