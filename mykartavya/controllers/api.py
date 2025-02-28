@@ -59,6 +59,10 @@ def available_commitments(filter={}):
 def activity_details(name):
     return Activity.activity_details(name)
 
+@frappe.whitelist(allow_guest=True)
+def volunteer_act_count():
+    return Activity.volunteer_act_count()
+
 # master data
 @frappe.whitelist(allow_guest=True)
 def country_data():
