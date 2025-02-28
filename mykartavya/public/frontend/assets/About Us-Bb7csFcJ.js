@@ -1,1 +1,0 @@
-import{_ as e,c as t,b as s}from"./index-C6HIta4H.js";const o={class:"pt-[62px] flex justify-center items-center h-screen"},c={__name:"About Us",setup(_){return(a,n)=>(s(),t("div",o,"About Us Coming Soon.."))}},p=e(c,[["__scopeId","data-v-56fafcba"]]);export{p as default};
