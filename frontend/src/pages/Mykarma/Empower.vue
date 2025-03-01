@@ -42,10 +42,10 @@
 
           <div class="">
             <div class="w-full bg-gray-200 rounded-full h-[5px]">
-              <div class="bg-green-500 h-[5px] rounded-full" :style="`width:${activities.com_percent}%`"></div>
+              <div class="bg-green-500 h-[5px] rounded-full" :style="`width:${activities.com_percent ?? 0}%`"></div>
             </div>
             <p class="text-caption font-normal mt-1" style="color: #0b0b0b">
-              {{ activities.com_percent }} % completed
+              {{ activities.com_percent ?? 0 }} % completed
             </p>
           </div>
         </div>

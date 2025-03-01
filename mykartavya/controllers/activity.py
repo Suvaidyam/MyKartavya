@@ -159,11 +159,11 @@ class Activity:
                 va.workflow_state as workflow_state
             FROM
                 `tabActivity` AS act
-            RIGHT JOIN `tabVolunteer Activity` AS va ON va.activity = act.name
+            LEFT JOIN `tabVolunteer Activity` AS va ON va.activity = act.name
             WHERE act.name = '{name}'
             """
         data = frappe.db.sql(sql_query, as_dict=True)
-        doc = data[0] if data else {}
+        doc = data[0] if data else data
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         exits = frappe.db.exists("Volunteer Activity", {"volunteer": user, "activity": name})
         if exits:
