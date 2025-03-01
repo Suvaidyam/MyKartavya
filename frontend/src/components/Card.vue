@@ -1,6 +1,6 @@
 <template>
     <div v-if="type != 'group'" class="card bg-white">
-        <router-link :to="`/activity/${item.name}`">
+        <router-link :to="`/activity/${item.activity}`">
             <div class="relative">
                 <img :src="item.activity_image" :alt="item.title" class="w-full rounded-md h-40 object-cover" />
                 <div
@@ -38,7 +38,7 @@
     <!--  -->
     
     <article v-else class="flex flex-col w-full pb-2">
-        <router-link :to="`/kindness-volunteering/${item.name}`">
+        <router-link :to="`/kindness-volunteering/${item.activity}`">
 
         <div class="flex relative flex-col py-3 pr-3 w-full rounded-xl aspect-[1.557]">
             <img :src="item.activity_image" alt="" class="object-cover rounded-md absolute inset-0 size-full" />

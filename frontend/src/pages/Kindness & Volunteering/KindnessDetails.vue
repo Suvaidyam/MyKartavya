@@ -64,7 +64,7 @@
           </div>
 
           <div class="font-poppins text-button">
-            <router-link :to="`/activity/${activitiesavilable.name}`">
+            <router-link :to="`/activity/${activitiesavilable.activity}`">
             <button
               class="bg-secondary min-w-[112px] px-2 h-[32px] rounded-[4px] flex justify-center items-center text-white hover:bg-opacity-90 transition-colors"
             >

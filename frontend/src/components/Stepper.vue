@@ -13,15 +13,15 @@
         <div class="relative border-gray-300 pl-6">
           <div v-for="(step, index) in steps" :key="index" class="mb-6 relative border-l">
             <div class="absolute -left-3 w-6 h-6 rounded-full flex items-center justify-center" :class="step.completed
-                ? 'bg-green-500 text-white'
-                : 'bg-orange-500 text-white '
+              ? 'bg-green-500 text-white'
+              : 'bg-orange-500 text-white '
               ">
               <CheckIcon v-if="step.completed" class="w-4 h-4" />
               <img src="..//assets/Frame (3).png" v-else alt="" class="w-4 h-4" />
             </div>
             <div :class="index > currentStep
-                ? 'blur-sm opacity-50 pointer-events-none '
-                : ''
+              ? 'blur-sm opacity-50 pointer-events-none '
+              : ''
               ">
               <p class="text-sm font-semibold text-gray-900 m-4">
                 STEP {{ index + 1 }}
@@ -30,11 +30,19 @@
               <p class="text-gray-600 text-sm ml-4 mt-0">
                 {{ step.description }}
               </p>
-
-              <button v-if="!step.completed" @click="nextStep(index)"
+              <button v-if="!step.completed && !(step.title == 'Get Started' && activity.workflow_state == 'Applied')"
+                @click="nextStep(index)"
                 class="mt-2 h-[28px] w-[147px] rounded-sm text-caption font-medium text-white ml-2" :class="index === steps.length - 1 ? 'bg-orange-500' : 'bg-orange-500'
                   ">
                 {{ step.button }}
+              </button>
+              <button disabled
+                v-if="!step.completed && step.title == 'Get Started' && activity.workflow_state == 'Applied'"
+                @click="nextStep(index)"
+                class="mt-2 h-[28px] cursor-not-allowed w-[147px] rounded-sm text-caption font-medium text-white ml-2"
+                :class="index === steps.length - 1 ? 'bg-orange-500' : 'bg-orange-500'
+                  ">
+                Pending by Admin
               </button>
             </div>
           </div>
@@ -79,8 +87,8 @@
               <div class="flex justify-center gap-6 my-3">
                 <button v-for="(emoji, index) in emojis" :key="index" @click="selectedEmoji = emoji"
                   class="text-3xl focus:outline-none transition duration-200" :class="selectedEmoji === emoji
-                      ? 'text-orange-500'
-                      : 'text-gray-400 opacity-30'
+                    ? 'text-orange-500'
+                    : 'text-gray-400 opacity-30'
                     ">
                   {{ emoji.icon }}
                 </button>
@@ -109,17 +117,25 @@
             <div class="mb-4">
               <label class="block font-medium mb-1">How much time you donated while working on the activity?</label>
               <div class="flex gap-2">
-                <input type="number" v-model="hours" placeholder="Hours" class="w-20 border rounded p-2"
-                  @input="hours = Math.max(0, hours)" />
-                <input type="number" v-model="minutes" placeholder="Minutes" @input="minutes = Math.max(0, minutes)"
-                  class="w-20 border rounded p-2" />
+                <div class="flex gap-2 items-center">
+                  <label for="" class="text-base font-normal">Hours</label>
+                  <input type="number" v-model="hours" class="w-24 border rounded px-2 h-8"
+                    @input="hours = Math.max(0, hours)" />
+                </div>
+                <div class="flex gap-2 items-center">
+                  <label for="" class="text-base font-normal">Minutes</label>
+                  <input type="number" v-model="minutes" @input="minutes = Math.max(0, minutes)"
+                    class="w-24 border rounded px-2 h-8" />
+                </div>
               </div>
             </div>
             <div class="mb-4">
-              <label class="block font-medium mb-1">How much percent work has completed?</label>
+              <label class="block text-lg font-normal mb-1">How much percent work has completed?</label>
               <div class="flex items-center gap-2">
-                <input type="range" min="0" max="100" v-model="progress" class="w-full accent-green-500" />
-                <span class="w-12 text-center">{{ progress }}%</span>
+                <input type="range" min="0" max="100" v-model="progress" class="w-full h-[6px] accent-green-500" />
+                <span
+                  class="h-8 w-16 flex items-center justify-center border rounded-sm text-base font-normal text-center">{{
+                  progress }}%</span>
               </div>
             </div>
             <div class="mb-4">
@@ -146,11 +162,12 @@
                   class="w-16 h-16 rounded object-cover" />
               </div>
             </div>
-
-            <button @click="submitReport"
-              class="w-full bg-orange-500 text-white py-2 rounded text-center font-semibold hover:bg-orange-600">
-              MARK AS COMPLETE
-            </button>
+            <div class="flex justify-end">
+              <button @click="submitReport"
+                class="bg-orange-500 text-white h-[38px] text-base w-48 rounded-sm text-center font-medium hover:bg-orange-600">
+                MARK AS COMPLETE
+              </button>
+            </div>
           </div>
         </div>
         <!-- Popup Modal for Activity Report -->
@@ -182,7 +199,7 @@
   </div>
 </template>
 <script setup>
-import { ref, inject,watch } from 'vue'
+import { ref, inject, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   RefreshCw as RefreshCwIcon,
@@ -242,6 +259,7 @@ const nextStep = async (index) => {
       volunteer: auth.cookie.user_id
     })
     if (res) {
+      props.activity.workflow_state = 'Applied'
       steps.value[index].completed = true
       currentStep.value++
     } else {
@@ -265,13 +283,13 @@ const submitReport = () => {
   activityReportPopup.value = false
   steps.value[2].completed = true
   currentStep.value++
-  console.log(
-    'object',
-    hours.value,
-    minutes.value,
-    uploadedImages.value,
-    progress.value
-  )
+  let data = {
+    hours: hours.value,
+    minutes: minutes.value,
+    progress: progress.value,
+    images: uploadedImages.value,
+  }
+  console.log(data)
 }
 const submit_your_feedback = () => {
   show_Feedback.value = false
@@ -307,16 +325,16 @@ const emojis = ref([
 const selectedEmoji = ref(null)
 const comments = ref('')
 
-watch(()=>props.activity, (newVal, oldVal) => {
-  if (newVal) {
-    if (newVal.workflow_state =='Applied'){
+watch(() => props.activity, (newVal, oldVal) => {
+  if (newVal.is_assigned) {
+    if (newVal.workflow_state == 'Applied') {
       steps.value[0].completed = true
       currentStep.value++
-    }else if(newVal.workflow_state =='Approved' && newVal.com_percent !=100){
+    } else if (newVal.workflow_state == 'Approved' && newVal.com_percent != 100) {
       steps.value[0].completed = true
       steps.value[1].completed = true
       currentStep.value = 2
-    }else if(newVal.com_percent==100){
+    } else if (newVal.com_percent == 100) {
       steps.value[0].completed = true
       steps.value[1].completed = true
       steps.value[2].completed = true
@@ -325,3 +343,15 @@ watch(()=>props.activity, (newVal, oldVal) => {
   }
 })
 </script>
+<style scoped>
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide number input arrows in Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+</style>
