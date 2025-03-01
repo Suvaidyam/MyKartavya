@@ -209,7 +209,11 @@
               }}</span>
             </td>
             <td class="text-[10px] font-normal text-center">
-              {{ (user.duration / 60 / 60).toFixed(2) }} hr
+              {{
+                user.duration / 60 / 60 < 1
+                  ? (user.duration / 60 / 60).toFixed(2) + ' hr'
+                  : Math.floor(user.duration / 60 / 60) + ' hr'
+              }}
             </td>
             <td class="text-[10px] font-normal text-center">
               {{ user.karma_points }} Points
