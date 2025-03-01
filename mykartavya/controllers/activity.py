@@ -120,6 +120,7 @@ class Activity:
 
     def act_now(activity, volunteer):
         # same activity can't be assigned to the same volunteer
+        volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")
         act = frappe.get_list(
             "Volunteer Activity",
             filters={"activity": activity, "volunteer": volunteer},
@@ -140,29 +141,36 @@ class Activity:
         return doc
     
     def activity_details(name):
-
+        
         sql_query = f"""
             SELECT
-            va.name as name,
-            act.name as activity,
-            va.duration as duration,
-            va.com_percent as com_percent,
-            act.title as title,
-            act.karma_points as karma_points,
-            act.start_date as start_date,
-            act.end_date as end_date,
-            act.hours as hours,
-            act.activity_description as activity_description,
-            act.activity_type as activity_type,
-            act.activity_image as activity_image,
-            va.workflow_state as workflow_state
-        FROM
-            `tabVolunteer Activity` AS va
-        INNER JOIN `tabActivity` AS act ON va.activity = act.name
-        WHERE va.name = '{name}'
-        """
+                va.name as name,
+                act.name as activity,
+                va.duration as duration,
+                va.com_percent as com_percent,
+                act.title as title,
+                act.karma_points as karma_points,
+                act.start_date as start_date,
+                act.end_date as end_date,
+                act.hours as hours,
+                act.activity_description as activity_description,
+                act.activity_type as activity_type,
+                act.activity_image as activity_image,
+                va.workflow_state as workflow_state
+            FROM
+                `tabActivity` AS act
+            RIGHT JOIN `tabVolunteer Activity` AS va ON va.activity = act.name
+            WHERE act.name = '{name}'
+            """
         data = frappe.db.sql(sql_query, as_dict=True)
-        return data[0] if data else {}
+        doc = data[0] if data else {}
+        user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+        exits = frappe.db.exists("Volunteer Activity", {"volunteer": user, "activity": name})
+        if exits:
+            doc["is_assigned"] = True
+        else:
+            doc["is_assigned"] = False
+        return doc
 
     def volunteer_act_count():
         sql_query = """
