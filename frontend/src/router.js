@@ -99,6 +99,11 @@ const routes = [
     path: '/about-us',
     component: () => import('@/pages/Public/About Us.vue'),
     meta: { requiresAuth: false }
+  },
+  {
+  name: 'AllActivity',
+  path: '/all-activity',
+  component: () => import('@/pages/View/Featuredacts.vue'),
   }
 ]
 
