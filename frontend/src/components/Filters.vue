@@ -3,7 +3,7 @@
         class="w-[270px] min-w-[270px] fixed overflow-auto h-screen pb-[62px] hidden lg:block border-r border-gray-200">
         <div class="bg-white relative px-4">
             <div class="flex sticky top-0 bg-white z-20 justify-between items-center py-3">
-                <h3 class="text-lg font-medium">Filter by</h3>
+                <h3 class="text-lg font-medium">store.filters by</h3>
                 <button :disabled="clear_all_disabled"
                     :class="[clear_all_disabled ? 'text-gray-500' : 'text-[#E86C13]', 'text-sm']" @click="clear_all()">
                     Clear All
@@ -26,7 +26,7 @@
                         </div>
 
                         <div v-for="el in item.options" class="flex px-2 items-center gap-2 text-sm">
-                            <input v-model="filter[item.key]" :value="el.name" :type="item.type" :name="item.key"
+                            <input v-model="store.filters[item.key]" :value="el.name" :type="item.type" :name="item.key"
                                 :class="[item.type == 'checkbox' ? 'rounded-sm' : 'rounded-full', 'focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary']"
                                 :id="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">
                             <div v-if="item.key === 'sdgs'" class=" flex items-center">
@@ -52,7 +52,7 @@
             <Menu v-for="item in filter_by" as="div" class="relative inline-block text-left">
                 <div>
                     <MenuButton :class="[
-                        (Array.isArray(filter[item.key]) ? filter[item.key].length > 0 : filter[item.key])
+                        (Array.isArray(store.filters[item.key]) ? store.filters[item.key].length > 0 : store.filters[item.key])
                             ? 'ring-[#E86C13] text-[#E86C13]'
                             : 'ring-gray-300',
                         'inline-flex w-full justify-center gap-x-1.5 truncate rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-inset hover:bg-gray-50'
@@ -74,7 +74,7 @@
                             <label class="text-[12px] font-normal" for="all-sdgs">All</label>
                         </div>
                         <div v-for="el in item.options" class="flex px-2 py-1 items-center gap-2 text-sm">
-                            <input v-model="filter[item.key]" :value="el.name" :type="item.type" :name="item.key"
+                            <input v-model="store.filters[item.key]" :value="el.name" :type="item.type" :name="item.key"
                                 :class="[item.type == 'checkbox' ? 'rounded-sm' : 'rounded-full', 'focus:ring-[#E86C13] checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary']"
                                 :id="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">
                             <label :for="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">{{ el.name }}</label>
@@ -98,10 +98,7 @@ import FilterLoader from './FilterLoader.vue';
 const call = inject('call')
 const loader = ref(false);
 const clear_all_disabled = ref(true);
-const props = defineProps({
-    filter: Object,
-});
-const filter = ref(props.filter);
+const store = inject('store'); 
 
 const sdgData = ref([]);
 const filter_by = ref([
@@ -110,25 +107,13 @@ const filter_by = ref([
         type: 'checkbox',
         key: 'sdgs',
         options: [],
-    },
-    {
-        name: 'Volunteering Hours',
-        type: 'radio',
-        key: 'volunteering_hours',
-        options: [{name:'Low to High'},{name:'High to Low'}]
-    },
+    }, 
     {
         name: 'Activity Type',
         type: 'checkbox',
         key: 'activity_type',
         options: [{name:'Online'},{name:'On-Ground'},{name:'Both'}]
-    },
-    {
-        name: 'Karma Points',
-        type: 'radio',
-        key: 'karma_points',
-        options: [{name:'Low to High'},{name:'High to Low'}]
-    },
+    }, 
 ]);
 
 const fetchSDGs = async () => {
@@ -158,17 +143,17 @@ const fetchSDGs = async () => {
 const allChecked = computed({
     get: () => {
         const sdgFilter = filter_by.value.find(f => f.key === 'sdgs');
-        return sdgFilter && filter.value.sdgs.length === sdgFilter.options.length;
+        return sdgFilter && store.filters.sdgs.length === sdgFilter.options.length;
     },
     set: (value) => {
         const sdgFilter = filter_by.value.find(f => f.key === 'sdgs');
-        filter.value.sdgs = value && sdgFilter ? [...sdgFilter.options.map(e=>{return e.name})] : [];
+        store.filters.sdgs = value && sdgFilter ? [...sdgFilter.options.map(e=>{return e.name})] : [];
     }
 });
 
 // Clear all filters
 const clear_all = () => {
-    filter.value = {
+    store.filters = {
         sdgs: [],
         volunteering_hours: '',
         activity_type: [],
@@ -176,8 +161,8 @@ const clear_all = () => {
     };
 };
 
-// Watch filter changes for Clear All button state
-watch(filter, (val) => {
+// Watch store.filters changes for Clear All button state
+watch(store.filters, (val) => {
     clear_all_disabled.value = Object.values(val).every(v =>
         Array.isArray(v) ? v.length === 0 : v === ''
     );

@@ -1,9 +1,9 @@
 <template>
   <div class="max-w-[1920px] w-full h-screen pt-[62px] mx-auto bg-gray-50">
     <div class="w-full h-full flex flex-col lg:flex-row px-5">
-      <Filters :filter="filter"/>
+      <Filters />
       <div class="w-full lg:pl-[270px] flex flex-col xl:flex-row">
-        <VolunteeringContent :filter="filter" :available_commitments="available_commitments" class="px-3"/>
+        <VolunteeringContent :available_commitments="available_commitments" class="px-3"/>
       </div>
     </div>
   </div>
@@ -14,12 +14,7 @@ import { ref, watch } from "vue";
 import Filters from "../../components/Filters.vue";
 import VolunteeringContent from "./VolunteeringContent.vue";
 
-const filter = ref({
-    sdgs: [],
-    volunteering_hours: '',
-    activity_type: [],
-    karma_points: ''
-})
+
 const available_commitments = ref([
   {
     title: 'Empower the needy',

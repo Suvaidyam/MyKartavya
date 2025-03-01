@@ -9,6 +9,7 @@ import Auth from './libs/controllers/auth'
 import call from './libs/controllers/call'
 import VOtpInput from "vue3-otp-input";
 import {formatDate}  from './libs/utils';
+import { store } from './store'
 
 import {
   Button,
@@ -26,6 +27,7 @@ setConfig('resourceFetcher', frappeRequest)
 app.use(router)
 app.use(resourcesPlugin)
 app.use(FeatherIcon)
+app.provide('store', store);
 app.provide('session', session)
 app.provide('call', call)
 app.provide('auth', auth)

@@ -1,18 +1,13 @@
 <template>
   <div class="max-w-[1920px] w-full pt-[62px] mx-auto">
     <div class="w-full flex flex-col lg:flex-row px-5">
-      <Filters :filter="filter" />
+      <Filters />
       <div class="w-full lg:pl-[270px] flex flex-col xl:flex-row">
         <main class="w-full xl:w-3/4 px-3 py-3 bg-gray-50">
           <!-- Current Commitments Section -->
           <div class="flex justify-between mb-2">
             <h1 class="text-[23px] font-normal">My Karma</h1>
-            <button class="border rounded-md px-2 py-1.5 h-8 w-8 bg-white">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24">
-                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M3 6h18M3 12h12M3 18h6" />
-              </svg>
-            </button>
+            <Sorting />
           </div>
           <section class="p-4 border rounded-[12px] bg-white h-[390px]">
             <div class="w-full h-full">
@@ -80,6 +75,7 @@
 <script setup>
 import { onMounted, ref, inject, watch, watchEffect } from 'vue';
 import Filters from '@/components/Filters.vue';
+import Sorting from '@/components/Sorting.vue';
 import MyDetails from './MyDetails.vue';
 import Card from '@/components/Card.vue';
 import CardLoader from '@/components/CardLoader.vue';
@@ -87,16 +83,12 @@ import NotFound from '../../components/NotFound.vue';
 import { FeatherIcon } from 'frappe-ui';
 
 // Data for Current Commitments
-const filter = ref({
-  sdgs: [],
-  volunteering_hours: '',
-  activity_type: [],
-  karma_points: ''
-});
+
 const current_commitments = ref([]);
 const available_commitments = ref([]);
 const loader = ref(false);
 const call = inject('call');
+const store = inject('store');
 const scrollContainer = ref(null);
 
 // Scroll state
@@ -181,8 +173,8 @@ onMounted(() => {
 });
 
 // Watch filter changes
-watch(() => filter.value, (newVal,oldVal) => {
-  if (newVal == oldVal) {
+watch(() => store.filters, (newVal,oldVal) => {
+  if (newVal) {
     cur_commitments(newVal);
     avai_commitments(newVal);
   }
