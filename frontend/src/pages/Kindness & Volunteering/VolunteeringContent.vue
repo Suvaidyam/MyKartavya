@@ -6,12 +6,7 @@
           Kindness & Volunteering
         </h1>
       </div>
-      <button
-        class="flex gap-1.5 justify-center items-center px-2 my-auto w-8 h-8 bg-white rounded border border-solid border-[color:var(--Stroke,#D9D9D9)]">
-        <img
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/9c4064297019ef96779e7eb626ead56be65f493645c97b478472dc4c6b81cf07?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-          alt="Filter" class="object-contain self-stretch my-auto w-4 aspect-square" />
-      </button>
+      <Sorting />
     </header>
 
     <nav
@@ -66,6 +61,7 @@ import { ref, computed, onMounted, inject, watch } from 'vue'
 import Card from '../../components/Card.vue'
 import CardLoader from '../../components/CardLoader.vue'
 import NotFound from '../../components/NotFound.vue'
+import Sorting from '../../components/Sorting.vue'
 
 const call = inject('call')
 const store = inject('store')

@@ -19,7 +19,7 @@
                                 class="rounded-sm focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="all-sdgs">
                             <label class="text-[12px] font-normal flex gap-2 items-center" for="all-sdgs">
-                                <img src="../assets/sdgall.png" :alt="el"
+                                <img src="../assets/sdgall.png" :alt="'el'"
                                 class="w-5 h-5 rounded-full object-cover" />
                                 All
                             </label>

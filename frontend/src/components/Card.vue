@@ -68,8 +68,8 @@
             {{ item.description }}
         </p>
 
-        <div class="flex gap-5 justify-between mt-2">
-            <div class="flex flex-col text-justify">
+        <div class="flex flex-col gap-3 justify-between mt-2">
+            <div class="flex items-center justify-between">
                 <div class="flex gap-1 items-center text-xs tracking-normal text-neutral-950">
                     <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/206e5d29b5523c409dbfe316e887c82aeb672c336764aad169ece16b133845e4?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
                         alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
@@ -77,8 +77,14 @@
                     }}
                     </time>
                 </div>
-                <!--  -->
-                <div class="flex items-center -space-x-3 pt-4">
+                <div class="flex gap-1 items-center self-end text-xs tracking-normal text-justify text-neutral-950">
+                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/193573c664d98aa3d1c71908aad0cbb8163b462f0553be41c395306a299aa57f?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
+                        alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                    <span class="self-stretch my-auto">{{ item.hours }} hr</span>
+                </div>
+            </div>
+            <div class="flex items-center justify-between">
+                <div v-if="JSON.parse(item.volunteers).length > 0 && JSON.parse(item.volunteers)[0].full_name !=null" class="flex items-center -space-x-3 ">
                     <div v-for="(el, index) in JSON?.parse(item.volunteers)" :key="index">
                         <img v-if="el.user_image" :src="el.user_image" :alt="'User ' + (index + 1)"
                             class="w-8 h-8 rounded-full border-2 border-white" />
@@ -91,20 +97,13 @@
                         +{{ JSON.parse(item.volunteers).length }}
                     </p>
                 </div>
-                <!--  -->
-            </div>
-            <div class="flex flex-col self-start">
-                <div class="flex gap-1 items-center self-end text-xs tracking-normal text-justify text-neutral-950">
-                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/193573c664d98aa3d1c71908aad0cbb8163b462f0553be41c395306a299aa57f?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-                        alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                    <span class="self-stretch my-auto">{{ item.hours }} hr</span>
-                </div>
-                <div
-                    class="flex gap-1 items-center mt-6 text-sm font-medium tracking-normal text-right text-orange-600 uppercase hover:text-orange-700">
+                <div v-else class="w-8 h-8"></div>
+                <div class="flex gap-1 items-center text-sm font-medium tracking-normal text-right text-orange-600 uppercase hover:text-orange-700">
                     <p>Act now</p>
                     <FeatherIcon name="arrow-up-right" class="size-4" />
                 </div>
             </div>
+           
         </div>
     </router-link>
     </article>
