@@ -42,10 +42,10 @@
 
           <div class="">
             <div class="w-full bg-gray-200 rounded-full h-[5px]">
-              <div class="bg-green-500 h-[5px] rounded-full" style="width: 60%"></div>
+              <div class="bg-green-500 h-[5px] rounded-full" :style="`width:${activities.com_percent}%`"></div>
             </div>
             <p class="text-caption font-normal mt-1" style="color: #0b0b0b">
-              60% completed
+              {{ activities.com_percent }} % completed
             </p>
           </div>
         </div>
@@ -114,10 +114,9 @@
               </div>
             </div>
           </div>
-
           <!-- Right Section - Timeline -->
           <div>
-            <Stepper />
+            <Stepper :activity="activities"/>
           </div>
         </div>
 
@@ -145,7 +144,7 @@
 </template>
 
 <script setup>
-import { inject, ref,onMounted } from 'vue'
+import { inject, ref,onMounted,watch } from 'vue'
 import { FeatherIcon } from 'frappe-ui'
 import Stepper from '../../components/Stepper.vue'
 import Card from '../../components/Card.vue'

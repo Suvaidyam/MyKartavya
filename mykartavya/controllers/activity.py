@@ -3,51 +3,99 @@ import frappe
 
 class Activity:
     def current_commitments(filter={}):
-        user = frappe.session.user
-        filters = {}
-        order_by = ""
+        user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+        if not user:
+            return []
+        where_clause = ""
+        order_by_clause = ""
+        if isinstance(filter, str):
+            filter = frappe.parse_json(filter)
         if filter:
             if "activity_type" in filter and filter["activity_type"]:
-                filters["activity_type"] = ["in", filter["activity_type"]]
-
-            if "sdgs" in filter and filter["sdgs"]:
-                filters["sdgs"] = ["in", filter["sdgs"]]
-
-            if "volunteering_hours" in filter and filter["volunteering_hours"]:
-                ordering = (
-                    "ASC" if filter["volunteering_hours"] == "Low to High" else "DESC"
-                )
-                order_by = f"hours {ordering}"
+                activity_types = ", ".join(f"'{at}'" for at in filter["activity_type"])
+                where_clause += f" AND act.activity_type IN ({activity_types})"
 
             if "karma_points" in filter and filter["karma_points"]:
-                ordering = "ASC" if filter["karma_points"] == "Low to High" else "DESC"
-                order_by = f"karma_points {ordering}"
-        activity_v = frappe.get_list(
-            "Volunteer Activity",
-            filters={"volunteer": user},
-            fields=["activity", "duration", "com_percent"],
-        )
-        activity = []
-        if activity_v:
-            activity = [act["activity"] for act in activity_v]
-            filters["name"] = ["in", activity]
+                if filter["karma_points"] == "Low to High":
+                    order_by_clause = " ORDER BY act.karma_points ASC"
+                elif filter["karma_points"] == "High to Low":
+                    order_by_clause = " ORDER BY act.karma_points DESC"
 
-        activity_data = frappe.get_all(
-            "Activity", filters=filters, fields=["*"], order_by=order_by
-        )
-        if len(activity_data) > 0:
-            for act in activity_data:
-                item = next(
-                    (a for a in activity_v if a["activity"] == act["name"]), None
-                )
-                act["duration"] = item["duration"]
-                act["completion_percent"] = item["com_percent"]
-        return activity_data
-
+            if "sdgs" in filter and filter["sdgs"]:
+                sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
+                where_clause += f" AND act.sdgs IN ({sdgs_values})"
+            
+            if "volunteering_hours" in filter and filter["volunteering_hours"]:
+                if filter["volunteering_hours"] == "Low to High":
+                    order_by_clause = " ORDER BY act.hours ASC"
+                elif filter["volunteering_hours"] == "High to Low":
+                    order_by_clause = " ORDER BY act.hours DESC"
+        
+        sql = f"""
+        SELECT
+            va.name as name,
+            act.name as activity,
+            va.duration as duration,
+            va.com_percent as com_percent,
+            act.title as title,
+            act.karma_points as karma_points,
+            act.start_date as start_date,
+            act.end_date as end_date,
+            act.hours as hours,
+            act.activity_description as activity_description,
+            act.activity_type as activity_type,
+            act.activity_image as activity_image
+        FROM
+            `tabVolunteer Activity` AS va
+        INNER JOIN `tabActivity` AS act ON va.activity = act.name
+        WHERE volunteer  = '{user}' {where_clause} 
+        {order_by_clause}
+        """
+        return frappe.db.sql(sql, as_dict=True)
+    
     def available_commitments(filter={}):
-        sql_query = """
+        where_clause = ""
+        order_by_clause = ""
+        user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+        if user:
+            where_clause += f" AND act.name NOT IN (SELECT activity FROM `tabVolunteer Activity` WHERE volunteer = '{user}')"
+        if isinstance(filter, str):
+            filter = frappe.parse_json(filter)
+        if filter:
+            if "activity_type" in filter and filter["activity_type"]:
+                activity_types = ", ".join(f"'{at}'" for at in filter["activity_type"])
+                where_clause += f" AND act.activity_type IN ({activity_types})"
+
+            if "karma_points" in filter and filter["karma_points"]:
+                if filter["karma_points"] == "Low to High":
+                    order_by_clause = " ORDER BY act.karma_points ASC"
+                elif filter["karma_points"] == "High to Low":
+                    order_by_clause = " ORDER BY act.karma_points DESC"
+
+            if "sdgs" in filter and filter["sdgs"]:
+                sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
+                where_clause += f" AND act.sdgs IN ({sdgs_values})"
+            
+            if "volunteering_hours" in filter and filter["volunteering_hours"]:
+                if filter["volunteering_hours"] == "Low to High":
+                    order_by_clause = " ORDER BY act.max_hours ASC"
+                elif filter["volunteering_hours"] == "High to Low":
+                    order_by_clause = " ORDER BY act.max_hours DESC"
+        
+        sql_query = f"""
             SELECT 
-                act.*,
+                va.name as name,
+                act.name as activity,
+                va.duration as duration,
+                va.com_percent as com_percent,
+                act.title as title,
+                act.karma_points as karma_points,
+                act.start_date as start_date,
+                act.end_date as end_date,
+                act.hours as hours,
+                act.activity_description as activity_description,
+                act.activity_type as activity_type,
+                act.activity_image as activity_image,
                 JSON_ARRAYAGG(
                     JSON_OBJECT(
                         'name', sva.name,
@@ -57,60 +105,12 @@ class Activity:
                     )
                 ) as volunteers
             FROM `tabActivity` as act
-            LEFT JOIN `tabVolunteer Activity` as vc ON vc.activity = act.name
-            LEFT JOIN `tabSVA User` as sva ON sva.name = vc.volunteer
+            LEFT JOIN `tabVolunteer Activity` as va ON va.activity = act.name
+            LEFT JOIN `tabSVA User` as sva ON sva.name = va.volunteer
+            WHERE act.end_date >= CURRENT_DATE() {where_clause}
+            GROUP BY act.name
+            {order_by_clause}
         """
-        conditions = []
-        order_by = ""
-        conditions.append("act.end_date >= CURRENT_DATE")
-        if filter:
-            if "activity_type" in filter and filter["activity_type"]:
-                activity_types = ", ".join(f"'{at}'" for at in filter["activity_type"])
-                conditions.append(f"act.activity_type IN ({activity_types})")
-
-            if "karma_points" in filter and filter["karma_points"]:
-                # Ensure karma_points is a number
-                try:
-                    karma_points = int(filter["karma_points"])
-                    conditions.append(f"act.karma_points = {karma_points}")
-                except (ValueError, TypeError):
-                    pass  # Skip invalid input
-
-            if "sdgs" in filter and filter["sdgs"]:
-                sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
-                conditions.append(f"act.sdgs IN ({sdgs_values})")
-
-            if "volunteering_hours" in filter and filter["volunteering_hours"]:
-                # Ensure volunteering_hours is a number
-                try:
-                    volunteering_hours = float(filter["volunteering_hours"])
-                    conditions.append(f"act.volunteering_hours = {volunteering_hours}")
-                except (ValueError, TypeError):
-                    pass  # Skip invalid input
-
-            # Sorting preferences
-            order_clauses = []
-            if "sort_volunteering_hours" in filter:
-                if filter["sort_volunteering_hours"] == "Low to High":
-                    order_clauses.append("act.volunteering_hours ASC")
-                elif filter["sort_volunteering_hours"] == "High to Low":
-                    order_clauses.append("act.volunteering_hours DESC")
-
-            if "sort_karma_points" in filter:
-                if filter["sort_karma_points"] == "Low to High":
-                    order_clauses.append("act.karma_points ASC")
-                elif filter["sort_karma_points"] == "High to Low":
-                    order_clauses.append("act.karma_points DESC")
-
-            if order_clauses:
-                order_by = " ORDER BY " + ", ".join(order_clauses)
-
-        if conditions:
-            sql_query += " WHERE " + " AND ".join(conditions)
-
-        sql_query += " GROUP BY act.name"
-        sql_query += order_by  # Append the sorting condition
-
         try:
             acts = frappe.db.sql(sql_query, as_dict=True)
             return acts
@@ -118,9 +118,51 @@ class Activity:
             frappe.log_error(f"Syntax error in query:\n{sql_query}")
             raise
 
-    def activity_details(name):
-        doc = frappe.get_doc("Activity", name)
+    def act_now(activity, volunteer):
+        # same activity can't be assigned to the same volunteer
+        act = frappe.get_list(
+            "Volunteer Activity",
+            filters={"activity": activity, "volunteer": volunteer},
+            pluck="name",
+        )
+        if act:
+            return {"error": "Activity already assigned to the volunteer", "status": 400}
+        doc = frappe.new_doc("Volunteer Activity")
+        doc.activity = activity
+        doc.volunteer = volunteer
+        doc.flags.ignore_permissions = True
+        doc.flags.ignore_mandatory = True
+        doc.save()
         return doc
+    
+    def workflow_state():
+        doc = frappe.get_doc('Workflow', 'Volunteer_activity')
+        return doc
+    
+    def activity_details(name):
+
+        sql_query = f"""
+            SELECT
+            va.name as name,
+            act.name as activity,
+            va.duration as duration,
+            va.com_percent as com_percent,
+            act.title as title,
+            act.karma_points as karma_points,
+            act.start_date as start_date,
+            act.end_date as end_date,
+            act.hours as hours,
+            act.activity_description as activity_description,
+            act.activity_type as activity_type,
+            act.activity_image as activity_image,
+            va.workflow_state as workflow_state
+        FROM
+            `tabVolunteer Activity` AS va
+        INNER JOIN `tabActivity` AS act ON va.activity = act.name
+        WHERE va.name = '{name}'
+        """
+        data = frappe.db.sql(sql_query, as_dict=True)
+        return data[0] if data else {}
 
     def volunteer_act_count():
         sql_query = """

@@ -42,7 +42,8 @@ def get_top_users():
         "Volunteer Activity",
         fields=["volunteer.full_name","karma_points","duration","volunteer.user_image"],
         order_by="karma_points DESC" ,
-        limit_page_length=10
+        limit_page_length=10,
+        ignore_permissions=True
     )
 
     return activities
@@ -56,8 +57,16 @@ def available_commitments(filter={}):
     return Activity.available_commitments(filter)
 
 @frappe.whitelist(allow_guest=True)
+def act_now(activity,volunteer):
+    return Activity.act_now(activity,volunteer)
+
+@frappe.whitelist(allow_guest=True)
 def activity_details(name):
     return Activity.activity_details(name)
+
+@frappe.whitelist(allow_guest=True)
+def workflow_state():
+    return Activity.workflow_state()
 
 @frappe.whitelist(allow_guest=True)
 def volunteer_act_count():

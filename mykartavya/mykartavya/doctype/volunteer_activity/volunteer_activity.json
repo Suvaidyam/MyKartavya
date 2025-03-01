@@ -25,7 +25,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Volunteer",
-   "options": "User",
+   "options": "SVA User",
    "reqd": 1
   },
   {
@@ -106,7 +106,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-28 20:29:33.927141",
+ "modified": "2025-03-01 12:03:46.711186",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",

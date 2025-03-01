@@ -28,9 +28,9 @@
             <div class="mt-3">
                 <div class="w-full bg-gray-200 rounded-full h-[5px]">
                     <div class="bg-[#4CAF50] h-[5px] rounded-full"
-                        :style="{ width: `${item?.completion_percent ?? 0}%` }"></div>
+                        :style="{ width: `${item?.com_percent ?? 0}%` }"></div>
                 </div>
-                <p class="text-xs font-normal pt-1 text-gray-600 mt-1">{{ item?.completion_percent ?? 0 }}% completed
+                <p class="text-xs font-normal pt-1 text-gray-600 mt-1">{{ item?.com_percent ?? 0 }}% completed
                 </p>
             </div>
         </router-link>
