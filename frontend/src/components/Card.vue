@@ -38,7 +38,7 @@
     <!--  -->
     
     <article v-else class="flex flex-col w-full pb-2">
-        <router-link :to="`/kindness-volunteering/${item.activity}`">
+        <router-link :to="auth.isLoggedIn?'/activity/'+item.activity:'/kindness-volunteering/'+item.activity">
 
         <div class="flex relative flex-col py-3 pr-3 w-full rounded-xl aspect-[1.557]">
             <img :src="item.activity_image" alt="" class="object-cover rounded-md absolute inset-0 size-full" />
@@ -112,9 +112,10 @@
 </template>
 
 <script setup>
-import { inject, ref } from 'vue';
+import { inject, ref} from 'vue';
 
 import { FeatherIcon } from 'frappe-ui';
+const auth = inject('auth');
 const formatDate = inject('formatDate');
 const props = defineProps({
     type: {
