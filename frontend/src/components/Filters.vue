@@ -19,6 +19,8 @@
                                 class="rounded-sm focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="all-sdgs">
                             <label class="text-[12px] font-normal flex gap-2 items-center" for="all-sdgs">
+                                <img src="../assets/sdgall.png" :alt="el"
+                                class="w-5 h-5 rounded-full object-cover" />
                                 All
                             </label>
                         </div>
@@ -29,7 +31,7 @@
                                 :id="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">
                             <div v-if="item.key === 'sdgs'" class=" flex items-center">
                                 <img v-if="el.sdg_image" :src="el.sdg_image" :alt="el"
-                                    class="w-5 h-5 rounded-full object-cover" />
+                                    class="w-5 h-5 rounded-full object-cover bg-white"  />
                                 <div v-else
                                     class="w-5 h-5 text-[12px] font-norma rounded-full bg-gray-100 flex items-center justify-center">
                                     {{ el?.name?.charAt(0) }}
@@ -160,7 +162,7 @@ const allChecked = computed({
     },
     set: (value) => {
         const sdgFilter = filter_by.value.find(f => f.key === 'sdgs');
-        filter.value.sdgs = value && sdgFilter ? [...sdgFilter.options] : [];
+        filter.value.sdgs = value && sdgFilter ? [...sdgFilter.options.map(e=>{return e.name})] : [];
     }
 });
 
