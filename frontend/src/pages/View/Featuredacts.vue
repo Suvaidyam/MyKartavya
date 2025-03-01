@@ -23,8 +23,11 @@
 import Card from '@/components/Card.vue';
 import CardLoader from '@/components/CardLoader.vue';
 import NotFound from '../../components/NotFound.vue';
-import { ref } from 'vue';
+import { inject, onMounted, ref } from 'vue';
 
+const call=inject('call');
+const available_commitments=ref([]);
+const loader = ref(false);
 
 const avai_commitments = async (filter) => {
   loader.value = true;
@@ -35,11 +38,13 @@ const avai_commitments = async (filter) => {
     available_commitments.value = response;
     setTimeout(() => {
       loader.value = false;
-      checkScrollButtons(); // Check button states after loading
     }, 1000);
   } catch (err) {
     loader.value = false;
     console.error('Error fetching Kindness data:', err);
   }
 };
+onMounted(() => {
+  avai_commitments();
+});
 </script>
