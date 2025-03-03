@@ -27,8 +27,8 @@
             </div>
             <div class="mt-3">
                 <div class="w-full bg-gray-200 rounded-full h-[5px]">
-                    <div class="bg-[#4CAF50] h-[5px] rounded-full"
-                        :style="{ width: `${item?.com_percent ?? 0}%` }"></div>
+                    <div class="bg-[#4CAF50] h-[5px] rounded-full" :style="{ width: `${item?.com_percent ?? 0}%` }">
+                    </div>
                 </div>
                 <p class="text-xs font-normal pt-1 text-gray-600 mt-1">{{ item?.com_percent ?? 0 }}% completed
                 </p>
@@ -36,82 +36,86 @@
         </router-link>
     </div>
     <!--  -->
-    
+
     <article v-else class="flex flex-col w-full pb-2">
-        <router-link :to="auth.isLoggedIn?'/activity/'+item.activity:'/kindness-volunteering/'+item.activity">
+        <router-link :to="auth.isLoggedIn ? '/activity/' + item.activity : '/kindness-volunteering/' + item.activity">
 
-        <div class="flex relative flex-col py-3 pr-3 w-full rounded-xl aspect-[1.557]">
-            <img :src="item.activity_image" alt="" class="object-cover rounded-md absolute inset-0 size-full" />
-            <div
-                class="flex relative justify-between text-xs font-medium tracking-normal leading-none text-justify text-neutral-950">
-                <div class="px-3 h-6 bg-secondary text-white flex items-center justify-center">{{ item.activity_type }}
-                </div>
-                <div class="flex flex-col rounded-lg px-2 justify-center h-6  bg-white border border-solid">
-                    <div class="flex gap-1 items-center w-full">
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c49a0afe7089e38e103d66c4c361731bed25ed9dfbe5b58de7105c730d3c6d93?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-                            alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                        <span class="self-stretch my-auto">{{ item.karma_points }} Points</span>
+            <div class="flex relative flex-col py-3 pr-3 w-full rounded-xl aspect-[1.557]">
+                <img :src="item.activity_image" alt="" class="object-cover rounded-md absolute inset-0 size-full" />
+                <div
+                    class="flex relative justify-between text-xs font-medium tracking-normal leading-none text-justify text-neutral-950">
+                    <div class="px-3 h-6 bg-secondary text-white flex items-center justify-center">{{ item.activity_type
+                        }}
                     </div>
-                </div>
-            </div>
-            <div class="flex relative gap-3 items-center self-start mt-36 ml-3 max-md:mt-10 max-md:ml-2.5">
-                <img v-for="(badge, index) in item.badgeImages" :key="index" :src="badge" alt=""
-                    class="object-contain shrink-0 self-stretch my-auto aspect-[0.92] w-[34px]" />
-            </div>
-        </div>
-
-        <h3 class="self-start truncate mt-3 text-base font-medium tracking-normal text-neutral-950">
-            {{ item.title }}
-        </h3>
-
-        <p class="mt-2 text-xs tracking-normal leading-3 text-justify text-[#666666]">
-            {{ item.description }}
-        </p>
-
-        <div class="flex flex-col gap-3 justify-between mt-2">
-            <div class="flex items-center justify-between">
-                <div class="flex gap-1 items-center text-xs tracking-normal text-neutral-950">
-                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/206e5d29b5523c409dbfe316e887c82aeb672c336764aad169ece16b133845e4?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-                        alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                    <time class="self-stretch my-auto">{{ formatDate(item.start_date) }} - {{ formatDate(item.end_date)
-                    }}
-                    </time>
-                </div>
-                <div class="flex gap-1 items-center self-end text-xs tracking-normal text-justify text-neutral-950">
-                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/193573c664d98aa3d1c71908aad0cbb8163b462f0553be41c395306a299aa57f?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-                        alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                    <span class="self-stretch my-auto">{{ item.hours }} hr</span>
-                </div>
-            </div>
-            <div class="flex items-center justify-between">
-                <div v-if="JSON.parse(item.volunteers).length > 0 && JSON.parse(item.volunteers)[0].full_name !=null" class="flex items-center -space-x-3 ">
-                    <div v-for="(el, index) in JSON?.parse(item.volunteers)" :key="index">
-                        <img v-if="el.user_image" :src="el.user_image" :alt="'User ' + (index + 1)"
-                            class="w-8 h-8 rounded-full border-2 border-white" />
-                        <div v-else
-                            class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-[#e86c13] text-sm">
-                            {{ el.full_name?.charAt(0) }}
+                    <div class="flex flex-col rounded-lg px-2 justify-center h-6  bg-white border border-solid">
+                        <div class="flex gap-1 items-center w-full">
+                            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c49a0afe7089e38e103d66c4c361731bed25ed9dfbe5b58de7105c730d3c6d93?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
+                                alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                            <span class="self-stretch my-auto">{{ item.karma_points }} Points</span>
                         </div>
                     </div>
-                    <p class="pl-4 text-sm text-center">
-                        +{{ JSON.parse(item.volunteers).length }}
-                    </p>
                 </div>
-                <div v-else class="w-8 h-8"></div>
-                <div class="flex gap-1 items-center text-sm font-medium tracking-normal text-right text-orange-600 uppercase hover:text-orange-700">
-                    <p>Act now</p>
-                    <FeatherIcon name="arrow-up-right" class="size-4" />
+                <div class="flex relative gap-3 items-center self-start mt-36 ml-3 max-md:mt-10 max-md:ml-2.5">
+                    <img v-for="(badge, index) in item.badgeImages" :key="index" :src="badge" alt=""
+                        class="object-contain shrink-0 self-stretch my-auto aspect-[0.92] w-[34px]" />
                 </div>
             </div>
-           
-        </div>
-    </router-link>
+
+            <h3 class="self-start truncate mt-3 text-base font-medium tracking-normal text-neutral-950">
+                {{ item.title }}
+            </h3>
+
+            <p class="mt-2 text-xs tracking-normal leading-3 text-justify text-[#666666]">
+                {{ item.description }}
+            </p>
+
+            <div class="flex flex-col gap-3 justify-between mt-2">
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-1 items-center text-xs tracking-normal text-neutral-950">
+                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/206e5d29b5523c409dbfe316e887c82aeb672c336764aad169ece16b133845e4?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
+                            alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                        <time class="self-stretch my-auto">{{ formatDate(item.start_date) }} - {{
+                            formatDate(item.end_date)
+                            }}
+                        </time>
+                    </div>
+                    <div class="flex gap-1 items-center self-end text-xs tracking-normal text-justify text-neutral-950">
+                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/193573c664d98aa3d1c71908aad0cbb8163b462f0553be41c395306a299aa57f?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
+                            alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                        <span class="self-stretch my-auto">{{ item.hours }} hr</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div v-if="JSON.parse(item.volunteers).length > 0 && JSON.parse(item.volunteers)[0].full_name != null"
+                        class="flex items-center -space-x-3 ">
+                        <div v-for="(el, index) in JSON?.parse(item.volunteers).slice(0, 3)" :key="index">
+                            <img v-if="el.user_image" :src="el.user_image" :alt="'User ' + (index + 1)"
+                                class="w-8 h-8 rounded-full border-2 border-white" />
+                            <div v-else
+                                class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-[#e86c13] text-sm">
+                                {{ el.full_name?.charAt(0) }}
+                            </div>
+                        </div>
+                        <p v-if="JSON.parse(item.volunteers).length > 3" class="pl-4 text-sm text-center">
+                            +{{ JSON.parse(item.volunteers).length - 3 }}
+                        </p>
+                    </div>
+                    <div v-else class="w-8 h-8"></div>
+                    <div
+                        class="flex gap-1 items-center text-sm font-medium tracking-normal text-right text-orange-600 uppercase hover:text-orange-700">
+                        <p>Act now</p>
+                        <FeatherIcon name="arrow-up-right" class="size-4" />
+                    </div>
+                </div>
+
+            </div>
+        </router-link>
     </article>
-                     
+
 </template>
 
 <script setup>
-import { inject, ref} from 'vue';
+import { inject, ref } from 'vue';
 
 import { FeatherIcon } from 'frappe-ui';
 const auth = inject('auth');
