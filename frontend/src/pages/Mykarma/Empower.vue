@@ -2,11 +2,11 @@
   <div class="h-screen w-full">
     <!-- banner section image -->
     <section>
-      <div v-if="activities" class="w-full h-[456px] md:h-[456px] back-img flex items-center mt-10 px-4 md:px-20">
+      <div :style="`background-image: url(${activities.activity_image});`" v-if="activities" class="w-full h-[456px] md:h-[456px] back-img flex items-center mt-10 px-4 md:px-20">
         <div
           class="max-w-sm w-[448px] h-[312px] bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-4 justify-center">
           <div class="border-b pb-2">
-          
+
             <h2 class="text-heading3 font-normal font-poppins mt-1">
               {{ activities.title }}
             </h2>
@@ -18,17 +18,17 @@
             <FeatherIcon name="calendar" class="size-4 text-[#666666]" />
 
             <span class="flex items-center text-bodyh2 font-normal mr-4" style="color: #0b0b0b">
-              {{formatDate(activities.start_date)}} - {{formatDate(activities.end_date)}} 
+              {{ formatDate(activities.start_date) }} - {{ formatDate(activities.end_date) }}
             </span>
           </div>
           <div class="flex items-center text-gray-600 text-bodyh2 font-normal justify-between border-b pb-2">
             <span class="flex justify-center gap-1" style="color: #0b0b0b">
               <FeatherIcon name="clock" class="size-4 text-[#666666]" />
-              {{ activities.hours }} hr 
+              {{ activities.hours }} hr
             </span>
             <span class="flex items-center gap-2 justify-center" style="color: #0b0b0b">
               <FeatherIcon name="database" class="size-4 text-secondary" />
-              <span class="text-bodyh2 font-normal"> {{activities.karma_points}}</span>
+              <span class="text-bodyh2 font-normal"> {{ activities.karma_points }}</span>
             </span>
           </div>
           <div class="flex space-x-2 border-b pb-2">
@@ -116,7 +116,7 @@
           </div>
           <!-- Right Section - Timeline -->
           <div>
-            <Stepper :activity="activities"/>
+            <Stepper :activity="activities" />
           </div>
         </div>
 
@@ -144,7 +144,7 @@
 </template>
 
 <script setup>
-import { inject, ref,onMounted,watch } from 'vue'
+import { inject, ref, onMounted, watch } from 'vue'
 import { FeatherIcon } from 'frappe-ui'
 import Stepper from '../../components/Stepper.vue'
 import Card from '../../components/Card.vue'
@@ -157,7 +157,7 @@ import {
   Share2,
 } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
- 
+
 
 const icons = [
   { name: 'Facebook', svg: Facebook },
@@ -165,20 +165,21 @@ const icons = [
   { name: 'LinkedIn', svg: Linkedin },
   { name: 'WhatsApp', svg: MessageCircle },
 ]
-const call=inject('call');
-const activities=ref([]);
+const call = inject('call');
+const activities = ref([]);
 const route = useRoute();
 const formatDate = inject('formatDate');
 
 
 const activity = async () => {
   try {
-        const response = await call('mykartavya.controllers.api.activity_details',{'name':route.params.name});
-            activities.value = response
-          
-    } catch (err) {
-        console.error('Error fetching activity data:', err);
+    const response = await call('mykartavya.controllers.api.activity_details', { 'name': route.params.name });
+    if (response) {
+      activities.value = response
     }
+  } catch (err) {
+    console.error('Error fetching activity data:', err);
+  }
 };
 // Sample data for the opportunities
 const relatedactivity = [
@@ -211,7 +212,6 @@ onMounted(activity)
 </style>
 <style scoped>
 .back-img {
-  background: url('https://s3-alpha-sig.figma.com/img/5fe6/fe04/058446e1c3ea035d2efd21a222ccb475?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=P-8K1XloauUtT7UVndu4L199Efq0NENaBmmYHpVZpgONi2Uxpbz6sP03gkJBPdo4LkhBZ1fbOgLHSF5Eq3RNvLCuSsdvhVTynPV2e7NlZ9TZqQFww3WueaAI-fXncdfG4xbhgvymccrF-Z0mLImqTne-4fbkk7I4tpHnChzjvmrENAMzsmMxFnhphfuatDa7~5RIlmLt84tmjiz2IBgoSZ3ZhV4WoGL7DQWE6OvV3uJ7JjoFHdUr9mNkWYKbcOJ~q0ehkwRR8XCYap4lG-BdlaOmQdG6ro1QlcixF~YEzhnDfvP1M4Gk00B~4lHnip9Hbzqkwml0NoehBoFPs-zkRQ__');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

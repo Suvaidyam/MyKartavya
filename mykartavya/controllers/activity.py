@@ -142,10 +142,11 @@ class Activity:
     
     def activity_details(name):
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
-        exits = frappe.db.exists("Volunteer Activity", {"volunteer": user, "activity": name})
+        exists = frappe.db.exists("Volunteer Activity", {"volunteer": user, "activity": name})
         where_clause = ""
-        if exits:
-            where_clause += f" AND va.volunteer = '{user}'"
+
+        volunteer_condition = f"AND va.volunteer = '{user}'" if exists else "AND va.volunteer IS NULL"
+
         sql_query = f"""
             SELECT
                 va.name as name,
@@ -164,13 +165,14 @@ class Activity:
             FROM
                 `tabActivity` AS act
             LEFT JOIN `tabVolunteer Activity` AS va ON va.activity = act.name
+            {volunteer_condition}
             WHERE act.name = '{name}'
             {where_clause}
             """
         data = frappe.db.sql(sql_query, as_dict=True)
         doc = data[0] if data else data
         
-        if exits:
+        if exists:
             doc["is_assigned"] = True
         else:
             doc["is_assigned"] = False
