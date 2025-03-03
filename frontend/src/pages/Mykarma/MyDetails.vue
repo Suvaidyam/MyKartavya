@@ -81,7 +81,7 @@
         <div
           class="absolute top-0 left-0 w-full h-1/2 bg-cover bg-center"
           style="
-            background-image: url('https://s3-alpha-sig.figma.com/img/314c/a6b6/6925cd67aa6829da55ab83120e89377c?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=MhdrmLTxP5LK4rgkhzgJrHhoB~dBaDieMGshleVZQuk6XQS9~32eIJdgogQD5QKflTfZ9BS0M02FYnwrvvcyRbBnaC9x4vq4iPEOeqtO6Xczb3zP1i0Rs0KmERk-qxGP8BX1JjVrOnXi1R5TzDv5p3-hqQaWeK~0oHJVYljIoXZtirUl5pt8w8Vh2G7OVUe3eu2XDuzN86DG6r2XRZzpflid2W1KWnnPFKCaavteAVUmMa7tW~j0Wq3tL0lqSfhl6~iEdkiocozghhGiE44DZfHTdIHS1qOjhTpeZv15dk23nfnSaoltbGxvbB-IvnYpa9nkCEH~svtuisP0SuBjFQ__');
+            background-image: url('..//../assets/6925cd67aa6829da55ab83120e89377c.png');
           "
         ></div>
         <h2 class="text-md font-semibold text-gray-800 pb-10 relative z-10">
@@ -104,7 +104,7 @@
               class="bg-orange-400 rounded-full w-20 h-20 flex items-center justify-center border-4 border-[#f17940]"
             >
               <img
-                src="https://s3-alpha-sig.figma.com/img/12cd/3413/2ef9687c557520a96af542610c485c5d?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KclQc3FF9OzuW1fuMp8vjuu4QlDbwQ21IVr5l096zMiYcuDpYXSUhaU0IfBJPtz6Egs~JoIjg8yWazRrePBYTUkUDO~uiMqqj~b~gbjjsRKhQbRk4VhDZ9aoNarS8KT5Q~38afg9ZQZbxzYWvdML~Kad-0WKZ5QBRX1WEZkgV-7dRAwkyr9FW4ihSZchKsVAFvrH39jpPpS9lXhz5CT5rK2K29Ruq3wbOMhr-dsEFjzlXNgdN-9I8kRGaiyOQ4piNuXpt9dcjYCMQoUB~lTqnMtHAH8A~XulLWlh7KJmKCBUkQLoxO0P5RJEZxkQlUkWZU6t1eOHIWWNasK~TwannA__"
+                src="..//../assets/2ef9687c557520a96af542610c485c5d.jpeg"
                 alt="Anaya Singh"
                 class="rounded-full w-full h-full object-cover"
               />
