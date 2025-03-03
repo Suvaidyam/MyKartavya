@@ -18,9 +18,8 @@
                             <input v-model="allChecked" type="checkbox"
                                 class="rounded-sm focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="all-sdgs">
-                            <label class="text-[12px] font-normal flex gap-2 items-center" for="all-sdgs">
-                                <img src="../assets/sdgall.png" :alt="'el'"
-                                class="w-5 h-5 rounded-full object-cover" />
+                            <label class="text-[12px] cursor-pointer font-normal flex gap-2 items-center" for="all-sdgs">
+                                <img src="../assets/sdgall.png" :alt="'el'" class="w-5 h-5 rounded-full object-cover" />
                                 All
                             </label>
                         </div>
@@ -29,16 +28,16 @@
                             <input v-model="store.filters[item.key]" :value="el.name" :type="item.type" :name="item.key"
                                 :class="[item.type == 'checkbox' ? 'rounded-sm' : 'rounded-full', 'focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary']"
                                 :id="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">
-                            <div v-if="item.key === 'sdgs'" class=" flex items-center">
-                                <img v-if="el.sdg_image" :src="el.sdg_image" :alt="el"
-                                    class="w-5 h-5 rounded-full object-cover bg-white"  />
-                                <div v-else
-                                    class="w-5 h-5 text-[12px] font-norma rounded-full bg-gray-100 flex items-center justify-center">
+                            <label class="text-[12px] font-normal cursor-pointer flex items-center gap-1"
+                                :for="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">
+                                <img v-if="el.sdg_image && item.key=='sdgs'" :src="el.sdg_image" :alt="el"
+                                    class="w-[21px] h-[21px] min-w-[21px] rounded-full object-cover bg-white" />
+                                <div v-if="!el.sdg_image && item.key=='sdgs'"
+                                    class="w-[21px] h-[21px] min-w-[21px] text-[11px] font-normal rounded-full bg-gray-100 flex items-center justify-center">
                                     {{ el?.name?.charAt(0) }}
                                 </div>
-                            </div>
-                            <label class="text-[12px] font-normal"
-                                :for="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">{{ el.name }}</label>
+                                {{ el.name }}
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -98,7 +97,7 @@ import FilterLoader from './FilterLoader.vue';
 const call = inject('call')
 const loader = ref(false);
 const clear_all_disabled = ref(true);
-const store = inject('store'); 
+const store = inject('store');
 
 const sdgData = ref([]);
 const filter_by = ref([
@@ -107,13 +106,13 @@ const filter_by = ref([
         type: 'checkbox',
         key: 'sdgs',
         options: [],
-    }, 
+    },
     {
         name: 'Activity Type',
         type: 'checkbox',
         key: 'activity_type',
-        options: [{name:'Online'},{name:'On-Ground'},{name:'Both'}]
-    }, 
+        options: [{ name: 'Online' }, { name: 'On-Ground' }, { name: 'Both' }]
+    },
 ]);
 
 const fetchSDGs = async () => {
@@ -126,7 +125,7 @@ const fetchSDGs = async () => {
             // sdgsFilter.options = response.map(sdg => sdg.name);
             sdgsFilter.options = response.map(sdg => ({
                 name: sdg.name,
-                sdg_image: sdg.sdg_image  
+                sdg_image: sdg.sdg_image
             }));
             setTimeout(() => {
                 loader.value = false;
@@ -147,7 +146,7 @@ const allChecked = computed({
     },
     set: (value) => {
         const sdgFilter = filter_by.value.find(f => f.key === 'sdgs');
-        store.filters.sdgs = value && sdgFilter ? [...sdgFilter.options.map(e=>{return e.name})] : [];
+        store.filters.sdgs = value && sdgFilter ? [...sdgFilter.options.map(e => { return e.name })] : [];
     }
 });
 
