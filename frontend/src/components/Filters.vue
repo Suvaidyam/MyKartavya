@@ -3,7 +3,7 @@
         class="w-[270px] min-w-[270px] fixed overflow-auto h-screen pb-[62px] hidden lg:block border-r border-gray-200">
         <div class="bg-white relative px-4">
             <div class="flex sticky top-0 bg-white z-20 justify-between items-center py-3">
-                <h3 class="text-lg font-medium">store.filters by</h3>
+                <h3 class="text-lg font-medium">Filter by</h3>
                 <button :disabled="clear_all_disabled"
                     :class="[clear_all_disabled ? 'text-gray-500' : 'text-[#E86C13]', 'text-sm']" @click="clear_all()">
                     Clear All

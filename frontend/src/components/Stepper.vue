@@ -119,12 +119,12 @@
               <div class="flex gap-2">
                 <div class="flex gap-2 items-center">
                   <label for="" class="text-base font-normal">Hours</label>
-                  <input type="number" v-model="hours" class="w-24 border rounded px-2 h-8"
-                    @input="hours = Math.max(0, hours)" />
+                  <input type="number" v-model="activity_log.hours" class="w-24 border rounded px-2 h-8"
+                    @input="activity_log.hours = Math.max(0, activity_log.hours)" />
                 </div>
                 <div class="flex gap-2 items-center">
                   <label for="" class="text-base font-normal">Minutes</label>
-                  <input type="number" v-model="minutes" @input="minutes = Math.max(0, minutes)"
+                  <input type="number" v-model="activity_log.minutes" @input="activity_log.minutes = Math.max(0, activity_log.minutes)"
                     class="w-24 border rounded px-2 h-8" />
                 </div>
               </div>
@@ -132,10 +132,10 @@
             <div class="mb-4">
               <label class="block text-lg font-normal mb-1">How much percent work has completed?</label>
               <div class="flex items-center gap-2">
-                <input type="range" min="0" max="100" v-model="progress" class="w-full h-[6px] accent-green-500" />
+                <input type="range" min="0" max="100" v-model="activity_log.progress" class="w-full h-[6px] accent-green-500" />
                 <span
                   class="h-8 w-16 flex items-center justify-center border rounded-sm text-base font-normal text-center">{{
-                  progress }}%</span>
+                    activity_log.progress }}%</span>
               </div>
             </div>
             <div class="mb-4">
@@ -158,7 +158,7 @@
                 </div>
               </div>
               <div class="flex gap-2 mt-3">
-                <img v-for="(image, index) in uploadedImages" :key="index" :src="image"
+                <img v-for="(image, index) in activity_log.images" :key="index" :src="image"
                   class="w-16 h-16 rounded object-cover" />
               </div>
             </div>
@@ -222,6 +222,12 @@ let props = defineProps({
     required: false,
     default: () => ({}),
   },
+}) 
+const activity_log = ref({
+  hours: 0,
+  minutes: 0,
+  progress: 0,
+  images: [],
 })
 const steps = ref([
   {
@@ -281,15 +287,11 @@ const nextStep = async (index) => {
 }
 const submitReport = () => {
   activityReportPopup.value = false
-  steps.value[2].completed = true
-  currentStep.value++
-  let data = {
-    hours: hours.value,
-    minutes: minutes.value,
-    progress: progress.value,
-    images: uploadedImages.value,
-  }
-  console.log(data)
+  if(props.activity.completion_wf_state == 'Submitted') {
+    steps.value[2].completed = true
+    currentStep.value++
+  } 
+  console.log(activity_log.value)
 }
 const submit_your_feedback = () => {
   show_Feedback.value = false
@@ -301,17 +303,13 @@ const submit_your_feedback = () => {
 const resetSteps = () => {
   steps.value.forEach((step) => (step.completed = false))
   currentStep.value = 0
-}
-const hours = ref('')
-const minutes = ref('')
-const progress = ref(30)
-const uploadedImages = ref([])
+} 
 const uploadFiles = (event) => {
   const files = event.target.files
   for (let file of files) {
     const reader = new FileReader()
     reader.onload = (e) => {
-      uploadedImages.value.push(e.target.result)
+      activity_log.value.images.push(e.target.result)
     }
     reader.readAsDataURL(file)
   }
@@ -326,6 +324,10 @@ const selectedEmoji = ref(null)
 const comments = ref('')
 
 watch(() => props.activity, (newVal, oldVal) => {
+  if(newVal.com_percent){
+    activity_log.value.progress = newVal.com_percent
+  }
+  // 
   if (newVal.is_assigned) {
     if (newVal.workflow_state == 'Applied') {
       steps.value[0].completed = true
@@ -334,14 +336,14 @@ watch(() => props.activity, (newVal, oldVal) => {
       steps.value[0].completed = true
       steps.value[1].completed = true
       currentStep.value = 2
-    } else if (newVal.com_percent == 100) {
+    } else if (newVal.completion_wf_state == 'Submitted') {
       steps.value[0].completed = true
       steps.value[1].completed = true
       steps.value[2].completed = true
       currentStep.value = 3
     }
   }
-})
+}, { immediate: true , deep: true})
 </script>
 <style scoped>
 input[type="number"]::-webkit-outer-spin-button,

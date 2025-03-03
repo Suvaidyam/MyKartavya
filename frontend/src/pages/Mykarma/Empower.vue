@@ -32,12 +32,10 @@
             </span>
           </div>
           <div class="flex space-x-2 border-b pb-2">
-            <img
-              src="https://s3-alpha-sig.figma.com/img/898b/9a5c/5eac9b190fb13207adabb3086b70731b?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=k0HgHMabVhEH5zXQfC7Y-T3VRTGLkbVh3CF-7U3dLsdJKHJn7LY~3g9fVJt6~MzCFuUan1rOU2ScbHhIcSVzRW326B-RGG3SjtQdGg0FR4L6Ib8VHyVQlRnXtA025TCVDifmrnVqQBJCTDxZiWdT2V8hGl8PGBpps1vlIWariZI7Dt2zRrxnHRYNwMUmTbGJS-Dt3egr13OP5smtgglO2PTc6oVst4kc2wykva2uIhlrpdQ~xug9VtkmweOtDhz4k10Db65Oc7UqmnlWhy4xNMSDmjk2zjKfTcjsidzI36OwHf-MHhwjz-weJyChhP5CTRiHn3WASMcQqlp35DsgDA__"
-              class="w-10 h-10" alt="Goal 10" />
-            <img
-              src="https://s3-alpha-sig.figma.com/img/77ec/4184/a463a59fc378c1ee77d824caf08528b3?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=j90JYppUcg2cLQ1-BOIm50A5DQ0mJ~82F7-ukZPIPc7CbhyAPySKPqfz~xshvTL2sSPZXiKq6zqifAp94u8GazYKe6Gz2VO1QjoD5EjW7kHNTsLuw1vM7B0we8dv5mUbFgSK9fJ8-D231cnJuBegTC7yzmw-6Ju-5PUkWjkv7RV6MbxTsVyIsgxxKlaTRid21s1LzA6Jgg4fZrSLvzfpbIbWwwateY3jDQM6DEZ7qS9D3JxkXoZ0RkGDVxcZBCiKADeY9GOQnsjR~RmeiVHFsllKCL2c-0fkcSYz9Wv6UhsMXUKiQ6bxiA1EFWnnuyewI1V4rzd-6q8ly~PwfM3Y0Q__"
-              class="w-10 h-10" alt="Goal 11" />
+            <div v-if="activities.sdgs" v-for="item in JSON.parse(activities.sdgs)">
+              <img v-if="item.image" :src="item.image" class="w-8 h-8" />
+              <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item.sdgs_name?.charAt(0) }}</span>
+            </div>
           </div>
 
           <div class="">
@@ -199,7 +197,7 @@ const relatedactivity = [
     "karma_points": 40,
     "hours": 2,
     "max_hours": 2,
-    "sdgs": "Clean Water and Sanitation",
+    "sdgs": "[{\"sdgs_name\": \"Clean Water and Sanitation\", \"image\": null},{\"sdgs_name\": \"Climate Action\", \"image\": \"/files/favicon.png\"}]",
     "volunteers": "[{\"name\": \"USER-25-0005\", \"full_name\": \"Rahul Sah\", \"email\": \"rahul.sah@gmail.com\", \"user_image\": null},{\"name\": \"USER-25-0004\", \"full_name\": \"Rahul Sah\", \"email\": \"rkrahul00011@gmail.com\", \"user_image\": null}]"
   }
 ];

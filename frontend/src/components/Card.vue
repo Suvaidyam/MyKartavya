@@ -1,5 +1,5 @@
 <template>
-    <div v-if="type != 'group'" class="card bg-white">
+    <div v-if="type != 'group'" class="card bg-white overflow-hidden">
         <router-link :to="`/activity/${item.activity}`">
             <div class="relative">
                 <img :src="item.activity_image" :alt="item.title" class="w-full rounded-md h-40 object-cover" />
@@ -11,7 +11,13 @@
                     class="absolute top-2 right-2 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
                     <span class="font-medium text-xs">{{ item.karma_points }} Points</span>
                 </div>
-
+                <div class="flex space-x-2 pb-2 absolute bottom-0 left-2">
+                    <div v-if="item.sdgs" v-for="el in JSON.parse(item.sdgs)">
+                        <img v-if="el.image" :src="el.image" class="w-8 h-8" />
+                        <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{
+                            el.sdgs_name?.charAt(0) }}</span>
+                    </div>
+                </div>
             </div>
             <div class="flex flex-col gap-2 pt-2">
                 <h3 class="text-bodyh1 font-medium truncate">{{ item.title }}</h3>
@@ -37,7 +43,7 @@
     </div>
     <!--  -->
 
-    <article v-else class="flex flex-col w-full pb-2">
+    <article v-else class="flex flex-col w-full pb-2 overflow-hidden">
         <router-link :to="auth.isLoggedIn ? '/activity/' + item.activity : '/kindness-volunteering/' + item.activity">
 
             <div class="flex relative flex-col py-3 pr-3 w-full rounded-xl aspect-[1.557]">
@@ -45,7 +51,7 @@
                 <div
                     class="flex relative justify-between text-xs font-medium tracking-normal leading-none text-justify text-neutral-950">
                     <div class="px-3 h-6 bg-secondary text-white flex items-center justify-center">{{ item.activity_type
-                        }}
+                    }}
                     </div>
                     <div class="flex flex-col rounded-lg px-2 justify-center h-6  bg-white border border-solid">
                         <div class="flex gap-1 items-center w-full">
@@ -55,9 +61,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex relative gap-3 items-center self-start mt-36 ml-3 max-md:mt-10 max-md:ml-2.5">
-                    <img v-for="(badge, index) in item.badgeImages" :key="index" :src="badge" alt=""
-                        class="object-contain shrink-0 self-stretch my-auto aspect-[0.92] w-[34px]" />
+                <div class="flex space-x-2 pb-2 absolute bottom-0 left-2">
+                    <div v-if="item.sdgs" v-for="el in JSON.parse(item.sdgs)">
+                        <img v-if="el.image" :src="el.image" class="w-8 h-8" />
+                        <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{
+                            el.sdgs_name?.charAt(0) }}</span>
+                    </div>
                 </div>
             </div>
 
@@ -76,7 +85,7 @@
                             alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                         <time class="self-stretch my-auto">{{ formatDate(item.start_date) }} - {{
                             formatDate(item.end_date)
-                            }}
+                        }}
                         </time>
                     </div>
                     <div class="flex gap-1 items-center self-end text-xs tracking-normal text-justify text-neutral-950">
