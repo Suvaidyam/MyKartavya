@@ -81,7 +81,7 @@
         <div
           class="absolute top-0 left-0 w-full h-1/2 bg-cover bg-center"
           style="
-            background-image: url('..//../assets/6925cd67aa6829da55ab83120e89377c.png');
+            background-image: url('https://res.cloudinary.com/dusyfh7fo/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/v1740989433/Group_20378_poztbs.png');
           "
         ></div>
         <h2 class="text-md font-semibold text-gray-800 pb-10 relative z-10">
