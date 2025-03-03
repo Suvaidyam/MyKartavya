@@ -28,19 +28,23 @@ class Profile:
         else:
             return {'status': '400', 'message': 'User not found'}
 
-    def total_karmapoint():
+    def user_count():
+        user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+        
         sql_query = """
         SELECT 
-            COUNT(va.activity) AS total_activity,
-            COUNT(va.volunteer) AS volunteer_count,
             SUM(va.karma_points) AS karma_points,
+            SUM(a.work_value_rupees) AS work_value_rupees,
             SUM(a.hours) AS total_hours,
-            COUNT(CASE WHEN va.com_percent = 100 THEN va.activity END) AS activity_Completed
+            COUNT(va.activity) AS activity_completed
         FROM `tabVolunteer Activity` AS va
-        JOIN `tabActivity` AS a ON va.activity = a.name;
+        INNER JOIN `tabActivity` AS a ON va.activity = a.name
+        WHERE va.volunteer = %s AND va.completion_wf_state='Submitted';
         """
-        results = frappe.db.sql(sql_query, as_dict=True)
-        return results
+        
+        results = frappe.db.sql(sql_query, (user,), as_dict=True)
+        return results[0]
+
     
     @frappe.whitelist(allow_guest=True)
     def top_three_volunteer():

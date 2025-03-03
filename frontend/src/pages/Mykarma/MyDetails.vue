@@ -50,7 +50,7 @@
           <h4 class="font-medium text-[10px] pb-1" style="color: #666666">
             Completed Opportunities
           </h4>
-          <p class="text-lg text-black">{{activities.activity_Completed}}</p>
+          <p class="text-lg text-black">{{activities.activity_completed}}</p>
         </div>
         <div class="border border-gray-300 rounded-lg px-4 py-3 text-center">
           <span class="block text-blue-500 text-xl pb-1">
@@ -69,7 +69,7 @@
           <h4 class="font-medium text-[10px] pb-1" style="color: #666666">
             Money Saved
           </h4>
-          <p class="text-lg text-black">₹ 1,765</p>
+          <p class="text-lg text-black">₹ {{activities.work_value_rupees}}</p>
         </div>
       </div>
     </div>
@@ -284,14 +284,14 @@ const auth = inject('auth')
 const call = inject('call')
 const users = ref([])
 const users_top_3 = ref()
-const activities=ref([])
+const activities=ref({})
 const activitiestopuser=ref([])
 
 const opportunities = async () => {
   try {
-    const response = await call('mykartavya.controllers.api.total_karmapoint');
+    const response = await call('mykartavya.controllers.api.user_count');
     if (response) {
-      activities.value = response[0];
+      activities.value = response;
     }
   } catch (err) {
     console.error('Error fetching activity data:', err);

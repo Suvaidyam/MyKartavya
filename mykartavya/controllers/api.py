@@ -61,6 +61,10 @@ def act_now(activity,volunteer):
     return Activity.act_now(activity,volunteer)
 
 @frappe.whitelist(allow_guest=True)
+def submit_activity_report(name,data):
+    return Activity.submit_activity_report(name,data)
+
+@frappe.whitelist(allow_guest=True)
 def activity_details(name):
     return Activity.activity_details(name)
 
@@ -109,8 +113,8 @@ def company_data():
     return company
 
 @frappe.whitelist(allow_guest=True)
-def total_karmapoint():
-    return Profile.total_karmapoint()
+def user_count():
+    return Profile.user_count()
 
 @frappe.whitelist(allow_guest=True)
 def top_three_volunteer():

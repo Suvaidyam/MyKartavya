@@ -100,50 +100,52 @@ class Activity:
                     order_by_clause = " ORDER BY act.max_hours ASC"
                 elif filter["volunteering_hours"] == "High to Low":
                     order_by_clause = " ORDER BY act.max_hours DESC"
-        
         sql_query = f"""
-            SELECT 
-                va.name as name,
-                act.name as activity,
-                va.duration as duration,
-                va.com_percent as com_percent,
-                act.title as title,
-                act.karma_points as karma_points,
-                act.start_date as start_date,
-                act.end_date as end_date,
-                act.hours as hours,
-                act.activity_description as activity_description,
-                act.activity_type as activity_type,
-                act.activity_image as activity_image,
-                COALESCE(
-                    JSON_ARRAYAGG(
-                        CASE 
-                            WHEN sdg.sdg IS NOT NULL 
-                            THEN JSON_OBJECT(
-                                'sdgs_name', sdg.sdg,
-                                'image', sdg.sdg_image
-                            )
-                            ELSE NULL
-                        END
-                    ), JSON_ARRAY()
-                ) AS sdgs,
-                JSON_ARRAYAGG(
-                    JSON_OBJECT(
-                        'name', sva.name,
-                        'full_name', sva.full_name,
-                        'email', sva.email,
-                        'user_image', sva.user_image
-                    )
-                ) as volunteers
-            FROM `tabActivity` as act
-            LEFT JOIN `tabVolunteer Activity` as va ON va.activity = act.name
-            LEFT JOIN `tabSVA User` as sva ON sva.name = va.volunteer
-            LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
-            LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
-            WHERE act.end_date >= CURRENT_DATE() {where_clause}
-            GROUP BY act.name
-            {order_by_clause}
-        """
+                    SELECT 
+                        va.name as name,
+                        act.name as activity,
+                        va.duration as duration,
+                        va.com_percent as com_percent,
+                        act.title as title,
+                        act.karma_points as karma_points,
+                        act.start_date as start_date,
+                        act.end_date as end_date,
+                        act.hours as hours,
+                        act.activity_description as activity_description,
+                        act.activity_type as activity_type,
+                        act.activity_image as activity_image,
+                        COALESCE(
+                            JSON_ARRAYAGG(
+                                DISTINCT CASE 
+                                    WHEN sdg.sdg IS NOT NULL 
+                                    THEN JSON_OBJECT(
+                                        'sdgs_name', sdg.sdg,
+                                        'image', sdg.sdg_image
+                                    )
+                                    ELSE NULL
+                                END
+                            ), JSON_ARRAY()
+                        ) AS sdgs,
+                        COALESCE(
+                            JSON_ARRAYAGG(
+                                DISTINCT JSON_OBJECT(
+                                    'name', sva.name,
+                                    'full_name', sva.full_name,
+                                    'email', sva.email,
+                                    'user_image', sva.user_image
+                                )
+                            ), JSON_ARRAY()
+                        ) as volunteers
+                    FROM `tabActivity` as act
+                    LEFT JOIN `tabVolunteer Activity` as va ON va.activity = act.name
+                    LEFT JOIN `tabSVA User` as sva ON sva.name = va.volunteer
+                    LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
+                    LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
+                    WHERE act.end_date >= CURRENT_DATE() {where_clause}
+                    GROUP BY act.name
+                    {order_by_clause}
+                """
+
         try:
             acts = frappe.db.sql(sql_query, as_dict=True)
             return acts
@@ -246,10 +248,12 @@ class Activity:
         if not exists:
             return {"error": "Activity not assigned to the volunteer", "status": 400}
         doc = frappe.get_doc("Volunteer Activity", exists)
-        doc.volunteer_activity_log = doc.append("volunteer_activity_log", {
-            "date":frappe.utils.now(),
-            "duration": data.get('hours') + data.get('minutes'),
-            "percent": data.get("progress"),
+        doc.append("volunteer_activity_log", {
+            "date": frappe.utils.now(),
+            "duration": data.get("duration"),
+            "percent": data.get("percent"),
         })
+        
         doc.save()
+        frappe.db.commit() 
         return doc

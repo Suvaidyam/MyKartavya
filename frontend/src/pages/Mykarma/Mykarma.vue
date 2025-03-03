@@ -174,7 +174,7 @@ onMounted(() => {
 
 // Watch filter changes
 watch(() => store.filters, (newVal,oldVal) => {
-  if (newVal) {
+  if (newVal==oldVal) {
     cur_commitments(newVal);
     avai_commitments(newVal);
   }

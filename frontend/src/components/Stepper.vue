@@ -124,7 +124,8 @@
                 </div>
                 <div class="flex gap-2 items-center">
                   <label for="" class="text-base font-normal">Minutes</label>
-                  <input type="number" v-model="activity_log.minutes" @input="activity_log.minutes = Math.max(0, activity_log.minutes)"
+                  <input type="number" v-model="activity_log.minutes"
+                    @input="activity_log.minutes = Math.max(0, activity_log.minutes)"
                     class="w-24 border rounded px-2 h-8" />
                 </div>
               </div>
@@ -132,7 +133,8 @@
             <div class="mb-4">
               <label class="block text-lg font-normal mb-1">How much percent work has completed?</label>
               <div class="flex items-center gap-2">
-                <input type="range" min="0" max="100" v-model="activity_log.progress" class="w-full h-[6px] accent-green-500" />
+                <input type="range" min="0" max="100" v-model="activity_log.progress"
+                  class="w-full h-[6px] accent-green-500" />
                 <span
                   class="h-8 w-16 flex items-center justify-center border rounded-sm text-base font-normal text-center">{{
                     activity_log.progress }}%</span>
@@ -164,8 +166,14 @@
             </div>
             <div class="flex justify-end">
               <button @click="submitReport"
-                class="bg-orange-500 text-white h-[38px] text-base w-48 rounded-sm text-center font-medium hover:bg-orange-600">
-                MARK AS COMPLETE
+                class="bg-orange-500 flex items-center justify-center text-white h-[38px] text-base w-48 rounded-sm text-center font-medium hover:bg-orange-600">
+                <p> MARK AS COMPLETE</p>
+                <div class="h-5 w-5" v-if="loading">
+                  <div
+                    class="animate-spin h-full w-full rounded-full border-[2px] flex justify-center items-center border-dotted border-[#fff]">
+                    <div class="w-3 h-3 rounded-full border-dashed border-[1px] border-[#fff]"></div>
+                  </div>
+                </div>
               </button>
             </div>
           </div>
@@ -206,6 +214,8 @@ import {
   Check as CheckIcon,
   AlertCircle as AlertCircleIcon,
 } from 'lucide-vue-next'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 const currentStep = ref(0)
 const show_Feedback = ref(false)
@@ -222,13 +232,14 @@ let props = defineProps({
     required: false,
     default: () => ({}),
   },
-}) 
+})
 const activity_log = ref({
   hours: 0,
   minutes: 0,
   progress: 0,
   images: [],
 })
+const loading = ref(false)
 const steps = ref([
   {
     title: 'Activity Approval',
@@ -285,13 +296,31 @@ const nextStep = async (index) => {
     currentStep.value++
   }
 }
-const submitReport = () => {
+const submitReport = async () => {
   activityReportPopup.value = false
-  if(props.activity.completion_wf_state == 'Submitted') {
+  loading.value = true
+  if (props.activity.completion_wf_state == 'Submitted') {
     steps.value[2].completed = true
     currentStep.value++
-  } 
-  console.log(activity_log.value)
+  }
+  try {
+    let res = await call('mykartavya.controllers.api.submit_activity_report', {
+      name: props.activity.name,
+      data: {
+        duration: ((activity_log.value.hours * 60) * 60 + activity_log.value.minutes * 60),
+        percent: (activity_log.value.progress - props.activity.com_percent),
+        images: activity_log.value.images,
+      }
+    })
+    if (res) {
+      activity_log.value.progress = res.com_percent
+      toast.success('Activity report submitted successfully')
+      loading.value = false
+    }
+  } catch (error) {
+    loading.value = false
+    toast.error('Something went wrong')
+  }
 }
 const submit_your_feedback = () => {
   show_Feedback.value = false
@@ -303,7 +332,7 @@ const submit_your_feedback = () => {
 const resetSteps = () => {
   steps.value.forEach((step) => (step.completed = false))
   currentStep.value = 0
-} 
+}
 const uploadFiles = (event) => {
   const files = event.target.files
   for (let file of files) {
@@ -324,7 +353,7 @@ const selectedEmoji = ref(null)
 const comments = ref('')
 
 watch(() => props.activity, (newVal, oldVal) => {
-  if(newVal.com_percent){
+  if (newVal.com_percent) {
     activity_log.value.progress = newVal.com_percent
   }
   // 
@@ -343,7 +372,7 @@ watch(() => props.activity, (newVal, oldVal) => {
       currentStep.value = 3
     }
   }
-}, { immediate: true , deep: true})
+}, { immediate: true, deep: true })
 </script>
 <style scoped>
 input[type="number"]::-webkit-outer-spin-button,
