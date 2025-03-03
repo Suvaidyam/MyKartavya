@@ -107,3 +107,12 @@ def company_data():
         fields=["*"]   
     )
     return company
+
+@frappe.whitelist(allow_guest=True)
+def total_karmapoint():
+    return Profile.total_karmapoint()
+
+@frappe.whitelist(allow_guest=True)
+def top_three_volunteer():
+    return Profile.top_three_volunteer()
+ 

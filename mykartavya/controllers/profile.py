@@ -27,3 +27,37 @@ class Profile:
             return user_doc
         else:
             return {'status': '400', 'message': 'User not found'}
+
+    def total_karmapoint():
+        sql_query = """
+        SELECT 
+            COUNT(va.activity) AS total_activity,
+            COUNT(va.volunteer) AS volunteer_count,
+            SUM(va.karma_points) AS karma_points,
+            SUM(a.hours) AS total_hours,
+            COUNT(CASE WHEN va.com_percent = 100 THEN va.activity END) AS activity_Completed
+        FROM `tabVolunteer Activity` AS va
+        JOIN `tabActivity` AS a ON va.activity = a.name;
+        """
+        results = frappe.db.sql(sql_query, as_dict=True)
+        return results
+    
+    @frappe.whitelist(allow_guest=True)
+    def top_three_volunteer():
+        sql_query = """
+        SELECT 
+            su.first_name,
+            su.user_image,
+            va.volunteer,
+            SUM(va.karma_points) AS total_karma_points,
+            SUM(a.hours) AS total_hours,
+            COUNT(a.name) AS total_activities
+        FROM `tabVolunteer Activity` AS va
+        JOIN `tabActivity` AS a ON va.activity = a.name
+        JOIN `tabSVA User` AS su ON va.volunteer = su.name
+        GROUP BY va.volunteer, su.first_name
+        ORDER BY total_karma_points DESC, total_hours ASC
+        LIMIT 3;
+        """
+        res = frappe.db.sql(sql_query, as_dict=True)
+        return res
