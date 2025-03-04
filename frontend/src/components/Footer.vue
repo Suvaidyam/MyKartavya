@@ -42,10 +42,8 @@
       <div class="bg-gray-800 p-6  w-full lg:w-[287px]">
         <h3 class="text-bodyh1 font-medium">Subscribe</h3>
         <div class="mt-4 flex">
-          <input type="email" placeholder="Email address" class="w-full p-2 text-black rounded-l-sm">
-          
-
-          <button class="bg-[#FF5722] p-3 rounded-r-sm"><img src="https://res.cloudinary.com/dusyfh7fo/image/upload/v1741071162/arrows-down-top-move-1_imy9ki.png" class="h-4" alt=""></button>
+          <input type="email" placeholder="Email address" v-model="email" class="w-full p-2 text-black rounded-l-sm">
+          <button @click="handleSubscribe" class="bg-[#FF5722] p-3 rounded-r-sm"><img src="https://res.cloudinary.com/dusyfh7fo/image/upload/v1741071162/arrows-down-top-move-1_imy9ki.png" class="h-4" alt=""></button>
         </div>
         <p class="mt-2 text-caption font-normal text-gray-400">NASSCOM Foundation works with the industry to drive social transformation and impact through technology.</p>
       </div>
@@ -66,3 +64,20 @@
     </div>
   </footer>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+// Reactive email variable
+const email = ref('');
+// Handle button click
+const handleSubscribe = () => {
+  if (!email.value.trim()) {
+    console.log('Please enter a valid email address.');
+  } else {
+    console.log(email.value);
+    email.value = ''; // Clear input field after submission
+  }
+};
+</script>
+
+
