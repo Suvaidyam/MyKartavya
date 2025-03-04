@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen bg-pink-50 pt-[62px] pb-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-[1920px] mx-auto">
+  <div class="min-h-screen bg-pink-50 pt-[62px]">
+    <div class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
         <h1 class="text-heading1 font-medium text-gray-900">Contact Us</h1>
         <p class="mt-2 text-bodyh1" style="color: #666666;">Got any query? Write to us</p>
@@ -58,61 +58,58 @@
         </div>
       </div>
     </div>
+  <div class="mt-14">
+      <Footer/>
+  </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      formData: {
-        name: '',
-        email: '',
-        organisation: '',
-        query: ''
-      },
-      errors: {}
-    };
-  },
-  methods: {
-    validateFields() {
-      const errors = {};
-      if (!this.formData.name.trim()) {
-        errors.name = "Name is required.";
-      }
+<script setup>
+import { ref } from 'vue';
+import Footer from '../../components/Footer.vue';
 
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!this.formData.email.trim()) {
-        errors.email = "Email address is required.";
-      } else if (!emailPattern.test(this.formData.email)) {
-        errors.email = "Invalid email address.";
-      }
+const formData = ref({
+  name: '',
+  email: '',
+  organisation: '',
+  query: ''
+});
 
-      if (!this.formData.organisation.trim()) {
-        errors.organisation = "Organisation is required.";
-      }
+const errors = ref({});
 
-      if (!this.formData.query.trim()) {
-        errors.query = "Query is required.";
-      }
+const validateFields = () => {
+  const newErrors = {};
+  if (!formData.value.name.trim()) {
+    newErrors.name = "Name is required.";
+  }
 
-      this.errors = errors;
-      return Object.keys(errors).length === 0;
-    },
-    handleSubmit() {
-      if (this.validateFields()) {
-        console.log("Form submitted successfully:", this.formData);
-        this.formData = {
-          name: '',
-          email: '',
-          organisation: '',
-          query: ''
-        };
-        this.errors = {};
-      } else {
-        console.error("Validation failed:", this.errors);
-      }
-    }
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!formData.value.email.trim()) {
+    newErrors.email = "Email address is required.";
+  } else if (!emailPattern.test(formData.value.email)) {
+    newErrors.email = "Invalid email address.";
+  }
+
+  if (!formData.value.organisation.trim()) {
+    newErrors.organisation = "Organisation is required.";
+  }
+
+  if (!formData.value.query.trim()) {
+    newErrors.query = "Query is required.";
+  }
+
+  errors.value = newErrors;
+  return Object.keys(newErrors).length === 0;
+};
+
+const handleSubmit = () => {
+  if (validateFields()) {
+    console.log("Form submitted successfully:", formData.value);
+    formData.value = { name: '', email: '', organisation: '', query: '' };
+    errors.value = {};
+  } else {
+    console.error("Validation failed:", errors.value);
   }
 };
 </script>
+
