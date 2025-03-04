@@ -1,17 +1,17 @@
 <template>
   <footer class="text-white py-10 px-6 md:px-16 w-full bg-[#0B0B0B]">
-    <div class="  flex flex-col lg:flex-row md:justify-between items-start gap-10">
+    <div class="  flex flex-col flex-wrap lg:flex-row md:justify-between items-start gap-10">
       
       <!-- Explore Section -->
       <div class="flex flex-col gap-4">
         <h3 class="text-bodyh1 font-normal text-white font-poppin">Explore</h3>
         <ul class="space-y-2">
-          <li><a href="#" class="hover:underline text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">About MyKartavya</a></li>
-          <li><a href="#" class="hover:underline text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">MyKartavya Features</a></li>
-          <li><a href="#" class="hover:underline text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Acts of Random Kindness</a></li>
-          <li><a href="#" class="hover:underline text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Volunteering Opportunities</a></li>
-          <li><a href="#" class="hover:underline text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">MyKartavya for Companies</a></li>
-          <li><a href="#" class="hover:underline text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">MyKartavya for NGOs</a></li>
+          <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">About MyKartavya</a></li>
+          <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">MyKartavya Features</a></li>
+          <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Acts of Random Kindness</a></li>
+          <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Volunteering Opportunities</a></li>
+          <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">MyKartavya for Companies</a></li>
+          <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">MyKartavya for NGOs</a></li>
         </ul>
       </div>
       
@@ -19,12 +19,12 @@
       <div class="flex flex-col gap-4">
         <h3 class="text-bodyh1 font-normal text-white font-poppin">Resources</h3>
         <ul class="space-y-2">
-          <li><a href="#" class="hover:underline text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Testimonials</a></li>
-          <li><a href="#" class="hover:underline text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">MyKartavya FAQs</a></li>
-          <li><a href="#" class="hover:underline text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Contact Us</a></li>
-          <li><a href="#" class="hover:underline text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Privacy Policy</a></li>
-          <li><a href="#" class="hover:underline text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Terms of Use</a></li>
-          <li><a href="#" class="hover:underline text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Disclaimer</a></li>
+          <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Testimonials</a></li>
+          <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">MyKartavya FAQs</a></li>
+          <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Contact Us</a></li>
+          <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Privacy Policy</a></li>
+          <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Terms of Use</a></li>
+          <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Disclaimer</a></li>
         </ul>
       </div>
       
