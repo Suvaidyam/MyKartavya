@@ -133,7 +133,7 @@ const baseDropdown = [
   {
     label: 'Logout',
     onClick: () => {
-      session.logout.submit();
+      auth.logout();
     },
     icon: () => h(FeatherIcon, { name: 'log-out' }),
   },
