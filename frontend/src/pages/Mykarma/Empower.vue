@@ -216,6 +216,10 @@ watch(()=>store.refresh_step, (val)=>{
   }
 }, {immediate: true, deep: true})
 
+watch(()=>route.params.name, async(val)=>{
+  await activity()
+  await relatedOpportunities()
+}, {immediate: true, deep: true})
 // scroll buttons
 
 // Scroll settings

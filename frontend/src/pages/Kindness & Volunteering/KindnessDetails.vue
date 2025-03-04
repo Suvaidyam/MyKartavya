@@ -154,7 +154,7 @@
 </template>
 
 <script setup>
-import { inject, ref, onMounted } from 'vue'
+import { inject, ref, onMounted,watch } from 'vue'
 import { FeatherIcon } from 'frappe-ui'
 import { useRoute } from 'vue-router'
 import Card from '../../components/Card.vue'
@@ -206,6 +206,10 @@ onMounted(async () => {
   await avilableactivity();
   await relatedOpportunities();
 });
+watch(()=>route.params.name, async(val)=>{
+  await avilableactivity();
+  await relatedOpportunities();
+}, {immediate: true, deep: true})
 </script>
 
 <style scoped>
