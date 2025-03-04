@@ -76,6 +76,10 @@ def workflow_state():
 def volunteer_act_count():
     return Activity.volunteer_act_count()
 
+@frappe.whitelist(allow_guest=True)
+def related_opportunities(name,sdgs):
+    return Activity.related_opportunities(name,sdgs)
+
 # master data
 @frappe.whitelist(allow_guest=True)
 def country_data():
@@ -120,3 +124,21 @@ def user_count():
 def top_three_volunteer():
     return Profile.top_three_volunteer()
  
+@frappe.whitelist(allow_guest=True)
+def create_subscription(data):
+    if not frappe.db.exists("Company", data["organisation"]):  
+        frappe.throw(_("Invalid Company: {}").format(data["organisation"]))
+
+    doc = frappe.get_doc({
+        "doctype": "Subscribe",
+        "full_name": data["name"],
+        "organisation": data["organisation"],  
+        "email_address": data["email"],
+        "message": data["query"],
+    })
+    
+    print(doc, "======================================================================")
+    doc.insert(ignore_permissions=True)
+    frappe.db.commit()
+    
+    return {"success": True, "message": _("Subscription added successfully.")}

@@ -7,7 +7,7 @@
   </div>
   <div class="bg-white h-[60px] shadow-md">
     <nav
-      v-if="['/', '/volunteering-opportunities', '/profile', '/activity', '/updateprofile', '/'].includes('/' + route.fullPath.split('/')[1])"
+      v-if="['/', '/volunteering-opportunities', '/profile', '/activity', '/updateprofile', '/all-activity'].includes('/' + route.fullPath.split('/')[1])"
       class="flex items-center justify-between w-full px-[36px] max-w-[1920px] mx-auto h-full">
       <router-link to="/" class="flex items-center space-x-4">
         <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
@@ -133,7 +133,7 @@ const baseDropdown = [
   {
     label: 'Logout',
     onClick: () => {
-      session.logout.submit();
+      auth.logout();
     },
     icon: () => h(FeatherIcon, { name: 'log-out' }),
   },

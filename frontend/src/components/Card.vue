@@ -1,18 +1,15 @@
 <template>
     <div v-if="type != 'group'" class="card bg-white overflow-hidden">
         <router-link :to="`/activity/${item.activity}`">
-            <div class="w-full flex flex-col justify-between rounded-md py-2 h-40 card-img"
-                :style="`background-image: url(${item.activity_image})`">
-                <div class="flex justify-between items-center pr-2 ">
-                    <div class="bg-orange-500 text-white font-medium text-xs flex items-center px-3 h-6 rounded-br-lg">
-                        {{ item.activity_type }}
-                    </div>
-                    <div class=" bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
-                        <span class="font-medium text-xs">{{ item.karma_points }} Points</span>
-                    </div>
-                    
+            <div class="w-full flex flex-col justify-between h-40 rounded-md relative">
+                <img :src="item.activity_image" alt="" class="h-full rounded-md">
+                <div class="bg-orange-500 absolute top-1 text-white font-medium text-xs flex items-center px-3 h-6 rounded-br-lg">
+                    {{ item.activity_type }}
                 </div>
-                <div class="flex items-center gap-1 px-2 overflow-auto">
+                <div class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
+                    <span class="font-medium text-xs">{{ item.karma_points }} Points</span>
+                </div>
+                <div class="absolute bottom-1  flex items-center gap-1 px-2 overflow-auto">
                     <div v-if="item.sdgs" v-for="el in JSON.parse(item.sdgs)">
                         <img v-if="el.image" :src="el.image" class="w-8 h-8" />
                         <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{
@@ -44,19 +41,17 @@
     </div>
     <!--  -->
 
-    <article v-else class="flex flex-col w-full pb-2 overflow-hidden">
+    <article v-else class="flex flex-col card w-full py-2 overflow-hidden">
         <router-link :to="auth.isLoggedIn ? '/activity/' + item.activity : '/kindness-volunteering/' + item.activity">
-            <div class="w-full flex flex-col justify-between rounded-md py-2 h-40 card-img"
-                :style="`background-image: url(${item.activity_image})`">
-                <div class="flex justify-between items-center pr-2 ">
-                    <div class="bg-orange-500 text-white font-medium text-xs flex items-center px-3 h-6 rounded-br-lg">
-                        {{ item.activity_type }}
-                    </div>
-                    <div class=" bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
-                        <span class="font-medium text-xs">{{ item.karma_points }} Points</span>
-                    </div>
+            <div class="w-full flex flex-col justify-between h-40 rounded-md relative">
+                <img :src="item.activity_image" alt="" class="h-full rounded-md">
+                <div class="bg-orange-500 absolute top-1 text-white font-medium text-xs flex items-center px-3 h-6 rounded-br-lg">
+                    {{ item.activity_type }}
                 </div>
-                <div class="flex items-center gap-1 px-2 overflow-auto">
+                <div class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
+                    <span class="font-medium text-xs">{{ item.karma_points }} Points</span>
+                </div>
+                <div class="absolute bottom-1  flex items-center gap-1 px-2 overflow-auto">
                     <div v-if="item.sdgs" v-for="el in JSON.parse(item.sdgs)">
                         <img v-if="el.image" :src="el.image" class="w-8 h-8" />
                         <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{
@@ -77,7 +72,7 @@
                             alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                         <time class="self-stretch my-auto">{{ formatDate(item.start_date) }} - {{
                             formatDate(item.end_date)
-                        }}
+                            }}
                         </time>
                     </div>
                     <div class="flex gap-1 items-center self-end text-xs tracking-normal text-justify text-neutral-950">

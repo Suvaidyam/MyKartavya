@@ -84,7 +84,7 @@
 
         <div class="mt-6">
           <button type="submit"
-            class="bg-orange-500 text-white font-semibold py-2 px-4 rounded hover:bg-orange-600 transition">
+            class="bg-orange-500 text-white font-semibold py-2 px-4 rounded-sm hover:bg-orange-600 transition">
             UPDATE
           </button>
         </div>

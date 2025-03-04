@@ -2,9 +2,10 @@
   <div class="h-screen w-full">
     <!-- banner section image -->
     <section>
-      <div :style="`background-image: url(${activities.activity_image});`" v-if="activities" class="w-full h-[456px] md:h-[456px] back-img flex items-center mt-10 px-4 md:px-20">
+      <div v-if="activities" class="w-full relative h-[456px] md:h-[456px] back-img flex items-center mt-10">
+        <img :src="activities.activity_image" class="w-full h-full" alt="">
         <div
-          class="max-w-sm w-[448px] h-[312px] bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-4 justify-center">
+          class="absolute top-20 left-10 max-w-sm w-[448px] h-[312px] bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-4 justify-center">
           <div class="border-b pb-2">
 
             <h2 class="text-heading3 font-normal font-poppins mt-1">
@@ -125,14 +126,23 @@
               Related Opportunities
             </h2>
 
-            <div class="flex gap-3">
-              <i class="fa-solid fa-less-than w-[7px] h-[12px] text-[#999999]"></i>
-              <i class="fa-solid fa-greater-than w-[7px] h-[12px] text-[#0B0B0B]"></i>
+            <div class="flex items-center">
+              <FeatherIcon @click="scrollLeft"
+                :class="['size-5 cursor-pointer', isLeftDisabled ? 'text-gray-500 disabled' : 'text-gray-700']"
+                name="chevron-left" :disabled="isLeftDisabled" />
+              <FeatherIcon @click="scrollRight"
+                :class="['size-5 cursor-pointer', isRightDisabled ? 'text-gray-500 disabled' : 'text-gray-700']"
+                name="chevron-right" :disabled="isRightDisabled" />
+
             </div>
           </div>
-          <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
-            <!-- Loop through the opportunities array -->
-            <Card v-for="(item, key) in relatedactivity" :key="key" :item="item" />
+          <div ref="scrollContainer" class="py-4 w-full overflow-x-scroll">
+            <div v-if="relatedactivity?.length > 0" class="flex items-center gap-4">
+              <Card v-for="(item, key) in relatedactivity" :key="key" :item="item" class="w-[320px] min-w-[320px] max-w-[320px]"/>
+            </div>
+            <div class="w-full h-[330px]" v-else>
+              <NotFound />
+            </div>
           </div>
         </div>
       </div>
@@ -142,10 +152,11 @@
 </template>
 
 <script setup>
-import { inject, ref, onMounted, watch } from 'vue'
+import { inject, ref, onMounted, watch,watchEffect } from 'vue'
 import { FeatherIcon } from 'frappe-ui'
 import Stepper from '../../components/Stepper.vue'
 import Card from '../../components/Card.vue'
+import NotFound from '../../components/NotFound.vue'
 // import CardLoader from "../../components/CardLoader.vue";
 import {
   Facebook,
@@ -164,10 +175,13 @@ const icons = [
   { name: 'WhatsApp', svg: MessageCircle },
 ]
 const call = inject('call');
+const store = inject('store');
 const activities = ref([]);
 const route = useRoute();
 const formatDate = inject('formatDate');
-
+const scrollContainer = ref(null);
+const isLeftDisabled = ref(true);
+const isRightDisabled = ref(false);
 
 const activity = async () => {
   try {
@@ -180,29 +194,77 @@ const activity = async () => {
   }
 };
 // Sample data for the opportunities
-const relatedactivity = [
-  {
-    "name": "ACT-Bright Bites-0001",
-    "status": "Draft",
-    "need_certificate": "Yes",
-    "title": "Bright Bites",
-    "activity_description": "<div class=\"ql-editor read-mode\"><p><span style=\"background-color: rgb(248, 248, 248); font-size: 12px; color: rgb(102, 102, 102);\">This Women's Entrepreneurship Day, let's empower underserved women running small business...</span></p></div>",
-    "activity_image": "/files/1.png",
-    "activity_published_date_starts": 1,
-    "publish_date": "2025-02-25 17:44:38",
-    "start_date": "2025-02-25 17:44:38",
-    "end_date": "2025-02-27 17:43:21",
-    "company": "Suvaidyam",
-    "contribution_type": "User Input",
-    "karma_points": 40,
-    "hours": 2,
-    "max_hours": 2,
-    "sdgs": "[{\"sdgs_name\": \"Clean Water and Sanitation\", \"image\": null},{\"sdgs_name\": \"Climate Action\", \"image\": \"/files/favicon.png\"}]",
-    "volunteers": "[{\"name\": \"USER-25-0005\", \"full_name\": \"Rahul Sah\", \"email\": \"rahul.sah@gmail.com\", \"user_image\": null},{\"name\": \"USER-25-0004\", \"full_name\": \"Rahul Sah\", \"email\": \"rkrahul00011@gmail.com\", \"user_image\": null}]"
+const relatedactivity = ref([]);
+const relatedOpportunities = async()=>{
+  try {
+    const response = await call('mykartavya.controllers.api.related_opportunities', { 'name': route.params.name,sdgs: activities.value.sdgs });
+    if (response) {
+      relatedactivity.value = response
+    }
+  } catch (err) {
+    console.error('Error fetching activity data:', err);
   }
-];
+}
+onMounted(async() => {
+  await activity()
+  await relatedOpportunities()
+})
+watch(()=>store.refresh_step, (val)=>{
+  if(val){
+    activity()
+    store.refresh_step = false
+  }
+}, {immediate: true, deep: true})
 
-onMounted(activity)
+watch(()=>route.params.name, async(val)=>{
+  await activity()
+  await relatedOpportunities()
+}, {immediate: true, deep: true})
+// scroll buttons
+
+// Scroll settings
+const cardWidth = 320;
+const scrollStep = cardWidth;
+const getScrollStep = () => {
+  return window.innerWidth <= 640 ? cardWidth / 2 : cardWidth; // Adjust for small screens
+};
+// Scroll functions with boundary checks
+const scrollLeft = () => {
+  if (scrollContainer.value) {
+    scrollContainer.value.scrollTo({
+      left: Math.max(0, scrollContainer.value.scrollLeft - scrollStep),
+      behavior: 'smooth',
+    });
+  }
+};
+
+const scrollRight = () => {
+  if (scrollContainer.value) {
+    const maxScroll = scrollContainer.value.scrollWidth - scrollContainer.value.clientWidth;
+    scrollContainer.value.scrollTo({
+      left: Math.min(maxScroll, scrollContainer.value.scrollLeft + scrollStep),
+      behavior: 'smooth',
+    });
+  }
+};
+
+// Function to check if buttons should be disabled
+const checkScrollButtons = () => {
+  if (!scrollContainer.value) return;
+  const { scrollLeft, scrollWidth, clientWidth } = scrollContainer.value;
+  isLeftDisabled.value = scrollLeft <= 0;
+  isRightDisabled.value = scrollLeft + clientWidth >= scrollWidth;
+};
+
+// Watch for scroll changes and update button states
+watchEffect(() => {
+  if (scrollContainer.value) {
+    scrollContainer.value.addEventListener('scroll', checkScrollButtons);
+  }
+});
+window.addEventListener('resize', () => {
+  getScrollStep(); // Ensure it updates when the window resizes
+});
 </script>
 
 <style>
@@ -214,7 +276,11 @@ onMounted(activity)
   background-size: cover;
   background-position: center;
 }
-
+::-webkit-scrollbar {
+  width: 4px;
+  /* Thin width */
+  height: 0px;
+}
 /* Ensures icons have smooth hover transition */
 button {
   transition: background 0.2s ease-in-out;
