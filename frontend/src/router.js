@@ -102,8 +102,8 @@ const routes = [
   },
   {
   name: 'AllActivity',
-  path: '/all-activity',
-  component: () => import('@/pages/View/Featuredacts.vue'),
+  path: '/all-activity/:name',
+  component: () => import('@/pages/View/AllActivity.vue'),
   }
 ]
 

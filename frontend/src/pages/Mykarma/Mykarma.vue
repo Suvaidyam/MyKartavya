@@ -39,8 +39,8 @@
                   </div>
                 </div>
                 <div v-if="current_commitments.length > 0 && (!isLeftDisabled || !isRightDisabled)" class="flex justify-center">
-                  <button class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary">View
-                    All</button>
+                  <router-link :to="`/all-activity/current-commitments`" class="border flex items-center justify-center px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary">View
+                    All</router-link>
                 </div>
               </div>
             </div>
@@ -131,7 +131,9 @@ const avai_commitments = async (filter) => {
 // Scroll settings
 const cardWidth = 245;
 const scrollStep = cardWidth;
-
+const getScrollStep = () => {
+  return window.innerWidth <= 640 ? cardWidth / 2 : cardWidth; // Adjust for small screens
+};
 // Scroll functions with boundary checks
 const scrollLeft = () => {
   if (scrollContainer.value) {
@@ -166,7 +168,9 @@ watchEffect(() => {
     scrollContainer.value.addEventListener('scroll', checkScrollButtons);
   }
 });
-
+window.addEventListener('resize', () => {
+  getScrollStep(); // Ensure it updates when the window resizes
+});
 onMounted(() => {
   cur_commitments();
   avai_commitments();
