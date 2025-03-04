@@ -32,7 +32,7 @@ const routes = [
     path: '/verify',
     name: 'Verify',
     component: () => import('@/pages/Auth/Verifyotp.vue'),
-    meta: { requiresAuth: false }  
+    meta: { requiresAuth: false }
   },
   {
     path: '/all-volunteer',
@@ -80,7 +80,7 @@ const routes = [
     name: 'KVDeatails',
     path: '/kindness-volunteering/:name',
     component: () => import('@/pages/Kindness & Volunteering/KindnessDetails.vue'),
-    meta: { requiresAuth: false } 
+    meta: { requiresAuth: false }
   },
   {
     name: 'FAQs',
@@ -101,9 +101,9 @@ const routes = [
     meta: { requiresAuth: false }
   },
   {
-  name: 'AllActivity',
-  path: '/all-activity',
-  component: () => import('@/pages/View/Featuredacts.vue'),
+    name: 'AllActivity',
+    path: '/all-activity',
+    component: () => import('@/pages/View/Featuredacts.vue'),
   }
 ]
 
