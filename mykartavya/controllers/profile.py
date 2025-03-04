@@ -65,3 +65,21 @@ class Profile:
         """
         res = frappe.db.sql(sql_query, as_dict=True)
         return res
+    
+    @frappe.whitelist(allow_guest=True)
+    def sdg_impacted():
+        sql_query = """
+        SELECT 
+            b.sdgs AS sdgs_name,
+            b.sdg_image AS image,
+            SUM(COALESCE(a.hours, 0)) AS hour, 
+            SUM(COALESCE(a.work_value_rupees, 0)) AS work_values
+        FROM `tabSDGs Child` AS b
+        LEFT JOIN `tabActivity` AS a
+            ON b.parent = a.name
+        GROUP BY b.sdgs, b.sdg_image;
+        """
+        res = frappe.db.sql(sql_query, as_dict=True)
+        return res
+
+    
