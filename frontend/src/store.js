@@ -6,6 +6,8 @@ const filters = ref({
     activity_type: [],
     karma_points: ''
 });
+const refresh_step = ref(false);
 export const store = reactive({
-    filters: filters.value
+    filters: filters.value,
+    refresh_step: refresh_step.value
 });

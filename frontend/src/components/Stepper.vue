@@ -4,7 +4,7 @@
       <div class="bg-white p-6 rounded-lg w-full relative">
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-heading4 font-medium">Timeline</h2>
-          <button @click="resetSteps"
+          <button @click="store.refresh_step = true"
             class="text-pink-500 flex items-center text-bodyh2 font-normal px-4 py-1 rounded-sm border">
             Refresh
             <RefreshCwIcon class="w-4 h-4 ml-1" />
@@ -224,6 +224,7 @@ const activityReportPopup = ref(false)
 const feedbackPointsPopup = ref(false)
 const call = inject('call')
 const auth = inject('auth')
+const store = inject('store')
 const route = useRoute()
 // const isshowbtn = ref(true)
 let props = defineProps({
@@ -240,6 +241,7 @@ const activity_log = ref({
   images: [],
 })
 const loading = ref(false)
+const refresh = ref(false)
 const steps = ref([
   {
     title: 'Activity Approval',
@@ -329,10 +331,6 @@ const submit_your_feedback = () => {
   console.log('object', selectedEmoji, comments.value)
 }
 
-const resetSteps = () => {
-  steps.value.forEach((step) => (step.completed = false))
-  currentStep.value = 0
-}
 const uploadFiles = (event) => {
   const files = event.target.files
   for (let file of files) {
