@@ -10,6 +10,7 @@
                     <div class=" bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
                         <span class="font-medium text-xs">{{ item.karma_points }} Points</span>
                     </div>
+                    
                 </div>
                 <div class="flex items-center gap-1 px-2 overflow-auto">
                     <div v-if="item.sdgs" v-for="el in JSON.parse(item.sdgs)">
