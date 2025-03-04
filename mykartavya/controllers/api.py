@@ -76,6 +76,10 @@ def workflow_state():
 def volunteer_act_count():
     return Activity.volunteer_act_count()
 
+@frappe.whitelist(allow_guest=True)
+def related_opportunities(name,sdgs):
+    return Activity.related_opportunities(name,sdgs)
+
 # master data
 @frappe.whitelist(allow_guest=True)
 def country_data():
