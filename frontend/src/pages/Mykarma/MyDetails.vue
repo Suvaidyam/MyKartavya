@@ -214,14 +214,17 @@
         <router-link to="/all-volunteer" class="text-orange-500 text-[10px] font-medium">VIEW ALL</router-link>
       </div>
       <div v-for="(sdg, index) in sdgs" :key="index" class="flex items-center space-x-4 pt-4">
-        <img :src="sdg.icon" :alt="sdg.title" class="w-10 h-10 rounded-[4px]" />
+        <img  v-if="sdg.image" :src="sdg.image" :alt="sdg.sdgs_name" class="w-10 h-10 rounded-[4px]" />
+                <div v-else class="w-10 h-10 rounded-[4px] border flex justify-center items-center">
+                  {{ sdg.sdgs_name?.charAt(0) }}
+                </div>
         <div>
-          <h3 class="text-[14px] font-normal">{{ sdg.title }}</h3>
+          <h3 class="text-[14px] font-normal">{{ sdg.sdgs_name || "0"}}</h3>
           <p class="text-gray-500 fornt-normal text-[12px]">
-            Time Donated : <span class="text-gray-800">{{ sdg.time }}</span>
+            Time Donated : <span class="text-gray-800">{{ sdg.hour || "0"}}</span>
           </p>
           <p class="text-gray-500 fornt-normal text-[12px]">
-            Money Saved : <span class="text-gray-800"> ₹ {{ sdg.money }}</span>
+            Money Saved : <span class="text-gray-800"> ₹ {{ sdg.work_values || "0"}}</span>
           </p>
         </div>
       </div>
@@ -238,6 +241,8 @@ const users = ref([])
 const users_top_3 = ref()
 const activities = ref({})
 const activitiestopuser = ref([])
+const sdgs = ref([])
+
 
 const opportunities = async () => {
   try {
@@ -262,28 +267,19 @@ const topvolunteer = async () => {
   }
 };
 
+const sdgimpacted= async () => {
+  try {
+    const response = await call('mykartavya.controllers.api.sdg_impacted');
+    if (response) {
+      sdgs.value = response;
+      console.log(activitiestopuser.value, "Top Volunteers");
+    }
+  } catch (err) {
+    console.error('Error fetching activity data:', err);
+  }
+};
 
 
-const sdgs = ref([
-  {
-    title: 'SDG 2 : Zero Hunger',
-    time: '1 hr',
-    money: 188,
-    icon: 'https://s3-alpha-sig.figma.com/img/688e/7a94/d05534c49dbbe9c0c94efb71c7fef84c?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=PKSCpduGi4nGd0xrbSSnUggnzY2ho41KjA25PdkPdBLjaMIvy2scTN9ABxLruAszf6SBEeHDp~Yp3FlNe-uhnA7i5HrtalOt4mT9dLsmyTVWMgeVM3g1eJKZEmwViHmomvQT8-E6~4lJaeP3vawIU6UCw52~j1S4jYJvEjU6PEzGxcW~blARM1xDKP5ZYXEJ7ahvkfX5LsZ~C1zm8eIorDgfYuXdavz8o2CmegIeSoi~4PihZQrrrgbVBzXMGcwkP~ASLpYwpbIF1LmsnL-SfCOJvuLU1Nileoxk8PgqRwq5BfRrnc4Oj20hV6TPRlpzS2hksr20NqyVsmDr~gFvAg__',
-  },
-  {
-    title: 'SDG 10 : Reduced Inequalities',
-    time: '1 hr',
-    money: 188,
-    icon: 'https://s3-alpha-sig.figma.com/img/8ebb/1242/da0ac058e973ebc925e2d13e2fbaf884?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=IdmPwMcY5k8KKGOhvyiJFUUUdzecnG-153B6gknvsxN5buBj7MmENA7cbgis0qsIhr5d1cmVXq7pF5LrZGZ-wA8X4ijYW1dRlgLLy-lWOD0WqRLsCVtOn~fLTj2~wtvG8rVictpONmOq0Eb8o5c7LaOVFRn13y80bSwBmXGn5gxFGftdCXBLRkSyNvRjRwezAkzUlThrjKgFgdzZ7YLJ80IErFuHW2qKqMj~TsQCCWUfgo1VUaB-cmToKktLGsUKJdoTaxtv~N51o-DtkHK~ofmTtLhvW6K3DbT9b8O3lXag953qmy2TVwHh1rLIAuXsDivkn5bpvixoFrHfeSn7FQ__',
-  },
-  {
-    title: 'SDG 4 : Quality Education',
-    time: '1 hr',
-    money: 188,
-    icon: 'https://s3-alpha-sig.figma.com/img/a66d/8876/39878f7d0022333404d9f475a657fc6e?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=l4cKNOSziFMmTJF1dWr3oSk0BfbVYmbbWJTt3flheevA5~CVJX6zZNZ4gQN-hTE2QkRtt6dc04nRS98to0xOMiGfae90cGaRwmCA-08j-uXkUFdbIEcBcnENHZclEMP1xjaeFTqqAXAPT~OBJmpgvHly9MY9MDH~DJg0GvkmxilQ5BjewrkkFk2eojfu0om2e7eBl3YehhCxJ3EHspDrQpngOk31~a~7g0qGILAOD8ekVgO0TPO1g0A1U7enUcFrXu0D0wC5MrCuUaBLgtKffhU1zOTv3MHlOHBD1GWXL49~EeJsRm05JoAPShba5hyffH8eOIdrIrutWGNwTHVLHw__',
-  },
-])
 
 const get = async () => {
   let res = await call(`mykartavya.controllers.api.get_top_users`)
@@ -294,5 +290,6 @@ onMounted(() => {
   topvolunteer();
   get();
   opportunities();
+  sdgimpacted();
 });
 </script>

@@ -142,3 +142,7 @@ def create_subscription(data):
     frappe.db.commit()
     
     return {"success": True, "message": _("Subscription added successfully.")}
+
+@frappe.whitelist(allow_guest=True)
+def sdg_impacted():
+    return Profile.sdg_impacted()
