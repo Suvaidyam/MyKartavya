@@ -28,18 +28,27 @@
             <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
               {{ field.label }} <span class="text-red-500 pt-2" v-if="field.required">*</span>
             </label>
-            <input v-if="field.type !== 'select'" v-model="formData[key]" :type="field.type"
-              :placeholder="field.placeholder"
+            <input v-if="key !== 'custom_date_of_birth' && field.type !== 'select'" v-model="formData[key]"
+              :type="field.type" :name="key" :placeholder="field.placeholder"
               class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
-            <select v-else v-model="formData[key]"
+
+            <input v-else-if="key === 'custom_date_of_birth'" v-model="formData.custom_date_of_birth" type="date"
+              name="custom_date_of_birth" :max="maxDate"
+              class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+
+            <select v-if="field.type === 'select'" v-model="formData[key]" :name="key"
               class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
               <option value="" disabled>Select {{ field.label }}</option>
               <option v-for="option in getOptions(key)" :key="option.name" :value="option.name">
                 {{ option.label || option.name }}
               </option>
             </select>
-            <!-- Validation Error -->
-            <p v-if="errors[key]" class="text-red-500 text-[11px] mt-1">{{ errors[key] }}</p>
+
+            <!-- Validation Error Message -->
+            <p v-if="errors[key]" class="text-red-500 text-[11px] mt-1">
+              {{ errors[key] }}
+            </p>
+
           </div>
           <!-- CV Upload -->
           <div>
@@ -85,7 +94,7 @@
 </template>
 
 <script setup>
-import { ref, inject, onMounted, watch } from "vue";
+import { ref, inject, onMounted, watch, nextTick } from "vue";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { useRouter } from "vue-router";
@@ -94,13 +103,15 @@ import { useRouter } from "vue-router";
 const call = inject("call");
 const auth = inject("auth");
 const router = useRouter();
+const errorFieldRef = ref(null);
+
 
 // Form fields and data
 const fields = ref({
   first_name: {
     label: "First Name",
     type: "text",
-    required: false,
+    required: true,
     pattern: /^[A-Za-z]+$/,
     error_message: "Please enter a valid first name (letters only)"
   },
@@ -108,8 +119,6 @@ const fields = ref({
     label: "Last Name",
     type: "text",
     required: false,
-    pattern: /^[A-Za-z]+$/,
-    error_message: "Please enter a valid last name (letters only)"
   },
   mobile_number: {
     label: "Phone No.",
@@ -128,6 +137,7 @@ const fields = ref({
     required: true,
     min: "1900-01-01",
     max: new Date().toISOString().split("T")[0],
+    max: "maxDate",
     error_message: "Please select a valid date of birth"
   },
   title: { label: "Title", type: "text", placeholder: "Enter your title", required: false }
@@ -145,6 +155,9 @@ const formData = ref({
   custom_date_of_birth: "",
   title: "",
 });
+
+const maxDate = ref(new Date().toISOString().split("T")[0]); // Today's date
+
 
 const errors = ref({});  // Errors object
 
@@ -202,17 +215,22 @@ const validateForm = () => {
     if (field.required && !value) {
       errors.value[key] = `${field.label} is required.`;
       valid = false;
+
+      if (!errorFieldRef.value) {
+        errorFieldRef.value = key;  // Store the first invalid field
+      }
     }
+
     // Phone Number Validation
     if (key === "mobile_number") {
       // Trim the value to ensure no extra spaces
-      const trimmedValue = value.trim();
+      const trimmedValue = value?.trim();
 
       // Check if the mobile number doesn't match the 10-digit pattern
-      if (!field.pattern.test(trimmedValue)) {
-        if (trimmedValue.length === 0) {
+      if (!field.pattern?.test(trimmedValue)) {
+        if (trimmedValue?.length === 0) {
           errors.value[key] = "Phone number is required.";
-        } else if (trimmedValue.length !== 10) {
+        } else if (trimmedValue?.length !== 10) {
           errors.value[key] = "Phone number must be exactly 10 digits.";
         } else {
           errors.value[key] = field.error_message;  // Default error message for invalid phone number
@@ -222,6 +240,7 @@ const validateForm = () => {
     }
 
     // First and Last Name Validation (only letters)
+    console.log(value);
     if (key === "first_name" && field.pattern && !field.pattern.test(value)) {
       errors.value[key] = field.error_message;
       valid = false;
@@ -232,22 +251,26 @@ const validateForm = () => {
       valid = false;
     }
     // Date of Birth Validation
-    if (key === "custom_date_of_birth" && field.min && value) {
-      const dob = new Date(value);
-      const minDate = new Date(field.min);
-      const maxDate = new Date(field.max);
+    // Date of Birth Validation
+    if (key === "custom_date_of_birth") {
+      if (!value) {
+        errors.value[key] = "Date of birth is required.";
+        valid = false;
+      } else {
+        const dob = new Date(value);
+        const today = new Date();
 
-      // Calculate the date 18 years ago from today
-      const today = new Date();
-      // const age18Date = new Date(today.setFullYear(today.getFullYear() - 18));
-
-      // Check if the date of birth is after the date 18 years ago or in the future be at least 18 years old and
-      // if (dob || dob > maxDate) {
-      //   errors.value[key] = "You cannot select a future date.";
-      //   valid = false;
-
-      // }
+        if (dob > today) {
+          errors.value[key] = "You cannot select a future date.";
+          valid = false;
+        } else {
+          delete errors.value[key]; // Clear errors if valid
+        }
+      }
     }
+
+
+
   }
 
   // Return whether the form is valid or not
@@ -256,7 +279,10 @@ const validateForm = () => {
 
 // On Submit
 const onSubmit = async () => {
-  if (!validateForm()) return;
+  if (!validateForm()) {
+    scrollToFirstError();
+    return;
+  }
 
   try {
     let res = await call("mykartavya.controllers.api.update_sva_user", {
@@ -296,4 +322,17 @@ onMounted(() => {
   fetchCompanies();
   getDetails();
 });
+
+const scrollToFirstError = async () => {
+  if (errorFieldRef.value) {
+    await nextTick();  // Ensure the DOM updates first
+    const element = document.querySelector(`[name="${errorFieldRef.value}"]`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+      element.focus();
+    }
+    errorFieldRef.value = null;  // Reset after scrolling
+  }
+};
+
 </script>
