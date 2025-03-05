@@ -12,19 +12,13 @@ class Profile:
         return doc
 
     def update_sva_user(data):
-        data = frappe.parse_json(data)
         data['password'] = 'admin@123'
         data['confirm_password'] = 'admin@123'
         name = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")   
-        user_doc = frappe.get_doc("SVA User", name)
         # return data
-        if user_doc:
-            user_doc.update(data)
-            user_doc.flags.ignore_mandatory = True
-            user_doc.flags.ignore_permissions = True
-            user_doc.save()  
-            frappe.db.commit()
-            return user_doc
+        if name:
+            user_doc = frappe.db.set_value("SVA User", name, data)
+            return {'status': '200', 'message': 'User updated successfully'}
         else:
             return {'status': '400', 'message': 'User not found'}
 
@@ -39,7 +33,7 @@ class Profile:
             COUNT(va.activity) AS activity_completed
         FROM `tabVolunteer Activity` AS va
         INNER JOIN `tabActivity` AS a ON va.activity = a.name
-        WHERE va.volunteer = %s AND va.completion_wf_state='Submitted';
+        WHERE va.volunteer = %s AND va.completion_wf_state='Approved';
         """
         
         results = frappe.db.sql(sql_query, (user,), as_dict=True)
@@ -84,13 +78,12 @@ class Profile:
 
     
     @frappe.whitelist(allow_guest=True) 
-    def check_user_fields(user_email):
-    
-        user = frappe.get_doc("User", user_email)  
-        required_fields = ["id", "name", "phone",]
-
-        missing_fields = [field for field in required_fields if not user.get(field)]
-
-        if missing_fields:
-            return {"success": False, "message": f"Missing fields: {', '.join(missing_fields)}"}
-        return {"success": True, "message": "All fields are filled."}
+    def check_user_fields():
+        validated = True
+        required_fields = ["first_name", "custom_date_of_birth", "mobile_number","custom_country","custom_state","custom_city"]
+        for field in required_fields:
+            if not frappe.db.get_value("SVA User", {"email": frappe.session.user}, field):
+                validated = False
+                break
+        return {"success": validated}
+        

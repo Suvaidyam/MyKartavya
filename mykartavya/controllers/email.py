@@ -428,8 +428,8 @@ def register_verify_otp(email, otp, full_name):
             raise OTPError(_("Invalid OTP"))
 
         # Clear OTP and attempts cache after successful verification
-        # frappe.cache().delete_value(otp_key)
-        # frappe.cache().delete_value(get_attempt_cache_key(email))
+        frappe.cache().delete_value(otp_key)
+        frappe.cache().delete_value(get_attempt_cache_key(email))
 
         # Create new user
         first_name = full_name.split(' ')[0]
@@ -437,6 +437,7 @@ def register_verify_otp(email, otp, full_name):
             last_name = full_name.split(' ')[1]
         else:
             last_name = ""
+        frappe.set_user("Administrator")
         user = frappe.get_doc({
             "doctype": "SVA User",
             "email": email,
@@ -446,6 +447,7 @@ def register_verify_otp(email, otp, full_name):
         })
         # user.append("role_profiles", {"role_profile": "Volunteer"})
         user.insert(ignore_permissions=True, ignore_mandatory=True)
+        frappe.set_user(email)
         frappe.logger().info(f"SVA User {email} registered successfully")
 
         # Log user in

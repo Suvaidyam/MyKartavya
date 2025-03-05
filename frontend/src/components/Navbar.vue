@@ -119,7 +119,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, h } from 'vue';
+import { ref, onMounted, h,watch } from 'vue';
 import { Dropdown, Button, FeatherIcon, Avatar, Tooltip } from 'frappe-ui';
 import { inject } from 'vue';
 import Notifications from './Notifications.vue';
@@ -127,6 +127,7 @@ import { useRouter, useRoute } from 'vue-router';
 
 const session = inject('session');
 const auth = inject('auth');
+const call = inject('call');
 const router = useRouter();
 const route = useRoute();
 const baseDropdown = [
@@ -181,10 +182,18 @@ const change_route = (route) => {
   router.push(route);
 };
 // Run on mount and on window resize
-onMounted(() => {
+onMounted(async() => {
   updateDropdown();
   window.addEventListener('resize', updateDropdown);
 });
+watch(()=>route.fullPath,async(value)=>{
+  if(value != '/updateprofile'){
+    let res = await call('mykartavya.controllers.api.check_user_fields', {});
+    if (!res?.success) {
+        router.push('/updateprofile');
+    }
+  }
+},{immediate:true})
 </script>
 
 <style scoped>

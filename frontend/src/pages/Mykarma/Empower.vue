@@ -76,7 +76,7 @@
           </div>
           <!-- Right Section - Timeline -->
           <div>
-            <Stepper :activity="activities" />
+            <Stepper :activity="activities" :key="activities.activity"/>
           </div>
         </div>
 

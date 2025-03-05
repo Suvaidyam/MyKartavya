@@ -40,7 +40,7 @@
                             </label>
                         </div>
                         <div v-if="item.key === 'activity_type'" class="flex px-2 items-center gap-2 text-sm">
-                            <input v-model="allChecked" type="checkbox"
+                            <input v-model="allType" type="checkbox"
                                 class="rounded-sm focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="both-activity_type">
                             <label class="text-[12px] font-normal" for="both-activity_type">Both</label>
@@ -156,14 +156,16 @@ const allChecked = computed({
         const sdgFilter = filter_by.value.find(f => f.key === 'sdgs');
         return sdgFilter && store.filters.sdgs.length === sdgFilter.options.length;
     },
-    get: () => {
-        const activityType = filter_by.value.find(f => f.key === 'activity_type');
-        return activityType && store.filters.activity_type.length === activityType.options.length;
-    },
     set: (value) => {
         const sdgFilter = filter_by.value.find(f => f.key === 'sdgs');
         store.filters.sdgs = value && sdgFilter ? [...sdgFilter.options.map(e => { return e.name })] : [];
-    },
+    } 
+});
+const allType = computed({
+    get: () => {
+        const activityType = filter_by.value.find(f => f.key === 'activity_type');
+        return activityType && store.filters.activity_type.length === activityType.options.length;
+    }, 
     set: (value) => {
         const activityType = filter_by.value.find(f => f.key === 'activity_type');
         store.filters.activity_type = value && activityType ? [...activityType.options.map(e => { return e.name })] : [];
