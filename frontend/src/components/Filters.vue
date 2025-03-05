@@ -16,7 +16,7 @@
                     <div class="flex flex-col gap-3 pb-2">
                         <div v-if="item.key === 'sdgs'" class="flex px-2 items-center gap-2 text-sm">
                             <input v-model="allChecked" type="checkbox"
-                                class="rounded-sm focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
+                                class="rounded-sm h-4 w-4 focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="all-sdgs">
                             <label class="text-[12px] cursor-pointer font-normal flex gap-2 items-center" for="all-sdgs">
                                 <img src="../assets/sdgall.png" :alt="'el'" class="w-5 h-5 rounded-full object-cover" />
@@ -38,6 +38,12 @@
                                 </div>
                                 {{ el.name }}
                             </label>
+                        </div>
+                        <div v-if="item.key === 'activity_type'" class="flex px-2 items-center gap-2 text-sm">
+                            <input v-model="allChecked" type="checkbox"
+                                class="rounded-sm focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
+                                id="both-activity_type">
+                            <label class="text-[12px] font-normal" for="both-activity_type">Both</label>
                         </div>
                     </div>
                 </div>
@@ -78,6 +84,12 @@
                                 :id="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">
                             <label :for="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">{{ el.name }}</label>
                         </div>
+                        <div v-if="item.key === 'activity_type'" class="flex px-2 items-center py-1 gap-2 text-sm">
+                            <input v-model="allChecked" type="checkbox"
+                                class="rounded-sm focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
+                                id="both-activity_type">
+                            <label class="text-[12px] font-normal" for="both-activity_type">Both</label>
+                        </div>
                     </MenuItems>
                 </transition>
             </Menu>
@@ -111,7 +123,7 @@ const filter_by = ref([
         name: 'Activity Type',
         type: 'checkbox',
         key: 'activity_type',
-        options: [{ name: 'Online' }, { name: 'On-Ground' }, { name: 'Both' }]
+        options: [{ name: 'Online' }, { name: 'On-Ground' }]
     },
 ]);
 
@@ -144,9 +156,17 @@ const allChecked = computed({
         const sdgFilter = filter_by.value.find(f => f.key === 'sdgs');
         return sdgFilter && store.filters.sdgs.length === sdgFilter.options.length;
     },
+    get: () => {
+        const activityType = filter_by.value.find(f => f.key === 'activity_type');
+        return activityType && store.filters.activity_type.length === activityType.options.length;
+    },
     set: (value) => {
         const sdgFilter = filter_by.value.find(f => f.key === 'sdgs');
         store.filters.sdgs = value && sdgFilter ? [...sdgFilter.options.map(e => { return e.name })] : [];
+    },
+    set: (value) => {
+        const activityType = filter_by.value.find(f => f.key === 'activity_type');
+        store.filters.activity_type = value && activityType ? [...activityType.options.map(e => { return e.name })] : [];
     }
 });
 
