@@ -37,12 +37,12 @@ def actvolunteer_data():
     )
     return doc
 @frappe.whitelist(allow_guest=True)
-def get_top_users():
+def get_top_users(top):
     activities = frappe.get_list(
         "Volunteer Activity",
         fields=["volunteer.full_name","karma_points","duration","volunteer.user_image"],
         order_by="karma_points DESC" ,
-        limit_page_length=10,
+        limit_page_length=top,
         ignore_permissions=True
     )
 
@@ -141,6 +141,7 @@ def create_subscription(data):
         "message": data["query"],
     })
     
+    print(doc, "======================================================================")
     doc.insert(ignore_permissions=True)
     frappe.db.commit()
     
@@ -149,7 +150,3 @@ def create_subscription(data):
 @frappe.whitelist(allow_guest=True)
 def sdg_impacted():
     return Profile.sdg_impacted()
-
-@frappe.whitelist(allow_guest=True)
-def check_user_fields():
-    return Profile.check_user_fields()
