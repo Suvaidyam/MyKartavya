@@ -1,11 +1,11 @@
 <template>
   <div class="p-6">
-    <h1 class="text-2xl font-bold mb-4">Kindness & Volunteering</h1>
+    <h1 class="text-heading3 font-bold mb-4">Kindness & Volunteering</h1>
     <div class="flex gap-6 border-b pb-2">
-      <button class="flex items-center gap-2 px-4 py-2 rounded text-gray-600">
+      <button class="flex items-center text-bodyh1 gap-2 px-4 py-2 rounded text-gray-600">
         Acts of Random Kindness
       </button>
-      <button class="flex items-center gap-2 px-4 py-2 border-b-2 border-orange-500 font-bold">
+      <button class="flex items-center text-bodyh1 gap-2 px-4 py-2 border-b-2 border-orange-500 font-bold">
          Volunteering Opportunities
       </button>
     </div>

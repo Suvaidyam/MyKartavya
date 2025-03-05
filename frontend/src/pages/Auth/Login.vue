@@ -2,7 +2,7 @@
   <div class="flex pt-[62px] flex-col items-center min-h-screen bg-secondary" style="background: #f5f5f5">
     <!-- Main Content Centered -->
     <main class="flex flex-col items-center text-center w-full px-4 min-h-[calc(100vh-64px)] justify-center">
-      <h1 class="text-[28px] md:text-[33px] font-medium font-poppins">
+      <h1 class="text-[28px] md:text-heading2 font-medium font-poppins">
         Your Journey of Kindness Starts Here
       </h1>
 
@@ -10,16 +10,16 @@
         <div class="flex flex-wrap justify-center gap-2 md:gap-4">
           <button class="border px-4 h-8 items-center bg-white rounded-full text-black border-orange-500 flex gap-1">
             <img src="../../assets/Frame.png" alt="" class="w-4" />
-            <p class="text-[14px] font-normal">Track Your Impact</p>
+            <p class="text-bodyh2 font-normal">Track Your Impact</p>
           </button>
           <button class="border px-4 h-8 items-center bg-white rounded-full text-black border-orange-500 flex gap-1">
             <img src="../../assets/Frame (2).png" alt="" class="w-4" />
-            <p class="text-[14px] font-normal">Join Activities Anywhere</p>
+            <p class="text-bodyh2 font-normal">Join Activities Anywhere</p>
           </button>
           <button class="border px-4 h-8 items-center bg-white rounded-full text-black flex gap-1"
             style="border-color: #f185bb">
             <img src="../../assets/Frame (1).png" alt="" class="w-4" />
-            <p class="text-[14px] font-normal">Connect with a Community</p>
+            <p class="text-bodyh2 font-normal">Connect with a Community</p>
           </button>
         </div>
       </div>
@@ -28,7 +28,7 @@
         <input type="email" v-model="email" placeholder="sample@example.com"
           class="w-full p-2 border rounded-sm mb-4 text-[14px]" style="color: #6e7073" />
         <button :disabled="loading" @click="get_otp()"
-          class="w-full flex items-center justify-center text-white py-2 rounded-sm text-[14px]"
+          class="w-full flex items-center justify-center text-white py-2 rounded-sm text-bodyh2"
           style="background: #ff5722">
           <div class="h-5 w-5" v-if="loading">
             <div
@@ -38,18 +38,18 @@
           </div>
           <p v-else>GET OTP</p>
         </button>
-        <p class="text-sm mt-4 text-gray-600">
+        <p class="text-bodyh2 mt-4 text-gray-600">
           Don't have an account?
           <router-link to="/register" class="text-orange-500">Sign up</router-link>
         </p>
         <div class="flex items-center my-4">
           <hr class="flex-grow border-t border-gray-300" />
-          <span class="mx-2 text-gray-500 text-[12px]">OR</span>
+          <span class="mx-2 text-gray-500 text-caption">OR</span>
           <hr class="flex-grow border-t border-gray-300" />
         </div>
         <div class="mt-4">
           <a :href="g_url">
-            <button class="w-full flex items-center justify-start p-2 border rounded-sm mb-2 text-[14px] font-normal"
+            <button class="w-full flex items-center justify-start p-2 border rounded-sm mb-2 text-bodyh2 font-normal"
               @click="Google_login">
               <img src="../../assets/icons8-google-48.png" alt="Google" class="h-5 mr-2" />
               Continue with Google
@@ -57,7 +57,7 @@
           </a>
 
           <a :href="m_url">
-            <button class="w-full flex items-center justify-start p-2 border rounded-sm text-[14px]"
+            <button class="w-full flex items-center justify-start p-2 border rounded-sm text-bodyh2"
               @click="micro_login">
               <img src="../../assets/icons8-microsoft-48.png" alt="Microsoft" class="h-5 mr-2" />
               Continue with Microsoft
