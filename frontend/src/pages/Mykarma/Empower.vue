@@ -35,7 +35,8 @@
           <div class="flex space-x-2 border-b pb-2">
             <div v-if="activities.sdgs" v-for="item in JSON.parse(activities.sdgs)">
               <img v-if="item.image" :src="item.image" class="w-8 h-8" />
-              <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item.sdgs_name?.charAt(0) }}</span>
+              <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item.sdgs_name?.charAt(0)
+                }}</span>
             </div>
           </div>
 
@@ -57,48 +58,8 @@
         <!-- Main Content -->
         <div class="grid gap-6 lg:grid-cols-3">
           <!-- Left Section -->
-          <div class="lg:col-span-2">
-            <p class="mb-4 text-bodyh2 font-normal text-justify" style="color: #666666">
-              <span class="text-[47px] text-black">T</span>his Women's
-              Entrepreneurship Day, let's empower underserved women running
-              small businesses or working in our communities by sharing positive
-              reviews of their businesses on our social media platforms. By
-              highlighting their names and services, we can increase their
-              visibility, boost their confidence, and foster growth.This small
-              act of kindness can have a significant impact, bringing hope and
-              faith to these women as they navigate their entrepreneurial
-              journeys. Together, we can create a supportive network that
-              uplifts and inspires!
-            </p>
-            <h2 class="text-heading4 font-medium mt-6" style="color: #0b0b0b">
-              Volunteer Role
-            </h2>
-            <p class="mt-2 text-bodyh2 font-normal text-justify" style="color: #666666">
-              Volunteers are encouraged to identify a small business or an
-              underserved woman in their community and capture a photo or video
-              showcasing her work. Along with the visual, write a positive
-              review that highlights her efforts and talents on your social
-              media platforms. This simple gesture can significantly boost her
-              business, while also encouraging her personally and fostering
-              self-confidence.By sharing these stories, we not only promote
-              their work but also inspire others to recognize the value of
-              supporting women entrepreneurs. Let's come together to uplift and
-              empower these remarkable women, helping them shine in their
-              communities!
-            </p>
-            <div class="mt-4">
-              <p class="text-[14px] font-poppins font-normal leading-[23.8px] tracking-[0.0025em] text-[#666666] text-justify"
-                style="word-spacing: 16px">
-                Share your experience along with pictures on your social media
-                handles and tag us on social media using
-                <span class="text-secondary hover:cursor-pointer">@MyKaratvaya @NASSCOMfdn</span>
-              </p>
-
-              <p class="mt-2 text-bodyh2 font-normal font-poppins" style="color: #666666">
-                Use hashtag #MyKartavya #DoGoodFeelGood #LittleActMatters
-                #womenempowerment#letsgrowtogether
-              </p>
-            </div>
+          <div class="lg:col-span-2 flex flex-col justify-between items-start">
+            <div v-html="activities.activity_description"></div>
             <div class="flex items-center gap-[12px] flex-col justify-self-start mt-[220px]">
               <span class="text-gray-700 font-medium flex items-center space-x-2">
                 <Share2 class="w-4 h-4 text-[#666666]" />
@@ -138,7 +99,8 @@
           </div>
           <div ref="scrollContainer" class="py-4 w-full overflow-x-scroll">
             <div v-if="relatedactivity?.length > 0" class="flex items-center gap-4">
-              <Card v-for="(item, key) in relatedactivity" :key="key" :item="item" class="w-[320px] min-w-[320px] max-w-[320px]"/>
+              <Card v-for="(item, key) in relatedactivity" :key="key" :item="item"
+                class="w-[320px] min-w-[320px] max-w-[320px]" />
             </div>
             <div class="w-full h-[330px]" v-else>
               <NotFound />
@@ -152,7 +114,7 @@
 </template>
 
 <script setup>
-import { inject, ref, onMounted, watch,watchEffect } from 'vue'
+import { inject, ref, onMounted, watch, watchEffect } from 'vue'
 import { FeatherIcon } from 'frappe-ui'
 import Stepper from '../../components/Stepper.vue'
 import Card from '../../components/Card.vue'
@@ -195,9 +157,9 @@ const activity = async () => {
 };
 // Sample data for the opportunities
 const relatedactivity = ref([]);
-const relatedOpportunities = async()=>{
+const relatedOpportunities = async () => {
   try {
-    const response = await call('mykartavya.controllers.api.related_opportunities', { 'name': route.params.name,sdgs: activities.value.sdgs });
+    const response = await call('mykartavya.controllers.api.related_opportunities', { 'name': route.params.name, sdgs: activities.value.sdgs });
     if (response) {
       relatedactivity.value = response
     }
@@ -205,21 +167,23 @@ const relatedOpportunities = async()=>{
     console.error('Error fetching activity data:', err);
   }
 }
-onMounted(async() => {
+onMounted(async () => {
   await activity()
   await relatedOpportunities()
 })
-watch(()=>store.refresh_step, (val)=>{
-  if(val){
+watch(() => store.refresh_step, (val) => {
+  if (val) {
     activity()
     store.refresh_step = false
   }
-}, {immediate: true, deep: true})
+}, { immediate: true, deep: true })
 
-watch(()=>route.params.name, async(val)=>{
-  await activity()
-  await relatedOpportunities()
-}, {immediate: true, deep: true})
+watch(() => route.params.name, async (val, old) => {
+  if (val != old) {
+    await activity()
+    await relatedOpportunities()
+  }
+}, { immediate: true, deep: true })
 // scroll buttons
 
 // Scroll settings
@@ -276,11 +240,13 @@ window.addEventListener('resize', () => {
   background-size: cover;
   background-position: center;
 }
+
 ::-webkit-scrollbar {
   width: 4px;
   /* Thin width */
   height: 0px;
 }
+
 /* Ensures icons have smooth hover transition */
 button {
   transition: background 0.2s ease-in-out;

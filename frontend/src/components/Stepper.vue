@@ -30,19 +30,26 @@
               <p class="text-gray-600 text-sm ml-4 mt-0">
                 {{ step.description }}
               </p>
-              <button v-if="!step.completed && !(step.title == 'Get Started' && activity.workflow_state == 'Applied')"
+              <button
+                v-if="!step.completed && !(['Get Started', 'Activity Report'].includes(step.title) && (activity.workflow_state == 'Applied' || activity.completion_wf_state == 'Submitted'))"
                 @click="nextStep(index)"
                 class="mt-2 h-[28px] w-[147px] rounded-sm text-caption font-medium text-white ml-2" :class="index === steps.length - 1 ? 'bg-orange-500' : 'bg-orange-500'
                   ">
                 {{ step.button }}
               </button>
               <button disabled
-                v-if="!step.completed && step.title == 'Get Started' && activity.workflow_state == 'Applied'"
+                v-if="!step.completed && ['Get Started'].includes(step.title) && ['Applied'].includes(activity.workflow_state)"
                 @click="nextStep(index)"
                 class="mt-2 h-[28px] cursor-not-allowed w-[147px] rounded-sm text-caption font-medium text-white ml-2"
                 :class="index === steps.length - 1 ? 'bg-orange-500' : 'bg-orange-500'
-                  ">
-                Pending by Admin
+                  ">{{ step.title == 'Get Started' ? 'Pending by Admin' : 'Review under Admin' }}
+              </button>
+              <button disabled
+                v-if="!step.completed && ['Activity Report'].includes(step.title) && (['Approved'].includes(activity.workflow_state) && activity.completion_wf_state == 'Submitted')"
+                @click="nextStep(index)"
+                class="mt-2 h-[28px] cursor-not-allowed w-[147px] rounded-sm text-caption font-medium text-white ml-2"
+                :class="index === steps.length - 1 ? 'bg-orange-500' : 'bg-orange-500'
+                  ">{{ step.title == 'Get Started' ? 'Pending by Admin' : 'Review under Admin' }}
               </button>
             </div>
           </div>
@@ -85,8 +92,8 @@
               <label class="block font-medium mb-2 text-gray-700">How would you rate your experience with the
                 activity?</label>
               <div class="flex justify-center gap-6 my-3">
-                <button v-for="(emoji, index) in emojis" :key="index" @click="selectedEmoji = emoji"
-                  class="text-3xl focus:outline-none transition duration-200" :class="selectedEmoji === emoji
+                <button v-for="(emoji, index) in emojis" :key="index" @click="feedback.rating = emoji.label"
+                  class="text-3xl focus:outline-none transition duration-200" :class="feedback.rating === emoji.label
                     ? 'text-orange-500'
                     : 'text-gray-400 opacity-30'
                     ">
@@ -94,7 +101,7 @@
                 </button>
               </div>
               <label class="block font-medium mb-2 text-gray-700">Comments (Optional)</label>
-              <textarea v-model="comments" class="w-full border rounded p-2 h-20 resize-none"></textarea>
+              <textarea v-model="feedback.comments" class="w-full border rounded p-2 h-20 resize-none"></textarea>
             </div>
             <!-- Submit Button -->
             <div class="p-4">
@@ -226,7 +233,10 @@ const call = inject('call')
 const auth = inject('auth')
 const store = inject('store')
 const route = useRoute()
-// const isshowbtn = ref(true)
+const feedback = ref({
+  rating: null,
+  comments: '',
+})
 let props = defineProps({
   activity: {
     type: Object,
@@ -287,16 +297,10 @@ const nextStep = async (index) => {
   }
   if (index === 3) {
     show_Feedback.value = true
-    console.log('object', steps.value[3].completed)
-    // steps.value[3].completed = true
   }
   if (index === 2) {
-    // Open popup for Activity Report
     activityReportPopup.value = true
-  } else if (index === currentStep.value) {
-    steps.value[index].completed = true
-    currentStep.value++
-  }
+  } 
 }
 const submitReport = async () => {
   activityReportPopup.value = false
@@ -324,11 +328,19 @@ const submitReport = async () => {
     toast.error('Something went wrong')
   }
 }
-const submit_your_feedback = () => {
-  show_Feedback.value = false
-  showCertificate.value = true
-  steps.value[3].completed = true
-  console.log('object', selectedEmoji, comments.value)
+const submit_your_feedback = async () => {
+  let res = await call('mykartavya.controllers.api.submit_feedback', {
+    name: props.activity.name,
+    volunteer: auth.cookie.user_id,
+    rating: feedback.value.rating,
+    comments: feedback.value.comments,
+  })
+  if (res.rating) {
+    show_Feedback.value = false
+    showCertificate.value = true
+    steps.value[3].completed = true
+  }
+
 }
 
 const uploadFiles = (event) => {
@@ -342,13 +354,12 @@ const uploadFiles = (event) => {
   }
 }
 const emojis = ref([
-  { icon: '😞', label: 'Bad' },
-  { icon: '😐', label: 'Neutral' },
-  { icon: '😊', label: 'Good' },
-  { icon: '🙂', label: 'Great' },
+  { icon: '😞', label: 0.2 },
+  { icon: '😐', label: 0.4 },
+  { icon: '😊', label: 0.6 },
+  { icon: '🙂', label: 0.8 },
+  { icon: '🙂', label: 1 },
 ])
-const selectedEmoji = ref(null)
-const comments = ref('')
 
 watch(() => props.activity, (newVal, oldVal) => {
   if (newVal.com_percent) {
@@ -359,18 +370,36 @@ watch(() => props.activity, (newVal, oldVal) => {
     if (newVal.workflow_state == 'Applied') {
       steps.value[0].completed = true
       currentStep.value++
-    } else if (newVal.workflow_state == 'Approved' && newVal.com_percent != 100) {
+    } else if (newVal.workflow_state == 'Approved' && newVal.completion_wf_state == 'Pending') {
       steps.value[0].completed = true
       steps.value[1].completed = true
       currentStep.value = 2
-    } else if (newVal.completion_wf_state == 'Submitted') {
+    } else if (newVal.workflow_state == 'Approved' && ['Submitted','Approved'].includes(newVal.completion_wf_state) && !(newVal.rating != null && newVal.rating != 0)) {
+      steps.value[0].completed = true
+      if (newVal.completion_wf_state == 'Submitted') {
+        steps.value[1].completed = true
+        currentStep.value = 2
+      } else {
+        steps.value[1].completed = true
+        steps.value[2].completed = true
+        currentStep.value = 3
+      }
+    } else if ((newVal.rating != null && newVal.rating != 0) && newVal.completion_wf_state == 'Approved') {
       steps.value[0].completed = true
       steps.value[1].completed = true
       steps.value[2].completed = true
-      currentStep.value = 3
+      steps.value[3].completed = true
+      currentStep.value = 4
     }
   }
 }, { immediate: true, deep: true })
+watch(() => activity_log.value.progress, (newVal, oldVal) => {
+  if (props.activity.com_percent <= newVal) {
+    return
+  } else {
+    activity_log.value.progress = props.activity.com_percent
+  }
+})
 </script>
 <style scoped>
 input[type="number"]::-webkit-outer-spin-button,

@@ -80,6 +80,10 @@ def volunteer_act_count():
 def related_opportunities(name,sdgs):
     return Activity.related_opportunities(name,sdgs)
 
+@frappe.whitelist(allow_guest=True)
+def submit_feedback(name,volunteer,rating,comments):
+    return Activity.submit_feedback(name,volunteer,rating,comments)
+
 # master data
 @frappe.whitelist(allow_guest=True)
 def country_data():

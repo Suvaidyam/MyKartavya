@@ -198,6 +198,8 @@ class Activity:
                 act.activity_image as activity_image,
                 va.workflow_state as workflow_state,
                 va.completion_wf_state as completion_wf_state,
+                va.rating as rating,
+                va.remarks as remarks,
                 COALESCE(
                     JSON_ARRAYAGG(
                         CASE 
@@ -271,8 +273,9 @@ class Activity:
         # check user and not assigned
         if user:
             v_activity = frappe.get_list("Volunteer Activity", filters={"volunteer": user}, pluck="activity")
-            where_clause += f" AND act.name NOT IN ({', '.join(frappe.db.escape(v) for v in v_activity)})"
-        
+            if v_activity:
+                where_clause += f" AND act.name NOT IN ({', '.join(frappe.db.escape(v) for v in v_activity)})"
+
         sql_query = f"""
         SELECT 
             act.name as activity,
@@ -318,3 +321,15 @@ class Activity:
 
         data = frappe.db.sql(sql_query, as_dict=True)
         return data
+
+    def submit_feedback(name,volunteer,rating,comments):
+        volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")
+        exists = frappe.db.exists("Volunteer Activity", {"volunteer": volunteer, "name": name})
+        if not exists:
+            return {"error": "Activity not assigned to the volunteer", "status": 400}
+        doc = frappe.get_doc("Volunteer Activity", exists)
+        doc.rating = rating
+        doc.remarks = comments
+        doc.save()
+        frappe.db.commit() 
+        return doc
