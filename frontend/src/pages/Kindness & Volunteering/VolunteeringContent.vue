@@ -40,7 +40,7 @@
       </div>
     </nav>
 
-    <div class="mt-5 w-full h-4/5">
+    <div v-if="activeTab=='kindness'" class="mt-5 w-full h-4/5">
       <div v-if="loader" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
         <CardLoader />
         <CardLoader />
@@ -52,6 +52,9 @@
         </div>
         <NotFound v-else />
       </div>
+    </div>
+    <div v-else class="w-full h-4/5 flex items-center justify-center">
+      <p>Coming Soon...</p>
     </div>
   </section>
 </template>
