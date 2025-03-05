@@ -66,49 +66,8 @@
       <div class="p-4 md:p-6 lg:p-10">
         <div class="flex flex-col lg:flex-row gap-4">
           <!-- Left Section -->
-          <div class="w-full lg:w-[65xp]">
-            <p class="mb-4 text-[10px] md:text-bodyh2 font-normal font-poppins text-justify" style="color: #666666">
-              <span class="text-3xl md:text-[47px] text-black">T</span>his
-              Women's Entrepreneurship Day, let's empower underserved women
-              running small businesses or working in our communities by sharing
-              positive reviews of their businesses on our social media
-              platforms. By highlighting their names and services, we can
-              increase their visibility, boost their confidence, and foster
-              growth.This small act of kindness can have a significant impact,
-              bringing hope and faith to these women as they navigate their
-              entrepreneurial journeys. Together, we can create a supportive
-              network that uplifts and inspires!
-            </p>
-
-            <h2 class="text-xl md:text-heading4 font-medium mt-6" style="color: #0b0b0b">
-              Volunteer Role
-            </h2>
-
-            <p class="mt-2 text-sm md:text-bodyh2 font-normal text-justify" style="color: #666666">
-              Volunteers are encouraged to identify a small business or an
-              underserved woman in their community and capture a photo or video
-              showcasing her work. Along with the visual, write a positive
-              review that highlights her efforts and talents on your social
-              media platforms. This simple gesture can significantly boost her
-              business, while also encouraging her personally and fostering
-              self-confidence.By sharing these stories, we not only promote
-              their work but also inspire others to recognize the value of
-              supporting women entrepreneurs. Let's come together to uplift and
-              empower these remarkable women, helping them shine in their
-              communities!
-            </p>
-
-            <div class="mt-4 space-y-2">
-              <p class="text-sm md:text-bodyh2 font-normal font-poppins" style="color: #666666">
-                Share your experience along with pictures on your social media
-                handles and tag us on social media using
-                <span class="text-secondary">@MyKaratvaya @NASSCOMfdn</span>
-              </p>
-              <p class="text-sm md:text-bodyh2 font-normal font-poppins" style="color: #666666">
-                Use hashtag #MyKartavya #DoGoodFeelGood #LittleActMatters
-                #womenempowerment #letsgrowtogether
-              </p>
-            </div>
+          <div class="w-full lg:w-[65%]">
+            <div v-html="activitiesavilable.activity_description"></div>
           </div>
 
           <!-- Right Section -->

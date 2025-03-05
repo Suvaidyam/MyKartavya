@@ -2,9 +2,9 @@
     <Menu as="div" class="relative inline-block text-left">
         <div>
             <MenuButton :class="
-                'inline-flex w-full justify-center gap-x-1.5 truncate rounded-md bg-white p-2.5 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-inset hover:bg-gray-50'
+                'inline-flex w-full justify-center gap-x-1.5 truncate rounded-md bg-gray-300 p-2 text-sm font-semibold text-gray-900 shadow-xs'
             ">
-                <FeatherIcon class="size-3" name="align-right" />
+                <FeatherIcon class="size-4 text-black" name="align-right" />
             </MenuButton>
         </div>
         <transition enter-active-class="transition ease-out duration-100"
