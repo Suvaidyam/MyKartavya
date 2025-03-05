@@ -9,15 +9,18 @@
   "volunteer",
   "activity",
   "enrollment_wf_state",
+  "column_break_uoat",
   "duration",
   "com_percent",
   "completion_wf_state",
-  "images",
+  "section_break_eeob",
   "karma_points",
+  "images",
+  "section_break_totr",
   "certificate",
+  "volunteer_activity_log",
   "rating",
-  "remarks",
-  "volunteer_activity_log"
+  "remarks"
  ],
  "fields": [
   {
@@ -66,11 +69,12 @@
    "options": "Activity Images"
   },
   {
+   "default": "0",
    "fieldname": "karma_points",
    "fieldtype": "Int",
    "label": "Karma Points",
    "non_negative": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "certificate",
@@ -102,11 +106,23 @@
    "label": "Completion Percent",
    "precision": "1",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_uoat",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_eeob",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_totr",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-01 12:03:46.711186",
+ "modified": "2025-03-05 12:38:41.532486",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",
