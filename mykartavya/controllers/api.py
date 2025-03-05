@@ -141,7 +141,6 @@ def create_subscription(data):
         "message": data["query"],
     })
     
-    print(doc, "======================================================================")
     doc.insert(ignore_permissions=True)
     frappe.db.commit()
     
@@ -150,3 +149,7 @@ def create_subscription(data):
 @frappe.whitelist(allow_guest=True)
 def sdg_impacted():
     return Profile.sdg_impacted()
+
+@frappe.whitelist(allow_guest=True)
+def check_user_fields():
+    return Profile.check_user_fields()

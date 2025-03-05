@@ -83,3 +83,14 @@ class Profile:
         return res
 
     
+    @frappe.whitelist(allow_guest=True) 
+    def check_user_fields(user_email):
+    
+        user = frappe.get_doc("User", user_email)  
+        required_fields = ["id", "name", "phone",]
+
+        missing_fields = [field for field in required_fields if not user.get(field)]
+
+        if missing_fields:
+            return {"success": False, "message": f"Missing fields: {', '.join(missing_fields)}"}
+        return {"success": True, "message": "All fields are filled."}
