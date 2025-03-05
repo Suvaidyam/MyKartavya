@@ -187,9 +187,10 @@ onMounted(async() => {
   window.addEventListener('resize', updateDropdown);
 });
 watch(()=>route.fullPath,async(value)=>{
-  if(value != '/updateprofile'){
+  if(value != '/updateprofile',auth.isLoggedIn){
     let res = await call('mykartavya.controllers.api.check_user_fields', {});
     if (!res?.success) {
+        localStorage.setItem('updateprofile', 'true');
         router.push('/updateprofile');
     }
   }

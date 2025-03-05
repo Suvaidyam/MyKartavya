@@ -3,10 +3,12 @@
         <router-link :to="`/activity/${item.activity}`">
             <div class="w-full flex flex-col justify-between h-40 rounded-md relative">
                 <img :src="item.activity_image" alt="" class="h-full rounded-md">
-                <div class="bg-orange-500 absolute top-1 text-white font-medium text-xs flex items-center px-3 h-6 rounded-br-lg">
+                <div
+                    class="bg-orange-500 absolute top-1 text-white font-medium text-xs flex items-center px-3 h-6 rounded-br-lg">
                     {{ item.activity_type }}
                 </div>
-                <div class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
+                <div
+                    class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
                     <span class="font-medium text-xs">{{ item.karma_points }} Points</span>
                 </div>
                 <div class="absolute bottom-1  flex items-center gap-1 px-2 overflow-auto">
@@ -45,10 +47,12 @@
         <router-link :to="auth.isLoggedIn ? '/activity/' + item.activity : '/kindness-volunteering/' + item.activity">
             <div class="w-full flex flex-col justify-between h-40 rounded-md relative">
                 <img :src="item.activity_image" alt="" class="h-full rounded-md">
-                <div class="bg-orange-500 absolute top-1 text-white font-medium text-xs flex items-center px-3 h-6 rounded-br-lg">
+                <div
+                    class="bg-orange-500 absolute top-1 text-white font-medium text-xs flex items-center px-3 h-6 rounded-br-lg">
                     {{ item.activity_type }}
                 </div>
-                <div class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
+                <div
+                    class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
                     <span class="font-medium text-xs">{{ item.karma_points }} Points</span>
                 </div>
                 <div class="absolute bottom-1  flex items-center gap-1 px-2 overflow-auto">
@@ -66,20 +70,18 @@
                 {{ item.description }}
             </p>
             <div class="flex flex-col gap-3 justify-between mt-2">
-                <div class="flex items-center justify-between">
-                    <div class="flex gap-1 items-center text-xs tracking-normal text-neutral-950">
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/206e5d29b5523c409dbfe316e887c82aeb672c336764aad169ece16b133845e4?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-                            alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                        <time class="self-stretch my-auto">{{ formatDate(item.start_date) }} - {{
-                            formatDate(item.end_date)
-                            }}
-                        </time>
-                    </div>
-                    <div class="flex gap-1 items-center self-end text-xs tracking-normal text-justify text-neutral-950">
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/193573c664d98aa3d1c71908aad0cbb8163b462f0553be41c395306a299aa57f?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-                            alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                        <span class="self-stretch my-auto">{{ item.hours }} hr</span>
-                    </div>
+                <div class="flex gap-1 items-center text-xs tracking-normal text-neutral-950">
+                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/206e5d29b5523c409dbfe316e887c82aeb672c336764aad169ece16b133845e4?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
+                        alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                    <time class="self-stretch my-auto">{{ formatDate(item.start_date) }} - {{
+                        formatDate(item.end_date)
+                    }}
+                    </time>
+                </div>
+                <div class="flex gap-1 items-center text-xs tracking-normal text-justify text-neutral-950">
+                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/193573c664d98aa3d1c71908aad0cbb8163b462f0553be41c395306a299aa57f?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
+                        alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                    <span class="self-stretch my-auto">{{ item.hours }} hr</span>
                 </div>
                 <div class="flex items-center justify-between">
                     <div v-if="JSON.parse(item.volunteers).length > 0 && JSON.parse(item.volunteers)[0].full_name != null"
