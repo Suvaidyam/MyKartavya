@@ -286,10 +286,19 @@ const onSubmit = async () => {
 
   try {
     let res = await call("mykartavya.controllers.api.update_sva_user", {
-      data: JSON.stringify(formData.value)
+      data: {
+        first_name: formData.value.first_name,
+        last_name: formData.value.last_name || "",
+        mobile_number: formData.value.mobile_number,
+        custom_date_of_birth: formData.value.custom_date_of_birth,
+        custom_country: formData.value.custom_country ,
+        custom_state: formData.value.custom_state,
+        custom_city: formData.value.custom_city ,
+        custom_company: formData.value.custom_company || "",
+      }
     });
 
-    if (res.success) {
+    if (res.status == 200) {
       toast.success("Profile updated successfully!", { "autoClose": 3000 });
       setTimeout(() => router.back(-1), 3000)
     } else {

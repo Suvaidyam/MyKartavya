@@ -55,7 +55,7 @@
           </div>
         </div>
         <!-- Activity modal for step start -->
-        <div v-if="showCertificate" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <!-- <div v-if="showCertificate" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div
             class="w-[384px] h-[296px] bg-white rounded-[12px] flex flex-col justify-end items-center py-[20px] gap-[21px] font-poppins">
             <div>
@@ -75,7 +75,7 @@
               View Certificate
             </button>
           </div>
-        </div>
+        </div> -->
 
         <div v-if="show_Feedback" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div class="bg-white rounded-lg shadow-lg w-full max-w-md">
