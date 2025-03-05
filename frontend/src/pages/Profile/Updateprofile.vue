@@ -330,6 +330,10 @@ onMounted(() => {
   fetchCountries();
   fetchCompanies();
   getDetails();
+  if(localStorage.getItem('updateprofile') == 'true'){
+    toast.error("Please update your profile to continue.", { "autoClose": 3000 });
+    localStorage.removeItem('updateprofile');
+  }
 });
 
 const scrollToFirstError = async () => {

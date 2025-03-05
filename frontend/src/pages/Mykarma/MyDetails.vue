@@ -1,5 +1,5 @@
 <template>
-  <aside class="w-full xl:w-1/4 bg-white rounded-md pt-3 lg:mt-0">
+  <aside class="w-full xl:w-[320px] xl:min-w-[320px] bg-white rounded-md pt-3 lg:mt-0">
     <div class="px-3">
       <div class="flex items-center mb-4 border-b border-gray-100 py-2">
         <img
