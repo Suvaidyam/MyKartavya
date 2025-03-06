@@ -6,7 +6,7 @@ from datetime import datetime, time
 
 class Activity(Document):
     def validate(self):
-        # self.validate_dates() 
+        self.validate_dates() 
         self.validate_hours()
         self.validate_points()
         self.validate_time()
@@ -15,12 +15,13 @@ class Activity(Document):
         self.validate_reward()
         self.validate_location()
         self.validate_company()
+        self.calculate_work_value_rupees()
     
     def validate_dates(self):
         current_datetime = now_datetime()
         
         # Validate publish date
-        if get_datetime(self.publish_date) < current_datetime:
+        if get_datetime(self.publish_date) > current_datetime:
             frappe.throw(_("Activity Publish Date cannot be in the past"))
             
         # Validate application deadline
@@ -147,3 +148,23 @@ class Activity(Document):
             self.state = None
             self.city = None
             self.address = None
+
+    def validate(self):
+        self.calculate_work_value_rupees()   
+
+    def calculate_work_value_rupees(self):
+        if self.value_type == "Skills":
+            total_value = 0
+            for skill_entry in self.skill:
+                skill_name = skill_entry.skills_name
+                skill_doc = frappe.get_doc("Skills", skill_name)
+                if skill_doc:
+                    total_value += skill_doc.rate_per_hour
+            self.work_value_rupees = total_value
+        
+        elif self.value_type == "General":
+            if self.work_value_rupees is not None:
+                pass
+            else:
+                self.work_value_rupees = 0
+     
