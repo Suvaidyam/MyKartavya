@@ -214,13 +214,15 @@
    "fieldname": "skill",
    "fieldtype": "Table MultiSelect",
    "label": "Skills",
+   "mandatory_depends_on": "eval:doc.value_type=='Skills'",
    "options": "Skills Child"
   },
   {
    "fieldname": "work_value_rupees",
    "fieldtype": "Int",
    "label": "Work Value (In Rupees)",
-   "mandatory_depends_on": "eval:doc.value_type=='General'"
+   "mandatory_depends_on": "eval:doc.value_type=='General'",
+   "read_only_depends_on": "eval:doc.value_type=='Skills'"
   },
   {
    "fieldname": "goal",
@@ -405,7 +407,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-03-06 12:30:58.910420",
+ "modified": "2025-03-06 14:52:58.662693",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",

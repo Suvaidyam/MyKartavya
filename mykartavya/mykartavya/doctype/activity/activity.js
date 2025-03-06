@@ -1,4 +1,12 @@
 frappe.ui.form.on("Activity", {
+    value_type: function(frm) {
+        if (frm.doc.value_type === "Skills") {
+            frm.set_value("work_value_rupees", 0);
+        } else if (frm.doc.value_type === "General") {
+            frm.set_value("work_value_rupees","" );
+        }
+    },
+
     refresh(frm) {
         let today = new Date(frappe.datetime.get_today());
         let fields = [
@@ -20,9 +28,10 @@ frappe.ui.form.on("Activity", {
             }
         });
     }
-
     
 });
+
+
 function validate_date(frm, field, depends_on) {
     let field_date = frm.doc[field] ? new Date(frm.doc[field]) : null;
     let depends_date = depends_on && frm.doc[depends_on] ? new Date(frm.doc[depends_on]) : null;
@@ -36,5 +45,3 @@ function validate_date(frm, field, depends_on) {
         frm.set_value(field, "");
     }
 }
-
-
