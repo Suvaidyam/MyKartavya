@@ -10,6 +10,7 @@
   "column_break_cfmi",
   "company_registration_date",
   "company_registration_year",
+  "registration_status",
   "contact_section",
   "first_name",
   "last_name",
@@ -37,6 +38,8 @@
   "volunteering_csr_activities",
   "employee_engagement",
   "company_logo",
+  "section_break_mkcb",
+  "remarks",
   "volunteer_details_tab",
   "volunteer",
   "section_break_tfdt",
@@ -275,11 +278,28 @@
    "label": "Country",
    "options": "Country",
    "reqd": 1
+  },
+  {
+   "fieldname": "registration_status",
+   "fieldtype": "Select",
+   "label": "Registration Status",
+   "options": "\nDraft\nPending Approval\nApproved\nRejected",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_mkcb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.registration_type=='Admin Registration'",
+   "fieldname": "remarks",
+   "fieldtype": "Text",
+   "label": "Remarks"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-21 18:33:15.385618",
+ "modified": "2025-03-06 15:26:32.677680",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Company",
@@ -359,6 +379,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
