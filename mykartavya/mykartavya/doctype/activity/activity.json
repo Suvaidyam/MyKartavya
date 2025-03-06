@@ -220,7 +220,7 @@
    "fieldname": "work_value_rupees",
    "fieldtype": "Int",
    "label": "Work Value (In Rupees)",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.value_type=='General'"
   },
   {
    "fieldname": "goal",
@@ -405,7 +405,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-03-06 09:27:59.818009",
+ "modified": "2025-03-06 12:30:58.910420",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
