@@ -1,14 +1,12 @@
 frappe.ui.form.on("Activity", {
     refresh(frm) {
-            
-
         let today = new Date(frappe.datetime.get_today());
         let fields = [
             { name: "publish_date", min: today },
             { name: "application_deadline", depends_on: "publish_date" },
             { name: "start_date", depends_on: "application_deadline" },
             { name: "end_date", depends_on: "start_date" },
-            { name: "reporting_deadline", depends_on: "end_date" }
+            { name: "reporting_deadline", depends_on: "end_date" } 
         ];
 
         fields.forEach(field => {
@@ -22,8 +20,9 @@ frappe.ui.form.on("Activity", {
             }
         });
     }
-});
 
+    
+});
 function validate_date(frm, field, depends_on) {
     let field_date = frm.doc[field] ? new Date(frm.doc[field]) : null;
     let depends_date = depends_on && frm.doc[depends_on] ? new Date(frm.doc[depends_on]) : null;
@@ -37,3 +36,5 @@ function validate_date(frm, field, depends_on) {
         frm.set_value(field, "");
     }
 }
+
+
