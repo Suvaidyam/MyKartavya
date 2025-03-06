@@ -357,7 +357,6 @@ const topvolunteer = async () => {
       'mykartavya.controllers.api.top_three_volunteer'
     )
     user.value = response
-    console.log('object====1', response)
     if (response) {
       activitiestopuser.value = response
       console.log(activitiestopuser.value, 'Top Volunteers')
@@ -372,7 +371,6 @@ const sdgimpacted = async () => {
     const response = await call('mykartavya.controllers.api.sdg_impacted')
     if (response) {
       sdgs.value = response
-      console.log(activitiestopuser.value, 'Top Volunteers')
     }
   } catch (err) {
     console.error('Error fetching activity data:', err)
@@ -384,7 +382,6 @@ const get_all_user = async () => {
   const response = await call('mykartavya.controllers.api.get_top_users', {
     top: 10,
   })
-  console.log('=================', response)
 }
 
 onMounted(() => {

@@ -77,6 +77,10 @@ def volunteer_act_count():
     return Activity.volunteer_act_count()
 
 @frappe.whitelist(allow_guest=True)
+def check_user_fields():
+    return Profile.check_user_fields()
+
+@frappe.whitelist(allow_guest=True)
 def related_opportunities(name,sdgs):
     return Activity.related_opportunities(name,sdgs)
 
@@ -140,8 +144,7 @@ def create_subscription(data):
         "email_address": data["email"],
         "message": data["query"],
     })
-    
-    print(doc, "======================================================================")
+     
     doc.insert(ignore_permissions=True)
     frappe.db.commit()
     

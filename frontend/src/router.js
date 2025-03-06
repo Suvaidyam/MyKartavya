@@ -56,7 +56,7 @@ const routes = [
     name: 'Contact',
     path: '/contact',
     component: () => import('@/pages/Public/Contact.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: false }
   },
   {
     name: 'Profile',

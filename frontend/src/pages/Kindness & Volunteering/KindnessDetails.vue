@@ -109,6 +109,7 @@
         </div>
       </div>
     </section>
+    <Footer />
   </div>
 </template>
 
@@ -119,6 +120,7 @@ import { useRoute } from 'vue-router'
 import Card from '../../components/Card.vue'
 import NotFound from '../../components/NotFound.vue'
 import CardLoader from '../../components/CardLoader.vue'
+import Footer from '../../components/Footer.vue'
 import {
   Facebook,
   Twitter,

@@ -21,7 +21,7 @@
         <ul class="space-y-2">
           <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Testimonials</a></li>
           <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">MyKartavya FAQs</a></li>
-          <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Contact Us</a></li>
+          <li><router-link to="/contact" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Contact Us</router-link></li>
           <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Privacy Policy</a></li>
           <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Terms of Use</a></li>
           <li><a href="#" class=" text-bodyh1 font-normal font-poppins"  style="color: #D9D9D9;">Disclaimer</a></li>
@@ -39,11 +39,13 @@
       </div>
       
       <!-- Subscribe Section -->
-      <div class="bg-gray-800 p-6  w-full lg:w-[287px]">
+      <div class="bg-gray-800 p-6  w-full lg:w-[338px]">
         <h3 class="text-bodyh1 font-medium">Subscribe</h3>
         <div class="mt-4 flex">
-          <input type="email" placeholder="Email address" v-model="email" class="w-full p-2 text-black rounded-l-sm">
-          <button @click="handleSubscribe" class="bg-[#FF5722] p-3 rounded-r-sm"><img src="https://res.cloudinary.com/dusyfh7fo/image/upload/v1741071162/arrows-down-top-move-1_imy9ki.png" class="h-4" alt=""></button>
+          <input type="email" placeholder="Email address" v-model="email" class="w-full px-2 h-[50px] text-black rounded-l-sm">
+          <button @click="handleSubscribe" class="bg-[#FF5722] h-[50px] w-[50px] flex items-center justify-center rounded-r-sm">
+            <FeatherIcon name="arrow-right" class="size-4 text-white" />
+          </button>
         </div>
         <p class="mt-2 text-caption font-normal text-gray-400">NASSCOM Foundation works with the industry to drive social transformation and impact through technology.</p>
       </div>
@@ -67,6 +69,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import {FeatherIcon} from 'frappe-ui';
 // Reactive email variable
 const email = ref('');
 // Handle button click
