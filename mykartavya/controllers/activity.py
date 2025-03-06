@@ -76,8 +76,13 @@ class Activity:
         where_clause = ""
         order_by_clause = ""
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+        company = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "custom_company")
         if user:
             where_clause += f" AND act.name NOT IN (SELECT activity FROM `tabVolunteer Activity` WHERE volunteer = '{user}')"
+        if company:
+            where_clause += f" AND (act.company IS NULL OR act.company IN ('','{company}'))"
+        else:
+            where_clause += " AND (act.company IS NULL OR act.company = '')"
         if isinstance(filter, str):
             filter = frappe.parse_json(filter)
         if filter:
