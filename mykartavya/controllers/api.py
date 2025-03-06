@@ -37,16 +37,33 @@ def actvolunteer_data():
     )
     return doc
 @frappe.whitelist(allow_guest=True)
-def get_top_users(top):
-    activities = frappe.get_list(
-        "Volunteer Activity",
-        fields=["volunteer.full_name","karma_points","duration","volunteer.user_image"],
-        order_by="karma_points DESC" ,
-        limit_page_length=top,
-        ignore_permissions=True
-    )
+def get_top_users(page=1, page_size=10):
+    try:
+        page = int(page)
+        page_size = int(page_size)
+        start = (page - 1) * page_size
 
-    return activities
+        activities = frappe.get_list(
+            "Volunteer Activity",
+            fields=["volunteer.full_name", "karma_points", "duration", "volunteer.user_image"],
+            order_by="karma_points DESC",
+            start=start,
+            page_length=page_size,
+            ignore_permissions=True
+        )
+
+        total_users = frappe.db.count("Volunteer Activity")
+
+        return {
+            "users": activities,
+            "total_users": total_users,
+            "total_pages": (total_users + page_size - 1) // page_size,
+            "current_page": page
+        }
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), "get_top_users Error")
+        return {"error": str(e)}
+
 
 @frappe.whitelist(allow_guest=True)
 def current_commitments(filter={}):
