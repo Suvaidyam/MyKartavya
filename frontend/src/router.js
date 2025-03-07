@@ -11,6 +11,11 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/certificate',
+    name: 'Certificate',
+    component: () => import('@/components/Certificate.vue'),
+  },
+  {
     path: '/landing',
     name: 'LandingPage',
     component: () => import('@/pages/Home.vue'),
