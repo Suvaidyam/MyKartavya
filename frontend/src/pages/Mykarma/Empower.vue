@@ -5,7 +5,7 @@
       <div v-if="activities" class="w-full relative h-[456px] md:h-[456px] back-img flex items-center mt-10">
         <img :src="activities.activity_image" class="w-full h-full" alt="">
         <div
-          class="absolute top-20 left-10 max-w-sm w-[448px] h-[312px] bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-4 justify-center">
+          class="absolute top-20 left-5 sm:left-10 max-w-sm w-[448px] h-[312px] bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-4 justify-center">
           <div class="border-b pb-2">
 
             <h2 class="text-heading3 font-normal font-poppins mt-1">
