@@ -169,37 +169,22 @@ class Activity(Document):
                 self.work_value_rupees = 0
     
     def validate(self):
-        if self.activity_image:
-            file_doc = frappe.db.get_value("File", {"file_url": self.activity_image}, ["file_size", "file_name"])
+        for field in ["activity_image", "reward_image"]:
+            image_url = getattr(self, field, None)
 
-            if file_doc:
-                file_size, file_name = file_doc
+            if image_url:
+                file_doc = frappe.db.get_value("File", {"file_url": image_url}, ["file_size", "file_name"])
 
-                # Validate file size (max 5MB)
-                if file_size > 5 * 1024 * 1024:  
-                    frappe.throw("File size exceeds 5 MB limit")
+                if file_doc:
+                    file_size, file_name = file_doc
 
-                # Validate file type (only images)
-                allowed_extensions = {"jpg", "jpeg", "png", "webp"}
-                file_extension = file_name.split(".")[-1].lower()
+                    # Validate file size (max 5MB)
+                    if file_size > 5 * 1024 * 1024:  
+                        frappe.throw(f"File size exceeds 5 MB limit for {field.replace('_', ' ').title()}")
 
-                if file_extension not in allowed_extensions:
-                    frappe.throw("Invalid file type. Only JPG, JPEG, PNG, and WEBP are allowed.")
-    
-    def validate(self):
-        if self.reward_image:
-            file_doc = frappe.db.get_value("File", {"file_url": self.reward_image}, ["file_size", "file_name"])
+                    # Validate file type (only images)
+                    allowed_extensions = {"jpg", "jpeg", "png", "webp"}
+                    file_extension = file_name.split(".")[-1].lower()
 
-            if file_doc:
-                file_size, file_name = file_doc
-
-                # Validate file size (max 5MB)
-                if file_size > 5 * 1024 * 1024:  
-                    frappe.throw("File size exceeds 5 MB limit")
-
-                # Validate file type (only images)
-                allowed_extensions = {"jpg", "jpeg", "png", "webp"}
-                file_extension = file_name.split(".")[-1].lower()
-
-                if file_extension not in allowed_extensions:
-                    frappe.throw("Invalid file type. Only JPG, JPEG, PNG, and WEBP are allowed.")
+                    if file_extension not in allowed_extensions:
+                        frappe.throw(f"Invalid file type for {field.replace('_', ' ').title()}. Only JPG, JPEG, PNG, and WEBP are allowed.")
