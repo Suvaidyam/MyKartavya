@@ -60,8 +60,8 @@ class Activity(Document):
             
         # Validate max hours
         if self.max_hours < self.hours:
-            frappe.throw(_("Max Hours must be greater than or equal to Hours"))
-            
+          frappe.throw(_("Max Hours must be greater than or equal to Hours"))
+
         # Validate max hours for fixed contribution type
         if self.contribution_type == "Fixed":
             self.max_hours = self.hours
@@ -167,4 +167,39 @@ class Activity(Document):
                 pass
             else:
                 self.work_value_rupees = 0
-     
+    
+    def validate(self):
+        if self.activity_image:
+            file_doc = frappe.db.get_value("File", {"file_url": self.activity_image}, ["file_size", "file_name"])
+
+            if file_doc:
+                file_size, file_name = file_doc
+
+                # Validate file size (max 5MB)
+                if file_size > 5 * 1024 * 1024:  
+                    frappe.throw("File size exceeds 5 MB limit")
+
+                # Validate file type (only images)
+                allowed_extensions = {"jpg", "jpeg", "png", "webp"}
+                file_extension = file_name.split(".")[-1].lower()
+
+                if file_extension not in allowed_extensions:
+                    frappe.throw("Invalid file type. Only JPG, JPEG, PNG, and WEBP are allowed.")
+    
+    def validate(self):
+        if self.reward_image:
+            file_doc = frappe.db.get_value("File", {"file_url": self.reward_image}, ["file_size", "file_name"])
+
+            if file_doc:
+                file_size, file_name = file_doc
+
+                # Validate file size (max 5MB)
+                if file_size > 5 * 1024 * 1024:  
+                    frappe.throw("File size exceeds 5 MB limit")
+
+                # Validate file type (only images)
+                allowed_extensions = {"jpg", "jpeg", "png", "webp"}
+                file_extension = file_name.split(".")[-1].lower()
+
+                if file_extension not in allowed_extensions:
+                    frappe.throw("Invalid file type. Only JPG, JPEG, PNG, and WEBP are allowed.")
