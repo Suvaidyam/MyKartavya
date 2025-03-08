@@ -59,7 +59,7 @@ class Activity(Document):
             frappe.throw(_("Minutes must be between 0 and 59"))
             
         # Validate max hours
-        if self.max_hours < self.hours:
+        if self.max_hours < self.hours and not self.contribution_type == 'Fixed':
           frappe.throw(_("Max Hours must be greater than or equal to Hours"))
 
         # Validate max hours for fixed contribution type
