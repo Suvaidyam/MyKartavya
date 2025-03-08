@@ -1,4 +1,15 @@
 frappe.ui.form.on("Activity", {
+    validate: function(frm) {
+        if (frm.doc.max_hours < frm.doc.hours) {
+            frappe.throw(__("Max Hours must be greater than or equal to Hours"));
+        }
+        
+        // Validate max hours for fixed contribution type
+        if (frm.doc.contribution_type === "Fixed") {
+            frm.set_value("max_hours", frm.doc.hours);
+            frm.refresh_field("max_hours");
+        }
+    },
     value_type: function(frm) {
         if (frm.doc.value_type === "Skills") {
             frm.set_value("work_value_rupees", 0);
