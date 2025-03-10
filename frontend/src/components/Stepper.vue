@@ -128,12 +128,13 @@
                   <label for="" class="text-base font-normal">Hours</label>
                   <input type="number" v-model="activity_log.hours" class="w-24 border rounded px-2 h-8"
                     @input="activity_log.hours = Math.max(0, activity_log.hours)" />
+
                 </div>
                 <div class="flex gap-2 items-center">
                   <label for="" class="text-base font-normal">Minutes</label>
-                  <input type="number" v-model="activity_log.minutes"
-                    @input="activity_log.minutes = Math.max(0, activity_log.minutes)"
-                    class="w-24 border rounded px-2 h-8" />
+                  <input type="number" v-model="activity_log.minutes" @input="
+                    activity_log.minutes = Math.max(0, activity_log.minutes)"
+                     class="w-24 border rounded px-2 h-8" />
                 </div>
               </div>
             </div>
@@ -300,7 +301,7 @@ const nextStep = async (index) => {
   }
   if (index === 2) {
     activityReportPopup.value = true
-  } 
+  }
 }
 const submitReport = async () => {
   activityReportPopup.value = false
@@ -309,6 +310,7 @@ const submitReport = async () => {
     steps.value[2].completed = true
     currentStep.value++
   }
+ 
   try {
     let res = await call('mykartavya.controllers.api.submit_activity_report', {
       name: props.activity.name,
@@ -321,8 +323,15 @@ const submitReport = async () => {
     if (res) {
       activity_log.value.progress = res.com_percent
       toast.success('Activity report submitted successfully')
-      loading.value = false
+      loading.value = false,
+      activity_log.value = {
+        hours: 0,
+        minutes: 0,
+        progress: 0
+
     }
+    store.refresh_step = true
+  }
   } catch (error) {
     loading.value = false
     toast.error('Something went wrong')
@@ -374,7 +383,7 @@ watch(() => props.activity, (newVal, oldVal) => {
       steps.value[0].completed = true
       steps.value[1].completed = true
       currentStep.value = 2
-    } else if (newVal.workflow_state == 'Approved' && ['Submitted','Approved'].includes(newVal.completion_wf_state) && !(newVal.rating != null && newVal.rating != 0)) {
+    } else if (newVal.workflow_state == 'Approved' && ['Submitted', 'Approved'].includes(newVal.completion_wf_state) && !(newVal.rating != null && newVal.rating != 0)) {
       steps.value[0].completed = true
       if (newVal.completion_wf_state == 'Submitted') {
         steps.value[1].completed = true
