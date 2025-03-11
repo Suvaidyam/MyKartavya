@@ -299,7 +299,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-10 16:14:09.382250",
+ "modified": "2025-03-10 20:12:10.405915",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Company",
@@ -332,7 +332,6 @@
   },
   {
    "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
@@ -343,28 +342,13 @@
    "write": 1
   },
   {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "NGO Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Volunteer Incharge",
-   "share": 1,
-   "write": 1
+   "share": 1
   },
   {
    "email": 1,
