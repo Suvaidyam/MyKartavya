@@ -1,0 +1,32 @@
+{
+ "chart_name": "Charts for hours Donated",
+ "chart_type": "Report",
+ "creation": "2025-03-12 16:11:04.645627",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "modified": "2025-03-12 16:11:09.490896",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Charts for hours Donated",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "report_name": "Charts for hours Donated",
+ "roles": [],
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "sdg_name",
+ "y_axis": [
+  {
+   "y_field": "total_hours"
+  }
+ ]
+}

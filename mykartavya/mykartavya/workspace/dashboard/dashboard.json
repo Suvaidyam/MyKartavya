@@ -2,6 +2,10 @@
  "app": "mykartavya",
  "charts": [
   {
+   "chart_name": "Charts for hours Donated",
+   "label": "Charts for hours Donated"
+  },
+  {
    "chart_name": "Activity status chart",
    "label": "ACTIVITY STATUS CHART"
   },
@@ -16,11 +20,20 @@
   {
    "chart_name": "Public Activiy Status Chart",
    "label": "PUBLIC ACTIVITY STATUS CHART"
+  },
+  {
+   "chart_name": "Chart for Amount Saved",
+   "label": "Chart for Amount Saved"
   }
  ],
- "content": "[{\"id\":\"uNZvG-yuGY\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Dashboard</span>\",\"col\":12}},{\"id\":\"H6PFhd_-cu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"COMPANIES REGISTERED\",\"col\":6}},{\"id\":\"Zx_48P2ZOJ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"AMOUNT SAVED\",\"col\":6}},{\"id\":\"T-dg5rjgLb\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"OVER ALL ACTIVIES\",\"col\":6}},{\"id\":\"LyUBj8ZFKo\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"PRIVATE ACTIVITIES\",\"col\":6}},{\"id\":\"BXIR-epZXe\",\"type\":\"chart\",\"data\":{\"chart_name\":\"ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"W99NVoH3NB\",\"type\":\"chart\",\"data\":{\"chart_name\":\"PRIVATE ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"NPbvmjdzrR\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"PUBLIC ACTIVITIES\",\"col\":6}},{\"id\":\"2Ua9h9ajQX\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"VOLUNTEER REGISTERED\",\"col\":6}},{\"id\":\"rd9BZ0C6YN\",\"type\":\"chart\",\"data\":{\"chart_name\":\"PUBLIC ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"jTuzwSgY2z\",\"type\":\"chart\",\"data\":{\"chart_name\":\"VOLUNTEER REGISTED STATUS CHART\",\"col\":6}}]",
+ "content": "[{\"id\":\"uNZvG-yuGY\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Dashboard</span>\",\"col\":12}},{\"id\":\"H6PFhd_-cu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"COMPANIES REGISTERED\",\"col\":6}},{\"id\":\"Zx_48P2ZOJ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"AMOUNT SAVED\",\"col\":6}},{\"id\":\"T-dg5rjgLb\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"OVER ALL ACTIVIES\",\"col\":6}},{\"id\":\"LyUBj8ZFKo\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"PRIVATE ACTIVITIES\",\"col\":6}},{\"id\":\"BXIR-epZXe\",\"type\":\"chart\",\"data\":{\"chart_name\":\"ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"W99NVoH3NB\",\"type\":\"chart\",\"data\":{\"chart_name\":\"PRIVATE ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"NPbvmjdzrR\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"PUBLIC ACTIVITIES\",\"col\":6}},{\"id\":\"2Ua9h9ajQX\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"VOLUNTEER REGISTERED\",\"col\":6}},{\"id\":\"rd9BZ0C6YN\",\"type\":\"chart\",\"data\":{\"chart_name\":\"PUBLIC ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"jTuzwSgY2z\",\"type\":\"chart\",\"data\":{\"chart_name\":\"VOLUNTEER REGISTED STATUS CHART\",\"col\":6}},{\"id\":\"3O02SOOTrR\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Leadboard\",\"col\":12}},{\"id\":\"vgBw7kBkOR\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Charts for hours Donated\",\"col\":12}},{\"id\":\"0kyaj2SLp-\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Chart for Amount Saved\",\"col\":12}}]",
  "creation": "2025-03-11 13:11:04.885163",
- "custom_blocks": [],
+ "custom_blocks": [
+  {
+   "custom_block_name": "Leadboard",
+   "label": "Leadboard"
+  }
+ ],
  "docstatus": 0,
  "doctype": "Workspace",
  "for_user": "",
@@ -32,7 +45,7 @@
  "label": "Dashboard",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-03-12 14:03:32.065703",
+ "modified": "2025-03-12 16:22:23.077966",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Dashboard",
