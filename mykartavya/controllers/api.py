@@ -4,6 +4,36 @@ from mykartavya.controllers.activity import Activity
 from mykartavya.controllers.filter import Filters
 from mykartavya.controllers.profile import Profile
 
+
+# @frappe.whitelist(allow_guest=True)
+# def get_ngos_by_state():
+#     ngos = frappe.get_all(
+#         "NGO",
+#         fields=["state", "COUNT(name) as count"],
+#         group_by="state",
+#         order_by="count DESC"
+#     )
+#     return ngos
+
+@frappe.whitelist(allow_guest=True)
+def get_ngos_by_state():
+    # return 'Hello World'
+    try:
+        query = """
+            SELECT s.state_name, COUNT(n.name) AS total_ngos
+            FROM `tabNGOs` n
+            JOIN `tabState` s ON n.state = s.state_code
+            GROUP BY s.state_name
+            ORDER BY total_ngos DESC;
+        """
+        data = frappe.db.sql(query, as_dict=True)
+        return data
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), _("Error fetching NGOs by state"))
+        return {"error": str(e)}
+
+
+
 @frappe.whitelist(allow_guest=True)
 def sdg_data():
     return Filters.sdg_data()
