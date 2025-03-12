@@ -356,7 +356,7 @@ const topvolunteer = async () => {
     const response = await call(
       'mykartavya.controllers.api.top_three_volunteer'
     )
-    user.value = response
+    users_top_3.value = response
     if (response) {
       activitiestopuser.value = response
       console.log(activitiestopuser.value, 'Top Volunteers')
