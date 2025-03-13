@@ -1,31 +1,4 @@
 frappe.ui.form.on("Activity", {
-    onload: function (frm) {
-        frm.trigger("check_status");
-    },
-    start_date: function(frm) {
-        frm.trigger("check_status");
-    },
-    end_date: function(frm) {
-        frm.trigger("check_status");
-    },
-    check_status: function(frm) {
-        let today = frappe.datetime.str_to_obj(frappe.datetime.get_today());  
-        let start_date = frm.doc.start_date ? frappe.datetime.str_to_obj(frm.doc.start_date) : null;
-        let end_date = frm.doc.end_date ? frappe.datetime.str_to_obj(frm.doc.end_date) : null;
-
-        if (start_date && end_date) {
-            if (start_date >= today) {
-                frm.set_value('status', 'Published');   
-            } else if (start_date <= today && today < end_date) {
-                frm.set_value('status', 'Ongoing');  
-            } else if (end_date.toDateString() === today.toDateString()) {
-                frm.set_value('status', 'Ended'); 
-            } else if (today > end_date) {
-                frm.set_value('status', 'Ended');  
-            }
-        }
-    },
-
     skill: function (frm) {
         if (frm.doc.value_type === "Skills") {
             frm.set_value("work_value_rupees", 0);
