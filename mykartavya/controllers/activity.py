@@ -80,10 +80,15 @@ class Activity:
         order_by_clause = ""
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         company = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "custom_company")
+        companies = frappe.db.get_list("User Permission", filters={"user": frappe.session.user, "allow": "Company"}, pluck="for_value",limit=100,ignore_permissions=True)
         if user:
             where_clause += f" AND act.name NOT IN (SELECT activity FROM `tabVolunteer Activity` WHERE volunteer = '{user}')"
-        if company:
-            where_clause += f" AND (act.company IS NULL OR act.company IN ('','{company}'))"
+        if company and len(companies) > 0:
+            where_clause += f" AND (act.company IS NULL OR act.company IN ('','{company}',{', '.join(frappe.db.escape(c) for c in companies)}))"
+        elif len(companies) > 0:
+            where_clause += f" AND (act.company IS NULL OR act.company IN ('',{', '.join(frappe.db.escape(c) for c in companies)}))"
+        elif company:
+            where_clause += f" AND (act.company IS NULL OR act.company = '{company}')"
         else:
             where_clause += " AND (act.company IS NULL OR act.company = '')"
         if isinstance(filter, str):
