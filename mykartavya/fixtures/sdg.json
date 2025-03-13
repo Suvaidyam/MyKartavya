@@ -4,118 +4,135 @@
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Affordable and Clean Energy",
-  "sdg": "Affordable and Clean Energy"
+  "sdg": "Affordable and Clean Energy",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Sustainable Cities and Communities",
-  "sdg": "Sustainable Cities and Communities"
+  "sdg": "Sustainable Cities and Communities",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Responsible Consumption and Production",
-  "sdg": "Responsible Consumption and Production"
+  "sdg": "Responsible Consumption and Production",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Reduced Inequality",
-  "sdg": "Reduced Inequality"
+  "sdg": "Reduced Inequality",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Quality Education",
-  "sdg": "Quality Education"
+  "sdg": "Quality Education",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Peace Justice and Strong Institutions",
-  "sdg": "Peace Justice and Strong Institutions"
+  "sdg": "Peace Justice and Strong Institutions",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Partnerships for the Goals",
-  "sdg": "Partnerships for the Goals"
+  "sdg": "Partnerships for the Goals",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "No Poverty",
-  "sdg": "No Poverty"
+  "sdg": "No Poverty",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Life on Land",
-  "sdg": "Life on Land"
+  "sdg": "Life on Land",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Life Below Water",
-  "sdg": "Life Below Water"
+  "sdg": "Life Below Water",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Industry Innovation and Infrastructure",
-  "sdg": "Industry Innovation and Infrastructure"
+  "sdg": "Industry Innovation and Infrastructure",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Good Health and Well-being",
-  "sdg": "Good Health and Well-being"
+  "sdg": "Good Health and Well-being",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Gender Equality",
-  "sdg": "Gender Equality"
+  "sdg": "Gender Equality",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Decent Work and Economic Growth",
-  "sdg": "Decent Work and Economic Growth"
- },
- {
-  "docstatus": 0,
-  "doctype": "SDG",
-  "modified": "2025-02-15 10:56:26",
-  "name": "Climate Action",
-  "sdg": "Climate Action"
- },
- {
-  "docstatus": 0,
-  "doctype": "SDG",
-  "modified": "2025-02-15 10:56:26",
-  "name": "Clean Water and Sanitation",
-  "sdg": "Clean Water and Sanitation"
+  "sdg": "Decent Work and Economic Growth",
+  "sdg_image": null
  },
  {
   "docstatus": 0,
   "doctype": "SDG",
   "modified": "2025-02-15 10:56:26",
   "name": "Zero Hunger",
-  "sdg": "Zero Hunger"
+  "sdg": "Zero Hunger",
+  "sdg_image": null
+ },
+ {
+  "docstatus": 0,
+  "doctype": "SDG",
+  "modified": "2025-02-15 10:56:26",
+  "name": "Clean Water and Sanitation",
+  "sdg": "Clean Water and Sanitation",
+  "sdg_image": null
+ },
+ {
+  "docstatus": 0,
+  "doctype": "SDG",
+  "modified": "2025-02-15 10:56:26",
+  "name": "Climate Action",
+  "sdg": "Climate Action",
+  "sdg_image": null
  }
 ]
