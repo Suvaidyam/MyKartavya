@@ -112,13 +112,15 @@ const routes = [
   },
   {
     name: 'Ngos',
-    path: '/ngosregistration',
+    path: '/ngo-registration',
     component: () => import('@/pages/NGOsRegistration/Ngoregistration.vue'),
+    meta: { requiresAuth: false }
   },
   {
     name: 'Company',
-    path: '/company',
+    path: '/company-registration',
     component: () => import('@/pages/Company/Company.vue'),
+    meta: { requiresAuth: false }
   },
 ]
 
