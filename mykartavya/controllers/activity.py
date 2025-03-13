@@ -1,5 +1,8 @@
 import frappe
 import json
+from frappe.utils.file_manager import save_file
+import base64
+
 
 class Activity:
     def current_commitments(filter={}):
@@ -235,6 +238,7 @@ class Activity:
             doc["is_assigned"] = False
         return doc
 
+
     def volunteer_act_count():
         sql_query = """
         SELECT 
@@ -255,15 +259,42 @@ class Activity:
         if not exists:
             return {"error": "Activity not assigned to the volunteer", "status": 400}
         doc = frappe.get_doc("Volunteer Activity", exists)
+        images = data.get("images")
+        if len(images):
+            for image in images:
+              Activity.upload_file(image,doc)
+            
         doc.append("volunteer_activity_log", {
             "date": frappe.utils.now(),
             "duration": data.get("duration"),
             "percent": data.get("percent"),
+            
         })
-        
-        doc.save()
+        doc.save(ignore_permissions=True)
         frappe.db.commit() 
         return doc
+    
+    def upload_file(data,doc):
+        try:
+            base64_string = data.get("preview")    
+            if "," in base64_string:
+                base64_string = base64_string.split(",")[1]
+            file_name = f"{doc.name}_{frappe.utils.now().replace(' ', '_')}.png"
+            file_content = base64.b64decode(base64_string)
+            file_path = save_file(
+                fname=file_name,
+                content=file_content,
+                dt="Volunteer Activity",
+                dn=doc.name,
+                is_private=0,
+            )
+            doc.append("images",{
+                    "image": file_path.file_url,
+                    "parent": doc.name
+                })
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
     
     def related_opportunities(name, sdgs):
         sdgs_list = json.loads(sdgs) if sdgs else []

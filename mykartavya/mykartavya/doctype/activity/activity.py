@@ -136,21 +136,21 @@ class Activity(Document):
             self.address = None
 
 
-    def on_update(self):
-        if self.value_type == "Skills":
-            total_value = 0
-            for skill_entry in self.skill:
-                skill_name = skill_entry.skills_name
-                skill_doc = frappe.get_doc("Skills", skill_name)
-                if skill_doc:
-                    total_value += skill_doc.rate_per_hour
-            self.work_value_rupees = total_value
+    # def on_update(self):
+    #     if self.value_type == "Skills":
+    #         total_value = 0
+    #         for skill_entry in self.skill:
+    #             skill_name = skill_entry.skills_name
+    #             skill_doc = frappe.get_doc("Skills", skill_name)
+    #             if skill_doc:
+    #                 total_value += skill_doc.rate_per_hour
+    #         self.work_value_rupees = total_value
         
-        elif self.value_type == "General":
-            if self.work_value_rupees is not None:
-                pass
-            else:
-                self.work_value_rupees = 0
+    #     elif self.value_type == "General":
+    #         if self.work_value_rupees is not None:
+    #             pass
+    #         else:
+    #             self.work_value_rupees = 0
     
     def validate(self):
         for field in ["activity_image", "reward_image"]:
