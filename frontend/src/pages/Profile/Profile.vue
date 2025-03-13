@@ -7,8 +7,10 @@
                 </div>
                 <div class="absolute left-8 -bottom-8">
                     <div class="w-32 h-32 rounded-full border-4 border-white overflow-hidden">
-                        <img v-if="auth.user_image" :src="auth.user_image" alt="Profile" class="w-full h-full object-cover" />
-                        <div v-else class="w-full h-full bg-gray-200 flex items-center justify-center text-[40px] text-gray-600">
+                        <img v-if="auth.user_image" :src="auth.user_image" alt="Profile"
+                            class="w-full h-full object-cover" />
+                        <div v-else
+                            class="w-full h-full bg-gray-200 flex items-center justify-center text-[40px] text-gray-600">
                             {{ auth.cookie.full_name.charAt(0) }}
                         </div>
                     </div>
@@ -17,10 +19,11 @@
             <div class="pt-10 px-4">
                 <h1 class="text-3xl font-medium">{{ auth.cookie.full_name }}</h1>
                 <p class="text-bodyh1 text-gray-600 mt-1">{{ auth.cookie.user_id }}</p>
-                <router-link to="/updateprofile" class="text-lg text-orange-500 font-normal mt-2">EDIT PROFILE</router-link>
+                <router-link to="/updateprofile" class="text-lg text-orange-500 font-normal mt-2">EDIT
+                    PROFILE</router-link>
             </div>
         </div>
-        <div class="pt-4" >
+        <div class="pt-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white rounded-lg p-6 shadow-sm">
                     <h2 class="text-xl font-semibold mb-6">Personal Info</h2>
@@ -34,7 +37,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.mobile_number || '---'  }}</div>
+                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.mobile_number || '---' }}</div>
                                 <div class="text-caption text-gray-500">Phone No.</div>
                             </div>
                         </div>
@@ -48,7 +51,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">   {{ svaUserData?.state || '---'  }},{{ svaUserData?.city || '---'  }}, {{ svaUserData?.custom_country }}</div>
+                                <div class="text-bodyh2 text-gray-900"> {{ svaUserData?.state || '---' }},{{
+                                    svaUserData?.city || '---' }}, {{ svaUserData?.custom_country }}</div>
                                 <div class="text-caption text-gray-500">Location</div>
                             </div>
                         </div>
@@ -61,7 +65,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.custom_date_of_birth || '---'  }}</div>
+                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.custom_date_of_birth || '---' }}
+                                </div>
                                 <div class="text-caption text-gray-500">Date of Birth</div>
                             </div>
                         </div>
@@ -100,7 +105,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.custom_employee_id || '---'  }}</div>
+                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.custom_employee_id || '---' }}
+                                </div>
                                 <div class="text-caption text-gray-500">Employee ID</div>
                             </div>
                         </div>
@@ -113,7 +119,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">{{svaUserData?.custom_ngo || '---'  }}</div>
+                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.custom_ngo || '---' }}</div>
                                 <div class="text-caption text-gray-500">Title</div>
                             </div>
                         </div>
@@ -174,17 +180,40 @@
                         </div>
                     </div>
                 </div>
+                <!-- Add Mapped Companies Section -->
+                <div v-if="!svaUserData?.custom_company" class="bg-white rounded-lg p-6 shadow-sm mt-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-semibold">My Companies</h2>
+                        <router-link to="/updateprofile" class="text-orange-500 hover:text-orange-600 text-sm">
+                            + Map New Company
+                        </router-link>
+                    </div>
+                    <div class="space-y-4">
+                        <div v-if="mappedCompanies.length === 0" class="text-gray-500 text-center py-8">
+                            No companies mapped yet
+                        </div>
+                        <div v-for="company in mappedCompanies" :key="company.name"
+                            class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                            <div>
+                                <p class="font-medium">{{ company.company_name }}</p>
+                                <p class="text-sm text-gray-600">{{ company.volunteer_email }}</p>
+                                <p class="text-xs text-gray-500">Role: {{ company.role_profile }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref ,inject,onMounted,computed} from 'vue';
+import { ref, inject, onMounted, computed } from 'vue';
 
 const auth = inject('auth');
 const call = inject('call')
-const svaUserData=ref(null)
+const svaUserData = ref(null)
+const mappedCompanies = ref([]);
 
 const certificates = ref([
     {
@@ -220,28 +249,53 @@ const certificates = ref([
 ]);
 
 const get = async () => {
-  try {
-    const response = await call('mykartavya.controllers.api.sva_user_data');
-    svaUserData.value = response[0];
-  } catch (err) {
-    // Handle the error here
-    console.error('Error fetching data:', err);
-  }
+    try {
+        const response = await call('mykartavya.controllers.api.sva_user_data');
+        svaUserData.value = response[0];
+        // Only fetch mapped companies if user doesn't have an assigned company
+        if (!svaUserData.value?.custom_company) {
+            await fetchMappedCompanies();
+        }
+    } catch (err) {
+        // Handle the error here
+        console.error('Error fetching data:', err);
+    }
 };
+
 const age = computed(() => {
-  if (!svaUserData.value?.custom_date_of_birth) return '---';
-  
-  const dob = new Date(svaUserData.value.custom_date_of_birth);
-  const today = new Date();
-  
-  let age = today.getFullYear() - dob.getFullYear();
-  const monthDiff = today.getMonth() - dob.getMonth();
-  
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-    age--;
-  }
-  return age;
+    if (!svaUserData.value?.custom_date_of_birth) return '---';
+
+    const dob = new Date(svaUserData.value.custom_date_of_birth);
+    const today = new Date();
+
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+        age--;
+    }
+    return age;
 });
 
-onMounted(get) 
+// Fetch mapped companies
+const fetchMappedCompanies = async () => {
+    try {
+        const response = await call('frappe.client.get_list', {
+            doctype: 'Volunteer Company Mapper',
+            fields: ['name', 'volunteer_email', 'company_name', 'role_profile'],
+            filters: {
+                volunteer: auth.cookie.name,
+                is_email_verified: 1
+            }
+        });
+        mappedCompanies.value = response || [];
+    } catch (error) {
+        console.error('Error fetching mapped companies:', error);
+        mappedCompanies.value = [];
+    }
+};
+
+onMounted(() => {
+    get();
+})
 </script>
