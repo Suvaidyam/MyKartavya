@@ -64,7 +64,26 @@
                         <p class="text-sm text-gray-600">{{ company.volunteer_email }}</p>
                         <p class="text-xs text-gray-500">Role: {{ company.role_profile }}</p>
                     </div>
-                    <button @click="removeMapping(company.name)" class="text-red-500 hover:text-red-600">
+                    <button @click="openConfirmDialog(company.name)" class="text-red-500 hover:text-red-600">
+                        Remove
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add this confirmation dialog -->
+        <div v-if="showConfirmDialog"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+                <h3 class="text-lg font-medium text-gray-900 mb-3">Confirm Removal</h3>
+                <p class="text-gray-600 mb-6">Are you sure you want to remove this company mapping?</p>
+                <div class="flex justify-end gap-3">
+                    <button @click="showConfirmDialog = false"
+                        class="px-4 py-2 text-gray-600 hover:text-gray-700 border border-gray-300 rounded-sm">
+                        Cancel
+                    </button>
+                    <button @click="confirmRemoveMapping"
+                        class="px-4 py-2 bg-red-500 text-white rounded-sm hover:bg-red-600">
                         Remove
                     </button>
                 </div>
@@ -87,6 +106,8 @@ const emailError = ref('');
 const resendTimer = ref(0);
 const mappedCompanies = ref([]);
 const isLoading = ref(false);
+const showConfirmDialog = ref(false);
+const companyToRemove = ref(null);
 
 // Email validation
 const isValidEmail = computed(() => {
@@ -185,12 +206,18 @@ const startNewMapping = () => {
     emailError.value = '';
 };
 
-// Remove company mapping with improved error handling
-const removeMapping = async (name) => {
+// Open confirmation dialog
+const openConfirmDialog = (name) => {
+    companyToRemove.value = name;
+    showConfirmDialog.value = true;
+};
+
+// Confirm removal
+const confirmRemoveMapping = async () => {
     try {
         await call('frappe.client.delete', {
             doctype: 'Volunteer Company Mapper',
-            name: name
+            name: companyToRemove.value
         });
 
         toast.success('Company mapping removed successfully!');
@@ -202,11 +229,14 @@ const removeMapping = async (name) => {
             toast.error('You do not have permission to remove this mapping');
         } else if (errorMessage.includes('not found')) {
             toast.error('This mapping no longer exists');
-            await fetchMappedCompanies(); // Refresh the list
+            await fetchMappedCompanies();
         } else {
             toast.error('Failed to remove company mapping');
             console.error('Remove mapping error:', error);
         }
+    } finally {
+        showConfirmDialog.value = false;
+        companyToRemove.value = null;
     }
 };
 
