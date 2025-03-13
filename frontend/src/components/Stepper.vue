@@ -168,7 +168,7 @@
                 </div>
               </div>
               <div class="flex gap-2 mt-3">
-                <img v-for="(image, index) in activity_log.images" :key="index" :src="image"
+                <img v-for="(image, index) in uploadedImages" :key="index" :src="image.preview" alt="img"
                   class="w-16 h-16 rounded object-cover" />
               </div>
             </div>
@@ -249,8 +249,9 @@ const activity_log = ref({
   hours: 0,
   minutes: 0,
   progress: 0,
-  images: [],
+  // images: [],
 })
+const uploadedImages = ref([])
 const loading = ref(false)
 const refresh = ref(false)
 const steps = ref([
@@ -310,14 +311,13 @@ const submitReport = async () => {
     steps.value[2].completed = true
     currentStep.value++
   }
- 
   try {
     let res = await call('mykartavya.controllers.api.submit_activity_report', {
       name: props.activity.name,
       data: {
         duration: ((activity_log.value.hours * 60) * 60 + activity_log.value.minutes * 60),
         percent: (activity_log.value.progress - props.activity.com_percent),
-        images: activity_log.value.images,
+        images:uploadedImages.value
       }
     })
     if (res) {
@@ -354,12 +354,17 @@ const submit_your_feedback = async () => {
 
 const uploadFiles = (event) => {
   const files = event.target.files
-  for (let file of files) {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      activity_log.value.images.push(e.target.result)
+  if (files.length) {
+    for (let file of files) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        console.log(file, 'file');
+        
+        uploadedImages.value.push({ file:file, preview: reader.result })
+        console.log(uploadedImages.value, 'uploadedImages');
+      }
+      reader.readAsDataURL(file)
     }
-    reader.readAsDataURL(file)
   }
 }
 const emojis = ref([

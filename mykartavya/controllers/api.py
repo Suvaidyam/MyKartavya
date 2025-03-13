@@ -192,3 +192,22 @@ def create_subscription(data):
 @frappe.whitelist(allow_guest=True)
 def sdg_impacted():
     return Profile.sdg_impacted()
+
+@frappe.whitelist()
+def add_activity_images(docname, images):
+    """Save uploaded images to the Volunteer Activity's child table."""
+    doc = frappe.get_doc("Volunteer Activity", docname)
+    print(doc,"===========================================================================")
+    # Ensure images is a list
+    if isinstance(images, str):
+        import json
+        images = json.loads(images)
+
+    for image in images:
+        new_row = doc.append("images", {})
+        new_row.image = image.get("file_url")
+        new_row.file_name = image.get("file_name")
+
+    doc.save()
+    frappe.db.commit()
+    return {"message": "Images added successfully"}
