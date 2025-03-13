@@ -1,7 +1,7 @@
 import frappe
 from frappe import _
 from frappe.model.document import Document
-from frappe.utils import get_datetime, now_datetime, get_time
+from frappe.utils import get_datetime, now_datetime,today,getdate
 from datetime import datetime, time
 
 class Activity(Document):
@@ -14,27 +14,21 @@ class Activity(Document):
         self.validate_reward()
         self.validate_location()
         self.validate_company()
-        self.calculate_work_value_rupees()
-        self.check_status()
-    
 
-    def check_status(self):
-            today = datetime.today().date()
-            start_date = self.start_date if self.start_date else None
-            end_date = self.end_date if self.end_date else None
-
-            if start_date and end_date:
-                if start_date >= today:
-                    self.status = "Published"
-                elif start_date <= today < end_date:
-                    self.status = "Ongoing"
-                elif end_date == today:
-                    self.status = "Ended"
-                elif today > end_date:
-                    self.status = "Ended"
-
-    def before_save(self):
-        self.check_status()
+    def on_update(self):
+        today_date = getdate(today())
+        start_date = getdate(self.start_date) if self.start_date else None
+        end_date = getdate(self.end_date) if self.end_date else None
+        
+        if start_date and end_date:
+            if start_date >= today_date:
+                self.status = "Published"
+            elif start_date <= today_date < end_date:
+                self.status = "Ongoing"
+            elif end_date == today_date:
+                self.status = "Ended"
+            elif today_date > end_date:
+                self.status = "Ended"
 
     def validate_dates(self):
         current_datetime = now_datetime()
@@ -71,16 +65,6 @@ class Activity(Document):
         # Validate max hours for fixed contribution type
         if self.contribution_type == "Fixed":
             self.max_hours = self.hours
-
-        current_date = datetime.today().date()
-
-        # Convert start_date to a date object (if it's a string)
-        start_date = self.start_date
-
-        # Check if start_date is before the current date
-        if start_date < current_date:
-            self.status = 'Published' 
-    
 
     def validate_time(self):
         try:
@@ -151,10 +135,8 @@ class Activity(Document):
             self.city = None
             self.address = None
 
-    def validate(self):
-        self.calculate_work_value_rupees()   
 
-    def calculate_work_value_rupees(self):
+    def on_update(self):
         if self.value_type == "Skills":
             total_value = 0
             for skill_entry in self.skill:
