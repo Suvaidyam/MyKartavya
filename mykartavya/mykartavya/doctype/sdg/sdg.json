@@ -1,7 +1,6 @@
 {
  "actions": [],
- "allow_rename": 1,
- "autoname": "format:VA-{#####}",
+ "autoname": "field:sdg",
  "creation": "2025-02-15 12:51:13.995192",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -22,18 +21,16 @@
   {
    "fieldname": "sdg_image",
    "fieldtype": "Attach Image",
-   "label": "SDG Image",
-   "reqd": 1,
-   "set_only_once": 1
+   "label": "SDG Image"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-12 18:18:43.404962",
+ "modified": "2025-03-13 16:23:32.043227",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "SDG",
- "naming_rule": "Expression",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -97,8 +94,8 @@
    "share": 1
   }
  ],
- "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "sdg"
 }
