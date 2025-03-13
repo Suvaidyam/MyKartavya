@@ -6,7 +6,7 @@ class Activity:
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         if not user:
             return []
-
+        base_url = frappe.get_conf().get("hostname","")
         where_clauses = ["va.volunteer = %(user)s"]
         order_by_clauses = []
         params = {"user": user}
@@ -45,7 +45,7 @@ class Activity:
             act.hours as hours,
             act.activity_description as activity_description,
             act.activity_type as activity_type,
-            act.activity_image as activity_image,
+            CONCAT('{base_url}', act.activity_image) as activity_image,
             COALESCE(
                 JSON_ARRAYAGG(
                     JSON_OBJECT(

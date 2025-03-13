@@ -8,7 +8,6 @@ class Activity(Document):
     def validate(self):
         self.validate_dates() 
         self.validate_hours()
-        self.validate_points()
         self.validate_time()
         self.validate_vacancies()
         self.handle_activity_published_date_starts()
@@ -16,7 +15,27 @@ class Activity(Document):
         self.validate_location()
         self.validate_company()
         self.calculate_work_value_rupees()
+        self.check_status()
     
+
+    def check_status(self):
+            today = datetime.today().date()
+            start_date = self.start_date if self.start_date else None
+            end_date = self.end_date if self.end_date else None
+
+            if start_date and end_date:
+                if start_date >= today:
+                    self.status = "Published"
+                elif start_date <= today < end_date:
+                    self.status = "Ongoing"
+                elif end_date == today:
+                    self.status = "Ended"
+                elif today > end_date:
+                    self.status = "Ended"
+
+    def before_save(self):
+        self.check_status()
+
     def validate_dates(self):
         current_datetime = now_datetime()
         
@@ -42,19 +61,6 @@ class Activity(Document):
 
             
     def validate_hours(self):
-        # Validate minimum hours
-        if self.minimum_hours <= 0:
-            frappe.throw(_("Minimum Hours must be a positive number"))
-            
-        # Validate buffer minutes
-        if self.buffer_minutes <= 0:
-            frappe.throw(_("Buffer Minutes must be a positive number"))
-            
-        # Validate hours
-        if self.hours <= 0:
-            frappe.throw(_("Hours must be a positive number"))
-            
-        # Validate minutes
         if not (0 <= self.minutes <= 59):
             frappe.throw(_("Minutes must be between 0 and 59"))
             
@@ -65,21 +71,17 @@ class Activity(Document):
         # Validate max hours for fixed contribution type
         if self.contribution_type == "Fixed":
             self.max_hours = self.hours
+
+        current_date = datetime.today().date()
+
+        # Convert start_date to a date object (if it's a string)
+        start_date = self.start_date
+
+        # Check if start_date is before the current date
+        if start_date < current_date:
+            self.status = 'Published' 
     
-    def validate_points(self):
-        # Validate work value rupees
-        if self.work_value_rupees <= 0:
-            frappe.throw(_("Work Value must be a positive number"))
-            
-        # Validate karma points
-        if self.karma_points <= 0:
-            frappe.throw(_("Karma Points must be a positive number"))
-            
-        # Handle work value for skills
-        if self.value_type == "Skills" and self.skill:
-            skill_doc = frappe.get_doc("Skills", self.skill)
-            self.work_value_rupees = skill_doc.work_value_rupees
-    
+
     def validate_time(self):
         try:
             if self.start_time_hr >= self.end_time_hr:

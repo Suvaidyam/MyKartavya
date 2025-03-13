@@ -101,17 +101,15 @@
               <CardLoader />
               <CardLoader />
             </div>
+            
             <div v-else class="w-full pb-4">
-              <div
-                v-if="available_commitments.length > 0"
-                class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
-              >
-                <Card
-                  v-for="item in available_commitments"
-                  :key="item.name"
-                  :item="item"
-                />
-              </div>
+              <div v-if="available_commitments.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <Card
+                v-for="item in available_commitments"
+                :key="item.name"
+                :item="item"
+              />
+            </div>
               <div class="w-full h-[330px]" v-else>
                 <NotFound />
               </div>
@@ -159,7 +157,7 @@ const cur_commitments = async (filter) => {
     current_commitments.value = response
     setTimeout(() => {
       loader.value = false
-      checkScrollButtons() // Check button states after loading
+      checkScrollButtons()  
     }, 1000)
   } catch (err) {
     loader.value = false
@@ -167,24 +165,24 @@ const cur_commitments = async (filter) => {
   }
 }
 const avai_commitments = async (filter) => {
-  loader.value = true
+  loader.value = true;
   try {
     const response = await call(
-      'mykartavya.controllers.api.available_commitments',
-      {
-        filter: filter ?? {},
-      }
-    )
-    available_commitments.value = response
+      "mykartavya.controllers.api.available_commitments",
+      { filter: filter ?? {} }
+    );
+    available_commitments.value = response;
+    
     setTimeout(() => {
-      loader.value = false
-      checkScrollButtons() // Check button states after loading
-    }, 1000)
+      loader.value = false;
+      checkScrollButtons(); 
+    }, 1000);
   } catch (err) {
-    loader.value = false
-    console.error('Error fetching Kindness data:', err)
+    loader.value = false;
+    console.error("Error fetching commitments:", err);
   }
-}
+};
+
 
 // Scroll settings
 const cardWidth = 245
