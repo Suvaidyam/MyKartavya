@@ -22,7 +22,7 @@ class VolunteerCompanyMapper(Document):
 				["name", "custom_company", "full_name", "role_profile"],
 				as_dict=1
 					)
-			print("SVA User"*20, sva_user)
+			# print("SVA User"*20, sva_user)
 			if not sva_user:
 				frappe.throw("Email not found in SVA User records")
 			
@@ -31,9 +31,9 @@ class VolunteerCompanyMapper(Document):
 			
 			# Check if verification is already in progress
 			if not frappe.cache().get_value(sent_cache_key):
-				print("Sending verification email..."*10 , sva_user.name)
+				# print("Sending verification email..."*10 , sva_user.name)
 				verification_data = {
-					"volunteer": self.volunteer,
+					"volunteer": self.volunteer if self.volunteer else frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name"),
 					"company": sva_user.custom_company,
 					"volunteer_name": sva_user.full_name,
 					"role_profile": sva_user.role_profile
@@ -226,6 +226,8 @@ def verify_email(**kwargs):
 		doc.role_profile = verification_data["role_profile"]
 		doc.company_name = frappe.db.get_value("Company", verification_data["company"], "company_name")
 		doc.is_email_verified = 1
+		print("doc"*20, doc.as_dict())
+		# frappe.throw("doc"*20)
 		
 		# Save with flags
 		doc.flags.ignore_permissions = True
@@ -237,67 +239,79 @@ def verify_email(**kwargs):
 		
 		frappe.db.commit()
 		
-		success_template = """
-			<!DOCTYPE html>
-			<html>
-			<head>
-				<style>
-					body {
-						font-family: Arial, sans-serif;
-						background-color: #f0f2f5;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						height: 100vh;
-						margin: 0;
-					}
-					.success-container {
-						background-color: white;
-						padding: 30px;
-						border-radius: 10px;
-						box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-						text-align: center;
-						max-width: 500px;
-					}
-					.success-icon {
-						color: #4CAF50;
-						font-size: 48px;
-						margin-bottom: 20px;
-					}
-					h3 {
-						color: #4CAF50;
-						margin-bottom: 20px;
-					}
-					p {
-						color: #666;
-						line-height: 1.6;
-					}
-					.close-message {
-						margin-top: 20px;
-						font-size: 14px;
-						color: #999;
-					}
-				</style>
-			</head>
-			<body>
-				<div class="success-container">
-					<div class="success-icon">✓</div>
-					<h3>Email Verified Successfully!</h3>
-					<p>Your volunteer company mapping has been created successfully.</p>
-					<p>You can now access the volunteer portal with your verified credentials.</p>
-					<p class="close-message">This window will close automatically in 3 seconds...</p>
-				</div>
-				<script>
-					setTimeout(function() {
-						window.close();
-					}, 3000);
-				</script>
-			</body>
-			</html>
-		"""
+		# Get the frontend URL from site config
+		frontend_url = frappe.get_conf().get('hostname', 'http://mykartavya.localhost:8080')
+		redirect_url = f"{frontend_url}/frontend/profile"
 		
-		return success_template
+		# Return JSON response with redirect URL
+		frappe.response.type = "redirect"
+		frappe.response.location = redirect_url
+		# return {
+		# 	"status": "success",
+		# 	"redirect_url": redirect_url,
+		# 	"message": """
+		# 		<!DOCTYPE html>
+		# 		<html>
+		# 		<head>
+		# 			<style>
+		# 				body {
+		# 					font-family: Arial, sans-serif;
+		# 					background-color: #f0f2f5;
+		# 					display: flex;
+		# 					justify-content: center;
+		# 					align-items: center;
+		# 					height: 100vh;
+		# 					margin: 0;
+		# 				}
+		# 				.success-container {
+		# 					background-color: white;
+		# 					padding: 30px;
+		# 					border-radius: 10px;
+		# 					box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+		# 					text-align: center;
+		# 					max-width: 500px;
+		# 				}
+		# 				.success-icon {
+		# 					color: #4CAF50;
+		# 					font-size: 48px;
+		# 					margin-bottom: 20px;
+		# 				}
+		# 				h3 {
+		# 					color: #4CAF50;
+		# 					margin-bottom: 20px;
+		# 				}
+		# 				p {
+		# 					color: #666;
+		# 					line-height: 1.6;
+		# 				}
+		# 				.close-message {
+		# 					margin-top: 20px;
+		# 					font-size: 14px;
+		# 					color: #999;
+		# 				}
+		# 			</style>
+		# 		</head>
+		# 		<body>
+		# 			<div class="success-container">
+		# 				<div class="success-icon">✓</div>
+		# 				<h3>Email Verified Successfully!</h3>
+		# 				<p>Your volunteer company mapping has been created successfully.</p>
+		# 				<p>You can now access the volunteer portal with your verified credentials.</p>
+		# 				<p class="close-message">Redirecting to profile page...</p>
+		# 			</div>
+		# 			<script>
+		# 				setTimeout(function() {
+		# 					window.location.href = "%s";
+		# 				}, 2000);
+		# 			</script>
+		# 		</body>
+		# 		</html>
+		# 	""" % redirect_url
+		# }
 		
 	except Exception as e:
 		frappe.log_error(f"Volunteer Mapping Error: {str(e)}")
-		return f"Error: {str(e)}"
+		return {
+			"status": "error",
+			"message": str(e)
+		}
