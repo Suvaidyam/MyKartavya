@@ -23,13 +23,12 @@
    "fieldname": "sdg_image",
    "fieldtype": "Attach Image",
    "label": "SDG Image",
-   "reqd": 1,
    "set_only_once": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-12 18:18:43.404962",
+ "modified": "2025-03-13 14:21:34.533812",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "SDG",
