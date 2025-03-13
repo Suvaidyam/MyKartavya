@@ -1,4 +1,31 @@
 frappe.ui.form.on("Activity", {
+    skill: function (frm) {
+        if (frm.doc.value_type === "Skills") {
+            frm.set_value("work_value_rupees", 0);
+            if (frm.doc.skill && frm.doc.skill.length > 0) {
+                let total_value = 0;
+                let promises = frm.doc.skill.map(skill_entry => {
+                    return frappe.db.get_doc("Skills", skill_entry.skills_name)   
+                        .then(skill_doc => {
+                                total_value += skill_doc.rate_per_hour;  
+                        })
+                        .catch(err => {
+                            console.error("Error fetching skill:", err);
+                        });
+                });
+                Promise.all(promises).then(() => {
+                    frm.set_value("work_value_rupees", total_value);
+                    frm.refresh();   
+                });
+            }
+        }
+    },
+    value_type: function (frm) {
+    if (frm.doc.value_type === "General") {
+        frm.set_value("work_value_rupees", "");
+        frm.set_value("skill", []);
+    }
+    },
     validate: function (frm) {
         if (frm.doc.max_hours < frm.doc.hours && frm.doc.contribution_type !== 'Fixed') {
             frappe.throw(__("Max Hours must be greater than or equal to Hours"));
@@ -10,18 +37,11 @@ frappe.ui.form.on("Activity", {
             frm.refresh_field("max_hours");
         }
     },
-    value_type: function (frm) {
-        if (frm.doc.value_type === "Skills") {
-            frm.set_value("work_value_rupees", 0);
-        } else if (frm.doc.value_type === "General") {
-            frm.set_value("work_value_rupees", "");
-        }
-    },
 
     refresh(frm) {
-        let today = new Date(frappe.datetime.get_today());
+        // let today = new Date(frappe.datetime.get_today());
         let fields = [
-            { name: "publish_date", min: today },
+            // { name: "publish_date", min: today },
             { name: "application_deadline", depends_on: "publish_date" },
             { name: "start_date", depends_on: "application_deadline" },
             { name: "end_date", depends_on: "start_date" },
