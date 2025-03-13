@@ -109,7 +109,17 @@ const routes = [
     name: 'AllActivity',
     path: '/all-activity/:name',
     component: () => import('@/pages/View/AllActivity.vue'),
-  }
+  },
+  {
+    name: 'Ngos',
+    path: '/ngosregistration',
+    component: () => import('@/pages/NGOsRegistration/Ngoregistration.vue'),
+  },
+  {
+    name: 'Company',
+    path: '/company',
+    component: () => import('@/pages/Company/Company.vue'),
+  },
 ]
 
 const router = createRouter({
