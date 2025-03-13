@@ -109,6 +109,11 @@ const routes = [
     name: 'AllActivity',
     path: '/all-activity/:name',
     component: () => import('@/pages/View/AllActivity.vue'),
+  },
+    {
+    name: 'Ngos',
+    path: '/ngosregistration',
+    component: () => import('@/pages/NGOsRegistration/Ngoregistration.vue'),
   }
 ]
 
