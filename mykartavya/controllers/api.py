@@ -5,15 +5,7 @@ from mykartavya.controllers.filter import Filters
 from mykartavya.controllers.profile import Profile
 
 
-# @frappe.whitelist(allow_guest=True)
-# def get_ngos_by_state():
-#     ngos = frappe.get_all(
-#         "NGO",
-#         fields=["state", "COUNT(name) as count"],
-#         group_by="state",
-#         order_by="count DESC"
-#     )
-#     return ngos
+
 
 @frappe.whitelist(allow_guest=True)
 def get_ngos_by_state():
