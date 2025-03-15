@@ -1,91 +1,77 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-10">
-    <div class="max-w-[1920px] mt-[20px] mx-auto p-8 bg-white rounded-xl shadow-xl">
-      <form @submit.prevent="submitForm" class="space-y-8" :class="{ 'loading': loading }">
-        <!-- Error Message Display -->
-        <div v-if="error" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative" role="alert">
-          <span class="block sm:inline">{{ error }}</span>
-        </div>
-
-        <!-- Progress Steps -->
-        <!-- <div class="flex justify-between mb-6">
-          <div v-for="(step, index) in ['Basic Info', 'Contact Details', 'Documents']" :key="index"
-            class="flex flex-col items-center">
-            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-indigo-600 text-white font-medium">
-              {{ index + 1 }}
-            </div>
-            <span class="mt-2 text-sm font-medium text-gray-700">{{ step }}</span>
+  <div class="max-w-[1920px] mx-auto px-10 pt-[82px] pb-4 bg-gray-50">
+    <div class="bg-white rounded-lg shadow mt-4">
+      <div class="p-6">
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">NGO Registration</h2>
+        <form @submit.prevent="submitForm" class="space-y-8" :class="{ 'loading': loading }">
+          <!-- Error Message Display -->
+          <div v-if="error" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
+            role="alert">
+            <span class="block sm:inline">{{ error }}</span>
           </div>
-          <div class="absolute left-0 right-0 h-0.5 bg-indigo-200 top-5 -z-10"></div>
-        </div> -->
 
-        <!-- Basic Information Section -->
-        <div class="bg-indigo-50 p-6 rounded-lg">
-          <h2 class="text-xl font-semibold text-indigo-800 mb-4 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Basic Information
-          </h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- NGO Name -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Row 1 -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">NGO Name <span
-                  class="text-red-500">*</span></label>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                NGO Name <span class="text-red-500 pt-2">*</span>
+              </label>
               <input v-model="form.ngo_name" type="text" placeholder="Enter NGO Name" required
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
             </div>
 
-            <!-- Website -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">NGO Website</label>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                Website
+              </label>
               <input v-model="form.website" type="url" placeholder="https://example.org"
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
             </div>
 
-            <!-- Official Contact Number -->
+            <!-- Row 2 -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Official Contact Number <span
-                  class="text-red-500">*</span></label>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                Official Contact Number <span class="text-red-500 pt-2">*</span>
+              </label>
               <input v-model="form.official_contact_number" type="tel" placeholder="+91 XXXXX XXXXX" required
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
             </div>
 
-            <!-- Email -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Email <span
-                  class="text-red-500">*</span></label>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                Email <span class="text-red-500 pt-2">*</span>
+              </label>
               <input v-model="form.email" type="email" placeholder="ngo@example.com" required
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
             </div>
 
-            <!-- Designation -->
+            <!-- Row 3 -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Designation <span
-                  class="text-red-500">*</span></label>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                Designation <span class="text-red-500 pt-2">*</span>
+              </label>
               <input v-model="form.designation" type="text" placeholder="e.g., Director, Secretary" required
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
             </div>
 
-            <!-- License Type -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">License Type <span
-                  class="text-red-500">*</span></label>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                License Type <span class="text-red-500 pt-2">*</span>
+              </label>
               <select v-model="form.license_type" required
-                class="w-full px-4 py-3 rounded-lg border-gray-300 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
                 <option value="FCRA">FCRA</option>
                 <option value="12A">Non-FCRA</option>
               </select>
             </div>
 
-            <!-- Country Dropdown -->
+            <!-- Row 4 -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Country <span
-                  class="text-red-500">*</span></label>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                Country <span class="text-red-500 pt-2">*</span>
+              </label>
               <select v-model="form.country"
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
                 <option value="" disabled>Select Country</option>
                 <option v-for="country in countries" :key="country.name" :value="country.name">
                   {{ country.label || country.name }}
@@ -93,12 +79,12 @@
               </select>
             </div>
 
-            <!-- State Dropdown -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">State <span
-                  class="text-red-500">*</span></label>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                State <span class="text-red-500 pt-2">*</span>
+              </label>
               <select v-model="form.state"
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
                 <option value="" disabled>Select State</option>
                 <option v-for="state in states" :key="state.name" :value="state.name">
                   {{ state.state_name || state.name }}
@@ -106,12 +92,13 @@
               </select>
             </div>
 
-            <!-- City Dropdown -->
+            <!-- Row 5 -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">City <span
-                  class="text-red-500">*</span></label>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                City <span class="text-red-500 pt-2">*</span>
+              </label>
               <select v-model="form.city"
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
                 <option value="" disabled>Select City</option>
                 <option v-for="city in cities" :key="city.name" :value="city.name">
                   {{ city.district_name || city.name }}
@@ -119,12 +106,12 @@
               </select>
             </div>
 
-            <!-- Area of Work Dropdown -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Area of Work <span
-                  class="text-red-500">*</span></label>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                Area of Work <span class="text-red-500 pt-2">*</span>
+              </label>
               <select v-model="form.area_of_work"
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
                 <option value="" disabled>Select Area of Work</option>
                 <option v-for="area in areaOfWorkOptions" :key="area" :value="area">
                   {{ area }}
@@ -132,104 +119,92 @@
               </select>
             </div>
 
-            <!-- Description -->
-            <div class="md:col-span-3">
-              <label class="block text-sm font-medium text-gray-700 mb-1">Description <span
-                  class="text-red-500">*</span></label>
+            <!-- Row 6 -->
+            <div>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                Contact Person Name <span class="text-red-500 pt-2">*</span>
+              </label>
+              <input v-model="form.contact_person_name" type="text" placeholder="Full Name" required
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+            </div>
+
+            <div>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                NGO Head Name <span class="text-red-500 pt-2">*</span>
+              </label>
+              <input v-model="form.ngo_head_name" type="text" placeholder="Full Name" required
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+            </div>
+
+            <!-- Row 7 -->
+            <div>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                NGO Head Email <span class="text-red-500 pt-2">*</span>
+              </label>
+              <input v-model="form.ngo_head_email" type="email" placeholder="head@example.com" required
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+            </div>
+
+            <div>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                NGO Head Mobile <span class="text-red-500 pt-2">*</span>
+              </label>
+              <input v-model="form.ngo_head_mobile" type="tel" placeholder="+91 XXXXX XXXXX" required
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+            </div>
+
+            <!-- Row 8 -->
+            <div>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                NGO Head Office Number
+              </label>
+              <input v-model="form.ngo_head_office_number" type="tel" placeholder="+91 XXXXX XXXXX"
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+            </div>
+
+            <div>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                Postal Code <span class="text-red-500 pt-2">*</span>
+              </label>
+              <input v-model="form.pincode" type="text" placeholder="Enter PIN code" required
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+            </div>
+
+            <!-- Row 9 (Full Width) -->
+            <div class="md:col-span-2">
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                Address <span class="text-red-500 pt-2">*</span>
+              </label>
+              <textarea v-model="form.address" rows="3" placeholder="Enter address with landmarks" required
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"></textarea>
+            </div>
+
+            <!-- Row 10 (Full Width) -->
+            <div class="md:col-span-2">
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                Description <span class="text-red-500 pt-2">*</span>
+              </label>
               <textarea v-model="form.description" rows="4" placeholder="Describe your NGO's mission and activities"
                 required
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition"></textarea>
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"></textarea>
             </div>
-          </div>
-        </div>
 
-        <!-- Contact Information Section -->
-        <div class="bg-indigo-50 p-6 rounded-lg mt-6">
-          <h2 class="text-xl font-semibold text-indigo-800 mb-4 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-            Contact Information
-          </h2>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Row 11 -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Contact Person Name <span
-                  class="text-red-500">*</span></label>
-              <input v-model="form.contact_person_name" type="text" placeholder="Full Name" required
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">NGO Head Name <span
-                  class="text-red-500">*</span></label>
-              <input v-model="form.ngo_head_name" type="text" placeholder="Full Name" required
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">NGO Head Email <span
-                  class="text-red-500">*</span></label>
-              <input v-model="form.ngo_head_email" type="email" placeholder="head@example.com" required
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">NGO Head Mobile <span
-                  class="text-red-500">*</span></label>
-              <input v-model="form.ngo_head_mobile" type="tel" placeholder="+91 XXXXX XXXXX" required
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">NGO Head Office Number</label>
-              <input v-model="form.ngo_head_office_number" type="tel" placeholder="+91 XXXXX XXXXX"
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Postal Code <span
-                  class="text-red-500">*</span></label>
-              <input v-model="form.pincode" type="text" placeholder="Enter PIN code" required
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
-            </div>
-
-            <div class="md:col-span-3">
-              <label class="block text-sm font-medium text-gray-700 mb-1">Address <span
-                  class="text-red-500">*</span></label>
-              <textarea v-model="form.address" rows="3" placeholder="Enter address with landmarks if any" required
-                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <!-- Registration Details Section -->
-        <div class="bg-indigo-50 p-6 rounded-lg mt-6">
-          <h2 class="text-xl font-semibold text-indigo-800 mb-4 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            Registration Details
-          </h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Registered with BigTech <span
-                  class="text-red-500">*</span></label>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                Registered with BigTech <span class="text-red-500 pt-2">*</span>
+              </label>
               <select v-model="form.registered_with_bigtech" required
-                class="w-full px-4 py-3 rounded-lg border-gray-300 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
+                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
               </select>
             </div>
 
-            <div class="md:col-span-2">
-              <label class="block text-sm font-medium text-gray-700 mb-1">NGO Logo</label>
+            <div>
+              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                NGO Logo
+              </label>
               <label
                 class="flex items-center px-4 py-3 bg-white rounded-lg shadow-sm border-2 border-dashed border-gray-300 cursor-pointer hover:bg-gray-50 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-500 mr-2" fill="none"
@@ -240,22 +215,19 @@
                 <span class="text-sm text-gray-600">Upload NGO Logo (PNG, JPG up to 2MB)</span>
                 <input type="file" class="hidden" @change="handleFileUpload" accept="image/*" />
               </label>
-              <div v-if="form.ngo_logo" class="mt-2 text-sm text-gray-600">
-                Selected file: {{ form.ngo_logo.name }}
-              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Submit Button -->
-        <div class="mt-6">
-          <button type="submit"
-            class="w-[600px] flex justify-center mx-auto items-center text-white py-4 px-8 rounded-lg text-lg font-semibold shadow-md transition duration-300 transform hover:-translate-y-1"
-            :disabled="loading" style="background: #FF5722;">
-            {{ loading ? 'Registering...' : 'Register NGO' }}
-          </button>
-        </div>
-      </form>
+          <!-- Submit Button -->
+          <div class="mt-6">
+            <button type="submit"
+              class="bg-orange-500 text-white font-semibold py-2 px-4 rounded-sm hover:bg-orange-600 transition"
+              :disabled="loading">
+              {{ loading ? 'Registering...' : 'Register NGO' }}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
