@@ -34,7 +34,7 @@ def sdg_data():
 def get_login_details(): 
     url=frappe.get_single('Social Login'),
     return(url)
-
+ 
 @frappe.whitelist(allow_guest=False)
 def sva_user_data():
     return Profile.sva_user_data()
