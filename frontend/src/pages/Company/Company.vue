@@ -1,125 +1,98 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-10">
-        <div class="max-w-[1920px] mt-[20px] mx-auto p-8 bg-white rounded-xl shadow-xl">
-            <form @submit.prevent="submitForm" class="space-y-8" :class="{ 'loading': loading }">
-                <!-- Error Message Display -->
-                <div v-if="error" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
-                    role="alert">
-                    <span class="block sm:inline">{{ error }}</span>
-                </div>
+    <div class="max-w-[1920px] mx-auto px-10 pt-[82px] pb-4 bg-gray-50">
+        <div class="bg-white rounded-lg shadow mt-4">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Company Registration</h2>
+                <form @submit.prevent="submitForm" class="space-y-8" :class="{ 'loading': loading }">
+                    <!-- Error Message Display -->
+                    <div v-if="error" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
+                        role="alert">
+                        <span class="block sm:inline">{{ error }}</span>
+                    </div>
 
-                <!-- Basic Information Section -->
-                <div class="bg-indigo-50 p-6 rounded-lg">
-                    <h2 class="text-xl font-semibold text-indigo-800 mb-4 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Basic Information
-                    </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- Company Name -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Basic Information -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Company Name <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Company Name <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <input v-model="form.company_name" type="text" placeholder="Enter Company Name" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
 
-                        <!-- Registration Date -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Registration Date <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Registration Date <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <input v-model="form.registration_date" type="date" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
 
-                        <!-- Email -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Email <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Email <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <input v-model="form.email" type="email" placeholder="company@example.com" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
-                    </div>
-                </div>
 
-                <!-- Contact Information Section -->
-                <div class="bg-indigo-50 p-6 rounded-lg">
-                    <h2 class="text-xl font-semibold text-indigo-800 mb-4 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        Contact Information
-                    </h2>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Contact Information -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">First Name <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                First Name <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <input v-model="form.first_name" type="text" placeholder="First Name" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Last Name <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Last Name <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <input v-model="form.last_name" type="text" placeholder="Last Name" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Designation <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Designation <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <input v-model="form.designation" type="text" placeholder="e.g., Director, Manager" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Mobile Number <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Mobile Number <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <input v-model="form.mobile_number" type="tel" placeholder="+91 XXXXX XXXXX" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Phone
+                            </label>
                             <input v-model="form.phone" type="tel" placeholder="+91 XXXXX XXXXX"
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
-                    </div>
-                </div>
 
-                <!-- Address Information Section -->
-                <div class="bg-indigo-50 p-6 rounded-lg">
-                    <h2 class="text-xl font-semibold text-indigo-800 mb-4 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        Address Information
-                    </h2>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="md:col-span-3">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">India Headquarters Address <span
-                                    class="text-red-500">*</span></label>
+                        <!-- Address Information -->
+                        <div class="md:col-span-2">
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                India Headquarters Address <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <textarea v-model="form.address" rows="3"
                                 placeholder="Enter complete address with landmarks" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition"></textarea>
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"></textarea>
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Country <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Country <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <select v-model="form.country" @change="fetchStates" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
                                 <option value="" disabled>Select Country</option>
                                 <option v-for="country in countries" :key="country.name" :value="country.name">
                                     {{ country.label || country.name }}
@@ -128,10 +101,11 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">State <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                State <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <select v-model="form.state" @change="fetchCities" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
                                 <option value="" disabled>Select State</option>
                                 <option v-for="state in states" :key="state.name" :value="state.name">
                                     {{ state.state_name || state.name }}
@@ -140,10 +114,11 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">City <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                City <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <select v-model="form.city" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
                                 <option value="" disabled>Select City</option>
                                 <option v-for="city in cities" :key="city.name" :value="city.name">
                                     {{ city.district_name || city.name }}
@@ -152,82 +127,61 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Pincode <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Pincode <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <input v-model="form.pincode" type="text" placeholder="Enter PIN code" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
-                    </div>
-                </div>
 
-                <!-- Organization Details Section -->
-                <div class="bg-indigo-50 p-6 rounded-lg">
-                    <h2 class="text-xl font-semibold text-indigo-800 mb-4 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                        Organization Details
-                    </h2>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Organization Details -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Number of Employees <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Number of Employees <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <input v-model="form.number_of_employees" type="number" min="1" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Clear Vision <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Clear Vision <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <select v-model="form.clear_vision" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Volunteering Program Details Section -->
-                <div class="bg-indigo-50 p-6 rounded-lg">
-                    <h2 class="text-xl font-semibold text-indigo-800 mb-4 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                        Volunteering Program Details
-                    </h2>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Volunteering Program Details -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Volunteering CSR Activities Cost
-                                (%) <span class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Volunteering CSR Activities Cost (%) <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <input v-model="form.volunteering_csr_activities" type="number" min="0" max="100" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Employee Engagement Coverage (%)
-                                <span class="text-red-500">*</span></label>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Employee Engagement Coverage (%) <span class="text-red-500 pt-2">*</span>
+                            </label>
                             <input v-model="form.employee_engagement" type="number" min="0" max="100" required
-                                class="w-full px-4 py-3 rounded-lg border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition" />
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
                     </div>
-                </div>
 
-                <!-- Submit Button -->
-                <div class="mt-6">
-                    <button type="submit"
-                        class="w-[600px] flex justify-center mx-auto items-center text-white py-4 px-8 rounded-lg text-lg font-semibold shadow-md transition duration-300 transform hover:-translate-y-1"
-                        :disabled="loading" style="background: #FF5722;">
-                        {{ loading ? 'Registering...' : 'Register Company' }}
-                    </button>
-                </div>
-            </form>
+                    <!-- Submit Button -->
+                    <div class="mt-6">
+                        <button type="submit"
+                            class="bg-orange-500 text-white font-semibold py-2 px-4 rounded-sm hover:bg-orange-600 transition"
+                            :disabled="loading">
+                            {{ loading ? 'Registering...' : 'Register Company' }}
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </template>
