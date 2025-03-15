@@ -341,7 +341,7 @@ const onSubmit = async () => {
 
     if (res.status == 200) {
       toast.success("Profile updated successfully!", { "autoClose": 3000 });
-      // setTimeout(() => router.back(-1), 3000)
+      setTimeout(() => router.push("/"), 3000);
     } else {
       toast.error(res.message || "Failed to update profile.");
     }
