@@ -1,0 +1,1 @@
+import{j as e,c as t,b as s}from"./index-C8FGMhp8.js";const c={class:"pt-[62px] flex justify-center items-center h-screen"},o={__name:"Features",setup(r){return(a,n)=>(s(),t("div",c,"Features Coming Soon.."))}},p=e(o,[["__scopeId","data-v-6f881489"]]);export{p as default};
