@@ -160,7 +160,7 @@
                   v-else
                   class="rounded-full w-full h-full bg-gray-100 flex items-center justify-center"
                 >
-                  {{ activitiestopuser[1]?.first_name?.charAt(0) }}
+                  {{ activitiestopuser[1]?.first_name?.charAt(0)||" T" }}
                 </div>
               </div>
               <span
@@ -170,7 +170,7 @@
               </span>
             </div>
             <p class="text-xs font-medium pt-3">
-              {{ activitiestopuser[1]?.first_name || 'Top 1' }}
+              {{ activitiestopuser[1]?.first_name || 'Top 2' }}
             </p>
             <p class="text-[10px] font-normal pt-2 flex gap-1">
               <FeatherIcon name="database" class="size-3 text-[#666666]" />
@@ -196,7 +196,7 @@
                   v-else
                   class="rounded-full w-full h-full bg-gray-100 flex items-center justify-center"
                 >
-                  {{ activitiestopuser[2]?.first_name?.charAt(0) }}
+                  {{ activitiestopuser[2]?.first_name?.charAt(0)||"T" }}
                 </div>
               </div>
               <span
@@ -206,7 +206,7 @@
               </span>
             </div>
             <p class="text-xs font-medium pt-3">
-              {{ activitiestopuser[2]?.first_name || 'Top 1' }}
+              {{ activitiestopuser[2]?.first_name || 'Top 3' }}
             </p>
             <p class="text-[10px] font-normal pt-2 flex gap-1">
               <FeatherIcon name="database" class="size-3 text-[#666666]" />

@@ -19,7 +19,7 @@ fixtures=[
     # 'Custom HTML Block',
     # 'SDG',
     # 'Skills',
-    # 'Property Setter',
+    'Property Setter',
     # 'SVADatatable Configuration',
     # "Workflow", "Workflow State", "Workflow Action",
     # "State",
