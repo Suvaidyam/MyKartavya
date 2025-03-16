@@ -1,0 +1,45 @@
+{
+ "app": "mykartavya",
+ "charts": [],
+ "content": "[{\"id\":\"6XYVZEyaf9\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Completion Approval\",\"col\":4}},{\"id\":\"4fy8AINWH6\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Request Approval\",\"col\":4}}]",
+ "creation": "2025-03-16 14:26:50.699022",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "list",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Volunteer Activity Approvel",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-03-16 14:29:26.531602",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Volunteer Activity Approvel",
+ "number_cards": [
+  {
+   "label": "Completion Approval",
+   "number_card_name": "Completion Approval"
+  },
+  {
+   "label": "Request Approval",
+   "number_card_name": "Request Approval"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "MyKartvya Admin"
+  }
+ ],
+ "sequence_id": 28.0,
+ "shortcuts": [],
+ "title": "Volunteer Activity Approvel",
+ "type": "Workspace"
+}
