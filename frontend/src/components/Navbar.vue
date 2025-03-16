@@ -11,9 +11,9 @@
     <nav
       v-if="['/', '/volunteering-opportunities', '/profile', '/activity', '/updateprofile', '/all-activity'].includes('/' + route.fullPath.split('/')[1])"
       class="flex items-center justify-between w-full px-[36px] max-w-[1920px] mx-auto h-full">
-      <router-link to="/" class="flex items-center space-x-4">
+      <a href="#" @click="handleLogoClick" class="flex items-center space-x-4">
         <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
-      </router-link>
+      </a>
       <div class="hidden md:flex space-x-8 text-gray-700">
         <router-link to="/" :class="[route.fullPath == '/' ? 'font-medium' : 'font-normal', 'text-sm']">My
           Karma</router-link>
@@ -62,9 +62,9 @@
     </nav>
     <!--  -->
     <nav v-else class="flex items-center justify-between h-full px-[36px] max-w-[1920px] mx-auto">
-      <router-link to="/" class="flex items-center space-x-4">
+      <a href="#" @click="handleLogoClick" class="flex items-center space-x-4">
         <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
-      </router-link>
+      </a>
       <div class="hidden md:flex space-x-8 text-gray-700">
         <router-link to="/"
           :class="[route.fullPath == '/landin' ? 'font-medium' : 'font-normal', 'text-sm']">Home</router-link>
@@ -134,6 +134,15 @@ const auth = inject('auth');
 const call = inject('call');
 const router = useRouter();
 const route = useRoute();
+
+const handleLogoClick = (e) => {
+  e.preventDefault();
+  const currentOrigin = window.location.origin;
+  // Convert from frontend port (8080) to backend port (8000)
+  const backendUrl = currentOrigin.replace(':8080', ':8000');
+  window.location.href = backendUrl;
+};
+
 const baseDropdown = [
   {
     label: 'Logout',
