@@ -12,13 +12,13 @@
  "idx": 0,
  "indicator_color": "green",
  "is_hidden": 0,
- "label": "Volunteer Activity Approvel",
+ "label": "Volunteer Activity Approval",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-03-16 14:29:26.531602",
+ "modified": "2025-03-16 21:40:51.727687",
  "modified_by": "Administrator",
  "module": "Mykartavya",
- "name": "Volunteer Activity Approvel",
+ "name": "Volunteer Activity Approval",
  "number_cards": [
   {
    "label": "Completion Approval",
@@ -40,6 +40,6 @@
  ],
  "sequence_id": 28.0,
  "shortcuts": [],
- "title": "Volunteer Activity Approvel",
+ "title": "Volunteer Activity Approval",
  "type": "Workspace"
 }
