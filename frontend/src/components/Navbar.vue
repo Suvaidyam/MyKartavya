@@ -1,12 +1,11 @@
 <template>
-  <div v-if="['/login', '/verify'].includes(route.fullPath)"
-    class="hidden md:flex space-x-4 justify-end px-10 bg-orange-100 h-8 items-center w-full">
+  <div v-if="!auth.isLoggedIn" class="hidden md:flex space-x-4 justify-end px-10 bg-[#FFBD9C] h-8 items-center w-full">
     <FeatherIcon name="search" class="size-4 cursor-pointer text-gray-700" />
     <router-link to="/company-registration" class="text-black font-normal text-xs">
       Register as Company
     </router-link>
 
-    <router-link to="/ngo-registration" class="text-[#000000] font-normal text-[12px]">Register as NGO</router-link >
+    <router-link to="/ngo-registration" class="text-[#000000] font-normal text-[12px]">Register as NGO</router-link>
   </div>
   <div class="bg-white h-[60px] shadow-md">
     <nav
