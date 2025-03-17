@@ -171,8 +171,7 @@
    "default": "0",
    "fieldname": "auto_approve_volunteers",
    "fieldtype": "Check",
-   "label": "Auto Approve Volunteers",
-   "read_only": 1
+   "label": "Auto Approve Volunteers"
   },
   {
    "default": "0",
@@ -223,6 +222,7 @@
    "fieldtype": "Int",
    "label": "Work Value (In Rupees)",
    "mandatory_depends_on": "eval:doc.value_type=='General'",
+   "non_negative": 1,
    "read_only_depends_on": "eval:doc.value_type=='Skills'"
   },
   {
@@ -416,7 +416,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-03-12 18:13:39.854332",
+ "modified": "2025-03-17 10:39:45.121285",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
