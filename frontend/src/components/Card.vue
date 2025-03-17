@@ -55,13 +55,17 @@
                     class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
                     <span class="font-medium text-xs">{{ item.karma_points }} Points</span>
                 </div>
-                <div class="absolute bottom-1  flex items-center gap-1 px-2 overflow-auto">
-                    <div v-if="item.sdgs" v-for="el in JSON.parse(item.sdgs)">
-                        <img v-if="el.image" :src="el.image" class="w-8 h-8" />
-                        <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{
-                            el.sdgs_name?.charAt(0) }}</span>
+                <div class="absolute bottom-1 flex items-center gap-1 px-2 overflow-auto">
+                    <div v-if="item.sdgs"
+                        v-for="(el, index) in (typeof item.sdgs === 'string' ? JSON.parse(item.sdgs) : item.sdgs)"
+                        :key="index">
+                        <img v-if="el?.image" :src="el?.image" class="w-8 h-8" />
+                        <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">
+                            {{ el?.sdgs_name?.charAt(0) }}
+                        </span>
                     </div>
                 </div>
+
             </div>
             <h3 class="self-start truncate mt-3 text-base font-medium tracking-normal text-neutral-950">
                 {{ item.title }}
@@ -75,7 +79,7 @@
                         alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                     <time class="self-stretch my-auto">{{ formatDate(item.start_date) }} - {{
                         formatDate(item.end_date)
-                    }}
+                        }}
                     </time>
                 </div>
                 <div class="flex gap-1 items-center text-xs tracking-normal text-justify text-neutral-950">

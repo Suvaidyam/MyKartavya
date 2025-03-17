@@ -11,6 +11,11 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/certificate',
+    name: 'Certificate',
+    component: () => import('@/components/Certificate.vue'),
+  },
+  {
     path: '/landing',
     name: 'LandingPage',
     component: () => import('@/pages/Home.vue'),
@@ -104,7 +109,19 @@ const routes = [
     name: 'AllActivity',
     path: '/all-activity/:name',
     component: () => import('@/pages/View/AllActivity.vue'),
-  }
+  },
+  {
+    name: 'Ngos',
+    path: '/ngo-registration',
+    component: () => import('@/pages/NGOsRegistration/Ngoregistration.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
+    name: 'Company',
+    path: '/company-registration',
+    component: () => import('@/pages/Company/Company.vue'),
+    meta: { requiresAuth: false }
+  },
 ]
 
 const router = createRouter({

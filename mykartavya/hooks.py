@@ -16,6 +16,7 @@ fixtures=[
     # 'Role',
     # 'Role Profile',
     # 'Builder Page',
+    # 'Custom HTML Block',
     # 'SDG',
     # 'Skills',
     # 'Property Setter',
@@ -24,7 +25,8 @@ fixtures=[
     # "State",
     # "District"
     # "Builder Client Script",
-    # "Website Settings"
+    # "Website Settings",
+    # "User Settings"
 ]
 
 

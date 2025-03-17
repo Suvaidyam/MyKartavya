@@ -1,0 +1,43 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2025-03-12 16:07:05.347716",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letterhead": null,
+ "modified": "2025-03-12 16:17:58.517837",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Charts for hours Donated",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "SELECT \n    COALESCE(sdg.sdg, 'Unknown SDG') AS sdg_name,\n    COALESCE(SUM(act.hours), 0) AS total_hours\nFROM \n    `tabActivity` AS act\nLEFT JOIN `tabSDGs Child` AS sdc \n    ON (act.name = sdc.parent AND sdc.parentfield = 'sdgs')\nLEFT JOIN `tabSDG` AS sdg \n    ON sdc.sdgs = sdg.name\nGROUP BY\n    sdg.sdg\nORDER BY \n    total_hours DESC;",
+ "ref_doctype": "Activity",
+ "report_name": "Charts for hours Donated",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "MyKartvya Admin"
+  },
+  {
+   "role": "Company Admin"
+  },
+  {
+   "role": "NGO Admin"
+  },
+  {
+   "role": "Volunteer Incharge"
+  },
+  {
+   "role": "Volunteer"
+  }
+ ],
+ "timeout": 0
+}

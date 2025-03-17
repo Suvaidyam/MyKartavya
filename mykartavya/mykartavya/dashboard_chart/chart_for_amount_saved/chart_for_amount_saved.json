@@ -1,0 +1,32 @@
+{
+ "chart_name": "Chart for Amount Saved",
+ "chart_type": "Report",
+ "creation": "2025-03-12 16:20:29.584076",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "modified": "2025-03-12 16:21:18.003154",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Chart for Amount Saved",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "report_name": "Chart for Amount Saved",
+ "roles": [],
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "sdg_name",
+ "y_axis": [
+  {
+   "y_field": "total_work_values"
+  }
+ ]
+}

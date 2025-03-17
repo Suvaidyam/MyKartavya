@@ -1,0 +1,23 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "User Settings",
+  "hide_user_table_view_settings": 0,
+  "is_zone_mandatory": 0,
+  "modified": "2025-03-13 14:59:47.828753",
+  "name": "User Settings",
+  "restriction_role_profile": [],
+  "role_level": [
+   {
+    "is_multiselect": 0,
+    "level": "NGOs",
+    "role": "NGO Admin"
+   },
+   {
+    "is_multiselect": 0,
+    "level": "Company",
+    "role": "Company Admin"
+   }
+  ]
+ }
+]

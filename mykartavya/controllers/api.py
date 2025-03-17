@@ -4,6 +4,28 @@ from mykartavya.controllers.activity import Activity
 from mykartavya.controllers.filter import Filters
 from mykartavya.controllers.profile import Profile
 
+
+
+
+@frappe.whitelist(allow_guest=True)
+def get_ngos_by_state():
+    # return 'Hello World'
+    try:
+        query = """
+            SELECT s.state_name, COUNT(n.name) AS total_ngos
+            FROM `tabNGOs` n
+            JOIN `tabState` s ON n.state = s.state_code
+            GROUP BY s.state_name
+            ORDER BY total_ngos DESC;
+        """
+        data = frappe.db.sql(query, as_dict=True)
+        return data
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), _("Error fetching NGOs by state"))
+        return {"error": str(e)}
+
+
+
 @frappe.whitelist(allow_guest=True)
 def sdg_data():
     return Filters.sdg_data()
@@ -12,7 +34,7 @@ def sdg_data():
 def get_login_details(): 
     url=frappe.get_single('Social Login'),
     return(url)
-
+ 
 @frappe.whitelist(allow_guest=False)
 def sva_user_data():
     return Profile.sva_user_data()
@@ -170,3 +192,22 @@ def create_subscription(data):
 @frappe.whitelist(allow_guest=True)
 def sdg_impacted():
     return Profile.sdg_impacted()
+
+@frappe.whitelist()
+def add_activity_images(docname, images):
+    """Save uploaded images to the Volunteer Activity's child table."""
+    doc = frappe.get_doc("Volunteer Activity", docname)
+    print(doc,"===========================================================================")
+    # Ensure images is a list
+    if isinstance(images, str):
+        import json
+        images = json.loads(images)
+
+    for image in images:
+        new_row = doc.append("images", {})
+        new_row.image = image.get("file_url")
+        new_row.file_name = image.get("file_name")
+
+    doc.save()
+    frappe.db.commit()
+    return {"message": "Images added successfully"}

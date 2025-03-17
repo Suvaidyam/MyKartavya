@@ -1,18 +1,5 @@
 [
  {
-  "custom_cn": "in",
-  "custom_country": "India",
-  "docstatus": 0,
-  "doctype": "State",
-  "modified": "2025-02-18 17:32:16.555209",
-  "name": "ST-01",
-  "state_code": "ST-01",
-  "state_name": "Andhra Pradesh",
-  "status": "Active",
-  "zone": null
- },
- {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -24,7 +11,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -36,7 +22,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -48,7 +33,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -60,7 +44,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -72,7 +55,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -84,7 +66,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -96,7 +77,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -108,7 +88,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -120,7 +99,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -132,7 +110,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -144,7 +121,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -156,7 +132,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -168,7 +143,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -180,7 +154,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -192,7 +165,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -204,7 +176,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -216,7 +187,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -228,7 +198,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -240,19 +209,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
-  "custom_country": "India",
-  "docstatus": 0,
-  "doctype": "State",
-  "modified": "2025-02-18 17:32:18.169717",
-  "name": "ST-21",
-  "state_code": "ST-21",
-  "state_name": "Rajasthan",
-  "status": "Active",
-  "zone": null
- },
- {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -264,7 +220,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -276,7 +231,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -288,19 +242,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
-  "custom_country": "India",
-  "docstatus": 0,
-  "doctype": "State",
-  "modified": "2025-02-18 17:32:18.434747",
-  "name": "ST-25",
-  "state_code": "ST-25",
-  "state_name": "Tripura",
-  "status": "Active",
-  "zone": null
- },
- {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -312,19 +253,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
-  "custom_country": "India",
-  "docstatus": 0,
-  "doctype": "State",
-  "modified": "2025-02-18 17:32:18.521767",
-  "name": "ST-27",
-  "state_code": "ST-27",
-  "state_name": "Uttarakhand",
-  "status": "Active",
-  "zone": null
- },
- {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -336,7 +264,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -348,7 +275,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -360,7 +286,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -372,19 +297,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
-  "custom_country": "India",
-  "docstatus": 0,
-  "doctype": "State",
-  "modified": "2025-02-18 17:32:18.736641",
-  "name": "ST-32",
-  "state_code": "ST-32",
-  "state_name": "Lakshadweep",
-  "status": "Active",
-  "zone": null
- },
- {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -396,7 +308,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -408,7 +319,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -420,7 +330,6 @@
   "zone": null
  },
  {
-  "custom_cn": "in",
   "custom_country": "India",
   "docstatus": 0,
   "doctype": "State",
@@ -428,6 +337,61 @@
   "name": "ST-36",
   "state_code": "ST-36",
   "state_name": "Puducherry",
+  "status": "Active",
+  "zone": null
+ },
+ {
+  "custom_country": "India",
+  "docstatus": 0,
+  "doctype": "State",
+  "modified": "2025-02-18 17:32:16.555209",
+  "name": "ST-01",
+  "state_code": "ST-01",
+  "state_name": "Andhra Pradesh",
+  "status": "Active",
+  "zone": null
+ },
+ {
+  "custom_country": "India",
+  "docstatus": 0,
+  "doctype": "State",
+  "modified": "2025-02-18 17:32:18.521767",
+  "name": "ST-27",
+  "state_code": "ST-27",
+  "state_name": "Uttarakhand",
+  "status": "Active",
+  "zone": null
+ },
+ {
+  "custom_country": "India",
+  "docstatus": 0,
+  "doctype": "State",
+  "modified": "2025-02-18 17:32:18.169717",
+  "name": "ST-21",
+  "state_code": "ST-21",
+  "state_name": "Rajasthan",
+  "status": "Active",
+  "zone": null
+ },
+ {
+  "custom_country": "India",
+  "docstatus": 0,
+  "doctype": "State",
+  "modified": "2025-02-18 17:32:18.434747",
+  "name": "ST-25",
+  "state_code": "ST-25",
+  "state_name": "Tripura",
+  "status": "Active",
+  "zone": null
+ },
+ {
+  "custom_country": "India",
+  "docstatus": 0,
+  "doctype": "State",
+  "modified": "2025-02-18 17:32:18.736641",
+  "name": "ST-32",
+  "state_code": "ST-32",
+  "state_name": "Lakshadweep",
   "status": "Active",
   "zone": null
  }

@@ -1,12 +1,15 @@
 import frappe
 import json
+from frappe.utils.file_manager import save_file
+import base64
+
 
 class Activity:
     def current_commitments(filter={}):
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         if not user:
             return []
-
+        base_url = frappe.get_conf().get("hostname","")
         where_clauses = ["va.volunteer = %(user)s"]
         order_by_clauses = []
         params = {"user": user}
@@ -45,7 +48,7 @@ class Activity:
             act.hours as hours,
             act.activity_description as activity_description,
             act.activity_type as activity_type,
-            act.activity_image as activity_image,
+            CONCAT('{base_url}', act.activity_image) as activity_image,
             COALESCE(
                 JSON_ARRAYAGG(
                     JSON_OBJECT(
@@ -77,10 +80,15 @@ class Activity:
         order_by_clause = ""
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         company = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "custom_company")
+        companies = frappe.db.get_list("User Permission", filters={"user": frappe.session.user, "allow": "Company"}, pluck="for_value",limit=100,ignore_permissions=True)
         if user:
             where_clause += f" AND act.name NOT IN (SELECT activity FROM `tabVolunteer Activity` WHERE volunteer = '{user}')"
-        if company:
-            where_clause += f" AND (act.company IS NULL OR act.company IN ('','{company}'))"
+        if company and len(companies) > 0:
+            where_clause += f" AND (act.company IS NULL OR act.company IN ('','{company}',{', '.join(frappe.db.escape(c) for c in companies)}))"
+        elif len(companies) > 0:
+            where_clause += f" AND (act.company IS NULL OR act.company IN ('',{', '.join(frappe.db.escape(c) for c in companies)}))"
+        elif company:
+            where_clause += f" AND (act.company IS NULL OR act.company = '{company}')"
         else:
             where_clause += " AND (act.company IS NULL OR act.company = '')"
         if isinstance(filter, str):
@@ -146,7 +154,7 @@ class Activity:
                     LEFT JOIN `tabSVA User` as sva ON sva.name = va.volunteer
                     LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
                     LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
-                    WHERE act.end_date >= CURRENT_DATE() {where_clause}
+                    WHERE act.end_date >= CURRENT_DATE() AND act.status = 'Published' {where_clause}
                     GROUP BY act.name
                     {order_by_clause}
                 """
@@ -235,6 +243,7 @@ class Activity:
             doc["is_assigned"] = False
         return doc
 
+
     def volunteer_act_count():
         sql_query = """
         SELECT 
@@ -255,15 +264,42 @@ class Activity:
         if not exists:
             return {"error": "Activity not assigned to the volunteer", "status": 400}
         doc = frappe.get_doc("Volunteer Activity", exists)
+        images = data.get("images")
+        if len(images):
+            for image in images:
+              Activity.upload_file(image,doc)
+            
         doc.append("volunteer_activity_log", {
             "date": frappe.utils.now(),
             "duration": data.get("duration"),
             "percent": data.get("percent"),
+            
         })
-        
-        doc.save()
+        doc.save(ignore_permissions=True)
         frappe.db.commit() 
         return doc
+    
+    def upload_file(data,doc):
+        try:
+            base64_string = data.get("preview")    
+            if "," in base64_string:
+                base64_string = base64_string.split(",")[1]
+            file_name = f"{doc.name}_{frappe.utils.now().replace(' ', '_')}.png"
+            file_content = base64.b64decode(base64_string)
+            file_path = save_file(
+                fname=file_name,
+                content=file_content,
+                dt="Volunteer Activity",
+                dn=doc.name,
+                is_private=0,
+            )
+            doc.append("images",{
+                    "image": file_path.file_url,
+                    "parent": doc.name
+                })
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
     
     def related_opportunities(name, sdgs):
         sdgs_list = json.loads(sdgs) if sdgs else []

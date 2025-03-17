@@ -1,22 +1,35 @@
 import frappe
 from frappe import _
 from frappe.model.document import Document
-from frappe.utils import get_datetime, now_datetime, get_time
+from frappe.utils import get_datetime, now_datetime,today,getdate
 from datetime import datetime, time
 
 class Activity(Document):
     def validate(self):
         self.validate_dates() 
         self.validate_hours()
-        self.validate_points()
         self.validate_time()
         self.validate_vacancies()
         self.handle_activity_published_date_starts()
         self.validate_reward()
         self.validate_location()
         self.validate_company()
-        self.calculate_work_value_rupees()
-    
+
+    def on_update(self):
+        today_date = getdate(today())
+        start_date = getdate(self.start_date) if self.start_date else None
+        end_date = getdate(self.end_date) if self.end_date else None
+        
+        if start_date and end_date:
+            if start_date >= today_date:
+                self.status = "Published"
+            elif start_date <= today_date < end_date:
+                self.status = "Ongoing"
+            elif end_date == today_date:
+                self.status = "Ended"
+            elif today_date > end_date:
+                self.status = "Ended"
+
     def validate_dates(self):
         current_datetime = now_datetime()
         
@@ -42,44 +55,17 @@ class Activity(Document):
 
             
     def validate_hours(self):
-        # Validate minimum hours
-        if self.minimum_hours <= 0:
-            frappe.throw(_("Minimum Hours must be a positive number"))
-            
-        # Validate buffer minutes
-        if self.buffer_minutes <= 0:
-            frappe.throw(_("Buffer Minutes must be a positive number"))
-            
-        # Validate hours
-        if self.hours <= 0:
-            frappe.throw(_("Hours must be a positive number"))
-            
-        # Validate minutes
         if not (0 <= self.minutes <= 59):
             frappe.throw(_("Minutes must be between 0 and 59"))
             
         # Validate max hours
-        if self.max_hours < self.hours:
-            frappe.throw(_("Max Hours must be greater than or equal to Hours"))
-            
+        if self.max_hours < self.hours and not self.contribution_type == 'Fixed':
+          frappe.throw(_("Max Hours must be greater than or equal to Hours"))
+
         # Validate max hours for fixed contribution type
         if self.contribution_type == "Fixed":
             self.max_hours = self.hours
-    
-    def validate_points(self):
-        # Validate work value rupees
-        if self.work_value_rupees <= 0:
-            frappe.throw(_("Work Value must be a positive number"))
-            
-        # Validate karma points
-        if self.karma_points <= 0:
-            frappe.throw(_("Karma Points must be a positive number"))
-            
-        # Handle work value for skills
-        if self.value_type == "Skills" and self.skill:
-            skill_doc = frappe.get_doc("Skills", self.skill)
-            self.work_value_rupees = skill_doc.work_value_rupees
-    
+
     def validate_time(self):
         try:
             if self.start_time_hr >= self.end_time_hr:
@@ -149,22 +135,40 @@ class Activity(Document):
             self.city = None
             self.address = None
 
-    def validate(self):
-        self.calculate_work_value_rupees()   
 
-    def calculate_work_value_rupees(self):
-        if self.value_type == "Skills":
-            total_value = 0
-            for skill_entry in self.skill:
-                skill_name = skill_entry.skills_name
-                skill_doc = frappe.get_doc("Skills", skill_name)
-                if skill_doc:
-                    total_value += skill_doc.rate_per_hour
-            self.work_value_rupees = total_value
+    # def on_update(self):
+    #     if self.value_type == "Skills":
+    #         total_value = 0
+    #         for skill_entry in self.skill:
+    #             skill_name = skill_entry.skills_name
+    #             skill_doc = frappe.get_doc("Skills", skill_name)
+    #             if skill_doc:
+    #                 total_value += skill_doc.rate_per_hour
+    #         self.work_value_rupees = total_value
         
-        elif self.value_type == "General":
-            if self.work_value_rupees is not None:
-                pass
-            else:
-                self.work_value_rupees = 0
-     
+    #     elif self.value_type == "General":
+    #         if self.work_value_rupees is not None:
+    #             pass
+    #         else:
+    #             self.work_value_rupees = 0
+    
+    def validate(self):
+        for field in ["activity_image", "reward_image"]:
+            image_url = getattr(self, field, None)
+
+            if image_url:
+                file_doc = frappe.db.get_value("File", {"file_url": image_url}, ["file_size", "file_name"])
+
+                if file_doc:
+                    file_size, file_name = file_doc
+
+                    # Validate file size (max 5MB)
+                    if file_size > 5 * 1024 * 1024:  
+                        frappe.throw(f"File size exceeds 5 MB limit for {field.replace('_', ' ').title()}")
+
+                    # Validate file type (only images)
+                    allowed_extensions = {"jpg", "jpeg", "png", "webp"}
+                    file_extension = file_name.split(".")[-1].lower()
+
+                    if file_extension not in allowed_extensions:
+                        frappe.throw(f"Invalid file type for {field.replace('_', ' ').title()}. Only JPG, JPEG, PNG, and WEBP are allowed.")

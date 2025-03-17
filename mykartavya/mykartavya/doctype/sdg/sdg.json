@@ -15,6 +15,7 @@
    "in_list_view": 1,
    "label": "SDG ",
    "reqd": 1,
+   "set_only_once": 1,
    "unique": 1
   },
   {
@@ -25,7 +26,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-25 18:37:23.337194",
+ "modified": "2025-03-13 16:23:32.043227",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "SDG",
@@ -45,28 +46,22 @@
    "write": 1
   },
   {
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "NGO Admin",
-   "share": 1,
-   "write": 1
+   "share": 1
   },
   {
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Company Admin",
-   "share": 1,
-   "write": 1
+   "share": 1
   },
   {
    "create": 1,
@@ -81,28 +76,22 @@
    "write": 1
   },
   {
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Volunteer Incharge",
-   "share": 1,
-   "write": 1
+   "share": 1
   },
   {
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Volunteer",
-   "share": 1,
-   "write": 1
+   "share": 1
   }
  ],
  "sort_field": "creation",

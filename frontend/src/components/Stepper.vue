@@ -128,12 +128,13 @@
                   <label for="" class="text-base font-normal">Hours</label>
                   <input type="number" v-model="activity_log.hours" class="w-24 border rounded px-2 h-8"
                     @input="activity_log.hours = Math.max(0, activity_log.hours)" />
+
                 </div>
                 <div class="flex gap-2 items-center">
                   <label for="" class="text-base font-normal">Minutes</label>
-                  <input type="number" v-model="activity_log.minutes"
-                    @input="activity_log.minutes = Math.max(0, activity_log.minutes)"
-                    class="w-24 border rounded px-2 h-8" />
+                  <input type="number" v-model="activity_log.minutes" @input="
+                    activity_log.minutes = Math.max(0, activity_log.minutes)"
+                     class="w-24 border rounded px-2 h-8" />
                 </div>
               </div>
             </div>
@@ -167,7 +168,7 @@
                 </div>
               </div>
               <div class="flex gap-2 mt-3">
-                <img v-for="(image, index) in activity_log.images" :key="index" :src="image"
+                <img v-for="(image, index) in uploadedImages" :key="index" :src="image.preview" alt="img"
                   class="w-16 h-16 rounded object-cover" />
               </div>
             </div>
@@ -248,8 +249,9 @@ const activity_log = ref({
   hours: 0,
   minutes: 0,
   progress: 0,
-  images: [],
+  // images: [],
 })
+const uploadedImages = ref([])
 const loading = ref(false)
 const refresh = ref(false)
 const steps = ref([
@@ -300,7 +302,7 @@ const nextStep = async (index) => {
   }
   if (index === 2) {
     activityReportPopup.value = true
-  } 
+  }
 }
 const submitReport = async () => {
   activityReportPopup.value = false
@@ -315,14 +317,21 @@ const submitReport = async () => {
       data: {
         duration: ((activity_log.value.hours * 60) * 60 + activity_log.value.minutes * 60),
         percent: (activity_log.value.progress - props.activity.com_percent),
-        images: activity_log.value.images,
+        images:uploadedImages.value
       }
     })
     if (res) {
       activity_log.value.progress = res.com_percent
       toast.success('Activity report submitted successfully')
-      loading.value = false
+      loading.value = false,
+      activity_log.value = {
+        hours: 0,
+        minutes: 0,
+        progress: 0
+
     }
+    store.refresh_step = true
+  }
   } catch (error) {
     loading.value = false
     toast.error('Something went wrong')
@@ -345,12 +354,17 @@ const submit_your_feedback = async () => {
 
 const uploadFiles = (event) => {
   const files = event.target.files
-  for (let file of files) {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      activity_log.value.images.push(e.target.result)
+  if (files.length) {
+    for (let file of files) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        console.log(file, 'file');
+        
+        uploadedImages.value.push({ file:file, preview: reader.result })
+        console.log(uploadedImages.value, 'uploadedImages');
+      }
+      reader.readAsDataURL(file)
     }
-    reader.readAsDataURL(file)
   }
 }
 const emojis = ref([
@@ -374,7 +388,7 @@ watch(() => props.activity, (newVal, oldVal) => {
       steps.value[0].completed = true
       steps.value[1].completed = true
       currentStep.value = 2
-    } else if (newVal.workflow_state == 'Approved' && ['Submitted','Approved'].includes(newVal.completion_wf_state) && !(newVal.rating != null && newVal.rating != 0)) {
+    } else if (newVal.workflow_state == 'Approved' && ['Submitted', 'Approved'].includes(newVal.completion_wf_state) && !(newVal.rating != null && newVal.rating != 0)) {
       steps.value[0].completed = true
       if (newVal.completion_wf_state == 'Submitted') {
         steps.value[1].completed = true

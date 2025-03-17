@@ -20,75 +20,108 @@
       </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow mt-4 p-6">
-      <h2 class="text-xl font-semibold text-gray-700 mb-4">Personal Info</h2>
-      <form @submit.prevent="onSubmit">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div v-for="(field, key) in fields" :key="key">
-            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-              {{ field.label }} <span class="text-red-500 pt-2" v-if="field.required">*</span>
-            </label>
-            <input v-if="key !== 'custom_date_of_birth' && field.type !== 'select'" v-model="formData[key]"
-              :type="field.type" :name="key" :placeholder="field.placeholder"
-              class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
-
-            <input v-else-if="key === 'custom_date_of_birth'" v-model="formData.custom_date_of_birth" type="date"
-              name="custom_date_of_birth" :max="maxDate"
-              class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
-
-            <select v-if="field.type === 'select'" v-model="formData[key]" :name="key"
-              class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
-              <option value="" disabled>Select {{ field.label }}</option>
-              <option v-for="option in getOptions(key)" :key="option.name" :value="option.name">
-                {{ option.label || option.name }}
-              </option>
-            </select>
-
-            <!-- Validation Error Message -->
-            <p v-if="errors[key]" class="text-red-500 text-[11px] mt-1">
-              {{ errors[key] }}
-            </p>
-
-          </div>
-          <!-- CV Upload -->
-          <div>
-            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Add CV</label>
-            <div
-              class="flex flex-col items-center justify-center border-2 border-dashed border-orange-300 text-orange-500 p-4 rounded cursor-pointer"
-              @click="cvInput.click()">
-              <svg class="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M7 3h10M7 3a2 2 0 00-2 2v2m2-2h10m0 0a2 2 0 012 2v2m-2-2H7m13 8V8H4v8a2 2 0 002 2h12a2 2 0 002-2z" />
-              </svg>
-              <span class="text-bodyh1">Click to upload or drag and drop</span>
-              <input ref="cvInput" type="file" accept=".pdf,.doc,.docx" class="hidden" @change="onCvSelected" />
-            </div>
-          </div>
-
-          <!-- Portfolio Upload -->
-          <div>
-            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Add Portfolio</label>
-            <div
-              class="flex flex-col items-center justify-center border-2 border-dashed border-orange-300 text-orange-500 p-4 rounded cursor-pointer"
-              @click="portfolioInput.click()">
-              <svg class="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M7 3h10M7 3a2 2 0 00-2 2v2m2-2h10m0 0a2 2 0 012 2v2m-2-2H7m13 8V8H4v8a2 2 0 002 2h12a2 2 0 002-2z" />
-              </svg>
-              <span class="text-sm">Click to upload or drag and drop</span>
-              <input ref="portfolioInput" type="file" accept=".pdf,.doc,.docx" class="hidden"
-                @change="onPortfolioSelected" />
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-6">
-          <button type="submit"
-            class="bg-orange-500 text-white font-semibold py-2 px-4 rounded-sm hover:bg-orange-600 transition">
-            UPDATE
+    <div class="bg-white rounded-lg shadow mt-4">
+      <!-- Tabs -->
+      <div class="border-b border-gray-200">
+        <nav class="flex space-x-8 px-6" aria-label="Tabs">
+          <button @click="activeTab = 'personal'" :class="[
+            activeTab === 'personal'
+              ? 'border-orange-500 text-orange-600'
+              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+            'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm'
+          ]">
+            Personal Info
           </button>
+          <button v-if="!formData.custom_company" @click="activeTab = 'company'" :class="[
+            activeTab === 'company'
+              ? 'border-orange-500 text-orange-600'
+              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+            'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm'
+          ]">
+            Company Mapping
+          </button>
+        </nav>
+      </div>
+
+      <!-- Tab Content -->
+      <div class="p-6">
+        <!-- Personal Info Tab -->
+        <div v-if="activeTab === 'personal'">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">Personal Info</h2>
+          <form @submit.prevent="onSubmit">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div v-for="(field, key) in fields" :key="key">
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  {{ field.label }} <span class="text-red-500 pt-2" v-if="field.required">*</span>
+                </label>
+                <input v-if="key !== 'custom_date_of_birth' && field.type !== 'select'" v-model="formData[key]"
+                  :type="field.type" :name="key" :placeholder="field.placeholder"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+
+                <input v-else-if="key === 'custom_date_of_birth'" v-model="formData.custom_date_of_birth" type="date"
+                  name="custom_date_of_birth" :max="maxDate"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+
+                <select v-if="field.type === 'select'" v-model="formData[key]" :name="key"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
+                  <option value="" disabled>Select {{ field.label }}</option>
+                  <option v-for="option in getOptions(key)" :key="option.name" :value="option.name">
+                    {{ option.label || option.name }}
+                  </option>
+                </select>
+
+                <!-- Validation Error Message -->
+                <p v-if="errors[key]" class="text-red-500 text-[11px] mt-1">
+                  {{ errors[key] }}
+                </p>
+
+              </div>
+              <!-- CV Upload -->
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Add CV</label>
+                <div
+                  class="flex flex-col items-center justify-center border-2 border-dashed border-orange-300 text-orange-500 p-4 rounded cursor-pointer"
+                  @click="cvInput.click()">
+                  <svg class="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M7 3h10M7 3a2 2 0 00-2 2v2m2-2h10m0 0a2 2 0 012 2v2m-2-2H7m13 8V8H4v8a2 2 0 002 2h12a2 2 0 002-2z" />
+                  </svg>
+                  <span class="text-bodyh1">Click to upload or drag and drop</span>
+                  <input ref="cvInput" type="file" accept=".pdf,.doc,.docx" class="hidden" @change="onCvSelected" />
+                </div>
+              </div>
+
+              <!-- Portfolio Upload -->
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Add Portfolio</label>
+                <div
+                  class="flex flex-col items-center justify-center border-2 border-dashed border-orange-300 text-orange-500 p-4 rounded cursor-pointer"
+                  @click="portfolioInput.click()">
+                  <svg class="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M7 3h10M7 3a2 2 0 00-2 2v2m2-2h10m0 0a2 2 0 012 2v2m-2-2H7m13 8V8H4v8a2 2 0 002 2h12a2 2 0 002-2z" />
+                  </svg>
+                  <span class="text-sm">Click to upload or drag and drop</span>
+                  <input ref="portfolioInput" type="file" accept=".pdf,.doc,.docx" class="hidden"
+                    @change="onPortfolioSelected" />
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <button type="submit"
+                class="bg-orange-500 text-white font-semibold py-2 px-4 rounded-sm hover:bg-orange-600 transition">
+                UPDATE
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+
+        <!-- Company Mapping Tab -->
+        <div v-if="activeTab === 'company' && !formData.custom_company">
+          <CompanyMapping />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -98,6 +131,7 @@ import { ref, inject, onMounted, watch, nextTick } from "vue";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { useRouter } from "vue-router";
+import CompanyMapping from './CompanyMapping.vue';
 
 // Inject API call function
 const call = inject("call");
@@ -105,6 +139,9 @@ const auth = inject("auth");
 const router = useRouter();
 const errorFieldRef = ref(null);
 
+// Add active tab state
+const activeTab = ref('personal');
+console.log(activeTab.value);
 
 // Form fields and data
 const fields = ref({
@@ -196,6 +233,10 @@ const getDetails = async () => {
   let res = await call("mykartavya.controllers.api.sva_user_data");
   if (res && res.length > 0) {
     formData.value = res[0];
+    // If user has a custom company, ensure they stay on personal tab
+    if (formData.value.custom_company && activeTab.value === 'company') {
+      activeTab.value = 'personal';
+    }
   }
 };
 
@@ -291,16 +332,16 @@ const onSubmit = async () => {
         last_name: formData.value.last_name || "",
         mobile_number: formData.value.mobile_number,
         custom_date_of_birth: formData.value.custom_date_of_birth,
-        custom_country: formData.value.custom_country ,
+        custom_country: formData.value.custom_country,
         custom_state: formData.value.custom_state,
-        custom_city: formData.value.custom_city ,
+        custom_city: formData.value.custom_city,
         custom_company: formData.value.custom_company || "",
       }
     });
 
     if (res.status == 200) {
       toast.success("Profile updated successfully!", { "autoClose": 3000 });
-      setTimeout(() => router.back(-1), 3000)
+      setTimeout(() => router.push("/"), 3000);
     } else {
       toast.error(res.message || "Failed to update profile.");
     }
@@ -330,7 +371,7 @@ onMounted(() => {
   fetchCountries();
   fetchCompanies();
   getDetails();
-  if(localStorage.getItem('updateprofile') == 'true'){
+  if (localStorage.getItem('updateprofile') == 'true') {
     toast.error("Please update your profile to continue.", { "autoClose": 3000 });
     localStorage.removeItem('updateprofile');
   }
