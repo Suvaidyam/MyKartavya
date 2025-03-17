@@ -55,10 +55,7 @@
             Time Donated
           </h4>
           <p class="text-lg font-semibold text-[#0B0B0B]">
-            <!-- {{ convertSecondsToTimeFormat(activities.total_hours || '0') }} hrs -->
-            {{
-              activities?.total_hours / 60 / 60 < 1 ? (activities?.total_hours / 60 / 60).toFixed(2) + ' hr' :
-                Math.floor(activities?.total_hours / 60 / 60) + ' hrs ' }} </p>
+            {{activities?.total_hours  ? sec_to_hours(activities?.total_hours)+ ' hrs ' :'0'}} </p>
         </div>
 
         <div class="border border-gray-300 rounded-lg px-4 py-3 text-center">
@@ -114,7 +111,7 @@
               {{ activitiestopuser[0]?.total_karma_points || '0' }} Points </div>
             <div class="flex items-center gap-1">
               <FeatherIcon name="clock" class="size-3 text-[#666666]" />
-            {{ activitiestopuser[0]?.total_hours || '0' }} hr
+            {{activitiestopuser[0]?.total_hours ? sec_to_hours(activitiestopuser[0]?.total_hours) : '0' }} hr
             </div>
           </div>
         </div>
@@ -140,11 +137,11 @@
             <p class="text-xs font-medium pt-3">
               {{ activitiestopuser[1]?.first_name || 'Top 2' }}
             </p>
-            <p class="text-[10px] font-normal pt-2 flex gap-1">
+            <p class="text-[10px] font-normal pt-2 flex items-center gap-1">
               <FeatherIcon name="database" class="size-3 text-[#666666]" />
               {{ activitiestopuser[1]?.total_karma_points || '0' }} Points |
               <FeatherIcon name="clock" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[1]?.total_hours || '0' }} hr
+              {{ activitiestopuser[1]?.total_hours ? sec_to_hours(activitiestopuser[1]?.total_hours) : '0' }} hr
             </p>
           </div>
 
@@ -167,11 +164,11 @@
             <p class="text-xs font-medium pt-3">
               {{ activitiestopuser[2]?.first_name || 'Top 3' }}
             </p>
-            <p class="text-[10px] font-normal pt-2 flex gap-1">
+            <p class="text-[10px] font-normal pt-2 flex items-center gap-1">
               <FeatherIcon name="database" class="size-3 text-[#666666]" />
               {{ activitiestopuser[2]?.total_karma_points || '0' }} Points |
               <FeatherIcon name="clock" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[2]?.total_hours || '0' }} hr
+              {{ activitiestopuser[2]?.total_hours ? sec_to_hours(activitiestopuser[2]?.total_hours) : '0' }} hr
             </p>
           </div>
         </div>
@@ -321,4 +318,7 @@ onMounted(() => {
   opportunities()
   sdgimpacted()
 })
+const sec_to_hours=(sec)=>{
+  return (sec / 60 / 60).toFixed(2)
+}
 </script>
