@@ -4,11 +4,19 @@
             <div class="w-full flex flex-col justify-between h-40 rounded-md relative">
                 <img :src="item.activity_image" alt="" class="h-full rounded-md">
                 <div
-                    class="bg-orange-500 absolute top-1 text-white font-medium text-xs flex items-center px-3 h-6 rounded-br-lg">
+                    class="bg-[#FF7C3A] activity-type absolute top-1 text-white font-medium text-xs flex items-center pl-3 pr-5 h-6 ">
                     {{ item.activity_type }}
                 </div>
                 <div
-                    class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
+                    class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-2xl shadow flex items-center gap-1">
+                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15.5002 3.66602C15.5002 2.28518 12.8885 1.16602 9.66683 1.16602C6.44516 1.16602 3.8335 2.28518 3.8335 3.66602M15.5002 3.66602V6.99935C15.5002 7.84935 14.5118 8.59935 13.0002 9.05102C12.0552 9.33435 10.906 9.49935 9.66683 9.49935C8.42766 9.49935 7.2785 9.33352 6.3335 9.05102C4.82266 8.59935 3.8335 7.84935 3.8335 6.99935V3.66602M15.5002 3.66602C15.5002 4.51602 14.5118 5.26602 13.0002 5.71768C12.0552 6.00102 10.906 6.16602 9.66683 6.16602C8.42766 6.16602 7.2785 6.00018 6.3335 5.71768C4.82266 5.26602 3.8335 4.51602 3.8335 3.66602"
+                            stroke="#FF5722" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M0.5 6.9994V10.3327C0.5 11.1827 1.48917 11.9327 3 12.3844C3.945 12.6677 5.09417 12.8327 6.33333 12.8327C7.5725 12.8327 8.72167 12.6669 9.66667 12.3844C11.1775 11.9327 12.1667 11.1827 12.1667 10.3327V9.4994M0.5 6.9994C0.5 6.0019 1.8625 5.14107 3.83333 4.74023M0.5 6.9994C0.5 7.8494 1.48917 8.5994 3 9.05107C3.945 9.3344 5.09417 9.4994 6.33333 9.4994C6.9125 9.4994 7.47167 9.46357 8 9.39607"
+                            stroke="#FF5722" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
                     <span class="font-medium text-xs">{{ item.karma_points?.toLocaleString() }} Points</span>
                 </div>
                 <div class="absolute bottom-1  flex items-center gap-1 px-2 overflow-auto">
@@ -22,7 +30,17 @@
             <div class="flex flex-col gap-2 pt-2">
                 <h3 class="text-bodyh1 font-medium truncate">{{ item.title }}</h3>
                 <div class="flex gap-2 items-center">
-                    <FeatherIcon name="calendar" class="size-4" />
+                    <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M1.33331 7.00033C1.33331 4.48633 1.33331 3.22899 2.11465 2.44833C2.89598 1.66766 4.15265 1.66699 6.66665 1.66699H9.33331C11.8473 1.66699 13.1046 1.66699 13.8853 2.44833C14.666 3.22966 14.6666 4.48633 14.6666 7.00033V8.33366C14.6666 10.8477 14.6666 12.105 13.8853 12.8857C13.104 13.6663 11.8473 13.667 9.33331 13.667H6.66665C4.15265 13.667 2.89531 13.667 2.11465 12.8857C1.33398 12.1043 1.33331 10.8477 1.33331 8.33366V7.00033Z"
+                            stroke="#666666" stroke-width="0.75" />
+                        <path d="M4.66666 1.66699V0.666992M11.3333 1.66699V0.666992M1.66666 5.00033H14.3333"
+                            stroke="#666666" stroke-width="0.75" stroke-linecap="round" />
+                        <path
+                            d="M12 10.3333C12 10.5101 11.9298 10.6797 11.8047 10.8047C11.6797 10.9298 11.5101 11 11.3333 11C11.1565 11 10.987 10.9298 10.8619 10.8047C10.7369 10.6797 10.6667 10.5101 10.6667 10.3333C10.6667 10.1565 10.7369 9.98695 10.8619 9.86193C10.987 9.7369 11.1565 9.66667 11.3333 9.66667C11.5101 9.66667 11.6797 9.7369 11.8047 9.86193C11.9298 9.98695 12 10.1565 12 10.3333ZM12 7.66667C12 7.84348 11.9298 8.01305 11.8047 8.13807C11.6797 8.2631 11.5101 8.33333 11.3333 8.33333C11.1565 8.33333 10.987 8.2631 10.8619 8.13807C10.7369 8.01305 10.6667 7.84348 10.6667 7.66667C10.6667 7.48986 10.7369 7.32029 10.8619 7.19526C10.987 7.07024 11.1565 7 11.3333 7C11.5101 7 11.6797 7.07024 11.8047 7.19526C11.9298 7.32029 12 7.48986 12 7.66667ZM8.66667 10.3333C8.66667 10.5101 8.59643 10.6797 8.4714 10.8047C8.34638 10.9298 8.17681 11 8 11C7.82319 11 7.65362 10.9298 7.5286 10.8047C7.40357 10.6797 7.33333 10.5101 7.33333 10.3333C7.33333 10.1565 7.40357 9.98695 7.5286 9.86193C7.65362 9.7369 7.82319 9.66667 8 9.66667C8.17681 9.66667 8.34638 9.7369 8.4714 9.86193C8.59643 9.98695 8.66667 10.1565 8.66667 10.3333ZM8.66667 7.66667C8.66667 7.84348 8.59643 8.01305 8.4714 8.13807C8.34638 8.2631 8.17681 8.33333 8 8.33333C7.82319 8.33333 7.65362 8.2631 7.5286 8.13807C7.40357 8.01305 7.33333 7.84348 7.33333 7.66667C7.33333 7.48986 7.40357 7.32029 7.5286 7.19526C7.65362 7.07024 7.82319 7 8 7C8.17681 7 8.34638 7.07024 8.4714 7.19526C8.59643 7.32029 8.66667 7.48986 8.66667 7.66667ZM5.33333 10.3333C5.33333 10.5101 5.2631 10.6797 5.13807 10.8047C5.01305 10.9298 4.84348 11 4.66667 11C4.48986 11 4.32029 10.9298 4.19526 10.8047C4.07024 10.6797 4 10.5101 4 10.3333C4 10.1565 4.07024 9.98695 4.19526 9.86193C4.32029 9.7369 4.48986 9.66667 4.66667 9.66667C4.84348 9.66667 5.01305 9.7369 5.13807 9.86193C5.2631 9.98695 5.33333 10.1565 5.33333 10.3333ZM5.33333 7.66667C5.33333 7.84348 5.2631 8.01305 5.13807 8.13807C5.01305 8.2631 4.84348 8.33333 4.66667 8.33333C4.48986 8.33333 4.32029 8.2631 4.19526 8.13807C4.07024 8.01305 4 7.84348 4 7.66667C4 7.48986 4.07024 7.32029 4.19526 7.19526C4.32029 7.07024 4.48986 7 4.66667 7C4.84348 7 5.01305 7.07024 5.13807 7.19526C5.2631 7.32029 5.33333 7.48986 5.33333 7.66667Z"
+                            fill="#666666" />
+                    </svg>
+
                     <p class="text-xs font-normal"> {{ formatDate(item.start_date) }} - {{ formatDate(item.end_date) }}
                     </p>
                 </div>
@@ -33,12 +51,6 @@
                             <p class="text-xs font-normal">{{ item.hours }} hr</p>
                         </Tooltip>
                     </div>
-                    <div class="flex gap-2 items-center">
-                        <Tooltip text="Donated Hours" :hover-delay="1" :placement="'top'">
-                            <FeatherIcon name="clock" class="size-4" />
-                            <p class="text-xs font-normal">{{item?.donet_hours ? ((item?.donet_hours/60)/60).toFixed(2)+' '+'hr':'--'}}</p>
-                        </Tooltip>
-                    </div>
                 </div>
             </div>
             <div class="mt-3">
@@ -46,8 +58,14 @@
                     <div class="bg-[#4CAF50] h-[5px] rounded-full" :style="{ width: `${item?.com_percent ?? 0}%` }">
                     </div>
                 </div>
-                <p class="text-xs font-normal pt-1 text-gray-600 mt-1">{{ item?.com_percent ?? 0 }}% completed
-                </p>
+                <div class="flex items-center justify-between">
+                    <p class="text-xs font-normal pt-1 text-[#0B0B0B] mt-1">{{ item?.com_percent ?? 0 }}% completed
+                    </p>
+                    <p class="text-xs font-normal flex items-center gap-1">
+                        <FeatherIcon name="clock" class="size-3" />
+                        {{ item?.donet_hours ? ((item?.donet_hours / 60) / 60).toFixed(2) : '0' }} hr
+                    </p>
+                </div>
             </div>
         </router-link>
     </div>
@@ -58,24 +76,29 @@
             <div class="w-full flex flex-col justify-between h-40 rounded-md relative">
                 <img :src="item.activity_image" alt="" class="h-full rounded-md">
                 <div
-                    class="bg-orange-500 absolute top-1 text-white font-medium text-xs flex items-center px-3 h-6 rounded-br-lg">
+                    class="bg-[#FF7C3A] activity-type absolute top-1 text-white font-medium text-xs flex items-center pl-3 pr-5 h-6 ">
                     {{ item.activity_type }}
                 </div>
                 <div
-                    class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
+                    class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-2xl shadow flex items-center gap-1">
+                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15.5002 3.66602C15.5002 2.28518 12.8885 1.16602 9.66683 1.16602C6.44516 1.16602 3.8335 2.28518 3.8335 3.66602M15.5002 3.66602V6.99935C15.5002 7.84935 14.5118 8.59935 13.0002 9.05102C12.0552 9.33435 10.906 9.49935 9.66683 9.49935C8.42766 9.49935 7.2785 9.33352 6.3335 9.05102C4.82266 8.59935 3.8335 7.84935 3.8335 6.99935V3.66602M15.5002 3.66602C15.5002 4.51602 14.5118 5.26602 13.0002 5.71768C12.0552 6.00102 10.906 6.16602 9.66683 6.16602C8.42766 6.16602 7.2785 6.00018 6.3335 5.71768C4.82266 5.26602 3.8335 4.51602 3.8335 3.66602"
+                            stroke="#FF5722" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M0.5 6.9994V10.3327C0.5 11.1827 1.48917 11.9327 3 12.3844C3.945 12.6677 5.09417 12.8327 6.33333 12.8327C7.5725 12.8327 8.72167 12.6669 9.66667 12.3844C11.1775 11.9327 12.1667 11.1827 12.1667 10.3327V9.4994M0.5 6.9994C0.5 6.0019 1.8625 5.14107 3.83333 4.74023M0.5 6.9994C0.5 7.8494 1.48917 8.5994 3 9.05107C3.945 9.3344 5.09417 9.4994 6.33333 9.4994C6.9125 9.4994 7.47167 9.46357 8 9.39607"
+                            stroke="#FF5722" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+
                     <span class="font-medium text-xs">{{ item.karma_points?.toLocaleString() }} Points</span>
                 </div>
-                <div class="absolute bottom-1 flex items-center gap-1 px-2 overflow-auto">
-                    <div v-if="item.sdgs"
-                        v-for="(el, index) in (typeof item.sdgs === 'string' ? JSON.parse(item.sdgs) : item.sdgs)"
-                        :key="index">
-                        <img v-if="el?.image" :src="el?.image" class="w-8 h-8" />
-                        <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">
-                            {{ el?.sdgs_name?.charAt(0) }}
-                        </span>
+                <div class="absolute bottom-1  flex items-center gap-1 px-2 overflow-auto">
+                    <div v-if="item.sdgs" v-for="el in JSON.parse(item.sdgs)">
+                        <img v-if="el.image" :src="el.image" class="w-8 h-8" />
+                        <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{
+                            el.sdgs_name?.charAt(0) }}</span>
                     </div>
                 </div>
-
             </div>
             <h3 class="self-start truncate mt-3 text-base font-medium tracking-normal text-neutral-950">
                 {{ item.title }}
@@ -85,8 +108,17 @@
             </p>
             <div class="flex flex-col gap-3 justify-between mt-2">
                 <div class="flex gap-1 items-center text-xs tracking-normal text-neutral-950">
-                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/206e5d29b5523c409dbfe316e887c82aeb672c336764aad169ece16b133845e4?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-                        alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                    <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M1.33331 7.00033C1.33331 4.48633 1.33331 3.22899 2.11465 2.44833C2.89598 1.66766 4.15265 1.66699 6.66665 1.66699H9.33331C11.8473 1.66699 13.1046 1.66699 13.8853 2.44833C14.666 3.22966 14.6666 4.48633 14.6666 7.00033V8.33366C14.6666 10.8477 14.6666 12.105 13.8853 12.8857C13.104 13.6663 11.8473 13.667 9.33331 13.667H6.66665C4.15265 13.667 2.89531 13.667 2.11465 12.8857C1.33398 12.1043 1.33331 10.8477 1.33331 8.33366V7.00033Z"
+                            stroke="#666666" stroke-width="0.75" />
+                        <path d="M4.66666 1.66699V0.666992M11.3333 1.66699V0.666992M1.66666 5.00033H14.3333"
+                            stroke="#666666" stroke-width="0.75" stroke-linecap="round" />
+                        <path
+                            d="M12 10.3333C12 10.5101 11.9298 10.6797 11.8047 10.8047C11.6797 10.9298 11.5101 11 11.3333 11C11.1565 11 10.987 10.9298 10.8619 10.8047C10.7369 10.6797 10.6667 10.5101 10.6667 10.3333C10.6667 10.1565 10.7369 9.98695 10.8619 9.86193C10.987 9.7369 11.1565 9.66667 11.3333 9.66667C11.5101 9.66667 11.6797 9.7369 11.8047 9.86193C11.9298 9.98695 12 10.1565 12 10.3333ZM12 7.66667C12 7.84348 11.9298 8.01305 11.8047 8.13807C11.6797 8.2631 11.5101 8.33333 11.3333 8.33333C11.1565 8.33333 10.987 8.2631 10.8619 8.13807C10.7369 8.01305 10.6667 7.84348 10.6667 7.66667C10.6667 7.48986 10.7369 7.32029 10.8619 7.19526C10.987 7.07024 11.1565 7 11.3333 7C11.5101 7 11.6797 7.07024 11.8047 7.19526C11.9298 7.32029 12 7.48986 12 7.66667ZM8.66667 10.3333C8.66667 10.5101 8.59643 10.6797 8.4714 10.8047C8.34638 10.9298 8.17681 11 8 11C7.82319 11 7.65362 10.9298 7.5286 10.8047C7.40357 10.6797 7.33333 10.5101 7.33333 10.3333C7.33333 10.1565 7.40357 9.98695 7.5286 9.86193C7.65362 9.7369 7.82319 9.66667 8 9.66667C8.17681 9.66667 8.34638 9.7369 8.4714 9.86193C8.59643 9.98695 8.66667 10.1565 8.66667 10.3333ZM8.66667 7.66667C8.66667 7.84348 8.59643 8.01305 8.4714 8.13807C8.34638 8.2631 8.17681 8.33333 8 8.33333C7.82319 8.33333 7.65362 8.2631 7.5286 8.13807C7.40357 8.01305 7.33333 7.84348 7.33333 7.66667C7.33333 7.48986 7.40357 7.32029 7.5286 7.19526C7.65362 7.07024 7.82319 7 8 7C8.17681 7 8.34638 7.07024 8.4714 7.19526C8.59643 7.32029 8.66667 7.48986 8.66667 7.66667ZM5.33333 10.3333C5.33333 10.5101 5.2631 10.6797 5.13807 10.8047C5.01305 10.9298 4.84348 11 4.66667 11C4.48986 11 4.32029 10.9298 4.19526 10.8047C4.07024 10.6797 4 10.5101 4 10.3333C4 10.1565 4.07024 9.98695 4.19526 9.86193C4.32029 9.7369 4.48986 9.66667 4.66667 9.66667C4.84348 9.66667 5.01305 9.7369 5.13807 9.86193C5.2631 9.98695 5.33333 10.1565 5.33333 10.3333ZM5.33333 7.66667C5.33333 7.84348 5.2631 8.01305 5.13807 8.13807C5.01305 8.2631 4.84348 8.33333 4.66667 8.33333C4.48986 8.33333 4.32029 8.2631 4.19526 8.13807C4.07024 8.01305 4 7.84348 4 7.66667C4 7.48986 4.07024 7.32029 4.19526 7.19526C4.32029 7.07024 4.48986 7 4.66667 7C4.84348 7 5.01305 7.07024 5.13807 7.19526C5.2631 7.32029 5.33333 7.48986 5.33333 7.66667Z"
+                            fill="#666666" />
+                    </svg>
+
                     <time class="self-stretch my-auto">{{ formatDate(item.start_date) }} - {{
                         formatDate(item.end_date)
                         }}
@@ -115,7 +147,7 @@
                     </div>
                     <div v-else class="w-8 h-8"></div>
                     <div
-                        class="flex gap-1 items-center text-sm font-medium tracking-normal text-right text-orange-600 uppercase hover:text-orange-700">
+                        class="flex gap-1 items-center text-sm font-medium tracking-normal text-right text-[#FF5722] uppercase hover:text-orange-700">
                         <p>Act now</p>
                         <FeatherIcon name="arrow-up-right" class="size-4" />
                     </div>
@@ -129,7 +161,7 @@
 <script setup>
 import { inject, ref } from 'vue';
 
-import { FeatherIcon,Tooltip } from 'frappe-ui';
+import { FeatherIcon, Tooltip } from 'frappe-ui';
 const auth = inject('auth');
 const formatDate = inject('formatDate');
 const props = defineProps({
@@ -164,5 +196,9 @@ const props = defineProps({
 ::-webkit-scrollbar {
     width: 0px;
     height: 0px;
+}
+
+.activity-type {
+    clip-path: polygon(0 0, 100% 0%, 89% 100%, 0% 100%);
 }
 </style>
