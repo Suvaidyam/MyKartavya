@@ -250,7 +250,7 @@ frappe.ui.form.on("Volunteer Activity", {
                                     text-overflow: ellipsis;
                                     font-weight: 500;
                                     margin-bottom: 8px;
-                                ">${item.file_name}</p>
+                                ">${item.file_name ?? ''}</p>
                                 <button class="preview-btn btn btn-default btn-xs" style="
                                     width: 100%;
                                     padding: 8px;

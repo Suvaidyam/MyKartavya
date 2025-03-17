@@ -383,7 +383,7 @@ watch(() => props.activity, (newVal, oldVal) => {
   if (newVal.is_assigned) {
     if (newVal.workflow_state == 'Applied') {
       steps.value[0].completed = true
-      currentStep.value++
+      currentStep.value = 1 
     } else if (newVal.workflow_state == 'Approved' && newVal.completion_wf_state == 'Pending') {
       steps.value[0].completed = true
       steps.value[1].completed = true

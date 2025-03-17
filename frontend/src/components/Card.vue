@@ -9,7 +9,7 @@
                 </div>
                 <div
                     class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
-                    <span class="font-medium text-xs">{{ item.karma_points }} Points</span>
+                    <span class="font-medium text-xs">{{ item.karma_points?.toLocaleString() }} Points</span>
                 </div>
                 <div class="absolute bottom-1  flex items-center gap-1 px-2 overflow-auto">
                     <div v-if="item.sdgs" v-for="el in JSON.parse(item.sdgs)">
@@ -28,13 +28,13 @@
                 </div>
                 <div class="flex gap-2 items-center justify-between">
                     <div class="flex gap-2 items-center">
-                        <Tooltip text="Expected Hours" :hover-delay="1" :placement="'top'">
+                        <Tooltip text="Activity Hours" :hover-delay="1" :placement="'top'">
                             <FeatherIcon name="clock" class="size-4" />
                             <p class="text-xs font-normal">{{ item.hours }} hr</p>
                         </Tooltip>
                     </div>
                     <div class="flex gap-2 items-center">
-                        <Tooltip text="Time Donated" :hover-delay="1" :placement="'top'">
+                        <Tooltip text="Donated Hours" :hover-delay="1" :placement="'top'">
                             <FeatherIcon name="clock" class="size-4" />
                             <p class="text-xs font-normal">{{item?.donet_hours ? ((item?.donet_hours/60)/60).toFixed(2)+' '+'hr':'--'}}</p>
                         </Tooltip>
@@ -63,7 +63,7 @@
                 </div>
                 <div
                     class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-full shadow flex items-center gap-1">
-                    <span class="font-medium text-xs">{{ item.karma_points }} Points</span>
+                    <span class="font-medium text-xs">{{ item.karma_points?.toLocaleString() }} Points</span>
                 </div>
                 <div class="absolute bottom-1 flex items-center gap-1 px-2 overflow-auto">
                     <div v-if="item.sdgs"

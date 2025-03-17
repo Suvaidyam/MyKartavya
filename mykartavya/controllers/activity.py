@@ -207,6 +207,7 @@ class Activity:
                 act.start_date as start_date,
                 act.end_date as end_date,
                 act.hours as hours,
+                va.duration as donet_hours,
                 act.activity_description as activity_description,
                 act.activity_type as activity_type,
                 act.activity_image as activity_image,

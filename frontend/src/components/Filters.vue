@@ -18,8 +18,8 @@
                             <input v-model="allChecked" type="checkbox"
                                 class="rounded-sm h-4 w-4 min-w-4 max-h-4 focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="all-sdgs">
-                            <label class="text-[12px] cursor-pointer font-normal flex gap-2 items-center" for="all-sdgs">
-                                <img src="../assets/sdgall.png" :alt="'el'" class="w-5 h-5 rounded-full object-cover" />
+                            <label class="text-[12px] cursor-pointer font-normal flex gap-1 items-center" for="all-sdgs">
+                                <img src="../assets/sdgall.png" :alt="'el'" class="w-[21px] h-[21px] min-w-[21px] min-h-[21px] rounded-full object-cover" />
                                 All
                             </label>
                         </div>
