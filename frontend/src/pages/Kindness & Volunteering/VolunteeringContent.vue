@@ -13,7 +13,7 @@
       class="flex flex-col justify-center items-start py-px mt-4 text-base tracking-normal leading-none bg-white border-b-2 border-solid border-b-[color:var(--Stroke,#D9D9D9)] max-md:pr-5 max-md:mr-0.5 max-md:max-w-full">
       <div class="flex flex-wrap gap-4 items-center max-w-full min-h-9 w-[519px]">
         <a @click.prevent="activeTab = 'kindness'"
-          class="flex gap-1 items-center self-stretch cursor-pointers p-2 my-auto bg-white border-b-2 border-solid min-w-60 text-stone-500"
+          class="flex gap-1 items-center self-stretch cursor-pointer p-2 my-auto bg-white border-b-2 border-solid min-w-60 text-stone-500"
           :class="{
             'border-b-[color:var(--S2,#FF7C3A)] text-neutral-950':
               activeTab === 'kindness',
@@ -25,7 +25,7 @@
           <span>Acts of Random Kindness</span>
         </a>
         <a @click.prevent="activeTab = 'volunteering'"
-          class="flex gap-1 items-center self-stretch cursor-pointers p-2 my-auto bg-white border-b-2 border-solid min-w-60 text-stone-500"
+          class="flex gap-1 items-center self-stretch cursor-pointer p-2 my-auto bg-white border-b-2 border-solid min-w-60 text-stone-500"
           :class="{
             'border-b-[color:var(--S2,#FF7C3A)] text-neutral-950':
               activeTab === 'volunteering',
