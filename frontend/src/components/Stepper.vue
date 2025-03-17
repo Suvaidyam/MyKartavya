@@ -208,7 +208,7 @@
           </div>
         </div>
         <!-- Activity modal for step end -->
-
+          <ReqForApproval />
         <!-- Popup Modal for Step Restriction -->
       </div>
     </div>
@@ -224,6 +224,7 @@ import {
 } from 'lucide-vue-next'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import ReqForApproval from './ReqForApproval.vue'
 
 const currentStep = ref(0)
 const show_Feedback = ref(false)
@@ -289,10 +290,12 @@ const nextStep = async (index) => {
       activity: route.params.name,
       volunteer: auth.cookie.user_id
     })
-    if (res) {
+    if (res.status == 200) {
       props.activity.workflow_state = 'Applied'
       steps.value[index].completed = true
       currentStep.value++
+    }else if(res.status == 201){
+      store.req_for_approavl = true
     } else {
       return
     }
@@ -358,10 +361,7 @@ const uploadFiles = (event) => {
     for (let file of files) {
       const reader = new FileReader()
       reader.onload = (e) => {
-        console.log(file, 'file');
-        
         uploadedImages.value.push({ file:file, preview: reader.result })
-        console.log(uploadedImages.value, 'uploadedImages');
       }
       reader.readAsDataURL(file)
     }

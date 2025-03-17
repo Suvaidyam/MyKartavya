@@ -170,20 +170,24 @@ class Activity:
     def act_now(activity, volunteer):
         # same activity can't be assigned to the same volunteer
         volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")
-        act = frappe.get_list(
-            "Volunteer Activity",
-            filters={"activity": activity, "volunteer": volunteer},
-            pluck="name",
-        )
-        if act:
-            return {"error": "Activity already assigned to the volunteer", "status": 400}
-        doc = frappe.new_doc("Volunteer Activity")
-        doc.activity = activity
-        doc.volunteer = volunteer
-        doc.flags.ignore_permissions = True
-        doc.flags.ignore_mandatory = True
-        doc.save()
-        return doc
+        workflow_state = frappe.db.get_value("SVA User", {"email": volunteer}, "workflow_state")
+        if workflow_state != "Approved":    
+            return {"msg": "Volunteer is not approved", "status": 201}
+        else:
+            act = frappe.get_list(
+                "Volunteer Activity",
+                filters={"activity": activity, "volunteer": volunteer},
+                pluck="name",
+            )
+            if act:
+                return {"msg": "Activity already assigned to the volunteer", "status": 400}
+            doc = frappe.new_doc("Volunteer Activity")
+            doc.activity = activity
+            doc.volunteer = volunteer
+            doc.flags.ignore_permissions = True
+            doc.flags.ignore_mandatory = True
+            doc.save()
+            return {"msg": "Activity assigned to the volunteer", "status": 200,'data':doc}
     
     def workflow_state():
         doc = frappe.get_doc('Workflow', 'Volunteer_activity')
