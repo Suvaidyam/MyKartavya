@@ -26,9 +26,19 @@
                     <p class="text-xs font-normal"> {{ formatDate(item.start_date) }} - {{ formatDate(item.end_date) }}
                     </p>
                 </div>
-                <div class="flex gap-2 items-center">
-                    <FeatherIcon name="clock" class="size-4" />
-                    <p class="text-xs font-normal">{{ item.hours }} hr</p>
+                <div class="flex gap-2 items-center justify-between">
+                    <div class="flex gap-2 items-center">
+                        <Tooltip text="Hours" :hover-delay="1" :placement="'top'">
+                            <FeatherIcon name="clock" class="size-4" />
+                            <p class="text-xs font-normal">{{ item.hours }} hr</p>
+                        </Tooltip>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <Tooltip text="Hours" :hover-delay="1" :placement="'top'">
+                            <FeatherIcon name="clock" class="size-4" />
+                            <p class="text-xs font-normal">{{ item.hours }} hr</p>
+                        </Tooltip>
+                    </div>
                 </div>
             </div>
             <div class="mt-3">
@@ -82,10 +92,11 @@
                         }}
                     </time>
                 </div>
-                <div class="flex gap-1 items-center text-xs tracking-normal text-justify text-neutral-950">
-                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/193573c664d98aa3d1c71908aad0cbb8163b462f0553be41c395306a299aa57f?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-                        alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                    <span class="self-stretch my-auto">{{ item.hours }} hr</span>
+                <div class="flex gap-2 items-center">
+                    <Tooltip text="Hours" :hover-delay="1" :placement="'top'">
+                        <FeatherIcon name="clock" class="size-4" />
+                        <p class="text-xs font-normal">{{ item.hours }} hr</p>
+                    </Tooltip>
                 </div>
                 <div class="flex items-center justify-between">
                     <div v-if="JSON.parse(item.volunteers).length > 0 && JSON.parse(item.volunteers)[0].full_name != null"
@@ -118,7 +129,7 @@
 <script setup>
 import { inject, ref } from 'vue';
 
-import { FeatherIcon } from 'frappe-ui';
+import { FeatherIcon,Tooltip } from 'frappe-ui';
 const auth = inject('auth');
 const formatDate = inject('formatDate');
 const props = defineProps({

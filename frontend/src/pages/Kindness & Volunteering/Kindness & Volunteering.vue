@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[1920px] w-full h-screen pt-[62px] mx-auto bg-gray-50">
+  <div class="max-w-[1920px] w-full h-screen pt-[92px] mx-auto bg-gray-50">
     <div class="w-full h-full flex flex-col lg:flex-row px-5">
       <Filters />
       <div class="w-full lg:pl-[270px] flex flex-col xl:flex-row">
