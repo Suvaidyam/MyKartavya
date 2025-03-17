@@ -69,6 +69,7 @@ def get_top_users(page=1, page_size=10):
             "Volunteer Activity",
             fields=["volunteer.full_name", "karma_points", "duration", "volunteer.user_image"],
             order_by="karma_points DESC",
+            group_by="volunteer",
             start=start,
             page_length=page_size,
             ignore_permissions=True
