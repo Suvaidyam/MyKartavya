@@ -16,7 +16,7 @@
                     <div class="flex flex-col gap-3 pb-2">
                         <div v-if="item.key === 'sdgs'" class="flex px-2 items-center gap-2 text-sm">
                             <input v-model="allChecked" type="checkbox"
-                                class="rounded-sm h-4 w-4 min-w-4 max-h-4 focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
+                                class="rounded-sm h-4 w-4 min-w-4 max-w-4 min-h-4 max-h-4 focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="all-sdgs">
                             <label class="text-[12px] cursor-pointer font-normal flex gap-1 items-center" for="all-sdgs">
                                 <img src="../assets/sdgall.png" :alt="'el'" class="w-[21px] h-[21px] min-w-[21px] min-h-[21px] rounded-full object-cover" />
@@ -26,7 +26,7 @@
 
                         <div v-for="el in item.options" class="flex px-2 items-center gap-2 text-sm">
                             <input v-model="store.filters[item.key]" :value="el.name" :type="item.type" :name="item.key"
-                                :class="[item.type == 'checkbox' ? 'rounded-sm' : 'rounded-full', 'focus:ring-[#E86C13] h-4 w-4 min-w-4 max-h-4 focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary']"
+                                :class="[item.type == 'checkbox' ? 'rounded-sm' : 'rounded-full', 'focus:ring-[#E86C13] h-4 w-4 min-w-4 max-w-4 min-h-4 max-h-4 focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary']"
                                 :id="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">
                             <label class="text-[12px] font-normal cursor-pointer flex items-center gap-1"
                                 :for="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">

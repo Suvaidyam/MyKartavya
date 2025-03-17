@@ -84,7 +84,9 @@
 
         <!-- Crown Icon -->
         <div class="absolute top-12 left-1/2 transform -translate-x-1/2">
-          <img src="../../assets/icons8-queen-48.png" alt="Crown" class="w-8 h-8" />
+          <svg width="30" height="23" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.04167 15.333L0.625 2.04134L7.27083 8.08301L11.5 0.833008L15.7292 8.08301L22.375 2.04134L19.9583 15.333H3.04167ZM19.9583 18.958C19.9583 19.683 19.475 20.1663 18.75 20.1663H4.25C3.525 20.1663 3.04167 19.683 3.04167 18.958V17.7497H19.9583V18.958Z" fill="#EBBB00"/>
+            </svg>            
         </div>
 
         <!-- Top Performer -->
@@ -99,7 +101,7 @@
               </div>
             </div>
             <span
-              class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
+              class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full">
               1
             </span>
           </div>
@@ -130,7 +132,7 @@
                 </div>
               </div>
               <span
-                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-purple-500 text-white text-xs px-2 py-1 rounded-full">
+                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-purple-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full">
                 2
               </span>
             </div>
@@ -161,7 +163,7 @@
                 </div>
               </div>
               <span
-                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full">
                 3
               </span>
             </div>
@@ -234,12 +236,13 @@
         </tbody>
       </table>
     </div>
-    <div class="bg-white w-full px-4 border-t border-[#b0b3b0]">
+    <!-- SDGs Impacted -->
+    <div class="bg-white w-full px-4 pb-4 border-t border-[#b0b3b0]">
       <div class="flex justify-between items-center">
         <h2 class="text-[16px] font-medium pt-6">SDGs Impacted</h2>
         <router-link to="/all-volunteer" class="text-orange-500 text-[10px] font-medium">VIEW ALL</router-link>
       </div>
-      <div v-for="(sdg, index) in sdgs" :key="index" class="flex items-center space-x-4 pt-4">
+      <div v-if="sdgs.length > 0" v-for="(sdg, index) in sdgs" :key="index" class="flex items-center space-x-4 pt-4">
         <img v-if="sdg.image" :src="sdg.image" :alt="sdg.sdgs_name" class="w-10 h-10 rounded-[4px]" />
         <div v-else class="w-10 h-10 rounded-[4px] border flex justify-center items-center">
           {{ sdg.sdgs_name?.charAt(0) }}
@@ -255,6 +258,9 @@
             <span class="text-gray-800"> ₹ {{ sdg.work_values || '0' }}</span>
           </p>
         </div>
+      </div>
+      <div v-else class="text-center text-gray-500 py-4">
+        No SDGs found
       </div>
     </div>
   </aside>
