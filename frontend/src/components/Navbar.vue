@@ -1,19 +1,22 @@
 <template>
-  <div v-if="['/login', '/verify'].includes(route.fullPath)"
-    class="hidden md:flex space-x-4 justify-end px-10 bg-orange-100 h-8 items-center w-full">
+  <div v-if="!auth.isLoggedIn" class="hidden md:flex space-x-4 justify-end px-10 bg-[#FFBD9C] h-8 items-center w-full">
     <FeatherIcon name="search" class="size-4 cursor-pointer text-gray-700" />
-    <a class="text-[#000000] font-normal text-[12px]">Register as Company</a>
-    <a class="text-[#000000] font-normal text-[12px]">Register as NGO</a>
+    <router-link to="/company-registration" class="text-black font-normal text-xs">
+      Register as Company
+    </router-link>
+
+    <router-link to="/ngo-registration" class="text-[#000000] font-normal text-[12px]">Register as NGO</router-link>
   </div>
   <div class="bg-white h-[60px] shadow-md">
     <nav
       v-if="['/', '/volunteering-opportunities', '/profile', '/activity', '/updateprofile', '/all-activity'].includes('/' + route.fullPath.split('/')[1])"
       class="flex items-center justify-between w-full px-[36px] max-w-[1920px] mx-auto h-full">
-      <router-link to="/" class="flex items-center space-x-4">
+      <a href="#" @click="handleLogoClick" class="flex items-center space-x-4">
         <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
-      </router-link>
+      </a>
       <div class="hidden md:flex space-x-8 text-gray-700">
-        <router-link to="/" :class="[route.fullPath == '/' ? 'font-medium' : 'font-normal', 'text-sm']">My Karma</router-link>
+        <router-link to="/" :class="[route.fullPath == '/' ? 'font-medium' : 'font-normal', 'text-sm']">My
+          Karma</router-link>
         <router-link to="/volunteering-opportunities"
           :class="[route.fullPath == '/volunteering-opportunities' ? 'font-medium' : 'font-normal', 'text-sm']">Volunteering
           Opportunities</router-link>
@@ -59,13 +62,14 @@
     </nav>
     <!--  -->
     <nav v-else class="flex items-center justify-between h-full px-[36px] max-w-[1920px] mx-auto">
-      <router-link to="/" class="flex items-center space-x-4">
+      <a href="#" @click="handleLogoClick" class="flex items-center space-x-4">
         <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
-      </router-link>
+      </a>
       <div class="hidden md:flex space-x-8 text-gray-700">
-        <router-link to="/landing"
-          :class="[route.fullPath == '/landing' ? 'font-medium' : 'font-normal', 'text-sm']">Home</router-link>
-        <router-link to="/about-us" :class="[route.fullPath == '/about-us' ? 'font-medium' : 'font-normal', 'text-sm']">About
+        <router-link to="/"
+          :class="[route.fullPath == '/landin' ? 'font-medium' : 'font-normal', 'text-sm']">Home</router-link>
+        <router-link to="/about-us"
+          :class="[route.fullPath == '/about-us' ? 'font-medium' : 'font-normal', 'text-sm']">About
           Us</router-link>
         <router-link to="/features"
           :class="[route.fullPath == '/features' ? 'font-medium' : 'font-normal', 'text-sm']">Features</router-link>
@@ -119,7 +123,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, h,watch } from 'vue';
+import { ref, onMounted, h, watch } from 'vue';
 import { Dropdown, Button, FeatherIcon, Avatar, Tooltip } from 'frappe-ui';
 import { inject } from 'vue';
 import Notifications from './Notifications.vue';
@@ -130,6 +134,15 @@ const auth = inject('auth');
 const call = inject('call');
 const router = useRouter();
 const route = useRoute();
+
+const handleLogoClick = (e) => {
+  e.preventDefault();
+  const currentOrigin = window.location.origin;
+  // Convert from frontend port (8080) to backend port (8000)
+  const backendUrl = currentOrigin.replace(':8080', ':8000');
+  window.location.href = backendUrl;
+};
+
 const baseDropdown = [
   {
     label: 'Logout',
@@ -182,19 +195,19 @@ const change_route = (route) => {
   router.push(route);
 };
 // Run on mount and on window resize
-onMounted(async() => {
+onMounted(async () => {
   updateDropdown();
   window.addEventListener('resize', updateDropdown);
 });
-watch(()=>route.fullPath,async(value)=>{
-  if(value != '/updateprofile',auth.isLoggedIn){
+watch(() => route.fullPath, async (value) => {
+  if (value != '/updateprofile', auth.isLoggedIn) {
     let res = await call('mykartavya.controllers.api.check_user_fields', {});
     if (!res?.success) {
-        localStorage.setItem('updateprofile', 'true');
-        router.push('/updateprofile');
+      localStorage.setItem('updateprofile', 'true');
+      router.push('/updateprofile');
     }
   }
-},{immediate:true})
+}, { immediate: true })
 </script>
 
 <style scoped>

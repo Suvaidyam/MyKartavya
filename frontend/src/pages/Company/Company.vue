@@ -1,316 +1,471 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-10">
-        <div class="max-w-5xl mx-auto p-6 font-sans mt-16">
-            <form @submit.prevent="submitForm" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Company Name <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" v-model="form.companyName" required
-                            class="block w-full rounded-md border-gray-300 py-2 px-3 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+    <div class="max-w-[1920px] mx-auto px-10 pt-[82px] pb-4 bg-gray-50">
+        <div class="bg-white rounded-lg shadow mt-4">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Company Registration</h2>
+                <form @submit.prevent="submitForm" class="space-y-8" :class="{ 'loading': loading }">
+                    <!-- Error Message Display -->
+                    <div v-if="error" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
+                        role="alert">
+                        <span class="block sm:inline">{{ error }}</span>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Company Registration Date <span class="text-red-500">*</span>
-                        </label>
-                        <input type="date" v-model="form.registrationDate" required
-                            class="block w-full rounded-md border-gray-300 border py-2 px-3 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                    </div>
-                </div>
-                <div>
-                    <h2 class="text-base font-bold text-gray-900 mb-4">Contact Information</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Basic Information -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                First Name <span class="text-red-500">*</span>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Company Name <span class="text-red-500 pt-2">*</span>
                             </label>
-                            <input type="text" v-model="form.firstName" required
-                                class="block w-full rounded-md border-gray-300 py-2 px-3 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            <input v-model="form.company_name" type="text" placeholder="Enter Company Name" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
+
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Designation <span class="text-red-500">*</span>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Registration Date <span class="text-red-500 pt-2">*</span>
                             </label>
-                            <input type="text" v-model="form.designation" required
-                                class="block w-full rounded-md border-gray-300 border py-2 px-3 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            <input v-model="form.registration_date" type="date" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
+
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Last Name <span class="text-red-500">*</span>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Email <span class="text-red-500 pt-2">*</span>
                             </label>
-                            <input type="text" v-model="form.lastName" required
-                                class="block w-full rounded-md border-gray-300 py-2 px-3 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            <input v-model="form.email" type="email" placeholder="company@example.com" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
+
+                        <!-- Contact Information -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                First Name <span class="text-red-500 pt-2">*</span>
+                            </label>
+                            <input v-model="form.first_name" type="text" placeholder="First Name" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                        </div>
+
+                        <div>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Last Name <span class="text-red-500 pt-2">*</span>
+                            </label>
+                            <input v-model="form.last_name" type="text" placeholder="Last Name" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                        </div>
+
+                        <div>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Designation <span class="text-red-500 pt-2">*</span>
+                            </label>
+                            <input v-model="form.designation" type="text" placeholder="e.g., Director, Manager" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                        </div>
+
+                        <div>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Mobile Number <span class="text-red-500 pt-2">*</span>
+                            </label>
+                            <input v-model="form.mobile_number" type="tel" placeholder="+91 XXXXX XXXXX" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                        </div>
+
+                        <div>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                                 Phone
                             </label>
-                            <input type="tel" v-model="form.phone"
-                                class="block w-full rounded-md border-gray-300 py-2 px-3 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            <input v-model="form.phone" type="tel" placeholder="+91 XXXXX XXXXX"
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Email <span class="text-red-500">*</span>
-                            </label>
-                            <input type="email" v-model="form.email" required
-                                class="block w-full rounded-md border-gray-300 py-2 px-3 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Mobile Number <span class="text-red-500">*</span>
-                            </label>
-                            <input type="tel" v-model="form.mobileNumber" required
-                                class="block w-full rounded-md border-gray-300 py-2 px-3 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h2 class="text-base font-bold text-gray-900 mb-4">Address Information</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        <!-- Address Information -->
                         <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                India Headquarters Address <span class="text-red-500">*</span>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                India Headquarters Address <span class="text-red-500 pt-2">*</span>
                             </label>
-                            <textarea v-model="form.address" rows="4" required
-                                class="block w-full rounded-md border-gray-300 py-2 px-3 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
+                            <textarea v-model="form.address" rows="3"
+                                placeholder="Enter complete address with landmarks" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"></textarea>
                         </div>
+
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Country <span class="text-red-500">*</span>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Country <span class="text-red-500 pt-2">*</span>
                             </label>
                             <select v-model="form.country" @change="fetchStates" required
-                                class="block w-full rounded-md border-gray-300 py-2 px-3 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
+                                <option value="" disabled>Select Country</option>
                                 <option v-for="country in countries" :key="country.name" :value="country.name">
-                                    {{ country.label }}
+                                    {{ country.label || country.name }}
                                 </option>
                             </select>
                         </div>
+
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                State <span class="text-red-500">*</span>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                State <span class="text-red-500 pt-2">*</span>
                             </label>
                             <select v-model="form.state" @change="fetchCities" required
-                                class="block w-full rounded-md border-gray-300 py-2 px-3 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
+                                <option value="" disabled>Select State</option>
                                 <option v-for="state in states" :key="state.name" :value="state.name">
-                                    {{ state.label }}
+                                    {{ state.state_name || state.name }}
                                 </option>
                             </select>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                City <span class="text-red-500">*</span>
-                            </label>
-                            <label for="city">City (District)</label>
-                            <select id="city" v-model="form.city" required>
-                                <option value="" disabled>Select your city</option>
-                                <option v-for="city in cities" :key="city.name" :value="city.name">
-                                    {{ city.label }}
-                                </option>
-                            </select>
 
-                        </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Pincode <span class="text-red-500">*</span>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                City <span class="text-red-500 pt-2">*</span>
                             </label>
-                            <input type="text" v-model="form.pincode" required
-                                class="block w-full rounded-md border-gray-300 py-2 px-3 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            <select v-model="form.city" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
+                                <option value="" disabled>Select City</option>
+                                <option v-for="city in cities" :key="city.name" :value="city.name">
+                                    {{ city.district_name || city.name }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Pincode <span class="text-red-500 pt-2">*</span>
+                            </label>
+                            <input v-model="form.pincode" type="text" placeholder="Enter PIN code" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                        </div>
+
+                        <!-- Organization Details -->
+                        <div>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Number of Employees <span class="text-red-500 pt-2">*</span>
+                            </label>
+                            <input v-model="form.number_of_employees" type="number" min="1" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                        </div>
+
+                        <div>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Clear Vision <span class="text-red-500 pt-2">*</span>
+                            </label>
+                            <select v-model="form.clear_vision" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <!-- Volunteering Program Details -->
+                        <div>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Volunteering CSR Activities Cost (%) <span class="text-red-500 pt-2">*</span>
+                            </label>
+                            <input v-model="form.volunteering_csr_activities" type="number" min="0" max="100" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                        </div>
+
+                        <div>
+                            <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                                Employee Engagement Coverage (%) <span class="text-red-500 pt-2">*</span>
+                            </label>
+                            <input v-model="form.employee_engagement" type="number" min="0" max="100" required
+                                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
                     </div>
-                </div>
-                <div>
-                    <h2 class="text-base font-bold text-gray-900 mb-4">Organization Details</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Number of Employees <span class="text-red-500">*</span>
-                            </label>
-                            <input type="number" v-model="form.employees" required
-                                class="block w-full rounded-md border-gray-300 border py-2 px-3 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Clear Vision <span class="text-red-500">*</span>
-                            </label>
-                            <div class="relative">
-                                <select v-model="form.clearVision" required
-                                    class="block w-full rounded-md border-gray-300 border py-2 pl-3 pr-10 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                                    <option>Yes</option>
-                                    <option>No</option>
-                                </select>
-                                <div
-                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
+
+                    <!-- Submit Button -->
+                    <div class="mt-6">
+                        <button type="submit"
+                            class="bg-orange-500 text-white font-semibold py-2 px-4 rounded-sm hover:bg-orange-600 transition"
+                            :disabled="loading">
+                            {{ loading ? 'Registering...' : 'Register Company' }}
+                        </button>
                     </div>
-                </div>
-                <div>
-                    <h2 class="text-base font-bold text-gray-900 mb-4">Volunteering Program Details</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Volunteering CSR Activities Cost <span class="text-red-500">*</span>
-                            </label>
-                            <input type="text" v-model="form.csrCost" required
-                                class="block w-full rounded-md border-gray-300 border py-2 px-3 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Employee Engagement Coverage <span class="text-red-500">*</span>
-                            </label>
-                            <input type="text" v-model="form.employeeEngagement" required
-                                class="block w-full rounded-md border-gray-300 border py-2 px-3 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                        </div>
-                    </div>
-                </div>
-                <div class="flex justify-end">
-                    <button type="submit"
-                        class="bg-orange-500 text-white font-semibold py-2 px-6 rounded-sm hover:bg-orange-600 transition">
-                        Submit
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { call } from "frappe-ui";
-import { reactive, ref } from "vue";
+import { ref, inject, onMounted } from "vue";
+import { useRouter } from 'vue-router';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
-const form = reactive({
-    registrationType: "Self Registration",
-    registrationDate: "",
-    companyName: "",
-    firstName: "",
-    lastName: "",
+const call = inject('call');
+const router = useRouter();
+const loading = ref(false);
+const error = ref(null);
+
+const form = ref({
+    registration_type: "Self Registration",
+    registration_date: "",
+    company_name: "",
+    first_name: "",
+    last_name: "",
     email: "",
     designation: "",
     phone: "",
-    mobileNumber: "",
+    mobile_number: "",
     address: "",
     country: "India",
     state: "",
     city: "",
     pincode: "",
-    employees: "",
-    clearVision: "Yes",
-    csrCost: "",
-    employeeEngagement: "",
+    number_of_employees: "",
+    clear_vision: "Yes",
+    volunteering_csr_activities: "",
+    employee_engagement: "",
 });
 
-function validateForm() {
-    if (!form.companyName) {
-        alert("Company Name is required");
+const validateForm = () => {
+    // Reset error
+    error.value = null;
+
+    // Required fields validation
+    const requiredFields = [
+        'company_name',
+        'registration_date',
+        'first_name',
+        'last_name',
+        'email',
+        'designation',
+        'mobile_number',
+        'address',
+        'country',
+        'state',
+        'city',
+        'pincode',
+        'number_of_employees',
+        'clear_vision',
+        'volunteering_csr_activities',
+        'employee_engagement'
+    ];
+
+    for (const field of requiredFields) {
+        if (!form.value[field]) {
+            error.value = `Please fill in ${field.replace(/_/g, ' ')}.`;
+            toast.error(error.value, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+            });
+            return false;
+        }
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.value.email)) {
+        error.value = 'Please enter a valid email address.';
+        toast.error(error.value, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+        });
         return false;
     }
-    if (!form.city) {
-        alert("City is required");
+
+    // Phone number validation
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(form.value.mobile_number)) {
+        error.value = 'Mobile number must be exactly 10 digits.';
+        toast.error(error.value, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+        });
         return false;
     }
-    if (!form.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-        alert("Valid email is required");
+
+    if (form.value.phone && !phoneRegex.test(form.value.phone)) {
+        error.value = 'Phone number must be exactly 10 digits.';
+        toast.error(error.value, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+        });
         return false;
     }
-    if (!form.registrationDate) {
-        alert("Registration Date is required");
+
+    // Pincode validation
+    if (!/^\d{6}$/.test(form.value.pincode)) {
+        error.value = 'Pincode must be exactly 6 digits.';
+        toast.error(error.value, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+        });
         return false;
     }
+
+    // Number of employees validation
+    if (parseInt(form.value.number_of_employees) < 1) {
+        error.value = 'Number of employees must be at least 1.';
+        toast.error(error.value, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+        });
+        return false;
+    }
+
+    // Percentage validations
+    const percentageFields = ['volunteering_csr_activities', 'employee_engagement'];
+    for (const field of percentageFields) {
+        const value = parseFloat(form.value[field]);
+        if (isNaN(value) || value < 0 || value > 100) {
+            error.value = `${field.replace(/_/g, ' ')} must be between 0 and 100.`;
+            toast.error(error.value, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+            });
+            return false;
+        }
+    }
+
     return true;
-}
+};
 
-
-async function submitForm() {
-    if (!validateForm()) return;
-
-    console.log("Form submitted:", form);
-
+const submitForm = async () => {
     try {
-        const response = await call("frappe.client.insert", {
-            doc: {
-                doctype: "Company",
-                first_name: form.firstName,
-                last_name: form.lastName,
-                company_registration_date: form.registrationDate,
-                company_name: form.companyName,
-                email: form.email,
-                designation: form.designation,
-                india_headquarters_address: form.address,
-                mobile_number: form.mobileNumber,
-                country: form.country,
-                state: form.state,
-                city: form.city, // Include city here
-                pincode: form.pincode,
-                number_of_employees: form.employees,
-                clear_vision: form.clearVision,
-                volunteering_csr_activities: form.csrCost,
-                employee_engagement: form.employeeEngagement,
-            },
+        if (!validateForm()) {
+            return;
+        }
+
+        loading.value = true;
+
+        const response = await call('mykartavya.mykartavya.api.register_company', {
+            registration_type: form.value.registration_type,
+            registration_date: form.value.registration_date,
+            company_name: form.value.company_name,
+            first_name: form.value.first_name,
+            last_name: form.value.last_name,
+            email: form.value.email,
+            designation: form.value.designation,
+            phone: form.value.phone,
+            mobile_number: form.value.mobile_number,
+            address: form.value.address,
+            country: form.value.country,
+            state: form.value.state,
+            city: form.value.city,
+            pincode: form.value.pincode,
+            number_of_employees: form.value.number_of_employees,
+            clear_vision: form.value.clear_vision,
+            volunteering_csr_activities: form.value.volunteering_csr_activities,
+            employee_engagement: form.value.employee_engagement,
         });
 
+        if (response.status === 'error') {
+            throw new Error(response.message);
+        }
 
-        console.log("API Response:", response);
-        alert("Form submitted successfully!");
-    } catch (error) {
-        console.error("Error submitting form:", error);
-        alert("Failed to submit the form. Please check the console for details.");
+        toast.success('Company Registration Successful! Please check your email for login credentials.', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+        });
+
+        // Redirect to home after a short delay
+        setTimeout(() => {
+            router.push('/');
+        }, 2000);
+
+    } catch (err) {
+        console.error('Error submitting form:', err);
+        toast.error(err.message || 'Failed to register company. Please try again.', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+        });
+    } finally {
+        loading.value = false;
     }
-}
+};
 
+// Fetch country, state and city data
 const countries = ref([]);
 const states = ref([]);
 const cities = ref([]);
 
-// Fetch data for countries
 const fetchCountries = async () => {
     try {
+        loading.value = true;
         const res = await call("mykartavya.controllers.api.country_data");
-        countries.value = Array.isArray(res)
-            ? res.map((c) => ({ name: c.name, label: c.label || c.name }))
-            : [];
-    } catch (error) {
-        console.error("Error fetching countries:", error);
-        alert("Failed to load countries.");
+        countries.value = res || [];
+    } catch (err) {
+        console.error('Error fetching countries:', err);
+        toast.error('Failed to load countries. Please try again.', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+        });
+    } finally {
+        loading.value = false;
     }
 };
 
-// Fetch data for states based on selected country
 const fetchStates = async () => {
-    if (!form.country) return;
     try {
-        const res = await call("mykartavya.controllers.api.state_data", { country: form.country });
-        states.value = Array.isArray(res)
-            ? res.map((s) => ({ name: s.name, label: s.state_name || s.name }))
-            : [];
-    } catch (error) {
-        console.error("Error fetching states:", error);
-        alert("Failed to load states.");
+        if (!form.value.country) return;
+        loading.value = true;
+        const res = await call("mykartavya.controllers.api.state_data", {
+            country: form.value.country
+        });
+        states.value = res || [];
+        form.value.state = ""; // Reset state when country changes
+        form.value.city = ""; // Reset city when country changes
+    } catch (err) {
+        console.error('Error fetching states:', err);
+        toast.error('Failed to load states. Please try again.', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+        });
+    } finally {
+        loading.value = false;
     }
 };
 
-// Fetch data for cities based on selected state
 const fetchCities = async () => {
-    if (!form.state) return;
     try {
-        const res = await call("mykartavya.controllers.api.city_data", { state: form.state });
-        cities.value = Array.isArray(res)
-            ? res.map((c) => ({ name: c.name, label: c.name })) // Ensure it matches `District` doctype
-            : [];
-    } catch (error) {
-        console.error("Error fetching cities:", error);
-        alert("Failed to load cities.");
+        if (!form.value.state) return;
+        loading.value = true;
+        const res = await call("mykartavya.controllers.api.city_data", {
+            state: form.value.state
+        });
+        cities.value = res || [];
+        form.value.city = ""; // Reset city when state changes
+    } catch (err) {
+        console.error('Error fetching cities:', err);
+        toast.error('Failed to load cities. Please try again.', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+        });
+    } finally {
+        loading.value = false;
     }
 };
 
-
-// Fetch initial countries on setup
-fetchCountries();
+onMounted(async () => {
+    await fetchCountries();
+    if (form.value.country) {
+        await fetchStates();
+    }
+});
 </script>
+
+<style scoped>
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.error-message {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+</style>

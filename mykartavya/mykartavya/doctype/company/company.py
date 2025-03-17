@@ -18,11 +18,11 @@ class Company(Document):
         # self.validate_address()
         self.validate_organization_details()
         self.validate_company_logo()
-        
+
     def validate_company_name(self):
         if len(self.company_name) > 100:
             frappe.throw("Company Name cannot exceed 100 characters")
-            
+
         # Check for uniqueness
         existing = frappe.db.exists("Company", {
             "company_name": self.company_name,
@@ -30,7 +30,7 @@ class Company(Document):
         })
         if existing:
             frappe.throw("Company Name must be unique")
-            
+
 
     def validate_registration_dates(self):
         if self.registration_type == "Self Registration":
@@ -52,17 +52,17 @@ class Company(Document):
                 except ValueError:
                     frappe.throw("Invalid Company Registration Year format")
 
-                    
+
     def validate_contact_details(self):
         # Validate names
         if len(self.first_name) > 100:
             frappe.throw("First Name cannot exceed 100 characters")
-            
+
         if len(self.last_name) > 100:
             frappe.throw("Last Name cannot exceed 100 characters")
 
         if not self.designation:
-            self.designation = ""   
+            self.designation = ""
 
         if len(self.designation) > 100:
             frappe.throw("Designation cannot exceed 100 characters")
@@ -71,66 +71,66 @@ class Company(Document):
         email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         if not re.match(email_pattern, self.email):
             frappe.throw("Invalid Email format")
-            
+
         # Phone number validation
         if self.phone and not re.match(r'^\d{10,15}$', self.phone):
             frappe.throw("Phone number must be between 10 and 15 digits")
-            
+
         # Mobile number validation
         if not re.match(r'^\d{10}$', self.mobile_number):
             frappe.throw("Mobile Number must be exactly 10 digits")
-            
+
         # Validate volunteering incharge details if Admin Registration
         if self.registration_type == "Admin Registration":
             if self.volunteering_incharge_email and not re.match(email_pattern, self.volunteering_incharge_email):
                 frappe.throw("Invalid Volunteering InCharge Email format")
-                
+
             if self.volunteering_incharge_phone and not re.match(r'^\d{10,15}$', self.volunteering_incharge_phone):
                 frappe.throw("Volunteering InCharge Phone must be between 10 and 15 digits")
-                    
+
     def validate_address(self):
         if self.pincode:
             if not re.match(r'^\d{6}$', self.pincode):
                 frappe.throw("Pincode must be exactly 6 digits")
-                
+
         # Validate state belongs to country
         if self.state and self.country:
             state = frappe.get_doc("State", self.state)
             if state.country != self.country:
                 frappe.throw("Selected State does not belong to the selected Country")
-                
+
     def validate_organization_details(self):
         if self.registration_type == "Self Registration":
             if self.number_of_employees is not None and self.number_of_employees < 1:
                 frappe.throw("Number of Employees must be at least 1")
-                
+
             if self.volunteering_csr_activities is not None:
                 if not (0 <= self.volunteering_csr_activities <= 100):
                     frappe.throw("Volunteering CSR Activities Cost must be between 0 and 100")
-                    
+
             if self.employee_engagement is not None:
                 if not (0 <= self.employee_engagement <= 100):
                     frappe.throw("Employee Engagement Coverage must be between 0 and 100")
-                    
+
     def validate_company_logo(self):
         if self.registration_type == "Admin Registration" and self.company_logo:
             # Get file extension
             _, file_extension = os.path.splitext(self.company_logo)
             file_extension = file_extension.lower()
-            
+
             # Validate file format
             allowed_formats = ['.jpg', '.jpeg', '.png', '.svg', '.webp']
             if file_extension not in allowed_formats:
                 frappe.throw("Company Logo must be in JPG, PNG, SVG, WEBP, or JPEG format")
-                
+
             # Validate file size (1MB to 5MB)
             file_size = frappe.get_doc("File", {"file_url": self.company_logo}).file_size
             min_size = 1 * 1024 * 1024  # 1MB in bytes
             max_size = 5 * 1024 * 1024  # 5MB in bytes
-            
+
             if not (min_size <= file_size <= max_size):
                 frappe.throw("Company Logo file size must be between 1MB and 5MB")
-                
+
     def before_save(self):
         # Strip whitespace from text fields
         self.company_name = self.company_name.strip()
@@ -139,38 +139,38 @@ class Company(Document):
         if self.designation:
             self.designation = self.designation.strip()
         else:
-            self.designation = "" 
-        
+            self.designation = ""
+
         if self.registration_type == "Admin Registration":
             if self.volunteering_incharge_name:
                 self.volunteering_incharge_name = self.volunteering_incharge_name.strip()
-                
+
         if self.india_headquarters_address:
             self.india_headquarters_address = self.india_headquarters_address.strip()
-    
+
 def after_insert(doc, method):
     if doc.registration_type == "Admin Registration":
         # Approve the company
         frappe.db.set_value("Company", doc.name, "workflow_state", "Approved")
-        
+
         # Fetch the updated workflow_state
         status = frappe.db.get_value("Company", doc.name, "workflow_state")
-        
+
         # Update registration_status
         frappe.db.set_value("Company", doc.name, "registration_status", status)
 
     # Create SVA User for both registration types
     insert_sva_user(doc)
-    
+
 def get_role_profile(registration_type):
     """Get appropriate role profile based on registration type"""
     role_profile_name = "Company Admin"
 
     role_profile = frappe.db.exists("Role Profile", role_profile_name)
-    
+
     if not role_profile:
         frappe.throw(f"Role Profile '{role_profile_name}' not found. Please create it first.")
-    
+
     return role_profile_name
 
 def insert_sva_user(doc):
@@ -187,11 +187,11 @@ def insert_sva_user(doc):
         state = doc.state
         city = doc.city
         designation = doc.designation
-        
+
         # Check if user already exists
         if frappe.db.exists("SVA User", {"email": email}):
             frappe.throw(f"SVA User with email {email} already exists")
-        
+
         sva_user = frappe.get_doc({
             "doctype": "SVA User",
             "email": email,
@@ -200,35 +200,43 @@ def insert_sva_user(doc):
             "password": password,
             "mobile_number": mobile_number,
             "confirm_password": password,
-            "custom_company": doc.name, 
+            "custom_company": doc.name,
             "role_profile": role_profile,
             "custom_country": country,
             "custom_state": state,
-            "custom_city": city, 
+            "custom_city": city,
             "custom_designation": designation,
-            "custom_volunteer_type": "Employee",   
+            "custom_volunteer_type": "Employee",
             "enabled": 1
         })
-        
+
         sva_user.insert(ignore_permissions=True)
+        sva_user = frappe.get_doc("SVA User", sva_user.name)
         if sva_user.custom_volunteer_type == "Employee":
-            frappe.db.set_value("SVA User", sva_user.name, "workflow_state", "Approved")
+            sva_user.append("table_pdop", {
+                "module": "Company",
+                "value": doc.name,
+            })
+            sva_user.save(ignore_permissions=True)
+
+        if sva_user.custom_volunteer_type == "Employee":
+            frappe.db.set_value("SVA User", sva_user.name, "workflow_state", "Approved",update_modified=False)
         frappe.db.commit()
-        
+
         frappe.msgprint(
             f"Company Admin SVA User created successfully!\nEmail: {email}\nRole Profile: {role_profile}",
             alert=True
         )
-        
+
         # Create Volunteer Incharge user if Admin Registration
         if doc.registration_type == "Admin Registration":
             incharge_email = doc.volunteering_incharge_email
             incharge_password = generate_random_password()
-            
+
             # Check if incharge user already exists
             if frappe.db.exists("SVA User", {"email": incharge_email}):
                 frappe.throw(f"SVA User with email {incharge_email} already exists")
-            
+
             incharge_user = frappe.get_doc({
                 "doctype": "SVA User",
                 "email": incharge_email,
@@ -243,20 +251,28 @@ def insert_sva_user(doc):
                 "custom_city": city,
                 "role_profile": "Volunteer Incharge",
                 "custom_designation": designation,
-                "custom_volunteer_type": "Employee",   
+                "custom_volunteer_type": "Employee",
                 "enabled": 1
             })
-            
+
             incharge_user.insert(ignore_permissions=True)
+            incharge_user = frappe.get_doc("SVA User", incharge_user.name)
             if incharge_user.custom_volunteer_type == "Employee":
-             frappe.db.set_value("SVA User", incharge_user.name, "workflow_state", "Approved")
+                incharge_user.append("table_pdop", {
+                    "module": "Company",
+                    "value": doc.name,
+                })
+                incharge_user.save(ignore_permissions=True)
+
+            if incharge_user.custom_volunteer_type == "Employee":
+                frappe.db.set_value("SVA User", incharge_user.name, "workflow_state", "Approved",update_modified=False)
             frappe.db.commit()
-            
+
             frappe.msgprint(
                 f"Volunteer Incharge SVA User created successfully!\nEmail: {incharge_email}\nRole Profile: Volunteer Incharge",
                 alert=True
             )
-            
+
     except Exception as e:
         frappe.log_error(f"Failed to create SVA User: {str(e)}")
         frappe.throw(f"Failed to create SVA User: {str(e)}")
@@ -270,9 +286,9 @@ def generate_random_password(length=10):
         random.choice(string.digits),
         random.choice("!@#$%^&*")
     ]
-    
+
     for _ in range(length - 4):
         password.append(random.choice(characters))
-    
+
     random.shuffle(password)
     return ''.join(password)
