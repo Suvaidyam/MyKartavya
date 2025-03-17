@@ -29,7 +29,7 @@ class Profile:
         SELECT 
             SUM(va.karma_points) AS karma_points,
             SUM(a.work_value_rupees) AS work_value_rupees,
-            SUM(a.hours) AS total_hours,
+            SUM(va.duration )AS total_hours,
             COUNT(va.activity) AS activity_completed
         FROM `tabVolunteer Activity` AS va
         INNER JOIN `tabActivity` AS a ON va.activity = a.name

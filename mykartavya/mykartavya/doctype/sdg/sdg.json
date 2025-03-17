@@ -20,13 +20,13 @@
   },
   {
    "fieldname": "sdg_image",
-   "fieldtype": "Attach Image",
+   "fieldtype": "Data",
    "label": "SDG Image"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-13 16:23:32.043227",
+ "modified": "2025-03-17 10:09:29.918799",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "SDG",
@@ -94,6 +94,7 @@
    "share": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": [],
