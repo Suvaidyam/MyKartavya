@@ -1,25 +1,33 @@
 frappe.ui.form.on("Activity", {
     skill: function (frm) {
         if (frm.doc.value_type === "Skills") {
-            frm.set_value("work_value_rupees", 0);
-            if (frm.doc.skill && frm.doc.skill.length > 0) {
-                let total_value = 0;
-                let promises = frm.doc.skill.map(skill_entry => {
-                    return frappe.db.get_doc("Skills", skill_entry.skills_name)   
-                        .then(skill_doc => {
-                                total_value += skill_doc.rate_per_hour;  
-                        })
-                        .catch(err => {
-                            console.error("Error fetching skill:", err);
-                        });
-                });
-                Promise.all(promises).then(() => {
-                    frm.set_value("work_value_rupees", total_value);
-                    frm.refresh();   
-                });
+            if (!frm.doc.skill || frm.doc.skill.length === 0) {
+                // Show an error message and prevent saving
+                frappe.msgprint(__('Please select at least one skill.'));
+                frappe.validated = false; // This prevents the form from saving
+                return;
             }
+    
+            frm.set_value("work_value_rupees", 0);
+            let total_value = 0;
+            let promises = frm.doc.skill.map(skill_entry => {
+                return frappe.db.get_doc("Skills", skill_entry.skills_name)   
+                    .then(skill_doc => {
+                        total_value += skill_doc.rate_per_hour;  
+                    })
+                    .catch(err => {
+                        console.error("Error fetching skill:", err);
+                    });
+            });
+    
+            Promise.all(promises).then(() => {
+                frm.set_value("work_value_rupees", total_value);
+                frm.refresh();   
+            });
         }
-    },
+    }
+    
+,    
     value_type: function (frm) {
     if (frm.doc.value_type === "General") {
         frm.set_value("work_value_rupees", "");

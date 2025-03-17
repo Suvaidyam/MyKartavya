@@ -14,6 +14,13 @@ class Activity(Document):
         self.validate_reward()
         self.validate_location()
         self.validate_company()
+        self.validateskill()
+
+
+    def validateskill(self):
+        if not self.skill or len(self.skill) == 0:
+            print(self.skill,"============================================")
+            frappe.throw(_("Please select at least one skill."))
 
     def on_update(self):
         today_date = getdate(today())
@@ -172,3 +179,4 @@ class Activity(Document):
 
                     if file_extension not in allowed_extensions:
                         frappe.throw(f"Invalid file type for {field.replace('_', ' ').title()}. Only JPG, JPEG, PNG, and WEBP are allowed.")
+
