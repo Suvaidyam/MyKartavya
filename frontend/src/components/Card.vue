@@ -28,15 +28,15 @@
                 </div>
                 <div class="flex gap-2 items-center justify-between">
                     <div class="flex gap-2 items-center">
-                        <Tooltip text="Hours" :hover-delay="1" :placement="'top'">
+                        <Tooltip text="Expected Hours" :hover-delay="1" :placement="'top'">
                             <FeatherIcon name="clock" class="size-4" />
                             <p class="text-xs font-normal">{{ item.hours }} hr</p>
                         </Tooltip>
                     </div>
                     <div class="flex gap-2 items-center">
-                        <Tooltip text="Hours" :hover-delay="1" :placement="'top'">
+                        <Tooltip text="Time Donated" :hover-delay="1" :placement="'top'">
                             <FeatherIcon name="clock" class="size-4" />
-                            <p class="text-xs font-normal">{{ item.hours }} hr</p>
+                            <p class="text-xs font-normal">{{item?.donet_hours ? ((item?.donet_hours/60)/60).toFixed(2)+' '+'hr':'--'}}</p>
                         </Tooltip>
                     </div>
                 </div>
