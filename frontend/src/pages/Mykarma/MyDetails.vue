@@ -137,12 +137,16 @@
             <p class="text-xs font-medium pt-3">
               {{ activitiestopuser[1]?.first_name || 'Top 2' }}
             </p>
-            <p class="text-[10px] font-normal pt-2 flex items-center gap-1">
-              <FeatherIcon name="database" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[1]?.total_karma_points?.toLocaleString() || '0' }} Points |
-              <FeatherIcon name="clock" class="size-3 text-[#666666]" />
+            <div class="text-[10px] font-normal pt-1 flex flex-col items-center gap-1">
+              <div class="flex items-center gap-1">
+                <FeatherIcon name="database" class="size-3 text-[#666666]" />
+              {{ activitiestopuser[1]?.total_karma_points?.toLocaleString() || '0' }} Points
+              </div> 
+              <div class="flex items-center gap-1">
+                <FeatherIcon name="clock" class="size-3 text-[#666666]" />
               {{ activitiestopuser[1]?.total_hours ? sec_to_hours(activitiestopuser[1]?.total_hours) : '0' }} hr
-            </p>
+              </div>
+            </div>
           </div>
 
           <!-- 3rd Place -->
@@ -164,12 +168,16 @@
             <p class="text-xs font-medium pt-3">
               {{ activitiestopuser[2]?.first_name || 'Top 3' }}
             </p>
-            <p class="text-[10px] font-normal pt-2 flex items-center gap-1">
-              <FeatherIcon name="database" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[2]?.total_karma_points?.toLocaleString() || '0' }} Points |
-              <FeatherIcon name="clock" class="size-3 text-[#666666]" />
+            <div class="text-[10px] font-normal pt-1 flex flex-col items-center gap-1">
+              <div class="flex items-center gap-1">
+                <FeatherIcon name="database" class="size-3 text-[#666666]" />
+              {{ activitiestopuser[2]?.total_karma_points?.toLocaleString() || '0' }} Points
+              </div> 
+              <div class="flex items-center gap-1">
+                <FeatherIcon name="clock" class="size-3 text-[#666666]" />
               {{ activitiestopuser[2]?.total_hours ? sec_to_hours(activitiestopuser[2]?.total_hours) : '0' }} hr
-            </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -240,7 +248,7 @@
           <h3 class="text-[14px] font-normal">{{ sdg.sdgs_name || '0' }}</h3>
           <p class="text-gray-500 fornt-normal text-[12px]">
             Time Donated :
-            <span class="text-gray-800">{{ sdg.hour || '0' }}</span>
+            <span class="text-gray-800">{{ sdg.hour ? sec_to_hours(sdg.hour) : '0' }} hr</span>
           </p>
           <p class="text-gray-500 fornt-normal text-[12px]">
             Money Saved :
