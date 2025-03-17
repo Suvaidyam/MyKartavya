@@ -66,7 +66,7 @@
             Money Saved
           </h4>
           <p class="text-lg font-semibold text-[#0B0B0B]">
-            ₹ {{ activities.work_value_rupees || '0' }}
+            ₹ {{ activities.work_value_rupees?.toLocaleString() || '0' }}
           </p>
         </div>
       </div>
@@ -108,7 +108,7 @@
           </p>
           <div class="text-[10px] font-normal pt-1 flex gap-1 flex-col items-center">
             <div class="flex items-center gap-1"><FeatherIcon name="database" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[0]?.total_karma_points || '0' }} Points </div>
+              {{ activitiestopuser[0]?.total_karma_points?.toLocaleString() || '0' }} Points </div>
             <div class="flex items-center gap-1">
               <FeatherIcon name="clock" class="size-3 text-[#666666]" />
             {{activitiestopuser[0]?.total_hours ? sec_to_hours(activitiestopuser[0]?.total_hours) : '0' }} hr
@@ -139,7 +139,7 @@
             </p>
             <p class="text-[10px] font-normal pt-2 flex items-center gap-1">
               <FeatherIcon name="database" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[1]?.total_karma_points || '0' }} Points |
+              {{ activitiestopuser[1]?.total_karma_points?.toLocaleString() || '0' }} Points |
               <FeatherIcon name="clock" class="size-3 text-[#666666]" />
               {{ activitiestopuser[1]?.total_hours ? sec_to_hours(activitiestopuser[1]?.total_hours) : '0' }} hr
             </p>
@@ -166,7 +166,7 @@
             </p>
             <p class="text-[10px] font-normal pt-2 flex items-center gap-1">
               <FeatherIcon name="database" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[2]?.total_karma_points || '0' }} Points |
+              {{ activitiestopuser[2]?.total_karma_points?.toLocaleString() || '0' }} Points |
               <FeatherIcon name="clock" class="size-3 text-[#666666]" />
               {{ activitiestopuser[2]?.total_hours ? sec_to_hours(activitiestopuser[2]?.total_hours) : '0' }} hr
             </p>
@@ -210,7 +210,7 @@
                 user?.duration / 60 / 60 < 1 ? (user?.duration / 60 / 60).toFixed(2) + ' hr' : Math.floor(user?.duration /
                   60 / 60) + ' hr ' + Math.floor((user?.duration % (60 * 60)) / 60) + ' min' }} </td>
             <td class="text-[10px] font-normal text-center">
-              {{ user?.karma_points }}
+              {{ user?.karma_points?.toLocaleString() }}
             </td>
             <td class="text-[10px] font-normal text-center">
               {{ user?.rank }}

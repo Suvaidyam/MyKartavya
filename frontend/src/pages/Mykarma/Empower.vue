@@ -23,13 +23,13 @@
             </span>
           </div>
           <div class="flex items-center text-gray-600 text-bodyh2 font-normal justify-between border-b pb-2">
-            <span class="flex justify-center gap-1" style="color: #0b0b0b">
+            <span class="flex justify-center items-center gap-1" style="color: #0b0b0b">
               <FeatherIcon name="clock" class="size-4 text-[#666666]" />
-              {{ activities.hours }} hr
+              {{activities.donet_hours ? ((activities.donet_hours/60)/60).toFixed(2):'0' }} hr
             </span>
             <span class="flex items-center gap-2 justify-center" style="color: #0b0b0b">
               <FeatherIcon name="database" class="size-4 text-secondary" />
-              <span class="text-bodyh2 font-normal"> {{ activities.karma_points }}</span>
+              <span class="text-bodyh2 font-normal"> {{ activities.karma_points?.toLocaleString() }}</span>
             </span>
           </div>
           <div class="flex space-x-2 border-b pb-2">
