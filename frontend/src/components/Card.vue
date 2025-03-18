@@ -51,6 +51,13 @@
                             <p class="text-xs font-normal">{{ item.hours }} hr</p>
                         </Tooltip>
                     </div>
+                    <Tooltip text="Review under proccess" :hover-delay="1" :placement="'top'">
+                        <FeatherIcon v-if="item.completion_wf_state=='Submitted'" name="clock" class="size-4 text-yellow-500" />
+                    </Tooltip>
+                    <Tooltip text="Completed" :hover-delay="1" :placement="'top'">
+                        <FeatherIcon v-if="item.completion_wf_state=='Approved'" name="check-circle" class="size-4 text-green-500" />
+                    </Tooltip>
+                    
                 </div>
             </div>
             <div class="mt-3">
