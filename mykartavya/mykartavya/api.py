@@ -1,6 +1,8 @@
 import frappe
 from frappe import _
 from frappe.utils import cstr
+from frappe.utils.file_manager import save_file
+import base64
 
 @frappe.whitelist(allow_guest=True)
 def register_ngo(**kwargs):
@@ -28,10 +30,29 @@ def register_ngo(**kwargs):
             "address": kwargs.get('address'),
             "pincode": kwargs.get('pincode'),
             "registered_with_bigtech": kwargs.get('registered_with_bigtech'),
-            "ngo_logo": kwargs.get('ngo_logo')
         })
-        
         ngo.insert(ignore_permissions=True)
+        frappe.db.commit()
+
+        try:
+            base64_string = kwargs.get('ngo_logo')   
+            if "," in base64_string:
+                base64_string = base64_string.split(",")[1]
+            file_name = f"{ngo.name}_{frappe.utils.now().replace(' ', '_')}.png"
+            file_content = base64.b64decode(base64_string)
+            file_path = save_file(
+                fname=file_name,
+                content=file_content,
+                dt="NGOs",
+                dn=ngo.name,
+                is_private=0,
+            )
+            ngo.ngo_logo = file_path.file_url
+            ngo.save(ignore_permissions=True)
+            frappe.db.commit()
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
         
         return {
             "status": "success",
