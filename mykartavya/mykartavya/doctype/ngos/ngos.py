@@ -12,11 +12,9 @@ class NGOs(Document):
         Validate the NGO document before saving
         """
         self.validate_contact_numbers()
-        self.validate_email_addresses()
         self.validate_website()
         self.validate_pincode()
         self.validate_goals()
-        self.validate_text_lengths()
         self.validate_ngo_logo()
 
     def validate_ngo_logo(self):
