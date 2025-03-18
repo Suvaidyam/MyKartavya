@@ -218,6 +218,7 @@
    "options": "Phone"
   },
   {
+   "depends_on": "eval:doc.registration_type=='Self Registration'",
    "fieldname": "area_of_work",
    "fieldtype": "Select",
    "in_list_view": 1,
@@ -226,6 +227,7 @@
    "options": "\nEducation\nSkills\nEnvironment\nFinancial Inclusion\nAccessibility and Inclusion\nDisaster Management\nHealthcare"
   },
   {
+   "depends_on": "eval:doc.registration_type=='Self Registration'",
    "fieldname": "address",
    "fieldtype": "Small Text",
    "label": "Address",
@@ -252,7 +254,6 @@
    "options": "Yes\nNo"
   },
   {
-   "depends_on": "eval:doc.registration_type=='Self Registration'",
    "fieldname": "ngo_logo",
    "fieldtype": "Attach Image",
    "label": "NGO Logo",
@@ -271,7 +272,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-20 11:50:10.531064",
+ "modified": "2025-03-17 15:06:28.755508",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "NGOs",
@@ -351,6 +352,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

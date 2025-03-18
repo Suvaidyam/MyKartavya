@@ -1,35 +1,42 @@
 <template>
-    <div>
-        <h2 class="text-xl font-semibold text-gray-700 mb-4">Company Mapping</h2>
+    <Button class="text-orange-500 hover:text-orange-600 text-sm bg-white hover:bg-white" @click="dialog = true">
+        + Map New Company
+    </Button>
+    <Dialog v-model="dialog">
+        <template #body-title>
+            <h3>Company Mapping</h3>
+        </template>
+        <template #body-content>
+            <div v-if="!isEmailVerified" class="max-w-md">
+                <div class="mb-4 relative">
+                    <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                        Company Email <span class="text-red-500">*</span>
+                    </label>
+                    <input v-model="email" type="email" placeholder="Enter your company email"
+                        :disabled="verificationSent"
+                        class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                    <p v-if="emailError" class="text-red-500 absolute -bottom-10 text-[11px] mt-1">{{ emailError }}</p>
+                </div>
 
-        <!-- Email Verification Section -->
-        <div v-if="!isEmailVerified" class="max-w-md">
-            <div class="mb-4">
-                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                    Company Email <span class="text-red-500">*</span>
-                </label>
-                <input v-model="email" type="email" placeholder="Enter your company email" :disabled="verificationSent"
-                    class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
-                <p v-if="emailError" class="text-red-500 text-[11px] mt-1">{{ emailError }}</p>
+                <!-- Verification Status -->
+                <div v-if="verificationSent" class="mb-4 p-4 bg-green-50 border border-green-200 rounded-md">
+                    <p class="text-green-700 text-sm">
+                        <span class="font-medium">Verification email sent!</span><br />
+                        Please check your email inbox and click the verification link to complete the company mapping
+                        process.
+                    </p>
+                    <button @click="resendVerification" class="mt-2 text-orange-600 text-sm hover:text-orange-700"
+                        :disabled="resendTimer > 0">
+                        {{ resendTimer > 0 ? `Resend in ${resendTimer}s` : 'Resend verification email' }}
+                    </button>
+                </div>
             </div>
-
-            <!-- Verification Status -->
-            <div v-if="verificationSent" class="mb-4 p-4 bg-green-50 border border-green-200 rounded-md">
-                <p class="text-green-700 text-sm">
-                    <span class="font-medium">Verification email sent!</span><br />
-                    Please check your email inbox and click the verification link to complete the company mapping
-                    process.
-                </p>
-                <button @click="resendVerification" class="mt-2 text-orange-600 text-sm hover:text-orange-700"
-                    :disabled="resendTimer > 0">
-                    {{ resendTimer > 0 ? `Resend in ${resendTimer}s` : 'Resend verification email' }}
-                </button>
-            </div>
-
+        </template>
+        <template #actions>
             <!-- Action Button -->
             <div>
                 <button v-if="!verificationSent" @click="sendVerification" :disabled="!isValidEmail || isLoading"
-                    class="bg-orange-500 text-white font-semibold py-2 px-4 rounded-sm hover:bg-orange-600 transition disabled:opacity-50 flex items-center gap-2">
+                    class="bg-orange-500 text-white font-medium py-2 w-60 justify-center rounded-sm hover:bg-orange-600 transition disabled:opacity-50 flex items-center gap-2">
                     <span v-if="isLoading" class="inline-block animate-spin w-4 h-4">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
@@ -42,63 +49,33 @@
                     {{ isLoading ? 'Sending...' : 'Send Verification Email' }}
                 </button>
             </div>
-        </div>
-
-        <!-- Mapped Companies List -->
-        <div v-else class="mt-6">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-medium text-gray-700">Mapped Companies</h3>
-                <button @click="startNewMapping" class="text-orange-500 hover:text-orange-600 text-sm">
-                    + Map New Company
+        </template>
+    </Dialog>
+    <div v-if="showConfirmDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+            <h3 class="text-lg font-medium text-gray-900 mb-3">Confirm Removal</h3>
+            <p class="text-gray-600 mb-6">Are you sure you want to remove this company mapping?</p>
+            <div class="flex justify-end gap-3">
+                <button @click="showConfirmDialog = false"
+                    class="px-4 py-2 text-gray-600 hover:text-gray-700 border border-gray-300 rounded-sm">
+                    Cancel
                 </button>
-            </div>
-
-            <div class="space-y-4">
-                <div v-if="mappedCompanies.length === 0" class="text-gray-500 text-center py-8">
-                    No companies mapped yet
-                </div>
-                <div v-for="company in mappedCompanies" :key="company.name"
-                    class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                    <div>
-                        <p class="font-medium">{{ company.company_name }}</p>
-                        <p class="text-sm text-gray-600">{{ company.volunteer_email }}</p>
-                        <p class="text-xs text-gray-500">Role: {{ company.role_profile }}</p>
-                    </div>
-                    <button @click="openConfirmDialog(company.name)" class="text-red-500 hover:text-red-600">
-                        Remove
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add this confirmation dialog -->
-        <div v-if="showConfirmDialog"
-            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
-                <h3 class="text-lg font-medium text-gray-900 mb-3">Confirm Removal</h3>
-                <p class="text-gray-600 mb-6">Are you sure you want to remove this company mapping?</p>
-                <div class="flex justify-end gap-3">
-                    <button @click="showConfirmDialog = false"
-                        class="px-4 py-2 text-gray-600 hover:text-gray-700 border border-gray-300 rounded-sm">
-                        Cancel
-                    </button>
-                    <button @click="confirmRemoveMapping"
-                        class="px-4 py-2 bg-red-500 text-white rounded-sm hover:bg-red-600">
-                        Remove
-                    </button>
-                </div>
+                <button @click="confirmRemoveMapping"
+                    class="px-4 py-2 bg-red-500 text-white rounded-sm hover:bg-red-600">
+                    Remove
+                </button>
             </div>
         </div>
     </div>
 </template>
-
 <script setup>
 import { ref, computed, onMounted, inject, watch } from 'vue';
 import { toast } from 'vue3-toastify';
+import { Button, Dialog } from 'frappe-ui';
 
 const call = inject('call');
 const auth = inject('auth');
-
+const dialog = ref(false);
 const email = ref('');
 const verificationSent = ref(false);
 const isEmailVerified = ref(false);
@@ -307,4 +284,6 @@ watch(email, () => {
 onMounted(() => {
     fetchMappedCompanies();
 });
+
+
 </script>

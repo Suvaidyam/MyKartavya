@@ -3,7 +3,6 @@ from frappe import _
 from frappe.model.document import Document
 from datetime import datetime
 import re
-import frappe
 import random
 import string
 
@@ -13,27 +12,26 @@ class NGOs(Document):
         Validate the NGO document before saving
         """
         self.validate_contact_numbers()
-        self.validate_email_addresses()
         self.validate_website()
         self.validate_pincode()
         self.validate_goals()
-        self.validate_text_lengths()
-        
-    def validate_text_lengths(self):
-        """
-        Validate text field lengths
-        """
-        if len(self.ngo_name) > 255:
-            frappe.throw(_("NGO Name cannot exceed 255 characters"))
-            
-        if self.designation and len(self.designation) > 100:
-            frappe.throw(_("Designation cannot exceed 100 characters"))
-            
-        if self.description and len(self.description) > 2000:
-            frappe.throw(_("Description cannot exceed 2000 characters"))
-            
-        if self.registration_type == 'Admin Registration' and self.location and len(self.location) > 500:
-            frappe.throw(_("Location cannot exceed 500 characters"))
+        self.validate_ngo_logo()
+
+    def validate_ngo_logo(self):
+        if not self.ngo_logo:
+            return
+        file_doc = frappe.db.get_value("File", {"file_url": self.ngo_logo}, ["file_size", "file_name"])
+        if not file_doc:
+            frappe.throw(f"File not found for NGO Logo: {self.ngo_logo}")
+        file_size, file_name = file_doc
+        max_size = 5 * 1024 * 1024  # 5MB in bytes
+        if file_size > max_size:
+            frappe.throw(f"File size exceeds 5 MB limit. Your file is {file_size / (1024 * 1024):.2f} MB.")
+        allowed_extensions = {"jpg", "jpeg", "png", "webp"}
+        file_extension = file_name.split(".")[-1].lower()
+
+        if file_extension not in allowed_extensions:
+            frappe.throw(f"Invalid file type: {file_extension.upper()}. Only JPG, JPEG, PNG, and WEBP are allowed.")
 
     def validate_contact_numbers(self):
         """
@@ -57,27 +55,6 @@ class NGOs(Document):
                             frappe.bold(_(self.meta.get_label(field)))
                         )
                     )
-
-    def validate_email_addresses(self):
-        """
-        Validate email address formats
-        """
-        email_fields = ['email']
-        
-        if self.registration_type == 'Self Registration':
-            email_fields.append('ngo_head_email')
-
-        email_pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-        
-        for field in email_fields:
-            if self.get(field):
-                if not email_pattern.match(self.get(field).lower()):
-                    frappe.throw(
-                        _("Invalid email format for {0}. Please enter a valid email address.").format(
-                            frappe.bold(_(self.meta.get_label(field)))
-                        )
-                    )
-
     def validate_website(self):
         """
         Validate website URL format
@@ -143,6 +120,7 @@ def create_ngo_users(doc):
                 mobile_number=doc.official_contact_number,
                 role_profile="NGO Admin",
                 custom_designation=doc.designation,
+                custom_volunteer_type="NGO Member",
                 doc=doc
             )
 
@@ -162,7 +140,7 @@ def create_ngo_users(doc):
         frappe.log_error(f"Failed to create SVA Users: {str(e)}")
         frappe.throw(f"Failed to create SVA Users: {str(e)}")
 
-def create_sva_user(first_name, email, mobile_number, role_profile, doc,custom_designation=None):
+def create_sva_user(first_name, email, mobile_number, role_profile, doc, custom_designation=None, custom_volunteer_type=None):
     """Create individual SVA User with appropriate role profile and NGO link"""
     try:
         password = generate_random_password()
@@ -185,7 +163,7 @@ def create_sva_user(first_name, email, mobile_number, role_profile, doc,custom_d
             "custom_city": doc.city,
             "custom_ngo": doc.name,
             "custom_designation": custom_designation,
-            "custom_volunteer_type":"NGO Member",
+            "custom_volunteer_type": custom_volunteer_type,
             "enabled": 1
         })
         
@@ -196,9 +174,6 @@ def create_sva_user(first_name, email, mobile_number, role_profile, doc,custom_d
                 "value": doc.name,
             })
         sva_user.save()
-        if sva_user.custom_volunteer_type == "NGO Member":
-            frappe.db.set_value("SVA User", sva_user.name, "workflow_state", "Approved")
-
         frappe.db.commit()
         
         frappe.msgprint(
@@ -211,20 +186,6 @@ def create_sva_user(first_name, email, mobile_number, role_profile, doc,custom_d
         frappe.throw(f"Failed to create {role_profile} SVA User: {str(e)}")
 
 def generate_random_password(length=10):
-    """Generate a stronger random password"""
-    # Include at least one of each: uppercase, lowercase, digit, and special character
+    """Generate a strong random password"""
     characters = string.ascii_letters + string.digits + "!@#$%^&*"
-    password = [
-        random.choice(string.ascii_uppercase),
-        random.choice(string.ascii_lowercase),
-        random.choice(string.digits),
-        random.choice("!@#$%^&*")
-    ]
-    
-    # Fill the rest with random characters
-    for _ in range(length - 4):
-        password.append(random.choice(characters))
-    
-    # Shuffle the password
-    random.shuffle(password)
-    return ''.join(password)
+    return ''.join(random.choice(characters) for _ in range(length))

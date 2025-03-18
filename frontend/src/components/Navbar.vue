@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!auth.isLoggedIn" class="hidden md:flex space-x-4 justify-end px-10 bg-[#FFBD9C] h-8 items-center w-full">
+  <div v-if="!auth.isLoggedIn" class="flex space-x-4 justify-end px-10 bg-[#FFBD9C] h-8 items-center w-full">
     <FeatherIcon name="search" class="size-4 cursor-pointer text-gray-700" />
     <router-link to="/company-registration" class="text-black font-normal text-xs">
       Register as Company
@@ -9,7 +9,7 @@
   </div>
   <div class="bg-white h-[60px] shadow-md">
     <nav
-      v-if="['/', '/volunteering-opportunities', '/profile', '/activity', '/updateprofile', '/all-activity'].includes('/' + route.fullPath.split('/')[1])"
+      v-if="['/', '/volunteering-opportunities', '/profile', '/activity', '/updateprofile', '/all-activity','/all-volunteer'].includes('/' + route.fullPath.split('/')[1])"
       class="flex items-center justify-between w-full px-[36px] max-w-[1920px] mx-auto h-full">
       <a href="#" @click="handleLogoClick" class="flex items-center space-x-4">
         <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
@@ -84,27 +84,27 @@
         <Dropdown class="block md:hidden" :options="[
           {
             label: 'Home',
-            onClick: () => { },
+            onClick: () => { change_route('/')},
             icon: () => h(FeatherIcon, { name: 'home' }),
           },
           {
             label: 'About Us',
-            onClick: () => { },
+            onClick: () => { change_route('/about-us') },
             icon: () => h(FeatherIcon, { name: 'users' }),
           },
           {
             label: 'Features',
-            onClick: () => { },
+            onClick: () => { change_route('/features') },
             icon: () => h(FeatherIcon, { name: 'layers' }),
           },
           {
             label: 'Kindness & Volunteering',
-            onClick: () => { },
+            onClick: () => { change_route('/kindness-volunteering')},
             icon: () => h(FeatherIcon, { name: 'heart' }),
           },
           {
             label: 'FAQs',
-            onClick: () => { },
+            onClick: () => { change_route('/faqs')},
             icon: () => h(FeatherIcon, { name: 'message-circle' }),
           },
         ]">
@@ -156,19 +156,15 @@ const baseDropdown = [
 const mobileDropdown = [
   {
     label: 'My Karma',
-    onClick: () => change_route('/mykarma'),
+    onClick: () => change_route('/'),
     icon: () => h(FeatherIcon, { name: 'activity' }),
   },
   {
     label: 'Volunteering Opportunities',
-    onClick: () => change_route('/volunteering'),
+    onClick: () => change_route('/volunteering-opportunities'),
     icon: () => h(FeatherIcon, { name: 'award' }),
   },
-  {
-    label: 'Settings',
-    onClick: () => { },
-    icon: () => h(FeatherIcon, { name: 'settings' }),
-  },
+  
 ];
 
 const dropdown = ref([...baseDropdown]);

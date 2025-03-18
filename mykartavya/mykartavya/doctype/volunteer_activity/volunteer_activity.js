@@ -4,24 +4,15 @@
 frappe.ui.form.on("Volunteer Activity", {
     refresh: function (frm) {
         if (frm.doc.completion_wf_state === 'Submitted') {
-            frm.add_custom_button("Actions", function() {
-                frappe.prompt([
-                    {
-                        label: 'Action',
-                        fieldname: 'action',
-                        fieldtype: 'Select',
-                        options: ['Approved', 'Rejected'],
-                        reqd: 1
-                    }
-                ],
-                function(values) {
-                    frm.set_value('completion_wf_state', values.action);
-                    frm.save();
-                },
-                'Select Action',
-                'Submit'
-                );
-            }).addClass('btn btn-dark');
+            frm.add_custom_button("Approve", function () {
+                frm.set_value('completion_wf_state', 'Approved');
+                frm.save();
+            }).addClass('btn btn-success');
+
+            frm.add_custom_button("Reject", function () {
+                frm.set_value('completion_wf_state', 'Rejected');
+                frm.save();
+            }).addClass('btn btn-danger');
         }
 
         // Get the field and section
@@ -250,7 +241,7 @@ frappe.ui.form.on("Volunteer Activity", {
                                     text-overflow: ellipsis;
                                     font-weight: 500;
                                     margin-bottom: 8px;
-                                ">${item.file_name}</p>
+                                ">${item.file_name ?? ''}</p>
                                 <button class="preview-btn btn btn-default btn-xs" style="
                                     width: 100%;
                                     padding: 8px;

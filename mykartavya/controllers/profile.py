@@ -48,7 +48,7 @@ class Profile:
             su.user_image,
             va.volunteer,
             SUM(va.karma_points) AS total_karma_points,
-            SUM(a.hours) AS total_hours,
+            SUM(va.duration) AS total_hours,
             COUNT(a.name) AS total_activities
         FROM `tabVolunteer Activity` AS va
         JOIN `tabActivity` AS a ON va.activity = a.name
@@ -65,13 +65,15 @@ class Profile:
         sql_query = """
         SELECT 
             b.sdgs AS sdgs_name,
-            b.sdg_image AS image,
-            SUM(COALESCE(a.hours, 0)) AS hour, 
+            s.sdg_image AS image,
+            SUM(COALESCE(va.duration, 0)) AS hour, 
             SUM(COALESCE(a.work_value_rupees, 0)) AS work_values
         FROM `tabSDGs Child` AS b
-        LEFT JOIN `tabActivity` AS a
-            ON b.parent = a.name
-        GROUP BY b.sdgs, b.sdg_image;
+        LEFT JOIN `tabSDG` AS s ON b.sdgs = s.name
+        LEFT JOIN `tabActivity` AS a ON b.parent = a.name
+        LEFT JOIN `tabVolunteer Activity` AS va ON a.name = va.activity
+        WHERE va.completion_wf_state='Approved'
+        GROUP BY b.sdgs;
         """
         res = frappe.db.sql(sql_query, as_dict=True)
         return res

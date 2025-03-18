@@ -55,10 +55,7 @@
             Time Donated
           </h4>
           <p class="text-lg font-semibold text-[#0B0B0B]">
-            <!-- {{ convertSecondsToTimeFormat(activities.total_hours || '0') }} hrs -->
-            {{
-              activities?.total_hours / 60 / 60 < 1 ? (activities?.total_hours / 60 / 60).toFixed(2) + ' hr' :
-                Math.floor(activities?.total_hours / 60 / 60) + ' hrs ' }} </p>
+            {{activities?.total_hours  ? sec_to_hours(activities?.total_hours)+ ' hrs ' :'0'}} </p>
         </div>
 
         <div class="border border-gray-300 rounded-lg px-4 py-3 text-center">
@@ -69,7 +66,7 @@
             Money Saved
           </h4>
           <p class="text-lg font-semibold text-[#0B0B0B]">
-            ₹ {{ activities.work_value_rupees || '0' }}
+            ₹ {{ activities.work_value_rupees?.toLocaleString() || '0' }}
           </p>
         </div>
       </div>
@@ -87,7 +84,9 @@
 
         <!-- Crown Icon -->
         <div class="absolute top-12 left-1/2 transform -translate-x-1/2">
-          <img src="../../assets/icons8-queen-48.png" alt="Crown" class="w-8 h-8" />
+          <svg width="30" height="23" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.04167 15.333L0.625 2.04134L7.27083 8.08301L11.5 0.833008L15.7292 8.08301L22.375 2.04134L19.9583 15.333H3.04167ZM19.9583 18.958C19.9583 19.683 19.475 20.1663 18.75 20.1663H4.25C3.525 20.1663 3.04167 19.683 3.04167 18.958V17.7497H19.9583V18.958Z" fill="#EBBB00"/>
+            </svg>            
         </div>
 
         <!-- Top Performer -->
@@ -102,7 +101,7 @@
               </div>
             </div>
             <span
-              class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
+              class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-orange-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full">
               1
             </span>
           </div>
@@ -111,10 +110,10 @@
           </p>
           <div class="text-[10px] font-normal pt-1 flex gap-1 flex-col items-center">
             <div class="flex items-center gap-1"><FeatherIcon name="database" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[0]?.total_karma_points || '0' }} Points </div>
+              {{ activitiestopuser[0]?.total_karma_points?.toLocaleString() || '0' }} Points </div>
             <div class="flex items-center gap-1">
               <FeatherIcon name="clock" class="size-3 text-[#666666]" />
-            {{ activitiestopuser[0]?.total_hours || '0' }} hr
+            {{activitiestopuser[0]?.total_hours ? sec_to_hours(activitiestopuser[0]?.total_hours) : '0' }} hr
             </div>
           </div>
         </div>
@@ -133,19 +132,23 @@
                 </div>
               </div>
               <span
-                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-purple-500 text-white text-xs px-2 py-1 rounded-full">
+                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-purple-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full">
                 2
               </span>
             </div>
             <p class="text-xs font-medium pt-3">
               {{ activitiestopuser[1]?.first_name || 'Top 2' }}
             </p>
-            <p class="text-[10px] font-normal pt-2 flex gap-1">
-              <FeatherIcon name="database" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[1]?.total_karma_points || '0' }} Points |
-              <FeatherIcon name="clock" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[1]?.total_hours || '0' }} hr
-            </p>
+            <div class="text-[10px] font-normal pt-1 flex flex-col items-center gap-1">
+              <div class="flex items-center gap-1">
+                <FeatherIcon name="database" class="size-3 text-[#666666]" />
+              {{ activitiestopuser[1]?.total_karma_points?.toLocaleString() || '0' }} Points
+              </div> 
+              <div class="flex items-center gap-1">
+                <FeatherIcon name="clock" class="size-3 text-[#666666]" />
+              {{ activitiestopuser[1]?.total_hours ? sec_to_hours(activitiestopuser[1]?.total_hours) : '0' }} hr
+              </div>
+            </div>
           </div>
 
           <!-- 3rd Place -->
@@ -160,19 +163,23 @@
                 </div>
               </div>
               <span
-                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+                class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full">
                 3
               </span>
             </div>
             <p class="text-xs font-medium pt-3">
               {{ activitiestopuser[2]?.first_name || 'Top 3' }}
             </p>
-            <p class="text-[10px] font-normal pt-2 flex gap-1">
-              <FeatherIcon name="database" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[2]?.total_karma_points || '0' }} Points |
-              <FeatherIcon name="clock" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[2]?.total_hours || '0' }} hr
-            </p>
+            <div class="text-[10px] font-normal pt-1 flex flex-col items-center gap-1">
+              <div class="flex items-center gap-1">
+                <FeatherIcon name="database" class="size-3 text-[#666666]" />
+              {{ activitiestopuser[2]?.total_karma_points?.toLocaleString() || '0' }} Points
+              </div> 
+              <div class="flex items-center gap-1">
+                <FeatherIcon name="clock" class="size-3 text-[#666666]" />
+              {{ activitiestopuser[2]?.total_hours ? sec_to_hours(activitiestopuser[2]?.total_hours) : '0' }} hr
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -213,7 +220,7 @@
                 user?.duration / 60 / 60 < 1 ? (user?.duration / 60 / 60).toFixed(2) + ' hr' : Math.floor(user?.duration /
                   60 / 60) + ' hr ' + Math.floor((user?.duration % (60 * 60)) / 60) + ' min' }} </td>
             <td class="text-[10px] font-normal text-center">
-              {{ user?.karma_points }}
+              {{ user?.karma_points?.toLocaleString() }}
             </td>
             <td class="text-[10px] font-normal text-center">
               {{ user?.rank }}
@@ -229,12 +236,13 @@
         </tbody>
       </table>
     </div>
-    <div class="bg-white w-full px-4 border-t border-[#b0b3b0]">
+    <!-- SDGs Impacted -->
+    <div class="bg-white w-full px-4 pb-4 border-t border-[#b0b3b0]">
       <div class="flex justify-between items-center">
         <h2 class="text-[16px] font-medium pt-6">SDGs Impacted</h2>
         <router-link to="/all-volunteer" class="text-orange-500 text-[10px] font-medium">VIEW ALL</router-link>
       </div>
-      <div v-for="(sdg, index) in sdgs" :key="index" class="flex items-center space-x-4 pt-4">
+      <div v-if="sdgs.length > 0" v-for="(sdg, index) in sdgs" :key="index" class="flex items-center space-x-4 pt-4">
         <img v-if="sdg.image" :src="sdg.image" :alt="sdg.sdgs_name" class="w-10 h-10 rounded-[4px]" />
         <div v-else class="w-10 h-10 rounded-[4px] border flex justify-center items-center">
           {{ sdg.sdgs_name?.charAt(0) }}
@@ -243,13 +251,16 @@
           <h3 class="text-[14px] font-normal">{{ sdg.sdgs_name || '0' }}</h3>
           <p class="text-gray-500 fornt-normal text-[12px]">
             Time Donated :
-            <span class="text-gray-800">{{ sdg.hour || '0' }}</span>
+            <span class="text-gray-800">{{ sdg.hour ? sec_to_hours(sdg.hour) : '0' }} hr</span>
           </p>
           <p class="text-gray-500 fornt-normal text-[12px]">
             Money Saved :
             <span class="text-gray-800"> ₹ {{ sdg.work_values || '0' }}</span>
           </p>
         </div>
+      </div>
+      <div v-else class="text-center text-gray-500 py-4">
+        No SDGs found
       </div>
     </div>
   </aside>
@@ -321,4 +332,7 @@ onMounted(() => {
   opportunities()
   sdgimpacted()
 })
+const sec_to_hours=(sec)=>{
+  return (sec / 60 / 60).toFixed(2)
+}
 </script>
