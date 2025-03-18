@@ -1,0 +1,31 @@
+{
+ "attach_print": 0,
+ "channel": "System Notification",
+ "condition": "doc.completion_wf_state =='Submitted'",
+ "creation": "2025-03-18 13:52:42.600477",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Volunteer Activity",
+ "enabled": 1,
+ "event": "Value Change",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "Add your message here",
+ "message_type": "Markdown",
+ "minutes_offset": 0,
+ "modified": "2025-03-18 13:56:18.853833",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Volunteer Activity Completion Review & Approval",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_role": "MyKartvya Admin"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "subject": "Activity Completion Review & Approval ",
+ "value_changed": "completion_wf_state"
+}
