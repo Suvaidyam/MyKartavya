@@ -1,0 +1,29 @@
+{
+ "attach_print": 0,
+ "channel": "System Notification",
+ "creation": "2025-03-18 13:42:32.788168",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Volunteer Activity",
+ "enabled": 1,
+ "event": "New",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<p>Are you trying to request activity approval as an admin user in MyKartvya, or do you need help automating or managing the approval process in your</p>\n",
+ "message_type": "Plain Text",
+ "minutes_offset": 0,
+ "modified": "2025-03-18 13:44:11.096217",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Volunteer Activity Approval for MyKartvya Admin",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_role": "MyKartvya Admin"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "subject": "Volunteer Activity Approval "
+}
