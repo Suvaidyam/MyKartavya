@@ -3,8 +3,8 @@
     <section class="flex flex-col lg:flex-row px-5 h-full">
       <Filters  />
       <main class="w-full h-full py-3 lg:pl-[270px]">
-        <div class="flex justify-between items-center pb-3">
-          <h2 class="text-lg font-semibold mb-4 px-3">Kindness & Volunteering</h2>
+        <div class="flex justify-between items-center pb-1">
+          <h2 class="text-3xl font-normal mb-4 text-[#0B0B0B] px-3">Kindness & Volunteering</h2>
           <Sorting :sort="filter" />
         </div>
         <div v-if="loader" class="px-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

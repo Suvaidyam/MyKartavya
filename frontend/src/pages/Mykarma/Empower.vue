@@ -50,8 +50,8 @@
             <div class="w-full bg-gray-200 rounded-full h-[5px]">
               <div class="bg-green-500 h-[5px] rounded-full" :style="`width:${activities.com_percent ?? 0}%`"></div>
             </div>
-            <div class="flex items-center justify-between gap-2">
-              <p class="text-caption font-normal mt-1" style="color: #0b0b0b">
+            <div class="flex items-center justify-between gap-2 pt-2">
+              <p class="text-caption font-normal" style="color: #0b0b0b">
                 {{ activities.com_percent ?? 0 }} % completed
               </p>
               <div class="flex items-center gap-2 text-xs font-normal">
