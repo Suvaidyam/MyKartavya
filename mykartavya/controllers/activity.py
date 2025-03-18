@@ -169,8 +169,8 @@ class Activity:
     # act_now
     def act_now(activity, volunteer):
         # same activity can't be assigned to the same volunteer
-        volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")
         workflow_state = frappe.db.get_value("SVA User", {"email": volunteer}, "workflow_state")
+        volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")
         if workflow_state != "Approved":    
             return {"msg": "Volunteer is not approved", "status": 201}
         else:
