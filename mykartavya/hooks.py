@@ -16,7 +16,7 @@ fixtures=[
     # 'Role',
     # 'Role Profile',
     'Builder Page',
-    # 'Custom HTML Block',
+    'Custom HTML Block',
     # 'SDG',
     # 'Skills',
     # 'Property Setter',
