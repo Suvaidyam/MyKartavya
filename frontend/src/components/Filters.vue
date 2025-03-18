@@ -125,7 +125,7 @@ const filter_by = ref([
         name: 'Activity Type',
         type: 'checkbox',
         key: 'activity_type',
-        options: [{ name: 'Online' }, { name: 'On-Ground' }]
+        options: []
     },
 ]);
 
@@ -133,21 +133,26 @@ const fetchSDGs = async () => {
     loader.value = true;
     try {
         const response = await call('mykartavya.controllers.api.sdg_data');
-        sdgData.value = response;
+        sdgData.value = response.sdg;
         const sdgsFilter = filter_by.value.find(f => f.key === 'sdgs');
+        const activityTypeFilter = filter_by.value.find(f => f.key === 'activity_type');
+
+        if (activityTypeFilter) {
+            activityTypeFilter.options = response?.act_type?.map(type => ({
+                name: type.name
+            }));
+        }
         if (sdgsFilter) {
-            // sdgsFilter.options = response.map(sdg => sdg.name);
-            sdgsFilter.options = response.map(sdg => ({
+            sdgsFilter.options = response?.sdg?.map(sdg => ({
                 name: sdg.name,
                 sdg_image: sdg.sdg_image
             }));
-            setTimeout(() => {
-                loader.value = false;
-            }, 500);
         }
     } catch (err) {
         loader.value = false;
         console.error('Error fetching SDG data:', err);
+    }finally{
+        setTimeout(() => { loader.value = false;}, 500);
     }
 };
 

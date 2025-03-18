@@ -47,6 +47,7 @@ class Activity:
             act.end_date as end_date,
             act.hours as hours,
             va.duration as donet_hours,
+            va.completion_wf_state as completion_wf_state,
             act.activity_description as activity_description,
             act.activity_type as activity_type,
             CONCAT('{base_url}', act.activity_image) as activity_image,
