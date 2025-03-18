@@ -293,7 +293,6 @@ def sdg_impacted():
 def add_activity_images(docname, images):
     """Save uploaded images to the Volunteer Activity's child table."""
     doc = frappe.get_doc("Volunteer Activity", docname)
-    print(doc,"===========================================================================")
     # Ensure images is a list
     if isinstance(images, str):
         import json
@@ -307,3 +306,31 @@ def add_activity_images(docname, images):
     doc.save()
     frappe.db.commit()
     return {"message": "Images added successfully"}
+
+
+@frappe.whitelist()
+def get_sdg_contribution_details():
+    result = frappe.db.sql("""
+        SELECT 
+            COALESCE(sdg.name, 'Unknown SDG') AS sdg_name,
+            COALESCE(sdg.sdg_image, '') AS sdg_image1,
+            COALESCE(SUM(act.work_value_rupees), 0) AS total_work_values,
+            COALESCE(SUM(act.hours), 0) AS total_hours,
+            COUNT(DISTINCT va.volunteer) AS volunteer_count
+        FROM 
+            `tabActivity` AS act
+        LEFT JOIN `tabSDGs Child` AS sdc 
+            ON act.name = sdc.parent AND sdc.parentfield = 'sdgs'
+        LEFT JOIN `tabSDG` AS sdg 
+            ON sdc.sdgs = sdg.name
+        LEFT JOIN `tabVolunteer Activity` AS va 
+            ON act.name = va.activity
+        GROUP BY
+            sdg_name
+        ORDER BY 
+            total_work_values DESC
+    """, as_dict=True)
+
+    print(result)  # ✅ Indentation fixed
+
+    return result
