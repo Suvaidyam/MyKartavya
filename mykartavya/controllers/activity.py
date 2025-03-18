@@ -215,6 +215,7 @@ class Activity:
                 act.activity_description as activity_description,
                 act.activity_type as activity_type,
                 act.activity_image as activity_image,
+                act.require_feedback_images as require_feedback_images,
                 va.workflow_state as workflow_state,
                 va.completion_wf_state as completion_wf_state,
                 va.rating as rating,
