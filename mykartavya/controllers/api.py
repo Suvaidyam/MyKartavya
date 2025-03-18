@@ -3,9 +3,104 @@ from frappe import _
 from mykartavya.controllers.activity import Activity
 from mykartavya.controllers.filter import Filters
 from mykartavya.controllers.profile import Profile
+from frappe.utils import validate_email_address
+import time
 
 
 
+
+@frappe.whitelist(allow_guest=True)
+def subscribe_to_newsletter(email, email_group="Mykartavya"):
+    """Subscribe an email to a newsletter group"""
+    try:
+        # Validate email
+        if not email:
+            return {
+                "success": False,
+                "message": "Email is required"
+            }
+            
+        email = email.strip().lower()  # Normalize email
+        if not validate_email_address(email):
+            return {
+                "success": False,
+                "message": "Please enter a valid email address"
+            }
+
+        # Check if email group exists
+        if not frappe.db.exists("Email Group", email_group):
+            frappe.log_error(f"Newsletter subscription failed - Invalid email group: {email_group}")
+            return {
+                "success": False,
+                "message": "Invalid email group"
+            }
+
+        # Check if email already exists in the group
+        if frappe.db.exists("Email Group Member", {
+            "email": email,
+            "email_group": email_group
+        }):
+            return {
+                "success": False,
+                "message": "You are already subscribed to our newsletter"
+            }
+
+        # Create Newsletter document
+        try:
+            newsletter = frappe.get_doc({
+                "doctype": "Newsletter",
+                "subject": "Welcome to Mykartavya Newsletter!",
+                "sender_email": "noreply.suvaidyam@gmail.com",
+                "sender_name": "Mykartavya",
+                "email_group": [{
+                    "doctype": "Email Group",
+                    "email_group": email_group
+                }],
+                "content_type": "Rich Text",
+                "message": f"""
+                    <div class='ql-editor read-mode'>
+                        <h3>Welcome to Mykartavya!</h3>
+                        <p>Thank you for subscribing to our newsletter. We're excited to have you join our community!</p>
+                        <p>Stay tuned for updates, news, and valuable insights.</p>
+                    </div>
+                """,
+                "send_unsubscribe_link": 1,
+                "published": 1  # Mark as published
+            })
+            newsletter.insert(ignore_permissions=True)
+            newsletter.submit()  # Submit the document
+            
+            # Send the welcome email
+            newsletter.send_emails()
+            
+        except Exception as e:
+            frappe.log_error(
+                message=f"Failed to create/send welcome newsletter for {email}: {str(e)}", 
+                title="Newsletter Creation Error"
+            )
+            # Continue with subscription even if welcome email fails
+
+        # Subscribe email to the group
+        from frappe.email.doctype.newsletter.newsletter import subscribe
+        subscribe(email_group, email)
+        
+        # Log the successful subscription
+        frappe.logger().info(f"New newsletter subscription: {email} to {email_group}")
+        
+        return {
+            "success": True,
+            "message": "Thank you for subscribing!"
+        }
+        
+    except Exception as e:
+        frappe.log_error(
+            message=f"Newsletter subscription failed for {email}: {str(e)}", 
+            title="Newsletter Subscription Error"
+        )
+        return {
+            "success": False,
+            "message": "Failed to subscribe. Please try again later."
+        }
 
 @frappe.whitelist(allow_guest=True)
 def get_ngos_by_state():
