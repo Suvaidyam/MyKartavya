@@ -69,11 +69,11 @@ class Profile:
             SUM(COALESCE(va.duration, 0)) AS hour, 
             SUM(COALESCE(a.work_value_rupees, 0)) AS work_values
         FROM `tabSDGs Child` AS b
-        LEFT JOIN `tabSDG` AS s ON b.sdgs = s.name
-        LEFT JOIN `tabActivity` AS a ON b.parent = a.name
-        LEFT JOIN `tabVolunteer Activity` AS va ON a.name = va.activity
+        INNER JOIN `tabSDG` AS s ON b.sdgs = s.name
+        INNER JOIN `tabActivity` AS a ON b.parent = a.name
+        INNER JOIN `tabVolunteer Activity` AS va ON a.name = va.activity
         WHERE va.completion_wf_state='Approved'
-        GROUP BY b.sdgs;
+        GROUP BY s.name;
         """
         res = frappe.db.sql(sql_query, as_dict=True)
         return res
