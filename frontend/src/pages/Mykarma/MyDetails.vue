@@ -73,11 +73,8 @@
     </div>
 
     <div class="rounded-lg px-3 xl:px-0 w-full mt-4">
-      <div class="rounded-t-xl px-6 py-4 relative overflow-hidden bg-gradient-to-b from-yellow-200 to-white">
+      <div class="rounded-t-xl px-6 py-4 achieve-bg relative overflow-hidden bg-gradient-to-b to-white">
         <!-- Background Image at the Top -->
-        <div class="absolute top-0 left-0 w-full h-1/2 bg-cover bg-center" style="
-            background-image: url('../../assets/6925cd67aa6829da55ab83120e89377c.png');
-          "></div>
         <h2 class="text-md font-semibold text-gray-800 pb-10 relative z-10">
           Top Performers
         </h2>
@@ -336,3 +333,11 @@ const sec_to_hours=(sec)=>{
   return (sec / 60 / 60).toFixed(2)
 }
 </script>
+
+<style scoped>
+.achieve-bg {
+  background-image: url('../../assets/achievement-bg.png');
+  background-size: cover;
+  background-position: center;
+}
+</style>
