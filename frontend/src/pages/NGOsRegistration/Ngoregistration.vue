@@ -364,36 +364,42 @@ onMounted(async () => {
   }
 });
 
-const handleFileUpload = async (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      // Upload file to Frappe
-      const response = await call('upload_file', {
-        file: formData,
-        is_private: 0,
-        doctype: 'NGOs',
-        fieldname: 'ngo_logo'
-      });
-      form.value.ngo_logo = response.file_url;
-      toast.success('Logo uploaded successfully!', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-      });
-    } catch (err) {
-      console.error('Error uploading file:', err);
-      toast.error('Failed to upload logo. Please try again.', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-      });
-    }
-  }
-};
+// const handleFileUpload = async (event) => {
+//   const file = event.target.files[0];
+//   if (file) {
+//     try {
+//       const formData = new FormData();
+//       formData.append('file', file);
+//       // Upload file to Frappe
+//       const response = await call('upload_file', {
+//         file: formData,
+//         is_private: 0,
+//         doctype: 'NGOs',
+//         fieldname: 'ngo_logo'
+//       });
+//       form.value.ngo_logo = response.file_url;
+//       toast.success('Logo uploaded successfully!', {
+//         position: "top-right",
+//         autoClose: 3000,
+//         hideProgressBar: false,
+//       });
+//     } catch (err) {
+//       console.error('Error uploading file:', err);
+//       toast.error('Failed to upload logo. Please try again.', {
+//         position: "top-right",
+//         autoClose: 3000,
+//         hideProgressBar: false,
+//       });
+//     }
+//   }
+// };
 
+const handleFileUpload = (event) => 
+{ const file = event.target.files[0]; console.log(file)  
+    const reader = new FileReader(); 
+    reader.onload = (e) => { form.value.ngo_logo = e.target.result; };
+    reader.readAsDataURL(file); }
+    
 const validateForm = () => {
   const requiredFields = [
     'ngo_name',

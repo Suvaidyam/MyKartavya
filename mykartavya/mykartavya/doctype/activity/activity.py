@@ -15,11 +15,11 @@ class Activity(Document):
         self.validate_location()
         self.validate_company()
         self.validateskill()
+        self.validate_image()
 
 
     def validateskill(self):
         if not self.skill or len(self.skill) == 0:
-            print(self.skill,"============================================")
             frappe.throw(_("Please select at least one skill."))
 
     def on_update(self):
@@ -30,7 +30,7 @@ class Activity(Document):
         if start_date and end_date:
             if start_date >= today_date:
                 self.status = "Published"
-            elif start_date <= today_date < end_date:
+            elif start_date < today_date < end_date:
                 self.status = "Ongoing"
             elif end_date == today_date:
                 self.status = "Ended"
@@ -159,7 +159,7 @@ class Activity(Document):
     #         else:
     #             self.work_value_rupees = 0
     
-    def validate(self):
+    def validate_image(self):
         for field in ["activity_image", "reward_image"]:
             image_url = getattr(self, field, None)
 
@@ -170,13 +170,17 @@ class Activity(Document):
                     file_size, file_name = file_doc
 
                     # Validate file size (max 5MB)
-                    if file_size > 5 * 1024 * 1024:  
-                        frappe.throw(f"File size exceeds 5 MB limit for {field.replace('_', ' ').title()}")
+                    max_size = 5 * 1024 * 1024  # 5MB
+                    if file_size > max_size:
+                        frappe.throw(f"{field.replace('_', ' ').title()} exceeds the 5MB file size limit.")
 
                     # Validate file type (only images)
                     allowed_extensions = {"jpg", "jpeg", "png", "webp"}
-                    file_extension = file_name.split(".")[-1].lower()
+                    if not file_name or "." not in file_name:
+                        frappe.throw(f"Invalid file name for {field.replace('_', ' ').title()}.")
 
+                    file_extension = file_name.rsplit(".", 1)[-1].lower()
                     if file_extension not in allowed_extensions:
-                        frappe.throw(f"Invalid file type for {field.replace('_', ' ').title()}. Only JPG, JPEG, PNG, and WEBP are allowed.")
+                        allowed_types = ", ".join(allowed_extensions).upper()
+                        frappe.throw(f"Invalid file type for {field.replace('_', ' ').title()}. Allowed types: {allowed_types}.")
 

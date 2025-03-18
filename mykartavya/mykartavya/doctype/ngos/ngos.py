@@ -6,6 +6,7 @@ import re
 import random
 import string
 
+
 class NGOs(Document):
     def validate(self):
         """
@@ -18,15 +19,13 @@ class NGOs(Document):
         self.validate_ngo_logo()
 
     def validate_ngo_logo(self):
-        if not self.ngo_logo:
-            return
         file_doc = frappe.db.get_value("File", {"file_url": self.ngo_logo}, ["file_size", "file_name"])
         if not file_doc:
             frappe.throw(f"File not found for NGO Logo: {self.ngo_logo}")
         file_size, file_name = file_doc
         max_size = 5 * 1024 * 1024  # 5MB in bytes
         if file_size > max_size:
-            frappe.throw(f"File size exceeds 5 MB limit. Your file is {file_size / (1024 * 1024):.2f} MB.")
+            frappe.throw(f"File size exceeds 5 MB limit.")
         allowed_extensions = {"jpg", "jpeg", "png", "webp"}
         file_extension = file_name.split(".")[-1].lower()
 
@@ -189,3 +188,5 @@ def generate_random_password(length=10):
     """Generate a strong random password"""
     characters = string.ascii_letters + string.digits + "!@#$%^&*"
     return ''.join(random.choice(characters) for _ in range(length))
+
+    
