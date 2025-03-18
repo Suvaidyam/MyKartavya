@@ -34,8 +34,10 @@
                 Official Contact Number <span class="text-red-500 pt-2">*</span>
               </label>
               <input v-model="form.official_contact_number" type="tel" placeholder="+91 XXXXX XXXXX" required
+                maxlength="10" pattern="\d{10}"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
             </div>
+
 
             <div>
               <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
@@ -149,26 +151,32 @@
               <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                 NGO Head Mobile <span class="text-red-500 pt-2">*</span>
               </label>
-              <input v-model="form.ngo_head_mobile" type="tel" placeholder="+91 XXXXX XXXXX" required
+              <input v-model="form.ngo_head_mobile" type="tel" placeholder="+91 XXXXX XXXXXr" required maxlength="10"
+                pattern="\d{10}"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
             </div>
+
 
             <!-- Row 8 -->
             <div>
               <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                 NGO Head Office Number
               </label>
-              <input v-model="form.ngo_head_office_number" type="tel" placeholder="+91 XXXXX XXXXX"
+              <input v-model="form.ngo_head_office_number" type="tel" placeholder="+91 XXXXX XXXXXr" maxlength="10"
+                pattern="\d{10}"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
             </div>
+
 
             <div>
               <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                 Postal Code <span class="text-red-500 pt-2">*</span>
               </label>
-              <input v-model="form.pincode" type="text" placeholder="Enter PIN code" required
+              <input v-model="form.pincode" type="text" placeholder="Enter PIN code" maxlength="6" pattern="\d{6}"
+                required oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
             </div>
+
 
             <!-- Row 9 (Full Width) -->
             <div class="md:col-span-2">
@@ -436,6 +444,7 @@ const validateForm = () => {
 
   return true;
 };
+
 
 const submitForm = async () => {
   try {
