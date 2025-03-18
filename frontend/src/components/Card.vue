@@ -4,11 +4,11 @@
             <div class="w-full flex flex-col justify-between h-40 rounded-md relative">
                 <img :src="item.activity_image" alt="" class="h-full rounded-md">
                 <div
-                    class="bg-[#FF7C3A] activity-type absolute top-1 text-white font-medium text-xs flex items-center pl-3 pr-5 h-6 ">
+                    class="bg-[#FF7C3A] activity-type absolute top-2 text-white font-medium text-xs flex items-center pl-3 pr-5 h-6 ">
                     {{ item.activity_type }}
                 </div>
                 <div
-                    class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-2xl shadow flex items-center gap-1">
+                    class="absolute right-[5px] top-2 bg-white text-gray-800 text-xs px-2 h-6 rounded-2xl shadow flex items-center gap-1">
                     <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M15.5002 3.66602C15.5002 2.28518 12.8885 1.16602 9.66683 1.16602C6.44516 1.16602 3.8335 2.28518 3.8335 3.66602M15.5002 3.66602V6.99935C15.5002 7.84935 14.5118 8.59935 13.0002 9.05102C12.0552 9.33435 10.906 9.49935 9.66683 9.49935C8.42766 9.49935 7.2785 9.33352 6.3335 9.05102C4.82266 8.59935 3.8335 7.84935 3.8335 6.99935V3.66602M15.5002 3.66602C15.5002 4.51602 14.5118 5.26602 13.0002 5.71768C12.0552 6.00102 10.906 6.16602 9.66683 6.16602C8.42766 6.16602 7.2785 6.00018 6.3335 5.71768C4.82266 5.26602 3.8335 4.51602 3.8335 3.66602"
@@ -19,7 +19,7 @@
                     </svg>
                     <span class="font-medium text-xs">{{ item.karma_points?.toLocaleString() }} Points</span>
                 </div>
-                <div class="absolute bottom-1  flex items-center gap-1 px-2 overflow-auto">
+                <div class="absolute bottom-2  flex items-center gap-2 px-2 overflow-auto">
                     <div v-if="item.sdgs" v-for="el in JSON.parse(item.sdgs)">
                         <img v-if="el.image" :src="el.image" class="w-8 h-8" />
                         <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{
@@ -58,8 +58,8 @@
                     <div class="bg-[#4CAF50] h-[5px] rounded-full" :style="{ width: `${item?.com_percent ?? 0}%` }">
                     </div>
                 </div>
-                <div class="flex items-center justify-between">
-                    <p class="text-xs font-normal pt-1 text-[#0B0B0B] mt-1">{{ item?.com_percent ?? 0 }}% completed
+                <div class="flex items-center justify-between pt-2">
+                    <p class="text-xs font-normal text-[#0B0B0B]">{{ item?.com_percent ?? 0 }}% completed
                     </p>
                     <p class="text-xs font-normal flex items-center gap-1">
                         <FeatherIcon name="clock" class="size-3" />
@@ -76,11 +76,11 @@
             <div class="w-full flex flex-col justify-between h-40 rounded-md relative">
                 <img :src="item.activity_image" alt="" class="h-full rounded-md">
                 <div
-                    class="bg-[#FF7C3A] activity-type absolute top-1 text-white font-medium text-xs flex items-center pl-3 pr-5 h-6 ">
+                    class="bg-[#FF7C3A] activity-type absolute top-2 text-white font-medium text-xs flex items-center pl-3 pr-5 h-6 ">
                     {{ item.activity_type }}
                 </div>
                 <div
-                    class="absolute right-2 top-1 bg-white text-gray-800 text-xs px-2 h-6 rounded-2xl shadow flex items-center gap-1">
+                    class="absolute right-[5px] top-2 bg-white text-gray-800 text-xs px-2 h-6 rounded-2xl shadow flex items-center gap-1">
                     <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M15.5002 3.66602C15.5002 2.28518 12.8885 1.16602 9.66683 1.16602C6.44516 1.16602 3.8335 2.28518 3.8335 3.66602M15.5002 3.66602V6.99935C15.5002 7.84935 14.5118 8.59935 13.0002 9.05102C12.0552 9.33435 10.906 9.49935 9.66683 9.49935C8.42766 9.49935 7.2785 9.33352 6.3335 9.05102C4.82266 8.59935 3.8335 7.84935 3.8335 6.99935V3.66602M15.5002 3.66602C15.5002 4.51602 14.5118 5.26602 13.0002 5.71768C12.0552 6.00102 10.906 6.16602 9.66683 6.16602C8.42766 6.16602 7.2785 6.00018 6.3335 5.71768C4.82266 5.26602 3.8335 4.51602 3.8335 3.66602"
@@ -92,7 +92,7 @@
 
                     <span class="font-medium text-xs">{{ item.karma_points?.toLocaleString() }} Points</span>
                 </div>
-                <div class="absolute bottom-1  flex items-center gap-1 px-2 overflow-auto">
+                <div class="absolute bottom-2  flex items-center gap-2 px-2 overflow-auto">
                     <div v-if="item.sdgs" v-for="el in JSON.parse(item.sdgs)">
                         <img v-if="el.image" :src="el.image" class="w-8 h-8" />
                         <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{

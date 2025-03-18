@@ -71,7 +71,7 @@
         <div class="grid gap-6 lg:grid-cols-3">
           <!-- Left Section -->
           <div class="lg:col-span-2 flex flex-col justify-between items-start">
-            <div v-html="activities.activity_description"></div>
+            <div class="text-[14px] text-[#666666] text-justify font-normal" v-html="activities.activity_description"></div>
             <div class="flex items-center gap-[12px] flex-col justify-self-start mt-[220px]">
               <span class="text-gray-700 font-medium flex items-center space-x-2">
                 <Share2 class="w-4 h-4 text-[#666666]" />
