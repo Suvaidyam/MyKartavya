@@ -4,12 +4,12 @@
 frappe.ui.form.on("Volunteer Activity", {
     refresh: function (frm) {
         if (frm.doc.completion_wf_state === 'Submitted') {
-            frm.add_custom_button("Approve", function () {
+            frm.add_custom_button("Activity Approve", function () {
                 frm.set_value('completion_wf_state', 'Approved');
                 frm.save();
             }).addClass('btn btn-success');
 
-            frm.add_custom_button("Reject", function () {
+            frm.add_custom_button("Activity Reject", function () {
                 frm.set_value('completion_wf_state', 'Rejected');
                 frm.save();
             }).addClass('btn btn-danger');
