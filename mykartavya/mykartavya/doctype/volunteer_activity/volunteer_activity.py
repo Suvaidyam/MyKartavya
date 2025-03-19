@@ -65,6 +65,20 @@ class VolunteerActivity(Document):
 			frappe.log_error(f"Error updating workflow state: {str(e)}")
 			raise
 
+		# socket notification aproved by mykartavya admin
+		user = frappe.db.get_value("SVA User", {'name': self.volunteer}, 'email')
+		if self.workflow_state == "Approved":
+			frappe.publish_realtime("volunteer_activity_approved", {"volunteer_activity": self.name})
+		elif self.workflow_state == "Rejected":
+			frappe.publish_realtime("volunteer_activity_rejected", {"volunteer_activity": self.name})
+
+		# Handle completion workflow state separately
+		if self.completion_wf_state == "Approved":
+			frappe.publish_realtime("volunteer_activity_completion_approved", {"volunteer_activity": self.name})
+		elif self.completion_wf_state == "Rejected":
+			frappe.publish_realtime("volunteer_activity_completion_rejected", {"volunteer_activity": self.name})
+
+
 	def calculate_log_totals(self):
 		"""Calculate total duration and percent from activity logs."""
 		total_seconds = 0

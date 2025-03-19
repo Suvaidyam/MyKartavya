@@ -1,11 +1,13 @@
 <template>
     <Menu as="div" class="relative inline-block text-left">
-        <div>
+        <div class="relative">
             <Tooltip text="Notifications" :hover-delay="1" :placement="'top'">
                 <MenuButton class="text-gray-600 flex items-center justify-center hover:text-black">
-                    <FeatherIcon name="bell" class="size-5 text-gray-700"/>
+                    <FeatherIcon name="bell" class="size-5 text-gray-700" />
                 </MenuButton>
             </Tooltip>
+            <p class="w-[6px] h-[6px] absolute top-0 right-[2px] rounded-full bg-secondary" v-if="notifications.length">
+            </p>
         </div>
         <transition enter-active-class="transition ease-out duration-100"
             enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
@@ -29,6 +31,40 @@
 </template>
 
 <script setup>
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { Tooltip,FeatherIcon } from 'frappe-ui';
+import { Menu, MenuButton, MenuItems } from '@headlessui/vue';
+import { Tooltip, FeatherIcon } from 'frappe-ui';
+import { ref, inject, watch, onMounted, onUnmounted } from 'vue';
+
+const socket = inject('socket');
+const notifications = ref([]);
+
+const eventTypes = [
+    "volunteer_activity_approved",
+    "volunteer_activity_rejected",
+    "volunteer_activity_completion_approved",
+    "volunteer_activity_completion_rejected"
+];
+
+const handleNotification = (eventType) => (data) => {
+    console.log("Notification Received:", eventType, data);
+    notifications.value.push(data);
+};
+
+onMounted(() => {
+    if (socket) {
+        eventTypes.forEach(eventType => {
+            socket.on(eventType, handleNotification(eventType));
+        });
+    } else {
+        console.error("Socket not found!");
+    }
+});
+
+onUnmounted(() => {
+    if (socket) {
+        eventTypes.forEach(eventType => {
+            socket.off(eventType, handleNotification(eventType));
+        });
+    }
+});
 </script>

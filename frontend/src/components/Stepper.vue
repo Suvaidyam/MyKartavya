@@ -288,7 +288,7 @@ const call = inject('call')
 const auth = inject('auth')
 const store = inject('store')
 const socket = inject('socket')
-console.log(socket)
+// console.log(socket)
 const route = useRoute()
 const feedback = ref({
   rating: null,
