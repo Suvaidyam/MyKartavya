@@ -272,7 +272,7 @@ const validateForm = () => {
     }
 
     // Phone number validation
-    if (!/^\d{10}$/.test(this.form.mobile_number)) {
+    if (!/^\d{10}$/.test(form.value.mobile_number)) {
         this.error = 'Mobile number must be exactly 10 digits.';
         this.toast.error(this.error, {
             position: "top-right",
