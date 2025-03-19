@@ -44,7 +44,7 @@
             Completed Opportunities
           </h4>
           <p class="text-lg font-semibold text-[#0B0B0B]">
-            10
+            0
           </p>
         </div>
         <div class="border border-gray-300 rounded-lg px-4 py-3 text-center">
