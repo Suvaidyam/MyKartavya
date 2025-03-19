@@ -21,19 +21,18 @@ class VolunteerActivity(Document):
 
 		try:
 			activity = frappe.get_doc("Activity", self.activity)
-			
+
 			# Set enrollment status based on auto_approve_volunteers
 			if activity.auto_approve_volunteers:
 				self.enrollment_wf_state = "Approved"
 				frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Approved")
 			else:
-				enrollment_wf_state = self.workflow_state 
-				print(f"Enrollment status set to ++++++++++++++++++++++++==========================: {enrollment_wf_state}")
-				frappe.db.set_value("Volunteer Activity", self.name, "enrollment_wf_state", enrollment_wf_state)
+				if self.enrollment_wf_state == "Approved":
+					frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Approved")
+				frappe.db.commit()
 		except Exception as e:
 			frappe.log_error(f"Error setting enrollment status: {str(e)}")
 			raise
-
 
 	def on_update(self):
 		"""Handle workflow state changes and related actions."""
@@ -63,6 +62,20 @@ class VolunteerActivity(Document):
 		except Exception as e:
 			frappe.log_error(f"Error updating workflow state: {str(e)}")
 			raise
+
+		# socket notification aproved by mykartavya admin
+		user = frappe.db.get_value("SVA User", {'name': self.volunteer}, 'email')
+		if self.workflow_state == "Approved":
+			frappe.publish_realtime("volunteer_activity_approved", {"volunteer_activity": self.name})
+		elif self.workflow_state == "Rejected":
+			frappe.publish_realtime("volunteer_activity_rejected", {"volunteer_activity": self.name})
+
+		# Handle completion workflow state separately
+		if self.completion_wf_state == "Approved":
+			frappe.publish_realtime("volunteer_activity_completion_approved", {"volunteer_activity": self.name})
+		elif self.completion_wf_state == "Rejected":
+			frappe.publish_realtime("volunteer_activity_completion_rejected", {"volunteer_activity": self.name})
+
 
 	def calculate_log_totals(self):
 		"""Calculate total duration and percent from activity logs."""

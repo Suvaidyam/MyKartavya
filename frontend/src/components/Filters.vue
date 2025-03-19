@@ -1,6 +1,6 @@
 <template>
     <aside :class="[route.fullPath=='/kindness-volunteering'?'pb-[92px]':'pb-[62px]']"
-        class="w-[270px] min-w-[270px] fixed overflow-auto h-screen hidden lg:block border-r border-gray-200">
+        class="w-[270px] min-w-[270px] fixed bg-white overflow-auto h-screen hidden lg:block border-r border-gray-200">
         <div class="bg-white relative px-4">
             <div class="flex sticky top-0 bg-white z-20 justify-between items-center py-3">
                 <h3 class="text-lg font-medium">Filter by</h3>

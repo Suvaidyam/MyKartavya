@@ -3,16 +3,29 @@
 
 frappe.ui.form.on("NGOs", {
     refresh(frm) {
-        // window.SVAHandleParentFieldProps = (fields) => {
-        //     console.log("fields", fields);
-        //     return fields.map(f => {
-        //         if (f.fieldname === 'custom_volunteer_type') {
-        //             return { ...f, default: 'NGO Member' };
-        //         }
-        //         return f;  
-        //     });
-        // }; 
-        
+        set_filters(frm);
     },
+
+    first_priority_goal(frm) {
+        frm.set_value("second_priority_goal", null);
+        frm.set_value("third_priority_goal", null);
+        set_filters(frm);
+    },
+
+    second_priority_goal(frm) {
+        frm.set_value("third_priority_goal", null);
+        set_filters(frm);
+    }
 });
+
+function set_filters(frm) {
+    frm.set_query("second_priority_goal", () => ({
+        filters: [["name", "!=", frm.doc.first_priority_goal]]
+    }));
+
+    frm.set_query("third_priority_goal", () => ({
+        filters: [["name", "not in", [frm.doc.first_priority_goal, frm.doc.second_priority_goal]]]
+    }));
+}
+
 

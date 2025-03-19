@@ -19,18 +19,24 @@ class NGOs(Document):
         self.validate_ngo_logo()
 
     def validate_ngo_logo(self):
+        if self.registration_type != "Self Registration":
+            return 
         file_doc = frappe.db.get_value("File", {"file_url": self.ngo_logo}, ["file_size", "file_name"])
+
         if not file_doc:
             frappe.throw(f"File not found for NGO Logo: {self.ngo_logo}")
-        file_size, file_name = file_doc
-        max_size = 5 * 1024 * 1024  # 5MB in bytes
-        if file_size > max_size:
-            frappe.throw(f"File size exceeds 5 MB limit.")
+
+        file_size, file_name = file_doc  # Unpack tuple correctly
         allowed_extensions = {"jpg", "jpeg", "png", "webp"}
         file_extension = file_name.split(".")[-1].lower()
+        max_size = 5 * 1024 * 1024  # 5MB in bytes
 
         if file_extension not in allowed_extensions:
-            frappe.throw(f"Invalid file type: {file_extension.upper()}. Only JPG, JPEG, PNG, and WEBP are allowed.")
+         frappe.throw("Invalid file type. Only JPG, JPEG, PNG, and WEBP are allowed.")
+
+        if file_size > max_size:
+            frappe.throw("File size exceeds 5 MB limit.")
+
 
     def validate_contact_numbers(self):
         """
@@ -91,12 +97,14 @@ class NGOs(Document):
                 frappe.throw(_("Priority Goals must be unique. Please select different goals for each priority level."))
 
 def after_insert(doc, method):
-    if doc.registration_type == "Self Registration":
+    if doc.registration_type == "Admin Registration":
         # Approve the NGO
-        frappe.db.set_value("NGOs", doc.name, "workflow_state", "Pending Approval")
+        frappe.db.set_value("NGOs", doc.name, "workflow_state", "Approved")
         frappe.db.commit()
     # Create both NGO Admin and Volunteer users
     create_ngo_users(doc)
+
+
 
 def get_role_profile(role_type):
     """Get appropriate role profile"""
@@ -173,6 +181,9 @@ def create_sva_user(first_name, email, mobile_number, role_profile, doc, custom_
                 "value": doc.name,
             })
         sva_user.save()
+        
+        if sva_user.custom_volunteer_type == "NGO Member":
+            frappe.db.set_value("SVA User", sva_user.name, "workflow_state", "Approved",update_modified=False)
         frappe.db.commit()
         
         frappe.msgprint(

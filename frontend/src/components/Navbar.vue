@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!auth.isLoggedIn" class="flex space-x-4 justify-end px-10 bg-[#FFBD9C] h-8 items-center w-full">
+  <div v-if="!auth.isLoggedIn" class="flex space-x-4 justify-end px-6 sm:px-10 bg-[#FFBD9C] h-8 items-center w-full">
     <FeatherIcon name="search" class="size-4 cursor-pointer text-gray-700" />
     <router-link to="/company-registration" class="text-black font-normal text-xs">
       Register as Company
@@ -10,7 +10,7 @@
   <div class="bg-white h-[60px] shadow-md">
     <nav
       v-if="['/', '/volunteering-opportunities', '/profile', '/activity', '/updateprofile', '/all-activity','/all-volunteer'].includes('/' + route.fullPath.split('/')[1])"
-      class="flex items-center justify-between w-full px-[36px] max-w-[1920px] mx-auto h-full">
+      class="flex items-center justify-between w-full px-3 sm:px-[36px] max-w-[1920px] mx-auto h-full">
       <a href="#" @click="handleLogoClick" class="flex items-center space-x-4">
         <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
       </a>
@@ -61,11 +61,11 @@
       </div>
     </nav>
     <!--  -->
-    <nav v-else class="flex items-center justify-between h-full px-[36px] max-w-[1920px] mx-auto">
+    <nav v-else class="flex items-center justify-between h-full px-3 sm:px-[36px] max-w-[1920px] mx-auto">
       <a href="#" @click="handleLogoClick" class="flex items-center space-x-4">
-        <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
+        <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="w-44 sm:w-auto sm:h-8" />
       </a>
-      <div class="hidden md:flex space-x-8 text-gray-700">
+      <div class="hidden lg:flex space-x-8 text-gray-700">
         <router-link to="/"
           :class="[route.fullPath == '/landin' ? 'font-medium' : 'font-normal', 'text-sm']">Home</router-link>
         <router-link to="/about-us"
@@ -80,8 +80,11 @@
         <router-link to="/faqs"
           :class="[route.fullPath == '/faqs' ? 'font-medium' : 'font-normal', 'text-sm']">FAQs</router-link>
       </div>
-      <div class="flex items-center gap-5 justify-center">
-        <Dropdown class="block md:hidden" :options="[
+      <div class="flex items-center gap-2 sm:gap-5 justify-center">
+        <router-link v-if="route.fullPath.split('?')[0] != '/login' && !auth.isLoggedIn" to="/login"
+          class="h-8 md:h-9 flex items-center justify-center bg-secondary rounded-sm px-2 sm:px-4 text-white text-[11px] sm:text-base font-medium">Continue
+          as volunteer</router-link>
+        <Dropdown class="block lg:hidden" :options="[
           {
             label: 'Home',
             onClick: () => { change_route('/')},
@@ -114,9 +117,7 @@
             </template>
           </Button>
         </Dropdown>
-        <router-link v-if="route.fullPath == '/landing'" to="/login"
-          class="h-9 flex items-center justify-center bg-secondary rounded-sm px-4 text-white text-base font-medium">Continue
-          as volunteer</router-link>
+        
       </div>
     </nav>
   </div>
