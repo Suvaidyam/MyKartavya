@@ -72,10 +72,10 @@
     <!-- Main section -->
     <section class="w-full bg-white">
       <div class="p-4 md:p-6 lg:p-10">
-        <div class="flex flex-col lg:flex-row gap-4">
+        <div class="flex flex-col lg:flex-row gap-10">
           <!-- Left Section -->
           <div class="w-full lg:w-[65%]">
-            <div v-html="activitiesavilable.activity_description"></div>
+            <div class="text-[14px] font-normal text-[#666666] text-justify leading-[170%]" v-html="activitiesavilable.activity_description"></div>
           </div>
 
           <!-- Right Section -->
