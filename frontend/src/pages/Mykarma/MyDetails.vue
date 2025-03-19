@@ -34,7 +34,7 @@
           <h4 class="font-medium text-[10px] pb-1" style="color: #666666">
             Act of Random Kindness
           </h4>
-          <p class="text-lg font-semibold text-[#0B0B0B]">98</p>
+          <p class="text-lg font-semibold text-[#0B0B0B]">{{ activities.activity_completed }}</p>
         </div>
         <div class="border border-gray-300 rounded-lg px-4 py-3 text-center">
           <span class="block text-blue-500 text-xl pb-1">
@@ -44,7 +44,7 @@
             Completed Opportunities
           </h4>
           <p class="text-lg font-semibold text-[#0B0B0B]">
-            {{ activities.activity_completed }}
+            10
           </p>
         </div>
         <div class="border border-gray-300 rounded-lg px-4 py-3 text-center">

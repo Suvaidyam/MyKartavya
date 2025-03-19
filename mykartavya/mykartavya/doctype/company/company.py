@@ -125,11 +125,9 @@ class Company(Document):
 
             # Validate file size (1MB to 5MB)
             file_size = frappe.get_doc("File", {"file_url": self.company_logo}).file_size
-            min_size = 1 * 1024 * 1024  # 1MB in bytes
-            max_size = 5 * 1024 * 1024  # 5MB in bytes
-
-            if not (min_size <= file_size <= max_size):
-                frappe.throw("Company Logo file size must be between 1MB and 5MB")
+            max_size = 5 * 1024 * 1024  # 5MB
+            if file_size > max_size:
+                 frappe.throw("Company Logo file size must be between 1MB and 5MB")
 
     def before_save(self):
         # Strip whitespace from text fields

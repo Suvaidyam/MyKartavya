@@ -64,7 +64,7 @@
                     />
                   </div>
                   <div class="w-full h-[330px]" v-else>
-                    <NotFound />
+                    <NotFound message="Your Current Commitments empty!"/>
                   </div>
                 </div>
                 <div
@@ -111,7 +111,7 @@
               />
             </div>
               <div class="w-full h-[330px]" v-else>
-                <NotFound />
+                <NotFound message="Available Commitments not Found!"/>
               </div>
             </div>
           </section>

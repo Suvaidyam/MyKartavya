@@ -54,7 +54,7 @@
               : ''
               ">
               <p class="text-[10px] font-normal px-6"
-                :class="index === steps.length - 1 ? 'text-[#FF5722]' : 'text-[#999999]'">
+                :class=" (step.completed-1) ? 'text-[#FF5722]' : 'text-[#999999]'">
                 STEP {{ index + 1 }}
               </p>
               <h3 class="text-[19px] font-medium  px-6 py-2">{{ step.title }}</h3>
@@ -287,6 +287,8 @@ const feedbackPointsPopup = ref(false)
 const call = inject('call')
 const auth = inject('auth')
 const store = inject('store')
+const socket = inject('socket')
+console.log(socket)
 const route = useRoute()
 const feedback = ref({
   rating: null,
