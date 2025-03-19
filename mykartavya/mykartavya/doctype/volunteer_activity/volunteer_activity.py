@@ -34,8 +34,6 @@ class VolunteerActivity(Document):
 			frappe.log_error(f"Error setting enrollment status: {str(e)}")
 			raise
 
-
-
 	def on_update(self):
 		"""Handle workflow state changes and related actions."""
 		try:

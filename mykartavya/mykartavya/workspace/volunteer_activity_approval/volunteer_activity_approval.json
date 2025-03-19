@@ -1,34 +1,39 @@
 {
  "app": "mykartavya",
  "charts": [],
- "content": "[]",
- "creation": "2025-03-16 14:26:50.699022",
+ "content": "[{\"id\":\"-YGIQZvCZE\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Completion Approval\",\"col\":4}},{\"id\":\"33GSsck5aC\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"copanies registered\",\"col\":4}}]",
+ "creation": "2025-03-19 10:32:42.409165",
  "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
  "for_user": "",
  "hide_custom": 0,
- "icon": "list",
+ "icon": "menu",
  "idx": 0,
  "indicator_color": "green",
  "is_hidden": 0,
  "label": "Volunteer Activity Approval",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-03-19 08:18:45.224175",
+ "modified": "2025-03-19 10:33:47.736795",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity Approval",
- "number_cards": [],
+ "number_cards": [
+  {
+   "label": "Completion Approval",
+   "number_card_name": "Completion Approval"
+  },
+  {
+   "label": "copanies registered",
+   "number_card_name": "copanies registered"
+  }
+ ],
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
- "roles": [
-  {
-   "role": "MyKartvya Admin"
-  }
- ],
+ "roles": [],
  "sequence_id": 28.0,
  "shortcuts": [],
  "title": "Volunteer Activity Approval",
