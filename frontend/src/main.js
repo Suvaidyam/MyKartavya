@@ -10,7 +10,7 @@ import call from './libs/controllers/call'
 import VOtpInput from "vue3-otp-input";
 import {formatDate}  from './libs/utils';
 import { store } from './store'
-import socket from './libs/controllers/socket'
+import {initSocket} from './libs/controllers/socket'
 
 import {
   Button,
@@ -24,7 +24,7 @@ import {
 let app = createApp(App)
 const auth = reactive(new Auth());
 setConfig('resourceFetcher', frappeRequest)
-
+const socket = initSocket()
 
 app.use(router)
 app.use(resourcesPlugin)
