@@ -21,18 +21,19 @@ class VolunteerActivity(Document):
 
 		try:
 			activity = frappe.get_doc("Activity", self.activity)
-			
+
 			# Set enrollment status based on auto_approve_volunteers
 			if activity.auto_approve_volunteers:
 				self.enrollment_wf_state = "Approved"
 				frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Approved")
 			else:
-				enrollment_wf_state = self.workflow_state 
-				print(f"Enrollment status set to ++++++++++++++++++++++++==========================: {enrollment_wf_state}")
-				frappe.db.set_value("Volunteer Activity", self.name, "enrollment_wf_state", enrollment_wf_state)
+				if self.enrollment_wf_state == "Approved":
+					frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Approved")
+				frappe.db.commit()
 		except Exception as e:
 			frappe.log_error(f"Error setting enrollment status: {str(e)}")
 			raise
+
 
 
 	def on_update(self):
