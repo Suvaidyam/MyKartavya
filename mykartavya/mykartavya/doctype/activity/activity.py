@@ -2,7 +2,7 @@ import frappe
 from frappe import _
 from frappe.model.document import Document
 from frappe.utils import get_datetime, now_datetime,today,getdate
-from datetime import datetime, time
+from datetime import time
 
 class Activity(Document):
     def validate(self):
@@ -14,36 +14,25 @@ class Activity(Document):
         self.validate_reward()
         self.validate_location()
         self.validate_company()
-        self.validateskill()
         self.validate_image()
-
-
-    def validateskill(self):
-        if not self.skill or len(self.skill) == 0:
-            frappe.throw(_("Please select at least one skill."))
 
     def on_update(self):
         today_date = getdate(today())
         start_date = getdate(self.start_date) if self.start_date else None
         end_date = getdate(self.end_date) if self.end_date else None
-        
-        if start_date and end_date:
-            if start_date >= today_date:
-                self.status = "Published"
-            elif start_date < today_date < end_date:
-                self.status = "Ongoing"
-            elif end_date == today_date:
-                self.status = "Ended"
-            elif today_date > end_date:
-                self.status = "Ended"
+        publish_date = getdate(self.publish_date) if self.publish_date else None
+
+        if self.status == "Draft" and publish_date and today_date >= publish_date:
+            self.status = "Published"
+
+        elif self.status == "Published" and start_date and today_date >= start_date:
+            self.status = "Ongoing"
+
+        elif self.status == "Ongoing" and end_date and today_date == end_date:
+            self.status = "Ended"
+
 
     def validate_dates(self):
-        current_datetime = now_datetime()
-        
-        # Validate publish date
-        if get_datetime(self.publish_date) < current_datetime:
-            frappe.throw(_("Activity Publish Date cannot be in the past"))
-            
         # Validate application deadline
         if get_datetime(self.application_deadline) <= get_datetime(self.publish_date):
             frappe.throw(_("Application Deadline must be after Publish Date"))
@@ -142,23 +131,6 @@ class Activity(Document):
             self.city = None
             self.address = None
 
-
-    # def on_update(self):
-    #     if self.value_type == "Skills":
-    #         total_value = 0
-    #         for skill_entry in self.skill:
-    #             skill_name = skill_entry.skills_name
-    #             skill_doc = frappe.get_doc("Skills", skill_name)
-    #             if skill_doc:
-    #                 total_value += skill_doc.rate_per_hour
-    #         self.work_value_rupees = total_value
-        
-    #     elif self.value_type == "General":
-    #         if self.work_value_rupees is not None:
-    #             pass
-    #         else:
-    #             self.work_value_rupees = 0
-    
     def validate_image(self):
         for field in ["activity_image", "reward_image"]:
             image_url = getattr(self, field, None)

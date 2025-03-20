@@ -28,7 +28,8 @@ fixtures=[
     # "District"
     # "Builder Client Script",
     # "Website Settings",
-    # "User Settings"
+    # "User Settings",
+    # "Server Script"
 ]
 
 

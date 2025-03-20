@@ -41,9 +41,9 @@ frappe.ui.form.on("Activity", {
     refresh(frm) {
         $('head').append('<style>.frappe-control:has(input[type="checkbox"][name="optimize"]) { display: none !important; }</style>');
 
-        let today = new Date(frappe.datetime.get_today());
+        // let today = new Date(frappe.datetime.get_today());
         let fields = [
-            { name: "publish_date", min: today },
+            // { name: "publish_date", min: today },
             { name: "application_deadline", depends_on: "publish_date" },
             { name: "start_date", depends_on: "application_deadline" },
             { name: "end_date", depends_on: "start_date" },
