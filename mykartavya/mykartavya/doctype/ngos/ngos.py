@@ -175,6 +175,7 @@ def create_sva_user(first_name, email, mobile_number, role_profile, doc, custom_
         })
         
         sva_user.insert(ignore_permissions=True)
+        sva_user=frappe.get_doc("SVA User",sva_user.name)
         if sva_user.custom_volunteer_type == "NGO Member":
             sva_user.append("table_pdop", {
                 "module": "NGOs",
