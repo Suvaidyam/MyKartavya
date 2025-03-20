@@ -1,4 +1,11 @@
 frappe.ui.form.on("Activity", {
+
+    is_global: function(frm) {
+        if (frm.doc.is_global) {
+            frm.set_value('company', '');
+        }
+    },
+
     skill: function (frm) {
         if (frm.doc.value_type === "Skills") {
             frm.set_value("work_value_rupees", 0);
@@ -39,7 +46,6 @@ frappe.ui.form.on("Activity", {
     },
 
     refresh(frm) {
-        $('head').append('<style>.frappe-control:has(input[type="checkbox"][name="optimize"]) { display: none !important; }</style>');
 
         // let today = new Date(frappe.datetime.get_today());
         let fields = [
