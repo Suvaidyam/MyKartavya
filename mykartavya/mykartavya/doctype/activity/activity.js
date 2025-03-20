@@ -1,12 +1,6 @@
 frappe.ui.form.on("Activity", {
     skill: function (frm) {
         if (frm.doc.value_type === "Skills") {
-            if (!frm.doc.skill || frm.doc.skill.length === 0) {
-                frappe.msgprint(__('Please select at least one skill.'));
-                frappe.validated = false;  
-                return;
-            }
-    
             frm.set_value("work_value_rupees", 0);
             let total_value = 0;
             let promises = frm.doc.skill.map(skill_entry => {
@@ -24,9 +18,8 @@ frappe.ui.form.on("Activity", {
                 frm.refresh();   
             });
         }
-    }
-    
-,    
+    },   
+     
     value_type: function (frm) {
     if (frm.doc.value_type === "General") {
         frm.set_value("work_value_rupees", "");
@@ -48,9 +41,9 @@ frappe.ui.form.on("Activity", {
     refresh(frm) {
         $('head').append('<style>.frappe-control:has(input[type="checkbox"][name="optimize"]) { display: none !important; }</style>');
 
-        // let today = new Date(frappe.datetime.get_today());
+        let today = new Date(frappe.datetime.get_today());
         let fields = [
-            // { name: "publish_date", min: today },
+            { name: "publish_date", min: today },
             { name: "application_deadline", depends_on: "publish_date" },
             { name: "start_date", depends_on: "application_deadline" },
             { name: "end_date", depends_on: "start_date" },

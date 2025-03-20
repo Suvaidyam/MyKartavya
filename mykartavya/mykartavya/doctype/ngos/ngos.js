@@ -3,6 +3,8 @@
 
 frappe.ui.form.on("NGOs", {
     refresh(frm) {
+        frm.timeline.wrapper.hide();
+        $('.layout-side-section').hide();
         set_filters(frm);
     },
 
