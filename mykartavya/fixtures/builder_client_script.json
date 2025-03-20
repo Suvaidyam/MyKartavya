@@ -218,6 +218,15 @@
  {
   "docstatus": 0,
   "doctype": "Builder Client Script",
+  "modified": "2025-03-20 10:55:21.414648",
+  "name": "Navbardropdown",
+  "public_url": "/files/page_scripts/JavaScript-4ef1d-6af263e34d.js?v=1464b5bd12",
+  "script": "window.addEventListener(\"DOMContentLoaded\", () => {\n    const navItems = document.querySelectorAll(\".nav-item\");\n    navItems.forEach((item) => {\n        item.addEventListener(\"click\", () => {\n            const dropdowns = item.querySelectorAll(\".foss-dropdown\");\n            const siblingDropdown = item.nextElementSibling;\n            dropdowns.forEach((dropdown) => {\n                if (dropdown !== siblingDropdown) {\n                    dropdown.style.display = \"none\";\n                } else {\n                    // toggle dropdown\n                    if (siblingDropdown.style.display === \"none\" || siblingDropdown.style.display === \"\") {\n                        siblingDropdown.style.display = \"flex\";\n                    } else {\n                        siblingDropdown.style.display = \"none\";\n                    }\n                }\n            });\n        });\n    });\n});\n\n",
+  "script_type": "JavaScript"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Client Script",
   "modified": "2025-03-18 15:17:57.949330",
   "name": "Newsletter",
   "public_url": "/files/page_scripts/JavaScript-3f181-4913928ba6.js?v=37740d249d",
@@ -236,19 +245,19 @@
  {
   "docstatus": 0,
   "doctype": "Builder Client Script",
-  "modified": "2025-03-18 11:21:11.042367",
+  "modified": "2025-03-20 15:09:40.563182",
   "name": "CSS-bccf0",
-  "public_url": "/files/page_styles/CSS-bccf0-e083307af8.css?v=062ee48734",
-  "script": "/* Write your CSS here */\n * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n\n\n.slider-container {\n            width: 100%;\n            max-width: 1920px;\n            margin: auto;\n            overflow: hidden;\n            position: relative;\n        }\n\n        .slider {\n            display: flex;\n            transition: transform 0.5s ease-in-out;\n        }\n\n        .slider img {\n            width: 100%;\n            height: 400px;\n            /*border-radius: 10px;*/\n        }\n\n        .prev,\n        .next {\n            position: absolute;\n            top: 50%;\n            transform: translateY(-50%);\n            /*background-color: rgba(0, 0, 0, 0.5);*/\n            color: white;\n            border: none;\n            padding: 10px;\n            cursor: pointer;\n        }\n\n        .prev {\n            left: 10px;\n        }\n\n        .next {\n            right: 10px;\n        }\n        \n        /*.foots{*/\n        /*     border-top: 1px solid white;*/\n        /*}*/\n        \n        .cardsbor{\n             border-right: 1px solid #D9D9D9;\n       \n       \n       \n      }\n        \n  \n        \n        ::-webkit-scrollbar {\n    width: 4px;\n    /* Thin width */\n    height: 4px;\n}\n \n::-webkit-scrollbar-thumb {\n    background: #b0b3b0;\n    /* Scrollbar color */\n    border-radius: 8px;\n}\n \n::-webkit-scrollbar-track {\n    background: #f0f0f0;\n    /* Track color */\n}\n\n.cardss{\n     width: 100%;\n    max-width: 1920px;\n}",
+  "public_url": "/files/page_styles/CSS-bccf0-e083307af8.css?v=62c6176990",
+  "script": "/* Write your CSS here */\n * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n\n\n.slider-container {\n            width: 100%;\n            max-width: 1920px;\n            margin: auto;\n            overflow: hidden;\n            position: relative;\n        }\n\n        .slider {\n            display: flex;\n            transition: transform 0.5s ease-in-out;\n        }\n\n        .slider img {\n            width: 100%;\n            height: 400px;\n            /*border-radius: 10px;*/\n        }\n\n        .prev,\n        .next {\n            position: absolute;\n            top: 50%;\n            transform: translateY(-50%);\n            /*background-color: rgba(0, 0, 0, 0.5);*/\n            color: white;\n            border: none;\n            padding: 10px;\n            cursor: pointer;\n        }\n\n        .prev {\n            left: 10px;\n        }\n\n        .next {\n            right: 10px;\n        }\n        \n        /*.foots{*/\n        /*     border-top: 1px solid white;*/\n        /*}*/\n        \n        .cardsbor{\n             border-right: 1px solid #D9D9D9;\n       \n       \n       \n      }\n        \n  \n        \n        ::-webkit-scrollbar {\n    width: 4px;\n    /* Thin width */\n    height: 4px;\n}\n \n::-webkit-scrollbar-thumb {\n    background: #b0b3b0;\n    /* Scrollbar color */\n    border-radius: 8px;\n}\n \n::-webkit-scrollbar-track {\n    background: #f0f0f0;\n    /* Track color */\n}\n\n.cardss{\n     width: 100%;\n    max-width: 1920px;\n}\n\n\n\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}\n\n/*.dropdown li {*/\n/*  padding: 8px;*/\n/*  cursor: pointer;*/\n/*}*/\n\n/*.dropdown li:hover {*/\n/*  background: #ddd;*/\n/*}*/\n",
   "script_type": "CSS"
  },
  {
   "docstatus": 0,
   "doctype": "Builder Client Script",
-  "modified": "2025-03-20 10:55:21.414648",
-  "name": "Navbardropdown",
-  "public_url": "/files/page_scripts/JavaScript-4ef1d-6af263e34d.js?v=1464b5bd12",
-  "script": "window.addEventListener(\"DOMContentLoaded\", () => {\n    const navItems = document.querySelectorAll(\".nav-item\");\n    navItems.forEach((item) => {\n        item.addEventListener(\"click\", () => {\n            const dropdowns = item.querySelectorAll(\".foss-dropdown\");\n            const siblingDropdown = item.nextElementSibling;\n            dropdowns.forEach((dropdown) => {\n                if (dropdown !== siblingDropdown) {\n                    dropdown.style.display = \"none\";\n                } else {\n                    // toggle dropdown\n                    if (siblingDropdown.style.display === \"none\" || siblingDropdown.style.display === \"\") {\n                        siblingDropdown.style.display = \"flex\";\n                    } else {\n                        siblingDropdown.style.display = \"none\";\n                    }\n                }\n            });\n        });\n    });\n});\n\n",
+  "modified": "2025-03-20 12:24:06.228172",
+  "name": "Navbar",
+  "public_url": "/files/page_scripts/JavaScript-6a4b5-2eb4e21113.js?v=53f971618e",
+  "script": "// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
   "script_type": "JavaScript"
  }
 ]
