@@ -1,17 +1,46 @@
 import frappe
-from frappe import _
-from frappe.utils import cstr
-from frappe.utils.file_manager import save_file
 import base64
+from frappe.utils import cstr, now_datetime
+from frappe.utils.file_manager import save_file
 
 @frappe.whitelist(allow_guest=True)
 def register_ngo(**kwargs):
     try:
-        # Create NGO document
+        ngo_name = kwargs.get('ngo_name')
+        base64_string = kwargs.get('ngo_logo')
+
+        if not ngo_name:
+            return {"status": "error", "message": "NGO Name is required"}
+        if not base64_string or len(base64_string) < 50:
+            return {"status": "error", "message": "NGO Logo is required"}
+        
+        try:
+            if "," in base64_string:
+                base64_string = base64_string.split(",")[1]
+            file_content = base64.b64decode(base64_string)
+        except Exception:
+            frappe.log_error(frappe.get_traceback(), "Base64 Decoding Error")
+            return {"status": "error", "message": "Invalid logo file."}
+
+        temp_ngo_name = f"temp_{now_datetime().strftime('%Y%m%d_%H%M%S')}"
+        file_name = f"{temp_ngo_name}.png"
+        file_doc = save_file(
+            fname=file_name,
+            content=file_content,
+            dt="NGOs",  
+            dn=temp_ngo_name,  
+            is_private=0,
+        )
+
+        if not file_doc or not file_doc.file_url:
+            frappe.log_error("File Upload Error: File URL missing", "NGO Logo Upload")
+            return {"status": "error", "message": "Failed to upload logo."}
+
         ngo = frappe.get_doc({
             "doctype": "NGOs",
             "registration_type": "Self Registration",
-            "ngo_name": kwargs.get('ngo_name'),
+            "ngo_name": ngo_name,
+            "ngo_logo": file_doc.file_url,   
             "website": kwargs.get('website'),
             "official_contact_number": kwargs.get('official_contact_number'),
             "email": kwargs.get('email'),
@@ -31,41 +60,21 @@ def register_ngo(**kwargs):
             "pincode": kwargs.get('pincode'),
             "registered_with_bigtech": kwargs.get('registered_with_bigtech'),
         })
-        ngo.insert(ignore_permissions=True)
-        frappe.db.commit()
+        ngo.insert(ignore_permissions=True)  
 
-        try:
-            base64_string = kwargs.get('ngo_logo')   
-            if "," in base64_string:
-                base64_string = base64_string.split(",")[1]
-            file_name = f"{ngo.name}_{frappe.utils.now().replace(' ', '_')}.png"
-            file_content = base64.b64decode(base64_string)
-            file_path = save_file(
-                fname=file_name,
-                content=file_content,
-                dt="NGOs",
-                dn=ngo.name,
-                is_private=0,
-            )
-            ngo.ngo_logo = file_path.file_url
-            ngo.save(ignore_permissions=True)
-            frappe.db.commit()
-        except Exception as e:
-            return {"status": "error", "message": str(e)}
-
-        
         return {
             "status": "success",
             "message": "NGO registered successfully",
             "data": ngo.as_dict()
         }
-        
+
     except Exception as e:
         frappe.log_error(frappe.get_traceback(), "NGO Registration Error")
         return {
             "status": "error",
             "message": cstr(e)
         }
+
 
 @frappe.whitelist(allow_guest=True)
 def register_company(**kwargs):
