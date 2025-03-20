@@ -2,6 +2,16 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("NGOs", {
+    setup: function (frm) {
+        frm['dt_events'] = {
+            "SVA User": {
+                "after_render": (dt, mode) => {
+                    let form_dialog = dt.form_dialog;
+                    form_dialog.set_value("custom_volunteer_type", "NGO Member");
+                }
+            }
+        }
+    },
     refresh(frm) {
         frm.timeline.wrapper.hide();
         $('.layout-side-section').hide();
