@@ -22,9 +22,9 @@
 
             <div>
               <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Website
+                Website <span class="text-red-500 pt-2">*</span>
               </label>
-              <input v-model="form.website" type="url" placeholder="https://example.org"
+              <input v-model="form.website" type="url" placeholder="https://example.org" required
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
             </div>
 
@@ -223,7 +223,21 @@
                 <span class="text-sm text-gray-600">Upload NGO Logo (PNG, JPG up to 2MB)</span>
                 <input type="file" class="hidden" @change="handleFileUpload" accept="image/*" />
               </label>
+
+              <!-- Image Preview with Remove Button -->
+              <div v-if="form.ngo_logo" class="py-3 flex px-4 border-2 border-dashed border-gray-300  rounded-lg  justify-end">
+              <div class="">
+                <img :src="'data:image/png;base64,' + form.ngo_logo" alt="Preview"
+                  class="w-32 h-32 object-cover rounded-lg border border-gray-300" />
+                <button @click="removeLogo"
+                  class="mt-2 px-8 py-1 text-white bg-red-500 rounded-lg text-sm hover:bg-red-600 transition">
+                  Remove
+                </button>
+              </div>
+              </div>
             </div>
+
+
           </div>
 
           <!-- Submit Button -->
@@ -270,7 +284,7 @@ const form = ref({
   pincode: "",
   registered_with_bigtech: "No",
   ngo_logo: null,
-  country: "India" // Default country
+  country: "India"  
 });
 
 const loading = ref(false);
@@ -296,7 +310,6 @@ const fetchCountries = async () => {
     loading.value = true;
     const res = await call("mykartavya.controllers.api.country_data");
     countries.value = res || [];
-    console.log('Countries fetched:', countries.value);
   } catch (err) {
     console.error('Error fetching countries:', err);
     error.value = 'Failed to load countries. Please try again.';
@@ -313,9 +326,8 @@ const fetchStates = async () => {
       country: form.value.country
     });
     states.value = res || [];
-    form.value.state = ""; // Reset state when country changes
-    form.value.city = ""; // Reset city when country changes
-    console.log('States fetched:', states.value);
+    form.value.state = "";  
+    form.value.city = "";  
   } catch (err) {
     console.error('Error fetching states:', err);
     error.value = 'Failed to load states. Please try again.';
@@ -333,7 +345,6 @@ const fetchCities = async () => {
     });
     cities.value = res || [];
     form.value.city = ""; // Reset city when state changes
-    console.log('Cities fetched:', cities.value);
   } catch (err) {
     console.error('Error fetching cities:', err);
     error.value = 'Failed to load cities. Please try again.';
@@ -358,48 +369,53 @@ watch(() => form.value.state, (newState) => {
 // Initialize data on component mount
 onMounted(async () => {
   await fetchCountries();
-  // If default country is set, fetch its states
   if (form.value.country) {
     await fetchStates();
   }
 });
 
-// const handleFileUpload = async (event) => {
-//   const file = event.target.files[0];
-//   if (file) {
-//     try {
-//       const formData = new FormData();
-//       formData.append('file', file);
-//       // Upload file to Frappe
-//       const response = await call('upload_file', {
-//         file: formData,
-//         is_private: 0,
-//         doctype: 'NGOs',
-//         fieldname: 'ngo_logo'
-//       });
-//       form.value.ngo_logo = response.file_url;
-//       toast.success('Logo uploaded successfully!', {
-//         position: "top-right",
-//         autoClose: 3000,
-//         hideProgressBar: false,
-//       });
-//     } catch (err) {
-//       console.error('Error uploading file:', err);
-//       toast.error('Failed to upload logo. Please try again.', {
-//         position: "top-right",
-//         autoClose: 3000,
-//         hideProgressBar: false,
-//       });
-//     }
-//   }
-// };
+const handleFileUpload = async (event) => {
+  const file = event.target.files[0];
+  if (!file) {
+    toast.error("Please select a file.");
+    return;
+  }
+  const allowedExtensions = ["image/jpeg", "image/png", "image/webp"];
+  const maxSize = 5 * 1024 * 1024; // 5MB
 
-const handleFileUpload = (event) => 
-{ const file = event.target.files[0]; console.log(file)  
-    const reader = new FileReader(); 
-    reader.onload = (e) => { form.value.ngo_logo = e.target.result; };
-    reader.readAsDataURL(file); }
-    
+  if (!allowedExtensions.includes(file.type)) {
+    toast.error("Invalid file type. Only JPG, PNG, and WEBP are allowed.");
+    return;
+  }
+
+  if (file.size > maxSize) {
+    toast.error("File size exceeds 5 MB limit.");
+    return;
+  }
+
+  // Convert to Base64
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+
+  reader.onload = async () => {
+    try {
+      const base64Data = reader.result.split(",")[1]; // Convert Base64
+      form.value.ngo_logo = base64Data;
+      toast.success("Image uploaded successfully!");
+    } catch (err) {
+      console.error("Error uploading file:", err);
+      toast.error("Failed to upload logo. Please try again.");
+    }
+  };
+};
+
+
+const removeLogo = () => {
+  form.value.ngo_logo = null;
+  toast.info("Image removed.");
+};
+
+
 const validateForm = () => {
   const requiredFields = [
     'ngo_name',
@@ -452,39 +468,70 @@ const validateForm = () => {
 };
 
 
+
+const resetForm = () => {
+  form.value = {
+    registration_type: "Self Registration",
+    ngo_name: "",
+    website: "",
+    official_contact_number: "",
+    email: "",
+    designation: "",
+    state: "",
+    city: "",
+    description: "",
+    license_type: "FCRA",
+    contact_person_name: "",
+    ngo_head_name: "",
+    ngo_head_email: "",
+    ngo_head_mobile: "",
+    ngo_head_office_number: "",
+    area_of_work: "",
+    address: "",
+    pincode: "",
+    registered_with_bigtech: "No",
+    ngo_logo: null, // ✅ Ensuring logo is reset
+    country: "India",
+  };
+};
 const submitForm = async () => {
   try {
     error.value = null;
-    if (!validateForm()) {
+    if (!validateForm()) return;
+
+    if (!form.value.ngo_logo) {
+      toast.error("NGO Logo is required before registration.");
       return;
     }
 
     loading.value = true;
 
-    const response = await call('mykartavya.mykartavya.api.register_ngo', {
-      ...form.value
+    const response = await call("mykartavya.mykartavya.api.register_ngo", {
+      ...form.value,
     });
 
-    if (response.status === 'success') {
-      toast.success('NGO Registration Successful! Please check your email for login credentials.', {
+    if (response.status === "success") {
+      toast.success("NGO Registration Successful! Check your email for login credentials.", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
       });
-      // Redirect to home or dashboard after a short delay
-      setTimeout(() => {
-        router.push('/');
-      }, 2000);
-    } else {
-      toast.error(response.message || 'Failed to register NGO. Please try again.', {
+
+        resetForm(); 
+        setTimeout(() => {
+        router.push("/");
+      }, 500); 
+    } else {       
+
+      toast.error(response.message || "Failed to register NGO. Please try again.", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
       });
     }
   } catch (err) {
-    console.error('Error submitting form:', err);
-    toast.error(err.message || 'Failed to register NGO. Please try again.', {
+    console.error("Error submitting form:", err);
+    toast.error(err.message || "Failed to register NGO. Please try again.", {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -493,7 +540,10 @@ const submitForm = async () => {
     loading.value = false;
   }
 };
+
+
 </script>
+
 
 <style scoped>
 .error-message {

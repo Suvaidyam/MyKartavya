@@ -41,7 +41,7 @@ class Activity(Document):
         current_datetime = now_datetime()
         
         # Validate publish date
-        if get_datetime(self.publish_date) > current_datetime:
+        if get_datetime(self.publish_date) < current_datetime:
             frappe.throw(_("Activity Publish Date cannot be in the past"))
             
         # Validate application deadline
