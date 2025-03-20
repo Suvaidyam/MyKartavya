@@ -7,7 +7,10 @@ from frappe.utils import validate_email_address
 import time
 
 
-
+@frappe.whitelist(allow_guest=True)
+def corporate_partners_logo():
+    logo = frappe.get_all("Corporate Partners", fields=["*"], order_by="creation DESC")
+    return logo
 
 @frappe.whitelist(allow_guest=True)
 def subscribe_to_newsletter(email, email_group="Mykartavya"):
