@@ -1,9 +1,9 @@
-var f=Object.defineProperty,b=Object.defineProperties;var I=Object.getOwnPropertyDescriptors;var a=Object.getOwnPropertySymbols;var w=Object.prototype.hasOwnProperty,g=Object.prototype.propertyIsEnumerable;var y=(e,c,t)=>c in e?f(e,c,{enumerable:!0,configurable:!0,writable:!0,value:t}):e[c]=t,s=(e,c)=>{for(var t in c||(c={}))w.call(c,t)&&y(e,t,c[t]);if(a)for(var t of a(c))g.call(c,t)&&y(e,t,c[t]);return e},h=(e,c)=>b(e,I(c));var v=(e,c)=>{var t={};for(var o in e)w.call(e,o)&&c.indexOf(o)<0&&(t[o]=e[o]);if(e!=null&&a)for(var o of a(e))c.indexOf(o)<0&&g.call(e,o)&&(t[o]=e[o]);return t};import{L as k}from"./index-B4Hi1_eH.js";/**
+var f=Object.defineProperty,b=Object.defineProperties;var M=Object.getOwnPropertyDescriptors;var a=Object.getOwnPropertySymbols;var w=Object.prototype.hasOwnProperty,g=Object.prototype.propertyIsEnumerable;var y=(e,c,t)=>c in e?f(e,c,{enumerable:!0,configurable:!0,writable:!0,value:t}):e[c]=t,s=(e,c)=>{for(var t in c||(c={}))w.call(c,t)&&y(e,t,c[t]);if(a)for(var t of a(c))g.call(c,t)&&y(e,t,c[t]);return e},h=(e,c)=>b(e,M(c));var v=(e,c)=>{var t={};for(var o in e)w.call(e,o)&&c.indexOf(o)<0&&(t[o]=e[o]);if(e!=null&&a)for(var o of a(e))c.indexOf(o)<0&&g.call(e,o)&&(t[o]=e[o]);return t};import{M as k}from"./index-B6yJHTYC.js";/**
  * @license lucide-vue-next v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const L=e=>e.replace(/([a-z0-9])([A-Z])/g,"$1-$2").toLowerCase();/**
+ */const I=e=>e.replace(/([a-z0-9])([A-Z])/g,"$1-$2").toLowerCase();/**
  * @license lucide-vue-next v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
@@ -13,12 +13,12 @@ var f=Object.defineProperty,b=Object.defineProperties;var I=Object.getOwnPropert
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const M=(C,{slots:l})=>{var d=C,{size:e,strokeWidth:c=2,absoluteStrokeWidth:t,color:o,iconNode:u,name:n,class:m}=d,x=v(d,["size","strokeWidth","absoluteStrokeWidth","color","iconNode","name","class"]);return k("svg",s(h(s({},i),{width:e||i.width,height:e||i.height,stroke:o||i.stroke,"stroke-width":t?Number(c)*24/Number(e):c,class:["lucide",`lucide-${L(n!=null?n:"icon")}`]}),x),[...u.map(p=>k(...p)),...l.default?[l.default()]:[]])};/**
+ */const m=(L,{slots:l})=>{var d=L,{size:e,strokeWidth:c=2,absoluteStrokeWidth:t,color:o,iconNode:u,name:n,class:C}=d,x=v(d,["size","strokeWidth","absoluteStrokeWidth","color","iconNode","name","class"]);return k("svg",s(h(s({},i),{width:e||i.width,height:e||i.height,stroke:o||i.stroke,"stroke-width":t?Number(c)*24/Number(e):c,class:["lucide",`lucide-${I(n!=null?n:"icon")}`]}),x),[...u.map(p=>k(...p)),...l.default?[l.default()]:[]])};/**
  * @license lucide-vue-next v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const r=(e,c)=>(t,{slots:o})=>k(M,h(s({},t),{iconNode:c,name:e}),o);/**
+ */const r=(e,c)=>(t,{slots:o})=>k(m,h(s({},t),{iconNode:c,name:e}),o);/**
  * @license lucide-vue-next v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
