@@ -65,9 +65,11 @@
                             <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                                 Mobile Number <span class="text-red-500 pt-2">*</span>
                             </label>
-                            <input v-model="form.mobile_number" type="tel" placeholder="+91 XXXXX XXXXX" required
+                            <input v-model="form.mobile_number" type="tel" placeholder="+91 XXXXX XXXXXr" maxlength="10"
+                                pattern="\d{10}"
                                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
+
 
                         <div>
                             <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
@@ -130,7 +132,9 @@
                             <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                                 Pincode <span class="text-red-500 pt-2">*</span>
                             </label>
-                            <input v-model="form.pincode" type="text" placeholder="Enter PIN code" required
+                            <input v-model="form.pincode" type="text" placeholder="Enter PIN code" maxlength="6"
+                                pattern="\d{6}" required
+                                oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)"
                                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                         </div>
 
@@ -196,6 +200,7 @@ const call = inject('call');
 const router = useRouter();
 const loading = ref(false);
 const error = ref(null);
+const value = ref(null)
 
 const form = ref({
     registration_type: "Self Registration",
@@ -267,10 +272,9 @@ const validateForm = () => {
     }
 
     // Phone number validation
-    const phoneRegex = /^\d{10}$/;
-    if (!phoneRegex.test(form.value.mobile_number)) {
-        error.value = 'Mobile number must be exactly 10 digits.';
-        toast.error(error.value, {
+    if (!/^\d{10}$/.test(form.value.mobile_number)) {
+        this.error = 'Mobile number must be exactly 10 digits.';
+        this.toast.error(this.error, {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,

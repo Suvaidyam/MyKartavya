@@ -49,7 +49,7 @@ def subscribe_to_newsletter(email, email_group="Mykartavya"):
         try:
             newsletter = frappe.get_doc({
                 "doctype": "Newsletter",
-                "subject": "Welcome to Mykartavya Newsletter!",
+                "subject": f"Welcome to Mykartavya Newsletter! <Email {email}>",
                 "sender_email": "noreply.suvaidyam@gmail.com",
                 "sender_name": "Mykartavya",
                 "email_group": [{
