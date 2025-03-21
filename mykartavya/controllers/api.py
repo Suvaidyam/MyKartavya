@@ -316,7 +316,7 @@ def get_sdg_contribution_details():
     result = frappe.db.sql("""
         SELECT 
             COALESCE(sdg.name, 'Unknown SDG') AS sdg_name,
-            COALESCE(sdg.sdg_image, '') AS sdg_image1,
+            COALESCE(sdg.sdg_image, '') AS sdg_image,
             COALESCE(SUM(act.work_value_rupees), 0) AS total_work_values,
             COALESCE(SUM(act.hours), 0) AS total_hours,
             COUNT(DISTINCT va.volunteer) AS volunteer_count
