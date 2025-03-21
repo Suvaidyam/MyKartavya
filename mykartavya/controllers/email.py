@@ -213,7 +213,7 @@ def send_otp_email(email, otp, type="login"):
             <body>
                 <div class="container">
                     <div class="logo">
-                        <img src="https://mykartavya.org/assets/logo.png" alt="MyKartavya Logo">
+                        <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo">
                     </div>
                     <h2>Login OTP</h2>
                     <div class="greeting">Hello, {full_name}</div>
