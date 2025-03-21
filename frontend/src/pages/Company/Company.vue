@@ -1,5 +1,15 @@
 <template>
     <div class="max-w-[1920px] mx-auto px-10 pt-[82px] pb-4 bg-gray-50">
+          <section class="relative w-full h-[250px] md:h-[300px] lg:h-[350px] bg-cover bg-center bg-no-repeat banner" 
+   >
+    
+    <!-- Absolute Positioned Text -->
+    <div class="absolute inset-0 flex items-center justify-start px-6 md:px-12 lg:px-16">
+      <h1 class="text-white font-semibold text-heading2  ">MyKartavya For Companies</h1>
+    </div>
+
+    
+  </section>
         <div class="bg-white rounded-lg shadow mt-4">
             <div class="p-6">
                 <h2 class="text-xl font-semibold text-gray-700 mb-4">Company Registration</h2>
@@ -471,5 +481,8 @@ onMounted(async () => {
     color: #dc2626;
     font-size: 0.875rem;
     margin-top: 0.5rem;
+}
+.banner {
+  background-image: url('../../assets/corporate-web-min.png');
 }
 </style>

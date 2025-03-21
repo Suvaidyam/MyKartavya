@@ -1,5 +1,15 @@
 <template>
   <div class="max-w-[1920px] mx-auto px-10 pt-[82px] pb-4 bg-gray-50">
+    <section class="relative w-full h-[250px] md:h-[300px] lg:h-[350px] bg-cover bg-center bg-no-repeat banner" 
+   >
+    
+    <!-- Absolute Positioned Text -->
+    <div class="absolute left-0 inset-0 flex items-center justify-start px-6 md:px-12 lg:px-16">
+      <h1 class="text-white font-semibold text-heading2  ">Register For NGO</h1>
+    </div>
+
+    
+  </section>
     <div class="bg-white rounded-lg shadow mt-4">
       <div class="p-6">
         <h2 class="text-xl font-semibold text-gray-700 mb-4">
@@ -11,13 +21,13 @@
           :class="{ loading: loading }"
         >
           <!-- Error Message Display -->
-          <div
+          <!-- <div
             v-if="error"
             class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
             role="alert"
           >
             <span class="block sm:inline">{{ error }}</span>
-          </div>
+          </div> -->
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Row 1 -->
@@ -667,5 +677,8 @@ const submitForm = async () => {
 .loading {
   opacity: 0.7;
   pointer-events: none;
+}
+.banner {
+  background-image: url('../../assets/ngo-web-min.png');
 }
 </style>
