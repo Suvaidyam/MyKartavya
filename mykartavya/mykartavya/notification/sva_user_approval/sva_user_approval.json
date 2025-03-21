@@ -1,0 +1,34 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "condition": "doc.workflow_state =='Approved'",
+ "creation": "2025-03-21 11:23:38.732810",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "SVA User",
+ "enabled": 1,
+ "event": "Value Change",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<p>Add your message here</p>\n",
+ "message_type": "Markdown",
+ "minutes_offset": 0,
+ "modified": "2025-03-21 12:41:49.002382",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "SVA User Approval",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_document_field": "email",
+   "receiver_by_role": ""
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "sender": "noreply",
+ "sender_email": "noreply.suvaidyam@gmail.com ",
+ "subject": "SVA User Status  Approval",
+ "value_changed": "workflow_state"
+}
