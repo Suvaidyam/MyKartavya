@@ -9,7 +9,7 @@ import time
 
 @frappe.whitelist(allow_guest=True)
 def corporate_partners_logo():
-    logo = frappe.get_all("Corporate Partners", fields=["*"], order_by="creation DESC")
+    logo = frappe.get_all("Company", fields=["company_logo",'name'], order_by="creation DESC")
     return logo
 
 @frappe.whitelist(allow_guest=True)
@@ -193,6 +193,10 @@ def current_commitments(filter={}):
 @frappe.whitelist(allow_guest=True)
 def available_commitments(filter={}):
     return Activity.available_commitments(filter)
+
+@frappe.whitelist(allow_guest=True)
+def available_commitments_public(filter={}):
+    return Activity.available_commitments_public(filter)
 
 @frappe.whitelist(allow_guest=True)
 def act_now(activity,volunteer):
