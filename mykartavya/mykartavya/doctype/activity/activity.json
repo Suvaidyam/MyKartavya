@@ -14,9 +14,9 @@
   "activity_image",
   "activity_published_date_starts",
   "publish_date",
-  "application_deadline",
   "start_date",
   "end_date",
+  "application_deadline",
   "reporting_deadline",
   "sdgs",
   "timing_section",
@@ -28,6 +28,7 @@
   "is_team_activity",
   "require_feedback_images",
   "is_global",
+  "is_private",
   "company",
   "is_featured",
   "category_section",
@@ -42,7 +43,6 @@
   "vacancy",
   "buffer_vacancy",
   "minimum_hours",
-  "buffer_minutes",
   "hours",
   "minutes",
   "max_hours",
@@ -177,7 +177,7 @@
    "default": "0",
    "fieldname": "is_team_activity",
    "fieldtype": "Check",
-   "label": "Team Activity"
+   "label": "Is Team Activity"
   },
   {
    "default": "0",
@@ -279,13 +279,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "buffer_minutes",
-   "fieldtype": "Int",
-   "label": "Buffer Minutes",
-   "non_negative": 1,
-   "reqd": 1
-  },
-  {
    "fieldname": "hours",
    "fieldtype": "Float",
    "label": "Hours",
@@ -305,8 +298,7 @@
    "fieldtype": "Float",
    "label": "Max Hours",
    "non_negative": 1,
-   "precision": "2",
-   "reqd": 1
+   "precision": "2"
   },
   {
    "fieldname": "organization_section",
@@ -381,11 +373,12 @@
    "label": "Address"
   },
   {
-   "depends_on": "eval:!doc.is_global",
+   "depends_on": "eval:doc.is_private",
    "fieldname": "company",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Company",
+   "mandatory_depends_on": "eval:doc.is_private",
    "options": "Company"
   },
   {
@@ -412,12 +405,18 @@
    "label": "Activity Type",
    "options": "\nOn-Ground\nOnline\nHybrid",
    "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_private",
+   "fieldtype": "Check",
+   "label": "Is Private"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-03-20 09:22:44.654743",
+ "modified": "2025-03-21 12:25:51.950709",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",

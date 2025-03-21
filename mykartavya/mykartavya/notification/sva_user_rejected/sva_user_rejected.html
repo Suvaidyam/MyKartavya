@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,88 +8,63 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 40px 40px;
+            padding: 30px;
             background-color: #f5f5f5;
         }
-
         .container {
             max-width: 500px;
             margin: auto;
             background: #ffffff;
-            border-radius: 8px;
-            padding: 30px;
+            padding: 40px 40px;
             text-align: center;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
-
         .logo img {
-            max-width: 180px;
+            max-width: 350px;
             height: auto;
             margin-bottom: 20px;
         }
-
         h2 {
             color: #a4a29d;
             font-size: 22px;
             margin: 15px 0;
             font-weight: bold;
         }
-
         .greeting {
             color: #444;
             font-size: 16px;
             margin: 22px 10px;
 
         }
-
         .info {
-            font-size: 16px;
+            font-size: 24px;
             color: #555;
             margin: 16px 0;
-            font-weight: semibold;
+            font-weight: bold;
         }
-
-        .cta-button {
-            display: inline-block;
-            background-color: #000000;
-            color: white;
-            padding: 12px 25px;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 500;
-            border-radius: 6px;
-            transition: background-color 0.3s;
-            margin: 15px 0;
+        .info1{
+          	font-size: 14px;
+            color: #555;
+          	font-weight: semibold;
         }
-
-        .cta-button:hover {
-            background-color: #0056b3;
-        }
-
-        .name {
-            font-size: 16px;
+        
+        .name{
+        	font-size: 16px;
             color: #555;
             font-weight: bold;
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <div class="logo">
-            <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png"
-                alt="MyKartavya Logo">
+            <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo">
         </div>
-
+		<p class="info">Rejected</p>
         <div class="greeting">Hello,<span class="name">{{doc.first_name}}</span></div>
-        <p class="info">You have been registered as a volunteer.</p>
-        <p class="info">Login using</p>
-        <p class="info">Email: <span>{{doc.email}}</span></p>
-        <p class="info">Mobile: <span>{{doc.mobile_number}}</span></p>
-
-        <a href="{{url}}" class="cta-button">Complete Registration</a>
-
+        <p class="info1">We regrate to inform you that your status volunteer as rejected.
+        	Please contact us as below for more details.
+        </p>
     </div>
 </body>
-
 </html>
