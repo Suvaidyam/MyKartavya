@@ -38,8 +38,9 @@ class Activity(Document):
             frappe.throw(_("Application Deadline must be after Publish Date"))
             
         # Validate start date
-        if get_datetime(self.start_date) <= get_datetime(self.application_deadline):
-            frappe.throw(_("Start Date must be after Application Deadline"))
+        if not self.activity_published_date_starts:
+            if get_datetime(self.start_date) <= get_datetime(self.application_deadline):
+                frappe.throw(_("Start Date must be after Application Deadline"))
             
         # Validate end date
         if get_datetime(self.end_date) <= get_datetime(self.start_date):

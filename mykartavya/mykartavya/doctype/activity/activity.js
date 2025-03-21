@@ -1,11 +1,11 @@
 frappe.ui.form.on("Activity", {
 
-    is_global: function(frm) {
-        if (frm.doc.is_global) {
+    is_private: function(frm) {
+        if (frm.doc.is_private) {
             frm.set_value('company', '');
         }
     },
-
+    
     skill: function (frm) {
         if (frm.doc.value_type === "Skills") {
             frm.set_value("work_value_rupees", 0);
@@ -33,18 +33,6 @@ frappe.ui.form.on("Activity", {
         frm.set_value("skill", []);
     }
     },
-    validate: function (frm) {
-        if (frm.doc.max_hours < frm.doc.hours && frm.doc.contribution_type !== 'Fixed') {
-            frappe.throw(__("Max Hours must be greater than or equal to Hours"));
-        }
-
-        // Validate max hours for fixed contribution type
-        if (frm.doc.contribution_type === "Fixed") {
-            frm.set_value("max_hours", frm.doc.hours);
-            frm.refresh_field("max_hours");
-        }
-    },
-
     refresh(frm) {
 
         // let today = new Date(frappe.datetime.get_today());
