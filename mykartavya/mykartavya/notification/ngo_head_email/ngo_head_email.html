@@ -6,117 +6,112 @@
     <title>Welcome to MyKartavya - NGO Creation Notification</title>
     <style>
         body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
         }
-        .email-container {
-            max-width: 750px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 30px;
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #ffffff;
             border-radius: 8px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        }
-        .header {
-            background-color: #56c7e2;
-            padding: 40px;
+            padding: 30px;
             text-align: center;
-            color: white;
-            border-radius: 8px 8px 0 0;
         }
-        .header img {
-            max-width: 300px;
+        .logo {
             margin-bottom: 20px;
         }
-        .header h1 {
-            font-size: 28px;
-            font-weight: bold;
-            margin: 0;
+        .logo img {
+            max-width: 200px;
+            height: auto;
         }
-        .content {
-            padding: 25px;
-            text-align: left;
-            color: #555;
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin: 20px 0;
+            font-weight: 500;
         }
         .greeting {
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
-        .main-text {
+            color: #666;
             font-size: 16px;
-            line-height: 1.7;
             margin-bottom: 20px;
         }
+        .message {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 20px 0;
+            text-align: center;
+        }
         .info-box {
-            background-color: #e1f7f5;
+            background-color: #f9f9f9;
+            border-radius: 6px;
             padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            border-left: 6px solid #03979d;
+            margin: 25px 0;
+            text-align: left;
         }
         .info-box p {
-            margin: 12px 0;
+            margin: 10px 0;
+            color: #333;
+            font-size: 14px;
+        }
+        .info-box a {
+            color: #03979d;
+            text-decoration: none;
         }
         .cta-button {
             display: inline-block;
             background-color: #03979d;
             color: white;
-            padding: 16px 28px;
+            padding: 12px 25px;
             text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 6px;
             transition: background-color 0.3s;
-            text-align: center;
+            margin: 15px 0;
         }
         .cta-button:hover {
             background-color: #027a73;
         }
         .footer {
-            background-color: #e1f7f5;
-            padding: 20px;
-            text-align: center;
-            font-size: 14px;
+            margin-top: 30px;
             color: #666;
-            border-radius: 0 0 8px 8px;
+            font-size: 14px;
+            text-align: center;
         }
-        .footer a {
-            color: #03979d;
-            text-decoration: none;
+        .footer p {
+            margin: 5px 0;
         }
     </style>
 </head>
 <body>
-    <div class="email-container">
-        <div class="header">
-            <img src="https://mykartavya.org/images/mykartavya-logo.png" alt="MyKartavya">
-            <h1>Welcome to MyKartavya - NGO </h1>
+    <div class="container">
+        <div class="logo">
+            <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo">
         </div>
-
-        <div class="content">
-            <p class="greeting">Dear {{doc.first_name}},</p>
-            <p class="main-text">
-                We are thrilled to inform you that your NGO has been successfully created on the MyKartavya platform.
-                As the head of this NGO, you will have full access to manage volunteer operations and help drive your mission forward.
-            </p>
-
-            <!-- Info Box -->
-            <div class="info-box">
-                <p><strong>NGO Name:</strong> {{doc.ngo_name}}</p>
-                <p><strong>NGO Head:</strong> {{doc.first_name}} {{doc.last_name}}</p>
-                <p><strong>Email:</strong> <a href="mailto:{{doc.ngo_head_email}}" style="color: #03979d;">{{doc.ngo_head_email}}</a></p>
-                <p><strong>NGO Status:</strong> {{doc.status}}</p>
-            </div>
-
-            <!-- Call to Action Button -->
-            <a href="{{url}}" class="cta-button">Access NGO Dashboard</a>
+        <h2>NGO Created Successfully</h2>
+        <div class="greeting">Hello, {{doc.first_name}}</div>
+        <div class="message">
+            We are thrilled to inform you that your NGO has been successfully created on the MyKartavya platform.
+            As the head of this NGO, you will have full access to manage volunteer operations and help drive your mission forward.
         </div>
-
+        <!-- Info Box -->
+        <div class="info-box">
+            <p><strong>NGO Name:</strong> {{doc.ngo_name}}</p>
+            <p><strong>NGO Head:</strong> {{doc.first_name}} {{doc.last_name}}</p>
+            <p><strong>Email:</strong> <a href="mailto:{{doc.ngo_head_email}}">{{doc.ngo_head_email}}</a></p>
+            <p><strong>NGO Status:</strong> {{doc.status}}</p>
+        </div>
+        <!-- Call to Action Button -->
+        <a href="{{url}}" class="cta-button">Access NGO Dashboard</a>
+        
         <div class="footer">
+            <p>Thank you!</p>
+            <p>Team MyKartavya</p>
+            <p>Feel free to contact us for further information</p>
             <p>© 2025 MyKartavya. All rights reserved.</p>
-            <p>If you have any questions, please don't hesitate to <a href="mailto:support@mykartavya.org">Contact Support</a>.</p>
         </div>
     </div>
 </body>

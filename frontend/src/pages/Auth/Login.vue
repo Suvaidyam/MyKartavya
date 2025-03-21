@@ -26,7 +26,7 @@
       <div class="mt-8 bg-white p-6 rounded-sm w-full max-w-[443px] shadow-md">
         <h2 class="text-[20px] font-medium mb-4">Login to your account</h2>
         <input type="email" v-model="email" placeholder="sample@example.com"
-          class="w-full p-2 border rounded-sm mb-4 text-[14px]" style="color: #6e7073" />
+          class="w-full p-2 border rounded-sm mb-4 text-[14px]" style="color: #6e7073" @keyup.enter="get_otp()" />
         <button :disabled="loading" @click="get_otp()"
           class="w-full flex items-center justify-center text-white py-2 rounded-sm text-bodyh2"
           style="background: #ff5722">
@@ -71,7 +71,7 @@
 
 <script setup>
 import { ref, inject, onMounted } from 'vue'
-import { useRouter ,useRoute} from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
@@ -89,9 +89,9 @@ const get_otp = async () => {
     return
   }
   let url = ''
-  if(route.query.full_name){
+  if (route.query.full_name) {
     url = 'register_send_otp'
-  }else{
+  } else {
     url = 'send_otp'
   }
   try {
@@ -101,15 +101,46 @@ const get_otp = async () => {
     })
     if (response.status === 'success') {
       loading.value = false
-      toast.success('OTP sent successfully')
-      router.push({ name: 'Verify', query: { email: email.value } })
+      toast.success('OTP sent successfully',
+        {
+          position: 'top-right',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        }
+      )
+      setTimeout(() => {
+        router.push({
+          name: 'Verify',
+          query: {
+            email: email.value,
+            returnUrl: route.query.returnUrl // Preserve any return URL if present
+          }
+        })
+      }, 2000)
     } else {
       loading.value = false
-      toast.error(response.message);
+      toast.error(response.message,
+        {
+          position: 'top-right',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+        }
+      )
     }
   } catch (error) {
-    toast.error('Something went wrong')
-    loading.value = false
+    toast.error('Something went wrong',
+      {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      }
+    )
   }
 }
 

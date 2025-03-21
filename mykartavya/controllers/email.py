@@ -70,7 +70,7 @@ def send_otp(email):
         otp = generate_otp()
         otp_key = get_otp_cache_key(email)
         
-        # Store OTP with 10 minutes expiration (600 seconds)
+        # Store OTP with 30 minutes expiration (1800 seconds)
         frappe.cache().set_value(
             otp_key,
             {
@@ -78,7 +78,7 @@ def send_otp(email):
                 'email': email,
                 'generated_at': now_datetime()
             },
-            expires_in_sec=600
+            expires_in_sec=1800
         )
 
         # Update attempts (1800 seconds = 30 minutes)
@@ -123,6 +123,13 @@ def send_otp_email(email, otp, type="login"):
             subject = _("Login OTP for {0}").format(frappe.local.site)
             template_name = "OTP Login"
         
+        # Get user's name from SVA User
+        full_name = "User"
+        if type == "login":
+            user = frappe.get_doc("SVA User", {"email": email})
+            if user:
+                full_name = f"{user.first_name} {user.last_name}".strip()
+        
         # Attempt to get the email template
         template = None
         try:
@@ -134,14 +141,14 @@ def send_otp_email(email, otp, type="login"):
         if template:
             message = frappe.render_template(
                 template.response, 
-                {"otp": otp, "valid_minutes": 10}
+                {"otp": otp, "valid_minutes": 30, "full_name": full_name}
             )
         else:
             # Default HTML message
             action_text = "Login" if type == "login" else "Complete Registration"
             url = ''
             if type == "register":
-                full_path = f"frontend/verify?email={email}full_name={'Test'}"
+                full_path = f"frontend/verify?email={email}"
             else:
                 full_path = f"frontend/verify?email={email}"
             message = f"""
@@ -153,69 +160,72 @@ def send_otp_email(email, otp, type="login"):
                 <style>
                     body {{
                         font-family: 'Helvetica Neue', Arial, sans-serif;
-                        background-color: #f7f9fc;
                         margin: 0;
                         padding: 20px;
+                        background-color: #f5f5f5;
                     }}
                     .container {{
-                        max-width: 600px;
+                        max-width: 500px;
                         margin: auto;
                         background: #ffffff;
                         border-radius: 8px;
-                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
                         padding: 30px;
                         text-align: center;
+                    }}
+                    .logo {{
+                        margin-bottom: 20px;
+                    }}
+                    .logo img {{
+                        max-width: 200px;
+                        height: auto;
                     }}
                     h2 {{
                         color: #333;
                         font-size: 24px;
+                        margin: 20px 0;
+                        font-weight: 500;
+                    }}
+                    .greeting {{
+                        color: #666;
+                        font-size: 16px;
                         margin-bottom: 20px;
                     }}
-                    .otp {{
-                        font-size: 28px;
-                        font-weight: bold;
-                        color: #007bff;
-                        padding: 15px;
-                        border: 2px solid #007bff;
-                        border-radius: 5px;
-                        display: inline-block;
-                        margin: 20px 0;
-                        background-color: #e7f3ff;
-                    }}
-                    p {{
-                        color: #555;
+                    .otp-message {{
+                        color: #666;
+                        font-size: 14px;
                         line-height: 1.6;
-                        font-size: 16px;
+                        margin: 20px 0;
+                    }}
+                    .otp {{
+                        font-size: 24px;
+                        color: #333;
+                        margin: 15px 0;
+                        font-weight: bold;
                     }}
                     .footer {{
                         margin-top: 30px;
-                        font-size: 12px;
-                        color: #aaa;
+                        color: #666;
+                        font-size: 14px;
                         text-align: center;
-                    }}
-                    .button {{
-                        display: inline-block;
-                        padding: 10px 20px;
-                        font-size: 16px;
-                        color: #ffffff;
-                        background-color: #007bff;
-                        border-radius: 5px;
-                        text-decoration: none;
-                        margin-top: 20px;
                     }}
                 </style>
             </head>
             <body>
                 <div class="container">
-                    <h2>Welcome to MyKartavya!</h2>
-                    <p>Your OTP for {action_text.lower()} is:</p>
+                    <div class="logo">
+                        <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo">
+                    </div>
+                    <h2>Login OTP</h2>
+                    <div class="greeting">Hello, {full_name}</div>
                     <div class="otp">{otp}</div>
-                    <p>This OTP will expire in 10 minutes.</p>
-                    <p>If you didn't request this OTP, please ignore this email.</p>
-                    <a href="{full_path}" class="button">{action_text} Now</a>
+                    <div class="otp-message">
+                        is the One Time Password (OTP) for your application and will be valid<br>
+                        for 30 mins only. Do not share your OTP with anyone.
+                    </div>
                     <div class="footer">
-                        <p>Thank you for using our service!</p>
-                        <p>If you have any questions, feel free to contact us.</p>
+                        <p>Thank you!</p>
+                        <p>Team MyKartavya</p>
+                        <p>Feel free to contact us for further information</p>
                     </div>
                 </div>
             </body>
@@ -258,21 +268,21 @@ def verify_otp(email, otp):
         frappe.logger().debug(f"Verifying OTP for email: {email}")
         
         otp_key = get_otp_cache_key(email)
-        stored_data = frappe.cache().get_value(otp_key)  # Changed from get() to get_value()
+        stored_data = frappe.cache().get_value(otp_key)
         
         frappe.logger().debug(f"Stored OTP data: {stored_data}")
 
         if not stored_data:
             raise OTPError(_("OTP expired or invalid"))
 
-        stored_otp = str(stored_data.get('otp'))  # Convert stored OTP to string
+        stored_otp = str(stored_data.get('otp'))
         generated_at = stored_data.get('generated_at')
 
         frappe.logger().debug(f"Comparing OTPs - Received: {otp}, Stored: {stored_otp}")
 
-        # Check if OTP has expired (10 minutes)
-        if get_datetime(generated_at) + timedelta(minutes=10) < now_datetime():
-            frappe.cache().delete_value(otp_key)  # Changed from delete() to delete_value()
+        # Check if OTP has expired (30 minutes)
+        if get_datetime(generated_at) + timedelta(minutes=30) < now_datetime():
+            frappe.cache().delete_value(otp_key)
             raise OTPError(_("OTP has expired. Please request a new one"))
 
         # Verify OTP
@@ -347,7 +357,7 @@ def register_send_otp(email):
         otp = generate_otp()
         otp_key = get_otp_cache_key(email)
 
-        # Store OTP with 10 minutes expiration (600 seconds)
+        # Store OTP with 30 minutes expiration (1800 seconds)
         frappe.cache().set_value(
             otp_key,
             {
@@ -355,7 +365,7 @@ def register_send_otp(email):
                 'email': email,
                 'generated_at': now_datetime()
             },
-            expires_in_sec=600
+            expires_in_sec=1800
         )
 
         # Update attempts (1800 seconds = 30 minutes)
