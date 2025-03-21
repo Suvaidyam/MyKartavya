@@ -1,15 +1,15 @@
 <template>
   <div class="max-w-[1920px] mx-auto px-10 pt-[82px] pb-4 bg-gray-50">
-    <section class="relative w-full h-[250px] md:h-[300px] lg:h-[350px] bg-cover bg-center bg-no-repeat banner" 
-   >
-    
-    <!-- Absolute Positioned Text -->
-    <div class="absolute left-0 inset-0 flex items-center justify-start px-6 md:px-12 lg:px-16">
-      <h1 class="text-white font-semibold text-heading2  ">Register For NGO</h1>
-    </div>
-
-    
-  </section>
+    <section
+      class="relative w-full h-[250px] md:h-[300px] lg:h-[350px] bg-cover bg-center bg-no-repeat banner"
+    >
+      <!-- Absolute Positioned Text -->
+      <div
+        class="absolute left-0 inset-0 flex items-center justify-start px-6 md:px-12 lg:px-16"
+      >
+        <h1 class="text-white font-semibold text-heading2">Register For NGO</h1>
+      </div>
+    </section>
     <div class="bg-white rounded-lg shadow mt-4">
       <div class="p-6">
         <h2 class="text-xl font-semibold text-gray-700 mb-4">
@@ -31,7 +31,7 @@
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Row 1 -->
-            <div>
+            <div class="">
               <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                 NGO Name <span class="text-red-500 pt-2">*</span>
               </label>
@@ -39,9 +39,15 @@
                 v-model="form.ngo_name"
                 type="text"
                 placeholder="Enter NGO Name"
-                required
+                @input="handleChange('ngo_name')"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
+              <p
+                v-if="errors.ngo_name"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.ngo_name }}
+              </p>
             </div>
 
             <div>
@@ -51,10 +57,16 @@
               <input
                 v-model="form.website"
                 type="url"
+                @input="handleChange('website')"
                 placeholder="https://example.org"
-                required
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
+              <p
+                v-if="errors.ngo_name"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.website }}
+              </p>
             </div>
 
             <!-- Row 2 -->
@@ -66,11 +78,17 @@
                 v-model="form.official_contact_number"
                 type="tel"
                 placeholder="+91 XXXXX XXXXX"
-                required
+                @input="handleChange('official_contact_number')"
                 maxlength="10"
                 pattern="\d{10}"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
+              <p
+                v-if="errors.official_contact_number"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.official_contact_number }}
+              </p>
             </div>
 
             <div>
@@ -79,11 +97,14 @@
               </label>
               <input
                 v-model="form.email"
+                @input="handleChange('email')"
                 type="email"
                 placeholder="ngo@example.com"
-                required
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
+              <p v-if="errors.email" class="text-red-500 text-[10px] pt-1 pl-1">
+                {{ errors.email }}
+              </p>
             </div>
 
             <!-- Row 3 -->
@@ -94,10 +115,16 @@
               <input
                 v-model="form.designation"
                 type="text"
+                @input="handleChange('designation')"
                 placeholder="e.g., Director, Secretary"
-                required
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
+              <p
+                v-if="errors.designation"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.designation }}
+              </p>
             </div>
 
             <div>
@@ -106,7 +133,6 @@
               </label>
               <select
                 v-model="form.license_type"
-                required
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               >
                 <option value="FCRA">FCRA</option>
@@ -131,6 +157,12 @@
                 >
                   {{ country.label || country.name }}
                 </option>
+                <p
+                  v-if="errors.country"
+                  class="text-red-500 text-[10px] pt-1 pl-1"
+                >
+                  {{ errors.country }}
+                </p>
               </select>
             </div>
 
@@ -150,6 +182,12 @@
                 >
                   {{ state.state_name || state.name }}
                 </option>
+                <p
+                  v-if="errors.state"
+                  class="text-red-500 text-[10px] pt-1 pl-1"
+                >
+                  {{ errors.state }}
+                </p>
               </select>
             </div>
 
@@ -170,6 +208,12 @@
                 >
                   {{ city.district_name || city.name }}
                 </option>
+                <p
+                  v-if="errors.city"
+                  class="text-red-500 text-[10px] pt-1 pl-1"
+                >
+                  {{ errors.city }}
+                </p>
               </select>
             </div>
 
@@ -189,6 +233,12 @@
                 >
                   {{ area }}
                 </option>
+                <p
+                  v-if="errors.area_of_work"
+                  class="text-red-500 text-[10px] pt-1 pl-1"
+                >
+                  {{ errors.area_of_work }}
+                </p>
               </select>
             </div>
 
@@ -201,9 +251,15 @@
                 v-model="form.contact_person_name"
                 type="text"
                 placeholder="Full Name"
-                required
+                @input="handleChange('contact_person_name')"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
+              <p
+                v-if="errors.contact_person_name"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.contact_person_name }}
+              </p>
             </div>
 
             <div>
@@ -213,10 +269,16 @@
               <input
                 v-model="form.ngo_head_name"
                 type="text"
+                @input="handleChange('ngo_head_name')"
                 placeholder="Full Name"
-                required
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
+              <p
+                v-if="errors.ngo_head_name"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.ngo_head_name }}
+              </p>
             </div>
 
             <!-- Row 7 -->
@@ -226,11 +288,17 @@
               </label>
               <input
                 v-model="form.ngo_head_email"
+                @input="handleChange('ngo_head_email')"
                 type="email"
                 placeholder="head@example.com"
-                required
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
+              <p
+                v-if="errors.ngo_head_email"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.ngo_head_email }}
+              </p>
             </div>
 
             <div>
@@ -240,12 +308,18 @@
               <input
                 v-model="form.ngo_head_mobile"
                 type="tel"
-                placeholder="+91 XXXXX XXXXXr"
-                required
+                placeholder="+91 XXXXX XXXXX"
+                @input="handleChange('ngo_head_mobile')"
                 maxlength="10"
                 pattern="\d{10}"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
+              <p
+                v-if="errors.ngo_head_mobile"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.ngo_head_mobile }}
+              </p>
             </div>
 
             <!-- Row 8 -->
@@ -256,11 +330,18 @@
               <input
                 v-model="form.ngo_head_office_number"
                 type="tel"
-                placeholder="+91 XXXXX XXXXXr"
+                placeholder="+91 XXXXX XXXXX"
+                @input="handleChange('ngo_head_office_number')"
                 maxlength="10"
                 pattern="\d{10}"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
+              <p
+                v-if="errors.ngo_head_office_number"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.ngo_head_office_number }}
+              </p>
             </div>
 
             <div>
@@ -271,12 +352,18 @@
                 v-model="form.pincode"
                 type="text"
                 placeholder="Enter PIN code"
+                @input="handleChange('pincode')"
                 maxlength="6"
                 pattern="\d{6}"
-                required
                 oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
+              <p
+                v-if="errors.pincode"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.pincode }}
+              </p>
             </div>
 
             <!-- Row 9 (Full Width) -->
@@ -286,11 +373,17 @@
               </label>
               <textarea
                 v-model="form.address"
+                @input="handleChange('address')"
                 rows="3"
                 placeholder="Enter address with landmarks"
-                required
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               ></textarea>
+              <p
+                v-if="errors.address"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.address }}
+              </p>
             </div>
 
             <!-- Row 10 (Full Width) -->
@@ -300,11 +393,17 @@
               </label>
               <textarea
                 v-model="form.description"
+                @input="handleChange('description')"
                 rows="4"
                 placeholder="Describe your NGO's mission and activities"
-                required
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               ></textarea>
+              <p
+                v-if="errors.description"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.description }}
+              </p>
             </div>
 
             <!-- Row 11 -->
@@ -314,12 +413,17 @@
               </label>
               <select
                 v-model="form.registered_with_bigtech"
-                required
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               >
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
               </select>
+              <p
+                v-if="errors.registered_with_bigtech"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.registered_with_bigtech }}
+              </p>
             </div>
 
             <div>
@@ -373,6 +477,12 @@
                   </button>
                 </div>
               </div>
+              <p
+                v-if="errors.ngo_logo"
+                class="text-red-500 text-[10px] pt-1 pl-1"
+              >
+                {{ errors.ngo_logo }}
+              </p>
             </div>
           </div>
 
@@ -426,7 +536,8 @@ const form = ref({
 })
 
 const loading = ref(false)
-const error = ref(null)
+const error = ref('')
+const errors = ref({})
 
 // Add refs for dropdown options
 const countries = ref([])
@@ -561,6 +672,7 @@ const removeLogo = () => {
 const validateForm = () => {
   const requiredFields = [
     'ngo_name',
+    'website',
     'email',
     'official_contact_number',
     'designation',
@@ -573,14 +685,16 @@ const validateForm = () => {
     'ngo_head_email',
     'ngo_head_mobile',
     'area_of_work',
+    'contact_person_name',
     'address',
     'pincode',
   ]
 
   for (const field of requiredFields) {
     if (!form.value[field]) {
-      error.value = `Please fill in ${field.replace(/_/g, ' ')}.`
-      return false
+      errors.value[field] = ` ${field.replace(/_/g, ' ')} is required!`
+    } else {
+      delete errors.value[field]
     }
   }
 
@@ -613,6 +727,14 @@ const validateForm = () => {
   }
 
   return true
+}
+
+const handleChange = (field) => {
+  if (!form.value[field].trim()) {
+    errors.value[field] = ` ${field.replace(/_/g, ' ')} is required!`
+  } else {
+    delete errors.value[field]
+  }
 }
 
 const submitForm = async () => {
