@@ -167,6 +167,97 @@ class Activity:
         except Exception as e:
             frappe.log_error(f"Syntax error in query:\n{sql_query}")
             raise
+
+    def available_commitments_public(filter={}):
+        where_clause = ""
+        order_by_clause = ""
+        user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+        company = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "custom_company")
+        companies = frappe.db.get_list("User Permission", filters={"user": frappe.session.user, "allow": "Company"}, pluck="for_value",limit=100,ignore_permissions=True)
+        if user:
+            where_clause += f" AND act.name NOT IN (SELECT activity FROM `tabVolunteer Activity` WHERE volunteer = '{user}')"
+        if company and len(companies) > 0:
+            where_clause += f" AND (act.company IS NULL OR act.company IN ('','{company}',{', '.join(frappe.db.escape(c) for c in companies)}))"
+        elif len(companies) > 0:
+            where_clause += f" AND (act.company IS NULL OR act.company IN ('',{', '.join(frappe.db.escape(c) for c in companies)}))"
+        elif company:
+            where_clause += f" AND (act.company IS NULL OR act.company = '{company}')"
+        else:
+            where_clause += " AND (act.company IS NULL OR act.company = '')"
+        if isinstance(filter, str):
+            filter = frappe.parse_json(filter)
+        if filter:
+            if "activity_type" in filter and filter["activity_type"]:
+                activity_types = ", ".join(f"'{at}'" for at in filter["activity_type"])
+                where_clause += f" AND act.activity_type IN ({activity_types})"
+
+            if "karma_points" in filter and filter["karma_points"]:
+                if filter["karma_points"] == "Low to High":
+                    order_by_clause = " ORDER BY act.karma_points ASC"
+                elif filter["karma_points"] == "High to Low":
+                    order_by_clause = " ORDER BY act.karma_points DESC"
+
+            if "sdgs" in filter and filter["sdgs"]:
+                sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
+                where_clause += f" AND sd.sdgs IN ({sdgs_values})"
+            
+            if "volunteering_hours" in filter and filter["volunteering_hours"]:
+                if filter["volunteering_hours"] == "Low to High":
+                    order_by_clause = " ORDER BY act.max_hours ASC"
+                elif filter["volunteering_hours"] == "High to Low":
+                    order_by_clause = " ORDER BY act.max_hours DESC"
+        sql_query = f"""
+                    SELECT 
+                        va.name as name,
+                        act.name as activity,
+                        va.duration as duration,
+                        va.com_percent as com_percent,
+                        act.title as title,
+                        act.karma_points as karma_points,
+                        act.start_date as start_date,
+                        act.end_date as end_date,
+                        act.hours as hours,
+                        act.activity_description as activity_description,
+                        act.activity_type as activity_type,
+                        act.activity_image as activity_image,
+                        COALESCE(
+                            JSON_ARRAYAGG(
+                                DISTINCT CASE 
+                                    WHEN sdg.sdg IS NOT NULL 
+                                    THEN JSON_OBJECT(
+                                        'sdgs_name', sdg.sdg,
+                                        'image', sdg.sdg_image
+                                    )
+                                    ELSE NULL
+                                END
+                            ), JSON_ARRAY()
+                        ) AS sdgs,
+                        COALESCE(
+                            JSON_ARRAYAGG(
+                                DISTINCT JSON_OBJECT(
+                                    'name', sva.name,
+                                    'full_name', sva.full_name,
+                                    'email', sva.email,
+                                    'user_image', sva.user_image
+                                )
+                            ), JSON_ARRAY()
+                        ) as volunteers
+                    FROM `tabActivity` as act
+                    LEFT JOIN `tabVolunteer Activity` as va ON va.activity = act.name
+                    LEFT JOIN `tabSVA User` as sva ON sva.name = va.volunteer
+                    LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
+                    LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
+                    WHERE act.end_date >= CURRENT_DATE() AND act.status = 'Published' AND act.is_featured = 'Yes' {where_clause}
+                    GROUP BY act.name
+                    {order_by_clause}
+                """
+
+        try:
+            acts = frappe.db.sql(sql_query, as_dict=True)
+            return acts
+        except Exception as e:
+            frappe.log_error(f"Syntax error in query:\n{sql_query}")
+            raise
     # act_now
     def act_now(activity, volunteer):
         # same activity can't be assigned to the same volunteer
