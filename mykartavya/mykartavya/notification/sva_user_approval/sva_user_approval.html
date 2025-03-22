@@ -30,7 +30,7 @@
         }
 
         h2 {
-            color: #a4a29d;
+            color: #535863;
             font-size: 22px;
             margin: 15px 0;
             font-weight: bold;
@@ -44,10 +44,12 @@
         }
 
         .info {
-            font-size: 16px;
+            font-size: 14px;
             color: #555;
             margin: 16px 0;
-            font-weight: semibold;
+            font-weight:semibold;
+            letter-spacing: 0.5px;  
+    		line-height: 1.5;
         }
 
         .cta-button {
@@ -80,12 +82,11 @@
             <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png"
                 alt="MyKartavya Logo">
         </div>
-
+		<h2> Request Successfully Received</h2>
         <div class="greeting">Hello,<span class="name">{{doc.first_name}}</span></div>
-        <p class="info">You have been registered as a volunteer.</p>
-        <p class="info">Login using</p>
-        <p class="info">Email: <span>{{doc.email}}</span></p>
-        <p class="info">Mobile: <span>{{doc.mobile_number}}</span></p>
+        <p class="info">We have successfully received your request to register as a corporate.
+			Our team is currently reviewing the application and we will onboard you as soon is request is approved
+		</p>
 
         <a href="{{url}}" class="cta-button">Set Password</a>
 
