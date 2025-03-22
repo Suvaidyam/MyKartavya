@@ -52,12 +52,14 @@
                         </Tooltip>
                     </div>
                     <Tooltip text="Review under proccess" :hover-delay="1" :placement="'top'">
-                        <FeatherIcon v-if="item.completion_wf_state=='Submitted'" name="clock" class="size-4 text-yellow-500" />
+                        <FeatherIcon v-if="item.completion_wf_state == 'Submitted'" name="clock"
+                            class="size-4 text-yellow-500" />
                     </Tooltip>
                     <Tooltip text="Completed" :hover-delay="1" :placement="'top'">
-                        <FeatherIcon v-if="item.completion_wf_state=='Approved'" name="check-circle" class="size-4 text-green-500" />
+                        <FeatherIcon v-if="item.completion_wf_state == 'Approved'" name="check-circle"
+                            class="size-4 text-green-500" />
                     </Tooltip>
-                    
+
                 </div>
             </div>
             <div class="mt-3">
@@ -101,9 +103,9 @@
                 </div>
                 <div class="absolute bottom-2  flex items-center gap-2 px-2 overflow-auto">
                     <div v-if="item.sdgs" v-for="el in JSON.parse(item.sdgs)">
-                        <img v-if="el.image" :src="el.image" class="w-8 h-8" />
+                        <img v-if="el?.image" :src="el?.image" class="w-8 h-8" />
                         <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{
-                            el.sdgs_name?.charAt(0) }}</span>
+                            el?.sdgs_name?.charAt(0) }}</span>
                     </div>
                 </div>
             </div>
