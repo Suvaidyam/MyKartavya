@@ -37,9 +37,10 @@
               </label>
               <input
                 v-model="form.ngo_name"
+                name="ngo_name"
                 type="text"
                 placeholder="Enter NGO Name"
-                @input="handleChange('ngo_name')"
+                @input="handle_input_change('ngo_name')"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
               <p
@@ -56,13 +57,14 @@
               </label>
               <input
                 v-model="form.website"
+                name="website"
                 type="url"
-                @input="handleChange('website')"
+                @input="handle_input_change('website')"
                 placeholder="https://example.org"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
               <p
-                v-if="errors.ngo_name"
+                v-if="errors.website"
                 class="text-red-500 text-[10px] pt-1 pl-1"
               >
                 {{ errors.website }}
@@ -76,9 +78,10 @@
               </label>
               <input
                 v-model="form.official_contact_number"
+                name="official_contact_number"
                 type="tel"
                 placeholder="+91 XXXXX XXXXX"
-                @input="handleChange('official_contact_number')"
+                @input="handle_input_change('official_contact_number')"
                 maxlength="10"
                 pattern="\d{10}"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
@@ -97,7 +100,8 @@
               </label>
               <input
                 v-model="form.email"
-                @input="handleChange('email')"
+                name="email"
+                @input="handle_input_change('email')"
                 type="email"
                 placeholder="ngo@example.com"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
@@ -115,7 +119,8 @@
               <input
                 v-model="form.designation"
                 type="text"
-                @input="handleChange('designation')"
+                name="designation"
+                @input="handle_input_change('designation')"
                 placeholder="e.g., Director, Secretary"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
@@ -133,6 +138,7 @@
               </label>
               <select
                 v-model="form.license_type"
+                name="license_type"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               >
                 <option value="FCRA">FCRA</option>
@@ -147,6 +153,7 @@
               </label>
               <select
                 v-model="form.country"
+                name="country"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               >
                 <option value="" disabled>Select Country</option>
@@ -172,6 +179,7 @@
               </label>
               <select
                 v-model="form.state"
+                name="state"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               >
                 <option value="" disabled>Select State</option>
@@ -198,6 +206,7 @@
               </label>
               <select
                 v-model="form.city"
+                name="city"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               >
                 <option value="" disabled>Select City</option>
@@ -223,6 +232,7 @@
               </label>
               <select
                 v-model="form.area_of_work"
+                name="area_of_work"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               >
                 <option value="" disabled>Select Area of Work</option>
@@ -249,9 +259,10 @@
               </label>
               <input
                 v-model="form.contact_person_name"
+                name="contact_person_name"
                 type="text"
                 placeholder="Full Name"
-                @input="handleChange('contact_person_name')"
+                @input="handle_input_change('contact_person_name')"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
               <p
@@ -269,7 +280,8 @@
               <input
                 v-model="form.ngo_head_name"
                 type="text"
-                @input="handleChange('ngo_head_name')"
+                name="ngo_head_name"
+                @input="handle_input_change('ngo_head_name')"
                 placeholder="Full Name"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
@@ -288,7 +300,8 @@
               </label>
               <input
                 v-model="form.ngo_head_email"
-                @input="handleChange('ngo_head_email')"
+                name="ngo_head_email"
+                @input="handle_input_change('ngo_head_email')"
                 type="email"
                 placeholder="head@example.com"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
@@ -307,9 +320,10 @@
               </label>
               <input
                 v-model="form.ngo_head_mobile"
+                name="ngo_head_mobile"
                 type="tel"
                 placeholder="+91 XXXXX XXXXX"
-                @input="handleChange('ngo_head_mobile')"
+                @input="handle_input_change('ngo_head_mobile')"
                 maxlength="10"
                 pattern="\d{10}"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
@@ -329,9 +343,10 @@
               </label>
               <input
                 v-model="form.ngo_head_office_number"
+                name="ngo_head_office_number"
                 type="tel"
                 placeholder="+91 XXXXX XXXXX"
-                @input="handleChange('ngo_head_office_number')"
+                @input="handle_input_change('ngo_head_office_number')"
                 maxlength="10"
                 pattern="\d{10}"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
@@ -350,9 +365,10 @@
               </label>
               <input
                 v-model="form.pincode"
+                name="pincode"
                 type="text"
                 placeholder="Enter PIN code"
-                @input="handleChange('pincode')"
+                @input="handle_input_change('pincode')"
                 maxlength="6"
                 pattern="\d{6}"
                 oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)"
@@ -373,7 +389,8 @@
               </label>
               <textarea
                 v-model="form.address"
-                @input="handleChange('address')"
+                @input="handle_input_change('address')"
+                name="address"
                 rows="3"
                 placeholder="Enter address with landmarks"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
@@ -393,7 +410,8 @@
               </label>
               <textarea
                 v-model="form.description"
-                @input="handleChange('description')"
+                name="description"
+                @input="handle_input_change('description')"
                 rows="4"
                 placeholder="Describe your NGO's mission and activities"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
@@ -413,6 +431,7 @@
               </label>
               <select
                 v-model="form.registered_with_bigtech"
+                name="registered_with_bigtech"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               >
                 <option value="Yes">Yes</option>
@@ -673,13 +692,13 @@ const validateForm = () => {
   const requiredFields = [
     'ngo_name',
     'website',
-    'email',
     'official_contact_number',
+    'email',
     'designation',
     'country',
     'state',
     'city',
-    'description',
+
     'contact_person_name',
     'ngo_head_name',
     'ngo_head_email',
@@ -687,15 +706,41 @@ const validateForm = () => {
     'area_of_work',
     'contact_person_name',
     'address',
+    'description',
     'pincode',
   ]
+  let firstErrorField = ref(null)
 
   for (const field of requiredFields) {
     if (!form.value[field]) {
       errors.value[field] = ` ${field.replace(/_/g, ' ')} is required!`
+      if (firstErrorField.value === null) {
+        firstErrorField.value = field
+      }
     } else {
       delete errors.value[field]
     }
+  }
+  if (firstErrorField.value) {
+    const errorElement = document.querySelector(
+      `[name="${firstErrorField.value}"]`
+    )
+
+    if (errorElement) {
+      const elementPosition =
+        errorElement.getBoundingClientRect().top + window.scrollY
+
+      window.scrollTo({
+        top: elementPosition - 200, // Field ko upar se adjust karein
+        behavior: 'smooth',
+      })
+
+      setTimeout(() => {
+        errorElement.focus() // Field me cursor laane ke liye thoda delay de
+      }, 200)
+    }
+
+    return false
   }
 
   // Validate email format
@@ -729,7 +774,7 @@ const validateForm = () => {
   return true
 }
 
-const handleChange = (field) => {
+const handle_input_change = (field) => {
   if (!form.value[field].trim()) {
     errors.value[field] = ` ${field.replace(/_/g, ' ')} is required!`
   } else {

@@ -1,5 +1,5 @@
 <template>
-    <aside :class="[route.fullPath=='/kindness-volunteering'?'pb-[92px]':'pb-[62px]']"
+    <aside :class="[route.fullPath == '/kindness-volunteering' ? 'pb-[92px]' : 'pb-[62px]']"
         class="w-[270px] min-w-[270px] fixed bg-white overflow-auto h-screen hidden lg:block border-r border-gray-200">
         <div class="bg-white relative px-4">
             <div class="flex sticky top-0 bg-white z-20 justify-between items-center py-3">
@@ -18,8 +18,10 @@
                             <input v-model="allChecked" type="checkbox"
                                 class="rounded-sm h-4 w-4 min-w-4 max-w-4 min-h-4 max-h-4 focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="all-sdgs">
-                            <label class="text-[12px] cursor-pointer font-normal flex gap-1 items-center" for="all-sdgs">
-                                <img src="../assets/sdgall.png" :alt="'el'" class="w-[21px] h-[21px] min-w-[21px] min-h-[21px] rounded-full object-cover" />
+                            <label class="text-[12px] cursor-pointer font-normal flex gap-1 items-center"
+                                for="all-sdgs">
+                                <img src="../assets/sdgall.png" :alt="'el'"
+                                    class="w-[21px] h-[21px] min-w-[21px] min-h-[21px] rounded-full object-cover" />
                                 All
                             </label>
                         </div>
@@ -27,12 +29,12 @@
                         <div v-for="el in item.options" class="flex px-2 items-center gap-2 text-sm">
                             <input v-model="store.filters[item.key]" :value="el.name" :type="item.type" :name="item.key"
                                 :class="[item.type == 'checkbox' ? 'rounded-sm' : 'rounded-full', 'focus:ring-[#E86C13] h-4 w-4 min-w-4 max-w-4 min-h-4 max-h-4 focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary']"
-                                :id="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">
+                                :id="`${item.key}-${el?.name?.toLowerCase().replace(' ', '-')}`">
                             <label class="text-[12px] font-normal cursor-pointer flex items-center gap-1"
-                                :for="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">
-                                <img v-if="el.sdg_image && item.key=='sdgs'" :src="el.sdg_image" :alt="el"
+                                :for="`${item.key}-${el?.name?.toLowerCase().replace(' ', '-')}`">
+                                <img v-if="el.sdg_image && item.key == 'sdgs'" :src="el.sdg_image" :alt="el"
                                     class="w-[21px] h-[21px] min-w-[21px] rounded-full object-cover bg-white" />
-                                <div v-if="!el.sdg_image && item.key=='sdgs'"
+                                <div v-if="!el.sdg_image && item.key == 'sdgs'"
                                     class="w-[21px] h-[21px] min-w-[21px] text-[11px] font-normal rounded-full bg-gray-100 flex items-center justify-center">
                                     {{ el?.name?.charAt(0) }}
                                 </div>
@@ -105,7 +107,7 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/vue';
 import { ref, computed, watch, onMounted, inject } from 'vue';
 import { FeatherIcon } from 'frappe-ui';
 import FilterLoader from './FilterLoader.vue';
-import {useRoute} from 'vue-router';
+import { useRoute } from 'vue-router';
 
 const call = inject('call')
 const loader = ref(false);
@@ -151,8 +153,8 @@ const fetchSDGs = async () => {
     } catch (err) {
         loader.value = false;
         console.error('Error fetching SDG data:', err);
-    }finally{
-        setTimeout(() => { loader.value = false;}, 500);
+    } finally {
+        setTimeout(() => { loader.value = false; }, 500);
     }
 };
 
@@ -166,13 +168,13 @@ const allChecked = computed({
     set: (value) => {
         const sdgFilter = filter_by.value.find(f => f.key === 'sdgs');
         store.filters.sdgs = value && sdgFilter ? [...sdgFilter.options.map(e => { return e.name })] : [];
-    } 
+    }
 });
 const allType = computed({
     get: () => {
         const activityType = filter_by.value.find(f => f.key === 'activity_type');
         return activityType && store.filters.activity_type.length === activityType.options.length;
-    }, 
+    },
     set: (value) => {
         const activityType = filter_by.value.find(f => f.key === 'activity_type');
         store.filters.activity_type = value && activityType ? [...activityType.options.map(e => { return e.name })] : [];
