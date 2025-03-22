@@ -227,36 +227,9 @@
  {
   "docstatus": 0,
   "doctype": "Builder Client Script",
-  "modified": "2025-03-22 11:03:39.299127",
-  "name": "JavaScript-7d086",
-  "public_url": "/files/page_scripts/JavaScript-7d086-d65abb3afc.js?v=a1fa1040b6",
-  "script": "// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
-  "script_type": "JavaScript"
- },
- {
-  "docstatus": 0,
-  "doctype": "Builder Client Script",
-  "modified": "2025-03-22 11:04:27.741207",
-  "name": "CSS-271e9",
-  "public_url": "/files/page_styles/CSS-271e9-11da37747b.css?v=d365f4f7b5",
-  "script": "/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
-  "script_type": "CSS"
- },
- {
-  "docstatus": 0,
-  "doctype": "Builder Client Script",
-  "modified": "2025-03-22 11:08:28.661246",
-  "name": "JavaScript-f70e5",
-  "public_url": "/files/page_scripts/JavaScript-f70e5-ed668b2c92.js?v=77ba2ce2c0",
-  "script": "// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
-  "script_type": "JavaScript"
- },
- {
-  "docstatus": 0,
-  "doctype": "Builder Client Script",
-  "modified": "2025-03-22 11:09:20.228884",
-  "name": "CSS-60cd0",
-  "public_url": "/files/page_styles/CSS-60cd0-1c771b847f.css?v=73b65f8365",
+  "modified": "2025-03-22 11:10:24.487365",
+  "name": "CSS-8e424",
+  "public_url": "/files/page_styles/CSS-8e424-740eb65340.css?v=99cdd2c719",
   "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
   "script_type": "CSS"
  },
@@ -272,20 +245,11 @@
  {
   "docstatus": 0,
   "doctype": "Builder Client Script",
-  "modified": "2025-03-22 11:10:24.487365",
-  "name": "CSS-8e424",
-  "public_url": "/files/page_styles/CSS-8e424-740eb65340.css?v=99cdd2c719",
-  "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
+  "modified": "2025-03-22 11:04:27.741207",
+  "name": "CSS-271e9",
+  "public_url": "/files/page_styles/CSS-271e9-11da37747b.css?v=d365f4f7b5",
+  "script": "/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
   "script_type": "CSS"
- },
- {
-  "docstatus": 0,
-  "doctype": "Builder Client Script",
-  "modified": "2025-03-22 11:12:09.892998",
-  "name": "JavaScript-bd897",
-  "public_url": "/files/page_scripts/JavaScript-bd897-718371058a.js?v=f839bb0342",
-  "script": "\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
-  "script_type": "JavaScript"
  },
  {
   "docstatus": 0,
@@ -299,10 +263,19 @@
  {
   "docstatus": 0,
   "doctype": "Builder Client Script",
-  "modified": "2025-03-22 11:17:43.040974",
-  "name": "JavaScript-c084c",
-  "public_url": "/files/page_scripts/JavaScript-c084c-3bcb2570cd.js?v=0df229cf42",
-  "script": "// Write your script here\n// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
+  "modified": "2025-03-22 11:03:39.299127",
+  "name": "JavaScript-7d086",
+  "public_url": "/files/page_scripts/JavaScript-7d086-d65abb3afc.js?v=a1fa1040b6",
+  "script": "// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
+  "script_type": "JavaScript"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Client Script",
+  "modified": "2025-03-22 11:12:09.892998",
+  "name": "JavaScript-bd897",
+  "public_url": "/files/page_scripts/JavaScript-bd897-718371058a.js?v=f839bb0342",
+  "script": "\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
   "script_type": "JavaScript"
  },
  {
@@ -313,6 +286,15 @@
   "public_url": "/files/page_styles/CSS-e01ec-ba2a90bbe7.css?v=0d78ded8dc",
   "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
   "script_type": "CSS"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Client Script",
+  "modified": "2025-03-22 11:17:43.040974",
+  "name": "JavaScript-c084c",
+  "public_url": "/files/page_scripts/JavaScript-c084c-3bcb2570cd.js?v=0df229cf42",
+  "script": "// Write your script here\n// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
+  "script_type": "JavaScript"
  },
  {
   "docstatus": 0,
@@ -348,6 +330,24 @@
   "name": "Navbar",
   "public_url": "/files/page_scripts/JavaScript-6a4b5-2eb4e21113.js?v=332a1ff5ed",
   "script": "// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
+  "script_type": "JavaScript"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Client Script",
+  "modified": "2025-03-22 11:09:20.228884",
+  "name": "CSS-60cd0",
+  "public_url": "/files/page_styles/CSS-60cd0-1c771b847f.css?v=73b65f8365",
+  "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
+  "script_type": "CSS"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Client Script",
+  "modified": "2025-03-22 11:08:28.661246",
+  "name": "JavaScript-f70e5",
+  "public_url": "/files/page_scripts/JavaScript-f70e5-ed668b2c92.js?v=77ba2ce2c0",
+  "script": "// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
   "script_type": "JavaScript"
  }
 ]
