@@ -181,11 +181,11 @@ def create_sva_user(first_name, email, mobile_number, role_profile, doc, custom_
                 "module": "NGOs",
                 "value": doc.name,
             })
-        sva_user.save()
+        sva_user.save(ignore_permissions=True)
         
         if sva_user.custom_volunteer_type == "NGO Member":
             frappe.db.set_value("SVA User", sva_user.name, "workflow_state", "Approved",update_modified=False)
-        frappe.db.commit()
+            frappe.db.commit()
         
         frappe.msgprint(
             f"{role_profile} SVA User created successfully!\nEmail: {email}\nRole Profile: {role_profile_name}",
