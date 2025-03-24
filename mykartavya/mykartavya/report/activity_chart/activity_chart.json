@@ -1,5 +1,6 @@
 {
  "add_total_row": 0,
+ "add_translate_data": 0,
  "columns": [
   {
    "fieldname": "fieds",
@@ -23,7 +24,7 @@
  "is_standard": "Yes",
  "json": "{}",
  "letterhead": null,
- "modified": "2025-03-12 12:34:12.825235",
+ "modified": "2025-03-24 15:04:28.907324",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity chart",
@@ -45,9 +46,6 @@
   },
   {
    "role": "NGO Admin"
-  },
-  {
-   "role": "Volunteer Incharge"
   },
   {
    "role": "Volunteer"

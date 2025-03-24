@@ -127,7 +127,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-17 15:56:14.553383",
+ "modified": "2025-03-24 15:13:05.556816",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",
@@ -147,22 +147,22 @@
    "write": 1
   },
   {
-   "create": 1,
    "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
+   "read": 1,
    "report": 1,
    "role": "MyKartvya Admin",
    "share": 1,
    "write": 1
   },
   {
-   "create": 1,
    "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
+   "read": 1,
    "report": 1,
    "role": "Company Admin",
    "share": 1,
@@ -175,19 +175,18 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Volunteer Incharge",
+   "role": "Volunteer",
    "share": 1,
    "write": 1
   },
   {
    "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Volunteer",
+   "role": "NGO Admin",
    "share": 1,
    "write": 1
   }
