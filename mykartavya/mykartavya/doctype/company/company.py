@@ -182,6 +182,13 @@ def insert_sva_user(doc):
                 "value": doc.name,
             })
             sva_user.save(ignore_permissions=True)
+        if sva_user.role_profile == "COmpany Admin":    
+            sva_user.save(ignore_permissions=True)
+            sva_user.append("table_pdop", {
+                "module": "SVA User",
+                "value": sva_user.name,
+            })
+            sva_user.save(ignore_permissions=True)
 
         if sva_user.custom_volunteer_type == "Employee":
             frappe.db.set_value("SVA User", sva_user.name, "workflow_state", "Approved",update_modified=False)
@@ -225,6 +232,12 @@ def insert_sva_user(doc):
                 incharge_user.append("table_pdop", {
                     "module": "Company",
                     "value": doc.name,
+                })
+                incharge_user.save(ignore_permissions=True)
+            if sva_user.role_profile == "COmpany Admin":     
+                incharge_user.append("table_pdop", {
+                "module": "SVA User",
+                "value": sva_user.name,
                 })
                 incharge_user.save(ignore_permissions=True)
 
