@@ -227,10 +227,19 @@
  {
   "docstatus": 0,
   "doctype": "Builder Client Script",
-  "modified": "2025-03-22 11:10:24.487365",
+  "modified": "2025-03-22 15:09:00.970470",
+  "name": "CSS-3c101",
+  "public_url": "/files/page_styles/CSS-3c101-5743e1f5fe.css?v=873b22e472",
+  "script": "        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\ntop: 75px;\n    right: 16px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
+  "script_type": "CSS"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Client Script",
+  "modified": "2025-03-22 14:55:01.926748",
   "name": "CSS-8e424",
-  "public_url": "/files/page_styles/CSS-8e424-740eb65340.css?v=99cdd2c719",
-  "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
+  "public_url": "/files/page_styles/CSS-8e424-740eb65340.css?v=73d5ecc1ba",
+  "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\ntop: 60px;\n    right: 16px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
   "script_type": "CSS"
  },
  {
@@ -245,29 +254,20 @@
  {
   "docstatus": 0,
   "doctype": "Builder Client Script",
+  "modified": "2025-03-22 14:55:44.233483",
+  "name": "CSS-54872",
+  "public_url": "/files/page_styles/CSS-54872-b6d2406956.css?v=d680241570",
+  "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\ntop: 60px;\n    right: 16px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
+  "script_type": "CSS"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Client Script",
   "modified": "2025-03-22 11:04:27.741207",
   "name": "CSS-271e9",
   "public_url": "/files/page_styles/CSS-271e9-11da37747b.css?v=d365f4f7b5",
   "script": "/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
   "script_type": "CSS"
- },
- {
-  "docstatus": 0,
-  "doctype": "Builder Client Script",
-  "modified": "2025-03-22 11:13:22.580223",
-  "name": "CSS-54872",
-  "public_url": "/files/page_styles/CSS-54872-b6d2406956.css?v=92d4cf3748",
-  "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
-  "script_type": "CSS"
- },
- {
-  "docstatus": 0,
-  "doctype": "Builder Client Script",
-  "modified": "2025-03-22 11:03:39.299127",
-  "name": "JavaScript-7d086",
-  "public_url": "/files/page_scripts/JavaScript-7d086-d65abb3afc.js?v=a1fa1040b6",
-  "script": "// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
-  "script_type": "JavaScript"
  },
  {
   "docstatus": 0,
@@ -281,10 +281,19 @@
  {
   "docstatus": 0,
   "doctype": "Builder Client Script",
-  "modified": "2025-03-22 11:18:47.896512",
+  "modified": "2025-03-22 11:03:39.299127",
+  "name": "JavaScript-7d086",
+  "public_url": "/files/page_scripts/JavaScript-7d086-d65abb3afc.js?v=a1fa1040b6",
+  "script": "// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
+  "script_type": "JavaScript"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Client Script",
+  "modified": "2025-03-22 14:55:59.445689",
   "name": "CSS-e01ec",
-  "public_url": "/files/page_styles/CSS-e01ec-ba2a90bbe7.css?v=0d78ded8dc",
-  "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
+  "public_url": "/files/page_styles/CSS-e01ec-ba2a90bbe7.css?v=8839c10b27",
+  "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\ntop: 60px;\n    right: 16px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
   "script_type": "CSS"
  },
  {
@@ -294,6 +303,24 @@
   "name": "JavaScript-c084c",
   "public_url": "/files/page_scripts/JavaScript-c084c-3bcb2570cd.js?v=0df229cf42",
   "script": "// Write your script here\n// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
+  "script_type": "JavaScript"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Client Script",
+  "modified": "2025-03-22 14:54:20.113538",
+  "name": "CSS-60cd0",
+  "public_url": "/files/page_styles/CSS-60cd0-1c771b847f.css?v=9bc2964680",
+  "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\ntop: 60px;\n    right: 16px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
+  "script_type": "CSS"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Client Script",
+  "modified": "2025-03-22 11:08:28.661246",
+  "name": "JavaScript-f70e5",
+  "public_url": "/files/page_scripts/JavaScript-f70e5-ed668b2c92.js?v=77ba2ce2c0",
+  "script": "// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
   "script_type": "JavaScript"
  },
  {
@@ -317,10 +344,10 @@
  {
   "docstatus": 0,
   "doctype": "Builder Client Script",
-  "modified": "2025-03-20 15:09:40.563182",
+  "modified": "2025-03-22 15:02:22.454201",
   "name": "CSS-bccf0",
-  "public_url": "/files/page_styles/CSS-bccf0-e083307af8.css?v=e64af38921",
-  "script": "/* Write your CSS here */\n * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n\n\n.slider-container {\n            width: 100%;\n            max-width: 1920px;\n            margin: auto;\n            overflow: hidden;\n            position: relative;\n        }\n\n        .slider {\n            display: flex;\n            transition: transform 0.5s ease-in-out;\n        }\n\n        .slider img {\n            width: 100%;\n            height: 400px;\n            /*border-radius: 10px;*/\n        }\n\n        .prev,\n        .next {\n            position: absolute;\n            top: 50%;\n            transform: translateY(-50%);\n            /*background-color: rgba(0, 0, 0, 0.5);*/\n            color: white;\n            border: none;\n            padding: 10px;\n            cursor: pointer;\n        }\n\n        .prev {\n            left: 10px;\n        }\n\n        .next {\n            right: 10px;\n        }\n        \n        /*.foots{*/\n        /*     border-top: 1px solid white;*/\n        /*}*/\n        \n        .cardsbor{\n             border-right: 1px solid #D9D9D9;\n       \n       \n       \n      }\n        \n  \n        \n        ::-webkit-scrollbar {\n    width: 4px;\n    /* Thin width */\n    height: 4px;\n}\n \n::-webkit-scrollbar-thumb {\n    background: #b0b3b0;\n    /* Scrollbar color */\n    border-radius: 8px;\n}\n \n::-webkit-scrollbar-track {\n    background: #f0f0f0;\n    /* Track color */\n}\n\n.cardss{\n     width: 100%;\n    max-width: 1920px;\n}\n\n\n\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}\n\n/*.dropdown li {*/\n/*  padding: 8px;*/\n/*  cursor: pointer;*/\n/*}*/\n\n/*.dropdown li:hover {*/\n/*  background: #ddd;*/\n/*}*/\n",
+  "public_url": "/files/page_styles/CSS-bccf0-e083307af8.css?v=c5e493fe74",
+  "script": "/* Write your CSS here */\n * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n\n\n.slider-container {\n            width: 100%;\n            max-width: 1920px;\n            margin: auto;\n            overflow: hidden;\n            position: relative;\n        }\n\n        .slider {\n            display: flex;\n            transition: transform 0.5s ease-in-out;\n        }\n\n        .slider img {\n            width: 100%;\n            height: 400px;\n            /*border-radius: 10px;*/\n        }\n\n        .prev,\n        .next {\n            position: absolute;\n            top: 50%;\n            transform: translateY(-50%);\n            /*background-color: rgba(0, 0, 0, 0.5);*/\n            color: white;\n            border: none;\n            padding: 10px;\n            cursor: pointer;\n        }\n\n        .prev {\n            left: 10px;\n        }\n\n        .next {\n            right: 10px;\n        }\n        \n        /*.foots{*/\n        /*     border-top: 1px solid white;*/\n        /*}*/\n        \n        .cardsbor{\n             border-right: 1px solid #D9D9D9;\n       \n       \n       \n      }\n        \n  \n        \n        ::-webkit-scrollbar {\n    width: 4px;\n    /* Thin width */\n    height: 4px;\n}\n \n::-webkit-scrollbar-thumb {\n    background: #b0b3b0;\n    /* Scrollbar color */\n    border-radius: 8px;\n}\n \n::-webkit-scrollbar-track {\n    background: #f0f0f0;\n    /* Track color */\n}\n\n.cardss{\n     width: 100%;\n    max-width: 1920px;\n}\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}\n\n\n",
   "script_type": "CSS"
  },
  {
@@ -330,24 +357,6 @@
   "name": "Navbar",
   "public_url": "/files/page_scripts/JavaScript-6a4b5-2eb4e21113.js?v=332a1ff5ed",
   "script": "// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
-  "script_type": "JavaScript"
- },
- {
-  "docstatus": 0,
-  "doctype": "Builder Client Script",
-  "modified": "2025-03-22 11:09:20.228884",
-  "name": "CSS-60cd0",
-  "public_url": "/files/page_styles/CSS-60cd0-1c771b847f.css?v=73b65f8365",
-  "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
-  "script_type": "CSS"
- },
- {
-  "docstatus": 0,
-  "doctype": "Builder Client Script",
-  "modified": "2025-03-22 11:08:28.661246",
-  "name": "JavaScript-f70e5",
-  "public_url": "/files/page_scripts/JavaScript-f70e5-ed668b2c92.js?v=77ba2ce2c0",
-  "script": "// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
   "script_type": "JavaScript"
  }
 ]
