@@ -29,7 +29,6 @@ class Activity(Document):
         elif self.status == "Ongoing" and end_date and today_date == end_date:
             self.status = "Ended"
 
-
     def validate_dates(self):
         # Validate application deadline
         if get_datetime(self.application_deadline) <= get_datetime(self.publish_date):
