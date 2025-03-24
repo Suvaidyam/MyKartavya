@@ -308,28 +308,38 @@ const nextStep = async (index) => {
     return
   }
 
-  if (index === 0) {
-    let res = await call('mykartavya.controllers.api.act_now', {
-      activity: route.params.name,
-      volunteer: auth.cookie.user_id
-    })
-    if (res.status == 200) {
-      props.activity.workflow_state = 'Applied'
-      steps.value[index].completed = true
-      currentStep.value++
-    } else if (res.status == 201) {
-      store.req_for_approavl = true
-    } else {
-      return
+  try {
+    if (index === 0) {
+      let res = await call('mykartavya.controllers.api.act_now', {
+        activity: route.params.name,
+        volunteer: auth.cookie.user_id
+      })
+
+      if (res.status == 200) {
+        props.activity.workflow_state = 'Applied'
+        steps.value[index].completed = true
+        currentStep.value++
+      } else if (res.status == 201) {
+        store.req_for_approval = true
+      } else if (res.status == 400) {
+        toast.error(res.msg);
+      } else {
+        return
+      }
     }
-  }
-  if (index === 3) {
-    show_Feedback.value = true
-  }
-  if (index === 2) {
-    activityReportPopup.value = true
-  }
+
+    if (index === 3) {
+      show_Feedback.value = true
+    }
+
+    if (index === 2) {
+      activityReportPopup.value = true
+    }
+  }catch (error) {
+  toast.error(error)
 }
+}
+
 const req_field = () => {
   let hasError = false;
   activity_err.value = { time: false, progress: false, image: false };
