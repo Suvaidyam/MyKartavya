@@ -4,7 +4,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 11:03:15.000790",
   "name": "map-CSS",
-  "public_url": "/files/page_styles/CSS-156f4-00b17af4d1.css?v=6c7631ce38",
+  "public_url": "/files/page_styles/CSS-156f4-00b17af4d1.css?v=b987b34489",
   "script": "/* Write your CSS here */\n<style>\n        * {\n            margin: 0;\n            padding: 0;\n        }\n        .hoverinfo {\n            min-width: 200px;\n            background: #fff;\n            box-shadow: 0 0 5px #ccc;\n            border-radius: 6px !important;\n            padding: 10px;\n           \n        }\n    </style>\n",
   "script_type": "CSS"
  },
@@ -13,7 +13,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 11:15:54.449472",
   "name": "CSS-c1e12",
-  "public_url": "/files/page_styles/CSS-c1e12-041ed28915.css?v=b38bbc256b",
+  "public_url": "/files/page_styles/CSS-c1e12-041ed28915.css?v=b73a1f8e03",
   "script": "/* Write your CSS here */\np{\n    color:red;\n}",
   "script_type": "CSS"
  },
@@ -22,7 +22,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 11:23:56.392043",
   "name": "JavaScript-684ca",
-  "public_url": "/files/page_scripts/JavaScript-684ca-b27f005cb8.js?v=dc3c9c67ba",
+  "public_url": "/files/page_scripts/JavaScript-684ca-b27f005cb8.js?v=4fad272c1e",
   "script": "// Write your script here\nlet panData = [\n            {\n                name:'Bihar',\n                seats: 40\n            },\n            {\n                name:'Uttar Pradesh',\n                seats: 80\n            },\n            {\n                name:'Madhya Pradesh',\n                seats: 29\n            },\n            {\n                name:'Rajasthan',\n                seats: 25\n            },\n            {\n                name:'Gujarat',\n                seats: 26\n            },\n            {\n                name:'Maharashtra',\n                seats: 48\n            },\n            {\n                name:'Karnataka',\n                seats: 28\n            },\n            {\n                name:'Andhra Pradesh',\n                seats: 25\n            },\n            {\n                name:'Telangana',\n                seats: 17\n            },\n            {\n                name:'Kerala',\n                seats: 20\n            },\n            {\n                name:'Tamil Nadu',\n                seats: 39\n            },\n            {\n                name:'West Bengal',\n                seats: 42\n            },\n            {\n                name:'Odisha',\n                seats: 21\n            },\n            {\n                name:'Chhattisgarh',\n                seats: 11\n            },\n            {\n                name:'Jharkhand',\n                seats: 14\n            },\n            {\n                name:'Assam',\n                seats: 14\n            },\n            {\n                name:'Punjab',\n                seats: 13\n            },\n            {\n                name:'Haryana',\n                seats: 10\n            },\n            {\n                name:'Uttarakhand',\n                seats: 5\n            },\n            {\n                name:'Himachal Pradesh',\n                seats: 4\n            },\n            {\n                name:'Jammu and Kashmir',\n                seats: 6\n            },\n            {\n                name:'Goa',\n                seats: 2\n            },\n            {\n                name:'Manipur',\n                seats: 2\n            },\n            {\n                name:'Tripura',\n                seats: 2\n            },\n            {\n                name:'Meghalaya',\n                seats: 2\n            },\n            {\n                name:'Nagaland',\n                seats: 1\n            },\n            {\n                name:'Arunachal Pradesh',\n                seats: 2\n            },\n            {\n                name:'Mizoram',\n                seats: 1\n            },\n            {\n                name:'Sikkim',\n                seats: 1\n            },\n            {\n                name:'Delhi',\n                seats: 7\n            },\n            {\n                name:'Puducherry',\n                seats: 1\n            },\n            {\n                name:'Chandigarh',\n                seats: 1\n            },\n        ]\n        $( function(){\n            var election = new Datamap({\n                scope: 'india',\n                element: document.getElementById('map'),\n                setProjection: function (element) {\n                    var projection = d3.geo.mercator()\n                        .center([78.9629, 23.5937]) // always in [East Latitude, North Longitude]\n                        .scale(1000);\n                    var path = d3.geo.path().projection(projection);\n                    return { path: path, projection: projection };\n                },\n                geographyConfig: {\n                    dataUrl: 'https://rawgit.com/Anujarya300/bubble_maps/master/data/geography-data/india.topo.json',\n                    popupTemplate: function(geography, data) {\n                        return `<div class=\"hoverinfo\">\n                                   <p style=\" text-align: center;\"> <strong > ${geography.properties.name}</strong></p>\n                                    <br> Total Seats: ${panData.find(x => x.name === geography.properties.name).seats}\n                                </div>`;\n                    }\n                }\n            });\n        });\n    ",
   "script_type": "JavaScript"
  },
@@ -31,7 +31,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-15 15:17:53.998054",
   "name": "CSS-d9f94",
-  "public_url": "/files/page_styles/CSS-d9f94-be1e3603a1.css?v=e28848ec3c",
+  "public_url": "/files/page_styles/CSS-d9f94-be1e3603a1.css?v=08fed19c99",
   "script": "/* Write your CSS here */\n/** {*/\n/*            margin: 0;*/\n/*            padding: 0;*/\n/*            box-sizing: border-box;*/\n/*        }*/\n\n/*        .slider-container {*/\n/*            width: 80%;*/\n/*            max-width: 1400px;*/\n/*            margin: auto;*/\n/*            overflow: hidden;*/\n/*            position: relative;*/\n/*        }*/\n\n/*        .slider {*/\n/*            display: flex;*/\n/*            transition: transform 0.5s ease-in-out;*/\n/*        }*/\n\n/*        .slider img {*/\n/*            width: 100%;*/\n/*            border-radius: 10px;*/\n/*        }*/\n\n/*        .prev,*/\n/*        .next {*/\n/*            position: absolute;*/\n/*            top: 50%;*/\n/*            transform: translateY(-50%);*/\n/*            background-color: rgba(0, 0, 0, 0.5);*/\n/*            color: white;*/\n/*            border: none;*/\n/*            padding: 10px;*/\n/*            cursor: pointer;*/\n/*        }*/\n\n/*        .prev {*/\n/*            left: 10px;*/\n/*        }*/\n\n/*        .next {*/\n/*            right: 10px;*/\n/*        }*/\n        \n        \n body {\n            font-family: Arial, sans-serif;\n            text-align: center;\n            background-color: #f8f8f8;\n        }\n\n        .slider-container {\n            display: flex;\n            align-items: center;\n            justify-content: center;\n            gap: 20px;\n            margin: 20px auto;\n            max-width: 1400px;\n        }\n\n        .testimonial-container {\n            position: relative;\n            width: 1308px;\n            /* 3 cards of 436px each */\n            overflow: hidden;\n            padding: 20px 0;\n        }\n\n        .testimonial-wrapper {\n            display: flex;\n            transition: transform 0.5s ease-in-out;\n            gap: 10px;\n        }\n\n        .testimonial {\n            flex: 0 0 436px;\n            background: white;\n            padding: 20px;\n            border-radius: 10px;\n            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);\n            text-align: center;\n        }\n\n        /*.testimonial img {*/\n        /*    width: 80px;*/\n        /*    height: 80px;*/\n        /*    border-radius: 50%;*/\n        /*    margin-bottom: 10px;*/\n        /*}*/\n\n        /*.testimonial p {*/\n        /*    font-size: 16px;*/\n        /*}*/\n\n        /*.testimonial h3 {*/\n        /*    color: #e74c3c;*/\n        /*}*/\n\n        .nav-button {\n            cursor: pointer;\n            font-size: 24px;\n            background: rgba(0, 0, 0, 0.2);\n            color: white;\n            padding: 15px;\n            border-radius: 50%;\n            border: none;\n        }\n        \n        ",
   "script_type": "CSS"
  },
@@ -40,7 +40,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-15 14:44:58.028814",
   "name": "JavaScript-a0fc1",
-  "public_url": "/files/page_scripts/JavaScript-a0fc1-8fe32930d6.js?v=3aa924c57c",
+  "public_url": "/files/page_scripts/JavaScript-a0fc1-8fe32930d6.js?v=257d0ef0e6",
   "script": "// // Write your script here\n//         let index = 0;\n//         const slides = document.querySelectorAll(\".slider img\");\n\n//         function showSlide(i) {\n//             if (i >= slides.length) index = 0;\n//             if (i < 0) index = slides.length - 1;\n//             document.querySelector(\".slider\").style.transform = `translateX(${-index * 100}%)`;\n//         }\n//         function nextSlide() {\n//             index++;\n//             showSlide(index);\n//         }\n//         function prevSlide() {\n//             index--;\n//             showSlide(index);\n//         }\n        \n        \n        \nlet index = 0;\n        const wrapper = document.querySelector(\".testimonial-wrapper\");\n        const totalSlides = document.querySelectorAll(\".testimonial\").length;\n        const cardWidth = 436;\n        const visibleSlides = 3;\n        const maxIndex = totalSlides - visibleSlides;\n\n        function changeTestimonial(direction) {\n            index += direction;\n\n            if (index < 0) {\n                index = maxIndex;\n            } else if (index > maxIndex) {\n                index = 0;\n            }\n\n            wrapper.style.transform = `translateX(-${index * (cardWidth + 10)}px)`;\n        }",
   "script_type": "JavaScript"
  },
@@ -49,7 +49,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-27 11:38:16.521158",
   "name": "JavaScript-31de1",
-  "public_url": "/files/page_scripts/JavaScript-31de1-98137011f6.js?v=eac8ec7a25",
+  "public_url": "/files/page_scripts/JavaScript-31de1-98137011f6.js?v=b28f7472a3",
   "script": " frappe.make_request({\n    method: \"POST\",\n    url: \"http://mkty.localhost:8080/api/method/mykartavya.controllers.api.available_commitments\",\n    callback: function(response) {\n        if (response.message) {\n            data.posts = response.message;\n            console.log(\"Fetched Data:\", response.message);\n        }\n    }\n});\nconsole.log(\"test\")\n",
   "script_type": "JavaScript"
  },
@@ -58,7 +58,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 11:18:10.045915",
   "name": "Indianmap-js",
-  "public_url": "/files/page_scripts/JavaScript-1fd55-6b13f6ba37.js?v=43a5c931d3",
+  "public_url": "/files/page_scripts/JavaScript-1fd55-6b13f6ba37.js?v=471764438e",
   "script": "\n <script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js\" integrity=\"sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=\" crossorigin=\"anonymous\"></script>\n    <script src=\"http://d3js.org/d3.v3.min.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.js\" integrity=\"sha256-OztcN49BsVSoupBpIZaUwczM6+GLsXuA8IJF+W9SsBU=\" crossorigin=\"anonymous\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/datamaps/0.5.9/datamaps.ind.js\" integrity=\"sha256-dIqkWXhup1J7R2OiniHh0/nH6hw0ELzNSKfBkO1WHlQ=\" crossorigin=\"anonymous\"></script>\n    <script>\n        let panData = [\n            {\n                name:'Bihar',\n                seats: 40\n            },\n            {\n                name:'Uttar Pradesh',\n                seats: 80\n            },\n            {\n                name:'Madhya Pradesh',\n                seats: 29\n            },\n            {\n                name:'Rajasthan',\n                seats: 25\n            },\n            {\n                name:'Gujarat',\n                seats: 26\n            },\n            {\n                name:'Maharashtra',\n                seats: 48\n            },\n            {\n                name:'Karnataka',\n                seats: 28\n            },\n            {\n                name:'Andhra Pradesh',\n                seats: 25\n            },\n            {\n                name:'Telangana',\n                seats: 17\n            },\n            {\n                name:'Kerala',\n                seats: 20\n            },\n            {\n                name:'Tamil Nadu',\n                seats: 39\n            },\n            {\n                name:'West Bengal',\n                seats: 42\n            },\n            {\n                name:'Odisha',\n                seats: 21\n            },\n            {\n                name:'Chhattisgarh',\n                seats: 11\n            },\n            {\n                name:'Jharkhand',\n                seats: 14\n            },\n            {\n                name:'Assam',\n                seats: 14\n            },\n            {\n                name:'Punjab',\n                seats: 13\n            },\n            {\n                name:'Haryana',\n                seats: 10\n            },\n            {\n                name:'Uttarakhand',\n                seats: 5\n            },\n            {\n                name:'Himachal Pradesh',\n                seats: 4\n            },\n            {\n                name:'Jammu and Kashmir',\n                seats: 6\n            },\n            {\n                name:'Goa',\n                seats: 2\n            },\n            {\n                name:'Manipur',\n                seats: 2\n            },\n            {\n                name:'Tripura',\n                seats: 2\n            },\n            {\n                name:'Meghalaya',\n                seats: 2\n            },\n            {\n                name:'Nagaland',\n                seats: 1\n            },\n            {\n                name:'Arunachal Pradesh',\n                seats: 2\n            },\n            {\n                name:'Mizoram',\n                seats: 1\n            },\n            {\n                name:'Sikkim',\n                seats: 1\n            },\n            {\n                name:'Delhi',\n                seats: 7\n            },\n            {\n                name:'Puducherry',\n                seats: 1\n            },\n            {\n                name:'Chandigarh',\n                seats: 1\n            },\n        ]\n        $( function(){\n            var election = new Datamap({\n                scope: 'india',\n                element: document.getElementById('map'),\n                setProjection: function (element) {\n                    var projection = d3.geo.mercator()\n                        .center([78.9629, 23.5937]) // always in [East Latitude, North Longitude]\n                        .scale(1000);\n                    var path = d3.geo.path().projection(projection);\n                    return { path: path, projection: projection };\n                },\n                geographyConfig: {\n                    dataUrl: 'https://rawgit.com/Anujarya300/bubble_maps/master/data/geography-data/india.topo.json',\n                    popupTemplate: function(geography, data) {\n                        return `<div class=\"hoverinfo\">\n                                   <p style=\" text-align: center;\"> <strong > ${geography.properties.name}</strong></p>\n                                    <br> Total Seats: ${panData.find(x => x.name === geography.properties.name).seats}\n                                </div>`;\n                    }\n                }\n            });\n        });\n    </script>",
   "script_type": "JavaScript"
  },
@@ -67,7 +67,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 11:46:04.731381",
   "name": "CSS-0a070",
-  "public_url": "/files/page_styles/CSS-0a070-0438ac878c.css?v=d8926d4370",
+  "public_url": "/files/page_styles/CSS-0a070-0438ac878c.css?v=95872beffd",
   "script": "/* Write your CSS here */\n",
   "script_type": "CSS"
  },
@@ -76,7 +76,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 12:01:46.226503",
   "name": "JavaScript-daf68",
-  "public_url": "/files/page_scripts/JavaScript-daf68-f0db6896a6.js?v=89a183f9dc",
+  "public_url": "/files/page_scripts/JavaScript-daf68-f0db6896a6.js?v=1a2b9f26a3",
   "script": "// Write your script here\n// <script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js\" integrity=\"sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=\" crossorigin=\"anonymous\"></script>\n//     <script src=\"http://d3js.org/d3.v3.min.js\"></script>\n//     <script src=\"https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.js\" integrity=\"sha256-OztcN49BsVSoupBpIZaUwczM6+GLsXuA8IJF+W9SsBU=\" crossorigin=\"anonymous\"></script>\n//     <script src=\"https://cdnjs.cloudflare.com/ajax/libs/datamaps/0.5.9/datamaps.ind.js\" integrity=\"sha256-dIqkWXhup1J7R2OiniHh0/nH6hw0ELzNSKfBkO1WHlQ=\" crossorigin=\"anonymous\"></script>\n    <script>\n        let panData = [\n            {\n                name:'Bihar',\n                seats: 40\n            },\n            {\n                name:'Uttar Pradesh',\n                seats: 80\n            },\n            {\n                name:'Madhya Pradesh',\n                seats: 29\n            },\n            {\n                name:'Rajasthan',\n                seats: 25\n            },\n            {\n                name:'Gujarat',\n                seats: 26\n            },\n            {\n                name:'Maharashtra',\n                seats: 48\n            },\n            {\n                name:'Karnataka',\n                seats: 28\n            },\n            {\n                name:'Andhra Pradesh',\n                seats: 25\n            },\n            {\n                name:'Telangana',\n                seats: 17\n            },\n            {\n                name:'Kerala',\n                seats: 20\n            },\n            {\n                name:'Tamil Nadu',\n                seats: 39\n            },\n            {\n                name:'West Bengal',\n                seats: 42\n            },\n            {\n                name:'Odisha',\n                seats: 21\n            },\n            {\n                name:'Chhattisgarh',\n                seats: 11\n            },\n            {\n                name:'Jharkhand',\n                seats: 14\n            },\n            {\n                name:'Assam',\n                seats: 14\n            },\n            {\n                name:'Punjab',\n                seats: 13\n            },\n            {\n                name:'Haryana',\n                seats: 10\n            },\n            {\n                name:'Uttarakhand',\n                seats: 5\n            },\n            {\n                name:'Himachal Pradesh',\n                seats: 4\n            },\n            {\n                name:'Jammu and Kashmir',\n                seats: 6\n            },\n            {\n                name:'Goa',\n                seats: 2\n            },\n            {\n                name:'Manipur',\n                seats: 2\n            },\n            {\n                name:'Tripura',\n                seats: 2\n            },\n            {\n                name:'Meghalaya',\n                seats: 2\n            },\n            {\n                name:'Nagaland',\n                seats: 1\n            },\n            {\n                name:'Arunachal Pradesh',\n                seats: 2\n            },\n            {\n                name:'Mizoram',\n                seats: 1\n            },\n            {\n                name:'Sikkim',\n                seats: 1\n            },\n            {\n                name:'Delhi',\n                seats: 7\n            },\n            {\n                name:'Puducherry',\n                seats: 1\n            },\n            {\n                name:'Chandigarh',\n                seats: 1\n            },\n        ]\n        $( function(){\n            var election = new Datamap({\n                scope: 'india',\n                element: document.getElementById('map'),\n                setProjection: function (element) {\n                    var projection = d3.geo.mercator()\n                        .center([78.9629, 23.5937]) // always in [East Latitude, North Longitude]\n                        .scale(1000);\n                    var path = d3.geo.path().projection(projection);\n                    return { path: path, projection: projection };\n                },\n                geographyConfig: {\n                    dataUrl: 'https://rawgit.com/Anujarya300/bubble_maps/master/data/geography-data/india.topo.json',\n                    popupTemplate: function(geography, data) {\n                        return `<div class=\"hoverinfo\">\n                                   <p style=\" text-align: center;\"> <strong > ${geography.properties.name}</strong></p>\n                                    <br> Total Seats: ${panData.find(x => x.name === geography.properties.name).seats}\n                                </div>`;\n                    }\n                }\n            });\n        });",
   "script_type": "JavaScript"
  },
@@ -85,7 +85,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 15:56:27.235741",
   "name": "JavaScript-87c87",
-  "public_url": "/files/page_scripts/JavaScript-87c87-3553a356ba.js?v=f1872bda6b",
+  "public_url": "/files/page_scripts/JavaScript-87c87-3553a356ba.js?v=565be67b6f",
   "script": "frappe.ready(function() {\n    frappe.require(\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js\" integrity=\"sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=\", function() {\n        console.log(\"Leaflet.js loaded!\");\n    });\n});\n\n\n    \n        let panData = [\n            {\n                name:'Bihar',\n                seats: 40\n            },\n            {\n                name:'Uttar Pradesh',\n                seats: 80\n            },\n            {\n                name:'Madhya Pradesh',\n                seats: 29\n            },\n            {\n                name:'Rajasthan',\n                seats: 25\n            },\n            {\n                name:'Gujarat',\n                seats: 26\n            },\n            {\n                name:'Maharashtra',\n                seats: 48\n            },\n            {\n                name:'Karnataka',\n                seats: 28\n            },\n            {\n                name:'Andhra Pradesh',\n                seats: 25\n            },\n            {\n                name:'Telangana',\n                seats: 17\n            },\n            {\n                name:'Kerala',\n                seats: 20\n            },\n            {\n                name:'Tamil Nadu',\n                seats: 39\n            },\n            {\n                name:'West Bengal',\n                seats: 42\n            },\n            {\n                name:'Odisha',\n                seats: 21\n            },\n            {\n                name:'Chhattisgarh',\n                seats: 11\n            },\n            {\n                name:'Jharkhand',\n                seats: 14\n            },\n            {\n                name:'Assam',\n                seats: 14\n            },\n            {\n                name:'Punjab',\n                seats: 13\n            },\n            {\n                name:'Haryana',\n                seats: 10\n            },\n            {\n                name:'Uttarakhand',\n                seats: 5\n            },\n            {\n                name:'Himachal Pradesh',\n                seats: 4\n            },\n            {\n                name:'Jammu and Kashmir',\n                seats: 6\n            },\n            {\n                name:'Goa',\n                seats: 2\n            },\n            {\n                name:'Manipur',\n                seats: 2\n            },\n            {\n                name:'Tripura',\n                seats: 2\n            },\n            {\n                name:'Meghalaya',\n                seats: 2\n            },\n            {\n                name:'Nagaland',\n                seats: 1\n            },\n            {\n                name:'Arunachal Pradesh',\n                seats: 2\n            },\n            {\n                name:'Mizoram',\n                seats: 1\n            },\n            {\n                name:'Sikkim',\n                seats: 1\n            },\n            {\n                name:'Delhi',\n                seats: 7\n            },\n            {\n                name:'Puducherry',\n                seats: 1\n            },\n            {\n                name:'Chandigarh',\n                seats: 1\n            },\n        ]\n        $( function(){\n            var election = new Datamap({\n                scope: 'india',\n                element: document.getElementById('map'),\n                setProjection: function (element) {\n                    var projection = d3.geo.mercator()\n                        .center([78.9629, 23.5937]) // always in [East Latitude, North Longitude]\n                        .scale(1000);\n                    var path = d3.geo.path().projection(projection);\n                    return { path: path, projection: projection };\n                },\n                geographyConfig: {\n                    dataUrl: 'https://rawgit.com/Anujarya300/bubble_maps/master/data/geography-data/india.topo.json',\n                    popupTemplate: function(geography, data) {\n                        return `<div class=\"hoverinfo\">\n                                   <p style=\" text-align: center;\"> <strong > ${geography.properties.name}</strong></p>\n                                    <br> Total Seats: ${panData.find(x => x.name === geography.properties.name).seats}\n                                </div>`;\n                    }\n                }\n            });\n        });\n   \n  ",
   "script_type": "JavaScript"
  },
@@ -94,7 +94,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 12:00:24.680174",
   "name": "CSS-a7308",
-  "public_url": "/files/page_styles/CSS-a7308-7f07511e60.css?v=4509b5f4b0",
+  "public_url": "/files/page_styles/CSS-a7308-7f07511e60.css?v=1cfae4c616",
   "script": "/* Write your CSS here */\n",
   "script_type": "CSS"
  },
@@ -103,7 +103,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 11:45:48.732024",
   "name": "CSS-e1f35",
-  "public_url": "/files/page_styles/CSS-e1f35-e12b88d028.css?v=06be93a67b",
+  "public_url": "/files/page_styles/CSS-e1f35-e12b88d028.css?v=604a58c2b8",
   "script": "/* Write your CSS here */\n",
   "script_type": "CSS"
  },
@@ -112,7 +112,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 16:09:44.496494",
   "name": "JavaScript-aed0f",
-  "public_url": "/files/page_scripts/JavaScript-aed0f-5a6438bda0.js?v=f3d5b03dcf",
+  "public_url": "/files/page_scripts/JavaScript-aed0f-5a6438bda0.js?v=5da58d4bf3",
   "script": "// Write your script here\n\n\n\n    frappe.require([\n        \"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js\",\n        \"http://d3js.org/d3.v3.min.js\",\n        \"https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.js\",\n        \"https://cdnjs.cloudflare.com/ajax/libs/datamaps/0.5.9/datamaps.ind.js\"\n    ], function() {\n        console.log(\"All scripts loaded!\");\n\n        let panData = [\n            { name: 'Bihar', seats: 40 },\n            { name: 'Uttar Pradesh', seats: 80 },\n            { name: 'Madhya Pradesh', seats: 29 },\n            { name: 'Rajasthan', seats: 25 },\n            { name: 'Gujarat', seats: 26 },\n            { name: 'Maharashtra', seats: 48 },\n            { name: 'Karnataka', seats: 28 },\n            { name: 'Andhra Pradesh', seats: 25 },\n            { name: 'Telangana', seats: 17 },\n            { name: 'Kerala', seats: 20 },\n            { name: 'Tamil Nadu', seats: 39 },\n            { name: 'West Bengal', seats: 42 },\n            { name: 'Odisha', seats: 21 },\n            { name: 'Chhattisgarh', seats: 11 },\n            { name: 'Jharkhand', seats: 14 },\n            { name: 'Assam', seats: 14 },\n            { name: 'Punjab', seats: 13 },\n            { name: 'Haryana', seats: 10 },\n            { name: 'Uttarakhand', seats: 5 },\n            { name: 'Himachal Pradesh', seats: 4 },\n            { name: 'Jammu and Kashmir', seats: 6 },\n            { name: 'Goa', seats: 2 },\n            { name: 'Manipur', seats: 2 },\n            { name: 'Tripura', seats: 2 },\n            { name: 'Meghalaya', seats: 2 },\n            { name: 'Nagaland', seats: 1 },\n            { name: 'Arunachal Pradesh', seats: 2 },\n            { name: 'Mizoram', seats: 1 },\n            { name: 'Sikkim', seats: 1 },\n            { name: 'Delhi', seats: 7 },\n            { name: 'Puducherry', seats: 1 },\n            { name: 'Chandigarh', seats: 1 }\n        ];\n\n        $(function() {\n            var election = new Datamap({\n                scope: 'india',\n                element: document.getElementById('map'),\n                setProjection: function(element) {\n                    var projection = d3.geo.mercator()\n                        .center([78.9629, 23.5937]) // Center of India\n                        .scale(1000);\n                    var path = d3.geo.path().projection(projection);\n                    return { path: path, projection: projection };\n                },\n                geographyConfig: {\n                    dataUrl: 'https://rawgit.com/Anujarya300/bubble_maps/master/data/geography-data/india.topo.json',\n                    popupTemplate: function(geography, data) {\n                        let stateData = panData.find(x => x.name === geography.properties.name);\n                        return `<div class=\"hoverinfo\">\n                                    <p style=\"text-align: center;\"><strong>${geography.properties.name}</strong></p>\n                                    <br> Total Seats: ${stateData ? stateData.seats : \"N/A\"}\n                                </div>`;\n                    }\n                }\n            });\n        });\n    });\n\n<style>\n    .hoverinfo {\n        min-width: 200px;\n        background: #fff;\n        box-shadow: 0 0 5px #ccc;\n        border-radius: 6px !important;\n        padding: 10px;\n    }\n</style>",
   "script_type": "JavaScript"
  },
@@ -121,7 +121,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 11:38:57.600083",
   "name": "JavaScript-1b8bb",
-  "public_url": "/files/page_scripts/JavaScript-1b8bb-9b479e54de.js?v=acc737a388",
+  "public_url": "/files/page_scripts/JavaScript-1b8bb-9b479e54de.js?v=819d92c734",
   "script": "\nlet panData = [\n            {\n                name:'Bihar',\n                seats: 40\n            },\n            {\n                name:'Uttar Pradesh',\n                seats: 80\n            },\n            {\n                name:'Madhya Pradesh',\n                seats: 29\n            },\n            {\n                name:'Rajasthan',\n                seats: 25\n            },\n            {\n                name:'Gujarat',\n                seats: 26\n            },\n            {\n                name:'Maharashtra',\n                seats: 48\n            },\n            {\n                name:'Karnataka',\n                seats: 28\n            },\n            {\n                name:'Andhra Pradesh',\n                seats: 25\n            },\n            {\n                name:'Telangana',\n                seats: 17\n            },\n            {\n                name:'Kerala',\n                seats: 20\n            },\n            {\n                name:'Tamil Nadu',\n                seats: 39\n            },\n            {\n                name:'West Bengal',\n                seats: 42\n            },\n            {\n                name:'Odisha',\n                seats: 21\n            },\n            {\n                name:'Chhattisgarh',\n                seats: 11\n            },\n            {\n                name:'Jharkhand',\n                seats: 14\n            },\n            {\n                name:'Assam',\n                seats: 14\n            },\n            {\n                name:'Punjab',\n                seats: 13\n            },\n            {\n                name:'Haryana',\n                seats: 10\n            },\n            {\n                name:'Uttarakhand',\n                seats: 5\n            },\n            {\n                name:'Himachal Pradesh',\n                seats: 4\n            },\n            {\n                name:'Jammu and Kashmir',\n                seats: 6\n            },\n            {\n                name:'Goa',\n                seats: 2\n            },\n            {\n                name:'Manipur',\n                seats: 2\n            },\n            {\n                name:'Tripura',\n                seats: 2\n            },\n            {\n                name:'Meghalaya',\n                seats: 2\n            },\n            {\n                name:'Nagaland',\n                seats: 1\n            },\n            {\n                name:'Arunachal Pradesh',\n                seats: 2\n            },\n            {\n                name:'Mizoram',\n                seats: 1\n            },\n            {\n                name:'Sikkim',\n                seats: 1\n            },\n            {\n                name:'Delhi',\n                seats: 7\n            },\n            {\n                name:'Puducherry',\n                seats: 1\n            },\n            {\n                name:'Chandigarh',\n                seats: 1\n            },\n        ]\n        $( function(){\n            var election = new Datamap({\n                scope: 'india',\n                element: document.getElementById('map'),\n                setProjection: function (element) {\n                    var projection = d3.geo.mercator()\n                        .center([78.9629, 23.5937]) // always in [East Latitude, North Longitude]\n                        .scale(1000);\n                    var path = d3.geo.path().projection(projection);\n                    return { path: path, projection: projection };\n                },\n                geographyConfig: {\n                    dataUrl: 'https://rawgit.com/Anujarya300/bubble_maps/master/data/geography-data/india.topo.json',\n                    popupTemplate: function(geography, data) {\n                        return `<div class=\"hoverinfo\">\n                                   <p style=\" text-align: center;\"> <strong > ${geography.properties.name}</strong></p>\n                                    <br> Total Seats: ${panData.find(x => x.name === geography.properties.name).seats}\n                                </div>`;\n                    }\n                }\n            });\n        });\n    ",
   "script_type": "JavaScript"
  },
@@ -130,7 +130,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 16:31:04.568593",
   "name": "CSS-600b6",
-  "public_url": "/files/page_styles/CSS-600b6-af4a84c3a6.css?v=f62fef662d",
+  "public_url": "/files/page_styles/CSS-600b6-af4a84c3a6.css?v=9a7aab00a9",
   "script": "/* Write your CSS here */\n* {\n            margin: 0;\n            padding: 0;\n        }\n\n        .hoverinfo {\n            min-width: 200px;\n            background: #fff;\n            box-shadow: 0 0 5px #ccc;\n            border-radius: 6px !important;\n            padding: 10px;\n\n        }",
   "script_type": "CSS"
  },
@@ -139,7 +139,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 11:44:15.793838",
   "name": "JavaScript-677f7",
-  "public_url": "/files/page_scripts/JavaScript-677f7-62fead84f5.js?v=7fa357ff80",
+  "public_url": "/files/page_scripts/JavaScript-677f7-62fead84f5.js?v=bd28a077cf",
   "script": "// Write your script here\n",
   "script_type": "JavaScript"
  },
@@ -148,7 +148,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 11:47:35.980692",
   "name": "CSS-e48a6",
-  "public_url": "/files/page_styles/CSS-e48a6-fe50f2c04f.css?v=d2fb5870f4",
+  "public_url": "/files/page_styles/CSS-e48a6-fe50f2c04f.css?v=155d93e564",
   "script": "/* Write your CSS here */\n \n        * {\n            margin: 0;\n            padding: 0;\n        }\n        .hoverinfo {\n            min-width: 200px;\n            background: #fff;\n            box-shadow: 0 0 5px #ccc;\n            border-radius: 6px !important;\n            padding: 10px;\n           \n        }\n   ",
   "script_type": "CSS"
  },
@@ -157,7 +157,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 16:26:54.676477",
   "name": "JavaScript-4f9d0",
-  "public_url": "/files/page_scripts/JavaScript-4f9d0-b9cb9513e7.js?v=1afe46dba9",
+  "public_url": "/files/page_scripts/JavaScript-4f9d0-b9cb9513e7.js?v=ae4ffb74a8",
   "script": "frappe.ready(function () {\n    function loadScript({ src, integrity, crossorigin }, callback) {\n        let script = document.createElement(\"script\");\n        script.src = src;\n        if (integrity) script.integrity = integrity;\n        if (crossorigin) script.crossOrigin = crossorigin;\n        script.onload = callback;\n        document.head.appendChild(script);\n    }\n\n    // List of scripts with all attributes\n    const scripts = [\n        {\n            src: \"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js\",\n            integrity: \"sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=\",\n            crossorigin: \"anonymous\"\n        },\n        {\n            src: \"http://d3js.org/d3.v3.min.js\",\n            integrity: \"\",\n            crossorigin: \"\"\n        },\n        {\n            src: \"https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.js\",\n            integrity: \"sha256-OztcN49BsVSoupBpIZaUwczM6+GLsXuA8IJF+W9SsBU=\",\n            crossorigin: \"anonymous\"\n        },\n        {\n            src: \"https://cdnjs.cloudflare.com/ajax/libs/datamaps/0.5.9/datamaps.ind.js\",\n            integrity: \"sha256-dIqkWXhup1J7R2OiniHh0/nH6hw0ELzNSKfBkO1WHlQ=\",\n            crossorigin: \"anonymous\"\n        }\n    ];\n\n    function loadScriptsSequentially(index = 0) {\n        if (index >= scripts.length) {\n            console.log(\"All scripts loaded successfully!\");\n            return;\n        }\n        loadScript(scripts[index], () => loadScriptsSequentially(index + 1));\n    }\n\n    // Start loading scripts\n    loadScriptsSequentially();\n});\n\n\nlet panData = [\n            {\n                name:'Bihar',\n                seats: 40\n            },\n            {\n                name:'Uttar Pradesh',\n                seats: 80\n            },\n            {\n                name:'Madhya Pradesh',\n                seats: 29\n            },\n            {\n                name:'Rajasthan',\n                seats: 25\n            },\n            {\n                name:'Gujarat',\n                seats: 26\n            },\n            {\n                name:'Maharashtra',\n                seats: 48\n            },\n            {\n                name:'Karnataka',\n                seats: 28\n            },\n            {\n                name:'Andhra Pradesh',\n                seats: 25\n            },\n            {\n                name:'Telangana',\n                seats: 17\n            },\n            {\n                name:'Kerala',\n                seats: 20\n            },\n            {\n                name:'Tamil Nadu',\n                seats: 39\n            },\n            {\n                name:'West Bengal',\n                seats: 42\n            },\n            {\n                name:'Odisha',\n                seats: 21\n            },\n            {\n                name:'Chhattisgarh',\n                seats: 11\n            },\n            {\n                name:'Jharkhand',\n                seats: 14\n            },\n            {\n                name:'Assam',\n                seats: 14\n            },\n            {\n                name:'Punjab',\n                seats: 13\n            },\n            {\n                name:'Haryana',\n                seats: 10\n            },\n            {\n                name:'Uttarakhand',\n                seats: 5\n            },\n            {\n                name:'Himachal Pradesh',\n                seats: 4\n            },\n            {\n                name:'Jammu and Kashmir',\n                seats: 6\n            },\n            {\n                name:'Goa',\n                seats: 2\n            },\n            {\n                name:'Manipur',\n                seats: 2\n            },\n            {\n                name:'Tripura',\n                seats: 2\n            },\n            {\n                name:'Meghalaya',\n                seats: 2\n            },\n            {\n                name:'Nagaland',\n                seats: 1\n            },\n            {\n                name:'Arunachal Pradesh',\n                seats: 2\n            },\n            {\n                name:'Mizoram',\n                seats: 1\n            },\n            {\n                name:'Sikkim',\n                seats: 1\n            },\n            {\n                name:'Delhi',\n                seats: 7\n            },\n            {\n                name:'Puducherry',\n                seats: 1\n            },\n            {\n                name:'Chandigarh',\n                seats: 1\n            },\n        ]\n",
   "script_type": "JavaScript"
  },
@@ -166,7 +166,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 11:41:38.139186",
   "name": "CSS-09c65",
-  "public_url": "/files/page_styles/CSS-09c65-9ec9d8b058.css?v=151f7f1308",
+  "public_url": "/files/page_styles/CSS-09c65-9ec9d8b058.css?v=1dce751dc8",
   "script": "/* Write your CSS here */\np{\n    color:red;\n}",
   "script_type": "CSS"
  },
@@ -175,7 +175,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-02-28 11:44:31.244694",
   "name": "JavaScript-01ab2",
-  "public_url": "/files/page_scripts/JavaScript-01ab2-aa7a291cf1.js?v=4ca9ab0c78",
+  "public_url": "/files/page_scripts/JavaScript-01ab2-aa7a291cf1.js?v=0a46e003b7",
   "script": "\nlet panData = [\n            {\n                name:'Bihar',\n                seats: 40\n            },\n            {\n                name:'Uttar Pradesh',\n                seats: 80\n            },\n            {\n                name:'Madhya Pradesh',\n                seats: 29\n            },\n            {\n                name:'Rajasthan',\n                seats: 25\n            },\n            {\n                name:'Gujarat',\n                seats: 26\n            },\n            {\n                name:'Maharashtra',\n                seats: 48\n            },\n            {\n                name:'Karnataka',\n                seats: 28\n            },\n            {\n                name:'Andhra Pradesh',\n                seats: 25\n            },\n            {\n                name:'Telangana',\n                seats: 17\n            },\n            {\n                name:'Kerala',\n                seats: 20\n            },\n            {\n                name:'Tamil Nadu',\n                seats: 39\n            },\n            {\n                name:'West Bengal',\n                seats: 42\n            },\n            {\n                name:'Odisha',\n                seats: 21\n            },\n            {\n                name:'Chhattisgarh',\n                seats: 11\n            },\n            {\n                name:'Jharkhand',\n                seats: 14\n            },\n            {\n                name:'Assam',\n                seats: 14\n            },\n            {\n                name:'Punjab',\n                seats: 13\n            },\n            {\n                name:'Haryana',\n                seats: 10\n            },\n            {\n                name:'Uttarakhand',\n                seats: 5\n            },\n            {\n                name:'Himachal Pradesh',\n                seats: 4\n            },\n            {\n                name:'Jammu and Kashmir',\n                seats: 6\n            },\n            {\n                name:'Goa',\n                seats: 2\n            },\n            {\n                name:'Manipur',\n                seats: 2\n            },\n            {\n                name:'Tripura',\n                seats: 2\n            },\n            {\n                name:'Meghalaya',\n                seats: 2\n            },\n            {\n                name:'Nagaland',\n                seats: 1\n            },\n            {\n                name:'Arunachal Pradesh',\n                seats: 2\n            },\n            {\n                name:'Mizoram',\n                seats: 1\n            },\n            {\n                name:'Sikkim',\n                seats: 1\n            },\n            {\n                name:'Delhi',\n                seats: 7\n            },\n            {\n                name:'Puducherry',\n                seats: 1\n            },\n            {\n                name:'Chandigarh',\n                seats: 1\n            },\n        ]\n        $( function(){\n            var election = new Datamap({\n                scope: 'india',\n                element: document.getElementById('map'),\n                setProjection: function (element) {\n                    var projection = d3.geo.mercator()\n                        .center([78.9629, 23.5937]) // always in [East Latitude, North Longitude]\n                        .scale(1000);\n                    var path = d3.geo.path().projection(projection);\n                    return { path: path, projection: projection };\n                },\n                geographyConfig: {\n                    dataUrl: 'https://rawgit.com/Anujarya300/bubble_maps/master/data/geography-data/india.topo.json',\n                    popupTemplate: function(geography, data) {\n                        return `<div class=\"hoverinfo\">\n                                   <p style=\" text-align: center;\"> <strong > ${geography.properties.name}</strong></p>\n                                    <br> Total Seats: ${panData.find(x => x.name === geography.properties.name).seats}\n                                </div>`;\n                    }\n                }\n            });\n        });\n    ",
   "script_type": "JavaScript"
  },
@@ -184,7 +184,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-01 17:49:49.113956",
   "name": "JavaScript-31de1-29d1c",
-  "public_url": "/files/page_scripts/JavaScript-31de1-98137011f6.js?v=3d854e5e81",
+  "public_url": "/files/page_scripts/JavaScript-31de1-98137011f6.js?v=c63e0919cc",
   "script": " frappe.make_request({\n    method: \"POST\",\n    url: \"http://mkty.localhost:8080/api/method/mykartavya.controllers.api.available_commitments\",\n    callback: function(response) {\n        if (response.message) {\n            data.posts = response.message;\n            console.log(\"Fetched Data:\", response.message);\n        }\n    }\n});\nconsole.log(\"test\")\n",
   "script_type": "JavaScript"
  },
@@ -193,7 +193,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-17 12:31:18.969630",
   "name": "CSS-30319",
-  "public_url": "/files/page_styles/CSS-30319-307ccefbc7.css?v=c97f0e4eaa",
+  "public_url": "/files/page_styles/CSS-30319-307ccefbc7.css?v=44c53ebc70",
   "script": "/* Write your CSS here */\n * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n\n\n.slider-container {\n            width: 100%;\n            max-width: 1920px;\n            margin: auto;\n            overflow: hidden;\n            position: relative;\n        }\n\n        .slider {\n            display: flex;\n            transition: transform 0.5s ease-in-out;\n        }\n\n        .slider img {\n            width: 100%;\n            height: 400px;\n            /*border-radius: 10px;*/\n        }\n\n        .prev,\n        .next {\n            position: absolute;\n            top: 50%;\n            transform: translateY(-50%);\n            /*background-color: rgba(0, 0, 0, 0.5);*/\n            color: white;\n            border: none;\n            padding: 10px;\n            cursor: pointer;\n        }\n\n        .prev {\n            left: 10px;\n        }\n\n        .next {\n            right: 10px;\n       ",
   "script_type": "CSS"
  },
@@ -202,7 +202,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-17 12:29:53.174009",
   "name": "JavaScript-f94ed",
-  "public_url": "/files/page_scripts/JavaScript-f94ed-72b18e0aed.js?v=de1c54d4d3",
+  "public_url": "/files/page_scripts/JavaScript-f94ed-72b18e0aed.js?v=16a4878556",
   "script": "// Write your script here\nlet index = 0;\n        const slides = document.querySelectorAll(\".slider img\");\n\n        function showSlide(i) {\n            if (i >= slides.length) index = 0;\n            if (i < 0) index = slides.length - 1;\n            document.querySelector(\".slider\").style.transform = `translateX(${-index * 100}%)`;\n        }\n        function nextSlide() {\n            index++;\n            showSlide(index);\n        }\n        function prevSlide() {\n            index--;\n            showSlide(index);\n      ",
   "script_type": "JavaScript"
  },
@@ -211,7 +211,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-18 13:54:24.043017",
   "name": "Newslist",
-  "public_url": "/files/page_scripts/JavaScript-8847f-231861cb1a.js?v=1db81a7f0f",
+  "public_url": "/files/page_scripts/JavaScript-8847f-231861cb1a.js?v=6f5fc8a3d3",
   "script": "document.querySelector('[name=\"subscription-form\"]').addEventListener('submit', function(event) {\n    event.preventDefault();\n\n    const formData = new FormData(this);\n    const data = Object.fromEntries(formData.entries());\n\n    // Log the data being sent\n    console.log('Data being sent:', {\n        doctype: 'Newsletter',\n        email: data.email,\n        sender_email: 'your_sender_email@example.com', // Replace with actual sender email\n        email_group: 'Mykartavya', // Replace with actual email group\n        subject: 'Welcome to our Newsletter!' // Replace with actual subject\n    });\n\n    // Create new Newsletter entry using fetch API\n    fetch('/api/method/frappe.client.insert', {\n        method: 'POST',\n        headers: {\n            'Content-Type': 'application/json',\n            'X-Frappe-CSRF-Token': getCookie('csrf_token') // Required for Frappe API\n        },\n        body: JSON.stringify({\n            doc: {\n                doctype: 'Newsletter',\n                email: data.email,\n                sender_email: 'your_sender_email@example.com', // Replace with actual sender email\n                email_group: 'Mykartavya', // Replace with actual email group\n                subject: 'Welcome to our Newsletter!' // Replace with actual subject\n            }\n        })\n    })\n    .then(response => response.json())\n    .then(data => {\n        console.log('Response from server:', data);\n        if (data.message) {\n            // Success message\n            alert('Thank you for subscribing!');\n            // Optional: Clear the form\n            event.target.reset();\n        } else {\n            // Handle errors returned from the server\n            alert('Failed to subscribe. Please check the details and try again.');\n            console.error('Error:', data);\n        }\n    })\n    .catch(error => {\n        // Error handling\n        alert('Something went wrong. Please try again.');\n        console.error('Error:', error);\n    });\n});\n\n// Helper function to get CSRF token\nfunction getCookie(name) {\n    let cookieValue = null;\n    if (document.cookie && document.cookie !== '') {\n        const cookies = document.cookie.split(';');\n        for (let i = 0; i < cookies.length; i++) {\n            const cookie = cookies[i].trim();\n            if (cookie.substring(0, name.length + 1) === (name + '=')) {\n                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));\n                break;\n            }\n        }\n    }\n    return cookieValue;\n}",
   "script_type": "JavaScript"
  },
@@ -220,7 +220,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-20 10:55:21.414648",
   "name": "Navbardropdown",
-  "public_url": "/files/page_scripts/JavaScript-4ef1d-6af263e34d.js?v=21edd78017",
+  "public_url": "/files/page_scripts/JavaScript-4ef1d-6af263e34d.js?v=d4b1e7cbb6",
   "script": "window.addEventListener(\"DOMContentLoaded\", () => {\n    const navItems = document.querySelectorAll(\".nav-item\");\n    navItems.forEach((item) => {\n        item.addEventListener(\"click\", () => {\n            const dropdowns = item.querySelectorAll(\".foss-dropdown\");\n            const siblingDropdown = item.nextElementSibling;\n            dropdowns.forEach((dropdown) => {\n                if (dropdown !== siblingDropdown) {\n                    dropdown.style.display = \"none\";\n                } else {\n                    // toggle dropdown\n                    if (siblingDropdown.style.display === \"none\" || siblingDropdown.style.display === \"\") {\n                        siblingDropdown.style.display = \"flex\";\n                    } else {\n                        siblingDropdown.style.display = \"none\";\n                    }\n                }\n            });\n        });\n    });\n});\n\n",
   "script_type": "JavaScript"
  },
@@ -229,7 +229,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-22 15:09:00.970470",
   "name": "CSS-3c101",
-  "public_url": "/files/page_styles/CSS-3c101-5743e1f5fe.css?v=873b22e472",
+  "public_url": "/files/page_styles/CSS-3c101-5743e1f5fe.css?v=80db6d9230",
   "script": "        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\ntop: 75px;\n    right: 16px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
   "script_type": "CSS"
  },
@@ -238,7 +238,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-22 14:55:01.926748",
   "name": "CSS-8e424",
-  "public_url": "/files/page_styles/CSS-8e424-740eb65340.css?v=73d5ecc1ba",
+  "public_url": "/files/page_styles/CSS-8e424-740eb65340.css?v=80b0937236",
   "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\ntop: 60px;\n    right: 16px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
   "script_type": "CSS"
  },
@@ -247,7 +247,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-22 11:11:03.404719",
   "name": "JavaScript-bb6c7",
-  "public_url": "/files/page_scripts/JavaScript-bb6c7-5187cb0821.js?v=7ec0f1a8ea",
+  "public_url": "/files/page_scripts/JavaScript-bb6c7-5187cb0821.js?v=11b5391c54",
   "script": "\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
   "script_type": "JavaScript"
  },
@@ -256,7 +256,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-22 14:55:44.233483",
   "name": "CSS-54872",
-  "public_url": "/files/page_styles/CSS-54872-b6d2406956.css?v=d680241570",
+  "public_url": "/files/page_styles/CSS-54872-b6d2406956.css?v=28eb4462a1",
   "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\ntop: 60px;\n    right: 16px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
   "script_type": "CSS"
  },
@@ -265,7 +265,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-22 11:04:27.741207",
   "name": "CSS-271e9",
-  "public_url": "/files/page_styles/CSS-271e9-11da37747b.css?v=d365f4f7b5",
+  "public_url": "/files/page_styles/CSS-271e9-11da37747b.css?v=91ab35bc6f",
   "script": "/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
   "script_type": "CSS"
  },
@@ -274,7 +274,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-22 11:12:09.892998",
   "name": "JavaScript-bd897",
-  "public_url": "/files/page_scripts/JavaScript-bd897-718371058a.js?v=f839bb0342",
+  "public_url": "/files/page_scripts/JavaScript-bd897-718371058a.js?v=24f77a387d",
   "script": "\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
   "script_type": "JavaScript"
  },
@@ -283,7 +283,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-22 11:03:39.299127",
   "name": "JavaScript-7d086",
-  "public_url": "/files/page_scripts/JavaScript-7d086-d65abb3afc.js?v=a1fa1040b6",
+  "public_url": "/files/page_scripts/JavaScript-7d086-d65abb3afc.js?v=86ed250e29",
   "script": "// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
   "script_type": "JavaScript"
  },
@@ -292,7 +292,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-22 14:55:59.445689",
   "name": "CSS-e01ec",
-  "public_url": "/files/page_styles/CSS-e01ec-ba2a90bbe7.css?v=8839c10b27",
+  "public_url": "/files/page_styles/CSS-e01ec-ba2a90bbe7.css?v=86b7225a8d",
   "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\ntop: 60px;\n    right: 16px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
   "script_type": "CSS"
  },
@@ -301,7 +301,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-22 11:17:43.040974",
   "name": "JavaScript-c084c",
-  "public_url": "/files/page_scripts/JavaScript-c084c-3bcb2570cd.js?v=0df229cf42",
+  "public_url": "/files/page_scripts/JavaScript-c084c-3bcb2570cd.js?v=2708c8b661",
   "script": "// Write your script here\n// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
   "script_type": "JavaScript"
  },
@@ -310,7 +310,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-22 14:54:20.113538",
   "name": "CSS-60cd0",
-  "public_url": "/files/page_styles/CSS-60cd0-1c771b847f.css?v=9bc2964680",
+  "public_url": "/files/page_styles/CSS-60cd0-1c771b847f.css?v=de4c375cb2",
   "script": "/* Write your CSS here */\n/* Write your CSS here */\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\ntop: 60px;\n    right: 16px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}",
   "script_type": "CSS"
  },
@@ -319,7 +319,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-22 11:08:28.661246",
   "name": "JavaScript-f70e5",
-  "public_url": "/files/page_scripts/JavaScript-f70e5-ed668b2c92.js?v=77ba2ce2c0",
+  "public_url": "/files/page_scripts/JavaScript-f70e5-ed668b2c92.js?v=8df8583715",
   "script": "// Write your script here\n// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
   "script_type": "JavaScript"
  },
@@ -328,7 +328,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-18 15:17:57.949330",
   "name": "Newsletter",
-  "public_url": "/files/page_scripts/JavaScript-3f181-4913928ba6.js?v=9c6863c62c",
+  "public_url": "/files/page_scripts/JavaScript-3f181-4913928ba6.js?v=2a64019546",
   "script": "document.addEventListener('DOMContentLoaded', function() {\n    function showNotification(message, type = 'success') {\n        const notification = document.createElement('div');\n        notification.className = `notification notification-${type}`;\n        notification.textContent = message;\n        \n        notification.style.position = 'fixed';\n        notification.style.top = '20px';\n        notification.style.right = '20px';\n        notification.style.padding = '15px';\n        notification.style.borderRadius = '4px';\n        notification.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';\n        notification.style.color = 'white';\n        notification.style.zIndex = '1000';\n        notification.style.minWidth = '200px';\n        notification.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';\n        \n        document.body.appendChild(notification);\n        \n        setTimeout(() => {\n            notification.style.opacity = '0';\n            notification.style.transition = 'opacity 0.5s ease';\n            setTimeout(() => {\n                notification.remove();\n            }, 500);\n        }, 3000);\n    }\n\n    const subscriptionForm = document.querySelector('[name=\"subscription-form\"]');\n\n    if (subscriptionForm) {\n        subscriptionForm.addEventListener('submit', function(event) {\n            event.preventDefault();\n\n            const formData = new FormData(this);\n            const email = formData.get('email');\n\n            const submitButton = this.querySelector('button[type=\"submit\"]');\n            if (submitButton) {\n                submitButton.disabled = true;\n            }\n\n            fetch('/api/method/mykartavya.controllers.api.subscribe_to_newsletter', {\n                method: 'POST',\n                headers: {\n                    'Content-Type': 'application/json',\n                    'X-Frappe-CSRF-Token': frappe.csrf_token\n                },\n                body: JSON.stringify({\n                    email: email,\n                    email_group: 'Mykartavya'\n                })\n            })\n            .then(response => response.json())\n            .then(data => {\n                console.log('API Response:', data);\n\n                if (data.message) {\n                    showNotification(data.message.message, data.message.success ? 'success' : 'error');\n                    if (data.message.success) {\n                        this.reset();\n                    }\n                }\n            })\n            .catch(error => {\n                console.error('Error:', error);\n                showNotification('Something went wrong. Please try again.', 'error');\n            })\n            .finally(() => {\n                if (submitButton) {\n                    submitButton.disabled = false;\n                }\n            });\n        });\n    } else {\n        console.warn('Subscription form not found in the DOM');\n    }\n});",
   "script_type": "JavaScript"
  },
@@ -337,7 +337,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-10 16:30:59.599534",
   "name": "JavaScript-dca7d",
-  "public_url": "/files/page_scripts/JavaScript-dca7d-1cf9ba63cf.js?v=02a9f06583",
+  "public_url": "/files/page_scripts/JavaScript-dca7d-1cf9ba63cf.js?v=1f044f559a",
   "script": "// Write your script here\nlet index = 0;\n        const slides = document.querySelectorAll(\".slider img\");\n\n        function showSlide(i) {\n            if (i >= slides.length) index = 0;\n            if (i < 0) index = slides.length - 1;\n            document.querySelector(\".slider\").style.transform = `translateX(${-index * 100}%)`;\n        }\n        function nextSlide() {\n            index++;\n            showSlide(index);\n        }\n        function prevSlide() {\n            index--;\n            showSlide(index);\n        }\n        \n        \n        \n        \ndocument.addEventListener(\"DOMContentLoaded\", function () {\n    const descriptionElement = document.querySelector(\".description\");\n    const toggleButton = document.querySelector(\".toggleBtn\");\n\n    const fullText = descriptionElement.textContent.trim();\n    const words = fullText.split(\" \");\n\n    if (words.length > 60) {\n      const truncatedText = words.slice(0, 60).join(\" \") + \"...\";\n      descriptionElement.textContent = truncatedText;\n      let isTruncated = true;\n\n      toggleButton.addEventListener(\"click\", function () {\n        if (isTruncated) {\n          descriptionElement.textContent = fullText;\n          toggleButton.textContent = \"Show Less\";\n        } else {\n          descriptionElement.textContent = truncatedText;\n          toggleButton.textContent = \"Show More\";\n        }\n        isTruncated = !isTruncated;\n      });\n    } else {\n      toggleButton.style.display = \"none\"; // Hide button if text is short\n    }\n  });",
   "script_type": "JavaScript"
  },
@@ -346,7 +346,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-22 15:02:22.454201",
   "name": "CSS-bccf0",
-  "public_url": "/files/page_styles/CSS-bccf0-e083307af8.css?v=c5e493fe74",
+  "public_url": "/files/page_styles/CSS-bccf0-e083307af8.css?v=71886a5220",
   "script": "/* Write your CSS here */\n * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n\n\n.slider-container {\n            width: 100%;\n            max-width: 1920px;\n            margin: auto;\n            overflow: hidden;\n            position: relative;\n        }\n\n        .slider {\n            display: flex;\n            transition: transform 0.5s ease-in-out;\n        }\n\n        .slider img {\n            width: 100%;\n            height: 400px;\n            /*border-radius: 10px;*/\n        }\n\n        .prev,\n        .next {\n            position: absolute;\n            top: 50%;\n            transform: translateY(-50%);\n            /*background-color: rgba(0, 0, 0, 0.5);*/\n            color: white;\n            border: none;\n            padding: 10px;\n            cursor: pointer;\n        }\n\n        .prev {\n            left: 10px;\n        }\n\n        .next {\n            right: 10px;\n        }\n        \n        /*.foots{*/\n        /*     border-top: 1px solid white;*/\n        /*}*/\n        \n        .cardsbor{\n             border-right: 1px solid #D9D9D9;\n       \n       \n       \n      }\n        \n  \n        \n        ::-webkit-scrollbar {\n    width: 4px;\n    /* Thin width */\n    height: 4px;\n}\n \n::-webkit-scrollbar-thumb {\n    background: #b0b3b0;\n    /* Scrollbar color */\n    border-radius: 8px;\n}\n \n::-webkit-scrollbar-track {\n    background: #f0f0f0;\n    /* Track color */\n}\n\n.cardss{\n     width: 100%;\n    max-width: 1920px;\n}\n        .dropdown {\n  display: none;\n  /*gap:12px*/\n  list-style: none;\n  padding: 10px;\n  background: #f8f8f8;\n  border: 1px solid #ccc;\n  position: absolute;\n top: 92px;\n  right: 20px;\n  width: 180px;\n   border-radius: 8px;\n   /*height*/\n height: 110px;\n}\n\n\n",
   "script_type": "CSS"
  },
@@ -355,7 +355,7 @@
   "doctype": "Builder Client Script",
   "modified": "2025-03-20 12:24:06.228172",
   "name": "Navbar",
-  "public_url": "/files/page_scripts/JavaScript-6a4b5-2eb4e21113.js?v=332a1ff5ed",
+  "public_url": "/files/page_scripts/JavaScript-6a4b5-2eb4e21113.js?v=bd62d48693",
   "script": "// Write your script here\ndocument.querySelector(\".hamburger\").addEventListener(\"click\", function () {\n  let dropdown = document.querySelector(\".dropdown\");\n  dropdown.style.display = dropdown.style.display === \"block\" ? \"none\" : \"block\";\n});\n",
   "script_type": "JavaScript"
  }
