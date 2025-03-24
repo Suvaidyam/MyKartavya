@@ -6,6 +6,7 @@ from frappe.model.document import Document
 
 
 class VolunteerActivity(Document):
+
 	def validate(self):
 		"""Validate and set enrollment status before saving."""
 		self.set_enrollment_status()
@@ -13,7 +14,7 @@ class VolunteerActivity(Document):
 		
 	def before_insert(self):
 		self.set_enrollment_status()
-		
+	
 	def set_enrollment_status(self):
 		"""Set enrollment status based on activity configuration."""
 		if not self.activity:

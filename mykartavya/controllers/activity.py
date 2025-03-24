@@ -260,26 +260,42 @@ class Activity:
             raise
     # act_now
     def act_now(activity, volunteer):
-        # same activity can't be assigned to the same volunteer
+        # Check if the volunteer is approved
         workflow_state = frappe.db.get_value("SVA User", {"email": volunteer}, "workflow_state")
         volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")
+
         if workflow_state != "Approved":    
             return {"msg": "Volunteer is not approved", "status": 201}
-        else:
-            act = frappe.get_list(
-                "Volunteer Activity",
-                filters={"activity": activity, "volunteer": volunteer},
-                pluck="name",
-            )
-            if act:
-                return {"msg": "Activity already assigned to the volunteer", "status": 400}
-            doc = frappe.new_doc("Volunteer Activity")
-            doc.activity = activity
-            doc.volunteer = volunteer
-            doc.flags.ignore_permissions = True
-            doc.flags.ignore_mandatory = True
-            doc.save()
-            return {"msg": "Activity assigned to the volunteer", "status": 200,'data':doc}
+
+        # Check if the activity is already assigned to the volunteer
+        act = frappe.get_list(
+            "Volunteer Activity",
+            filters={"activity": activity, "volunteer": volunteer},
+            pluck="name",
+        )
+        if act:
+            return {"msg": "Activity already assigned to the volunteer", "status": 400}
+
+        unlimited_vacancies = frappe.db.get_value("Activity", activity, "unlimited_vacancies")
+        if not unlimited_vacancies:
+            total_vacancies = frappe.db.get_value("Activity", activity, "total_vacancies") or 0
+            current_count = frappe.db.count("Volunteer Activity", filters={"activity": activity})
+
+            if current_count >= total_vacancies:
+                return {
+                    "msg": f"{total_vacancies} seats for this activity are already filled. No more users can be added.",
+                    "status": 400,
+                }
+        # Assign activity to the volunteer
+        doc = frappe.new_doc("Volunteer Activity")
+        doc.activity = activity
+        doc.volunteer = volunteer
+        doc.flags.ignore_permissions = True
+        doc.flags.ignore_mandatory = True
+        doc.save()
+
+        return {"msg": "Activity assigned to the volunteer", "status": 200, "data": doc}
+
     
     def workflow_state():
         doc = frappe.get_doc('Workflow', 'Volunteer_activity')

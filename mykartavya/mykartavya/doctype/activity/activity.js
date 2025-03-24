@@ -25,7 +25,20 @@ frappe.ui.form.on("Activity", {
                 frm.refresh();   
             });
         }
-    },   
+    },
+    unlimited_vacancies: function (frm) {
+        if (!frm.doc.unlimited_vacancies) {
+            frm.set_value('vacancy', 0);
+            frm.set_value('buffer_vacancy', 0);
+        }
+    }, 
+
+    vacancy: function(frm) {
+        update_total_vacancies(frm);
+    },
+    buffer_vacancy: function(frm) {
+        update_total_vacancies(frm);
+    },
      
     value_type: function (frm) {
     if (frm.doc.value_type === "General") {
@@ -35,9 +48,9 @@ frappe.ui.form.on("Activity", {
     },
     refresh(frm) {
 
-        // let today = new Date(frappe.datetime.get_today());
+        let today = new Date(frappe.datetime.get_today());
         let fields = [
-            // { name: "publish_date", min: today },
+            { name: "publish_date", min: today },
             { name: "application_deadline", depends_on: "publish_date" },
             { name: "start_date", depends_on: "application_deadline" },
             { name: "end_date", depends_on: "start_date" },
@@ -79,7 +92,12 @@ function validate_date(frm, field, depends_on) {
         });
         frm.set_value(field, "");
     }
+}
 
+function update_total_vacancies(frm) {
+    let vacancy = frm.doc.vacancy || 0;
+    let buffer_vacancy = frm.doc.buffer_vacancy || 0;
+    let total = vacancy + buffer_vacancy;
 
-
+    frm.set_value('total_vacancies', total);
 }

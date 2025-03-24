@@ -181,6 +181,7 @@
                 type="tel"
                 name="phone"
                 placeholder="+91 XXXXX XXXXX"
+                maxlength="10"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
               />
               <p v-if="errors.phone" class="text-red-500 text-[10px] pt-1 pl-1">
@@ -311,7 +312,7 @@
               <input
                 v-model="form.number_of_employees"
                 name="number_of_employees"
-                type="number"
+                type="text"
                 @input="handle_input_change('number_of_employees')"
                 min="1"
                 class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
@@ -340,7 +341,7 @@
               <input
                 v-model="form.volunteering_csr_activities"
                 name="volunteering_csr_activities"
-                type="number"
+                type="text"
                 @input="handle_input_change('volunteering_csr_activities')"
                 min="0"
                 max="100"
@@ -356,7 +357,7 @@
               <input
                 v-model="form.employee_engagement"
                 name="employee_engagement"
-                type="number"
+                type="text"
                 @input="handle_input_change('employee_engagement')"
                 min="0"
                 max="100"
@@ -414,6 +415,8 @@ const form = ref({
   employee_engagement: '',
 })
 
+const phoneRegex = /^\d{10}$/;
+
 const validateForm = () => {
   // Reset error
   error.value = null
@@ -443,11 +446,11 @@ const validateForm = () => {
     if (!form.value[field]) {
       error.value = `Please fill in ${field.replace(/_/g, ' ')}.`
       errors.value[field] = ` ${field.replace(/_/g, ' ')} is required!`
-      toast.error(error.value, {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-      })
+    //   toast.error(error.value, {
+    //     position: 'top-right',
+    //     autoClose: 3000,
+    //     hideProgressBar: false,
+    //   })
       if (firstErrorField.value === null) {
         firstErrorField.value = field
       }
