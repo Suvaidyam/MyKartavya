@@ -16,24 +16,17 @@ class VolunteerActivity(Document):
 		self.set_enrollment_status()
 	
 	def set_enrollment_status(self):
-		"""Set enrollment status based on activity configuration."""
 		if not self.activity:
 			return
 
 		try:
 			activity = frappe.get_doc("Activity", self.activity)
-
-			# Set enrollment status based on auto_approve_volunteers
-			if activity.auto_approve_volunteers:
-				self.enrollment_wf_state = "Approved"
-				frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Approved")
-			else:
-				if self.enrollment_wf_state == "Approved":
-					frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Approved")
-				frappe.db.commit()
+			if activity.auto_approve_volunteers or self.enrollment_wf_state == "Approved":
+				self.enrollment_wf_state = self.workflow_state = "Approved"
+				frappe.db.set_value(self.doctype, self.name, "workflow_state", "Approved")
+				self.save(ignore_permissions=True)
 		except Exception as e:
 			frappe.log_error(f"Error setting enrollment status: {str(e)}")
-			raise
 
 	def on_update(self):
 		"""Handle workflow state changes and related actions."""

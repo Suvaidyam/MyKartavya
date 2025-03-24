@@ -1,0 +1,31 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "creation": "2025-03-24 16:07:04.970073",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Newsletter",
+ "enabled": 1,
+ "event": "New",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "Add your message here",
+ "message_type": "HTML",
+ "minutes_offset": 0,
+ "modified": "2025-03-24 16:07:47.912111",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Subscribe",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_document_field": "sender_email"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "sender": "noreply",
+ "sender_email": "noreply.suvaidyam@gmail.com",
+ "subject": "Subscription Activated"
+}
