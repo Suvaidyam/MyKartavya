@@ -27,7 +27,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-10 20:29:41.428450",
+ "modified": "2025-03-24 15:00:56.978170",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Skills",
@@ -75,15 +75,6 @@
    "read": 1,
    "report": 1,
    "role": "NGO Admin",
-   "share": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Volunteer Incharge",
    "share": 1
   },
   {

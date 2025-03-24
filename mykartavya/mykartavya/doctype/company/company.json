@@ -299,7 +299,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-10 20:12:10.405915",
+ "modified": "2025-03-24 15:10:11.152191",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Company",
@@ -347,7 +347,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Volunteer Incharge",
+   "role": "Volunteer",
    "share": 1
   },
   {
@@ -356,7 +356,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Volunteer",
+   "role": "NGO Admin",
    "share": 1
   }
  ],

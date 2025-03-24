@@ -6,10 +6,10 @@
   "doctype": "Role",
   "home_page": null,
   "is_custom": 0,
-  "modified": "2025-02-08 13:40:07.926200",
-  "name": "Volunteer Incharge",
+  "modified": "2025-03-22 10:09:39.760607",
+  "name": "Partner NGO",
   "restrict_to_domain": null,
-  "role_name": "Volunteer Incharge",
+  "role_name": "Partner NGO",
   "two_factor_auth": 0
  },
  {
