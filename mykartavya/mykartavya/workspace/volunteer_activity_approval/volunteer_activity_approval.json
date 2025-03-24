@@ -1,7 +1,7 @@
 {
  "app": "mykartavya",
  "charts": [],
- "content": "[{\"id\":\"-YGIQZvCZE\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Completion Approval\",\"col\":4}},{\"id\":\"33GSsck5aC\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"copanies registered\",\"col\":4}}]",
+ "content": "[{\"id\":\"UZeX9_GPgG\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending Completion Requests\",\"col\":4}},{\"id\":\"j90g8vOMI8\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending Enrollment Requests\",\"col\":4}}]",
  "creation": "2025-03-19 10:32:42.409165",
  "custom_blocks": [],
  "docstatus": 0,
@@ -15,18 +15,18 @@
  "label": "Volunteer Activity Approval",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-03-19 10:33:47.736795",
+ "modified": "2025-03-24 09:45:59.604327",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity Approval",
  "number_cards": [
   {
-   "label": "Completion Approval",
-   "number_card_name": "Completion Approval"
+   "label": "Pending Completion Requests",
+   "number_card_name": "Pending Completion Requests"
   },
   {
-   "label": "copanies registered",
-   "number_card_name": "copanies registered"
+   "label": "Pending Enrollment Requests",
+   "number_card_name": "Pending Enrollment Requests"
   }
  ],
  "owner": "Administrator",
