@@ -8,6 +8,31 @@ import time
 
 
 @frappe.whitelist(allow_guest=True)
+def user_testimonial():
+    try:
+        # Fetch testimonials with `sva_user`
+        testimonials = frappe.get_all('Testimonial', fields=["name", "comment", "user","is_publish"])
+
+        # Fetch user details for each testimonial from "SVA User"
+        for testimonial in testimonials:
+            if testimonial.get("user"):
+                user_doc = frappe.get_doc("SVA User", testimonial["user"])
+                testimonial["user_details"] = {
+                    "name": user_doc.name,
+                    "email": user_doc.email,
+                    "full_name": user_doc.full_name,
+                    "user_image":user_doc.user_image,
+                    "user_type":user_doc.custom_volunteer_type,
+                    "designation": user_doc.custom_designation if hasattr(user_doc, "custom_designation") else None 
+                }
+
+        return {"message": testimonials}
+
+    except Exception as e:
+        frappe.log_error(f"Error in user_testimonial: {e}")
+        return {"error": _("Failed to fetch testimonials with user details")}
+        
+@frappe.whitelist(allow_guest=True)
 def corporate_partners_logo():
     logo = frappe.get_all("Company", fields=["company_logo",'name'], order_by="creation DESC")
     return logo
