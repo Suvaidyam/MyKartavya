@@ -20,9 +20,6 @@ class Company(Document):
         self.validate_company_logo()
 
     def validate_company_name(self):
-        if len(self.company_name) > 100:
-            frappe.throw("Company Name cannot exceed 100 characters")
-
         # Check for uniqueness
         existing = frappe.db.exists("Company", {
             "company_name": self.company_name,
@@ -30,7 +27,6 @@ class Company(Document):
         })
         if existing:
             frappe.throw("Company Name must be unique")
-
 
     def validate_registration_dates(self):
         if self.registration_type == "Self Registration":
@@ -54,37 +50,7 @@ class Company(Document):
 
 
     def validate_contact_details(self):
-        # Validate names
-        if len(self.first_name) > 100:
-            frappe.throw("First Name cannot exceed 100 characters")
-
-        if len(self.last_name) > 100:
-            frappe.throw("Last Name cannot exceed 100 characters")
-
-        if not self.designation:
-            self.designation = ""
-
-        if len(self.designation) > 100:
-            frappe.throw("Designation cannot exceed 100 characters")
-
-        # Email validation
-        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-        if not re.match(email_pattern, self.email):
-            frappe.throw("Invalid Email format")
-
-        # Phone number validation
-        if self.phone and not re.match(r'^\d{10,15}$', self.phone):
-            frappe.throw("Phone number must be between 10 and 15 digits")
-
-        # Mobile number validation
-        if not re.match(r'^\d{10}$', self.mobile_number):
-            frappe.throw("Mobile Number must be exactly 10 digits")
-
-        # Validate volunteering incharge details if Admin Registration
         if self.registration_type == "Admin Registration":
-            if self.volunteering_incharge_email and not re.match(email_pattern, self.volunteering_incharge_email):
-                frappe.throw("Invalid Volunteering InCharge Email format")
-
             if self.volunteering_incharge_phone and not re.match(r'^\d{10,15}$', self.volunteering_incharge_phone):
                 frappe.throw("Volunteering InCharge Phone must be between 10 and 15 digits")
 
@@ -162,7 +128,7 @@ def after_insert(doc, method):
 
 def get_role_profile(registration_type):
     """Get appropriate role profile based on registration type"""
-    role_profile_name = "Company Admin"
+    role_profile_name = "Volunteer"
 
     role_profile = frappe.db.exists("Role Profile", role_profile_name)
 
@@ -247,7 +213,7 @@ def insert_sva_user(doc):
                 "custom_country": country,
                 "custom_state": state,
                 "custom_city": city,
-                "role_profile": "Volunteer Incharge",
+                "role_profile": "Company Admin",
                 "custom_designation": designation,
                 "custom_volunteer_type": "Employee",
                 "enabled": 1

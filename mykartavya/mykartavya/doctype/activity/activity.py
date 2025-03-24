@@ -7,9 +7,7 @@ from datetime import time
 class Activity(Document):
     def validate(self):
         self.validate_dates() 
-        self.validate_hours()
         self.validate_time()
-        self.validate_vacancies()
         self.handle_activity_published_date_starts()
         self.validate_reward()
         self.validate_location()
@@ -50,19 +48,6 @@ class Activity(Document):
         if get_datetime(self.reporting_deadline) <= get_datetime(self.end_date):
             frappe.throw(_("Reporting Deadline must be after End Date"))
 
-            
-    def validate_hours(self):
-        if not (0 <= self.minutes <= 59):
-            frappe.throw(_("Minutes must be between 0 and 59"))
-            
-        # Validate max hours
-        if self.max_hours < self.hours and not self.contribution_type == 'Fixed':
-          frappe.throw(_("Max Hours must be greater than or equal to Hours"))
-
-        # Validate max hours for fixed contribution type
-        if self.contribution_type == "Fixed":
-            self.max_hours = self.hours
-
     def validate_time(self):
         try:
             if self.start_time_hr >= self.end_time_hr:
@@ -94,13 +79,6 @@ class Activity(Document):
             
         except (ValueError, TypeError):
             raise ValueError(_("Invalid time values provided. Hour: {0}, Minute: {1}".format(hour, minute)))
-    
-    def validate_vacancies(self):
-        if not self.unlimited_vacancies:
-            if not self.vacancy or self.vacancy <= 0:
-                frappe.throw(_("Number of Vacancies must be a positive number"))
-            if not self.buffer_vacancy or self.buffer_vacancy < 0:
-                frappe.throw(_("Buffer Vacancies must be zero or a positive number"))
     
     def handle_activity_published_date_starts(self):
         if self.activity_published_date_starts:
