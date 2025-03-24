@@ -12,6 +12,18 @@ frappe.ui.form.on("NGOs", {
             }
         }
     },
+    validate: function (frm) {
+        if (frm.image_uploaded) {
+            frappe.validated = false;
+            frm.image_uploaded = false;
+        }
+    },
+
+    ngo_logo: function (frm) {
+        if (frm.doc.ngo_logo) {
+            frm.image_uploaded = true;
+        }
+    },
     refresh(frm) {
         frm.timeline.wrapper.hide();
         $('.layout-side-section').hide();
