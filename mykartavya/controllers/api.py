@@ -34,8 +34,12 @@ def user_testimonial():
         
 @frappe.whitelist(allow_guest=True)
 def corporate_partners_logo():
-    logo = frappe.get_all("Company", fields=["company_logo",'name'], order_by="creation DESC")
-    return logo
+    try:
+        logo = frappe.get_all("Company", fields=["company_logo", "name"], order_by="creation DESC")
+        return logo
+    except Exception as e:
+        frappe.log_error(f"Error fetching corporate partners logo: {str(e)}", "Corporate Partners Logo API")
+        return {"error": "Failed to fetch corporate partners logo"}
 
 @frappe.whitelist(allow_guest=True)
 def subscribe_to_newsletter(email, email_group="Mykartavya"):

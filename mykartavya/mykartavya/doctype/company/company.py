@@ -12,6 +12,7 @@ import os
 
 class Company(Document):
     def validate(self):
+       
         self.validate_company_name()
         self.validate_registration_dates()
         self.validate_contact_details()

@@ -1,7 +1,7 @@
 // Copyright (c) 2025, Aniket Singh and contributors
 // For license information, please see license.txt
 frappe.ui.form.on("Company", {
-  
+
     setup: function (frm) {
         frm['dt_events'] = {
             "SVA User": {
@@ -20,6 +20,18 @@ frappe.ui.form.on("Company", {
             frappe.msgprint(__('Company Registration Date cannot be a future date.'));
             frm.set_value('company_registration_date', '');
         }
-    }
-  
+    },
+    validate: function (frm) {
+        if (frm.image_uploaded) {
+            frappe.validated = false;
+            frm.image_uploaded = false;
+        }
+    },
+
+    company_logo: function (frm) {
+        if (frm.doc.company_logo) {
+            frm.image_uploaded = true;
+        }
+    },
+
 });
