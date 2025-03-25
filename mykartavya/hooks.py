@@ -13,8 +13,8 @@ required_apps = [
 ]
 
 fixtures=[
-    # 'Role',
-    # 'Role Profile',
+    'Role',
+    'Role Profile',
     # 'Builder Page',
     # 'Custom HTML Block',
     # 'SDG',
