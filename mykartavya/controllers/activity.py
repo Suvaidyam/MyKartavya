@@ -283,7 +283,7 @@ class Activity:
 
             if current_count >= total_vacancies:
                 return {
-                    "msg": f"{total_vacancies} seats for this activity are already filled. No more users can be added.",
+                    "msg": f"Vacancies for this activity are already filled. No more users can be added.",
                     "status": 400,
                 }
         # Assign activity to the volunteer
