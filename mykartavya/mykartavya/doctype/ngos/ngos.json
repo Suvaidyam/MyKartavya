@@ -1,325 +1,371 @@
 {
-    "actions": [],
-    "autoname": "field:ngo_name",
-    "creation": "2025-02-16 08:12:35",
-    "doctype": "DocType",
-    "engine": "InnoDB",
-    "field_order": [
-        "basic_information_section",
-        "registration_type",
-        "ngo_name",
-        "website",
-        "official_contact_number",
-        "email",
-        "designation",
-        "state",
-        "city",
-        "description",
-        "license_type",
-        "location_information_section",
-        "country",
-        "location",
-        "priority_goals_section",
-        "first_priority_goal",
-        "second_priority_goal",
-        "third_priority_goal",
-        "contacts_section",
-        "contact_person_name",
-        "ngo_head_name",
-        "ngo_head_email",
-        "ngo_head_mobile",
-        "ngo_head_office_number",
-        "area_of_work",
-        "address",
-        "pincode",
-        "registration_details_section",
-        "registered_with_bigtech",
-        "ngo_logo",
-        "users_tab",
-        "users"
-    ],
-    "fields": [
-        {
-            "fieldname": "basic_information_section",
-            "fieldtype": "Section Break",
-            "label": "Basic Information"
-        },
-        {
-            "default": "Admin Registration",
-            "fieldname": "registration_type",
-            "fieldtype": "Select",
-            "hidden": 1,
-            "in_list_view": 1,
-            "label": "Registration Type",
-            "options": "Self Registration\nAdmin Registration",
-            "reqd": 1
-        },
-        {
-            "fieldname": "ngo_name",
-            "fieldtype": "Data",
-            "in_list_view": 1,
-            "label": "NGO Name",
-            "length": 255,
-            "reqd": 1,
-            "unique": 1
-        },
-        {
-            "fieldname": "website",
-            "fieldtype": "Data",
-            "in_list_view": 1,
-            "label": "NGO Website",
-            "length": 255,
-            "options": "URL"
-        },
-        {
-            "fieldname": "official_contact_number",
-            "fieldtype": "Data",
-            "in_list_view": 1,
-            "label": "Official Contact Number",
-            "options": "Phone",
-            "reqd": 1
-        },
-        {
-            "fieldname": "email",
-            "fieldtype": "Data",
-            "in_list_view": 1,
-            "label": "Email",
-            "reqd": 1
-        },
-        {
-            "fieldname": "designation",
-            "fieldtype": "Data",
-            "label": "Designation",
-            "length": 100,
-            "reqd": 1
-        },
-        {
-            "fieldname": "state",
-            "fieldtype": "Link",
-            "in_list_view": 1,
-            "label": "State",
-            "options": "State",
-            "reqd": 1
-        },
-        {
-            "fieldname": "city",
-            "fieldtype": "Link",
-            "in_list_view": 1,
-            "label": "City",
-            "options": "District",
-            "reqd": 1
-        },
-        {
-            "fieldname": "description",
-            "fieldtype": "Text Editor",
-            "label": "Description",
-            "length": 2000,
-            "reqd": 1
-        },
-        {
-            "fieldname": "license_type",
-            "fieldtype": "Select",
-            "in_list_view": 1,
-            "label": "License Type",
-            "options": "FCRA\nNon-FCRA",
-            "reqd": 1
-        },
-        {
-            "fieldname": "location_information_section",
-            "fieldtype": "Section Break",
-            "label": "Location Information"
-        },
-        {
-            "fieldname": "country",
-            "fieldtype": "Link",
-            "in_list_view": 1,
-            "label": "Country",
-            "options": "Country"
-        },
-        {
-            "fieldname": "location",
-            "fieldtype": "Small Text",
-            "label": "Address",
-            "length": 500
-        },
-        {
-            "fieldname": "priority_goals_section",
-            "fieldtype": "Section Break",
-            "label": "Priority Goals"
-        },
-        {
-            "fieldname": "first_priority_goal",
-            "fieldtype": "Link",
-            "in_list_view": 1,
-            "label": "First Priority Goal",
-            "options": "SDG"
-        },
-        {
-            "fieldname": "second_priority_goal",
-            "fieldtype": "Link",
-            "label": "Second Priority Goal",
-            "options": "SDG"
-        },
-        {
-            "fieldname": "third_priority_goal",
-            "fieldtype": "Link",
-            "label": "Third Priority Goal",
-            "options": "SDG"
-        },
-        {
-            "fieldname": "contacts_section",
-            "fieldtype": "Section Break",
-            "label": "Contacts"
-        },
-        {
-            "fieldname": "contact_person_name",
-            "fieldtype": "Data",
-            "in_list_view": 1,
-            "label": "Contact Person Name"
-        },
-        {
-            "fieldname": "ngo_head_name",
-            "fieldtype": "Data",
-            "label": "NGO Head Name"
-        },
-        {
-            "fieldname": "ngo_head_email",
-            "fieldtype": "Data",
-            "label": "NGO Head Email",
-            "options": "Email"
-        },
-        {
-            "fieldname": "ngo_head_mobile",
-            "fieldtype": "Data",
-            "label": "NGO Head Mobile",
-            "options": "Phone"
-        },
-        {
-            "fieldname": "ngo_head_office_number",
-            "fieldtype": "Data",
-            "label": "NGO Head Office Number",
-            "options": "Phone"
-        },
-        {
-            "fieldname": "area_of_work",
-            "fieldtype": "Select",
-            "in_list_view": 1,
-            "label": "Area of Work",
-            "options": "\nEducation\nSkills\nEnvironment\nFinancial Inclusion\nAccessibility and Inclusion\nDisaster Management\nHealthcare"
-        },
-        {
-            "fieldname": "address",
-            "fieldtype": "Small Text",
-            "label": "Address"
-        },
-        {
-            "fieldname": "pincode",
-            "fieldtype": "Data",
-            "label": "Postal Code",
-            "length": 6
-        },
-        {
-            "fieldname": "registration_details_section",
-            "fieldtype": "Section Break",
-            "label": "Registration Details"
-        },
-        {
-            "fieldname": "registered_with_bigtech",
-            "fieldtype": "Select",
-            "label": "Registered with BigTech",
-            "options": "Yes\nNo"
-        },
-        {
-            "fieldname": "ngo_logo",
-            "fieldtype": "Attach Image",
-            "label": "NGO Logo"
-        },
-        {
-            "fieldname": "users_tab",
-            "fieldtype": "Tab Break",
-            "label": "Users"
-        },
-        {
-            "fieldname": "users",
-            "fieldtype": "HTML",
-            "label": "Users"
-        }
-    ],
-    "index_web_pages_for_search": 1,
-    "links": [],
-    "modified": "2025-03-25 12:08:39.664605",
-    "modified_by": "Administrator",
-    "module": "Mykartavya",
-    "name": "NGOs",
-    "naming_rule": "By fieldname",
-    "owner": "Administrator",
-    "permissions": [
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "System Manager",
-            "share": 1,
-            "write": 1
-        },
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "MyKartvya Admin",
-            "share": 1,
-            "write": 1
-        },
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "Company Admin",
-            "share": 1,
-            "write": 1
-        },
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "NGO Admin",
-            "share": 1,
-            "write": 1
-        },
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "Volunteer",
-            "share": 1,
-            "write": 1
-        }
-    ],
-    "row_format": "Dynamic",
-    "show_title_field_in_link": 1,
-    "sort_field": "modified",
-    "sort_order": "DESC",
-    "states": [],
-    "title_field": "ngo_name",
-    "track_changes": 1
+ "actions": [],
+ "autoname": "field:ngo_name",
+ "creation": "2025-02-16 08:12:35",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_information_section",
+  "registration_type",
+  "ngo_name",
+  "website",
+  "official_contact_number",
+  "email",
+  "column_break_hewq",
+  "designation",
+  "state",
+  "city",
+  "license_type",
+  "section_break_hrsw",
+  "description",
+  "location_information_section",
+  "country",
+  "location",
+  "priority_goals_section",
+  "first_priority_goal",
+  "column_break_jhnb",
+  "second_priority_goal",
+  "column_break_hodg",
+  "third_priority_goal",
+  "contacts_section",
+  "contact_person_name",
+  "ngo_head_name",
+  "ngo_head_email",
+  "ngo_head_mobile",
+  "column_break_cpls",
+  "ngo_head_office_number",
+  "area_of_work",
+  "pincode",
+  "section_break_owwt",
+  "address",
+  "registration_details_section",
+  "registered_with_bigtech",
+  "column_break_edaf",
+  "ngo_logo",
+  "section_break_njut",
+  "html_mzll",
+  "users_tab",
+  "users"
+ ],
+ "fields": [
+  {
+   "fieldname": "basic_information_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Information"
+  },
+  {
+   "default": "Admin Registration",
+   "fieldname": "registration_type",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Registration Type",
+   "options": "Self Registration\nAdmin Registration",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ngo_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "NGO Name",
+   "length": 255,
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "website",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "NGO Website",
+   "length": 255,
+   "options": "URL"
+  },
+  {
+   "fieldname": "official_contact_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Official Contact Number",
+   "options": "Phone",
+   "reqd": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email",
+   "reqd": 1
+  },
+  {
+   "fieldname": "designation",
+   "fieldtype": "Data",
+   "label": "Designation",
+   "length": 100,
+   "reqd": 1
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "State",
+   "options": "State",
+   "reqd": 1
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "City",
+   "options": "District",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description",
+   "length": 2000,
+   "reqd": 1
+  },
+  {
+   "fieldname": "license_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "License Type",
+   "options": "FCRA\nNon-FCRA",
+   "reqd": 1
+  },
+  {
+   "fieldname": "location_information_section",
+   "fieldtype": "Section Break",
+   "label": "Location Information"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Small Text",
+   "label": "Address",
+   "length": 500
+  },
+  {
+   "fieldname": "priority_goals_section",
+   "fieldtype": "Section Break",
+   "label": "Priority Goals"
+  },
+  {
+   "fieldname": "first_priority_goal",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "First Priority Goal",
+   "options": "SDG"
+  },
+  {
+   "fieldname": "second_priority_goal",
+   "fieldtype": "Link",
+   "label": "Second Priority Goal",
+   "options": "SDG"
+  },
+  {
+   "fieldname": "third_priority_goal",
+   "fieldtype": "Link",
+   "label": "Third Priority Goal",
+   "options": "SDG"
+  },
+  {
+   "fieldname": "contacts_section",
+   "fieldtype": "Section Break",
+   "label": "Contacts"
+  },
+  {
+   "fieldname": "contact_person_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Contact Person Name"
+  },
+  {
+   "fieldname": "ngo_head_name",
+   "fieldtype": "Data",
+   "label": "NGO Head Name"
+  },
+  {
+   "fieldname": "ngo_head_email",
+   "fieldtype": "Data",
+   "label": "NGO Head Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "ngo_head_mobile",
+   "fieldtype": "Data",
+   "label": "NGO Head Mobile",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "ngo_head_office_number",
+   "fieldtype": "Data",
+   "label": "NGO Head Office Number",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "area_of_work",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Area of Work",
+   "options": "\nEducation\nSkills\nEnvironment\nFinancial Inclusion\nAccessibility and Inclusion\nDisaster Management\nHealthcare"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "pincode",
+   "fieldtype": "Data",
+   "label": "Postal Code",
+   "length": 6
+  },
+  {
+   "fieldname": "registration_details_section",
+   "fieldtype": "Section Break",
+   "label": "Registration Details"
+  },
+  {
+   "fieldname": "registered_with_bigtech",
+   "fieldtype": "Select",
+   "label": "Registered with BigTech",
+   "options": "Yes\nNo"
+  },
+  {
+   "fieldname": "ngo_logo",
+   "fieldtype": "Attach Image",
+   "label": "NGO Logo"
+  },
+  {
+   "fieldname": "users_tab",
+   "fieldtype": "Tab Break",
+   "label": "Users"
+  },
+  {
+   "fieldname": "users",
+   "fieldtype": "HTML",
+   "label": "Users"
+  },
+  {
+   "fieldname": "column_break_hewq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_hrsw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_jhnb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_hodg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_cpls",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_owwt",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_edaf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_njut",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "html_mzll",
+   "fieldtype": "HTML",
+   "options": "<div style=\"min-height:20px;\"></div>"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-03-25 14:03:04.778107",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "NGOs",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "MyKartvya Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Company Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "NGO Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Volunteer",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "ngo_name",
+ "track_changes": 1
 }
