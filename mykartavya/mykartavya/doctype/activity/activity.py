@@ -133,4 +133,3 @@ class Activity(Document):
                     if file_extension not in allowed_extensions:
                         allowed_types = ", ".join(allowed_extensions).upper()
                         frappe.throw(f"Invalid file type for {field.replace('_', ' ').title()}. Allowed types: {allowed_types}.")
-
