@@ -129,6 +129,7 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:!doc.activity_published_date_starts",
    "fieldname": "application_deadline",
    "fieldtype": "Datetime",
    "label": "Application Deadline",
@@ -425,7 +426,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-03-24 15:09:19.082238",
+ "modified": "2025-03-25 17:44:15.007386",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
