@@ -16,7 +16,7 @@
  "link_to": "NGOs",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-02-19 13:46:06.199629",
+ "modified": "2025-03-25 17:52:51.594588",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Ngo",
@@ -25,7 +25,14 @@
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
- "roles": [],
+ "roles": [
+  {
+   "role": "MyKartvya Admin"
+  },
+  {
+   "role": "NGO Admin"
+  }
+ ],
  "sequence_id": 24.0,
  "shortcuts": [],
  "title": "Ngo",

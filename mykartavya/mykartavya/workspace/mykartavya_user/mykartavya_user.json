@@ -16,7 +16,7 @@
  "link_to": "SVA User",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-03-10 19:55:39.681915",
+ "modified": "2025-03-25 17:49:57.913713",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "MyKartavya User",
@@ -25,7 +25,11 @@
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
- "roles": [],
+ "roles": [
+  {
+   "role": "MyKartvya Admin"
+  }
+ ],
  "sequence_id": 23.0,
  "shortcuts": [],
  "title": "MyKartavya User",
