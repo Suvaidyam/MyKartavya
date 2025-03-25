@@ -9,7 +9,7 @@
   </div>
   <div class="bg-white h-[60px] shadow-md">
     <nav
-      v-if="['/', '/volunteering-opportunities', '/profile', '/activity', '/updateprofile', '/all-activity','/all-volunteer'].includes('/' + route.fullPath.split('/')[1])"
+      v-if="['/', '/volunteering-opportunities', '/profile', '/activity', '/updateprofile', '/all-activity', '/all-volunteer'].includes('/' + route.fullPath.split('/')[1])"
       class="flex items-center justify-between w-full px-3 sm:px-[36px] max-w-[1920px] mx-auto h-full">
       <a href="#" @click="handleLogoClick" class="flex items-center space-x-4">
         <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
@@ -68,17 +68,14 @@
       <div class="hidden lg:flex space-x-8 text-gray-700">
         <router-link to="/"
           :class="[route.fullPath == '/landin' ? 'font-medium' : 'font-normal', 'text-sm']">Home</router-link>
-        <router-link to="/about-us"
-          :class="[route.fullPath == '/about-us' ? 'font-medium' : 'font-normal', 'text-sm']">About
-          Us</router-link>
-        <router-link to="/features"
-          :class="[route.fullPath == '/features' ? 'font-medium' : 'font-normal', 'text-sm']">Features</router-link>
+        <a href="#" @click="handleAboutClick"
+          :class="[route.fullPath == '/about-us' ? 'font-medium' : 'font-normal', 'text-sm']">About Us</a>
         <router-link to="/kindness-volunteering"
           :class="[route.fullPath.split('/')[1] == 'kindness-volunteering' ? 'font-medium' : 'font-normal', 'text-sm']">Kindness
           &
           Volunteering</router-link>
-        <router-link to="/faqs"
-          :class="[route.fullPath == '/faqs' ? 'font-medium' : 'font-normal', 'text-sm']">FAQs</router-link>
+        <a href="#" @click="handleFaqClick"
+          :class="[route.fullPath == '/faqs' ? 'font-medium' : 'font-normal', 'text-sm']">FAQs</a>
       </div>
       <div class="flex items-center gap-2 sm:gap-5 justify-center">
         <router-link v-if="route.fullPath.split('?')[0] != '/login' && !auth.isLoggedIn" to="/login"
@@ -87,27 +84,22 @@
         <Dropdown class="block lg:hidden" :options="[
           {
             label: 'Home',
-            onClick: () => { change_route('/')},
+            onClick: () => { handleHomeClick() },
             icon: () => h(FeatherIcon, { name: 'home' }),
           },
           {
             label: 'About Us',
-            onClick: () => { change_route('/about-us') },
+            onClick: () => { handleAboutClick() },
             icon: () => h(FeatherIcon, { name: 'users' }),
           },
           {
-            label: 'Features',
-            onClick: () => { change_route('/features') },
-            icon: () => h(FeatherIcon, { name: 'layers' }),
-          },
-          {
             label: 'Kindness & Volunteering',
-            onClick: () => { change_route('/kindness-volunteering')},
+            onClick: () => { change_route('/kindness-volunteering') },
             icon: () => h(FeatherIcon, { name: 'heart' }),
           },
           {
             label: 'FAQs',
-            onClick: () => { change_route('/faqs')},
+            onClick: () => { handleFaqClick() },
             icon: () => h(FeatherIcon, { name: 'message-circle' }),
           },
         ]">
@@ -117,7 +109,7 @@
             </template>
           </Button>
         </Dropdown>
-        
+
       </div>
     </nav>
   </div>
@@ -144,6 +136,27 @@ const handleLogoClick = (e) => {
   window.location.href = backendUrl;
 };
 
+const handleAboutClick = (e) => {
+  if (e) e.preventDefault();
+  const currentOrigin = window.location.origin;
+  const backendUrl = currentOrigin.replace(':8080', ':8000') + '/about';
+  window.location.href = backendUrl;
+};
+
+const handleHomeClick = (e) => {
+  if (e) e.preventDefault();
+  const currentOrigin = window.location.origin;
+  const backendUrl = currentOrigin.replace(':8080', ':8000');
+  window.location.href = backendUrl;
+};
+
+const handleFaqClick = (e) => {
+  if (e) e.preventDefault();
+  const currentOrigin = window.location.origin;
+  const backendUrl = currentOrigin.replace(':8080', ':8000') + '/faqs';
+  window.location.href = backendUrl;
+};
+
 const baseDropdown = [
   {
     label: 'Logout',
@@ -165,7 +178,7 @@ const mobileDropdown = [
     onClick: () => change_route('/volunteering-opportunities'),
     icon: () => h(FeatherIcon, { name: 'award' }),
   },
-  
+
 ];
 
 const dropdown = ref([...baseDropdown]);
