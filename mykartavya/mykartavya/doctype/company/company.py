@@ -19,6 +19,7 @@ class Company(Document):
         # self.validate_address()
         self.validate_organization_details()
         self.validate_company_logo()
+        self.validate_existing_sva_user()
 
     def validate_company_name(self):
         # Check for uniqueness
@@ -95,6 +96,16 @@ class Company(Document):
             max_size = 5 * 1024 * 1024  # 5MB
             if file_size > max_size:
                  frappe.throw("Company Logo file size must be between 1MB and 5MB")
+
+    def validate_existing_sva_user(self):
+        # Check for existing SVA User with company admin email
+        if frappe.db.exists("SVA User", {"email": self.email}):
+            frappe.throw(f"SVA User with email {self.email} already exists. Please use a different email or contact support.")
+
+        # For Admin Registration, also check volunteering incharge email
+        if self.registration_type == "Admin Registration" and self.volunteering_incharge_email:
+            if frappe.db.exists("SVA User", {"email": self.volunteering_incharge_email}):
+                frappe.throw(f"SVA User with email {self.volunteering_incharge_email} already exists. Please use a different email or contact support.")
 
     def before_save(self):
         # Strip whitespace from text fields
