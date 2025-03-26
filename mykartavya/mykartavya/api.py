@@ -79,6 +79,14 @@ def register_ngo(**kwargs):
 @frappe.whitelist(allow_guest=True)
 def register_company(**kwargs):
     try:
+        # Convert numeric fields to appropriate types
+        if kwargs.get('number_of_employees'):
+            kwargs['number_of_employees'] = int(kwargs['number_of_employees'])
+        if kwargs.get('volunteering_csr_activities'):
+            kwargs['volunteering_csr_activities'] = float(kwargs['volunteering_csr_activities'])
+        if kwargs.get('employee_engagement'):
+            kwargs['employee_engagement'] = float(kwargs['employee_engagement'])
+
         # Create company document
         company = frappe.get_doc({
             "doctype": "Company",
@@ -110,6 +118,13 @@ def register_company(**kwargs):
             "data": company.as_dict()
         }
         
+    except ValueError as e:
+        # Handle type conversion errors
+        frappe.log_error(f"Company Registration Error - Invalid numeric value: {str(e)}")
+        return {
+            "status": "error",
+            "message": "Please ensure all numeric fields contain valid numbers"
+        }
     except Exception as e:
         frappe.log_error(f"Company Registration Error: {str(e)}")
         return {
