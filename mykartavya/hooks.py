@@ -29,7 +29,7 @@ fixtures=[
     # "Builder Client Script",
     # "Website Settings",
     # "User Settings",
-    # "Server Script"
+    # "Server Script",
 ]
 
 

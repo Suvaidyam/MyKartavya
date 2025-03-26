@@ -16,9 +16,6 @@ class VolunteerActivity(Document):
 		self.set_enrollment_status()
 	
 	def set_enrollment_status(self):
-		if not self.activity:
-			return
-
 		try:
 			activity = frappe.get_doc("Activity", self.activity)
 			if activity.auto_approve_volunteers or self.enrollment_wf_state == "Approved":

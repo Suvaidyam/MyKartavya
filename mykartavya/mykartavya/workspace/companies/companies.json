@@ -16,7 +16,7 @@
  "link_to": "Company",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-02-19 13:46:19.723989",
+ "modified": "2025-03-25 17:50:45.920974",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Companies",
@@ -25,7 +25,14 @@
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
- "roles": [],
+ "roles": [
+  {
+   "role": "MyKartvya Admin"
+  },
+  {
+   "role": "Company Admin"
+  }
+ ],
  "sequence_id": 25.0,
  "shortcuts": [],
  "title": "Companies",
