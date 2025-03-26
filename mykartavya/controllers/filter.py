@@ -14,14 +14,15 @@ class Filters:
         else:
             where_clause += " AND (act.company IS NULL OR act.company = '')"
         sql = f"""
-            SELECT 
-                sdg.name,
-                sdg.sdg_image
-            FROM `tabActivity` as act 
+          SELECT 
+            sdg.name,
+            sdg.sdg_image
+            FROM `tabActivity` AS act 
             LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
             LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
-            WHERE 1=1 {where_clause}
-            GROUP BY sdg.name
+            WHERE act.status = 'Published' {where_clause}
+            GROUP BY sdg.name;
+
             """
         sdg = frappe.db.sql(sql, as_dict=1)
         sql = f"""
