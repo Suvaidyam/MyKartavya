@@ -10,7 +10,7 @@
       <div class="bg-white rounded-sm  shadow mt-4">
         <div class="p-6">
           <h2 class="text-xl font-semibold text-gray-700 mb-4">
-            NGO Registration
+            <!-- NGO Registration -->
           </h2>
           <form @submit.prevent="submitForm" class="space-y-8" :class="{ loading: loading }">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
