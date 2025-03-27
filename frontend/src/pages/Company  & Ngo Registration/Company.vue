@@ -1,14 +1,14 @@
 <template>
   <div class="max-w-[1920px] mx-auto px-10 pt-[82px] pb-4 bg-gray-50">
     <section
-      class="relative w-full h-[250px] md:h-[300px] lg:h-[350px] bg-cover bg-center bg-no-repeat banner"
+      class="relative w-full h-[250px] md:h-[300px] lg:h-[247px] bg-cover bg-center bg-no-repeat banner"
     >
       <!-- Absolute Positioned Text -->
       <div
         class="absolute inset-0 flex items-center justify-start px-6 md:px-12 lg:px-16"
       >
         <h1 class="text-white font-semibold text-heading2">
-          MyKartavya For Companies
+          Register For Companies
         </h1>
       </div>
     </section>
