@@ -1,5 +1,18 @@
 frappe.ui.form.on("Activity", {
 
+    validate: function (frm) {
+        if (frm.image_uploaded) {
+            frappe.validated = false;
+            frm.image_uploaded = false;
+        }
+    },
+
+    activity_image: function (frm) {
+        if (frm.doc.activity_image) {
+            frm.image_uploaded = true;
+        }
+    },
+
     onload: function (frm) {
         if (frm.is_new()) {
             frappe.call({
@@ -123,6 +136,7 @@ function update_total_vacancies(frm) {
 
     frm.set_value('total_vacancies', total);
 }
+
 
 
 

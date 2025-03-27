@@ -4,7 +4,7 @@
       <!-- Absolute Positioned Text -->
       <div class="absolute inset-0 flex items-center justify-start px-6 md:px-12 lg:px-16">
         <h1 class="text-white font-semibold text-heading2">
-          Register For Companies
+          Register For Company
         </h1>
       </div>
     </section>
@@ -12,7 +12,7 @@
       <div class="bg-white rounded-sm shadow mt-4">
         <div class="p-6">
           <h2 class="text-xl font-semibold text-gray-700 mb-4">
-            Company Registration
+            <!-- Company Registration -->
           </h2>
           <form @submit.prevent="submitForm" class="space-y-8" :class="{ loading: loading }">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
