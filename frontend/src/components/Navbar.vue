@@ -71,8 +71,7 @@
         <a href="#" @click="handleAboutClick"
           :class="[route.fullPath == '/about-us' ? 'font-medium' : 'font-normal', 'text-sm']">About Us</a>
         <router-link to="/kindness-volunteering"
-          :class="[route.fullPath.split('/')[1] == 'kindness-volunteering' ? 'font-medium' : 'font-normal', 'text-sm']">Kindness
-          &
+          :class="[route.fullPath.split('/')[1] == 'kindness-volunteering' ? 'font-medium' : 'font-normal', 'text-sm']"> 
           Volunteering</router-link>
         <a href="#" @click="handleFaqClick"
           :class="[route.fullPath == '/faqs' ? 'font-medium' : 'font-normal', 'text-sm']">FAQs</a>
@@ -93,7 +92,7 @@
             icon: () => h(FeatherIcon, { name: 'users' }),
           },
           {
-            label: 'Kindness & Volunteering',
+            label: 'Volunteering',
             onClick: () => { change_route('/kindness-volunteering') },
             icon: () => h(FeatherIcon, { name: 'heart' }),
           },

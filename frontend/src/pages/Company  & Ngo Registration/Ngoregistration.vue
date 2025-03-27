@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-[1920px] mx-auto px-10 pt-[82px] pb-4 bg-gray-50">
     <section
-      class="relative w-full h-[250px] md:h-[300px] lg:h-[350px] bg-cover bg-center bg-no-repeat banner"
+      class="relative w-full h-[250px] md:h-[300px] lg:h-[247px] bg-cover bg-center bg-no-repeat banner"
     >
       <!-- Absolute Positioned Text -->
       <div
@@ -20,15 +20,6 @@
           class="space-y-8"
           :class="{ loading: loading }"
         >
-          <!-- Error Message Display -->
-          <!-- <div
-            v-if="error"
-            class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            <span class="block sm:inline">{{ error }}</span>
-          </div> -->
-
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Row 1 -->
             <div class="">
