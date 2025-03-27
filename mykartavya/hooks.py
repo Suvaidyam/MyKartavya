@@ -30,6 +30,7 @@ fixtures=[
     # "Website Settings",
     # "User Settings",
     # "Server Script",
+    # "FAQs"
 ]
 
 

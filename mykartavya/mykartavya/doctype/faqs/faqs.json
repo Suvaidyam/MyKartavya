@@ -1,0 +1,85 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "format:FAQ-{####}",
+    "creation": "2025-03-27 10:33:40.237352",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "basic_details_section",
+        "question",
+        "answer",
+        "status_section",
+        "is_published"
+    ],
+    "fields": [
+        {
+            "fieldname": "basic_details_section",
+            "fieldtype": "Section Break",
+            "label": "FAQ Details"
+        },
+        {
+            "fieldname": "question",
+            "fieldtype": "Text Editor",
+            "label": "Question",
+            "reqd": 1
+        },
+        {
+            "fieldname": "answer",
+            "fieldtype": "Text Editor",
+            "label": "Answer",
+            "reqd": 1
+        },
+        {
+            "fieldname": "status_section",
+            "fieldtype": "Section Break",
+            "label": "Status & Display"
+        },
+        {
+            "default": "0",
+            "fieldname": "is_published",
+            "fieldtype": "Check",
+            "label": "Is Published"
+        }
+    ],
+    "grid_page_length": 50,
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2025-03-27 10:33:40.237352",
+    "modified_by": "Administrator",
+    "module": "Mykartavya",
+    "name": "FAQs",
+    "naming_rule": "Expression",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Volunteer"
+        },
+        {
+            "read": 1,
+            "role": "NGO Admin"
+        },
+        {
+            "read": 1,
+            "role": "Company Admin"
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
+}

@@ -370,3 +370,30 @@ def get_sdg_contribution_details():
     print(result)  # ✅ Indentation fixed
 
     return result
+
+@frappe.whitelist(allow_guest=True)
+def get_faqs():
+    try:
+        # Fetch all published FAQs without display_order and category
+        faqs = frappe.get_all(
+            "FAQs",
+            filters={"is_published": 1},
+            fields=["question", "answer"],
+            order_by="creation ASC"
+        )
+
+        return {
+            "success": True,
+            "message": "FAQs fetched successfully",
+            "data": {
+                "all_faqs": faqs
+            }
+        }
+
+    except Exception as e:
+        frappe.log_error(f"Error in get_faqs: {str(e)}", "FAQ API Error")
+        return {
+            "success": False,
+            "message": "Failed to fetch FAQs",
+            "error": str(e)
+        }
