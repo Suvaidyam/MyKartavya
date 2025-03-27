@@ -78,8 +78,7 @@
       </div>
       <div class="flex items-center gap-2 sm:gap-5 justify-center">
         <router-link v-if="route.fullPath.split('?')[0] != '/login' && !auth.isLoggedIn" to="/login"
-          class="h-8 md:h-9 flex items-center justify-center bg-secondary rounded-sm px-2 sm:px-4 text-white text-[11px] sm:text-base font-medium">Continue
-          as volunteer</router-link>
+          class="h-8 md:h-9 flex items-center justify-center bg-secondary rounded-sm px-2 sm:px-4 text-white text-[11px] sm:text-base font-medium"> Start Volunteering Now</router-link>
         <Dropdown class="block lg:hidden" :options="[
           {
             label: 'Home',
