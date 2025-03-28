@@ -35,7 +35,7 @@
                   {{ field.label }} <span class="text-red-500 pt-2" v-if="field.required">*</span>
                 </label>
                 <input v-if="key !== 'custom_date_of_birth' && field.type !== 'select'" v-model="formData[key]"
-                  :type="field.type" :name="key" :placeholder="field.placeholder"
+                  :type="field.type" :name="key" :placeholder="field.placeholder" :maxlength="field.maxLength || 100"  
                   class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
 
                 <input v-else-if="key === 'custom_date_of_birth'" v-model="formData.custom_date_of_birth" type="date"
@@ -127,14 +127,15 @@ const fields = ref({
   last_name: {
     label: "Last Name",
     type: "text",
-    required: false,
+    required: true,
   },
   mobile_number: {
     label: "Phone No.",
     type: "text",
     required: true,
     pattern: /^[0-9]{10}$/,  // Validates a 10-digit phone number
-    error_message: "Invalid phone number "
+    error_message: "Invalid phone number ",
+    maxLength: 15
   },
   custom_country: { label: "Country", type: "select", required: true },
   custom_state: { label: "State", type: "select", required: true },
