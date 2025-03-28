@@ -409,27 +409,34 @@ def register_verify_otp(email, otp, full_name):
         if not email or not otp:
             raise OTPError(_("Email and OTP are required"))
 
-        # Convert OTP to string for comparison
+        # Add detailed debug logging
+        frappe.logger().debug(f"Input - Email: {email}, OTP: {otp}, Full Name: {full_name}")
+        
         otp = str(otp)
-
-        # Add debug logging
-        frappe.logger().debug(f"Verifying OTP for email: {email}")
-
         otp_key = get_otp_cache_key(email)
         stored_data = frappe.cache().get_value(otp_key)
-
-        frappe.logger().debug(f"Stored OTP data: {stored_data}")
-
+        
+        # Log the stored data
+        frappe.logger().debug(f"Stored cache data: {stored_data}")
+        
         if not stored_data:
+            frappe.logger().debug("No stored OTP data found")
             raise OTPError(_("OTP expired or invalid"))
 
-        stored_otp = str(stored_data.get('otp'))  # Convert stored OTP to string
+        stored_otp = str(stored_data.get('otp'))
         generated_at = stored_data.get('generated_at')
-
-        frappe.logger().debug(f"Comparing OTPs - Received: {otp}, Stored: {stored_otp}")
-
-        # Check if OTP has expired (10 minutes)
+        
+        # Log OTP comparison
+        frappe.logger().debug(f"OTP Comparison - Received: '{otp}', Stored: '{stored_otp}'")
+        frappe.logger().debug(f"OTP Types - Received: {type(otp)}, Stored: {type(stored_otp)}")
+        
+        # Check expiration
+        current_time = now_datetime()
+        expiry_time = get_datetime(generated_at) + timedelta(minutes=10)
+        frappe.logger().debug(f"Time check - Current: {current_time}, Expiry: {expiry_time}")
+        
         if get_datetime(generated_at) + timedelta(minutes=10) < now_datetime():
+            frappe.logger().debug("OTP expired")
             frappe.cache().delete_value(otp_key)
             raise OTPError(_("OTP has expired. Please request a new one"))
 
