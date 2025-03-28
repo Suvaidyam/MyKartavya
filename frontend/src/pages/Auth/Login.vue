@@ -1,34 +1,23 @@
 <template>
-  <div
-    class="flex pt-[62px] flex-col items-center min-h-screen bg-secondary"
-    style="background: #f5f5f5"
-  >
+  <div class="flex pt-[62px] flex-col items-center min-h-screen bg-secondary" style="background: #f5f5f5">
     <!-- Main Content Centered -->
-    <main
-      class="flex flex-col items-center text-center w-full px-4 min-h-[calc(100vh-64px)] justify-center"
-    >
+    <main class="flex flex-col items-center text-center w-full px-4 min-h-[calc(100vh-64px)] justify-center">
       <h1 class="text-[28px] md:text-heading2 font-medium font-poppins">
         Your Journey of Kindness Starts Here
       </h1>
 
       <div class="text-center mt-2">
         <div class="flex flex-wrap justify-center gap-2 md:gap-4">
-          <button
-            class="border px-4 h-8 items-center bg-white rounded-full text-black border-orange-500 flex gap-1"
-          >
+          <button class="border px-4 h-8 items-center bg-white rounded-full text-black border-orange-500 flex gap-1">
             <img src="../../assets/Frame.png" alt="" class="w-4" />
             <p class="text-bodyh2 font-normal">Track Your Impact</p>
           </button>
-          <button
-            class="border px-4 h-8 items-center bg-white rounded-full text-black border-orange-500 flex gap-1"
-          >
+          <button class="border px-4 h-8 items-center bg-white rounded-full text-black border-orange-500 flex gap-1">
             <img src="../../assets/Frame (2).png" alt="" class="w-4" />
             <p class="text-bodyh2 font-normal">Join Activities Anywhere</p>
           </button>
-          <button
-            class="border px-4 h-8 items-center bg-white rounded-full text-black flex gap-1"
-            style="border-color: #f185bb"
-          >
+          <button class="border px-4 h-8 items-center bg-white rounded-full text-black flex gap-1"
+            style="border-color: #f185bb">
             <img src="../../assets/Frame (1).png" alt="" class="w-4" />
             <p class="text-bodyh2 font-normal">Connect with a Community</p>
           </button>
@@ -36,36 +25,22 @@
       </div>
       <div class="mt-8 bg-white p-6 rounded-sm w-full max-w-[443px] shadow-md">
         <h2 class="text-[20px] font-medium mb-4">Login to your account</h2>
-        <input
-          type="email"
-          v-model="email"
-          placeholder="sample@example.com"
-          class="w-full p-2 border rounded-sm mb-4 text-[14px]"
-          style="color: #6e7073"
-          @keyup.enter="get_otp()"
-        />
-        <button
-          :disabled="loading"
-          @click="get_otp()"
+        <input type="email" v-model="email" placeholder="sample@example.com"
+          class="w-full p-2 border rounded-sm mb-4 text-[14px]" style="color: #6e7073" @keyup.enter="get_otp()" />
+        <button :disabled="loading || !isEmailValid" @click="get_otp()"
           class="w-full flex items-center justify-center text-white py-2 rounded-sm text-bodyh2"
-          style="background: #ff5722"
-        >
+          :style="{ background: isEmailValid ? '#ff5722' : '#cccccc' }">
           <div class="h-5 w-5" v-if="loading">
             <div
-              class="animate-spin h-full w-full rounded-full border-[2px] flex justify-center items-center border-dotted border-[#fff]"
-            >
-              <div
-                class="w-3 h-3 rounded-full border-dashed border-[1px] border-[#fff]"
-              ></div>
+              class="animate-spin h-full w-full rounded-full border-[2px] flex justify-center items-center border-dotted border-[#fff]">
+              <div class="w-3 h-3 rounded-full border-dashed border-[1px] border-[#fff]"></div>
             </div>
           </div>
           <p v-else>GET OTP</p>
         </button>
         <p class="text-bodyh2 mt-4 text-gray-600">
           Don't have an account?
-          <router-link to="/register" class="text-orange-500"
-            >Sign up</router-link
-          >
+          <router-link to="/register" class="text-orange-500">Sign up</router-link>
         </p>
         <!-- <div class="flex items-center my-4">
           <hr class="flex-grow border-t border-gray-300" />
@@ -107,7 +82,7 @@
 </template>
 
 <script setup>
-import { ref, inject, onMounted } from 'vue'
+import { ref, inject, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
@@ -119,6 +94,11 @@ const email = ref('')
 const loading = ref(false)
 const g_url = ref('')
 const m_url = ref('')
+
+const isEmailValid = computed(() => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return email.value.trim() !== '' && emailRegex.test(email.value)
+})
 
 const get_otp = async () => {
   if (email.value === '') {
