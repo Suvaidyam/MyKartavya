@@ -367,7 +367,7 @@
                 />
               </div>
 
-              <!-- <div>
+              <div>
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Company Logo <span class="text-red-500 pt-2">*</span>
                 </label>
@@ -399,7 +399,6 @@
                   />
                 </label>
 
-                
                 <div
                   v-if="form.company_logo"
                   class="py-3 flex px-4 border-2 border-dashed border-gray-300 rounded-lg justify-end"
@@ -424,7 +423,7 @@
                 >
                   {{ errors.company_logo }}
                 </p>
-              </div> -->
+              </div>
             </div>
 
             <!-- Submit Button -->
@@ -693,7 +692,7 @@ const submitForm = async () => {
       clear_vision: form.value.clear_vision,
       volunteering_csr_activities: form.value.volunteering_csr_activities,
       employee_engagement: form.value.employee_engagement,
-      // company_logo: form.value.company_logo,
+      company_logo: form.value.company_logo,
     })
 
     if (response.status === 'error') {
