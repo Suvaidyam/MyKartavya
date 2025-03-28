@@ -1,61 +1,46 @@
 <template>
   <section class="mt-2 w-full h-full">
-    <header
-      class="flex items-center flex-wrap gap-5 justify-between w-full max-md:mr-0.5 max-md:max-w-full mt-3"
-    >
-      <div class="flex leading-none justify-between lg:w-[94%] w-[94%]">
-        <h1 class="self-start mt-1 text-2xl text-center text-neutral-950">
+    <header class="flex items-center flex-wrap gap-5 justify-between w-full mt-3">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-4">
+        <h1 class="text-2xl text-neutral-950">
           Kindness & Volunteering
         </h1>
-        <div class="max-w-[184px] min-h-[32px]">
+        <div class="flex flex-wrap items-center gap-4">
           <button
-            class="h-8 rounded-sm border border-[#D9D9D9] bg-white py-2 px-4 gap-1.5 flex flex-row items-center text-sm font-[400] text-[#E23D90]"
-          >
+            class="h-8 rounded-sm border border-[#D9D9D9] bg-white py-2 px-4 gap-1.5 flex flex-row items-center text-sm font-[400] text-[#E23D90] whitespace-nowrap">
             Generate Random
             <FeatherIcon class="size-[13px]" name="refresh-ccw" />
           </button>
+          <Sorting />
         </div>
       </div>
-      <Sorting />
     </header>
 
     <nav
-      class="flex flex-col justify-center items-start py-px mt-4 text-base tracking-normal leading-none bg-white border-b-2 border-solid border-b-[color:var(--Stroke,#D9D9D9)] max-md:pr-5 max-md:mr-0.5 max-md:max-w-full"
-    >
-      <div
-        class="flex flex-wrap gap-4 items-center max-w-full min-h-9 w-[519px]"
-      >
-        <a
-          @click.prevent="activeTab = 'kindness'"
-          class="flex gap-1 items-center self-stretch cursor-pointer p-2 my-auto bg-white border-b-2 border-solid min-w-60 text-stone-500"
-          :class="{
+      class="flex flex-col justify-center items-start py-px mt-4 text-base tracking-normal leading-none bg-white border-b-2 border-solid border-b-[color:var(--Stroke,#D9D9D9)] w-full overflow-x-auto">
+      <div class="flex gap-4 items-center min-h-9 w-full">
+        <a @click.prevent="activeTab = 'kindness'"
+          class="flex gap-1 items-center cursor-pointer p-2 bg-white border-b-2 border-solid whitespace-nowrap" :class="{
             'border-b-[color:var(--S2,#FF7C3A)] text-neutral-950':
               activeTab === 'kindness',
-            'border-b-[color:var(--Primary,#FFF)]': activeTab !== 'kindness',
-          }"
-        >
+            'border-b-[color:var(--Primary,#FFF)] text-[#6B7280]':
+              activeTab !== 'kindness',
+          }">
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/e19184eebc4a59cfdb05175c1ea1d1c4b671b0eb0457754baf6d25cefb636347?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-            alt=""
-            class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
-          />
+            alt="Kindness icon" class="w-5 h-5 object-contain" />
           <span>Acts of Random Kindness</span>
         </a>
-        <a
-          @click.prevent="activeTab = 'volunteering'"
-          class="flex gap-1 items-center self-stretch cursor-pointer p-2 my-auto bg-white border-b-2 border-solid min-w-60 text-stone-500"
-          :class="{
+        <a @click.prevent="activeTab = 'volunteering'"
+          class="flex gap-1 items-center cursor-pointer p-2 bg-white border-b-2 border-solid whitespace-nowrap" :class="{
             'border-b-[color:var(--S2,#FF7C3A)] text-neutral-950':
               activeTab === 'volunteering',
-            'border-b-[color:var(--Primary,#FFF)]':
+            'border-b-[color:var(--Primary,#FFF)] text-[#6B7280]':
               activeTab !== 'volunteering',
-          }"
-        >
+          }">
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/5df16569a7fc25da6cc37b22e0be591bf7cdc731ac26089af74b0ead24bbac7b?placeholderIfAbsent=true&apiKey=ef196b73f352421e818afb6843ffc193"
-            alt=""
-            class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
-          />
+            alt="Volunteering icon" class="w-5 h-5 object-contain" />
           <span>Volunteering Opportunities</span>
         </a>
       </div>
@@ -68,10 +53,7 @@
         <CardLoader />
       </div>
       <div v-else class="h-full">
-        <div
-          v-if="activity.length > 0"
-          class="grid grid-cols-3 gap-5 max-md:grid-cols-1"
-        >
+        <div v-if="activity.length > 0" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
           <Card v-for="item in activity" :key="item.name" :item="item" />
         </div>
         <NotFound v-else />
