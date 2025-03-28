@@ -71,16 +71,14 @@
         <a href="#" @click="handleAboutClick"
           :class="[route.fullPath == '/about-us' ? 'font-medium' : 'font-normal', 'text-sm']">About Us</a>
         <router-link to="/kindness-volunteering"
-          :class="[route.fullPath.split('/')[1] == 'kindness-volunteering' ? 'font-medium' : 'font-normal', 'text-sm']">Kindness
-          &
+          :class="[route.fullPath.split('/')[1] == 'kindness-volunteering' ? 'font-medium' : 'font-normal', 'text-sm']"> 
           Volunteering</router-link>
         <a href="#" @click="handleFaqClick"
           :class="[route.fullPath == '/faqs' ? 'font-medium' : 'font-normal', 'text-sm']">FAQs</a>
       </div>
       <div class="flex items-center gap-2 sm:gap-5 justify-center">
         <router-link v-if="route.fullPath.split('?')[0] != '/login' && !auth.isLoggedIn" to="/login"
-          class="h-8 md:h-9 flex items-center justify-center bg-secondary rounded-sm px-2 sm:px-4 text-white text-[11px] sm:text-base font-medium">Continue
-          as volunteer</router-link>
+          class="h-8 md:h-9 flex items-center justify-center bg-secondary rounded-sm px-2 sm:px-4 text-white text-[11px] sm:text-base font-medium"> Start Volunteering Now</router-link>
         <Dropdown class="block lg:hidden" :options="[
           {
             label: 'Home',
@@ -93,7 +91,7 @@
             icon: () => h(FeatherIcon, { name: 'users' }),
           },
           {
-            label: 'Kindness & Volunteering',
+            label: 'Volunteering',
             onClick: () => { change_route('/kindness-volunteering') },
             icon: () => h(FeatherIcon, { name: 'heart' }),
           },

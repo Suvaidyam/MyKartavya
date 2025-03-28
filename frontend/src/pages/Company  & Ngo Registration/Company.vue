@@ -1,382 +1,242 @@
 <template>
-  <div class="max-w-[1920px] mx-auto px-10 pt-[82px] pb-4 bg-gray-50">
-    <section
-      class="relative w-full h-[250px] md:h-[300px] lg:h-[350px] bg-cover bg-center bg-no-repeat banner"
-    >
+  <div class="max-w-[1920px] mx-auto pt-[82px] pb-4 bg-gray-50">
+    <section class="relative w-full h-[250px] md:h-[300px] lg:h-[247px] bg-cover bg-center bg-no-repeat banner">
       <!-- Absolute Positioned Text -->
-      <div
-        class="absolute inset-0 flex items-center justify-start px-6 md:px-12 lg:px-16"
-      >
+      <div class="absolute inset-0 flex items-center justify-start px-6 md:px-12 lg:px-16">
         <h1 class="text-white font-semibold text-heading2">
-          MyKartavya For Companies
+          Register For Company
         </h1>
       </div>
     </section>
-    <div class="bg-white rounded-lg shadow mt-4">
-      <div class="p-6">
-        <h2 class="text-xl font-semibold text-gray-700 mb-4">
-          Company Registration
-        </h2>
-        <form
-          @submit.prevent="submitForm"
-          class="space-y-8"
-          :class="{ loading: loading }"
-        >
-          <!-- Error Message Display -->
-          <!-- <div
-            v-if="error"
-            class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative"
-            role="alert"
-          >
-            <span class="block sm:inline">{{ error }}</span>
-          </div> -->
+    <div class="px-10">
+      <div class="bg-white rounded-sm shadow mt-4">
+        <div class="p-6">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">
+            <!-- Company Registration -->
+          </h2>
+          <form @submit.prevent="submitForm" class="space-y-8" :class="{ loading: loading }">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Basic Information -->
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  Company Name <span class="text-red-500 pt-2">*</span>
+                </label>
+                <input v-model="form.company_name" type="text" name="company_name"
+                  @input="handle_input_change('company_name')" placeholder="Enter Company Name"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.company_name" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.company_name }}
+                </p>
+              </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Basic Information -->
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Company Name <span class="text-red-500 pt-2">*</span>
-              </label>
-              <input
-                v-model="form.company_name"
-                type="text"
-                name="company_name"
-                @input="handle_input_change('company_name')"
-                placeholder="Enter Company Name"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              />
-              <p
-                v-if="errors.company_name"
-                class="text-red-500 text-[10px] pt-1 pl-1"
-              >
-                {{ errors.company_name }}
-              </p>
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  Registration Date <span class="text-red-500 pt-2">*</span>
+                </label>
+                <input v-model="form.registration_date" type="date" name="registration_date"
+                  @input="handle_input_change('registration_date')"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.registration_date" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.registration_date }}
+                </p>
+              </div>
+
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  Email <span class="text-red-500 pt-2">*</span>
+                </label>
+                <input v-model="form.email" name="email" type="email" @input="handle_input_change('email')"
+                  placeholder="company@example.com"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.email" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.email }}
+                </p>
+              </div>
+
+              <!-- Contact Information -->
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  First Name <span class="text-red-500 pt-2">*</span>
+                </label>
+                <input v-model="form.first_name" type="text" name="first_name"
+                  @input="handle_input_change('first_name')" placeholder="First Name"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.first_name" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.first_name }}
+                </p>
+              </div>
+
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  Last Name <span class="text-red-500 pt-2">*</span>
+                </label>
+                <input v-model="form.last_name" type="text" name="last_name" @input="handle_input_change('last_name')"
+                  placeholder="Last Name"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.last_name" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.last_name }}
+                </p>
+              </div>
+
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  Designation <span class="text-red-500 pt-2">*</span>
+                </label>
+                <input v-model="form.designation" type="text" name="designation"
+                  @input="handle_input_change('designation')" placeholder="e.g., Director, Manager"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.designation" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.designation }}
+                </p>
+              </div>
+
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  Mobile Number <span class="text-red-500 pt-2">*</span>
+                </label>
+                <input v-model="form.mobile_number" type="tel" name="mobile_number"
+                  @input="handle_input_change('mobile_number')" placeholder="+91 XXXXX XXXXXr" maxlength="10"
+                  pattern="\d{10}"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.mobile_number" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.mobile_number }}
+                </p>
+              </div>
+
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  Phone
+                </label>
+                <input v-model="form.phone" type="tel" name="phone" placeholder="+91 XXXXX XXXXX" maxlength="10"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.phone" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.phone }}
+                </p>
+              </div>
+
+              <!-- Address Information -->
+              <div class="md:col-span-2">
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  India Headquarters Address
+                  <span class="text-red-500 pt-2">*</span>
+                </label>
+                <textarea v-model="form.address" @input="handle_input_change('address')" name="address" rows="3"
+                  placeholder="Enter complete address with landmarks"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"></textarea>
+                <p v-if="errors.address" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.address }}
+                </p>
+              </div>
+
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  Country <span class="text-red-500 pt-2">*</span>
+                </label>
+                <select v-model="form.country" @change="fetchStates" name="country"
+                  @input="handle_input_change('country')"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
+                  <option value="" disabled>Select Country</option>
+                  <option v-for="country in countries" :key="country.name" :value="country.name">
+                    {{ country.label || country.name }}
+                  </option>
+                </select>
+                <p v-if="errors.country" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.country }}
+                </p>
+              </div>
+
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  State <span class="text-red-500 pt-2">*</span>
+                </label>
+                <select v-model="form.state" @change="fetchCities" @input="handle_input_change('state')" name="state"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
+                  <option value="" disabled>Select State</option>
+                  <option v-for="state in states" :key="state.name" :value="state.name">
+                    {{ state.state_name || state.name }}
+                  </option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  City <span class="text-red-500 pt-2">*</span>
+                </label>
+                <select v-model="form.city" name="city"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
+                  <option value="" disabled>Select City</option>
+                  <option v-for="city in cities" :key="city.name" :value="city.name">
+                    {{ city.district_name || city.name }}
+                  </option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  Pincode <span class="text-red-500 pt-2">*</span>
+                </label>
+                <input v-model="form.pincode" type="text" name="pincode" @input="handle_input_change('pincode')"
+                  placeholder="Enter PIN code" maxlength="6" pattern="\d{6}"
+                  oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.pincode" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.pincode }}
+                </p>
+              </div>
+
+              <!-- Organization Details -->
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  Number of Employees <span class="text-red-500 pt-2">*</span>
+                </label>
+                <input v-model="form.number_of_employees" name="number_of_employees" type="text"
+                  @input="handle_input_change('number_of_employees')" min="1"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+              </div>
+
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  Clear Vision <span class="text-red-500 pt-2">*</span>
+                </label>
+                <select v-model="form.clear_vision"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+
+              <!-- Volunteering Program Details -->
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  Volunteering CSR Activities Cost (%)
+                  <span class="text-red-500 pt-2">*</span>
+                </label>
+                <input v-model="form.volunteering_csr_activities" name="volunteering_csr_activities" type="text"
+                  @input="handle_input_change('volunteering_csr_activities')" min="0" max="100"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+              </div>
+
+              <div>
+                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
+                  Employee Engagement Coverage (%)
+                  <span class="text-red-500 pt-2">*</span>
+                </label>
+                <input v-model="form.employee_engagement" name="employee_engagement" type="text"
+                  @input="handle_input_change('employee_engagement')" min="0" max="100"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+              </div>
             </div>
 
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Registration Date <span class="text-red-500 pt-2">*</span>
-              </label>
-              <input
-                v-model="form.registration_date"
-                type="date"
-                name="registration_date"
-                @input="handle_input_change('registration_date')"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              />
-              <p
-                v-if="errors.registration_date"
-                class="text-red-500 text-[10px] pt-1 pl-1"
-              >
-                {{ errors.registration_date }}
-              </p>
+            <!-- Submit Button -->
+            <div class="mt-6">
+              <button type="submit"
+                class="bg-orange-500 text-white font-semibold py-2 px-4 rounded-sm hover:bg-orange-600 transition"
+                :disabled="loading">
+                {{ loading ? 'Registering...' : 'Register Company' }}
+              </button>
             </div>
-
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Email <span class="text-red-500 pt-2">*</span>
-              </label>
-              <input
-                v-model="form.email"
-                name="email"
-                type="email"
-                @input="handle_input_change('email')"
-                placeholder="company@example.com"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              />
-              <p v-if="errors.email" class="text-red-500 text-[10px] pt-1 pl-1">
-                {{ errors.email }}
-              </p>
-            </div>
-
-            <!-- Contact Information -->
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                First Name <span class="text-red-500 pt-2">*</span>
-              </label>
-              <input
-                v-model="form.first_name"
-                type="text"
-                name="first_name"
-                @input="handle_input_change('first_name')"
-                placeholder="First Name"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              />
-              <p
-                v-if="errors.first_name"
-                class="text-red-500 text-[10px] pt-1 pl-1"
-              >
-                {{ errors.first_name }}
-              </p>
-            </div>
-
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Last Name <span class="text-red-500 pt-2">*</span>
-              </label>
-              <input
-                v-model="form.last_name"
-                type="text"
-                name="last_name"
-                @input="handle_input_change('last_name')"
-                placeholder="Last Name"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              />
-              <p
-                v-if="errors.last_name"
-                class="text-red-500 text-[10px] pt-1 pl-1"
-              >
-                {{ errors.last_name }}
-              </p>
-            </div>
-
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Designation <span class="text-red-500 pt-2">*</span>
-              </label>
-              <input
-                v-model="form.designation"
-                type="text"
-                name="designation"
-                @input="handle_input_change('designation')"
-                placeholder="e.g., Director, Manager"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              />
-              <p
-                v-if="errors.designation"
-                class="text-red-500 text-[10px] pt-1 pl-1"
-              >
-                {{ errors.designation }}
-              </p>
-            </div>
-
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Mobile Number <span class="text-red-500 pt-2">*</span>
-              </label>
-              <input
-                v-model="form.mobile_number"
-                type="tel"
-                name="mobile_number"
-                @input="handle_input_change('mobile_number')"
-                placeholder="+91 XXXXX XXXXXr"
-                maxlength="10"
-                pattern="\d{10}"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              />
-              <p
-                v-if="errors.mobile_number"
-                class="text-red-500 text-[10px] pt-1 pl-1"
-              >
-                {{ errors.mobile_number }}
-              </p>
-            </div>
-
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Phone
-              </label>
-              <input
-                v-model="form.phone"
-                type="tel"
-                name="phone"
-                placeholder="+91 XXXXX XXXXX"
-                maxlength="10"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              />
-              <p v-if="errors.phone" class="text-red-500 text-[10px] pt-1 pl-1">
-                {{ errors.phone }}
-              </p>
-            </div>
-
-            <!-- Address Information -->
-            <div class="md:col-span-2">
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                India Headquarters Address
-                <span class="text-red-500 pt-2">*</span>
-              </label>
-              <textarea
-                v-model="form.address"
-                @input="handle_input_change('address')"
-                name="address"
-                rows="3"
-                placeholder="Enter complete address with landmarks"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              ></textarea>
-              <p
-                v-if="errors.address"
-                class="text-red-500 text-[10px] pt-1 pl-1"
-              >
-                {{ errors.address }}
-              </p>
-            </div>
-
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Country <span class="text-red-500 pt-2">*</span>
-              </label>
-              <select
-                v-model="form.country"
-                @change="fetchStates"
-                name="country"
-                @input="handle_input_change('country')"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              >
-                <option value="" disabled>Select Country</option>
-                <option
-                  v-for="country in countries"
-                  :key="country.name"
-                  :value="country.name"
-                >
-                  {{ country.label || country.name }}
-                </option>
-              </select>
-              <p
-                v-if="errors.country"
-                class="text-red-500 text-[10px] pt-1 pl-1"
-              >
-                {{ errors.country }}
-              </p>
-            </div>
-
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                State <span class="text-red-500 pt-2">*</span>
-              </label>
-              <select
-                v-model="form.state"
-                @change="fetchCities"
-                @input="handle_input_change('state')"
-                name="state"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              >
-                <option value="" disabled>Select State</option>
-                <option
-                  v-for="state in states"
-                  :key="state.name"
-                  :value="state.name"
-                >
-                  {{ state.state_name || state.name }}
-                </option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                City <span class="text-red-500 pt-2">*</span>
-              </label>
-              <select
-                v-model="form.city"
-                name="city"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              >
-                <option value="" disabled>Select City</option>
-                <option
-                  v-for="city in cities"
-                  :key="city.name"
-                  :value="city.name"
-                >
-                  {{ city.district_name || city.name }}
-                </option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Pincode <span class="text-red-500 pt-2">*</span>
-              </label>
-              <input
-                v-model="form.pincode"
-                type="text"
-                name="pincode"
-                @input="handle_input_change('pincode')"
-                placeholder="Enter PIN code"
-                maxlength="6"
-                pattern="\d{6}"
-                oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              />
-              <p
-                v-if="errors.pincode"
-                class="text-red-500 text-[10px] pt-1 pl-1"
-              >
-                {{ errors.pincode }}
-              </p>
-            </div>
-
-            <!-- Organization Details -->
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Number of Employees <span class="text-red-500 pt-2">*</span>
-              </label>
-              <input
-                v-model="form.number_of_employees"
-                name="number_of_employees"
-                type="text"
-                @input="handle_input_change('number_of_employees')"
-                min="1"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              />
-            </div>
-
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Clear Vision <span class="text-red-500 pt-2">*</span>
-              </label>
-              <select
-                v-model="form.clear_vision"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              >
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            <!-- Volunteering Program Details -->
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Volunteering CSR Activities Cost (%)
-                <span class="text-red-500 pt-2">*</span>
-              </label>
-              <input
-                v-model="form.volunteering_csr_activities"
-                name="volunteering_csr_activities"
-                type="text"
-                @input="handle_input_change('volunteering_csr_activities')"
-                min="0"
-                max="100"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              />
-            </div>
-
-            <div>
-              <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                Employee Engagement Coverage (%)
-                <span class="text-red-500 pt-2">*</span>
-              </label>
-              <input
-                v-model="form.employee_engagement"
-                name="employee_engagement"
-                type="text"
-                @input="handle_input_change('employee_engagement')"
-                min="0"
-                max="100"
-                class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-              />
-            </div>
-          </div>
-
-          <!-- Submit Button -->
-          <div class="mt-6">
-            <button
-              type="submit"
-              class="bg-orange-500 text-white font-semibold py-2 px-4 rounded-sm hover:bg-orange-600 transition"
-              :disabled="loading"
-            >
-              {{ loading ? 'Registering...' : 'Register Company' }}
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -446,11 +306,11 @@ const validateForm = () => {
     if (!form.value[field]) {
       error.value = `Please fill in ${field.replace(/_/g, ' ')}.`
       errors.value[field] = ` ${field.replace(/_/g, ' ')} is required!`
-    //   toast.error(error.value, {
-    //     position: 'top-right',
-    //     autoClose: 3000,
-    //     hideProgressBar: false,
-    //   })
+      //   toast.error(error.value, {
+      //     position: 'top-right',
+      //     autoClose: 3000,
+      //     hideProgressBar: false,
+      //   })
       if (firstErrorField.value === null) {
         firstErrorField.value = field
       }
@@ -707,6 +567,7 @@ onMounted(async () => {
   font-size: 0.875rem;
   margin-top: 0.5rem;
 }
+
 .banner {
   background-image: url('../../assets/corporate-web-min.png');
 }

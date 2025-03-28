@@ -15,7 +15,7 @@ required_apps = [
 fixtures=[
     # 'Role',
     # 'Role Profile',
-    # 'Builder Page',
+    'Builder Page',
     # 'Custom HTML Block',
     # 'SDG',
     # 'Skills',
@@ -30,6 +30,7 @@ fixtures=[
     # "Website Settings",
     # "User Settings",
     # "Server Script",
+    # "FAQs"
 ]
 
 
