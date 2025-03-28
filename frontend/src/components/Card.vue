@@ -2,7 +2,8 @@
     <div v-if="type != 'group'" class="card bg-white overflow-hidden">
         <router-link :to="`/activity/${item.activity}`">
             <div class="w-full flex flex-col justify-between h-40 rounded-md relative">
-                <img :src="item.activity_image" alt="" class="h-full rounded-md">
+                <img :src="item.activity_image || 'https://res.cloudinary.com/dyt5jqnax/image/upload/v1742968038/mykartavya-logo_jptv31.png'"
+                    alt="" class="h-full rounded-md">
                 <div
                     class="bg-[#FF7C3A] activity-type absolute top-2 text-white font-medium text-xs flex items-center pl-3 pr-5 h-6 ">
                     {{ item.activity_type }}
@@ -83,7 +84,8 @@
     <article v-else class="flex flex-col card w-full py-2 overflow-hidden">
         <router-link :to="auth.isLoggedIn ? '/activity/' + item.activity : '/kindness-volunteering/' + item.activity">
             <div class="w-full flex flex-col justify-between h-40 rounded-md relative">
-                <img :src="item.activity_image" alt="" class="h-full rounded-md">
+                <img :src="item.activity_image || 'https://res.cloudinary.com/dyt5jqnax/image/upload/v1742968038/mykartavya-logo_jptv31.png'"
+                    alt="" class="h-full rounded-md">
                 <div
                     class="bg-[#FF7C3A] activity-type absolute top-2 text-white font-medium text-xs flex items-center pl-3 pr-5 h-6 ">
                     {{ item.activity_type }}
