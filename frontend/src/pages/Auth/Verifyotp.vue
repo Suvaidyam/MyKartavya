@@ -27,7 +27,7 @@
         <h2 class="text-[20px] font-medium font-poppins text-gray-900 text-center">OTP Verification</h2>
         <p class="text-gray-600 text-center mt-1 text-[12px] font-normal">
           We've shared a 6-digit OTP on <span class="text-orange-500 font-semibold">{{ email || 'sample@gmail.com'
-            }}</span>
+          }}</span>
         </p>
 
         <!-- OTP Input -->
@@ -58,7 +58,15 @@
         <!-- Resend OTP -->
         <p class="text-center text-[14px] text-gray-600 mt-4">
           Didn't receive?
-          <a href="#" @click.prevent="resendOTP" class="text-orange-500 font-normal text-[14px]">Resend OTP</a>
+          <a href="#" @click.prevent="resendOTP" :class="{
+            'text-orange-500 hover:text-orange-600': !isResendDisabled,
+            'text-gray-400 cursor-not-allowed': isResendDisabled
+          }" class="font-normal text-[14px]">
+            Resend OTP
+            <span v-if="isResendDisabled">
+              ({{ countdown }}s)
+            </span>
+          </a>
         </p>
       </div>
     </main>
@@ -66,7 +74,7 @@
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'
+import { ref, inject, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
@@ -77,6 +85,41 @@ const route = useRoute()
 const loading = ref(false)
 const email = ref(route.query.email || '')
 const bindValue = ref('') // Fix for OTP binding
+const isResendDisabled = ref(false)
+const countdown = ref(30) // 30 seconds countdown
+let countdownTimer = null
+
+const startCountdown = () => {
+  isResendDisabled.value = true
+  countdown.value = 30
+
+  countdownTimer = setInterval(() => {
+    countdown.value--
+    if (countdown.value <= 0) {
+      clearInterval(countdownTimer)
+      isResendDisabled.value = false
+    }
+  }, 1000)
+}
+
+const resendOTP = async () => {
+  if (isResendDisabled.value) return
+
+  try {
+    startCountdown()
+    await getOTP()
+  } catch (error) {
+    isResendDisabled.value = false
+    clearInterval(countdownTimer)
+  }
+}
+
+// Cleanup timer when component unmounts
+onUnmounted(() => {
+  if (countdownTimer) {
+    clearInterval(countdownTimer)
+  }
+})
 
 const getOTP = async () => {
   if (!email.value) {
@@ -87,36 +130,34 @@ const getOTP = async () => {
   try {
     const response = await call('mykartavya.controllers.email.send_otp', { email: email.value })
     if (response.status === "success") {
-      toast.success('OTP sent successfully',
-        {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-        }
-      )
-    } else {
-      toast.error('Failed to send OTP',
-        {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-        }
-      )
-    }
-  } catch (error) {
-    toast.error('Failed to send OTP',
-      {
+      toast.success('OTP sent successfully', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
-      }
-    )
+      })
+    } else {
+      isResendDisabled.value = false // Reset disabled state on error
+      clearInterval(countdownTimer)
+      toast.error('Failed to send OTP', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+      })
+    }
+  } catch (error) {
+    isResendDisabled.value = false // Reset disabled state on error
+    clearInterval(countdownTimer)
+    toast.error('Failed to send OTP', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+    })
   }
 }
 
@@ -194,10 +235,6 @@ const verifyOTP = async () => {
   }
 }
 
-const resendOTP = () => {
-  getOTP();
-}
-
 // Add this function to handle OTP completion
 const handleOnComplete = (value) => {
   // Automatically verify when all digits are entered
@@ -241,5 +278,10 @@ const handleOnChange = (value) => {
 input::placeholder {
   font-size: 15px;
   font-weight: 600;
+}
+
+/* Add these new styles */
+.cursor-not-allowed {
+  cursor: not-allowed;
 }
 </style>
