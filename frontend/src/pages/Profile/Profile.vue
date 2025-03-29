@@ -29,7 +29,8 @@
                     <h2 class="text-xl font-semibold mb-6">Personal Info</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <div
+                                class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -43,7 +44,8 @@
                         </div>
 
                         <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <div
+                                class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -57,7 +59,8 @@
                             </div>
                         </div>
                         <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <div
+                                class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -71,7 +74,8 @@
                             </div>
                         </div>
                         <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <div
+                                class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -83,8 +87,9 @@
                                 <div class="text-caption text-gray-500">Age</div>
                             </div>
                         </div>
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <div class="flex items-start gap-3" v-if="svaUserData?.custom_company">
+                            <div
+                                class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -92,12 +97,13 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">Dhwani RIS</div>
+                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.custom_company || '---' }}</div>
                                 <div class="text-caption text-gray-500">Organisation</div>
                             </div>
                         </div>
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <div class="flex items-start gap-3" v-if="svaUserData?.custom_company">
+                            <div
+                                class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -111,7 +117,8 @@
                             </div>
                         </div>
                         <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <div
+                                class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -119,19 +126,21 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.custom_ngo || '---' }}</div>
+                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.custom_title || '---' }}</div>
                                 <div class="text-caption text-gray-500">Title</div>
                             </div>
                         </div>
                         <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <div
+                                class="w-10 h-10 min-w-10 min-h-10 bg-gray-100 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
                                     <path
                                         d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900 break-all">https://www.linkedin.com/in/username/
+                                <div class="text-bodyh2 text-gray-900 break-all">{{ svaUserData?.custom_linkedin ||
+                                    '---' }}
                                 </div>
                                 <div class="text-caption text-gray-500">Linkedin</div>
                             </div>
@@ -155,7 +164,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                 </svg>
-                                <span class="text-gray-700">Portfolio_Aayush Kumar.pdf</span>
+                                <span class="text-gray-700">{{ svaUserData?.custom_portfolio || '---' }}</span>
                             </div>
                             <div class="flex items-center gap-2 px-4 py-3 bg-gray-50 rounded-lg">
                                 <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"
@@ -163,7 +172,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                 </svg>
-                                <span class="text-gray-700">CV_Aayush Kumar.pdf</span>
+                                <span class="text-gray-700">{{ svaUserData?.custom_cv || '---' }}</span>
                             </div>
                         </div>
                     </div>
@@ -184,7 +193,7 @@
                 <div v-if="!svaUserData?.custom_company" class="bg-white rounded-lg p-6 shadow-sm mt-6">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-xl font-semibold">My Companies</h2>
-                       <Company/>
+                        <Company />
                     </div>
                     <div class="space-y-4">
                         <div v-if="mappedCompanies.length === 0" class="text-gray-500 text-center py-8">
