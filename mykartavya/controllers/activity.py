@@ -65,8 +65,8 @@ class Activity:
         LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
         LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
         WHERE {where_clause}
-        {order_by_clause}
         GROUP BY act.name
+        {order_by_clause}
         """
 
         try:
@@ -108,13 +108,18 @@ class Activity:
 
             if "sdgs" in filter and filter["sdgs"]:
                 sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
-                where_clause += f" AND sd.sdgs IN ({sdgs_values})"
+                where_clause += f"""
+                AND EXISTS (
+                    SELECT 1 FROM `tabSDGs Child` AS sub_sd
+                    WHERE sub_sd.parent = act.name
+                    AND sub_sd.sdgs IN ({sdgs_values})
+                )"""
             
             if "volunteering_hours" in filter and filter["volunteering_hours"]:
                 if filter["volunteering_hours"] == "Low to High":
-                    order_by_clause = " ORDER BY act.max_hours ASC"
+                    order_by_clause = " ORDER BY act.hours ASC"
                 elif filter["volunteering_hours"] == "High to Low":
-                    order_by_clause = " ORDER BY act.max_hours DESC"
+                    order_by_clause = " ORDER BY act.hours DESC"
         sql_query = f"""
                     SELECT 
                         va.name as name,
