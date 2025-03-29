@@ -32,17 +32,11 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   {{ field.label }} <span class="text-red-500 pt-2" v-if="field.required">*</span>
                 </label>
-<<<<<<< HEAD
                 <input v-if="key !== 'custom_date_of_birth' && field.type !== 'select' && field.type !== 'file'"
                   v-model="formData[key]" :type="field.type" :name="key" :placeholder="field.placeholder"
                   :readonly="field.readonly"
                   class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
                   :class="{ 'bg-gray-100': field.readonly }" />
-=======
-                <input v-if="key !== 'custom_date_of_birth' && field.type !== 'select'" v-model="formData[key]"
-                  :type="field.type" :name="key" :placeholder="field.placeholder" :maxlength="field.maxLength || 100"  
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
->>>>>>> bca76e0df735aed833669dd1679463ac131e6e3d
 
                 <input v-else-if="key === 'custom_date_of_birth'" v-model="formData.custom_date_of_birth" type="date"
                   name="custom_date_of_birth" :max="maxDate"
