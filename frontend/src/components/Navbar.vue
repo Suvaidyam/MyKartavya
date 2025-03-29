@@ -66,8 +66,9 @@
         <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="w-44 sm:w-auto sm:h-8" />
       </a>
       <div class="hidden lg:flex space-x-8 text-gray-700">
-        <router-link to="/"
-          :class="[route.fullPath == '/landin' ? 'font-medium' : 'font-normal', 'text-sm']">Home</router-link>
+        
+        <a href="#" @click="handleLogoClick"
+          :class="[route.fullPath == '/landin' ? 'font-medium' : 'font-normal', 'text-sm']">Home</a>
         <a href="#" @click="handleAboutClick"
           :class="[route.fullPath == '/about-us' ? 'font-medium' : 'font-normal', 'text-sm']">About Us</a>
         <router-link to="/kindness-volunteering"
