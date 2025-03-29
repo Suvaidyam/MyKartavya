@@ -449,11 +449,15 @@ def register_verify_otp(email, otp, full_name):
         frappe.cache().delete_value(get_attempt_cache_key(email))
 
         # Create new user
-        first_name = full_name.split(' ')[0]
-        if len(full_name.split(' ')) > 1:
-            last_name = full_name.split(' ')[1]
+        
+        name_parts = full_name.split()
+        if len(name_parts) > 2:
+            first_name = name_parts[0]
+            last_name = ' '.join(name_parts[1:])  # Join remaining words as last_name
         else:
-            last_name = ""
+            first_name = name_parts[0]
+            last_name = name_parts[1] if len(name_parts) > 1 else ""
+
         frappe.set_user("Administrator")
         user = frappe.get_doc({
             "doctype": "SVA User",
