@@ -21,8 +21,6 @@
     </div>
 
     <div class="bg-white rounded-lg shadow mt-4">
-
-
       <!-- Tab Content -->
       <div class="p-6">
         <!-- Personal Info Tab -->
@@ -30,20 +28,39 @@
           <h2 class="text-xl font-semibold text-gray-700 mb-4">Personal Info</h2>
           <form @submit.prevent="onSubmit">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div v-for="(field, key) in fields" :key="key">
+              <div v-for="(field, key) in visibleFields" :key="key">
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   {{ field.label }} <span class="text-red-500 pt-2" v-if="field.required">*</span>
                 </label>
-                <input v-if="key !== 'custom_date_of_birth' && field.type !== 'select'" v-model="formData[key]"
-                  :type="field.type" :name="key" :placeholder="field.placeholder" :maxlength="field.maxLength || 100"  
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <input v-if="key !== 'custom_date_of_birth' && field.type !== 'select' && field.type !== 'file'"
+                  v-model="formData[key]" :type="field.type" :name="key" :placeholder="field.placeholder"
+                  :readonly="field.readonly"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
+                  :class="{ 'bg-gray-100': field.readonly }" />
 
                 <input v-else-if="key === 'custom_date_of_birth'" v-model="formData.custom_date_of_birth" type="date"
                   name="custom_date_of_birth" :max="maxDate"
                   class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
 
-                <select v-if="field.type === 'select'" v-model="formData[key]" :name="key"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
+                <div v-else-if="field.type === 'file'" class="flex flex-col">
+                  <input v-if="key === 'custom_portfolio'" type="file" id="portfolioInput" :name="key"
+                    @change="onPortfolioSelected" class="hidden" />
+                  <input v-if="key === 'custom_cv'" type="file" id="cvInput" :name="key" @change="onCvSelected"
+                    class="hidden" />
+                  <div class="flex items-center">
+                    <button type="button" @click="triggerFileInput(key)"
+                      class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-sm transition">
+                      {{ formData[key] ? 'Change File' : 'Upload File' }}
+                    </button>
+                    <span v-if="formData[key]" class="ml-2 text-sm text-gray-600 truncate max-w-xs">
+                      {{ formData[key].split('/').pop() }}
+                    </span>
+                  </div>
+                </div>
+
+                <select v-if="field.type === 'select'" v-model="formData[key]" :name="key" :disabled="field.readonly"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
+                  :class="{ 'bg-gray-100': field.readonly }">
                   <option value="" disabled>Select {{ field.label }}</option>
                   <option v-for="option in getOptions(key)" :key="option.name" :value="option.name">
                     {{ option.label || option.name }}
@@ -54,37 +71,6 @@
                 <p v-if="errors[key]" class="text-red-500 text-[11px] mt-1">
                   {{ errors[key] }}
                 </p>
-
-              </div>
-              <!-- CV Upload -->
-              <div>
-                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Add CV</label>
-                <div
-                  class="flex flex-col items-center justify-center border-2 border-dashed border-orange-300 text-orange-500 p-4 rounded cursor-pointer"
-                  @click="cvInput.click()">
-                  <svg class="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M7 3h10M7 3a2 2 0 00-2 2v2m2-2h10m0 0a2 2 0 012 2v2m-2-2H7m13 8V8H4v8a2 2 0 002 2h12a2 2 0 002-2z" />
-                  </svg>
-                  <span class="text-bodyh1">Click to upload or drag and drop</span>
-                  <input ref="cvInput" type="file" accept=".pdf,.doc,.docx" class="hidden" @change="onCvSelected" />
-                </div>
-              </div>
-
-              <!-- Portfolio Upload -->
-              <div>
-                <label class="block text-bodyh1 font-normal text-gray-700 mb-1">Add Portfolio</label>
-                <div
-                  class="flex flex-col items-center justify-center border-2 border-dashed border-orange-300 text-orange-500 p-4 rounded cursor-pointer"
-                  @click="portfolioInput.click()">
-                  <svg class="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M7 3h10M7 3a2 2 0 00-2 2v2m2-2h10m0 0a2 2 0 012 2v2m-2-2H7m13 8V8H4v8a2 2 0 002 2h12a2 2 0 002-2z" />
-                  </svg>
-                  <span class="text-sm">Click to upload or drag and drop</span>
-                  <input ref="portfolioInput" type="file" accept=".pdf,.doc,.docx" class="hidden"
-                    @change="onPortfolioSelected" />
-                </div>
               </div>
             </div>
 
@@ -96,14 +82,13 @@
             </div>
           </form>
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, inject, onMounted, watch, nextTick } from "vue";
+import { ref, inject, onMounted, watch, nextTick, computed } from "vue";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { useRouter } from "vue-router";
@@ -113,7 +98,6 @@ const call = inject("call");
 const auth = inject("auth");
 const router = useRouter();
 const errorFieldRef = ref(null);
-
 
 // Form fields and data
 const fields = ref({
@@ -140,7 +124,7 @@ const fields = ref({
   custom_country: { label: "Country", type: "select", required: true },
   custom_state: { label: "State", type: "select", required: true },
   custom_city: { label: "City", type: "select", required: true },
-  custom_company: { label: "Company", type: "select", required: false },
+  custom_company: { label: "Company", type: "select", required: false, readonly: false },
   custom_date_of_birth: {
     label: "Date of Birth",
     type: "date",
@@ -150,9 +134,28 @@ const fields = ref({
     max: "maxDate",
     error_message: "Please select a valid date of birth"
   },
-  title: { label: "Title", type: "text", placeholder: "Enter your title", required: false }
+  custom_title: {
+    label: "Title",
+    type: "text",
+    placeholder: "Enter your title",
+    required: false
+  },
+  custom_portfolio: {
+    label: "Portfolio",
+    type: "file",
+    required: false
+  },
+  custom_cv: {
+    label: "CV",
+    type: "file",
+    required: false
+  },
+  custom_linkedin: {
+    label: "LinkedIn",
+    type: "text",
+    required: false
+  }
 });
-
 
 const formData = ref({
   first_name: "",
@@ -163,11 +166,28 @@ const formData = ref({
   custom_city: "",
   custom_company: "",
   custom_date_of_birth: "",
-  title: "",
+  custom_title: "",
+  custom_portfolio: "",
+  custom_cv: "",
+  custom_linkedin: ""
+});
+
+// Computed property to filter out fields based on conditions
+const visibleFields = computed(() => {
+  const result = { ...fields.value };
+
+  // If there's no company or it's empty, remove the company field
+  if (!formData.value.custom_company) {
+    delete result.custom_company;
+  } else {
+    // If company exists, make it readonly
+    result.custom_company.readonly = true;
+  }
+
+  return result;
 });
 
 const maxDate = ref(new Date().toISOString().split("T")[0]); // Today's date
-
 
 const errors = ref({});  // Errors object
 
@@ -175,6 +195,15 @@ const countries = ref([]);
 const states = ref([]);
 const cities = ref([]);
 const companies = ref([]);
+
+// Function to trigger the file input click event - FIXED VERSION
+const triggerFileInput = (key) => {
+  if (key === 'custom_portfolio') {
+    document.getElementById('portfolioInput').click();
+  } else if (key === 'custom_cv') {
+    document.getElementById('cvInput').click();
+  }
+};
 
 const fetchCountries = async () => {
   const res = await call("mykartavya.controllers.api.country_data");
@@ -206,7 +235,6 @@ const getDetails = async () => {
   let res = await call("mykartavya.controllers.api.sva_user_data");
   if (res && res.length > 0) {
     formData.value = res[0];
-
   }
 };
 
@@ -215,7 +243,7 @@ const validateForm = () => {
   let valid = true;
 
   for (const key in formData.value) {
-    const field = fields.value[key];
+    const field = visibleFields.value[key];
     const value = formData.value[key];
 
     if (!field) {
@@ -251,17 +279,16 @@ const validateForm = () => {
     }
 
     // First and Last Name Validation (only letters)
-    console.log(value);
     if (key === "first_name" && field.pattern && !field.pattern.test(value)) {
       errors.value[key] = field.error_message;
       valid = false;
     }
 
-    if (key === "last_name" && field.pattern && !field.pattern.test(value)) {
+    if (key === "last_name" && value && field.pattern && !field.pattern.test(value)) {
       errors.value[key] = field.error_message;
       valid = false;
     }
-    // Date of Birth Validation
+
     // Date of Birth Validation
     if (key === "custom_date_of_birth") {
       if (!value) {
@@ -279,9 +306,6 @@ const validateForm = () => {
         }
       }
     }
-
-
-
   }
 
   // Return whether the form is valid or not
@@ -306,6 +330,10 @@ const onSubmit = async () => {
         custom_state: formData.value.custom_state,
         custom_city: formData.value.custom_city,
         custom_company: formData.value.custom_company || "",
+        custom_title: formData.value.custom_title || "",
+        custom_portfolio: formData.value.custom_portfolio || "",
+        custom_cv: formData.value.custom_cv || "",
+        custom_linkedin: formData.value.custom_linkedin || ""
       }
     });
 
@@ -359,4 +387,48 @@ const scrollToFirstError = async () => {
   }
 };
 
+// Fixed File Upload Functions
+const onCvSelected = async (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    try {
+      const fileFormData = new FormData();
+      fileFormData.append('file', file);
+      fileFormData.append('doctype', 'SVA User');
+      fileFormData.append('docname', auth.cookie.name);
+      fileFormData.append('fieldname', 'custom_cv');
+
+      const response = await call('frappe.client.attach_file', fileFormData);
+      if (response) {
+        formData.value.custom_cv = response.file_url;
+        toast.success('CV uploaded successfully!');
+      }
+    } catch (error) {
+      console.error('CV upload error:', error);
+      toast.error('Failed to upload CV');
+    }
+  }
+};
+
+const onPortfolioSelected = async (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    try {
+      const fileFormData = new FormData();
+      fileFormData.append('file', file);
+      fileFormData.append('doctype', 'SVA User');
+      fileFormData.append('docname', auth.cookie.name);
+      fileFormData.append('fieldname', 'custom_portfolio');
+
+      const response = await call('frappe.client.attach_file', fileFormData);
+      if (response) {
+        formData.value.custom_portfolio = response.file_url;
+        toast.success('Portfolio uploaded successfully!');
+      }
+    } catch (error) {
+      console.error('Portfolio upload error:', error);
+      toast.error('Failed to upload Portfolio');
+    }
+  }
+};
 </script>

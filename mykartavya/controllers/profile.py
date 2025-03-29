@@ -6,7 +6,7 @@ class Profile:
         doc = frappe.get_list(
             "SVA User", 
             filters={"name": user}, 
-            fields=["name","mobile_number","full_name","first_name","last_name","email","user_image","custom_employee_id","custom_date_of_birth","custom_background_image","custom_company","custom_country","custom_state","custom_state.state_name as state","custom_city","custom_city.district_name as city"],
+            fields=["name","mobile_number","full_name","first_name","last_name","email","user_image","custom_employee_id","custom_date_of_birth","custom_background_image","custom_company","custom_country","custom_state","custom_state.state_name as state","custom_city","custom_city.district_name as city","custom_title","custom_portfolio","custom_cv" ,"custom_linkedin"],
             ignore_permissions=True
         )
         return doc
