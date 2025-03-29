@@ -14,7 +14,7 @@
                 <div v-else v-for="item in filter_by" class="flex flex-col border-t">
                     <h4 class="text-[14px] font-medium mb-2 pt-2">{{ item.name }}</h4>
                     <div class="flex flex-col gap-3 pb-2">
-                        <div v-if="item.key === 'sdgs'" class="flex px-2 items-center gap-2 text-sm">
+                        <div v-if="item.key === 'sdgs' && item.options.length > 1" class="flex px-2 items-center gap-2 text-sm">
                             <input v-model="allChecked" type="checkbox"
                                 class="rounded-sm h-4 w-4 min-w-4 max-w-4 min-h-4 max-h-4 focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="all-sdgs">
@@ -41,7 +41,7 @@
                                 {{ el.name }}
                             </label>
                         </div>
-                        <div v-if="item.key === 'activity_type'" class="flex px-2 items-center gap-2 text-sm">
+                        <div v-if="item.key === 'activity_type' && item.options.length > 1" class="flex px-2 items-center gap-2 text-sm">
                             <input v-model="allType" type="checkbox"
                                 class="rounded-sm focus:ring-[#E86C13] h-4 w-4 min-w-4 max-h-4 focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="both-activity_type">
