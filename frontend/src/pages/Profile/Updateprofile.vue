@@ -21,8 +21,6 @@
     </div>
 
     <div class="bg-white rounded-lg shadow mt-4">
-
-
       <!-- Tab Content -->
       <div class="p-6">
         <!-- Personal Info Tab -->
@@ -34,14 +32,31 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   {{ field.label }} <span class="text-red-500 pt-2" v-if="field.required">*</span>
                 </label>
-                <input v-if="key !== 'custom_date_of_birth' && field.type !== 'select'" v-model="formData[key]"
-                  :type="field.type" :name="key" :placeholder="field.placeholder" :readonly="field.readonly"
+                <input v-if="key !== 'custom_date_of_birth' && field.type !== 'select' && field.type !== 'file'"
+                  v-model="formData[key]" :type="field.type" :name="key" :placeholder="field.placeholder"
+                  :readonly="field.readonly"
                   class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
                   :class="{ 'bg-gray-100': field.readonly }" />
 
                 <input v-else-if="key === 'custom_date_of_birth'" v-model="formData.custom_date_of_birth" type="date"
                   name="custom_date_of_birth" :max="maxDate"
                   class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+
+                <div v-else-if="field.type === 'file'" class="flex flex-col">
+                  <input v-if="key === 'custom_portfolio'" type="file" id="portfolioInput" :name="key"
+                    @change="onPortfolioSelected" class="hidden" />
+                  <input v-if="key === 'custom_cv'" type="file" id="cvInput" :name="key" @change="onCvSelected"
+                    class="hidden" />
+                  <div class="flex items-center">
+                    <button type="button" @click="triggerFileInput(key)"
+                      class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-sm transition">
+                      {{ formData[key] ? 'Change File' : 'Upload File' }}
+                    </button>
+                    <span v-if="formData[key]" class="ml-2 text-sm text-gray-600 truncate max-w-xs">
+                      {{ formData[key].split('/').pop() }}
+                    </span>
+                  </div>
+                </div>
 
                 <select v-if="field.type === 'select'" v-model="formData[key]" :name="key" :disabled="field.readonly"
                   class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
@@ -56,10 +71,8 @@
                 <p v-if="errors[key]" class="text-red-500 text-[11px] mt-1">
                   {{ errors[key] }}
                 </p>
-
               </div>
             </div>
-
 
             <div class="mt-6">
               <button type="submit"
@@ -69,7 +82,6 @@
             </div>
           </form>
         </div>
-
       </div>
     </div>
   </div>
@@ -86,7 +98,6 @@ const call = inject("call");
 const auth = inject("auth");
 const router = useRouter();
 const errorFieldRef = ref(null);
-
 
 // Form fields and data
 const fields = ref({
@@ -145,7 +156,6 @@ const fields = ref({
   }
 });
 
-
 const formData = ref({
   first_name: "",
   last_name: "",
@@ -178,13 +188,21 @@ const visibleFields = computed(() => {
 
 const maxDate = ref(new Date().toISOString().split("T")[0]); // Today's date
 
-
 const errors = ref({});  // Errors object
 
 const countries = ref([]);
 const states = ref([]);
 const cities = ref([]);
 const companies = ref([]);
+
+// Function to trigger the file input click event - FIXED VERSION
+const triggerFileInput = (key) => {
+  if (key === 'custom_portfolio') {
+    document.getElementById('portfolioInput').click();
+  } else if (key === 'custom_cv') {
+    document.getElementById('cvInput').click();
+  }
+};
 
 const fetchCountries = async () => {
   const res = await call("mykartavya.controllers.api.country_data");
@@ -208,11 +226,8 @@ const fetchCompanies = async () => {
   companies.value = res || [];
 };
 
-
-
 watch(() => formData.value.custom_country, fetchStates);
 watch(() => formData.value.custom_state, fetchCities);
-
 
 // Get user details
 const getDetails = async () => {
@@ -263,16 +278,16 @@ const validateForm = () => {
     }
 
     // First and Last Name Validation (only letters)
-    console.log(value);
     if (key === "first_name" && field.pattern && !field.pattern.test(value)) {
       errors.value[key] = field.error_message;
       valid = false;
     }
 
-    if (key === "last_name" && field.pattern && !field.pattern.test(value)) {
+    if (key === "last_name" && value && field.pattern && !field.pattern.test(value)) {
       errors.value[key] = field.error_message;
       valid = false;
     }
+
     // Date of Birth Validation
     if (key === "custom_date_of_birth") {
       if (!value) {
@@ -371,25 +386,24 @@ const scrollToFirstError = async () => {
   }
 };
 
-const cvInput = ref(null);
-const portfolioInput = ref(null);
-
+// Fixed File Upload Functions
 const onCvSelected = async (event) => {
   const file = event.target.files[0];
   if (file) {
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('doctype', 'SVA User');
-      formData.append('docname', auth.cookie.name);
-      formData.append('fieldname', 'custom_cv');
+      const fileFormData = new FormData();
+      fileFormData.append('file', file);
+      fileFormData.append('doctype', 'SVA User');
+      fileFormData.append('docname', auth.cookie.name);
+      fileFormData.append('fieldname', 'custom_cv');
 
-      const response = await call('frappe.client.attach_file', formData);
+      const response = await call('frappe.client.attach_file', fileFormData);
       if (response) {
         formData.value.custom_cv = response.file_url;
         toast.success('CV uploaded successfully!');
       }
     } catch (error) {
+      console.error('CV upload error:', error);
       toast.error('Failed to upload CV');
     }
   }
@@ -399,21 +413,21 @@ const onPortfolioSelected = async (event) => {
   const file = event.target.files[0];
   if (file) {
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('doctype', 'SVA User');
-      formData.append('docname', auth.cookie.name);
-      formData.append('fieldname', 'custom_portfolio');
+      const fileFormData = new FormData();
+      fileFormData.append('file', file);
+      fileFormData.append('doctype', 'SVA User');
+      fileFormData.append('docname', auth.cookie.name);
+      fileFormData.append('fieldname', 'custom_portfolio');
 
-      const response = await call('frappe.client.attach_file', formData);
+      const response = await call('frappe.client.attach_file', fileFormData);
       if (response) {
         formData.value.custom_portfolio = response.file_url;
         toast.success('Portfolio uploaded successfully!');
       }
     } catch (error) {
+      console.error('Portfolio upload error:', error);
       toast.error('Failed to upload Portfolio');
     }
   }
 };
-
 </script>
