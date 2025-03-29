@@ -1,0 +1,1 @@
+import{_ as e,c as t,j as s}from"./index-CGbfoD3N.js";const c={class:"pt-[62px] flex justify-center items-center h-screen"},o={__name:"Features",setup(r){return(a,_)=>(s(),t("div",c,"Features Coming Soon.."))}},p=e(o,[["__scopeId","data-v-6f881489"]]);export{p as default};

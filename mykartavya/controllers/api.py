@@ -5,6 +5,7 @@ from mykartavya.controllers.filter import Filters
 from mykartavya.controllers.profile import Profile
 from frappe.utils import validate_email_address
 import time
+import base64
 
 
 @frappe.whitelist(allow_guest=True)
@@ -180,6 +181,14 @@ def update_sva_user(data):
         
         # Handle file uploads if present
         if data.get('custom_cv'):
+            try:
+                base64_string = data['custom_cv']
+                if "," in base64_string:
+                    base64_string = data['custom_cv'].split(",")[1]
+                file_content = base64.b64decode(base64_string)
+            except Exception:
+                frappe.log_error(frappe.get_traceback(), "Base64 Decoding Error")
+                return {"status": "error", "message": "Invalid cv file."}
             file_doc = frappe.get_doc({
                 "doctype": "File",
                 "file_name": f"cv_{name}.pdf",
@@ -188,12 +197,20 @@ def update_sva_user(data):
                 "attached_to_field": "custom_cv",
                 "folder": "Home",
                 "is_private": 0,
-                "content": data['custom_cv']
+                "content": file_content
             })
             file_doc.save(ignore_permissions=True)
             data['custom_cv'] = file_doc.file_url
 
         if data.get('custom_portfolio'):
+            try:
+                base64_string = data['custom_portfolio']
+                if "," in base64_string:
+                    base64_string = data['custom_portfolio'].split(",")[1]
+                file_content = base64.b64decode(base64_string)
+            except Exception:
+                frappe.log_error(frappe.get_traceback(), "Base64 Decoding Error")
+                return {"status": "error", "message": "Invalid portfolio file."}
             file_doc = frappe.get_doc({
                 "doctype": "File",
                 "file_name": f"portfolio_{name}.pdf",
@@ -202,7 +219,7 @@ def update_sva_user(data):
                 "attached_to_field": "custom_portfolio",
                 "folder": "Home",
                 "is_private": 0,
-                "content": data['custom_portfolio']
+                "content": file_content
             })
             file_doc.save(ignore_permissions=True)
             data['custom_portfolio'] = file_doc.file_url
