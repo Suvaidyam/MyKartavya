@@ -34,9 +34,9 @@
                 </label>
                 <input v-if="key !== 'custom_date_of_birth' && field.type !== 'select' && field.type !== 'file'"
                   v-model="formData[key]" :type="field.type" :name="key" :placeholder="field.placeholder"
-                  :readonly="field.readonly"
+                  :readonly="field.readonly" :maxlength="field.maxLength"
                   class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                  :class="{ 'bg-gray-100': field.readonly }" />
+                  :class="{ 'bg-gray-100': field.readonly }" @change="handleInputChange(key, $event)" />
 
                 <input v-else-if="key === 'custom_date_of_birth'" v-model="formData.custom_date_of_birth" type="date"
                   name="custom_date_of_birth" :max="maxDate"
@@ -106,12 +106,14 @@ const fields = ref({
     type: "text",
     required: true,
     pattern: /^[A-Za-z]+$/,
-    error_message: "Please enter a valid first name (letters only)"
+    error_message: "Please enter a valid first name (letters only)",
+    maxLength: 100
   },
   last_name: {
     label: "Last Name",
     type: "text",
     required: true,
+    maxLength: 100
   },
   mobile_number: {
     label: "Phone No.",
@@ -232,9 +234,19 @@ watch(() => formData.value.custom_state, fetchCities);
 
 // Get user details
 const getDetails = async () => {
-  let res = await call("mykartavya.controllers.api.sva_user_data");
-  if (res && res.length > 0) {
-    formData.value = res[0];
+  try {
+    let res = await call("mykartavya.controllers.api.sva_user_data");
+    if (res && res.length > 0) {
+      formData.value = res[0];
+      // Ensure auth.cookie.name is set
+      auth.cookie.name = res[0].name; // Assuming 'name' is the correct field
+      console.log('User details loaded:', res[0]);
+    } else {
+      throw new Error('Failed to load user details.');
+    }
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    toast.error('Failed to load user details. Please try again.');
   }
 };
 
@@ -322,6 +334,7 @@ const onSubmit = async () => {
   try {
     let res = await call("mykartavya.controllers.api.update_sva_user", {
       data: {
+        name: formData.value.name,
         first_name: formData.value.first_name,
         last_name: formData.value.last_name || "",
         mobile_number: formData.value.mobile_number,
@@ -390,45 +403,115 @@ const scrollToFirstError = async () => {
 // Fixed File Upload Functions
 const onCvSelected = async (event) => {
   const file = event.target.files[0];
-  if (file) {
-    try {
-      const fileFormData = new FormData();
-      fileFormData.append('file', file);
-      fileFormData.append('doctype', 'SVA User');
-      fileFormData.append('docname', auth.cookie.name);
-      fileFormData.append('fieldname', 'custom_cv');
+  if (!file) {
+    toast.error('Please select a file.');
+    return;
+  }
 
-      const response = await call('frappe.client.attach_file', fileFormData);
-      if (response) {
+  // Check if we have the user document name
+  if (!formData.value.name) {
+    toast.error('User document not loaded. Please refresh the page and try again.');
+    return;
+  }
+
+  // File validation
+  const allowedExtensions = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+  const maxSize = 5 * 1024 * 1024; // 5MB
+
+  if (!allowedExtensions.includes(file.type)) {
+    toast.error('Invalid file type. Only PDF and DOC/DOCX files are allowed.');
+    return;
+  }
+
+  if (file.size > maxSize) {
+    toast.error('File size exceeds 5 MB limit.');
+    return;
+  }
+
+  // Convert to Base64
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+
+  reader.onload = async () => {
+    try {
+      const base64Data = reader.result.split(',')[1]; // Convert Base64
+      const response = await call('mykartavya.controllers.api.update_sva_user', {
+        data: {
+          name: formData.value.name,
+          custom_cv: base64Data
+        }
+      });
+
+      if (response.status === 200) {
         formData.value.custom_cv = response.file_url;
         toast.success('CV uploaded successfully!');
+      } else {
+        throw new Error('Failed to upload CV');
       }
-    } catch (error) {
-      console.error('CV upload error:', error);
-      toast.error('Failed to upload CV');
+    } catch (err) {
+      console.error('Error uploading CV:', err);
+      toast.error(err.message || 'Failed to upload CV. Please try again.');
     }
-  }
+  };
 };
 
 const onPortfolioSelected = async (event) => {
   const file = event.target.files[0];
-  if (file) {
-    try {
-      const fileFormData = new FormData();
-      fileFormData.append('file', file);
-      fileFormData.append('doctype', 'SVA User');
-      fileFormData.append('docname', auth.cookie.name);
-      fileFormData.append('fieldname', 'custom_portfolio');
+  if (!file) {
+    toast.error('Please select a file.');
+    return;
+  }
 
-      const response = await call('frappe.client.attach_file', fileFormData);
-      if (response) {
+  // Check if we have the user document name
+  if (!formData.value.name) {
+    toast.error('User document not loaded. Please refresh the page and try again.');
+    return;
+  }
+
+  // File validation
+  const allowedExtensions = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+  const maxSize = 5 * 1024 * 1024; // 5MB
+
+  if (!allowedExtensions.includes(file.type)) {
+    toast.error('Invalid file type. Only JPG, PNG, WEBP, and PDF are allowed.');
+    return;
+  }
+
+  if (file.size > maxSize) {
+    toast.error('File size exceeds 5 MB limit.');
+    return;
+  }
+
+  // Convert to Base64
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+
+  reader.onload = async () => {
+    try {
+      const base64Data = reader.result.split(',')[1]; // Convert Base64
+      const response = await call('mykartavya.controllers.api.update_sva_user', {
+        data: {
+          name: formData.value.name,
+          custom_portfolio: base64Data
+        }
+      });
+
+      if (response.status === 200) {
         formData.value.custom_portfolio = response.file_url;
         toast.success('Portfolio uploaded successfully!');
+      } else {
+        throw new Error('Failed to upload portfolio');
       }
-    } catch (error) {
-      console.error('Portfolio upload error:', error);
-      toast.error('Failed to upload Portfolio');
+    } catch (err) {
+      console.error('Error uploading portfolio:', err);
+      toast.error(err.message || 'Failed to upload portfolio. Please try again.');
     }
-  }
+  };
+};
+
+// Method to handle input change
+const handleInputChange = (key, event) => {
+  console.log(`Field ${key} changed to:`, event.target.value);
+  // Additional logic can be added here
 };
 </script>
