@@ -157,22 +157,89 @@
                     </div>
                     <div class="mt-8">
                         <h3 class="text-sm font-medium mb-3">Attachments</h3>
-                        <div class="space-y-2">
-                            <div class="flex items-center gap-2 px-4 py-3 bg-gray-50 rounded-lg">
-                                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                </svg>
-                                <span class="text-gray-700">{{ svaUserData?.custom_portfolio || '---' }}</span>
+                        <div class="space-y-3">
+                            <!-- Portfolio -->
+                            <div v-if="svaUserData?.custom_portfolio"
+                                class="flex items-center justify-between px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900">Portfolio</p>
+                                        <p class="text-xs text-gray-500">
+                                            {{ getFileName(svaUserData.custom_portfolio) }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <a :href="svaUserData.custom_portfolio" target="_blank"
+                                        class="p-2 text-gray-500 hover:text-orange-600 transition-colors" title="View">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        </svg>
+                                    </a>
+                                    <a :href="svaUserData.custom_portfolio" download
+                                        class="p-2 text-gray-500 hover:text-orange-600 transition-colors"
+                                        title="Download">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                        </svg>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="flex items-center gap-2 px-4 py-3 bg-gray-50 rounded-lg">
-                                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                                </svg>
-                                <span class="text-gray-700">{{ svaUserData?.custom_cv || '---' }}</span>
+                            <div v-else class="px-4 py-3 bg-gray-50 rounded-lg text-gray-500 text-sm">
+                                No portfolio uploaded
+                            </div>
+
+                            <!-- CV -->
+                            <div v-if="svaUserData?.custom_cv"
+                                class="flex items-center justify-between px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900">Curriculum Vitae</p>
+                                        <p class="text-xs text-gray-500">
+                                            {{ getFileName(svaUserData.custom_cv) }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <a :href="svaUserData.custom_cv" target="_blank"
+                                        class="p-2 text-gray-500 hover:text-blue-600 transition-colors" title="View">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        </svg>
+                                    </a>
+                                    <a :href="svaUserData.custom_cv" download
+                                        class="p-2 text-gray-500 hover:text-blue-600 transition-colors"
+                                        title="Download">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div v-else class="px-4 py-3 bg-gray-50 rounded-lg text-gray-500 text-sm">
+                                No CV uploaded
                             </div>
                         </div>
                     </div>
@@ -301,6 +368,13 @@ const fetchMappedCompanies = async () => {
         console.error('Error fetching mapped companies:', error);
         mappedCompanies.value = [];
     }
+};
+
+// Add this helper function in the script section, before onMounted
+const getFileName = (url) => {
+    if (!url) return '';
+    const parts = url.split('/');
+    return parts[parts.length - 1];
 };
 
 onMounted(() => {

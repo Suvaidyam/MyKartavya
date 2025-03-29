@@ -168,7 +168,64 @@ def sva_user_data():
 
 @frappe.whitelist()
 def update_sva_user(data):
-    return Profile.update_sva_user(data)
+    try:
+        data = frappe.parse_json(data)
+        name = data.get('name')
+        
+        if not name:
+            frappe.throw("User name is required")
+            
+        # Get the existing user doc
+        user_doc = frappe.get_doc("SVA User", name)
+        
+        # Handle file uploads if present
+        if data.get('custom_cv'):
+            file_doc = frappe.get_doc({
+                "doctype": "File",
+                "file_name": f"cv_{name}.pdf",
+                "attached_to_doctype": "SVA User",
+                "attached_to_name": name,
+                "attached_to_field": "custom_cv",
+                "folder": "Home",
+                "is_private": 0,
+                "content": data['custom_cv']
+            })
+            file_doc.save(ignore_permissions=True)
+            data['custom_cv'] = file_doc.file_url
+
+        if data.get('custom_portfolio'):
+            file_doc = frappe.get_doc({
+                "doctype": "File",
+                "file_name": f"portfolio_{name}.pdf",
+                "attached_to_doctype": "SVA User",
+                "attached_to_name": name,
+                "attached_to_field": "custom_portfolio",
+                "folder": "Home",
+                "is_private": 0,
+                "content": data['custom_portfolio']
+            })
+            file_doc.save(ignore_permissions=True)
+            data['custom_portfolio'] = file_doc.file_url
+
+        # Update other fields
+        for key, value in data.items():
+            if hasattr(user_doc, key) and key != 'name':
+                user_doc.set(key, value)
+        
+        user_doc.save(ignore_permissions=True)
+        
+        return {
+            "status": 200,
+            "message": "User updated successfully",
+            "file_url": data.get('custom_cv') or data.get('custom_portfolio')
+        }
+        
+    except Exception as e:
+        frappe.log_error(f"Error in update_sva_user: {str(e)}", "SVA User Update Error")
+        return {
+            "status": 500,
+            "message": f"Failed to update user: {str(e)}"
+        }
 
 @frappe.whitelist(allow_guest=True)
 def get_activity_data():
