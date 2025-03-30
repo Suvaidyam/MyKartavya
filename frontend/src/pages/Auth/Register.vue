@@ -100,17 +100,23 @@ const handleSubmit = async () => {
     )
     if (response.status === 'success') {
       loading.value = false
-      toast.success('OTP sent successfully')
+      toast.success('OTP sent successfully', {
+        autoClose: 1000,
+      })
       router.push({
         name: 'Verify',
         query: { email: email.value, full_name: full_name.value },
       })
     } else {
       loading.value = false
-      toast.error(response.message)
+      toast.error(response.message, {
+        autoClose: 1000,
+      })
     }
   } catch (error) {
-    toast.error('Something went wrong')
+    toast.error('Something went wrong', {
+      autoClose: 1000,
+    })
     loading.value = false
   }
 }
