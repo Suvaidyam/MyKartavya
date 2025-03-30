@@ -27,7 +27,7 @@
         <h2 class="text-[20px] font-medium font-poppins text-gray-900 text-center">OTP Verification</h2>
         <p class="text-gray-600 text-center mt-1 text-[12px] font-normal">
           We've shared a 6-digit OTP on <span class="text-orange-500 font-semibold">{{ email || 'sample@gmail.com'
-          }}</span>
+            }}</span>
         </p>
 
         <!-- OTP Input -->
@@ -197,7 +197,7 @@ const verifyOTP = async () => {
         toast.success('OTP verified successfully',
           {
             position: 'top-right',
-            autoClose: 2000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,

@@ -76,8 +76,11 @@
 
             <div class="mt-6">
               <button type="submit"
-                class="bg-orange-500 text-white font-semibold py-2 px-4 rounded-sm hover:bg-orange-600 transition">
-                UPDATE
+                class="bg-orange-500 text-white font-semibold py-2 px-4 rounded-sm hover:bg-orange-600 transition flex items-center justify-center min-w-[100px]"
+                :disabled="loading">
+                <span v-if="loading"
+                  class="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+                {{ loading ? 'UPDATING...' : 'UPDATE' }}
               </button>
             </div>
           </form>
@@ -126,7 +129,7 @@ const fields = ref({
   custom_country: { label: "Country", type: "select", required: true },
   custom_state: { label: "State", type: "select", required: true },
   custom_city: { label: "City", type: "select", required: true },
-  custom_company: { label: "Company", type: "select", required: false, readonly: false },
+  custom_company: { label: "Organization", type: "select", required: false, readonly: false },
   custom_date_of_birth: {
     label: "Date of Birth",
     type: "date",
@@ -197,6 +200,9 @@ const countries = ref([]);
 const states = ref([]);
 const cities = ref([]);
 const companies = ref([]);
+
+// First, add the loading state ref at the top with other refs
+const loading = ref(false);
 
 // Function to trigger the file input click event - FIXED VERSION
 const triggerFileInput = (key) => {
@@ -281,8 +287,8 @@ const validateForm = () => {
       if (!field.pattern?.test(trimmedValue)) {
         if (trimmedValue?.length === 0) {
           errors.value[key] = "Phone number is required.";
-        } else if (trimmedValue?.length !== 10) {
-          errors.value[key] = "Phone number must be exactly 10 digits.";
+        } else if (trimmedValue?.length !== 15) {
+          errors.value[key] = "Phone number must be exactly 15 digits.";
         } else {
           errors.value[key] = field.error_message;  // Default error message for invalid phone number
         }
@@ -331,6 +337,7 @@ const onSubmit = async () => {
     return;
   }
 
+  loading.value = true;
   try {
     let res = await call("mykartavya.controllers.api.update_sva_user", {
       data: {
@@ -351,13 +358,15 @@ const onSubmit = async () => {
     });
 
     if (res.status == 200) {
-      toast.success("Profile updated successfully!", { "autoClose": 3000 });
-      setTimeout(() => router.push("/"), 3000);
+      toast.success("Profile updated successfully!", { "autoClose": 2000 });
+      setTimeout(() => router.push("/"), 1000);
     } else {
       toast.error(res.message || "Failed to update profile.");
     }
   } catch (error) {
     toast.error("An error occurred while updating the profile.");
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -383,7 +392,7 @@ onMounted(() => {
   fetchCompanies();
   getDetails();
   if (localStorage.getItem('updateprofile') == 'true') {
-    toast.error("Please update your profile to continue.", { "autoClose": 3000 });
+    toast.error("Please update your profile to continue.", { "autoClose": 2000 });
     localStorage.removeItem('updateprofile');
   }
 });
