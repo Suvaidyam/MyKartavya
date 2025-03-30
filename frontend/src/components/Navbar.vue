@@ -66,20 +66,25 @@
         <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="w-44 sm:w-auto sm:h-8" />
       </a>
       <div class="hidden lg:flex space-x-8 text-gray-700">
-        
         <a href="#" @click="handleLogoClick"
           :class="[route.fullPath == '/landin' ? 'font-medium' : 'font-normal', 'text-sm']">Home</a>
         <a href="#" @click="handleAboutClick"
           :class="[route.fullPath == '/about-us' ? 'font-medium' : 'font-normal', 'text-sm']">About Us</a>
+        <router-link v-if="auth.isLoggedIn" to="/"
+          :class="[route.fullPath == '/' ? 'font-medium' : 'font-normal', 'text-sm']">My Karma</router-link>
+        <router-link v-if="auth.isLoggedIn" to="/volunteering-opportunities"
+          :class="[route.fullPath == '/volunteering-opportunities' ? 'font-medium' : 'font-normal', 'text-sm']">Volunteering
+          Opportunities</router-link>
         <router-link to="/kindness-volunteering"
-          :class="[route.fullPath.split('/')[1] == 'kindness-volunteering' ? 'font-medium' : 'font-normal', 'text-sm']"> 
+          :class="[route.fullPath.split('/')[1] == 'kindness-volunteering' ? 'font-medium' : 'font-normal', 'text-sm']">
           Volunteering</router-link>
         <a href="#" @click="handleFaqClick"
           :class="[route.fullPath == '/faqs' ? 'font-medium' : 'font-normal', 'text-sm']">FAQs</a>
       </div>
       <div class="flex items-center gap-2 sm:gap-5 justify-center">
         <router-link v-if="route.fullPath.split('?')[0] != '/login' && !auth.isLoggedIn" to="/login"
-          class="h-8 md:h-9 flex items-center justify-center bg-secondary rounded-sm px-2 sm:px-4 text-white text-[11px] sm:text-base font-medium"> Start Volunteering Now</router-link>
+          class="h-8 md:h-9 flex items-center justify-center bg-secondary rounded-sm px-2 sm:px-4 text-white text-[11px] sm:text-base font-medium">
+          Start Volunteering Now</router-link>
         <Dropdown class="block lg:hidden" :options="[
           {
             label: 'Home',
@@ -91,6 +96,18 @@
             onClick: () => { handleAboutClick() },
             icon: () => h(FeatherIcon, { name: 'users' }),
           },
+          ...(auth.isLoggedIn ? [
+            {
+              label: 'My Karma',
+              onClick: () => { change_route('/') },
+              icon: () => h(FeatherIcon, { name: 'activity' }),
+            },
+            {
+              label: 'Volunteering Opportunities',
+              onClick: () => { change_route('/volunteering-opportunities') },
+              icon: () => h(FeatherIcon, { name: 'award' }),
+            }
+          ] : []),
           {
             label: 'Volunteering',
             onClick: () => { change_route('/kindness-volunteering') },
