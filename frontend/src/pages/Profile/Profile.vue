@@ -246,13 +246,53 @@
                 </div>
                 <div class="bg-white rounded-lg p-6 shadow-sm">
                     <h2 class="text-xl font-semibold mb-6">My Certificates</h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div v-for="certificate in certificates" :key="certificate.id"
-                            class="bg-gray-50 rounded-lg p-3">
-                            <img :src="certificate.image" :alt="certificate.title"
-                                class="w-full h-40 object-cover rounded-lg mb-3" />
-                            <h3 class="font-medium text-gray-900">{{ certificate.title }}</h3>
-                            <p class="text-sm text-gray-500">{{ certificate.date }}</p>
+                    <div v-if="certificates.length === 0" class="text-gray-500 text-center py-8">
+                        No certificates earned yet
+                    </div>
+                    <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                        <div v-for="certificate in certificates" :key="certificate.name"
+                            class="relative group w-full max-w-[250px] mx-auto">
+                            <!-- Certificate Card -->
+                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                                <!-- Certificate Preview -->
+                                <div class="aspect-[1.4/1] relative">
+                                    <!-- Default Certificate Background -->
+                                    <div class="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100">
+                                        <img :src="'/cert1.jpg'" alt="Certificate" class="w-full h-full object-cover" />
+                                    </div>
+
+                                    <!-- Hover Overlay -->
+                                    <div
+                                        class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
+                                        <a :href="certificate.certificate" target="_blank"
+                                            class="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors duration-200">
+                                            <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                        </a>
+                                        <a :href="certificate.certificate" download
+                                            class="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors duration-200">
+                                            <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Certificate Info -->
+                                <div class="p-3 border-t border-gray-200">
+                                    <h3 class="font-medium text-gray-900 text-sm line-clamp-1">
+                                        {{ certificate.activity_title }}
+                                    </h3>
+                                    <p class="text-xs text-gray-500 mt-1">{{ certificate.date }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -289,39 +329,7 @@ const auth = inject('auth');
 const call = inject('call')
 const svaUserData = ref(null)
 const mappedCompanies = ref([]);
-
-const certificates = ref([
-    {
-        id: 1,
-        title: 'Empower the needy',
-        date: '12 Nov, 2024',
-        image: '/cert1.jpg'
-    },
-    {
-        id: 2,
-        title: 'Beat the sugar',
-        date: '14 Nov, 2024',
-        image: '/cert2.jpg'
-    },
-    {
-        id: 3,
-        title: 'Bright Bites',
-        date: '14 Nov, 2024',
-        image: '/cert3.jpg'
-    },
-    {
-        id: 4,
-        title: 'Creation of a digital interface',
-        date: '16 Nov, 2024',
-        image: '/placeholder4.jpg'
-    },
-    {
-        id: 5,
-        title: 'Data Management System',
-        date: '18 Nov, 2024',
-        image: '/placeholder5.jpg'
-    }
-]);
+const certificates = ref([]);
 
 const get = async () => {
     try {
@@ -377,7 +385,36 @@ const getFileName = (url) => {
     return parts[parts.length - 1];
 };
 
+// Add this function to fetch certificates
+const fetchCertificates = async () => {
+    try {
+        const response = await call('mykartavya.controllers.api.get_user_certificates');
+        if (response.success) {
+            certificates.value = response.certificates;
+        } else {
+            console.error('Error fetching certificates:', response.message);
+        }
+    } catch (error) {
+        console.error('Error fetching certificates:', error);
+    }
+};
+
+const closePreview = () => {
+    // Close the preview modal
+    const modal = document.querySelector('.group-hover\\:flex');
+    if (modal) {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+    }
+};
+
 onMounted(() => {
     get();
+    fetchCertificates();
+
+    // Close modal on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closePreview();
+    });
 })
 </script>

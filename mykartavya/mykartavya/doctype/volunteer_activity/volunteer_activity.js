@@ -7,12 +7,12 @@ frappe.ui.form.on("Volunteer Activity", {
             frm.add_custom_button("Activity Approve", function () {
                 frm.set_value('completion_wf_state', 'Approved');
                 frm.save();
-            }).addClass('btn btn-success');
+            });
 
             frm.add_custom_button("Activity Reject", function () {
                 frm.set_value('completion_wf_state', 'Rejected');
                 frm.save();
-            }).addClass('btn btn-danger');
+            }).addClass('btn-danger');
         }
 
         // Get the field and section
@@ -426,4 +426,3 @@ frappe.ui.form.on("Volunteer Activity", {
 });
 
 
- 

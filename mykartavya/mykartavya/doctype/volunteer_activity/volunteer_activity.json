@@ -14,9 +14,11 @@
   "com_percent",
   "completion_wf_state",
   "section_break_eeob",
+  "column_break_zxdk",
   "karma_points",
   "images",
   "section_break_totr",
+  "column_break_mhyw",
   "certificate",
   "volunteer_activity_log",
   "rating",
@@ -29,6 +31,7 @@
    "in_list_view": 1,
    "label": "Volunteer",
    "options": "SVA User",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -37,6 +40,7 @@
    "in_list_view": 1,
    "label": "Activity",
    "options": "Activity",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -81,7 +85,8 @@
   {
    "fieldname": "certificate",
    "fieldtype": "Attach",
-   "label": "Certificate"
+   "label": "Certificate",
+   "read_only": 1
   },
   {
    "fieldname": "rating",
@@ -122,11 +127,21 @@
   {
    "fieldname": "section_break_totr",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_zxdk",
+   "fieldtype": "Column Break",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_mhyw",
+   "fieldtype": "Column Break",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-31 15:58:24.988789",
+ "modified": "2025-03-31 17:54:35.340670",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",
@@ -190,6 +205,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": []
