@@ -82,7 +82,7 @@
           :class="[route.fullPath == '/faqs' ? 'font-medium' : 'font-normal', 'text-sm']">FAQs</a>
       </div>
       <div class="flex items-center gap-2 sm:gap-5 justify-center">
-        <router-link v-if="route.fullPath.split('?')[0] != '/login' && !auth.isLoggedIn" to="/login"
+        <router-link v-if="route.fullPath.split('?')[0] != '/login' && route.fullPath.split('?')[0] != '/verify' && !auth.isLoggedIn" to="/login"
           class="h-8 md:h-9 flex items-center justify-center bg-secondary rounded-sm px-2 sm:px-4 text-white text-[11px] sm:text-base font-medium">
           Start Volunteering Now</router-link>
         <Dropdown class="block lg:hidden" :options="[

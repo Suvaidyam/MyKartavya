@@ -473,6 +473,12 @@ def get_faqs():
             "error": str(e)
         }
 
+
+
+import frappe
+from frappe.utils.pdf import get_pdf
+from datetime import datetime
+
 @frappe.whitelist()
 def view_certificate(activity):
     try:
@@ -487,8 +493,6 @@ def view_certificate(activity):
             fieldname=["name", "duration", "karma_points", "certificate"],
             as_dict=True
         )
-        print(volunteer_activity , "volunteer_activity +++++++++++++++++++++++++++++++",frappe.session.user)
-        
         if not volunteer_activity:
             frappe.throw("No volunteer activity found for this user and activity")
             
@@ -502,27 +506,39 @@ def view_certificate(activity):
 
         # Get activity details
         activity_doc = frappe.get_doc("Activity", activity)
+
         # Prepare certificate data
+        completion_date = frappe.utils.now_datetime()  # Ensure it's a datetime object
         certificate_data = {
             "full_name": user.full_name,
             "activity_title": activity_doc.title,
-            "completion_date": frappe.utils.now_datetime().strftime("%d %B %Y"),
+            "completion_date": completion_date.strftime("%d %B %Y"),  # Convert to string
             "hours_contributed": str(round((volunteer_activity.duration or 0) / 3600, 2)),
             "karma_points": str(volunteer_activity.karma_points or 0)
         }
-        # Generate PDF from template
-        html = frappe.get_template("mykartavya/templates/pages/certificate.html").render(certificate_data)
-        # Create PDF
+
+        # Load HTML template
+        template = frappe.get_template("mykartavya/templates/pages/certificate.html")
+        if not template:
+            frappe.throw("Certificate template not found")
+
+        html = template.render(certificate_data)
+
+        # Generate PDF
+        if not get_pdf:
+            frappe.throw("get_pdf function is missing. Check your Frappe installation.")
+
         pdf_data = get_pdf(html)
-        
+
         # Generate unique filename
-        filename = f"certificate_{activity}_{frappe.session.user}_{frappe.utils.now().strftime('%Y%m%d%H%M%S')}.pdf"
-        
-        # Create temporary file
-        with open(frappe.get_site_path("public", "files", filename), "wb") as f:
+        filename = f"certificate_{activity}_{frappe.session.user}_{completion_date.strftime('%Y%m%d%H%M%S')}.pdf"
+        file_path = frappe.get_site_path("public", "files", filename)
+
+        # Save PDF file
+        with open(file_path, "wb") as f:
             f.write(pdf_data)
-            
-        # Create file document
+
+        # Create File document in Frappe
         file_url = f"/files/{filename}"
         file_doc = frappe.get_doc({
             "doctype": "File",
@@ -534,17 +550,16 @@ def view_certificate(activity):
             "is_private": 0
         })
         file_doc.insert(ignore_permissions=True)
-        
-        # Update volunteer activity with certificate
-        volunteer_activity.certificate = file_url
-        volunteer_activity.save(ignore_permissions=True)
-        
+
+        # Update volunteer activity with certificate link
+        frappe.db.set_value("Volunteer Activity", volunteer_activity.name, "certificate", file_url)
+
         return {
             "success": True,
             "message": "Certificate generated successfully",
             "certificate_url": file_url
         }
-        
+
     except Exception as e:
         frappe.log_error(f"Error generating certificate: {str(e)}", "Certificate Generation Error")
         return {
