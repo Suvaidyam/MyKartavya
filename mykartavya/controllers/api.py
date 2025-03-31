@@ -566,3 +566,37 @@ def view_certificate(activity):
             "success": False,
             "message": str(e)
         }
+
+@frappe.whitelist()
+def get_user_certificates():
+    try:
+        user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+        if not user:
+            return {"success": False, "message": "User not found"}
+            
+        certificates = frappe.get_all(
+            "Volunteer Activity",
+            filters={
+                "volunteer": user,
+                "certificate": ["is", "set"]  # Only get activities with certificates
+            },
+            fields=["name", "activity", "certificate", "creation"]
+        )
+        
+        # Get activity titles
+        for cert in certificates:
+            activity = frappe.get_doc("Activity", cert.activity)
+            cert.activity_title = activity.title
+            cert.date = frappe.utils.format_date(cert.creation)
+            
+        return {
+            "success": True,
+            "certificates": certificates
+        }
+        
+    except Exception as e:
+        frappe.log_error(f"Error fetching certificates: {str(e)}", "Certificate Fetch Error")
+        return {
+            "success": False,
+            "message": str(e)
+        }
