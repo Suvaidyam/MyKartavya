@@ -81,8 +81,7 @@
   {
    "fieldname": "certificate",
    "fieldtype": "Attach",
-   "label": "Certificate",
-   "read_only": 1
+   "label": "Certificate"
   },
   {
    "fieldname": "rating",
@@ -127,7 +126,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-24 15:13:05.556816",
+ "modified": "2025-03-31 15:28:41.543595",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",

@@ -68,7 +68,7 @@
             border: 4px solid #1a202c;
             margin: 3rem;
             padding: 2rem;
-            background-image: url("{{ url_for('static', filename='assets/background.png') }}");
+            background-image: url("/assets/mykartavya/images/background.png");
             background-size: cover;
             background-position: center;
         }
@@ -190,20 +190,16 @@
 <body>
     <div class="certificate-container">
         <!-- Colorful corners -->
-        <img class="corner-img top-left-corner" src="{{ url_for('static', filename='assets/Group 20378 (Copy).png') }}"
-            alt="">
-        <img class="corner-img top-right-corner" src="{{ url_for('static', filename='assets/Group 20377 (Copy).png') }}"
-            alt="">
-        <img class="corner-img bottom-left-corner" src="{{ url_for('static', filename='assets/Group 20379.png') }}"
-            alt="">
-        <img class="corner-img middle-right-corner" src="{{ url_for('static', filename='assets/Group 20380.png') }}"
-            alt="">
+        <img class="corner-img top-left-corner" src="" alt="">
+        <img class="corner-img top-right-corner" src="" alt="">
+        <img class="corner-img bottom-left-corner" src="" alt="">
+        <img class="corner-img middle-right-corner" src="" alt="">
 
         <!-- Certificate content -->
         <div class="certificate-content">
             <div class="text-center">
                 <div class="logo">
-                    <img src="{{ url_for('static', filename='assets/mykartavya-logo (1).png') }}" alt="MyKartavya Logo">
+                    <img src="" alt="MyKartavya Logo">
                 </div>
 
                 <h1 class="title">CERTIFICATE</h1>
@@ -211,7 +207,7 @@
 
                 <p class="presented-to">THIS CERTIFICATE IS PRESENTED TO</p>
 
-                <h3 class="recipient-name">{{ recipient_name }}</h3>
+                <h3 class="recipient-name">{{ full_name }}</h3>
 
                 <p class="description">
                     In recognition of his/her efforts and achievement in completing the three months internship program.
@@ -226,7 +222,7 @@
                     </div>
 
                     <div class="seal">
-                        <img src="{{ url_for('static', filename='assets/Group 20381.png') }}" alt="Certificate Seal">
+                        <img src="" alt="Certificate Seal">
                     </div>
 
                     <div class="signature">
