@@ -4,6 +4,7 @@ from mykartavya.controllers.activity import Activity
 from mykartavya.controllers.filter import Filters
 from mykartavya.controllers.profile import Profile
 from frappe.utils import validate_email_address
+from frappe.utils.pdf import get_pdf
 import time
 import base64
 
@@ -470,4 +471,83 @@ def get_faqs():
             "success": False,
             "message": "Failed to fetch FAQs",
             "error": str(e)
+        }
+
+@frappe.whitelist()
+def view_certificate(activity):
+    try:
+        # Get current user's SVA User record
+        user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, ["name", "full_name"], as_dict=True)
+        if not user:
+            frappe.throw("User not found")
+            
+        # Get volunteer activity details
+        volunteer_activity = frappe.db.get_value("Volunteer Activity",
+            filters={"activity": activity, "volunteer": user.name},
+            fieldname=["name", "duration", "karma_points", "certificate"],
+            as_dict=True
+        )
+        print(volunteer_activity , "volunteer_activity +++++++++++++++++++++++++++++++",frappe.session.user)
+        
+        if not volunteer_activity:
+            frappe.throw("No volunteer activity found for this user and activity")
+            
+        # Return existing certificate if already generated
+        if volunteer_activity.certificate:
+            return {
+                "success": True,
+                "message": "Certificate already exists",
+                "certificate_url": volunteer_activity.certificate
+            }
+
+        # Get activity details
+        activity_doc = frappe.get_doc("Activity", activity)
+        # Prepare certificate data
+        certificate_data = {
+            "full_name": user.full_name,
+            "activity_title": activity_doc.title,
+            "completion_date": frappe.utils.now_datetime().strftime("%d %B %Y"),
+            "hours_contributed": str(round((volunteer_activity.duration or 0) / 3600, 2)),
+            "karma_points": str(volunteer_activity.karma_points or 0)
+        }
+        # Generate PDF from template
+        html = frappe.get_template("mykartavya/templates/pages/certificate.html").render(certificate_data)
+        # Create PDF
+        pdf_data = get_pdf(html)
+        
+        # Generate unique filename
+        filename = f"certificate_{activity}_{frappe.session.user}_{frappe.utils.now().strftime('%Y%m%d%H%M%S')}.pdf"
+        
+        # Create temporary file
+        with open(frappe.get_site_path("public", "files", filename), "wb") as f:
+            f.write(pdf_data)
+            
+        # Create file document
+        file_url = f"/files/{filename}"
+        file_doc = frappe.get_doc({
+            "doctype": "File",
+            "file_url": file_url,
+            "file_name": filename,
+            "attached_to_doctype": "Volunteer Activity",
+            "attached_to_name": volunteer_activity.name,
+            "attached_to_field": "certificate",
+            "is_private": 0
+        })
+        file_doc.insert(ignore_permissions=True)
+        
+        # Update volunteer activity with certificate
+        volunteer_activity.certificate = file_url
+        volunteer_activity.save(ignore_permissions=True)
+        
+        return {
+            "success": True,
+            "message": "Certificate generated successfully",
+            "certificate_url": file_url
+        }
+        
+    except Exception as e:
+        frappe.log_error(f"Error generating certificate: {str(e)}", "Certificate Generation Error")
+        return {
+            "success": False,
+            "message": str(e)
         }

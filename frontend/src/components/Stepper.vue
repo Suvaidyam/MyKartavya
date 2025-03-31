@@ -135,6 +135,28 @@
           </div>
         </div>
 
+        <!-- New Karma Points Popup -->
+        <div v-if="showKarmaPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 text-center">
+            <div class="mb-6">
+              <div class="w-48 h-36 mx-auto text-[#FF5722]">
+                <img src="../assets/certificate.png" alt="karma points">
+              </div>
+              <h2 class="text-2xl font-semibold mb-2">Congratulations!</h2>
+              <p class="text-gray-600">You've earned {{ props.activity.karma_points }} karma points</p>
+            </div>
+            <div class="flex justify-center">
+              <button v-if="props.activity.need_certificate === 'Yes'" @click="viewCertificate"
+                class="bg-[#FF5722] text-white py-2 px-6 rounded font-semibold hover:bg-orange-600 flex items-center gap-2"
+                :disabled="isLoadingCertificate">
+                <span v-if="isLoadingCertificate"
+                  class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                {{ isLoadingCertificate ? 'GENERATING...' : 'VIEW CERTIFICATE' }}
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div v-if="activityReportPopup"
           class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div class="bg-white rounded-lg shadow-lg p-6 w-[500px]">
@@ -240,9 +262,10 @@ import ReqForApproval from './ReqForApproval.vue'
 
 const currentStep = ref(0)
 const show_Feedback = ref(false)
-const showCertificate = ref(false)
+const showKarmaPopup = ref(false)
+
 const activityReportPopup = ref(false)
-const feedbackPointsPopup = ref(false)
+
 const showLockedStepPopup = ref(false)
 const call = inject('call')
 const auth = inject('auth')
@@ -335,9 +358,9 @@ const nextStep = async (index) => {
     if (index === 2) {
       activityReportPopup.value = true
     }
-  }catch (error) {
-  toast.error(error)
-}
+  } catch (error) {
+    toast.error(error)
+  }
 }
 
 const req_field = () => {
@@ -409,11 +432,35 @@ const submit_your_feedback = async () => {
   })
   if (res.rating) {
     show_Feedback.value = false
-    showCertificate.value = true
+    showKarmaPopup.value = true
     steps.value[3].completed = true
-  }
 
+    // Auto close popup if no certificate needed
+    if (props.activity.need_certificate !== 'Yes') {
+      setTimeout(() => {
+        showKarmaPopup.value = false
+      }, 3000)
+    }
+  }
 }
+
+const isLoadingCertificate = ref(false);
+
+const viewCertificate = async () => {
+  isLoadingCertificate.value = true;
+  let res = await call('mykartavya.controllers.api.view_certificate', {
+    activity: props.activity.activity
+  })
+  if (res) {
+    isLoadingCertificate.value = false;
+    toast.success('Certificate visible in your profile after few minutes')
+    showKarmaPopup.value = false
+    setTimeout(() => {
+      showKarmaPopup.value = false
+    }, 3000)
+  }
+}
+
 
 const uploadFiles = (event) => {
   const files = event.target.files
@@ -473,6 +520,15 @@ watch(() => activity_log.value.progress, (newVal, oldVal) => {
     activity_log.value.progress = props.activity.com_percent
   }
 })
+
+// Add a watch effect for auto-closing
+watch(() => showKarmaPopup, (newValue) => {
+  if (newValue && props.activity.need_certificate === 'No') {
+    setTimeout(() => {
+      showKarmaPopup.value = false;
+    }, 3000); // 3000 milliseconds = 3 seconds
+  }
+});
 </script>
 <style scoped>
 .border-l {
