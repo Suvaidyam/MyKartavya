@@ -5,6 +5,7 @@ from mykartavya.controllers.filter import Filters
 from mykartavya.controllers.profile import Profile
 from frappe.utils import validate_email_address
 from frappe.utils.pdf import get_pdf
+from frappe.utils.file_manager import save_file
 import time
 import base64
 
@@ -177,69 +178,56 @@ def update_sva_user(data):
         if not name:
             frappe.throw("User name is required")
             
-        # Get the existing user doc
         user_doc = frappe.get_doc("SVA User", name)
         
-        # Handle file uploads if present
-        if data.get('custom_cv'):
-            try:
-                base64_string = data['custom_cv']
-                if "," in base64_string:
-                    base64_string = data['custom_cv'].split(",")[1]
-                file_content = base64.b64decode(base64_string)
-            except Exception:
-                frappe.log_error(frappe.get_traceback(), "Base64 Decoding Error")
-                return {"status": "error", "message": "Invalid cv file."}
-            file_doc = frappe.get_doc({
-                "doctype": "File",
-                "file_name": f"cv_{name}.pdf",
-                "attached_to_doctype": "SVA User",
-                "attached_to_name": name,
-                "attached_to_field": "custom_cv",
-                "folder": "Home",
-                "is_private": 0,
-                "content": file_content
-            })
-            file_doc.save(ignore_permissions=True)
-            data['custom_cv'] = file_doc.file_url
-
-        if data.get('custom_portfolio'):
-            try:
-                base64_string = data['custom_portfolio']
-                if "," in base64_string:
-                    base64_string = data['custom_portfolio'].split(",")[1]
-                file_content = base64.b64decode(base64_string)
-            except Exception:
-                frappe.log_error(frappe.get_traceback(), "Base64 Decoding Error")
-                return {"status": "error", "message": "Invalid portfolio file."}
-            file_doc = frappe.get_doc({
-                "doctype": "File",
-                "file_name": f"portfolio_{name}.pdf",
-                "attached_to_doctype": "SVA User",
-                "attached_to_name": name,
-                "attached_to_field": "custom_portfolio",
-                "folder": "Home",
-                "is_private": 0,
-                "content": file_content
-            })
-            file_doc.save(ignore_permissions=True)
-            data['custom_portfolio'] = file_doc.file_url
-
+        # Handle file uploads first
+        file_fields = ['custom_portfolio', 'custom_cv','user_image','custom_background_image']
+        for field in file_fields:
+            if field in data and data[field]:
+                try:
+                    # Create unique filename
+                    temp_file_name = f"temp_{frappe.utils.now_datetime().strftime('%Y%m%d_%H%M%S')}_{field}"
+                    
+                    # Handle base64 content
+                    if "," in data[field]:
+                        data[field] = data[field].split(",")[1]
+                    file_content = base64.b64decode(data[field])
+                    
+                    # Save the file
+                    file_doc = save_file(
+                        fname=temp_file_name,
+                        content=file_content,
+                        dt="SVA User",
+                        dn=name,
+                        is_private=0,
+                    )
+                    
+                    # Check if file was saved successfully
+                    if not file_doc or not file_doc.file_url:
+                        frappe.log_error("File Upload Error: File URL missing", f"SVA User {field} Upload")
+                        continue
+                        
+                    # Update the field with file URL
+                    user_doc.set(field, file_doc.file_url)
+                except Exception as e:
+                    frappe.log_error(f"Error saving {field}: {str(e)}")
+                    continue
+        
         # Update other fields
         for key, value in data.items():
-            if hasattr(user_doc, key) and key != 'name':
+            if hasattr(user_doc, key) and key != 'name' and key not in file_fields:
                 user_doc.set(key, value)
         
         user_doc.save(ignore_permissions=True)
+        frappe.db.commit()
         
         return {
             "status": 200,
-            "message": "User updated successfully",
-            "file_url": data.get('custom_cv') or data.get('custom_portfolio')
+            "message": "User updated successfully"
         }
         
     except Exception as e:
-        frappe.log_error(f"Error in update_sva_user: {str(e)}", "SVA User Update Error")
+        frappe.log_error(frappe.get_traceback(), "SVA User Update Error")
         return {
             "status": 500,
             "message": f"Failed to update user: {str(e)}"

@@ -1,29 +1,63 @@
 <template>
     <div class="max-w-[1920px] pt-[82px] pb-8 px-10 mx-auto bg-gray-50 min-h-screen">
-        <div class="h-[291px] rounded-b-md bg-white">
+        <div class="bg-white rounded-b-md">
             <div class="relative">
                 <div class="w-full h-[152px]">
-                    <img src="../../assets/Rectangle.png" alt="Banner" class="w-full h-full object-cover" />
+                    <img v-if="svaUserData?.custom_background_image" :src="svaUserData.custom_background_image"
+                        alt="Banner" class="w-full h-full object-cover" />
+                    <img v-else src="../../assets/Rectangle.png" alt="Banner" class="w-full h-full object-cover" />
                 </div>
                 <div class="absolute left-8 -bottom-8">
                     <div class="w-32 h-32 rounded-full border-4 border-white overflow-hidden">
-                        <img v-if="auth.user_image" :src="auth.user_image" alt="Profile"
+                        <img v-if="svaUserData?.user_image" :src="svaUserData.user_image" alt="Profile"
                             class="w-full h-full object-cover" />
                         <div v-else
                             class="w-full h-full bg-gray-200 flex items-center justify-center text-[40px] text-gray-600">
-                            {{ auth.cookie.full_name.charAt(0) }}
+                            {{ auth.cookie.full_name.charAt(0).toUpperCase() }}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="pt-10 px-4">
-                <h1 class="text-3xl font-medium">{{ auth.cookie.full_name }}</h1>
-                <p class="text-bodyh1 text-gray-600 mt-1">{{ auth.cookie.user_id }}</p>
-                <router-link to="/updateprofile" class="text-lg text-orange-500 font-normal mt-2">EDIT
-                    PROFILE</router-link>
+            <div class="pt-10 px-4 pb-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-3xl font-medium">{{ auth.cookie.full_name }}</h1>
+                        <p class="text-bodyh1 text-gray-600 mt-1">{{ auth.cookie.user_id }}</p>
+                        <router-link to="/updateprofile" class="text-lg text-orange-500 font-normal mt-2">EDIT
+                            PROFILE</router-link>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-gray-500">Status:</span>
+                        <span class="px-3 py-1 text-sm font-medium rounded-full" :class="{
+                            'bg-green-100 text-green-800': svaUserData?.workflow_state === 'Approved',
+                            'bg-yellow-100 text-yellow-800': svaUserData?.workflow_state === 'Pending Approval',
+                            'bg-red-100 text-red-800': svaUserData?.workflow_state === 'Rejected',
+                            'bg-gray-100 text-gray-800': !svaUserData?.workflow_state || svaUserData?.workflow_state === 'Not Set'
+                        }">
+                            {{ svaUserData?.workflow_state || 'Not Set' }}
+                        </span>
+                    </div>
+                </div>
+                <!-- Add Rejection Remarks Section -->
+                <div v-if="svaUserData?.workflow_state === 'Rejected' && svaUserData?.custom_remarks"
+                    class="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <div class="flex items-start gap-3">
+                        <div
+                            class="w-10 h-10 min-w-10 min-h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-sm font-medium text-red-800 mb-1">Rejection Reason</h3>
+                            <p class="text-sm text-red-700 whitespace-pre-wrap">{{ svaUserData.custom_remarks }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="pt-4">
+        <div class="pt-12">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white rounded-lg p-6 shadow-sm">
                     <h2 class="text-xl font-semibold mb-6">Personal Info</h2>
@@ -83,8 +117,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">{{ age }} years</div>
-                                <div class="text-caption text-gray-500">Age</div>
+                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.custom_gender || '---' }}</div>
+                                <div class="text-caption text-gray-500">Gender</div>
                             </div>
                         </div>
                         <div class="flex items-start gap-3" v-if="svaUserData?.custom_company">
@@ -406,6 +440,13 @@ const closePreview = () => {
         modal.classList.remove('flex');
         modal.classList.add('hidden');
     }
+};
+
+// Add this function in the script section, before onMounted
+const getInitials = (fullName) => {
+    if (!fullName) return '';
+    const names = fullName.split(' ');
+    return names[0].toUpperCase();
 };
 
 onMounted(() => {
