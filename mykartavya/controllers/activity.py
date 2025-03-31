@@ -320,6 +320,7 @@ class Activity:
                 va.duration as duration,
                 va.com_percent as com_percent,
                 act.title as title,
+                act.need_certificate as need_certificate,
                 act.karma_points as karma_points,
                 act.start_date as start_date,
                 act.end_date as end_date,
