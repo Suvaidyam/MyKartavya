@@ -1,11 +1,13 @@
 <template>
   <div v-if="!auth.isLoggedIn" class="flex space-x-4 justify-end px-6 sm:px-10 bg-[#FFBD9C] h-8 items-center w-full">
     <FeatherIcon name="search" class="size-4 cursor-pointer text-gray-700" />
-    <router-link  v-if="route.fullPath.split('?')[0] != '/company-registration'" to="/company-registration" class="text-black font-normal text-xs">
+    <router-link v-if="route.fullPath.split('?')[0] != '/company-registration'" to="/company-registration"
+      class="text-black font-normal text-xs">
       Register as Company
     </router-link>
 
-    <router-link to="/ngo-registration"  v-if="route.fullPath.split('?')[0] != '/ngo-registration'" class="text-[#000000] font-normal text-[12px]">Register as NGO</router-link>
+    <router-link to="/ngo-registration" v-if="route.fullPath.split('?')[0] != '/ngo-registration'"
+      class="text-[#000000] font-normal text-[12px]">Register as NGO</router-link>
   </div>
   <div class="bg-white h-[60px] shadow-md">
     <nav
@@ -53,13 +55,16 @@
         <Dropdown :options="dropdown">
           <Button class="w-9 h-9 min-w-9 min-h-9 rounded-full">
             <template #icon>
-              <Avatar class="w-9 h-9 min-w-9 min-h-9" :shape="'circle'" :ref_for="true" :image="auth?.user_image"
-                :label="auth?.cookie?.full_name" size="md" />
+              <Avatar class="w-9 h-9 min-w-9 min-h-9" :shape="'circle'" :ref_for="true"
+                :image="auth?.cookie?.user_image || null" :label="auth?.cookie?.full_name || 'User'" size="md" />
             </template>
           </Button>
         </Dropdown>
       </div>
+
+
     </nav>
+
     <!--  -->
     <nav v-else class="flex items-center justify-between h-full px-3 sm:px-[36px] max-w-[1920px] mx-auto">
       <a href="#" @click="handleLogoClick" class="flex items-center space-x-4">
@@ -75,14 +80,16 @@
         <router-link v-if="auth.isLoggedIn" to="/volunteering-opportunities"
           :class="[route.fullPath == '/volunteering-opportunities' ? 'font-medium' : 'font-normal', 'text-sm']">Volunteering
           Opportunities</router-link>
-        <router-link to="/kindness-volunteering"
+        <router-link v-if="!auth.isLoggedIn" to="/kindness-volunteering"
           :class="[route.fullPath.split('/')[1] == 'kindness-volunteering' ? 'font-medium' : 'font-normal', 'text-sm']">
           Volunteering</router-link>
         <a href="#" @click="handleFaqClick"
           :class="[route.fullPath == '/faqs' ? 'font-medium' : 'font-normal', 'text-sm']">FAQs</a>
       </div>
       <div class="flex items-center gap-2 sm:gap-5 justify-center">
-        <router-link v-if="route.fullPath.split('?')[0] != '/login' && route.fullPath.split('?')[0] != '/verify' && !auth.isLoggedIn" to="/login"
+        <router-link
+          v-if="route.fullPath.split('?')[0] != '/login' && route.fullPath.split('?')[0] != '/verify' && !auth.isLoggedIn"
+          to="/login"
           class="h-8 md:h-9 flex items-center justify-center bg-secondary rounded-sm px-2 sm:px-4 text-white text-[11px] sm:text-base font-medium">
           Start Volunteering Now</router-link>
         <Dropdown class="block lg:hidden" :options="[
