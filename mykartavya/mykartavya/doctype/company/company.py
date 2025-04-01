@@ -163,7 +163,6 @@ def insert_sva_user(doc):
         state = doc.state
         city = doc.city
         designation = doc.designation
-        gender = doc.gender
         # Check if user already exists
         if frappe.db.exists("SVA User", {"email": email}):
             frappe.throw(f"SVA User with email {email} already exists")
@@ -183,7 +182,6 @@ def insert_sva_user(doc):
             "custom_city": city,
             "custom_designation": designation,
             "custom_volunteer_type": "Employee",
-            'custom_gender':gender,
             "enabled": 1
         })
 
@@ -224,7 +222,6 @@ def insert_sva_user(doc):
                 "role_profile": "Company Admin",
                 "custom_designation": designation,
                 "custom_volunteer_type": "Employee",
-                'custom_gender':gender,
                 "enabled": 1
             })
 
