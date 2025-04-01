@@ -159,12 +159,16 @@ import { ref, inject, onMounted, watch, nextTick, computed } from "vue";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { useRouter } from "vue-router";
+import Country_code from "@/assets/Country/Country_code.js";
 
 // Inject API call function
 const call = inject("call");
 const auth = inject("auth");
 const router = useRouter();
 const errorFieldRef = ref(null);
+
+console.log("Country_code",Country_code);
+
 
 // Form fields and data
 const fields = ref({
@@ -182,14 +186,23 @@ const fields = ref({
     required: true,
     maxLength: 100
   },
+  country_code: {
+  label: "Phone No1",
+  type: "select",
+  required: true,
+  options: Country_code.map((c) => ({
+    name: c.dial_code,
+  }))
+},
   mobile_number: {
     label: "Phone No.",
-    type: "text",
+    type: "tel",
     required: true,
     pattern: /^[0-9]{10}$/,
     error_message: "Invalid phone number ",
     maxLength: 15
   },
+  
   custom_country: { label: "Country", type: "select", required: true },
   custom_state: { label: "State", type: "select", required: true },
   custom_city: { label: "City", type: "select", required: true },
@@ -250,7 +263,9 @@ const formData = ref({
   custom_linkedin: "",
   custom_cv: "",
   custom_portfolio: "",
-  custom_gender: ""
+  custom_gender: "",
+  country_code:""
+
 });
 
 // Computed property to filter out fields based on conditions
@@ -426,6 +441,7 @@ const onSubmit = async () => {
       custom_portfolio: formData.value.custom_portfolio || "",
       custom_cv: formData.value.custom_cv || "",
       custom_gender: formData.value.custom_gender,
+      country_code:formData.value.country_code,
       user_image: formData.value.user_image || "",
       custom_background_image: formData.value.custom_background_image || ""
     };
@@ -461,6 +477,8 @@ const getOptions = (key) => {
       return companies.value.map(comp => ({ name: comp.name, label: comp.company_name || comp.name }));
     case "custom_gender":
       return fields.value.custom_gender.options;
+      case "country_code":
+      return fields.value.country_code.options;  
     default:
       return [];
   }
