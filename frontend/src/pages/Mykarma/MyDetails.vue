@@ -2,7 +2,7 @@
   <aside class="w-full xl:w-[320px] xl:min-w-[320px] bg-white rounded-md pt-3 lg:mt-0">
     <div class="px-3">
       <div class="flex items-center mb-4 border-b border-gray-100 py-2">
-        <img v-if="auth.user_image" :src="user_image" alt="Profile Picture"
+        <img v-if="auth.cookie.user_image" :src="auth.cookie.user_image" alt="Profile Picture"
           class="rounded-full w-[60px] h-[60px] object-cover mr-4" />
         <div
           class="w-[60px] min-w-[60px] mr-4 text-2xl h-[60px] flex items-center justify-center rounded-full bg-gray-100"
@@ -55,7 +55,7 @@
             Time Donated
           </h4>
           <p class="text-lg font-semibold text-[#0B0B0B]">
-            {{activities?.total_hours  ? sec_to_hours(activities?.total_hours)+ ' hrs ' :'0'}} </p>
+            {{ activities?.total_hours ? sec_to_hours(activities?.total_hours) + ' hrs ' : '0' }} </p>
         </div>
 
         <div class="border border-gray-300 rounded-lg px-4 py-3 text-center">
@@ -82,8 +82,10 @@
         <!-- Crown Icon -->
         <div class="absolute top-12 left-1/2 transform -translate-x-1/2">
           <svg width="30" height="23" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.04167 15.333L0.625 2.04134L7.27083 8.08301L11.5 0.833008L15.7292 8.08301L22.375 2.04134L19.9583 15.333H3.04167ZM19.9583 18.958C19.9583 19.683 19.475 20.1663 18.75 20.1663H4.25C3.525 20.1663 3.04167 19.683 3.04167 18.958V17.7497H19.9583V18.958Z" fill="#EBBB00"/>
-            </svg>            
+            <path
+              d="M3.04167 15.333L0.625 2.04134L7.27083 8.08301L11.5 0.833008L15.7292 8.08301L22.375 2.04134L19.9583 15.333H3.04167ZM19.9583 18.958C19.9583 19.683 19.475 20.1663 18.75 20.1663H4.25C3.525 20.1663 3.04167 19.683 3.04167 18.958V17.7497H19.9583V18.958Z"
+              fill="#EBBB00" />
+          </svg>
         </div>
 
         <!-- Top Performer -->
@@ -106,11 +108,13 @@
             {{ activitiestopuser[0]?.first_name || 'Top 1' }}
           </p>
           <div class="text-[10px] font-normal pt-1 flex gap-1 flex-col items-center">
-            <div class="flex items-center gap-1"><FeatherIcon name="database" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[0]?.total_karma_points?.toLocaleString() || '0' }} Points </div>
+            <div class="flex items-center gap-1">
+              <FeatherIcon name="database" class="size-3 text-[#666666]" />
+              {{ activitiestopuser[0]?.total_karma_points?.toLocaleString() || '0' }} Points
+            </div>
             <div class="flex items-center gap-1">
               <FeatherIcon name="clock" class="size-3 text-[#666666]" />
-            {{activitiestopuser[0]?.total_hours ? sec_to_hours(activitiestopuser[0]?.total_hours) : '0' }} hr
+              {{ activitiestopuser[0]?.total_hours ? sec_to_hours(activitiestopuser[0]?.total_hours) : '0' }} hr
             </div>
           </div>
         </div>
@@ -139,11 +143,11 @@
             <div class="text-[10px] font-normal pt-1 flex flex-col items-center gap-1">
               <div class="flex items-center gap-1">
                 <FeatherIcon name="database" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[1]?.total_karma_points?.toLocaleString() || '0' }} Points
-              </div> 
+                {{ activitiestopuser[1]?.total_karma_points?.toLocaleString() || '0' }} Points
+              </div>
               <div class="flex items-center gap-1">
                 <FeatherIcon name="clock" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[1]?.total_hours ? sec_to_hours(activitiestopuser[1]?.total_hours) : '0' }} hr
+                {{ activitiestopuser[1]?.total_hours ? sec_to_hours(activitiestopuser[1]?.total_hours) : '0' }} hr
               </div>
             </div>
           </div>
@@ -170,11 +174,11 @@
             <div class="text-[10px] font-normal pt-1 flex flex-col items-center gap-1">
               <div class="flex items-center gap-1">
                 <FeatherIcon name="database" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[2]?.total_karma_points?.toLocaleString() || '0' }} Points
-              </div> 
+                {{ activitiestopuser[2]?.total_karma_points?.toLocaleString() || '0' }} Points
+              </div>
               <div class="flex items-center gap-1">
                 <FeatherIcon name="clock" class="size-3 text-[#666666]" />
-              {{ activitiestopuser[2]?.total_hours ? sec_to_hours(activitiestopuser[2]?.total_hours) : '0' }} hr
+                {{ activitiestopuser[2]?.total_hours ? sec_to_hours(activitiestopuser[2]?.total_hours) : '0' }} hr
               </div>
             </div>
           </div>
@@ -329,7 +333,7 @@ onMounted(() => {
   opportunities()
   sdgimpacted()
 })
-const sec_to_hours=(sec)=>{
+const sec_to_hours = (sec) => {
   return (sec / 60 / 60).toFixed(2)
 }
 </script>
