@@ -17,10 +17,11 @@
         <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
       </a>
       <div class="hidden md:flex space-x-8 text-gray-700">
-        <router-link to="/" :class="[route.fullPath == '/' ? 'font-medium' : 'font-normal', 'text-sm']">My
+        <router-link to="/"
+          :class="[route.fullPath == '/' ? 'font-medium text-[#000000]' : 'font-normal text-[#666666]', 'text-bodyh2']">My
           Karma</router-link>
         <router-link to="/volunteering-opportunities"
-          :class="[route.fullPath == '/volunteering-opportunities' ? 'font-medium' : 'font-normal', 'text-sm']">Volunteering
+          :class="[route.fullPath == '/volunteering-opportunities' ? 'font-medium text-[#000000]' : 'font-normal text-[#666666]', 'text-bodyh2']">Volunteering
           Opportunities</router-link>
       </div>
       <div class="flex items-center gap-5 justify-center">
@@ -72,19 +73,21 @@
       </a>
       <div class="hidden lg:flex space-x-8 text-gray-700">
         <a href="#" @click="handleLogoClick"
-          :class="[route.fullPath == '/landin' ? 'font-medium' : 'font-normal', 'text-sm']">Home</a>
+          :class="[route.fullPath == '/landin' ? 'font-medium text-[#000000]' : 'font-normal', 'text-bodyh2']">Home</a>
         <a href="#" @click="handleAboutClick"
-          :class="[route.fullPath == '/about-us' ? 'font-medium' : 'font-normal', 'text-sm']">About Us</a>
+          :class="[route.fullPath == '/about-us' ? 'font-medium text-[#000000]' : 'font-normal', 'text-bodyh2']">About
+          Us</a>
         <router-link v-if="auth.isLoggedIn" to="/"
-          :class="[route.fullPath == '/' ? 'font-medium' : 'font-normal', 'text-sm']">My Karma</router-link>
+          :class="[route.fullPath == '/' ? 'font-medium text-[#000000]' : 'font-normal', 'text-bodyh2']">My
+          Karma</router-link>
         <router-link v-if="auth.isLoggedIn" to="/volunteering-opportunities"
-          :class="[route.fullPath == '/volunteering-opportunities' ? 'font-medium' : 'font-normal', 'text-sm']">Volunteering
+          :class="[route.fullPath == '/volunteering-opportunities' ? 'font-medium text-[#000000]' : 'font-normal', 'text-bodyh2']">Volunteering
           Opportunities</router-link>
         <router-link v-if="!auth.isLoggedIn" to="/kindness-volunteering"
-          :class="[route.fullPath.split('/')[1] == 'kindness-volunteering' ? 'font-medium' : 'font-normal', 'text-sm']">
+          :class="[route.fullPath.split('/')[1] == 'kindness-volunteering' ? 'font-medium text-[#000000]' : 'font-normal', 'text-bodyh2']">
           Volunteering</router-link>
         <a href="#" @click="handleFaqClick"
-          :class="[route.fullPath == '/faqs' ? 'font-medium' : 'font-normal', 'text-sm']">FAQs</a>
+          :class="[route.fullPath == '/faqs' ? 'font-medium text-[#000000]' : 'font-normal', 'text-bodyh2']">FAQs</a>
       </div>
       <div class="flex items-center gap-2 sm:gap-5 justify-center">
         <router-link
