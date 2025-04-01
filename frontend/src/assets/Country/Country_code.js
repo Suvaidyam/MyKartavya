@@ -1,4 +1,4 @@
-let Country_code = [{ "name": "Afghanistan", "flag": "🇦🇫", "code": "AF", "dial_code": "+93" },
+let country_code = [{ "name": "Afghanistan", "flag": "🇦🇫", "code": "AF", "dial_code": "+93" },
  { "name": "Åland Islands", "flag": "🇦🇽", "code": "AX", "dial_code": "+358" },
  { "name": "Albania", "flag": "🇦🇱", "code": "AL", "dial_code": "+355" },
  { "name": "Algeria", "flag": "🇩🇿", "code": "DZ", "dial_code": "+213" },
@@ -246,4 +246,4 @@ let Country_code = [{ "name": "Afghanistan", "flag": "🇦🇫", "code": "AF", "
  { "name": "Zimbabwe", "flag": "🇿🇼", "code": "ZW", "dial_code": "+263" }]
 
 
- export default  Country_code;
+ export default  country_code;
