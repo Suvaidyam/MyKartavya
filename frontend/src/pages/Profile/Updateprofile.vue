@@ -434,7 +434,7 @@ const onSubmit = async () => {
       data: formDataToSend
     });
 
-    if (res.status === 200) {
+    if (res.status == 200) {
       toast.success("Profile updated successfully!", { "autoClose": 2000 });
       setTimeout(() => router.push("/"), 1000);
     } else {
