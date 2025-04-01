@@ -76,12 +76,18 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-2">
                   {{ field.label }} <span class="text-red-500" v-if="field.required">*</span>
                 </label>
-                <input v-if="key !== 'custom_date_of_birth' && field.type !== 'select' && field.type !== 'file'"
-                  v-model="formData[key]" :type="field.type" :name="key" :placeholder="field.placeholder"
-                  :readonly="field.readonly" :maxlength="field.maxLength"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2.5 px-4 focus:outline-none focus:ring focus:ring-orange-200"
-                  :class="{ 'bg-gray-100': field.readonly }" @change="handleInputChange(key, $event)" />
-
+                <div class="flex" v-if="key !== 'custom_date_of_birth' && field.type !== 'select' && field.type !== 'file'">
+                  <select v-if="key=='mobile_number'" name="" id="" v-model="formData.country_code" class=" border border-gray-300 text-bodyh2 rounded-l px-4  focus:outline-none focus:ring focus:ring-orange-200">
+                    <option value="" v-for="el in code" :key="el.dial_code" :value="el.dial_code">{{ el.dial_code }}</option>
+                  </select>
+                  <input 
+                    v-model="formData[key]" :type="field.type" :name="key" :placeholder="field.placeholder"
+                    :readonly="field.readonly" :maxlength="field.maxLength"
+                    :disabled="field.readonly"
+                    class="block w-full border border-gray-300 text-bodyh2 py-2.5 px-4 focus:outline-none focus:ring focus:ring-orange-200"
+                    :class="[key=='mobile_number'?'rounded-r':'rounded'  ]" @change="handleInputChange(key, $event)" />
+                </div>
+                  
                 <input v-else-if="key === 'custom_date_of_birth'" v-model="formData.custom_date_of_birth" type="date"
                   name="custom_date_of_birth" :max="maxDate"
                   class="block w-full border border-gray-300 text-bodyh2 rounded py-2.5 px-4 focus:outline-none focus:ring focus:ring-orange-200" />
@@ -159,16 +165,15 @@ import { ref, inject, onMounted, watch, nextTick, computed } from "vue";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { useRouter } from "vue-router";
-import Country_code from "@/assets/Country/Country_code.js";
+import country_code from "@/assets/Country/Country_code.js";
 
 // Inject API call function
 const call = inject("call");
 const auth = inject("auth");
 const router = useRouter();
 const errorFieldRef = ref(null);
-
-console.log("Country_code",Country_code);
-
+ 
+const code = ref(country_code)
 
 // Form fields and data
 const fields = ref({
@@ -186,14 +191,6 @@ const fields = ref({
     required: true,
     maxLength: 100
   },
-  country_code: {
-  label: "Phone No1",
-  type: "select",
-  required: true,
-  options: Country_code.map((c) => ({
-    name: c.dial_code,
-  }))
-},
   mobile_number: {
     label: "Phone No.",
     type: "tel",
@@ -264,7 +261,7 @@ const formData = ref({
   custom_cv: "",
   custom_portfolio: "",
   custom_gender: "",
-  country_code:""
+  country_code:" +91 "
 
 });
 
