@@ -181,33 +181,45 @@ def update_sva_user(data):
         user_doc = frappe.get_doc("SVA User", name)
         
         # Handle file uploads first
-        file_fields = ['custom_portfolio', 'custom_cv','user_image','custom_background_image']
+        file_fields = ['custom_portfolio', 'custom_cv', 'user_image', 'custom_background_image']
+        # Define file extensions for each field
+        file_extensions = {
+            'custom_portfolio': '.pdf',
+            'custom_cv': '.pdf',
+            'user_image': '.png',  # Assuming images are PNG, adjust if needed
+            'custom_background_image': '.png'  # Assuming images are PNG, adjust if needed
+        }
+        
         for field in file_fields:
-            if field in data and data[field]:
-                try:
-                    # Create unique filename
-                    temp_file_name = f"temp_{frappe.utils.now_datetime().strftime('%Y%m%d_%H%M%S')}_{field}"
+            # If field is explicitly set to None/null/empty, clear the field
+            if field in data:
+                if not data[field]:
+                    user_doc.set(field, None)
+                    continue
                     
-                    # Handle base64 content
+                try:
+                    # Handle base64 content for new file uploads
                     if "," in data[field]:
                         data[field] = data[field].split(",")[1]
                     file_content = base64.b64decode(data[field])
                     
-                    # Save the file
+                    # Generate filename with proper extension
+                    extension = file_extensions.get(field, '.pdf')  # Default to .pdf if not specified
+                    timestamp = int(time.time())
+                    fname = f"{field}_{timestamp}{extension}"
+                    
                     file_doc = save_file(
-                        fname=temp_file_name,
+                        fname=fname,
                         content=file_content,
                         dt="SVA User",
                         dn=name,
                         is_private=0,
                     )
                     
-                    # Check if file was saved successfully
                     if not file_doc or not file_doc.file_url:
                         frappe.log_error("File Upload Error: File URL missing", f"SVA User {field} Upload")
                         continue
                         
-                    # Update the field with file URL
                     user_doc.set(field, file_doc.file_url)
                 except Exception as e:
                     frappe.log_error(f"Error saving {field}: {str(e)}")
