@@ -10,10 +10,16 @@ frappe.ui.form.on("Activity", {
         }
     },
 
-    validate: function (frm) {
+    validate: function(frm) {
+        // Condition 1: Prevent saving if image is uploaded
         if (frm.image_uploaded) {
             frappe.validated = false;
-            frm.image_uploaded = false;
+            frm.image_uploaded = false; // Reset the flag
+        }
+
+        if (frm.doc.is_global && frm.doc.is_private) {
+            frappe.msgprint(__('An activity cannot be both Global and Private. Please uncheck one.'));
+            frappe.validated = false; 
         }
     },
 
@@ -44,6 +50,19 @@ frappe.ui.form.on("Activity", {
             });
         }
     },
+
+    is_private: function(frm) {
+        if (frm.doc.is_private) {
+            frm.set_value('is_global', 0); 
+        }
+    },
+    is_global: function(frm) {
+        if (frm.doc.is_global) {
+            frm.set_value('is_private', 0);  
+        }
+    },
+
+   
     is_private: function (frm) {
         if (!frm.doc.is_private) {
             frm.set_value('company', '');
