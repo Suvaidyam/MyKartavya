@@ -1,0 +1,12 @@
+/* [data-fieldname="start_time_hr"] .duration-picker [data-unit="day"],
+[data-fieldname="start_time_hr"] .duration-picker [data-unit="second"] {
+    display: none !important;
+} */
+
+/* #navbar-breadcrumbs li.disabled a {
+    font-weight: normal !important;
+    color: red !important;
+} */
+ul#navbar-breadcrumbs li.disabled a {
+    color: gray !important;
+}
