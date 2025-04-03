@@ -9,4 +9,6 @@
 } */
 ul#navbar-breadcrumbs li.disabled a {
     color: gray !important;
+    font-size: 13px;
+    font-weight: 400;
 }
