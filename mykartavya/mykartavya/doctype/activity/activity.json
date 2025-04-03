@@ -148,7 +148,7 @@
   },
   {
    "fieldname": "start_time_hr",
-   "fieldtype": "Duration",
+   "fieldtype": "Time",
    "label": "Start Time",
    "options": " ",
    "reqd": 1
@@ -159,7 +159,7 @@
   },
   {
    "fieldname": "end_time_hr",
-   "fieldtype": "Duration",
+   "fieldtype": "Time",
    "label": "End Time",
    "options": " ",
    "reqd": 1
@@ -426,7 +426,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-02 14:58:58.821650",
+ "modified": "2025-04-03 13:45:31.311441",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
@@ -486,6 +486,7 @@
    "role": "Volunteer"
   }
  ],
+ "row_format": "Dynamic",
  "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

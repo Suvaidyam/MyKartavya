@@ -208,6 +208,15 @@ app_include_css = "/assets/mykartavya/css/styleoverrite.css"
 # 	],
 # }
 
+scheduler_events = {
+    "daily": [
+        "mykartavya.activity.process_activities"
+    ],
+}
+
+
+
+
 # Testing
 # -------
 
