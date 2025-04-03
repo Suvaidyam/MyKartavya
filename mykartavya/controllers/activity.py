@@ -211,6 +211,8 @@ class Activity:
                     order_by_clause = " ORDER BY act.max_hours ASC"
                 elif filter["volunteering_hours"] == "High to Low":
                     order_by_clause = " ORDER BY act.max_hours DESC"
+
+                 
         sql_query = f"""
                     SELECT 
                         va.name as name,
@@ -252,11 +254,14 @@ class Activity:
                     LEFT JOIN `tabSVA User` as sva ON sva.name = va.volunteer
                     LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
                     LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
-                    WHERE act.end_date >= CURRENT_DATE() AND act.status = 'Published' AND act.is_featured = 'Yes' {where_clause}
+                    WHERE act.end_date >= CURRENT_DATE() 
+                    AND act.status = 'Published'
+                    AND act.is_featured = 'Yes' 
+                    AND act.docstatus != 2  
                     GROUP BY act.name
                     {order_by_clause}
                 """
-
+        print("\n\n\norder_by_clause\n\n\n",order_by_clause)
         try:
             acts = frappe.db.sql(sql_query, as_dict=True)
             return acts
