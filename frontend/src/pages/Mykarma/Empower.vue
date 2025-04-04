@@ -89,7 +89,7 @@
                   others</span>
               </span>
               <div class="flex items-center gap-3 justify-start w-[230px]">
-                <button v-for="icon in icons" :key="icon.name" :aria-label="icon.name"
+                <button v-for="icon in icons" :key="icon.name" :aria-label="icon.name" @click="shareToSocial(icon)"
                   class="p-1.5 bg-white rounded-full hover:bg-gray-300">
                   <component :is="icon.svg" class="w-5 h-5 text-gray-600" />
                 </button>
@@ -136,7 +136,7 @@
 </template>
 
 <script setup>
-import { inject, ref, onMounted, watch, watchEffect } from 'vue'
+import { inject, ref, onMounted, watch, watchEffect, computed } from 'vue'
 import { FeatherIcon } from 'frappe-ui'
 import Stepper from '../../components/Stepper.vue'
 import Card from '../../components/Card.vue'
@@ -153,11 +153,39 @@ import { useRoute } from 'vue-router'
 
 
 const icons = [
-  { name: 'Facebook', svg: Facebook },
-  { name: 'X', svg: Twitter },
-  { name: 'LinkedIn', svg: Linkedin },
-  { name: 'WhatsApp', svg: MessageCircle },
+  {
+    name: 'Facebook',
+    svg: Facebook,
+    shareUrl: computed(() => {
+      return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(activities.value?.title)}`
+    })
+  },
+  {
+    name: 'X',
+    svg: Twitter,
+    shareUrl: computed(() => {
+      const text = `Check out ${activities.value?.title}`;
+      const hashtags = activities.value?.sdgs ? JSON.parse(activities.value.sdgs).map(sdg => sdg.sdgs_name?.replace(/\s+/g, '')).join(',') : '';
+      return `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}&hashtags=${hashtags}`
+    })
+  },
+  {
+    name: 'LinkedIn',
+    svg: Linkedin,
+    shareUrl: computed(() => {
+      return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`
+    })
+  },
+  {
+    name: 'WhatsApp',
+    svg: MessageCircle,
+    shareUrl: computed(() => {
+      const text = `${activities.value?.title}\n${window.location.href}`;
+      return `https://wa.me/?text=${encodeURIComponent(text)}`
+    })
+  },
 ]
+
 const call = inject('call');
 const store = inject('store');
 const activities = ref([]);
@@ -251,6 +279,19 @@ watchEffect(() => {
 window.addEventListener('resize', () => {
   getScrollStep(); // Ensure it updates when the window resizes
 });
+
+const shareToSocial = (platform) => {
+  const width = 600;
+  const height = 400;
+  const left = (window.innerWidth - width) / 2;
+  const top = (window.innerHeight - height) / 2;
+
+  window.open(
+    platform.shareUrl.value,
+    'social-share',
+    `width=${width},height=${height},left=${left},top=${top}`
+  );
+}
 </script>
 
 <style>
