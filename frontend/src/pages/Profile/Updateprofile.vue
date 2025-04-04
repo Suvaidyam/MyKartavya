@@ -223,8 +223,8 @@ const fields = ref({
       { name: "Other", label: "Other" }
     ]
   },
-  custom_title: {
-    label: "Title",
+  custom_designation: {
+    label: "Designation",
     type: "text",
     placeholder: "Enter your title",
     required: false
@@ -256,12 +256,12 @@ const formData = ref({
   custom_city: "",
   custom_company: "",
   custom_date_of_birth: "",
-  custom_title: "",
   custom_linkedin: "",
   custom_cv: "",
   custom_portfolio: "",
   custom_gender: "",
-  country_code:" +91 "
+  country_code:" +91 ",
+  custom_designation: "",
 
 });
 
@@ -329,8 +329,7 @@ const getDetails = async () => {
       workflowState.value = res[0].workflow_state || 'Not Set';
       // Ensure auth.cookie.name is set
       auth.cookie.name = res[0].name;
-      console.log('User details loaded:', res[0]);
-      console.log('Workflow state:', workflowState.value); // Debug log
+      // console.log('User details loaded:', res[0]);
     } else {
       throw new Error('Failed to load user details.');
     }
@@ -433,7 +432,7 @@ const onSubmit = async () => {
       custom_state: formData.value.custom_state,
       custom_city: formData.value.custom_city,
       custom_company: formData.value.custom_company || "",
-      custom_title: formData.value.custom_title || "",
+      custom_designation: formData.value.custom_designation || "",
       custom_linkedin: formData.value.custom_linkedin || "",
       custom_portfolio: formData.value.custom_portfolio || "",
       custom_cv: formData.value.custom_cv || "",

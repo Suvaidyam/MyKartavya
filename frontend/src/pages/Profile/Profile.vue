@@ -160,8 +160,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.custom_title || '---' }}</div>
-                                <div class="text-caption text-gray-500">Title</div>
+                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.custom_designation || '---' }}</div>
+                                <div class="text-caption text-gray-500">Designation</div>
                             </div>
                         </div>
                         <div class="flex items-start gap-3">
@@ -369,6 +369,7 @@ const get = async () => {
     try {
         const response = await call('mykartavya.controllers.api.sva_user_data');
         svaUserData.value = response[0];
+        console.log('SVA User Data:', svaUserData.value);
         // Only fetch mapped companies if user doesn't have an assigned company
         if (!svaUserData.value?.custom_company) {
             await fetchMappedCompanies();
