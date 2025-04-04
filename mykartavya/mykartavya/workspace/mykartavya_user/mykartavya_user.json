@@ -1,8 +1,8 @@
 {
- "app": "myKartavya ",
+ "app": "mykartavya",
  "charts": [],
- "content": "[{\"type\":\"header\",\"data\":{\"text\":\"MyKartavya \"}}]",
- "creation": "2025-03-10 15:08:54.191819",
+ "content": "[{\"id\":\"tEUvpBPS4l\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Volunteer\",\"col\":4}},{\"id\":\"mRWCSgezPQ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Volunteer Ngo\",\"col\":4}},{\"id\":\"EnWVsomjIp\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Volunteer Company\",\"col\":4}}]",
+ "creation": "2025-04-04 15:33:44.976476",
  "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
@@ -13,25 +13,33 @@
  "indicator_color": "green",
  "is_hidden": 0,
  "label": "MyKartavya User",
- "link_to": "SVA User",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-03-25 17:49:57.913713",
+ "modified": "2025-04-04 15:36:23.303081",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "MyKartavya User",
- "number_cards": [],
+ "number_cards": [
+  {
+   "label": "Volunteer",
+   "number_card_name": "Volunteer-1"
+  },
+  {
+   "label": "Volunteer Ngo",
+   "number_card_name": "Volunteer Ngo"
+  },
+  {
+   "label": "Volunteer Company",
+   "number_card_name": "Volunteer"
+  }
+ ],
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
- "roles": [
-  {
-   "role": "MyKartvya Admin"
-  }
- ],
+ "roles": [],
  "sequence_id": 23.0,
  "shortcuts": [],
  "title": "MyKartavya User",
- "type": "Link"
+ "type": "Workspace"
 }
