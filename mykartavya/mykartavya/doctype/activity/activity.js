@@ -1,25 +1,13 @@
 frappe.ui.form.on("Activity", {
-    start_time_hr: function (frm) {
-        if (frm.doc.start_time_hr && typeof frm.doc.start_time_hr === 'string') {
-            frm.set_value('start_time_hr', format_time(frm.doc.start_time_hr));
-        }
-    },
-    end_time_hr: function (frm) {
-        if (frm.doc.end_time_hr && typeof frm.doc.end_time_hr === 'string') {
-            frm.set_value('end_time_hr', format_time(frm.doc.end_time_hr));
-        }
-    },
-
-    validate: function(frm) {
-        // Condition 1: Prevent saving if image is uploaded
+    validate: function (frm) {
         if (frm.image_uploaded) {
             frappe.validated = false;
-            frm.image_uploaded = false; // Reset the flag
+            frm.image_uploaded = false;  
         }
 
         if (frm.doc.is_global && frm.doc.is_private) {
             frappe.msgprint(__('An activity cannot be both Global and Private. Please uncheck one.'));
-            frappe.validated = false; 
+            frappe.validated = false;
         }
     },
 
@@ -51,18 +39,18 @@ frappe.ui.form.on("Activity", {
         }
     },
 
-    is_private: function(frm) {
+    is_private: function (frm) {
         if (frm.doc.is_private) {
-            frm.set_value('is_global', 0); 
+            frm.set_value('is_global', 0);
         }
     },
-    is_global: function(frm) {
+    is_global: function (frm) {
         if (frm.doc.is_global) {
-            frm.set_value('is_private', 0);  
+            frm.set_value('is_private', 0);
         }
     },
 
-   
+
     is_private: function (frm) {
         if (!frm.doc.is_private) {
             frm.set_value('company', '');
@@ -114,7 +102,7 @@ frappe.ui.form.on("Activity", {
 
         let today = new Date(frappe.datetime.get_today());
         let fields = [
-            { name: "publish_date", min: today },
+            // { name: "publish_date", min: today },
             { name: "application_deadline", depends_on: "publish_date" },
             { name: "start_date", depends_on: "application_deadline" },
             { name: "end_date", depends_on: "start_date" },
@@ -165,28 +153,3 @@ function update_total_vacancies(frm) {
 
     frm.set_value('total_vacancies', total);
 }
-
-function format_time(time_string) {
-    if (!time_string || typeof time_string !== 'string') return "";
-
-    // Ensure the input is in HH:MM format (handle missing seconds)
-    let parts = time_string.split(":");
-    if (parts.length < 2) return ""; // Invalid format check
-
-    let hours = parseInt(parts[0]);
-    let minutes = parseInt(parts[1]);
-    let seconds = parts.length === 3 ? parseInt(parts[2]) : 0; // Default to 0 seconds if missing
-
-    if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) return "";
-
-    let ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12; // Convert to 12-hour format
-
-    return (
-        ("0" + hours).slice(-2) + ":" +
-        ("0" + minutes).slice(-2) + ":" +
-        ("0" + seconds).slice(-2) + " " + ampm
-    );
-}
-
-
