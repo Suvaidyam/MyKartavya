@@ -29,6 +29,17 @@ class Activity(Document):
         elif self.status == "Ongoing" and end_date and today_date == end_date:
             self.status = "Ended"
 
+
+    def process_activities():
+        frappe.logger().info("✅ process_activities scheduler running successfully!")
+        activities = frappe.get_all("Activity", filters={"status": ["in", ["Draft", "Published", "Ongoing","Ended"]]}, fields=["name"])
+        
+        for activity in activities:
+            doc = frappe.get_doc("Activity", activity.name)
+            doc.on_update()
+            doc.save()
+            frappe.db.commit()
+
     def validate_dates(self):
         # Validate application deadline
         if get_datetime(self.application_deadline) <= get_datetime(self.publish_date):

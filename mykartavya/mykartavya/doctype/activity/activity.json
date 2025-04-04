@@ -133,7 +133,7 @@
    "fieldname": "application_deadline",
    "fieldtype": "Datetime",
    "label": "Application Deadline",
-   "reqd": 1
+   "mandatory_depends_on": "eval:!doc.activity_published_date_starts"
   },
   {
    "fieldname": "reporting_deadline",
@@ -148,7 +148,7 @@
   },
   {
    "fieldname": "start_time_hr",
-   "fieldtype": "Duration",
+   "fieldtype": "Time",
    "label": "Start Time",
    "options": " ",
    "reqd": 1
@@ -159,7 +159,7 @@
   },
   {
    "fieldname": "end_time_hr",
-   "fieldtype": "Duration",
+   "fieldtype": "Time",
    "label": "End Time",
    "options": " ",
    "reqd": 1
@@ -426,7 +426,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-03-25 17:44:15.007386",
+ "modified": "2025-04-03 13:45:31.311441",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
