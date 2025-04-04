@@ -77,6 +77,7 @@ frappe.ui.form.on("Activity", {
             });
         }
     },
+
     unlimited_vacancies: function (frm) {
         if (frm.doc.unlimited_vacancies) {
             is_private
@@ -99,10 +100,9 @@ frappe.ui.form.on("Activity", {
         }
     },
     refresh(frm) {
-
         let today = new Date(frappe.datetime.get_today());
         let fields = [
-            // { name: "publish_date", min: today },
+            { name: "publish_date", min: today },
             { name: "application_deadline", depends_on: "publish_date" },
             { name: "start_date", depends_on: "application_deadline" },
             { name: "end_date", depends_on: "start_date" },
@@ -124,9 +124,7 @@ frappe.ui.form.on("Activity", {
         frm.set_value('auto_approve_volunteers', !frm.doc.auto_approve_volunteers)
         frm.set_value('start_date', frm.doc.publish_date)
     }
-
 });
-
 
 function validate_date(frm, field, depends_on) {
     let field_date = frm.doc[field] ? new Date(frm.doc[field]) : null;
@@ -150,6 +148,5 @@ function update_total_vacancies(frm) {
     let vacancy = frm.doc.vacancy || 0;
     let buffer_vacancy = frm.doc.buffer_vacancy || 0;
     let total = vacancy + buffer_vacancy;
-
     frm.set_value('total_vacancies', total);
 }

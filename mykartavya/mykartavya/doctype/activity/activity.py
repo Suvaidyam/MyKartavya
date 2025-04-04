@@ -106,12 +106,12 @@ class Activity(Document):
             self.city = None
             self.address = None
 
-        if self.status == "Draft" and self.publish_date >= today():
+        if self.publish_date >= today():
             self.status = "Published"
-        elif self.status == "Published" and self.start_date >= today():
-            self.status = "Ongoing"
             self.docstatus = 1
-        elif self.status == "Ongoing" and self.end_date >= today():
+        elif self.start_date >= today():
+            self.status = "Ongoing"
+        elif self.end_date >= today():
             self.status = "Ended"
 
     def validate_image(self):
