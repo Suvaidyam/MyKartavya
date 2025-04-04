@@ -1,7 +1,7 @@
 import frappe
 from frappe import _
 from frappe.model.document import Document
-from frappe.utils import get_datetime, now_datetime,today,getdate
+from frappe.utils import getdate, today,get_datetime
 from datetime import time
 
 class Activity(Document):
@@ -13,50 +13,36 @@ class Activity(Document):
         self.validate_location()
         self.validate_company()
         self.validate_image()
-
-    def on_update(self):
-        today_date = getdate(today())
-        start_date = getdate(self.start_date) if self.start_date else None
-        end_date = getdate(self.end_date) if self.end_date else None
-        publish_date = getdate(self.publish_date) if self.publish_date else None
-
-        if self.status == "Draft" and publish_date and today_date >= publish_date:
-            self.status = "Published"
-
-        elif self.status == "Published" and start_date and today_date >= start_date:
-            self.status = "Ongoing"
-
-        elif self.status == "Ongoing" and end_date and today_date == end_date:
-            self.status = "Ended"
-
-
+    @frappe.whitelist()
     def process_activities():
         frappe.logger().info("✅ process_activities scheduler running successfully!")
-        activities = frappe.get_all("Activity", filters={"status": ["in", ["Draft", "Published", "Ongoing","Ended"]]}, fields=["name"])
+        activities = frappe.get_all("Activity", filters={"status": ["in", ["Draft", "Published", "Ongoing"]]}, fields=["name"])
         
         for activity in activities:
             doc = frappe.get_doc("Activity", activity.name)
-            doc.on_update()
             doc.save()
-            frappe.db.commit()
 
     def validate_dates(self):
         # Validate application deadline
-        if get_datetime(self.application_deadline) <= get_datetime(self.publish_date):
-            frappe.throw(_("Application Deadline must be after Publish Date"))
-            
+        if self.application_deadline and self.publish_date:
+            if get_datetime(self.application_deadline) <= get_datetime(self.publish_date):
+                frappe.throw(_("Application Deadline must be after Publish Date"))
+
         # Validate start date
-        if not self.activity_published_date_starts:
-            if get_datetime(self.start_date) <= get_datetime(self.application_deadline):
-                frappe.throw(_("Start Date must be after Application Deadline"))
-            
+        if self.start_date and self.application_deadline:
+            if not self.activity_published_date_starts:
+                if get_datetime(self.start_date) <= get_datetime(self.application_deadline):
+                    frappe.throw(_("Start Date must be after Application Deadline"))
+
         # Validate end date
-        if get_datetime(self.end_date) <= get_datetime(self.start_date):
-            frappe.throw(_("End Date must be after Start Date"))
-            
+        if self.end_date and self.start_date:
+            if get_datetime(self.end_date) <= get_datetime(self.start_date):
+                frappe.throw(_("End Date must be after Start Date"))
+
         # Validate reporting deadline
-        if get_datetime(self.reporting_deadline) <= get_datetime(self.end_date):
-            frappe.throw(_("Reporting Deadline must be after End Date"))
+        if self.reporting_deadline and self.end_date:
+            if get_datetime(self.reporting_deadline) <= get_datetime(self.end_date):
+                frappe.throw(_("Reporting Deadline must be after End Date"))
 
     def validate_time(self):
         try:
@@ -119,6 +105,14 @@ class Activity(Document):
             self.state = None
             self.city = None
             self.address = None
+
+        if self.status == "Draft" and self.publish_date >= today():
+            self.status = "Published"
+        elif self.status == "Published" and self.start_date >= today():
+            self.status = "Ongoing"
+            self.docstatus = 1
+        elif self.status == "Ongoing" and self.end_date >= today():
+            self.status = "Ended"
 
     def validate_image(self):
         for field in ["activity_image", "reward_image"]:
