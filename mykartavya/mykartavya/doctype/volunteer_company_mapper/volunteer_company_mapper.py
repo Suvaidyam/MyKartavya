@@ -95,7 +95,7 @@ class VolunteerCompanyMapper(Document):
 						margin-bottom: 30px;
 					}}
 					.header {{
-						background: linear-gradient(135deg, #6B46C1 0%, #4834D4 100%);
+						background:#4834D4;
 						color: white;
 						padding: 30px;
 						text-align: center;
@@ -111,7 +111,7 @@ class VolunteerCompanyMapper(Document):
 					}}
 					.verify-button {{
 						display: inline-block;
-						background: linear-gradient(135deg, #6B46C1 0%, #4834D4 100%);
+						background: #4834D4;
 						color: white;
 						padding: 16px 32px;
 						text-decoration: none;
@@ -187,7 +187,6 @@ class VolunteerCompanyMapper(Document):
 			</body>
 			</html>
 		"""
-
 		frappe.sendmail(
 			recipients=[self.volunteer_email],
 			subject="Verify Your Email - MyKartavya Volunteer Portal",
