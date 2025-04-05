@@ -6,7 +6,7 @@ class Profile:
         doc = frappe.get_list(
             "SVA User", 
             filters={"name": user}, 
-            fields=["name","mobile_number","full_name","first_name","last_name","email","user_image","custom_employee_id","custom_date_of_birth","custom_background_image","custom_company","custom_country","custom_state","custom_state.state_name as state","custom_city","custom_city.district_name as city","custom_portfolio","custom_cv","custom_designation" ,"custom_linkedin" ,'workflow_state','custom_gender','custom_remarks'],
+            fields=["name","mobile_number","full_name","first_name","last_name","email","user_image","custom_employee_id","custom_date_of_birth","custom_background_image","custom_company","custom_country","custom_state","custom_state.state_name as state","custom_city","custom_city.district_name as city","custom_portfolio","custom_cv","custom_designation" ,"custom_linkedin" ,'workflow_state','custom_gender','custom_remarks','custom_phone_number'],
             ignore_permissions=True
         )
         return doc
@@ -15,8 +15,18 @@ class Profile:
         data['password'] = 'admin@123'
         data['confirm_password'] = 'admin@123'
         name = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")   
-        # return data
+        
         if name:
+            # Ensure phone number is in the correct format
+            if 'custom_phone_number' in data:
+                # If phone number doesn't have country code, add it
+                if not data['custom_phone_number'].startswith('+'):
+                    data['custom_phone_number'] = f"+91-{data['custom_phone_number']}"
+                # Ensure proper format with hyphen
+                elif '-' not in data['custom_phone_number']:
+                    data['custom_phone_number'] = data['custom_phone_number'].replace('+', '+', 1)
+                    data['custom_phone_number'] = f"{data['custom_phone_number']}-{data['custom_phone_number'].split('+')[1]}"
+            
             user_doc = frappe.db.set_value("SVA User", name, data)
             return {'status': '200', 'message': 'User updated successfully'}
         else:

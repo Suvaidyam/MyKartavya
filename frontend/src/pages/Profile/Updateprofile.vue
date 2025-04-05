@@ -76,20 +76,31 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-2">
                   {{ field.label }} <span class="text-red-500" v-if="field.required">*</span>
                 </label>
-                <div class="flex" v-if="key !== 'custom_date_of_birth' && field.type !== 'select' && field.type !== 'file'">
-                  <select v-if="key=='mobile_number'" name="" id="" v-model="formData.country_code" class=" border border-gray-300 text-bodyh2 rounded-l px-4  focus:outline-none focus:ring focus:ring-orange-200">
-                    <option value="" v-for="el in code" :key="el.dial_code" :value="el.dial_code">{{ el.dial_code }}</option>
-                  </select>
-                  <input 
-                    v-model="formData[key]" :type="field.type" :name="key" :placeholder="field.placeholder"
-                    :readonly="field.readonly" :maxlength="field.maxLength"
-                    :disabled="field.readonly"
-                    class="block w-full border border-gray-300 text-bodyh2 py-2.5 px-4 focus:outline-none focus:ring focus:ring-orange-200"
-                    :class="[key=='mobile_number'?'rounded-r':'rounded'  ]" @change="handleInputChange(key, $event)" />
+                <div class="flex"
+                  v-if="key !== 'custom_date_of_birth' && field.type !== 'select' && field.type !== 'file'">
+                  <div v-if="key == 'custom_phone_number'" class="relative">
+                    <select v-model="formData.country_code"
+                      class="h-[42px] appearance-none border border-gray-300 text-bodyh2 rounded-l px-4 focus:outline-none focus:ring focus:ring-orange-200 min-w-[100px] flex items-center gap-2">
+                      <option v-for="el in code" :key="el.dial_code" :value="el.dial_code"
+                        class="flex items-center gap-2">
+                        <span class="inline-block w-6">{{ el.flag }}</span>{{ el.dial_code }}
+                      </option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                      <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <input v-model="formData[key]" :type="field.type" :name="key" :placeholder="field.placeholder"
+                    :readonly="field.readonly" :maxlength="field.maxLength" :disabled="field.readonly"
+                    class="block w-full border border-gray-300 text-bodyh2 h-[42px] px-4 focus:outline-none focus:ring focus:ring-orange-200"
+                    :class="[key == 'custom_phone_number' ? 'rounded-r border-l-0' : 'rounded']"
+                    @change="handleInputChange(key, $event)" />
                 </div>
-                  
+
                 <input v-else-if="key === 'custom_date_of_birth'" v-model="formData.custom_date_of_birth" type="date"
-                  name="custom_date_of_birth" :max="maxDate"
+                  name="custom_date_of_birth" :max="maxDate" :min="minDate"
                   class="block w-full border border-gray-300 text-bodyh2 rounded py-2.5 px-4 focus:outline-none focus:ring focus:ring-orange-200" />
 
                 <div v-else-if="field.type === 'file'" class="flex flex-col">
@@ -172,7 +183,7 @@ const call = inject("call");
 const auth = inject("auth");
 const router = useRouter();
 const errorFieldRef = ref(null);
- 
+
 const code = ref(country_code)
 
 // Form fields and data
@@ -191,15 +202,15 @@ const fields = ref({
     required: true,
     maxLength: 100
   },
-  mobile_number: {
-    label: "Phone No.",
+  custom_phone_number: {
+    label: "Phone Number",
     type: "tel",
     required: true,
     pattern: /^[0-9]{10}$/,
-    error_message: "Invalid phone number ",
-    maxLength: 15
+    error_message: "Please enter a valid 10-digit phone number",
+    maxLength: 10
   },
-  
+
   custom_country: { label: "Country", type: "select", required: true },
   custom_state: { label: "State", type: "select", required: true },
   custom_city: { label: "City", type: "select", required: true },
@@ -211,7 +222,7 @@ const fields = ref({
     min: "1900-01-01",
     max: new Date().toISOString().split("T")[0],
     max: "maxDate",
-    error_message: "Please select a valid date of birth"
+    error_message: "You must be at least 18 years old"
   },
   custom_gender: {
     label: "Gender",
@@ -250,7 +261,8 @@ const fields = ref({
 const formData = ref({
   first_name: "",
   last_name: "",
-  mobile_number: "",
+  custom_phone_number: "",
+  country_code: "+91", // Default country code
   custom_country: "",
   custom_state: "",
   custom_city: "",
@@ -260,9 +272,7 @@ const formData = ref({
   custom_cv: "",
   custom_portfolio: "",
   custom_gender: "",
-  country_code:" +91 ",
   custom_designation: "",
-
 });
 
 // Computed property to filter out fields based on conditions
@@ -280,7 +290,17 @@ const visibleFields = computed(() => {
   return result;
 });
 
-const maxDate = ref(new Date().toISOString().split("T")[0]); // Today's date
+const maxDate = computed(() => {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() - 18); // Subtract 18 years from current date
+  return date.toISOString().split('T')[0];
+});
+
+const minDate = computed(() => {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() - 100); // Allow dates up to 100 years ago
+  return date.toISOString().split('T')[0];
+});
 
 const errors = ref({});  // Errors object
 
@@ -325,11 +345,16 @@ const getDetails = async () => {
     let res = await call("mykartavya.controllers.api.sva_user_data");
     if (res && res.length > 0) {
       formData.value = res[0];
+      // Extract country code and phone number if they exist
+      if (formData.value.custom_phone_number && formData.value.custom_phone_number.includes('-')) {
+        const [countryCode, phoneNumber] = formData.value.custom_phone_number.split('-');
+        formData.value.country_code = countryCode;
+        formData.value.custom_phone_number = phoneNumber;
+      }
       // Set the workflow state from the API response
       workflowState.value = res[0].workflow_state || 'Not Set';
       // Ensure auth.cookie.name is set
       auth.cookie.name = res[0].name;
-      // console.log('User details loaded:', res[0]);
     } else {
       throw new Error('Failed to load user details.');
     }
@@ -361,8 +386,34 @@ const validateForm = () => {
       }
     }
 
+    // Date of Birth Validation
+    if (key === "custom_date_of_birth" && value) {
+      const dob = new Date(value);
+      const today = new Date();
+      const age = today.getFullYear() - dob.getFullYear();
+      const monthDiff = today.getMonth() - dob.getMonth();
+
+      // Adjust age if birthday hasn't occurred this year
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+        const actualAge = age - 1;
+        if (actualAge < 18) {
+          errors.value[key] = "You must be at least 18 years old";
+          valid = false;
+        }
+      } else if (age < 18) {
+        errors.value[key] = "You must be at least 18 years old";
+        valid = false;
+      }
+
+      // Check if date is too old (more than 100 years)
+      if (age > 100) {
+        errors.value[key] = "Please enter a valid date of birth";
+        valid = false;
+      }
+    }
+
     // Phone Number Validation
-    if (key === "mobile_number") {
+    if (key === "custom_phone_number") {
       // Trim the value to ensure no extra spaces
       const trimmedValue = value?.trim();
 
@@ -370,8 +421,8 @@ const validateForm = () => {
       if (!field.pattern?.test(trimmedValue)) {
         if (trimmedValue?.length === 0) {
           errors.value[key] = "Phone number is required.";
-        } else if (trimmedValue?.length !== 15) {
-          errors.value[key] = "Phone number must be exactly 15 digits.";
+        } else if (trimmedValue?.length !== 10) {
+          errors.value[key] = "Phone number must be exactly 10 digits.";
         } else {
           errors.value[key] = field.error_message;  // Default error message for invalid phone number
         }
@@ -389,24 +440,6 @@ const validateForm = () => {
       errors.value[key] = field.error_message;
       valid = false;
     }
-
-    // Date of Birth Validation
-    if (key === "custom_date_of_birth") {
-      if (!value) {
-        errors.value[key] = "Date of birth is required.";
-        valid = false;
-      } else {
-        const dob = new Date(value);
-        const today = new Date();
-
-        if (dob > today) {
-          errors.value[key] = "You cannot select a future date.";
-          valid = false;
-        } else {
-          delete errors.value[key]; // Clear errors if valid
-        }
-      }
-    }
   }
 
   // Return whether the form is valid or not
@@ -422,11 +455,14 @@ const onSubmit = async () => {
 
   loading.value = true;
   try {
+    // Format phone number with country code
+    const formattedPhoneNumber = `${formData.value.country_code}-${formData.value.custom_phone_number}`;
+
     const formDataToSend = {
       name: formData.value.name,
       first_name: formData.value.first_name,
       last_name: formData.value.last_name || "",
-      mobile_number: formData.value.mobile_number,
+      custom_phone_number: formattedPhoneNumber, // Use the formatted phone number
       custom_date_of_birth: formData.value.custom_date_of_birth,
       custom_country: formData.value.custom_country,
       custom_state: formData.value.custom_state,
@@ -437,7 +473,6 @@ const onSubmit = async () => {
       custom_portfolio: formData.value.custom_portfolio || "",
       custom_cv: formData.value.custom_cv || "",
       custom_gender: formData.value.custom_gender,
-      country_code:formData.value.country_code,
       user_image: formData.value.user_image || "",
       custom_background_image: formData.value.custom_background_image || ""
     };
@@ -473,8 +508,8 @@ const getOptions = (key) => {
       return companies.value.map(comp => ({ name: comp.name, label: comp.company_name || comp.name }));
     case "custom_gender":
       return fields.value.custom_gender.options;
-      case "country_code":
-      return fields.value.country_code.options;  
+    case "country_code":
+      return fields.value.country_code.options;
     default:
       return [];
   }
@@ -561,3 +596,42 @@ const getFileName = (base64String) => {
   return 'Uploaded File'
 }
 </script>
+
+<style scoped>
+.country-select {
+  background-color: white;
+}
+
+.country-select option {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Custom styling for the select dropdown */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: white;
+  cursor: pointer;
+}
+
+/* Ensure the flag and dial code are properly spaced */
+select option {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Add hover effect on options */
+select option:hover {
+  background-color: #f3f4f6;
+}
+
+/* Style for the selected option */
+select:focus option:checked {
+  background-color: #f97316;
+  color: white;
+}
+</style>
