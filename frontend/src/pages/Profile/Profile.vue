@@ -72,8 +72,9 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.mobile_number || '---' }}</div>
-                                <div class="text-caption text-gray-500">Phone No.</div>
+                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.custom_phone_number || '---' }}
+                                </div>
+                                <div class="text-caption text-gray-500">Phone Number</div>
                             </div>
                         </div>
 
@@ -160,7 +161,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.custom_designation || '---' }}</div>
+                                <div class="text-bodyh2 text-gray-900">{{ svaUserData?.custom_designation || '---' }}
+                                </div>
                                 <div class="text-caption text-gray-500">Designation</div>
                             </div>
                         </div>
