@@ -225,17 +225,43 @@ def update_sva_user(data):
                     frappe.log_error(f"Error saving {field}: {str(e)}")
                     continue
         
+        # Handle skills update
+        if 'custom_skill' in data:
+            # Delete existing skills
+            frappe.db.delete("User Skills Child", {"parent": name})
+            
+            # Add new skills
+            if len(data['custom_skill']):
+                skills = data['custom_skill']
+                data['custom_skill'] = []
+                for skill in skills:
+                    data.custom_skill.append({
+                        "skill": skill
+                    })
+            # Remove skills from data to avoid update conflict
+            # del data['custom_skill']
+        
+        # Handle phone number update
+        if 'custom_phone_number' in data:
+            # If phone number doesn't have country code, add it
+            if not data['custom_phone_number'].startswith('+'):
+                data['custom_phone_number'] = f"+91-{data['custom_phone_number']}"
+            # Ensure proper format with hyphen
+            elif '-' not in data['custom_phone_number']:
+                data['custom_phone_number'] = data['custom_phone_number'].replace('+', '+', 1)
+                data['custom_phone_number'] = f"{data['custom_phone_number']}-{data['custom_phone_number'].split('+')[1]}"
         # Update other fields
         for key, value in data.items():
             if hasattr(user_doc, key) and key != 'name' and key not in file_fields:
                 user_doc.set(key, value)
         
         user_doc.save(ignore_permissions=True)
-        frappe.db.commit()
+        # frappe.db.commit()
         
         return {
             "status": 200,
-            "message": "User updated successfully"
+            "message": "User updated successfully",
+            "data": user_doc.as_dict()
         }
         
     except Exception as e:
@@ -600,3 +626,8 @@ def get_user_certificates():
             "success": False,
             "message": str(e)
         }
+
+@frappe.whitelist(allow_guest=True)
+def get_all_skills():
+    skills = frappe.get_all("User Skills", fields=["name", "skill_name"])
+    return skills
