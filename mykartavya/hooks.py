@@ -211,13 +211,10 @@ app_include_css = "/assets/mykartavya/css/styleoverrite.css"
 scheduler_events = {
     "cron":{
         "* * * * *": [
-            "mykartavya.doctype.activity.activity.process_activities"
+            "mykartavya.mykartavya.doctype.activity.activity.process_activities"
         ],
     }
 }
-
-
-
 
 # Testing
 # -------

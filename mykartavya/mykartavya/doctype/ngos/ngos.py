@@ -9,15 +9,12 @@ import string
 
 class NGOs(Document):
     def validate(self):
-        """
-        Validate the NGO document before saving
-        """
-        self.validate_contact_numbers()
         self.validate_website()
         self.validate_pincode()
         self.validate_goals()
         self.validate_ngo_logo()
         self.validate_existing_sva_user()
+   
 
     def validate_ngo_logo(self):
         if self.registration_type != "Self Registration":
@@ -39,28 +36,7 @@ class NGOs(Document):
             frappe.throw("File size exceeds 5 MB limit.")
 
 
-    def validate_contact_numbers(self):
-        """
-        Validate phone number formats
-        """
-        phone_fields = ['official_contact_number']
-        
-        if self.registration_type == 'Self Registration':
-            phone_fields.extend(['ngo_head_mobile', 'ngo_head_office_number'])
-
-        phone_pattern = re.compile(r'^\d{10}$')
-        
-        for field in phone_fields:
-            value = self.get(field)
-            if value:
-                # Remove any spaces or hyphens before validation
-                cleaned_number = re.sub(r'[\s-]', '', value)
-                if not phone_pattern.match(cleaned_number):
-                    frappe.throw(
-                        _("Invalid phone number format for {0}. Please enter a valid 10-digit phone number.").format(
-                            frappe.bold(_(self.meta.get_label(field)))
-                        )
-                    )
+  
     def validate_website(self):
         """
         Validate website URL format
@@ -133,24 +109,31 @@ def get_role_profile(role_type):
 def create_ngo_users(doc):
     """Create both NGO Admin and Volunteer users"""
     try:
+        def clean_mobile_number(number):
+            """Remove country code and keep only last 10 digits"""
+            digits = ''.join(filter(str.isdigit, number))
+            return digits[-10:]  
+        
         # Create NGO Admin user
         if doc.ngo_name and doc.email and doc.official_contact_number:
             create_sva_user(
                 first_name=doc.ngo_name,
                 email=doc.email,
-                mobile_number=doc.official_contact_number,
+                mobile_number=clean_mobile_number(doc.official_contact_number),
+                official_contact_number=doc.official_contact_number,
                 role_profile="NGO Admin",
                 custom_designation=doc.designation,
                 custom_volunteer_type="NGO Member",
                 doc=doc
             )
 
+
         # Create Volunteer user
         if doc.ngo_head_name and doc.ngo_head_email and doc.ngo_head_mobile:
             create_sva_user(
                 first_name=doc.ngo_head_name,
                 email=doc.ngo_head_email,
-                mobile_number=doc.ngo_head_mobile,
+                mobile_number=clean_mobile_number(doc.ngo_head_mobile),
                 custom_designation=doc.designation,
                 role_profile="Volunteer",
                 custom_volunteer_type="NGO Member",
@@ -161,7 +144,7 @@ def create_ngo_users(doc):
         frappe.log_error(f"Failed to create SVA Users: {str(e)}")
         frappe.throw(f"Failed to create SVA Users: {str(e)}")
 
-def create_sva_user(first_name, email, mobile_number, role_profile, doc, custom_designation=None, custom_volunteer_type=None, ):
+def create_sva_user(first_name, email, mobile_number,official_contact_number, role_profile, doc, custom_designation=None, custom_volunteer_type=None, ):
     """Create individual SVA User with appropriate role profile and NGO link"""
     try:
         password = generate_random_password()
@@ -178,6 +161,7 @@ def create_sva_user(first_name, email, mobile_number, role_profile, doc, custom_
             "last_name": "",
             "new_password": password,
             "mobile_number": mobile_number,
+            "custom_phone_number": official_contact_number,
             "role_profile": role_profile_name,
             "custom_country": doc.country,
             "custom_state": doc.state,

@@ -82,10 +82,9 @@
   },
   {
    "fieldname": "official_contact_number",
-   "fieldtype": "Data",
+   "fieldtype": "Phone",
    "in_list_view": 1,
    "label": "Official Contact Number",
-   "options": "Phone",
    "reqd": 1
   },
   {
@@ -205,9 +204,8 @@
   },
   {
    "fieldname": "ngo_head_office_number",
-   "fieldtype": "Data",
-   "label": "NGO Head Office Number",
-   "options": "Phone"
+   "fieldtype": "Phone",
+   "label": "NGO Head Office Number"
   },
   {
    "fieldname": "area_of_work",
@@ -293,7 +291,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-25 14:03:04.778107",
+ "modified": "2025-04-05 13:09:29.184366",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "NGOs",

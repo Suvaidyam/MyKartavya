@@ -111,7 +111,7 @@ class Activity(Document):
             self.docstatus = 1
         elif self.start_date >= today():
             self.status = "Ongoing"
-        elif self.end_date >= today():
+        elif self.end_date == today():
             self.status = "Ended"
 
     def validate_image(self):

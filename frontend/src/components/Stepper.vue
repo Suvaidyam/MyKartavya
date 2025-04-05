@@ -344,6 +344,7 @@ const nextStep = async (index) => {
         currentStep.value++
       } else if (res.status == 201) {
         store.req_for_approval = true
+        toast.error("User not approved ")
       } else if (res.status == 400) {
         toast.error(res.msg);
       } else {
