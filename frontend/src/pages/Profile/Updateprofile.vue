@@ -77,19 +77,40 @@
                   {{ field.label }} <span class="text-red-500" v-if="field.required">*</span>
                 </label>
                 <div class="flex"
-                  v-if="key !== 'custom_date_of_birth' && field.type !== 'select' && field.type !== 'file'">
+                  v-if="key !== 'custom_date_of_birth' && !['select', 'file', 'multiselect'].includes(field.type)">
                   <div v-if="key == 'custom_phone_number'" class="relative">
-                    <select v-model="formData.country_code"
-                      class="h-[42px] appearance-none border border-gray-300 text-bodyh2 rounded-l px-4 focus:outline-none focus:ring focus:ring-orange-200 min-w-[100px] flex items-center gap-2">
-                      <option v-for="el in code" :key="el.dial_code" :value="el.dial_code"
-                        class="flex items-center gap-2">
-                        <span class="inline-block w-6">{{ el.flag }}</span>{{ el.dial_code }}
-                      </option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                      <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                      </svg>
+                    <div class="relative country-code-wrapper">
+                      <div
+                        class="flex items-center h-[42px] border border-gray-300 rounded-l px-3 min-w-[120px] cursor-pointer"
+                        @click.stop="toggleDropdown">
+                        <div class="flex items-center gap-2 flex-1">
+                          <span>{{ selectedCountry.flag }}</span>
+                          <span>{{ selectedCountry.dial_code }}</span>
+                        </div>
+                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+
+                      <!-- Dropdown -->
+                      <div v-if="showCountryDropdown"
+                        class="absolute left-0 z-50 w-[280px] max-h-60 bg-white border border-gray-200 rounded-md shadow-lg mt-1">
+                        <div class="p-2 border-b">
+                          <input type="text" v-model="countrySearch" placeholder="Search country..."
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-orange-200"
+                            @click.stop />
+                        </div>
+                        <div class="overflow-y-auto max-h-[188px] country-dropdown">
+                          <div v-for="country in filteredCountryCodes" :key="selectedCountry.dial_code"
+                            @click.stop="selectCountryCode(country)"
+                            class="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 cursor-pointer"
+                            :class="{ 'bg-orange-50': country.dial_code === formData.country_code }">
+                            <span class="w-6">{{ country.flag }}</span>
+                            <span class="text-gray-600">{{ country.name }}</span>
+                            <span class="text-gray-500 ml-auto">{{ country.dial_code }}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <input v-model="formData[key]" :type="field.type" :name="key" :placeholder="field.placeholder"
@@ -139,14 +160,22 @@
                   </div>
                 </div>
 
-                <select v-if="field.type === 'select'" v-model="formData[key]" :name="key" :disabled="field.readonly"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2.5 px-4 focus:outline-none focus:ring focus:ring-orange-200"
-                  :class="{ 'bg-gray-100': field.readonly }">
-                  <option value="" disabled>Select {{ field.label }}</option>
-                  <option v-for="option in getOptions(key)" :key="option.name" :value="option.name">
-                    {{ option.label || option.name }}
-                  </option>
-                </select>
+                <!-- Replace the existing select element with new searchable select -->
+                <SearchableSelect v-if="field.type === 'select'" v-model="formData[key]" :options="getOptions(key)"
+                  :label="field.label" :placeholder="`Select ${field.label}`" :required="field.required" />
+
+                <!-- Add multi-select component for skills -->
+                <div v-if="key === 'custom_skill'" class="w-full">
+                  <Multiselect v-model="formData.custom_skill" :options="getOptions('custom_skill')" :multiple="true"
+                    placeholder="Select skills" label="label" track-by="name" :preselect-first="false"
+                    class="multiselect-orange">
+                    <template slot="selection">
+                      <span class="multiselect__single" v-if="values.length && !isOpen">
+                        {{ values.length }} skills selected
+                      </span>
+                    </template>
+                  </Multiselect>
+                </div>
 
                 <!-- Validation Error Message -->
                 <p v-if="errors[key]" class="text-red-500 text-[11px] mt-1">
@@ -177,6 +206,9 @@ import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { useRouter } from "vue-router";
 import country_code from "@/assets/Country/Country_code.js";
+import Multiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.css'
+import SearchableSelect from '@/components/SearchableSelect.vue';
 
 // Inject API call function
 const call = inject("call");
@@ -199,7 +231,7 @@ const fields = ref({
   last_name: {
     label: "Last Name",
     type: "text",
-    required: true,
+    required: false,
     maxLength: 100
   },
   custom_phone_number: {
@@ -256,6 +288,11 @@ const fields = ref({
     type: "file",
     required: false
   },
+  custom_skill: {
+    label: "Skills",
+    type: "multiselect",
+    required: false
+  },
 });
 
 const formData = ref({
@@ -273,6 +310,7 @@ const formData = ref({
   custom_portfolio: "",
   custom_gender: "",
   custom_designation: "",
+  custom_skill: [],
 });
 
 // Computed property to filter out fields based on conditions
@@ -308,6 +346,7 @@ const countries = ref([]);
 const states = ref([]);
 const cities = ref([]);
 const companies = ref([]);
+const skills = ref([]);
 
 // First, add the loading state ref at the top with other refs
 const loading = ref(false);
@@ -336,21 +375,47 @@ const fetchCompanies = async () => {
   companies.value = res || [];
 };
 
+const fetchSkills = async () => {
+  try {
+    const res = await call("mykartavya.controllers.api.get_all_skills");
+    skills.value = res || [];
+  } catch (error) {
+    console.error('Error fetching skills:', error);
+    toast.error('Failed to load skills. Please try again.');
+  }
+};
+
 watch(() => formData.value.custom_country, fetchStates);
 watch(() => formData.value.custom_state, fetchCities);
 
 // Get user details
 const getDetails = async () => {
   try {
+    // First fetch skills to ensure we have the skill data
+    await fetchSkills();
+
     let res = await call("mykartavya.controllers.api.sva_user_data");
     if (res && res.length > 0) {
       formData.value = res[0];
+
       // Extract country code and phone number if they exist
       if (formData.value.custom_phone_number && formData.value.custom_phone_number.includes('-')) {
         const [countryCode, phoneNumber] = formData.value.custom_phone_number.split('-');
         formData.value.country_code = countryCode;
         formData.value.custom_phone_number = phoneNumber;
       }
+
+      // Handle skills - map skill IDs to skill objects
+      if (formData.value.custom_skill && formData.value.custom_skill.length > 0) {
+        // Map skill IDs to skill objects
+        formData.value.custom_skill = formData.value.custom_skill.map(skillId => {
+          const skill = skills.value.find(s => s.name === skillId);
+          return skill ? { name: skill.name, label: skill.skill_name } : skillId;
+        });
+      } else {
+        formData.value.custom_skill = []; // Ensure it's always an array
+      }
+
       // Set the workflow state from the API response
       workflowState.value = res[0].workflow_state || 'Not Set';
       // Ensure auth.cookie.name is set
@@ -363,6 +428,7 @@ const getDetails = async () => {
     toast.error('Failed to load user details. Please try again.');
   }
 };
+
 
 const validateForm = () => {
   errors.value = {}; // Clear previous errors
@@ -458,11 +524,17 @@ const onSubmit = async () => {
     // Format phone number with country code
     const formattedPhoneNumber = `${formData.value.country_code}-${formData.value.custom_phone_number}`;
 
+    // Prepare skills data - ensure we're sending just the skill names
+    const skillsData = formData.value.custom_skill.map(skill => {
+      // If skill is an object, use the name property, otherwise use the skill directly
+      return typeof skill === 'object' ? skill.name : skill;
+    });
+
     const formDataToSend = {
       name: formData.value.name,
       first_name: formData.value.first_name,
       last_name: formData.value.last_name || "",
-      custom_phone_number: formattedPhoneNumber, // Use the formatted phone number
+      custom_phone_number: formattedPhoneNumber,
       custom_date_of_birth: formData.value.custom_date_of_birth,
       custom_country: formData.value.custom_country,
       custom_state: formData.value.custom_state,
@@ -474,7 +546,8 @@ const onSubmit = async () => {
       custom_cv: formData.value.custom_cv || "",
       custom_gender: formData.value.custom_gender,
       user_image: formData.value.user_image || "",
-      custom_background_image: formData.value.custom_background_image || ""
+      custom_background_image: formData.value.custom_background_image || "",
+      custom_skill: skillsData || [], // Ensure we always send an array, even if empty
     };
 
     let res = await call("mykartavya.controllers.api.update_sva_user", {
@@ -482,14 +555,18 @@ const onSubmit = async () => {
     });
 
     if (res.status == 200) {
-      toast.success("Profile updated successfully!", { "autoClose": 2000 });
-      setTimeout(() => router.push("/"), 1000);
+      await toast.success("Profile updated successfully!", {
+        autoClose: 2000,
+      });
+      setTimeout(() => {
+        router.push('/')
+      }, 1000)
     } else {
       throw new Error(res.message || "Failed to update profile");
     }
   } catch (error) {
     console.error('Error in form submission:', error);
-    toast.error(error.message || "An error occurred while updating the profile.", { "autoClose": 2000 });
+    toast.error(error.message || "An error occurred while updating the profile.", { autoClose: 2000 });
   } finally {
     loading.value = false;
   }
@@ -510,6 +587,8 @@ const getOptions = (key) => {
       return fields.value.custom_gender.options;
     case "country_code":
       return fields.value.country_code.options;
+    case "custom_skill":
+      return skills.value.map(skill => ({ name: skill.name, label: skill.skill_name }));
     default:
       return [];
   }
@@ -519,11 +598,41 @@ const getOptions = (key) => {
 onMounted(async () => {
   fetchCountries();
   fetchCompanies();
+  fetchSkills();
   getDetails();
+
   if (localStorage.getItem('updateprofile') == 'true') {
     toast.error("Please update your profile to continue.", { "autoClose": 2000 });
     localStorage.removeItem('updateprofile');
   }
+
+  // Single click handler for closing dropdown
+  document.addEventListener('click', (e) => {
+    const wrapper = document.querySelector('.country-code-wrapper');
+    if (!wrapper?.contains(e.target)) {
+      showCountryDropdown.value = false;
+      countrySearch.value = '';
+    }
+  });
+
+  // Add click handler for all dropdowns
+  document.addEventListener('click', (e) => {
+    const selectWrappers = document.querySelectorAll('.select-wrapper');
+    let clickedInside = false;
+
+    selectWrappers.forEach(wrapper => {
+      if (wrapper.contains(e.target)) {
+        clickedInside = true;
+      }
+    });
+
+    if (!clickedInside) {
+      activeDropdown.value = null;
+      Object.keys(searchQueries.value).forEach(key => {
+        searchQueries.value[key] = '';
+      });
+    }
+  });
 });
 
 const scrollToFirstError = async () => {
@@ -595,6 +704,81 @@ const getFileName = (base64String) => {
   }
   return 'Uploaded File'
 }
+
+const countrySearch = ref('');
+const showCountryDropdown = ref(false);
+const selectedCountry = computed(() => {
+  return code.value.find(c => c.dial_code === formData.value.country_code) || {
+    flag: "🇮🇳",
+    dial_code: "+91",
+    name: "India"
+  };
+});
+
+const filteredCountryCodes = computed(() => {
+  const search = countrySearch.value.toLowerCase();
+  return code.value.filter(country =>
+    country.dial_code.toLowerCase().includes(search) ||
+    country.name.toLowerCase().includes(search) ||
+    country.flag.toLowerCase().includes(search)
+  ).sort((a, b) => {
+    // Sort by match priority
+    const aNameMatch = a.name.toLowerCase().includes(search);
+    const bNameMatch = b.name.toLowerCase().includes(search);
+    const aCodeMatch = a.dial_code.toLowerCase().includes(search);
+    const bCodeMatch = b.dial_code.toLowerCase().includes(search);
+
+    if (aNameMatch && !bNameMatch) return -1;
+    if (!aNameMatch && bNameMatch) return 1;
+    if (aCodeMatch && !bCodeMatch) return -1;
+    if (!aCodeMatch && bCodeMatch) return 1;
+    return a.name.localeCompare(b.name);
+  });
+});
+
+const selectCountryCode = (country) => {
+  formData.value.country_code = country.dial_code;
+  countrySearch.value = '';
+  showCountryDropdown.value = false;
+};
+
+const toggleDropdown = () => {
+  showCountryDropdown.value = !showCountryDropdown.value;
+};
+
+// Add these new refs and methods in the script section
+const activeDropdown = ref(null);
+const searchQueries = ref({});
+
+const toggleFieldDropdown = (field) => {
+  if (activeDropdown.value === field) {
+    activeDropdown.value = null;
+  } else {
+    activeDropdown.value = field;
+  }
+};
+
+const getFilteredOptions = (key) => {
+  const options = getOptions(key);
+  const search = (searchQueries.value[key] || '').toLowerCase();
+
+  return options.filter(option =>
+    option.name.toLowerCase().includes(search) ||
+    (option.label && option.label.toLowerCase().includes(search))
+  );
+};
+
+const selectOption = (field, option) => {
+  formData.value[field] = option.name;
+  searchQueries.value[field] = '';
+  activeDropdown.value = null;
+};
+
+const getSelectedLabel = (field, value) => {
+  if (!value) return '';
+  const option = getOptions(field).find(opt => opt.name === value);
+  return option ? (option.label || option.name) : value;
+};
 </script>
 
 <style scoped>
@@ -633,5 +817,76 @@ select option:hover {
 select:focus option:checked {
   background-color: #f97316;
   color: white;
+}
+
+.multiselect-orange {
+  --ms-tag-bg: #f97316;
+  --ms-tag-color: #fff;
+  --ms-option-bg-selected: #f97316;
+  --ms-option-color-selected: #fff;
+  --ms-ring-color: #f97316;
+}
+
+.multiselect-orange :deep(.multiselect__tags) {
+  @apply border border-gray-300 rounded-md;
+}
+
+.multiselect-orange :deep(.multiselect__tag) {
+  @apply bg-orange-500 text-white;
+}
+
+.multiselect-orange :deep(.multiselect__option--highlight) {
+  @apply bg-orange-500 text-white;
+}
+
+.multiselect-orange :deep(.multiselect__option--highlight::after) {
+  @apply bg-orange-500 text-white;
+}
+
+.country-dropdown {
+  scrollbar-width: thin;
+  scrollbar-color: #f97316 #f3f4f6;
+}
+
+.country-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.country-dropdown::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+.country-dropdown::-webkit-scrollbar-thumb {
+  background-color: #f97316;
+  border-radius: 2px;
+}
+
+.country-code-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.select-dropdown {
+  scrollbar-width: thin;
+  scrollbar-color: #f97316 #f3f4f6;
+}
+
+.select-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.select-dropdown::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+.select-dropdown::-webkit-scrollbar-thumb {
+  background-color: #f97316;
+  border-radius: 2px;
+}
+
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
 }
 </style>
