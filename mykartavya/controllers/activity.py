@@ -161,7 +161,7 @@ class Activity:
                     LEFT JOIN `tabSVA User` as sva ON sva.name = va.volunteer
                     LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
                     LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
-                    WHERE act.end_date >= CURRENT_DATE() AND act.status = 'Published'
+                    WHERE act.end_date >= CURRENT_DATE() AND act.status IN ('Published', 'Ongoing')
                     AND act.docstatus = 1 
                        {where_clause}
                     GROUP BY act.name
@@ -256,7 +256,7 @@ class Activity:
                     LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
                     LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
                     WHERE act.end_date >= CURRENT_DATE() 
-                    AND act.status = 'Published'
+                    AND act.status IN ('Published', 'Ongoing')
                     AND act.is_featured = 'Yes' 
                     AND act.docstatus = 1  
                     GROUP BY act.name

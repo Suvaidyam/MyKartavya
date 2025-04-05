@@ -163,6 +163,7 @@ def insert_sva_user(doc):
         state = doc.state
         city = doc.city
         designation = doc.designation
+        phone = str(doc.phone)
         # Check if user already exists
         if frappe.db.exists("SVA User", {"email": email}):
             frappe.throw(f"SVA User with email {email} already exists")
@@ -173,7 +174,8 @@ def insert_sva_user(doc):
             "first_name": first_name,
             "last_name": last_name,
             "password": password,
-            "mobile_number": mobile_number,
+            "custom_phone_number_":phone,
+            "mobile_number": mobile_number, 
             "confirm_password": password,
             "custom_company": doc.name,
             "role_profile": role_profile,
@@ -184,7 +186,7 @@ def insert_sva_user(doc):
             "custom_volunteer_type": "Employee",
             "enabled": 1
         })
-
+        print("Phone =======================================================================",phone)
         sva_user.insert(ignore_permissions=True)
         sva_user = frappe.get_doc("SVA User", sva_user.name)
         sva_user.save(ignore_permissions=True)
@@ -213,7 +215,7 @@ def insert_sva_user(doc):
                 "first_name": doc.volunteering_incharge_name,
                 "last_name": "",
                 "password": incharge_password,
-                "mobile_number": doc.volunteering_incharge_phone,
+                "custom_phone_number": doc.volunteering_incharge_phone,
                 "confirm_password": incharge_password,
                 "custom_company": doc.name,
                 "custom_country": country,
