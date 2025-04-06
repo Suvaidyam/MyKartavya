@@ -183,35 +183,41 @@
    "fieldname": "contact_person_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Contact Person Name"
+   "label": "Contact Person Name",
+   "mandatory_depends_on": "eval:doc.registration_type==\"Self Registration\""
   },
   {
    "fieldname": "ngo_head_name",
    "fieldtype": "Data",
-   "label": "NGO Head Name"
+   "label": "NGO Head Name",
+   "mandatory_depends_on": "eval:doc.registration_type==\"Self Registration\""
   },
   {
    "fieldname": "ngo_head_email",
    "fieldtype": "Data",
    "label": "NGO Head Email",
+   "mandatory_depends_on": "eval:doc.registration_type==\"Self Registration\"",
    "options": "Email"
   },
   {
    "fieldname": "ngo_head_mobile",
    "fieldtype": "Data",
    "label": "NGO Head Mobile",
+   "mandatory_depends_on": "eval:doc.registration_type==\"Self Registration\"",
    "options": "Phone"
   },
   {
    "fieldname": "ngo_head_office_number",
    "fieldtype": "Phone",
-   "label": "NGO Head Office Number"
+   "label": "NGO Head Office Number",
+   "mandatory_depends_on": "eval:doc.registration_type==\"Self Registration\""
   },
   {
    "fieldname": "area_of_work",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Area of Work",
+   "mandatory_depends_on": "eval:doc.registration_type==\"Self Registration\"",
    "options": "\nEducation\nSkills\nEnvironment\nFinancial Inclusion\nAccessibility and Inclusion\nDisaster Management\nHealthcare"
   },
   {
@@ -223,7 +229,8 @@
    "fieldname": "pincode",
    "fieldtype": "Data",
    "label": "Postal Code",
-   "length": 6
+   "length": 6,
+   "mandatory_depends_on": "eval:doc.registration_type==\"Self Registration\""
   },
   {
    "fieldname": "registration_details_section",
@@ -291,7 +298,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-06 15:32:27.106290",
+ "modified": "2025-04-06 18:02:34.685403",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "NGOs",
@@ -359,7 +366,6 @@
    "write": 1
   }
  ],
- "row_format": "Dynamic",
  "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
