@@ -185,10 +185,10 @@
                     <div class="mt-8">
                         <h3 class="text-sm font-medium mb-3">Skills</h3>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-4 py-1 bg-pink-50 text-pink-700 rounded-full text-sm">Communication</span>
-                            <span class="px-4 py-1 bg-pink-50 text-pink-700 rounded-full text-sm">Teamwork</span>
-                            <span class="px-4 py-1 bg-pink-50 text-pink-700 rounded-full text-sm">Problem -
-                                Solving</span>
+                            <span v-for="skill in svaUserData?.custom_skill" :key="skill"
+                                class="px-4 py-1 bg-pink-50 text-pink-700 rounded-full text-sm">
+                                {{ skill }}
+                            </span>
                         </div>
                     </div>
                     <div class="mt-8">
@@ -366,18 +366,29 @@ const call = inject('call')
 const svaUserData = ref(null)
 const mappedCompanies = ref([]);
 const certificates = ref([]);
+const allSkills = ref([]);
+
+const fetchAllSkills = async () => {
+    try {
+        const response = await call('mykartavya.controllers.api.get_all_skills');
+        allSkills.value = response || [];
+    } catch (error) {
+        console.error('Error fetching all skills:', error);
+    }
+};
 
 const get = async () => {
     try {
         const response = await call('mykartavya.controllers.api.sva_user_data');
-        svaUserData.value = response[0];
-        console.log('SVA User Data:', svaUserData.value);
-        // Only fetch mapped companies if user doesn't have an assigned company
-        if (!svaUserData.value?.custom_company) {
-            await fetchMappedCompanies();
+        if (response && response.length > 0) {
+            svaUserData.value = response[0];
+            svaUserData.value.custom_skill = svaUserData.value.custom_skill.map(skillId => {
+                const skill = allSkills.value.find(s => s.name === skillId);
+                return skill ? skill.skill_name : skillId;
+            });
+            console.log('SVA User Data:', svaUserData.value);
         }
     } catch (err) {
-        // Handle the error here
         console.error('Error fetching data:', err);
     }
 };
@@ -453,9 +464,9 @@ const getInitials = (fullName) => {
 };
 
 onMounted(() => {
+    fetchAllSkills();
     get();
     fetchCertificates();
-
     // Close modal on escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closePreview();
