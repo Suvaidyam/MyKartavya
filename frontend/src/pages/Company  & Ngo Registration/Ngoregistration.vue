@@ -44,10 +44,46 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Official Contact Number <span class="text-red-500 pt-2">*</span>
                 </label>
-                <input v-model="form.official_contact_number" name="official_contact_number" type="tel"
-                  placeholder="+91 XXXXX XXXXX" @input="handle_input_change('official_contact_number')" maxlength="10"
-                  pattern="\d{10}"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <div class="flex">
+                  <div class="relative country-code-wrapper">
+                    <div
+                      class="flex items-center h-[42px] border border-gray-300 rounded-l px-3 min-w-[120px] cursor-pointer"
+                      @click.stop="toggleOfficialContactDropdown">
+                      <div class="flex items-center gap-2 flex-1">
+                        <span>{{ selectedOfficialContactCountry.flag }}</span>
+                        <span>{{ selectedOfficialContactCountry.dial_code }}</span>
+                      </div>
+                      <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+
+                    <!-- Dropdown -->
+                    <div v-if="showOfficialContactDropdown"
+                      class="absolute left-0 z-50 w-[280px] max-h-60 bg-white border border-gray-200 rounded-md shadow-lg mt-1">
+                      <div class="p-2 border-b">
+                        <input type="text" v-model="officialContactCountrySearch" placeholder="Search country..."
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-orange-200"
+                          @click.stop />
+                      </div>
+                      <div class="overflow-y-auto max-h-[188px] country-dropdown">
+                        <div v-for="country in filteredOfficialContactCountryCodes"
+                          :key="selectedOfficialContactCountry.dial_code"
+                          @click.stop="selectOfficialContactCountryCode(country)"
+                          class="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 cursor-pointer"
+                          :class="{ 'bg-orange-50': country.dial_code === form.official_contact_country_code }">
+                          <span class="w-6">{{ country.flag }}</span>
+                          <span class="text-gray-600">{{ country.name }}</span>
+                          <span class="text-gray-500 ml-auto">{{ country.dial_code }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input v-model="form.official_contact_number" name="official_contact_number" type="tel"
+                    placeholder="XXXXX XXXXX" @input="handle_input_change('official_contact_number')" maxlength="10"
+                    pattern="\d{10}"
+                    class="block w-full border border-gray-300 text-bodyh2 rounded-r py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200 border-l-0" />
+                </div>
                 <p v-if="errors.official_contact_number" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.official_contact_number }}
                 </p>
@@ -82,11 +118,11 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   License Type <span class="text-red-500 pt-2">*</span>
                 </label>
-                <select v-model="form.license_type" name="license_type"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
-                  <option value="FCRA">FCRA</option>
-                  <option value="12A">Non-FCRA</option>
-                </select>
+                <SearchableSelect v-model="form.license_type" :options="licenseTypeOptions" label="License Type"
+                  placeholder="Select License Type" :required="true" />
+                <p v-if="errors.license_type" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.license_type }}
+                </p>
               </div>
 
               <!-- Row 4 -->
@@ -94,32 +130,22 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Country <span class="text-red-500 pt-2">*</span>
                 </label>
-                <select v-model="form.country" name="country"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
-                  <option value="" disabled>Select Country</option>
-                  <option v-for="country in countries" :key="country.name" :value="country.name">
-                    {{ country.label || country.name }}
-                  </option>
-                  <p v-if="errors.country" class="text-red-500 text-[10px] pt-1 pl-1">
-                    {{ errors.country }}
-                  </p>
-                </select>
+                <SearchableSelect v-model="form.country" :options="getOptions('country')" label="Country"
+                  placeholder="Select Country" :required="true" />
+                <p v-if="errors.country" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.country }}
+                </p>
               </div>
 
               <div>
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   State <span class="text-red-500 pt-2">*</span>
                 </label>
-                <select v-model="form.state" name="state"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
-                  <option value="" disabled>Select State</option>
-                  <option v-for="state in states" :key="state.name" :value="state.name">
-                    {{ state.state_name || state.name }}
-                  </option>
-                  <p v-if="errors.state" class="text-red-500 text-[10px] pt-1 pl-1">
-                    {{ errors.state }}
-                  </p>
-                </select>
+                <SearchableSelect v-model="form.state" :options="getOptions('state')" label="State"
+                  placeholder="Select State" :required="true" />
+                <p v-if="errors.state" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.state }}
+                </p>
               </div>
 
               <!-- Row 5 -->
@@ -127,32 +153,22 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   City <span class="text-red-500 pt-2">*</span>
                 </label>
-                <select v-model="form.city" name="city"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
-                  <option value="" disabled>Select City</option>
-                  <option v-for="city in cities" :key="city.name" :value="city.name">
-                    {{ city.district_name || city.name }}
-                  </option>
-                  <p v-if="errors.city" class="text-red-500 text-[10px] pt-1 pl-1">
-                    {{ errors.city }}
-                  </p>
-                </select>
+                <SearchableSelect v-model="form.city" :options="getOptions('city')" label="City"
+                  placeholder="Select City" :required="true" />
+                <p v-if="errors.city" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.city }}
+                </p>
               </div>
 
               <div>
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Area of Work <span class="text-red-500 pt-2">*</span>
                 </label>
-                <select v-model="form.area_of_work" name="area_of_work"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
-                  <option value="" disabled>Select Area of Work</option>
-                  <option v-for="area in areaOfWorkOptions" :key="area" :value="area">
-                    {{ area }}
-                  </option>
-                  <p v-if="errors.area_of_work" class="text-red-500 text-[10px] pt-1 pl-1">
-                    {{ errors.area_of_work }}
-                  </p>
-                </select>
+                <SearchableSelect v-model="form.area_of_work" :options="getOptions('area_of_work')" label="Area of Work"
+                  placeholder="Select Area of Work" :required="true" />
+                <p v-if="errors.area_of_work" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.area_of_work }}
+                </p>
               </div>
 
               <!-- Row 6 -->
@@ -195,7 +211,7 @@
 
               <div>
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
-                  NGO Head Mobile <span class="text-red-500 pt-2">*</span>
+                  NGO Head Mobile Number<span class="text-red-500 pt-2">*</span>
                 </label>
                 <input v-model="form.ngo_head_mobile" name="ngo_head_mobile" type="tel" placeholder="+91 XXXXX XXXXX"
                   @input="handle_input_change('ngo_head_mobile')" maxlength="10" pattern="\d{10}"
@@ -210,10 +226,45 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   NGO Head Office Number
                 </label>
-                <input v-model="form.ngo_head_office_number" name="ngo_head_office_number" type="tel"
-                  placeholder="+91 XXXXX XXXXX" @input="handle_input_change('ngo_head_office_number')" maxlength="10"
-                  pattern="\d{10}"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <div class="flex">
+                  <div class="relative country-code-wrapper">
+                    <div
+                      class="flex items-center h-[42px] border border-gray-300 rounded-l px-3 min-w-[120px] cursor-pointer"
+                      @click.stop="toggleDropdown">
+                      <div class="flex items-center gap-2 flex-1">
+                        <span>{{ selectedCountry.flag }}</span>
+                        <span>{{ selectedCountry.dial_code }}</span>
+                      </div>
+                      <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+
+                    <!-- Dropdown -->
+                    <div v-if="showCountryDropdown"
+                      class="absolute left-0 z-50 w-[280px] max-h-60 bg-white border border-gray-200 rounded-md shadow-lg mt-1">
+                      <div class="p-2 border-b">
+                        <input type="text" v-model="countrySearch" placeholder="Search country..."
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-orange-200"
+                          @click.stop />
+                      </div>
+                      <div class="overflow-y-auto max-h-[188px] country-dropdown">
+                        <div v-for="country in filteredCountryCodes" :key="selectedCountry.dial_code"
+                          @click.stop="selectCountryCode(country)"
+                          class="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 cursor-pointer"
+                          :class="{ 'bg-orange-50': country.dial_code === form.country_code }">
+                          <span class="w-6">{{ country.flag }}</span>
+                          <span class="text-gray-600">{{ country.name }}</span>
+                          <span class="text-gray-500 ml-auto">{{ country.dial_code }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input v-model="form.ngo_head_office_number" name="ngo_head_office_number" type="tel"
+                    placeholder="XXXXX XXXXX" @input="handle_input_change('ngo_head_office_number')" maxlength="10"
+                    pattern="\d{10}"
+                    class="block w-full border border-gray-300 text-bodyh2 rounded-r py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200 border-l-0" />
+                </div>
                 <p v-if="errors.ngo_head_office_number" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.ngo_head_office_number }}
                 </p>
@@ -263,11 +314,8 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Registered with BigTech <span class="text-red-500 pt-2">*</span>
                 </label>
-                <select v-model="form.registered_with_bigtech" name="registered_with_bigtech"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200">
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
+                <SearchableSelect v-model="form.registered_with_bigtech" :options="bigTechOptions"
+                  label="Registered with BigTech" placeholder="Select Option" :required="true" />
                 <p v-if="errors.registered_with_bigtech" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.registered_with_bigtech }}
                 </p>
@@ -322,10 +370,12 @@
 </template>
 
 <script setup>
-import { ref, inject, onMounted, watch } from 'vue'
+import { ref, inject, onMounted, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import SearchableSelect from '@/components/SearchableSelect.vue'
+import country_code from "@/assets/Country/Country_code.js"
 
 const call = inject('call')
 const router = useRouter()
@@ -335,6 +385,7 @@ const form = ref({
   ngo_name: '',
   website: '',
   official_contact_number: '',
+  official_contact_country_code: '+91', // Default country code
   email: '',
   designation: '',
   state: '',
@@ -346,6 +397,7 @@ const form = ref({
   ngo_head_email: '',
   ngo_head_mobile: '',
   ngo_head_office_number: '',
+  country_code: '+91', // Default country code
   area_of_work: '',
   address: '',
   pincode: '',
@@ -371,6 +423,103 @@ const areaOfWorkOptions = ref([
   'Disaster Management',
   'Healthcare',
 ])
+
+// License type options
+const licenseTypeOptions = ref([
+  { name: 'FCRA', label: 'FCRA' },
+  { name: '12A', label: 'Non-FCRA' }
+])
+
+// BigTech options
+const bigTechOptions = ref([
+  { name: 'Yes', label: 'Yes' },
+  { name: 'No', label: 'No' }
+])
+
+// Country code selection
+const code = ref(country_code)
+const countrySearch = ref('');
+const showCountryDropdown = ref(false);
+const selectedCountry = computed(() => {
+  return code.value.find(c => c.dial_code === form.value.country_code) || {
+    flag: "🇮🇳",
+    dial_code: "+91",
+    name: "India"
+  };
+});
+
+// Country code selection for official contact number
+const officialContactCountrySearch = ref('');
+const showOfficialContactDropdown = ref(false);
+const selectedOfficialContactCountry = computed(() => {
+  return code.value.find(c => c.dial_code === form.value.official_contact_country_code) || {
+    flag: "🇮🇳",
+    dial_code: "+91",
+    name: "India"
+  };
+});
+
+const filteredCountryCodes = computed(() => {
+  const search = countrySearch.value.toLowerCase();
+  return code.value.filter(country =>
+    country.dial_code.toLowerCase().includes(search) ||
+    country.name.toLowerCase().includes(search) ||
+    country.flag.toLowerCase().includes(search)
+  ).sort((a, b) => {
+    // Sort by match priority
+    const aNameMatch = a.name.toLowerCase().includes(search);
+    const bNameMatch = b.name.toLowerCase().includes(search);
+    const aCodeMatch = a.dial_code.toLowerCase().includes(search);
+    const bCodeMatch = b.dial_code.toLowerCase().includes(search);
+
+    if (aNameMatch && !bNameMatch) return -1;
+    if (!aNameMatch && bNameMatch) return 1;
+    if (aCodeMatch && !bCodeMatch) return -1;
+    if (!aCodeMatch && bCodeMatch) return 1;
+    return a.name.localeCompare(b.name);
+  });
+});
+
+const filteredOfficialContactCountryCodes = computed(() => {
+  const search = officialContactCountrySearch.value.toLowerCase();
+  return code.value.filter(country =>
+    country.dial_code.toLowerCase().includes(search) ||
+    country.name.toLowerCase().includes(search) ||
+    country.flag.toLowerCase().includes(search)
+  ).sort((a, b) => {
+    // Sort by match priority
+    const aNameMatch = a.name.toLowerCase().includes(search);
+    const bNameMatch = b.name.toLowerCase().includes(search);
+    const aCodeMatch = a.dial_code.toLowerCase().includes(search);
+    const bCodeMatch = b.dial_code.toLowerCase().includes(search);
+
+    if (aNameMatch && !bNameMatch) return -1;
+    if (!aNameMatch && bNameMatch) return 1;
+    if (aCodeMatch && !bCodeMatch) return -1;
+    if (!aCodeMatch && bCodeMatch) return 1;
+    return a.name.localeCompare(b.name);
+  });
+});
+
+const selectCountryCode = (country) => {
+  form.value.country_code = country.dial_code;
+  countrySearch.value = '';
+  showCountryDropdown.value = false;
+};
+
+const selectOfficialContactCountryCode = (country) => {
+  form.value.official_contact_country_code = country.dial_code;
+  officialContactCountrySearch.value = '';
+  showOfficialContactDropdown.value = false;
+};
+
+const toggleDropdown = () => {
+  showCountryDropdown.value = !showCountryDropdown.value;
+};
+
+const toggleOfficialContactDropdown = () => {
+  showOfficialContactDropdown.value = !showOfficialContactDropdown.value;
+};
 
 // Fetch country, state and city data
 const fetchCountries = async () => {
@@ -440,12 +589,39 @@ watch(
   }
 )
 
+// Get options for SearchableSelect
+const getOptions = (key) => {
+  switch (key) {
+    case 'country':
+      return countries.value.map(c => ({ name: c.name, label: c.label || c.name }));
+    case 'state':
+      return states.value.map(s => ({ name: s.name, label: s.state_name || s.name }));
+    case 'city':
+      return cities.value.map(c => ({ name: c.name, label: c.district_name || c.name }));
+    case 'area_of_work':
+      return areaOfWorkOptions.value.map(area => ({ name: area, label: area }));
+    default:
+      return [];
+  }
+};
+
 // Initialize data on component mount
 onMounted(async () => {
   await fetchCountries()
   if (form.value.country) {
     await fetchStates()
   }
+
+  // Single click handler for closing dropdowns
+  document.addEventListener('click', (e) => {
+    const wrapper = document.querySelector('.country-code-wrapper');
+    if (!wrapper?.contains(e.target)) {
+      showCountryDropdown.value = false;
+      showOfficialContactDropdown.value = false;
+      countrySearch.value = '';
+      officialContactCountrySearch.value = '';
+    }
+  });
 })
 
 const handleFileUpload = async (event) => {
@@ -594,8 +770,17 @@ const submitForm = async () => {
 
     loading.value = true
 
+    // Format phone numbers with country codes
+    const formattedOfficeNumber = form.value.ngo_head_office_number ?
+      `${form.value.country_code}-${form.value.ngo_head_office_number}` : '';
+
+    const formattedOfficialContactNumber = form.value.official_contact_number ?
+      `${form.value.official_contact_country_code}-${form.value.official_contact_number}` : '';
+
     const response = await call('mykartavya.mykartavya.api.register_ngo', {
       ...form.value,
+      ngo_head_office_number: formattedOfficeNumber,
+      official_contact_number: formattedOfficialContactNumber,
     })
 
     if (response.status === 'success') {
@@ -648,5 +833,28 @@ const submitForm = async () => {
 
 .banner {
   background-image: url('../../assets/ngo-web-min.png');
+}
+
+.country-dropdown {
+  scrollbar-width: thin;
+  scrollbar-color: #f97316 #f3f4f6;
+}
+
+.country-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.country-dropdown::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+.country-dropdown::-webkit-scrollbar-thumb {
+  background-color: #f97316;
+  border-radius: 2px;
+}
+
+.country-code-wrapper {
+  position: relative;
+  display: inline-block;
 }
 </style>
