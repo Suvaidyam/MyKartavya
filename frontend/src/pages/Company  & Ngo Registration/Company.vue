@@ -1,12 +1,8 @@
 <template>
   <div class="max-w-[1920px] mx-auto pt-[82px] pb-4 bg-gray-50">
-    <section
-      class="relative w-full h-[250px] md:h-[300px] lg:h-[247px] bg-cover bg-center bg-no-repeat banner"
-    >
+    <section class="relative w-full h-[250px] md:h-[300px] lg:h-[247px] bg-cover bg-center bg-no-repeat banner">
       <!-- Absolute Positioned Text -->
-      <div
-        class="absolute inset-0 flex items-center justify-start px-6 md:px-12 lg:px-16"
-      >
+      <div class="absolute inset-0 flex items-center justify-start px-6 md:px-12 lg:px-16">
         <h1 class="text-white font-semibold text-heading2">
           Register For Company
         </h1>
@@ -18,52 +14,29 @@
           <h2 class="text-xl font-semibold text-gray-700 mb-4">
             <!-- Company Registration -->
           </h2>
-          <form
-            @submit.prevent="submitForm"
-            class="space-y-8"
-            :class="{ loading: loading }"
-          >
+          <form @submit.prevent="submitForm" class="space-y-8" :class="{ loading: loading }">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <!-- Basic Information -->
               <div>
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Company Name <span class="text-red-500 pt-2">*</span>
                 </label>
-                <input
-                  v-model="form.company_name"
-                  type="text"
-                  name="company_name"
-                  @input="handle_input_change('company_name')"
-                  placeholder="Enter Company Name"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                />
-                <p
-                  v-if="errors.company_name"
-                  class="text-red-500 text-[10px] pt-1 pl-1"
-                >
+                <input v-model="form.company_name" type="text" name="company_name"
+                  @input="handle_input_change('company_name')" placeholder="Enter Company Name"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.company_name" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.company_name }}
                 </p>
               </div>
 
               <div>
-                <label
-                  for="registration_date"
-                  class="block text-bodyh1 font-normal text-gray-700 mb-1"
-                >
+                <label for="registration_date" class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Registration Date <span class="text-red-500 pt-2">*</span>
                 </label>
-                <input
-                  v-model="form.registration_date"
-                  id="registration_date"
-                  type="date"
-                  name="registration_date"
+                <input v-model="form.registration_date" id="registration_date" type="date" name="registration_date"
                   @input="handle_input_change('registration_date')"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                />
-                <p
-                  v-if="errors.registration_date"
-                  class="text-red-500 text-[10px] pt-1 pl-1"
-                >
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.registration_date" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.registration_date }}
                 </p>
               </div>
@@ -72,18 +45,10 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Email <span class="text-red-500 pt-2">*</span>
                 </label>
-                <input
-                  v-model="form.email"
-                  name="email"
-                  type="email"
-                  @input="handle_input_change('email')"
+                <input v-model="form.email" name="email" type="email" @input="handle_input_change('email')"
                   placeholder="company@example.com"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                />
-                <p
-                  v-if="errors.email"
-                  class="text-red-500 text-[10px] pt-1 pl-1"
-                >
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.email" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.email }}
                 </p>
               </div>
@@ -93,18 +58,10 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   First Name <span class="text-red-500 pt-2">*</span>
                 </label>
-                <input
-                  v-model="form.first_name"
-                  type="text"
-                  name="first_name"
-                  @input="handle_input_change('first_name')"
-                  placeholder="First Name"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                />
-                <p
-                  v-if="errors.first_name"
-                  class="text-red-500 text-[10px] pt-1 pl-1"
-                >
+                <input v-model="form.first_name" type="text" name="first_name"
+                  @input="handle_input_change('first_name')" placeholder="First Name"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.first_name" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.first_name }}
                 </p>
               </div>
@@ -113,18 +70,10 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Last Name <span class="text-red-500 pt-2">*</span>
                 </label>
-                <input
-                  v-model="form.last_name"
-                  type="text"
-                  name="last_name"
-                  @input="handle_input_change('last_name')"
+                <input v-model="form.last_name" type="text" name="last_name" @input="handle_input_change('last_name')"
                   placeholder="Last Name"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                />
-                <p
-                  v-if="errors.last_name"
-                  class="text-red-500 text-[10px] pt-1 pl-1"
-                >
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.last_name" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.last_name }}
                 </p>
               </div>
@@ -133,18 +82,10 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Designation <span class="text-red-500 pt-2">*</span>
                 </label>
-                <input
-                  v-model="form.designation"
-                  type="text"
-                  name="designation"
-                  @input="handle_input_change('designation')"
-                  placeholder="e.g., Director, Manager"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                />
-                <p
-                  v-if="errors.designation"
-                  class="text-red-500 text-[10px] pt-1 pl-1"
-                >
+                <input v-model="form.designation" type="text" name="designation"
+                  @input="handle_input_change('designation')" placeholder="e.g., Director, Manager"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.designation" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.designation }}
                 </p>
               </div>
@@ -153,20 +94,11 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Mobile Number <span class="text-red-500 pt-2">*</span>
                 </label>
-                <input
-                  v-model="form.mobile_number"
-                  type="tel"
-                  name="mobile_number"
-                  @input="handle_input_change('mobile_number')"
-                  placeholder="+91 XXXXX XXXXXr"
-                  maxlength="10"
+                <input v-model="form.mobile_number" type="tel" name="mobile_number"
+                  @input="handle_input_change('mobile_number')" placeholder="+91 XXXXX XXXXXr" maxlength="10"
                   pattern="\d{10}"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                />
-                <p
-                  v-if="errors.mobile_number"
-                  class="text-red-500 text-[10px] pt-1 pl-1"
-                >
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.mobile_number" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.mobile_number }}
                 </p>
               </div>
@@ -175,18 +107,44 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Phone
                 </label>
-                <input
-                  v-model="form.phone"
-                  type="tel"
-                  name="phone"
-                  placeholder="+91 XXXXX XXXXX"
-                  maxlength="10"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                />
-                <p
-                  v-if="errors.phone"
-                  class="text-red-500 text-[10px] pt-1 pl-1"
-                >
+                <div class="flex">
+                  <div class="relative country-code-wrapper">
+                    <div
+                      class="flex items-center h-[42px] border border-gray-300 rounded-l px-3 min-w-[120px] cursor-pointer"
+                      @click.stop="toggleDropdown">
+                      <div class="flex items-center gap-2 flex-1">
+                        <span>{{ selectedCountry.flag }}</span>
+                        <span>{{ selectedCountry.dial_code }}</span>
+                      </div>
+                      <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+
+                    <!-- Dropdown -->
+                    <div v-if="showCountryDropdown"
+                      class="absolute left-0 z-50 w-[280px] max-h-60 bg-white border border-gray-200 rounded-md shadow-lg mt-1">
+                      <div class="p-2 border-b">
+                        <input type="text" v-model="countrySearch" placeholder="Search country..."
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-orange-200"
+                          @click.stop />
+                      </div>
+                      <div class="overflow-y-auto max-h-[188px] country-dropdown">
+                        <div v-for="country in filteredCountryCodes" :key="selectedCountry.dial_code"
+                          @click.stop="selectCountryCode(country)"
+                          class="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 cursor-pointer"
+                          :class="{ 'bg-orange-50': country.dial_code === form.phone_country_code }">
+                          <span class="w-6">{{ country.flag }}</span>
+                          <span class="text-gray-600">{{ country.name }}</span>
+                          <span class="text-gray-500 ml-auto">{{ country.dial_code }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input v-model="form.phone" type="tel" name="phone" placeholder="XXXXX XXXXX" maxlength="10"
+                    class="block w-full border border-gray-300 text-bodyh2 rounded-r py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200 border-l-0" />
+                </div>
+                <p v-if="errors.phone" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.phone }}
                 </p>
               </div>
@@ -197,18 +155,10 @@
                   India Headquarters Address
                   <span class="text-red-500 pt-2">*</span>
                 </label>
-                <textarea
-                  v-model="form.address"
-                  @input="handle_input_change('address')"
-                  name="address"
-                  rows="3"
+                <textarea v-model="form.address" @input="handle_input_change('address')" name="address" rows="3"
                   placeholder="Enter complete address with landmarks"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                ></textarea>
-                <p
-                  v-if="errors.address"
-                  class="text-red-500 text-[10px] pt-1 pl-1"
-                >
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"></textarea>
+                <p v-if="errors.address" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.address }}
                 </p>
               </div>
@@ -217,26 +167,9 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Country <span class="text-red-500 pt-2">*</span>
                 </label>
-                <select
-                  v-model="form.country"
-                  @change="fetchStates"
-                  name="country"
-                  @input="handle_input_change('country')"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                >
-                  <option value="" disabled>Select Country</option>
-                  <option
-                    v-for="country in countries"
-                    :key="country.name"
-                    :value="country.name"
-                  >
-                    {{ country.label || country.name }}
-                  </option>
-                </select>
-                <p
-                  v-if="errors.country"
-                  class="text-red-500 text-[10px] pt-1 pl-1"
-                >
+                <SearchableSelect v-model="form.country" :options="getOptions('country')" label="Country"
+                  placeholder="Select Country" :required="true" />
+                <p v-if="errors.country" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.country }}
                 </p>
               </div>
@@ -245,63 +178,33 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   State <span class="text-red-500 pt-2">*</span>
                 </label>
-                <select
-                  v-model="form.state"
-                  @change="fetchCities"
-                  @input="handle_input_change('state')"
-                  name="state"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                >
-                  <option value="" disabled>Select State</option>
-                  <option
-                    v-for="state in states"
-                    :key="state.name"
-                    :value="state.name"
-                  >
-                    {{ state.state_name || state.name }}
-                  </option>
-                </select>
+                <SearchableSelect v-model="form.state" :options="getOptions('state')" label="State"
+                  placeholder="Select State" :required="true" />
+                <p v-if="errors.state" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.state }}
+                </p>
               </div>
 
               <div>
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   City <span class="text-red-500 pt-2">*</span>
                 </label>
-                <select
-                  v-model="form.city"
-                  name="city"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                >
-                  <option value="" disabled>Select City</option>
-                  <option
-                    v-for="city in cities"
-                    :key="city.name"
-                    :value="city.name"
-                  >
-                    {{ city.district_name || city.name }}
-                  </option>
-                </select>
+                <SearchableSelect v-model="form.city" :options="getOptions('city')" label="City"
+                  placeholder="Select City" :required="true" />
+                <p v-if="errors.city" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.city }}
+                </p>
               </div>
 
               <div>
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Pincode <span class="text-red-500 pt-2">*</span>
                 </label>
-                <input
-                  v-model="form.pincode"
-                  type="text"
-                  name="pincode"
-                  @input="handle_input_change('pincode')"
-                  placeholder="Enter PIN code"
-                  maxlength="6"
-                  pattern="\d{6}"
+                <input v-model="form.pincode" type="text" name="pincode" @input="handle_input_change('pincode')"
+                  placeholder="Enter PIN code" maxlength="6" pattern="\d{6}"
                   oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                />
-                <p
-                  v-if="errors.pincode"
-                  class="text-red-500 text-[10px] pt-1 pl-1"
-                >
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
+                <p v-if="errors.pincode" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.pincode }}
                 </p>
               </div>
@@ -311,27 +214,20 @@
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Number of Employees <span class="text-red-500 pt-2">*</span>
                 </label>
-                <input
-                  v-model="form.number_of_employees"
-                  name="number_of_employees"
-                  type="text"
-                  @input="handle_input_change('number_of_employees')"
-                  min="1"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                />
+                <input v-model="form.number_of_employees" name="number_of_employees" type="text"
+                  @input="handle_input_change('number_of_employees')" min="1"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
               </div>
 
               <div>
                 <label class="block text-bodyh1 font-normal text-gray-700 mb-1">
                   Clear Vision <span class="text-red-500 pt-2">*</span>
                 </label>
-                <select
-                  v-model="form.clear_vision"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                >
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
+                <SearchableSelect v-model="form.clear_vision" :options="clearVisionOptions" label="Clear Vision"
+                  placeholder="Select Option" :required="true" />
+                <p v-if="errors.clear_vision" class="text-red-500 text-[10px] pt-1 pl-1">
+                  {{ errors.clear_vision }}
+                </p>
               </div>
 
               <!-- Volunteering Program Details -->
@@ -340,15 +236,9 @@
                   Volunteering CSR Activities Cost (%)
                   <span class="text-red-500 pt-2">*</span>
                 </label>
-                <input
-                  v-model="form.volunteering_csr_activities"
-                  name="volunteering_csr_activities"
-                  type="text"
-                  @input="handle_input_change('volunteering_csr_activities')"
-                  min="0"
-                  max="100"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                />
+                <input v-model="form.volunteering_csr_activities" name="volunteering_csr_activities" type="text"
+                  @input="handle_input_change('volunteering_csr_activities')" min="0" max="100"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
               </div>
 
               <div>
@@ -356,15 +246,9 @@
                   Employee Engagement Coverage (%)
                   <span class="text-red-500 pt-2">*</span>
                 </label>
-                <input
-                  v-model="form.employee_engagement"
-                  name="employee_engagement"
-                  type="text"
-                  @input="handle_input_change('employee_engagement')"
-                  min="0"
-                  max="100"
-                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200"
-                />
+                <input v-model="form.employee_engagement" name="employee_engagement" type="text"
+                  @input="handle_input_change('employee_engagement')" min="0" max="100"
+                  class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
               </div>
 
               <div>
@@ -372,55 +256,28 @@
                   Company Logo <span class="text-red-500 pt-2">*</span>
                 </label>
                 <label
-                  class="flex items-center px-4 py-3 bg-white rounded-lg shadow-sm border-2 border-dashed border-gray-300 cursor-pointer hover:bg-gray-50 transition"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 text-indigo-500 mr-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                    />
+                  class="flex items-center px-4 py-3 bg-white rounded-lg shadow-sm border-2 border-dashed border-gray-300 cursor-pointer hover:bg-gray-50 transition">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-500 mr-2" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                   </svg>
-                  <span class="text-sm text-gray-600"
-                    >Upload Company Logo (PNG, JPG up to 2MB)</span
-                  >
-                  <input
-                    type="file"
-                    class="hidden"
-                    @change="handleFileUpload"
-                    accept="image/*"
-                  />
+                  <span class="text-sm text-gray-600">Upload Company Logo (PNG, JPG up to 2MB)</span>
+                  <input type="file" class="hidden" @change="handleFileUpload" accept="image/*" />
                 </label>
 
-                <div
-                  v-if="form.company_logo"
-                  class="py-3 flex px-4 border-2 border-dashed border-gray-300 rounded-lg justify-end"
-                >
+                <div v-if="form.company_logo"
+                  class="py-3 flex px-4 border-2 border-dashed border-gray-300 rounded-lg justify-end">
                   <div class="">
-                    <img
-                      :src="'data:image/png;base64,' + form.company_logo"
-                      alt="Preview"
-                      class="w-32 h-32 object-cover rounded-lg border border-gray-300"
-                    />
-                    <button
-                      @click="removeLogo"
-                      class="mt-2 px-8 py-1 text-white bg-red-500 rounded-lg text-sm hover:bg-red-600 transition"
-                    >
+                    <img :src="'data:image/png;base64,' + form.company_logo" alt="Preview"
+                      class="w-32 h-32 object-cover rounded-lg border border-gray-300" />
+                    <button @click="removeLogo"
+                      class="mt-2 px-8 py-1 text-white bg-red-500 rounded-lg text-sm hover:bg-red-600 transition">
                       Remove
                     </button>
                   </div>
                 </div>
-                <p
-                  v-if="errors.company_logo"
-                  class="text-red-500 text-[10px] pt-1 pl-1"
-                >
+                <p v-if="errors.company_logo" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.company_logo }}
                 </p>
               </div>
@@ -428,11 +285,9 @@
 
             <!-- Submit Button -->
             <div class="mt-6">
-              <button
-                type="submit"
+              <button type="submit"
                 class="bg-orange-500 text-white font-semibold py-2 px-4 rounded-sm hover:bg-orange-600 transition"
-                :disabled="loading"
-              >
+                :disabled="loading">
                 {{ loading ? 'Registering...' : 'Register Company' }}
               </button>
             </div>
@@ -444,10 +299,12 @@
 </template>
 
 <script setup>
-import { ref, inject, onMounted } from 'vue'
+import { ref, inject, onMounted, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import SearchableSelect from '@/components/SearchableSelect.vue'
+import country_code from "@/assets/Country/Country_code.js"
 
 const call = inject('call')
 const router = useRouter()
@@ -464,6 +321,7 @@ const form = ref({
   email: '',
   designation: '',
   phone: '',
+  phone_country_code: '+91', // Default country code for phone
   mobile_number: '',
   address: '',
   country: 'India',
@@ -476,6 +334,12 @@ const form = ref({
   employee_engagement: '',
   company_logo: null,
 })
+
+// Clear vision options
+const clearVisionOptions = ref([
+  { name: 'Yes', label: 'Yes' },
+  { name: 'No', label: 'No' }
+])
 
 const phoneRegex = /^\d{10}$/
 
@@ -665,6 +529,49 @@ const handle_input_change = (field) => {
   }
 }
 
+// Country code selection
+const code = ref(country_code)
+const countrySearch = ref('');
+const showCountryDropdown = ref(false);
+const selectedCountry = computed(() => {
+  return code.value.find(c => c.dial_code === form.value.phone_country_code) || {
+    flag: "🇮🇳",
+    dial_code: "+91",
+    name: "India"
+  };
+});
+
+const filteredCountryCodes = computed(() => {
+  const search = countrySearch.value.toLowerCase();
+  return code.value.filter(country =>
+    country.dial_code.toLowerCase().includes(search) ||
+    country.name.toLowerCase().includes(search) ||
+    country.flag.toLowerCase().includes(search)
+  ).sort((a, b) => {
+    // Sort by match priority
+    const aNameMatch = a.name.toLowerCase().includes(search);
+    const bNameMatch = b.name.toLowerCase().includes(search);
+    const aCodeMatch = a.dial_code.toLowerCase().includes(search);
+    const bCodeMatch = b.dial_code.toLowerCase().includes(search);
+
+    if (aNameMatch && !bNameMatch) return -1;
+    if (!aNameMatch && bNameMatch) return 1;
+    if (aCodeMatch && !bCodeMatch) return -1;
+    if (!aCodeMatch && bCodeMatch) return 1;
+    return a.name.localeCompare(b.name);
+  });
+});
+
+const selectCountryCode = (country) => {
+  form.value.phone_country_code = country.dial_code;
+  countrySearch.value = '';
+  showCountryDropdown.value = false;
+};
+
+const toggleDropdown = () => {
+  showCountryDropdown.value = !showCountryDropdown.value;
+};
+
 const submitForm = async () => {
   try {
     if (!validateForm()) {
@@ -672,6 +579,10 @@ const submitForm = async () => {
     }
 
     loading.value = true
+
+    // Format phone number with country code if it exists
+    const formattedPhone = form.value.phone ?
+      `${form.value.phone_country_code}-${form.value.phone}` : '';
 
     const response = await call('mykartavya.mykartavya.api.register_company', {
       registration_type: form.value.registration_type,
@@ -681,7 +592,7 @@ const submitForm = async () => {
       last_name: form.value.last_name,
       email: form.value.email,
       designation: form.value.designation,
-      phone: form.value.phone,
+      phone: formattedPhone,
       mobile_number: form.value.mobile_number,
       address: form.value.address,
       country: form.value.country,
@@ -792,11 +703,53 @@ const fetchCities = async () => {
   }
 }
 
+// Get options for SearchableSelect
+const getOptions = (key) => {
+  switch (key) {
+    case 'country':
+      return countries.value.map(c => ({ name: c.name, label: c.label || c.name }));
+    case 'state':
+      return states.value.map(s => ({ name: s.name, label: s.state_name || s.name }));
+    case 'city':
+      return cities.value.map(c => ({ name: c.name, label: c.district_name || c.name }));
+    default:
+      return [];
+  }
+};
+
+// Watch for changes in country and state selections
+watch(
+  () => form.value.country,
+  (newCountry) => {
+    if (newCountry) {
+      fetchStates()
+    }
+  }
+)
+
+watch(
+  () => form.value.state,
+  (newState) => {
+    if (newState) {
+      fetchCities()
+    }
+  }
+)
+
 onMounted(async () => {
   await fetchCountries()
   if (form.value.country) {
     await fetchStates()
   }
+
+  // Single click handler for closing dropdown
+  document.addEventListener('click', (e) => {
+    const wrapper = document.querySelector('.country-code-wrapper');
+    if (!wrapper?.contains(e.target)) {
+      showCountryDropdown.value = false;
+      countrySearch.value = '';
+    }
+  });
 })
 </script>
 
@@ -814,5 +767,28 @@ onMounted(async () => {
 
 .banner {
   background-image: url('../../assets/corporate-web-min.png');
+}
+
+.country-dropdown {
+  scrollbar-width: thin;
+  scrollbar-color: #f97316 #f3f4f6;
+}
+
+.country-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.country-dropdown::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+.country-dropdown::-webkit-scrollbar-thumb {
+  background-color: #f97316;
+  border-radius: 2px;
+}
+
+.country-code-wrapper {
+  position: relative;
+  display: inline-block;
 }
 </style>
