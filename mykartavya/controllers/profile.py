@@ -57,19 +57,29 @@ class Profile:
     #         return {'status': '400', 'message': 'User not found'}
 
     def user_count():
+        users = []
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+        users.append(user)
+        volunteer_emails = frappe.db.get_all("Volunteer Company Mapper",{"volunteer":user},pluck='volunteer_email')
+        if len(volunteer_emails):
+            volunteer_ids = frappe.db.get_all("SVA User",{"email":["IN",volunteer_emails]},pluck='name')
+            if len(volunteer_ids):
+                users.extend(volunteer_ids)
+
+        if users:
+            users = f"({', '.join(repr(user) for user in users)})"
         
-        sql_query = """
+        sql_query = f"""
         SELECT 
             SUM(va.karma_points) AS karma_points,
             SUM(a.work_value_rupees) AS work_value_rupees,
-            SUM(va.duration )AS total_hours,
+            SUM(va.duration)AS total_hours,
             COUNT(va.activity) AS activity_completed
         FROM `tabVolunteer Activity` AS va
         INNER JOIN `tabActivity` AS a ON va.activity = a.name
-        WHERE va.volunteer = %s AND va.completion_wf_state='Approved';
+        WHERE va.volunteer IN {users} AND va.completion_wf_state='Approved';
         """
-        results = frappe.db.sql(sql_query, (user,), as_dict=True)
+        results = frappe.db.sql(sql_query, as_dict=True)
         return results[0]
 
     
