@@ -1,0 +1,1 @@
+import{_ as e,c as t,j as s}from"./index-Dyir72Cu.js";const o={class:"pt-[62px] flex justify-center items-center h-screen"},c={__name:"About Us",setup(_){return(a,n)=>(s(),t("div",o,"About Us Coming Soon.."))}},p=e(c,[["__scopeId","data-v-56fafcba"]]);export{p as default};
