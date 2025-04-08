@@ -13,14 +13,7 @@ class Activity(Document):
         self.validate_location()
         self.validate_company()
         self.validate_image()
-    @frappe.whitelist()
-    def process_activities():
-        frappe.logger().info("✅ process_activities scheduler running successfully!")
-        activities = frappe.get_all("Activity", filters={"status": ["in", ["Draft", "Published", "Ongoing"]]}, fields=["name"])
-        
-        for activity in activities:
-            doc = frappe.get_doc("Activity", activity.name)
-            doc.save()
+    
 
     def validate_dates(self):
         # Validate application deadline
