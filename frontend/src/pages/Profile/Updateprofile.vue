@@ -240,7 +240,7 @@ const fields = ref({
     required: true,
     pattern: /^[0-9]{10}$/,
     error_message: "Please enter a valid 10-digit phone number",
-    maxLength: 10
+    maxLength: 15
   },
 
   custom_country: { label: "Country", type: "select", required: true },
@@ -559,7 +559,10 @@ const onSubmit = async () => {
         autoClose: 2000,
       });
       setTimeout(() => {
-        router.push('/')
+        router.push('/').then(() => {
+      // Reload the page after route push
+      window.location.reload();
+    });
       }, 1000)
     } else {
       throw new Error(res.message || "Failed to update profile");
@@ -667,24 +670,21 @@ const handleFileUpload = async (event, field) => {
     return
   }
 
-  // For image files, validate file type
-  if (field === 'user_image' || field === 'custom_background_image') {
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
-    if (!allowedTypes.includes(file.type)) {
-      toast.error('Please upload a valid image file (JPG, PNG, or WEBP)', { "autoClose": 2000 })
-      return
-    }
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
+  if ((field === 'user_image' || field === 'custom_background_image') && !allowedTypes.includes(file.type)) {
+    toast.error('Please upload a valid image file (JPG, PNG, or WEBP)', { autoClose: 2000 })
+    return
   }
-
   // Convert to Base64
   const reader = new FileReader()
   reader.readAsDataURL(file)
 
   reader.onload = async () => {
     try {
-      const base64Data = reader.result.split(',')[1] // Convert Base64
-      formData.value[field] = base64Data
-      toast.success('File uploaded successfully!', { "autoClose": 2000 })
+      // const base64Data = reader.result.split(',')[1] // Convert Base64
+      formData.value[field] = reader.result
+      // formData.value[field] = base64Data
+      toast.success('File uploaded successfully!', { "autoClose": 1000 })
     } catch (err) {
       console.error('Error uploading file:', err)
       toast.error('Failed to upload file. Please try again.', { "autoClose": 2000 })

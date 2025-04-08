@@ -263,6 +263,7 @@
    "fieldname": "vacancy",
    "fieldtype": "Int",
    "label": "Vacancies",
+   "mandatory_depends_on": "eval:!doc.unlimited_vacancies",
    "non_negative": 1
   },
   {
@@ -270,6 +271,7 @@
    "fieldname": "buffer_vacancy",
    "fieldtype": "Int",
    "label": "Buffer Vacancies",
+   "mandatory_depends_on": "eval:!doc.unlimited_vacancies",
    "non_negative": 1
   },
   {
@@ -426,7 +428,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-04 12:39:32.724666",
+ "modified": "2025-04-08 11:14:57.945471",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",

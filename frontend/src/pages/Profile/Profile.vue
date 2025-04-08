@@ -293,8 +293,8 @@
                                 <!-- Certificate Preview -->
                                 <div class="aspect-[1.4/1] relative">
                                     <!-- Default Certificate Background -->
-                                    <div class="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100">
-                                        <img :src="'/cert1.jpg'" alt="Certificate" class="w-full h-full object-cover" />
+                                    <div class="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100"> 
+                                        <iframe :src="certificate.certificate" frameborder="0"></iframe>
                                     </div>
 
                                     <!-- Hover Overlay -->
