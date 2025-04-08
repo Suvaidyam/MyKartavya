@@ -6,7 +6,7 @@
           Kindness & Volunteering
         </h1>
         <div class="flex flex-wrap items-center gap-4">
-          <button
+          <button @click="generateRandom"
             class="h-8 rounded-sm border border-[#D9D9D9] bg-white py-2 px-4 gap-1.5 flex flex-row items-center text-sm font-[400] text-[#E23D90] whitespace-nowrap">
             Generate Random
             <FeatherIcon class="size-[13px]" name="refresh-ccw" />
@@ -95,6 +95,30 @@ const kindnes = async (filter) => {
   } catch (err) {
     loader.value = false
     console.error('Error fetching Kindness data:', err)
+  }
+}
+
+const generateRandom = async () => {
+  loader.value = true
+  try {
+    const response = await call(
+      'mykartavya.controllers.api.available_commitments',
+      {
+        filter: { ...store.filters },
+      }
+    )
+    if (response && response.length > 0) {
+      const randomIndex = Math.floor(Math.random() * response.length)
+      activity.value = [response[randomIndex]]
+    } else {
+      activity.value = []
+    }
+    setTimeout(() => {
+      loader.value = false
+    }, 1000)
+  } catch (err) {
+    loader.value = false
+    console.error('Error generating random activity:', err)
   }
 }
 
