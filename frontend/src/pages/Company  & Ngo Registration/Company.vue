@@ -388,7 +388,7 @@ const handleFileUpload = async (event) => {
     try {
       const base64Data = reader.result.split(',')[1] // Convert Base64
       form.value.company_logo = base64Data
-      toast.success('Image uploaded successfully!')
+      toast.success('File uploaded successfully!',{ "autoClose": 1000 })
     } catch (err) {
       console.error('Error uploading file:', err)
       toast.error('Failed to upload logo. Please try again.')
@@ -398,7 +398,7 @@ const handleFileUpload = async (event) => {
 
 const removeLogo = () => {
   form.value.company_logo = null
-  toast.info('Image removed.')
+  toast.info('File removed.',{ "autoClose": 2000 })
 }
 
 const validateForm = () => {
