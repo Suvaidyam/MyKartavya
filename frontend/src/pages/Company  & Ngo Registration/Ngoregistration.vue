@@ -337,7 +337,7 @@
                 </label>
 
                 <!-- Image Preview with Remove Button -->
-                <div v-if="form.ngo_logo"
+                <!-- <div v-if="form.ngo_logo"
                   class="py-3 flex px-4 border-2 border-dashed border-gray-300 rounded-lg justify-end">
                   <div class="">
                     <img :src="'data:image/png;base64,' + form.ngo_logo" alt="Preview"
@@ -347,7 +347,30 @@
                       Remove
                     </button>
                   </div>
+                </div> -->
+
+                <div v-if="form.ngo_logo" class="mt-2 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      <span class="text-sm text-gray-600">{{ getFileName(form.ngo_logo) }}</span>
+                    </div>
+                    <button @click="removeLogo"
+                      class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-white bg-red-500 rounded-md hover:bg-red-600 transition-colors duration-200">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                      Remove
+                    </button>
+                  </div>
                 </div>
+
                 <p v-if="errors.ngo_logo" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.ngo_logo }}
                 </p>
@@ -651,7 +674,7 @@ const handleFileUpload = async (event) => {
     try {
       const base64Data = reader.result.split(',')[1] // Convert Base64
       form.value.ngo_logo = base64Data
-      toast.success('Image uploaded successfully!')
+      toast.success('Ngo Logo uploaded successfully!',{ "autoClose": 1000 })
     } catch (err) {
       console.error('Error uploading file:', err)
       toast.error('Failed to upload logo. Please try again.')
@@ -659,9 +682,17 @@ const handleFileUpload = async (event) => {
   }
 }
 
+const getFileName = (base64String) => {
+  if (!base64String) return ''
+  if (base64String.startsWith('data:')) {
+    return 'Image File'
+  }
+  return 'Uploaded File'
+}
+
 const removeLogo = () => {
   form.value.ngo_logo = null
-  toast.info('Image removed.')
+  toast.info('Ngo logo removed.',{ "autoClose": 2000 })
 }
 
 const validateForm = () => {
