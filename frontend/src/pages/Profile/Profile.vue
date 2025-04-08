@@ -213,15 +213,6 @@
                                     </div>
                                 </div>
                                 <div class="flex gap-2">
-                                    <!-- <a :href="svaUserData.custom_portfolio" target="_blank"
-                                        class="p-2 text-gray-500 hover:text-orange-600 transition-colors" title="View">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
-                                    </a> -->
                                     <a :href="svaUserData.custom_portfolio" download
                                         class="p-2 text-gray-500 hover:text-orange-600 transition-colors"
                                         title="Download">
@@ -255,15 +246,6 @@
                                     </div>
                                 </div>
                                 <div class="flex gap-2">
-                                    <!-- <a :href="svaUserData.custom_cv" target="_blank"
-                                        class="p-2 text-gray-500 hover:text-blue-600 transition-colors" title="View">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
-                                    </a> -->
                                     <a :href="svaUserData.custom_cv" download
                                         class="p-2 text-gray-500 hover:text-blue-600 transition-colors"
                                         title="Download">
@@ -289,14 +271,12 @@
                         <div v-for="certificate in certificates" :key="certificate.name"
                             class="relative group w-full max-w-[250px] mx-auto">
                             <!-- Certificate Card -->
-                            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                                 <!-- Certificate Preview -->
                                 <div class="aspect-[1.4/1] relative">
                                     <!-- Default Certificate Background -->
-                                    <div class="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100"> 
-                                        <iframe :src="certificate.certificate" frameborder="0"></iframe>
-                                    </div>
-
+                                    <iframe :src="certificate.certificate" frameborder="0" class="w-full h-full"
+                                        style="aspect-ratio: 1.4 / 1; object-fit: cover; overflow: hidden; scrollbar-width: none;"></iframe>
                                     <!-- Hover Overlay -->
                                     <div
                                         class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
@@ -386,7 +366,6 @@ const get = async () => {
                 const skill = allSkills.value.find(s => s.name === skillId);
                 return skill ? skill.skill_name : skillId;
             });
-            console.log('SVA User Data:', svaUserData.value);
         }
     } catch (err) {
         console.error('Error fetching data:', err);
@@ -474,3 +453,13 @@ onMounted(() => {
     });
 })
 </script>
+<style scoped>
+iframe {
+  overflow: hidden;
+  scrollbar-width: none;  
+}
+
+iframe::-webkit-scrollbar {
+  display: none;  
+}
+</style>
