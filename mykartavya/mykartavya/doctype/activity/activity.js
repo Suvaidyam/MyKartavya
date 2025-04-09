@@ -16,7 +16,6 @@ frappe.ui.form.on("Activity", {
             frm.image_uploaded = true;
         }
     },
-
     onload: function (frm) {
         if (frm.is_new()) {
             frappe.call({
@@ -38,7 +37,6 @@ frappe.ui.form.on("Activity", {
             });
         }
     },
-
     is_private: function (frm) {
         if (frm.doc.is_private) {
             frm.set_value('is_global', 0);
@@ -99,50 +97,105 @@ frappe.ui.form.on("Activity", {
             frm.set_value("skill", []);
         }
     },
-    refresh(frm) {
-        let today = new Date(frappe.datetime.get_today());
-        let fields = [
-            { name: "publish_date", min: today },
-            { name: "application_deadline", depends_on: "publish_date" },
-            { name: "start_date", depends_on: "application_deadline" },
-            { name: "end_date", depends_on: "start_date" },
-            { name: "reporting_deadline", depends_on: "end_date" }
-        ];
 
-        fields.forEach(field => {
-            if (frm.fields_dict[field.name]) {
-                let $input = $(frm.fields_dict[field.name].$input);
-                $input.datepicker({
-                    minDate: field.min || null
-                }).on("change", function () {
-                    validate_date(frm, field.name, field.depends_on);
-                });
-            }
-        });
+    publish_date: function(frm) {
+        if (frm.doc.publish_date) {
+            frm.set_value('application_deadline', null);
+            frm.set_value('end_date', null);
+            frm.set_value('reporting_deadline', null);
+            frm.set_value('start_date', null);
+
+            const minDate = frappe.datetime.add_days(frm.doc.publish_date, 1);
+
+            frm.fields_dict.application_deadline.datepicker.update({
+                minDate: frappe.datetime.str_to_obj(minDate)
+            });
+        }
+    },
+
+    application_deadline: function(frm) {
+        if (frm.doc.application_deadline) {
+            frm.set_value('start_date', null);
+            frm.set_value('end_date', null);
+            frm.set_value('reporting_deadline', null);
+    
+            const minEndDate = frappe.datetime.add_days(frm.doc.application_deadline, 1);
+    
+            frm.fields_dict.start_date.datepicker.update({
+                minDate: frappe.datetime.str_to_obj(minEndDate)
+            });
+        }
+    },
+    start_date: function(frm) {
+        if (frm.doc.start_date) {
+            frm.set_value('end_date', null);
+            frm.set_value('reporting_deadline', null);
+    
+            const minEndDate = frappe.datetime.add_days(frm.doc.start_date, 1);
+    
+            frm.fields_dict.end_date.datepicker.update({
+                minDate: frappe.datetime.str_to_obj(minEndDate)
+            });
+        }
+    },
+    end_date: function(frm) {
+        if (frm.doc.end_date) {
+            frm.set_value('reporting_deadline', null);
+    
+            const minEndDate = frappe.datetime.add_days(frm.doc.end_date, 1);
+    
+            frm.fields_dict.reporting_deadline.datepicker.update({
+                minDate: frappe.datetime.str_to_obj(minEndDate)
+            });
+        }
+    },
+
+    refresh(frm) {
+        let today = frappe.datetime.get_today();
+        frm.set_df_property('publish_date', 'min_date', today);
+
+        if (frm.doc.publish_date) {
+            const minDate = frappe.datetime.add_days(frm.doc.publish_date, 1);
+    
+            frm.fields_dict.application_deadline.datepicker.update({
+                minDate: frappe.datetime.str_to_obj(minDate)
+            });
+        }
+
+        if (frm.doc.application_deadline) {
+            const minDate = frappe.datetime.add_days(frm.doc.application_deadline, 1);
+    
+            frm.fields_dict.start_date.datepicker.update({
+                minDate: frappe.datetime.str_to_obj(minDate)
+            });
+        }
+    
+        if (frm.doc.start_date) {
+            const minEndDate = frappe.datetime.add_days(frm.doc.start_date, 1);
+    
+            frm.fields_dict.end_date.datepicker.update({
+                minDate: frappe.datetime.str_to_obj(minEndDate)
+            });
+        }
+    
+        if (frm.doc.end_date) {
+            const minDeadline = frappe.datetime.add_days(frm.doc.end_date, 1);
+    
+            frm.fields_dict.reporting_deadline.datepicker.update({
+                minDate: frappe.datetime.str_to_obj(minDeadline)
+            });
+        }
     },
     activity_published_date_starts: function (frm) {
-        frm.set_value('auto_approve_volunteers', !frm.doc.auto_approve_volunteers)
-        frm.set_value('start_date', frm.doc.publish_date)
+        if (frm.doc.activity_published_date_starts) {
+            frm.set_value('application_deadline', null);
+            frm.set_value('auto_approve_volunteers', !frm.doc.auto_approve_volunteers);
+            frm.set_value('start_date', frm.doc.publish_date);
+        }else {
+            frm.set_value('start_date', null);
+        }
     }
 });
-
-function validate_date(frm, field, depends_on) {
-    let field_date = frm.doc[field] ? new Date(frm.doc[field]) : null;
-    let depends_date = depends_on && frm.doc[depends_on] ? new Date(frm.doc[depends_on]) : null;
-
-    if (field === "start_date" && frm.doc.activity_published_date_starts) {
-        return;
-    }
-
-    if (depends_date && field_date && field_date <= depends_date) {
-        frappe.msgprint({
-            title: __('Invalid Date'),
-            message: __(`${frappe.meta.get_label(frm.doctype, field, frm.doc.name)} must be after ${frappe.meta.get_label(frm.doctype, depends_on, frm.doc.name)}.`),
-            indicator: 'red'
-        });
-        frm.set_value(field, "");
-    }
-}
 
 function update_total_vacancies(frm) {
     let vacancy = frm.doc.vacancy || 0;

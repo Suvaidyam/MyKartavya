@@ -9,6 +9,7 @@
 } */
 ul#navbar-breadcrumbs li.disabled a {
     color: gray !important;
-    font-size: 13px;
-    font-weight: 400;
+    font: -webkit-control !important;
+    /* font-size: 13px !important;
+    font-weight: 400 !important; */
 }
