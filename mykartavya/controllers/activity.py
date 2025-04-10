@@ -373,17 +373,17 @@ class Activity:
     def volunteer_act_count():
         sql_query = """
         SELECT 
-            IFNULL(COUNT(va.activity), 0) AS total_activity,
-            IFNULL(COUNT(va.volunteer), 0) AS volunteer_count,
-            IFNULL(SUM(a.work_value_rupees), 0) AS total_rupees,
-            IFNULL(SUM(a.hours), 0) AS total_hours,
-            IFNULL(COUNT(DISTINCT a.ngo), 0) AS total_ngo 
+            COUNT(va.activity) AS total_activity,
+            COUNT(va.volunteer) AS volunteer_count,
+            SUM(a.work_value_rupees) AS total_rupees,
+            SUM(a.hours) AS total_hours,
+            COUNT(DISTINCT a.ngo) AS total_ngo 
         FROM `tabVolunteer Activity` AS va
         JOIN `tabActivity` AS a ON va.activity = a.name;
         """
         result = frappe.db.sql(sql_query, as_dict=True)
         return result
-
+    
     def submit_activity_report(name,data):
         volunteer = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         exists = frappe.db.exists("Volunteer Activity", {"volunteer": volunteer, "name": name})
