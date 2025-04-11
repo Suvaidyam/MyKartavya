@@ -92,7 +92,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Email",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "designation",
@@ -197,7 +198,8 @@
    "fieldtype": "Data",
    "label": "NGO Head Email",
    "mandatory_depends_on": "eval:doc.registration_type==\"Self Registration\"",
-   "options": "Email"
+   "options": "Email",
+   "unique": 1
   },
   {
    "fieldname": "ngo_head_mobile",
@@ -298,7 +300,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-06 18:02:34.685403",
+ "modified": "2025-04-11 12:10:15.217718",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "NGOs",
@@ -366,6 +368,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

@@ -105,7 +105,8 @@
    "label": "Email",
    "length": 100,
    "options": "Email",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "depends_on": "eval:doc.registration_type=='Self Registration'",
@@ -206,7 +207,8 @@
    "label": "Volunteering InCharge Email",
    "length": 100,
    "mandatory_depends_on": "eval:doc.registration_type=='Admin Registration'",
-   "options": "Email"
+   "options": "Email",
+   "unique": 1
   },
   {
    "depends_on": "eval:doc.registration_type=='Admin Registration'",
@@ -300,7 +302,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-05 12:50:47.133496",
+ "modified": "2025-04-11 12:11:24.686300",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Company",
