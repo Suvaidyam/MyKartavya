@@ -28,13 +28,13 @@
   "doctype_event": "After Insert",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2025-03-25 14:51:27.544854",
+  "modified": "2025-04-11 12:00:17.773095",
   "module": "Mykartavya",
-  "name": "SVA user data",
+  "name": "NGO user data",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "SVA User",
-  "script": "if doc.custom_company and doc.custom_volunteer_type == \"Employee\":\n    doc.append(\n        \"table_pdop\",\n        {\n            \"module\": \"Company\",\n            \"value\": doc.custom_company,\n        }\n    )\n    doc.save(ignore_permissions=True)\n\n\n        \n\n\n\n",
+  "script": "if doc.custom_ngo and doc.custom_volunteer_type == \"NGO Member\":\n    doc.append(\"table_pdop\",{\n        \"module\":\"NGOs\",\n        \"value\":doc.custom_ngo\n    })\n    doc.save(ignore_permissions=True)\n",
   "script_type": "DocType Event"
  },
  {
@@ -47,13 +47,13 @@
   "doctype_event": "After Insert",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2025-03-25 14:52:27.796034",
+  "modified": "2025-04-11 11:07:31.942159",
   "module": "Mykartavya",
-  "name": "NGO user data",
+  "name": "Company",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "SVA User",
-  "script": "if doc.custom_ngo and doc.custom_volunteer_type == \"NGO Member\":\n    doc.append(\"table_pdop\",{\n        \"module\":\"NGOs\",\n        \"value\":doc.custom_ngo\n    })\n    doc.save(ignore_permissions=True)\n",
+  "script": "if doc.custom_company and doc.custom_volunteer_type == \"Employee\":\n    doc.append(\n        \"table_pdop\",\n        {\n            \"module\": \"Company\",\n            \"value\": doc.custom_company,\n        }\n    )\n    doc.save(ignore_permissions=True)\n",
   "script_type": "DocType Event"
  }
 ]

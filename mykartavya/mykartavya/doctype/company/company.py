@@ -12,14 +12,12 @@ import os
 
 class Company(Document):
     def validate(self):
-       
         self.validate_company_name()
         self.validate_registration_dates()
         self.validate_contact_details()
         # self.validate_address()
         self.validate_organization_details()
         self.validate_company_logo()
-        self.validate_existing_sva_user()
 
     def validate_company_name(self):
         # Check for uniqueness
@@ -97,16 +95,6 @@ class Company(Document):
             if file_size > max_size:
                  frappe.throw("Company Logo file size must be between 1MB and 5MB")
 
-    def validate_existing_sva_user(self):
-        # Check for existing SVA User with company admin email
-        if frappe.db.exists("SVA User", {"email": self.email}):
-            frappe.throw(f"SVA User with email {self.email} already exists. Please use a different email or contact support.")
-
-        # For Admin Registration, also check volunteering incharge email
-        if self.registration_type == "Admin Registration" and self.volunteering_incharge_email:
-            if frappe.db.exists("SVA User", {"email": self.volunteering_incharge_email}):
-                frappe.throw(f"SVA User with email {self.volunteering_incharge_email} already exists. Please use a different email or contact support.")
-
     def before_save(self):
         # Strip whitespace from text fields
         self.company_name = self.company_name.strip()
@@ -126,13 +114,8 @@ class Company(Document):
 
 def after_insert(doc, method):
     if doc.registration_type == "Admin Registration":
-        # Approve the company
         frappe.db.set_value("Company", doc.name, "workflow_state", "Approved")
-
-        # Fetch the updated workflow_state
         status = frappe.db.get_value("Company", doc.name, "workflow_state")
-
-        # Update registration_status
         frappe.db.set_value("Company", doc.name, "registration_status", status)
 
     # Create SVA User for both registration types
@@ -186,7 +169,6 @@ def insert_sva_user(doc):
             "custom_volunteer_type": "Employee",
             "enabled": 1
         })
-        print("Phone =======================================================================",phone)
         sva_user.insert(ignore_permissions=True)
         sva_user = frappe.get_doc("SVA User", sva_user.name)
         sva_user.save(ignore_permissions=True)

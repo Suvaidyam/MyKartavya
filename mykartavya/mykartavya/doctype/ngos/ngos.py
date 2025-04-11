@@ -13,8 +13,6 @@ class NGOs(Document):
         self.validate_pincode()
         self.validate_goals()
         self.validate_ngo_logo()
-        self.validate_existing_sva_user()
-   
 
     def validate_ngo_logo(self):
         if self.registration_type != "Self Registration":
@@ -34,8 +32,6 @@ class NGOs(Document):
 
         if file_size > max_size:
             frappe.throw("File size exceeds 5 MB limit.")
-
-
   
     def validate_website(self):
         """
@@ -72,19 +68,6 @@ class NGOs(Document):
             
             if len(set(goals)) != len(goals):
                 frappe.throw(_("Priority Goals must be unique. Please select different goals for each priority level."))
-
-    def validate_existing_sva_user(self):
-        """
-        Validate that no SVA User exists with the NGO's email addresses
-        """
-        # Check NGO Admin email
-        if frappe.db.exists("SVA User", {"email": self.email}):
-            frappe.throw(f"SVA User with email {self.email} already exists. Please use a different email or contact support.")
-
-        # For Self Registration, also check NGO Head email
-        if self.registration_type == "Self Registration" and self.ngo_head_email:
-            if frappe.db.exists("SVA User", {"email": self.ngo_head_email}):
-                frappe.throw(f"SVA User with email {self.ngo_head_email} already exists. Please use a different email or contact support.")
 
 def after_insert(doc, method):
     if doc.registration_type == "Admin Registration":
@@ -125,7 +108,6 @@ def create_ngo_users(doc):
                 custom_volunteer_type="NGO Member",
                 doc=doc
             )
-
 
         # Create Volunteer user
         if doc.ngo_head_name and doc.ngo_head_email and doc.ngo_head_mobile:
