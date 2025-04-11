@@ -35,6 +35,7 @@
                 </label>
                 <input v-model="form.registration_date" id="registration_date" type="date" name="registration_date"
                   @input="handle_input_change('registration_date')"
+                  :max="today"
                   class="block w-full border border-gray-300 text-bodyh2 rounded py-2 px-3 focus:outline-none focus:ring focus:ring-orange-200" />
                 <p v-if="errors.registration_date" class="text-red-500 text-[10px] pt-1 pl-1">
                   {{ errors.registration_date }}
@@ -320,6 +321,15 @@ const router = useRouter()
 const loading = ref(false)
 const error = ref(null)
 const errors = ref({})
+
+
+//  Validate Registration Date 
+const today = computed(() => {
+  const date = new Date()
+  return date.toISOString().split('T')[0]
+})
+
+
 
 const form = ref({
   registration_type: 'Self Registration',
