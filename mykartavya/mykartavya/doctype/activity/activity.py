@@ -99,13 +99,20 @@ class Activity(Document):
             self.city = None
             self.address = None
 
-        if self.publish_date >= today():
+        today_date = today()
+        publish_date = self.publish_date.split(" ")[0] if self.publish_date else None
+        start_date = self.start_date.split(" ")[0] if self.start_date else None
+        end_date = self.end_date.split(" ")[0] if self.end_date else None
+
+        if publish_date == today_date:
             self.status = "Published"
             self.docstatus = 1
-        elif self.start_date >= today():
+        elif start_date == today_date:
             self.status = "Ongoing"
-        elif self.end_date == today():
+        elif end_date == today_date:
             self.status = "Ended"
+        else:
+            self.status = "Draft"
 
     def validate_image(self):
         for field in ["activity_image", "reward_image"]:

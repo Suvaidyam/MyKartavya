@@ -377,7 +377,7 @@ class Activity:
             SUM(a.work_value_rupees) AS total_rupees,
             SUM(a.hours) AS total_hours,
             (SELECT COUNT(*) FROM `tabNGOs`) AS total_ngo,
-            (SELECT COUNT(*) FROM `tabSVA User`) AS volunteer_count,
+            (SELECT COUNT(*) FROM `tabSVA User`) AS volunteer_count
         FROM `tabVolunteer Activity` AS va
         JOIN `tabActivity` AS a ON va.activity = a.name;
         """
@@ -392,6 +392,7 @@ class Activity:
         doc = frappe.get_doc("Volunteer Activity", exists)
         images = data.get("images")
         if len(images):
+
             for image in images:
               Activity.upload_file(image,doc)
             
