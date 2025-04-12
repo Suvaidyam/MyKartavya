@@ -153,6 +153,11 @@ frappe.ui.form.on("Activity", {
     refresh(frm) {
         let today = frappe.datetime.get_today();
         frm.set_df_property('publish_date', 'min_date', today);
+        formatted_today = new Date(today);
+        $(frm.fields_dict['publish_date'].$input).datepicker({
+            minDate: formatted_today
+        });
+        
 
         if (frm.doc.publish_date) {
             const minDate = frappe.datetime.add_days(frm.doc.publish_date, 1);

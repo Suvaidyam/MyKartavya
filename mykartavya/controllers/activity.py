@@ -374,10 +374,10 @@ class Activity:
         sql_query = """
         SELECT 
             COUNT(va.activity) AS total_activity,
-            COUNT(va.volunteer) AS volunteer_count,
             SUM(a.work_value_rupees) AS total_rupees,
             SUM(a.hours) AS total_hours,
-            COUNT(DISTINCT a.ngo) AS total_ngo 
+            (SELECT COUNT(*) FROM `tabNGOs`) AS total_ngo,
+            (SELECT COUNT(*) FROM `tabSVA User`) AS volunteer_count,
         FROM `tabVolunteer Activity` AS va
         JOIN `tabActivity` AS a ON va.activity = a.name;
         """
