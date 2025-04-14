@@ -175,8 +175,13 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900 break-all">{{ svaUserData?.custom_linkedin ||
-                                    '---' }}
+                                <div class="text-bodyh2 text-gray-900 break-all">
+                                    <a v-if="svaUserData?.custom_linkedin" :href="svaUserData.custom_linkedin"
+                                        target="_blank" rel="noopener noreferrer"
+                                        class="text-gray-900 hover:text-orange-500 transition-colors">
+                                        {{ svaUserData.custom_linkedin }}
+                                    </a>
+                                    <span v-else>---</span>
                                 </div>
                                 <div class="text-caption text-gray-500">Linkedin</div>
                             </div>
@@ -455,11 +460,11 @@ onMounted(() => {
 </script>
 <style scoped>
 iframe {
-  overflow: hidden;
-  scrollbar-width: none;  
+    overflow: hidden;
+    scrollbar-width: none;
 }
 
 iframe::-webkit-scrollbar {
-  display: none;  
+    display: none;
 }
 </style>
