@@ -5,7 +5,7 @@
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-heading4 font-medium">Timeline</h2>
           <button @click="store.refresh_step = true"
-            class="text-pink-500 flex items-center text-base font-normal w-[107px] justify-center h-8 rounded-sm border">
+            class="text-pink-500 flex items-center text-base font-normal w-[107px] justify-center h-8 rounded-sm border refresh-button">
             Refresh
             <RefreshCwIcon class="w-4 h-4 ml-1" />
           </button>
@@ -76,19 +76,19 @@
               <button
                 v-if="!step.completed && !(['Get Started', 'Activity Report'].includes(step.title) && (activity.workflow_state == 'Applied' || activity.completion_wf_state == 'Submitted'))"
                 @click="nextStep(index)"
-                class="mt-3 h-[28px] px-3 uppercase rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722]">
+                class="mt-3 h-[28px] px-3 uppercase rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
                 {{ step.button }}
               </button>
               <button disabled
                 v-if="!step.completed && ['Get Started'].includes(step.title) && ['Applied'].includes(activity.workflow_state)"
                 @click="nextStep(index)"
-                class="mt-3 h-[28px] uppercase cursor-not-allowed px-3 rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722]">
+                class="mt-3 h-[28px] uppercase cursor-not-allowed px-3 rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
                 {{ step.title == 'Get Started' ? 'Pending by Admin' : 'Review under Admin' }}
               </button>
               <button disabled
                 v-if="!step.completed && ['Activity Report'].includes(step.title) && (['Approved'].includes(activity.workflow_state) && activity.completion_wf_state == 'Submitted')"
                 @click="nextStep(index)"
-                class="mt-2 h-[28px] uppercase cursor-not-allowed px-3 rounded-sm text-caption font-medium text-white ml-2 bg-[#FF5722]">
+                class="mt-2 h-[28px] uppercase cursor-not-allowed px-3 rounded-sm text-caption font-medium text-white ml-2 bg-[#FF5722] button-animation">
                 {{ step.title == 'Get Started' ? 'Pending by Admin' : 'Review under Admin' }}
               </button>
             </div>
@@ -109,7 +109,7 @@
           <div class="bg-white rounded-lg shadow-lg w-full max-w-md">
             <div class="flex justify-between items-center border-b p-4">
               <h2 class="text-lg font-semibold">Share Feedback</h2>
-              <button @click="show_Feedback = false" class="text-gray-500 hover:text-gray-700 text-xl">
+              <button @click="show_Feedback = false" class="text-gray-500 hover:text-gray-700 text-xl button-animation">
                 &times;
               </button>
             </div>
@@ -128,7 +128,7 @@
             </div>
             <div class="p-4">
               <button @click="submit_your_feedback"
-                class="w-full bg-[#FF5722] text-white py-2 rounded font-semibold hover:bg-orange-600">
+                class="w-full bg-[#FF5722] text-white py-2 rounded font-semibold hover:bg-orange-600 button-animation">
                 SUBMIT FEEDBACK
               </button>
             </div>
@@ -147,7 +147,7 @@
             </div>
             <div class="flex justify-center">
               <button v-if="props.activity.need_certificate === 'Yes'" @click="viewCertificate"
-                class="bg-[#FF5722] text-white py-2 px-6 rounded font-semibold hover:bg-orange-600 flex items-center gap-2"
+                class="bg-[#FF5722] text-white py-2 px-6 rounded font-semibold hover:bg-orange-600 flex items-center gap-2 button-animation"
                 :disabled="isLoadingCertificate">
                 <span v-if="isLoadingCertificate"
                   class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
@@ -162,7 +162,7 @@
           <div class="bg-white rounded-lg shadow-lg p-6 w-[500px]">
             <div class="flex justify-between items-center border-b pb-2 mb-4">
               <h2 class="text-lg font-semibold">Activity Completion</h2>
-              <button @click="activityReportPopup = false" class="text-gray-500 hover:text-gray-700">
+              <button @click="activityReportPopup = false" class="text-gray-500 hover:text-gray-700 button-animation">
                 &times;
               </button>
             </div>
@@ -229,7 +229,7 @@
             </div>
             <div class="flex justify-end">
               <button @click="submitReport"
-                class="bg-[#FF5722] flex items-center justify-center text-white h-[38px] text-base w-48 rounded-sm text-center font-medium hover:bg-orange-600">
+                class="bg-[#FF5722] flex items-center justify-center text-white h-[38px] text-base w-48 rounded-sm text-center font-medium hover:bg-orange-600 button-animation">
                 <p>MARK AS COMPLETE</p>
                 <div class="h-5 w-5" v-if="loading">
                   <div
@@ -332,35 +332,38 @@ const nextStep = async (index) => {
   }
 
   try {
-    if (index === 0) {
+    if (index == 0) {
       let res = await call('mykartavya.controllers.api.act_now', {
         activity: route.params.name,
         volunteer: auth.cookie.user_id
       })
 
-      if (res.status == 200) {
+      if (res && res.status == 200) {
         props.activity.workflow_state = 'Applied'
         steps.value[index].completed = true
         currentStep.value++
-      } else if (res.status == 201) {
+      } else if (res && res.status == 201) {
         store.req_for_approval = true
-        toast.error("User not approved ")
-      } else if (res.status == 400) {
-        toast.error(res.msg);
+        toast.error("Your account is pending for approval")
+        return
+      } else if (res && res.status == 400) {
+        toast.error(res.msg || "Something went wrong")
       } else {
+        toast.error("Something went wrong")
         return
       }
     }
 
-    if (index === 3) {
+    if (index == 3) {
       show_Feedback.value = true
     }
 
-    if (index === 2) {
+    if (index == 2) {
       activityReportPopup.value = true
     }
   } catch (error) {
-    toast.error(error)
+    console.error(error)
+    toast.error("Something went wrong")
   }
 }
 
@@ -408,7 +411,7 @@ const submitReport = async () => {
 
     if (res) {
       activity_log.value.progress = res.com_percent;
-      toast.success("Activity report submitted successfully",{ "autoClose": 1000 });
+      toast.success("Activity report submitted successfully", { "autoClose": 2000 });
       loading.value = false;
       activity_log.value = {
         hours: 0,
@@ -454,10 +457,11 @@ const viewCertificate = async () => {
   })
   if (res) {
     isLoadingCertificate.value = false;
-    toast.success('Certificate visible in your profile after few minutes',{ "autoClose": 1000 })
+    toast.success('Certificate visible in your profile after few minutes', { "autoClose": 1000 })
     showKarmaPopup.value = false
     setTimeout(() => {
       showKarmaPopup.value = false
+      router.push('/profile')
     }, 3000)
   }
 }
@@ -551,5 +555,38 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.button-animation {
+  transition: all 0.2s ease;
+}
+
+.button-animation:active {
+  transform: scale(0.95);
+}
+
+.button-animation:active .w-4 {
+  transform: rotate(180deg);
+}
+
+.button-animation:disabled {
+  transform: none;
+  cursor: not-allowed;
+}
+
+.refresh-button {
+  transition: transform 0.2s ease;
+}
+
+.refresh-button:active {
+  transform: scale(0.95);
+}
+
+.refresh-button .w-4 {
+  transition: transform 0.3s ease;
+}
+
+.refresh-button:active .w-4 {
+  transform: rotate(180deg);
 }
 </style>
