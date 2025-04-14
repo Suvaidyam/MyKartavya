@@ -408,7 +408,7 @@ const submitReport = async () => {
 
     if (res) {
       activity_log.value.progress = res.com_percent;
-      toast.success("Activity report submitted successfully");
+      toast.success("Activity report submitted successfully",{ "autoClose": 1000 });
       loading.value = false;
       activity_log.value = {
         hours: 0,
@@ -454,7 +454,7 @@ const viewCertificate = async () => {
   })
   if (res) {
     isLoadingCertificate.value = false;
-    toast.success('Certificate visible in your profile after few minutes')
+    toast.success('Certificate visible in your profile after few minutes',{ "autoClose": 1000 })
     showKarmaPopup.value = false
     setTimeout(() => {
       showKarmaPopup.value = false
