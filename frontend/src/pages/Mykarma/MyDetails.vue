@@ -87,7 +87,6 @@
               fill="#EBBB00" />
           </svg>
         </div>
-
         <!-- Top Performer -->
         <div class="flex flex-col items-center">
           <div class="relative">
@@ -96,7 +95,7 @@
               <img v-if="activitiestopuser[0]?.user_image" :src="activitiestopuser[0]?.user_image" alt="Anaya Singh"
                 class="rounded-full w-full h-full object-cover" />
               <div v-else class="rounded-full w-full h-full bg-gray-100 flex items-center justify-center">
-                {{ activitiestopuser[0]?.first_name?.charAt(0) }}
+                {{ activitiestopuser[0]?.first_name?.charAt(0) || " T" }}
               </div>
             </div>
             <span
@@ -214,7 +213,7 @@
               </div>
               <span class="text-gray-800 font-medium text-[10px]">{{
                 user?.full_name
-                }}</span>
+              }}</span>
             </td>
             <td class="text-[10px] font-normal text-center">
               {{

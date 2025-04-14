@@ -273,7 +273,6 @@ class Activity:
         # Check if the volunteer is approved
         workflow_state = frappe.db.get_value("SVA User", {"email": volunteer}, "workflow_state")
         volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")
-
         if workflow_state != "Approved":    
             return {"msg": "Volunteer is not approved", "status": 201}
 
@@ -287,6 +286,7 @@ class Activity:
             return {"msg": "Activity already assigned to the volunteer", "status": 400}
 
         unlimited_vacancies = frappe.db.get_value("Activity", activity, "unlimited_vacancies")
+
         if not unlimited_vacancies:
             total_vacancies = frappe.db.get_value("Activity", activity, "total_vacancies") or 0
             current_count = frappe.db.count("Volunteer Activity", filters={"activity": activity})
@@ -376,8 +376,12 @@ class Activity:
             COUNT(va.activity) AS total_activity,
             SUM(a.work_value_rupees) AS total_rupees,
             SUM(a.hours) AS total_hours,
-            (SELECT COUNT(*) FROM `tabNGOs`) AS total_ngo,
-            (SELECT COUNT(*) FROM `tabSVA User`) AS volunteer_count
+            (SELECT COUNT(*) FROM `tabNGOs`
+                WHERE workflow_state = 'Approved'
+            ) AS total_ngo,
+            (SELECT COUNT(*) FROM `tabSVA User`
+                WHERE workflow_state = 'Approved'
+            ) AS volunteer_count 
         FROM `tabVolunteer Activity` AS va
         JOIN `tabActivity` AS a ON va.activity = a.name;
         """
