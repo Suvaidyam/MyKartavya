@@ -9,21 +9,28 @@ class VolunteerActivity(Document):
 
 	def validate(self):
 		"""Validate and set enrollment status before saving."""
-		self.set_enrollment_status()
 		self.calculate_log_totals()
 		
 	def before_insert(self):
 		self.set_enrollment_status()
-	
+	 
 	def set_enrollment_status(self):
 		try:
 			activity = frappe.get_doc("Activity", self.activity)
-			if activity.auto_approve_volunteers or self.enrollment_wf_state == "Approved":
-				self.enrollment_wf_state = self.workflow_state = "Approved"
-				frappe.db.set_value(self.doctype, self.name, "workflow_state", "Approved")
-				self.save(ignore_permissions=True)
+			if activity.auto_approve_volunteers:
+				self.enrollment_wf_state = "Approved"
+				self.db_set("workflow_state", "Approved", update_modified=False, ignore_permissions=True)
+
 		except Exception as e:
 			frappe.log_error(f"Error setting enrollment status: {str(e)}")
+
+	def before_save(self):
+		try:
+			if self.workflow_state and self.workflow_state != self.enrollment_wf_state:
+				self.enrollment_wf_state = self.workflow_state
+		except Exception as e:
+			frappe.log_error(f"Error syncing workflow and enrollment state: {str(e)}")
+
 
 	def on_update(self):
 		"""Handle workflow state changes and related actions."""
