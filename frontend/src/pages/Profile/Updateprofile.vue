@@ -521,8 +521,12 @@ const onSubmit = async () => {
 
   loading.value = true;
   try {
-    // Format phone number with country code
-    const formattedPhoneNumber = `${formData.value.country_code}-${formData.value.custom_phone_number}`;
+    // Ensure country code is set, default to +91 if not set
+    const countryCode = formData.value.country_code || "+91";
+
+    // Format phone number with country code, ensuring no undefined values
+    const phoneNumber = formData.value.custom_phone_number || "";
+    const formattedPhoneNumber = `${countryCode}-${phoneNumber}`;
 
     // Prepare skills data - ensure we're sending just the skill names
     const skillsData = formData.value.custom_skill.map(skill => {
@@ -560,9 +564,9 @@ const onSubmit = async () => {
       });
       setTimeout(() => {
         router.push('/').then(() => {
-      // Reload the page after route push
-      window.location.reload();
-    });
+          // Reload the page after route push
+          window.location.reload();
+        });
       }, 1000)
     } else {
       throw new Error(res.message || "Failed to update profile");
