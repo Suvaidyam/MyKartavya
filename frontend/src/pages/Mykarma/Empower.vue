@@ -1,8 +1,35 @@
 <template>
   <div class="h-screen w-full">
+    <!-- Alert Banner for Unapproved Users -->
+    <div v-if="!isUserApproved" class="w-full mt-16 bg-yellow-50 border-b border-yellow-200">
+      <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between flex-wrap">
+          <div class="w-0 flex-1 flex items-center">
+            <span class="flex p-2 rounded-lg bg-yellow-100">
+              <svg class="h-6 w-6 text-yellow-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </span>
+            <p class="ml-3 font-medium text-yellow-800">
+              <span class="md:hidden">Your account is pending approval</span>
+              <span class="hidden md:inline">Your account is currently pending approval. Some features may be limited
+                until your account is approved.</span>
+            </p>
+          </div>
+          <div class="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
+            <a href="/profile"
+              class="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-yellow-700 bg-yellow-100 hover:bg-yellow-200">
+              View Profile
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- banner section image -->
-    <section>
-      <div v-if="activities" class="w-full relative h-[456px] md:h-[456px] back-img flex items-center mt-10">
+    <section :class="{ 'mt-[52px]': !isUserApproved }">
+      <div v-if="activities" class="w-full relative h-[456px] md:h-[456px] back-img flex items-center mt-[60px]">
         <img :src="activities.activity_image" class="w-full h-full" alt="">
         <div
           class="absolute top-20 left-5 sm:left-10 max-w-sm w-[448px] h-[312px] bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-4 justify-center">
@@ -110,11 +137,11 @@
             </h2>
 
             <div class="flex items-center">
-              <FeatherIcon @click="scrollLeft"
-                :class="['size-5 cursor-pointer', isLeftDisabled ? 'text-gray-500 disabled' : 'text-gray-700']"
+              <FeatherIcon @click="!isLeftDisabled && scrollLeft"
+                :class="['size-5', isLeftDisabled ? 'text-gray-500 cursor-not-allowed opacity-50' : 'text-gray-700 cursor-pointer']"
                 name="chevron-left" :disabled="isLeftDisabled" />
-              <FeatherIcon @click="scrollRight"
-                :class="['size-5 cursor-pointer', isRightDisabled ? 'text-gray-500 disabled' : 'text-gray-700']"
+              <FeatherIcon @click="!isRightDisabled && scrollRight"
+                :class="['size-5', isRightDisabled ? 'text-gray-500 cursor-not-allowed opacity-50' : 'text-gray-700 cursor-pointer']"
                 name="chevron-right" :disabled="isRightDisabled" />
 
             </div>
@@ -136,7 +163,7 @@
 </template>
 
 <script setup>
-import { inject, ref, onMounted, watch, watchEffect, computed } from 'vue'
+import { inject, ref, onMounted, watch, watchEffect, computed, onUnmounted } from 'vue'
 import { FeatherIcon } from 'frappe-ui'
 import Stepper from '../../components/Stepper.vue'
 import Card from '../../components/Card.vue'
@@ -194,6 +221,7 @@ const formatDate = inject('formatDate');
 const scrollContainer = ref(null);
 const isLeftDisabled = ref(true);
 const isRightDisabled = ref(false);
+const isUserApproved = ref(false)
 
 const activity = async () => {
   try {
@@ -217,7 +245,20 @@ const relatedOpportunities = async () => {
     console.error('Error fetching activity data:', err);
   }
 }
+
+const checkUserApproval = async () => {
+  try {
+    const response = await call('mykartavya.controllers.api.sva_user_data');
+    if (response && response.length > 0) {
+      isUserApproved.value = response[0]?.workflow_state === 'Approved';
+    }
+  } catch (err) {
+    console.error('Error checking user approval status:', err);
+  }
+}
+
 onMounted(async () => {
+  await checkUserApproval()
   await activity()
   await relatedOpportunities()
 })
@@ -267,15 +308,36 @@ const checkScrollButtons = () => {
   if (!scrollContainer.value) return;
   const { scrollLeft, scrollWidth, clientWidth } = scrollContainer.value;
   isLeftDisabled.value = scrollLeft <= 0;
-  isRightDisabled.value = scrollLeft + clientWidth >= scrollWidth;
+  // Check if content is actually overflowing
+  const isOverflowing = scrollWidth > clientWidth;
+  isRightDisabled.value = !isOverflowing || (scrollLeft + clientWidth >= scrollWidth);
 };
 
 // Watch for scroll changes and update button states
 watchEffect(() => {
   if (scrollContainer.value) {
     scrollContainer.value.addEventListener('scroll', checkScrollButtons);
+    // Initial check for overflow
+    checkScrollButtons();
   }
 });
+
+// Add resize observer to handle dynamic content changes
+onMounted(() => {
+  const resizeObserver = new ResizeObserver(() => {
+    checkScrollButtons();
+  });
+
+  if (scrollContainer.value) {
+    resizeObserver.observe(scrollContainer.value);
+  }
+
+  // Cleanup
+  onUnmounted(() => {
+    resizeObserver.disconnect();
+  });
+});
+
 window.addEventListener('resize', () => {
   getScrollStep(); // Ensure it updates when the window resizes
 });
