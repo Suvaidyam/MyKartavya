@@ -126,7 +126,7 @@ class Activity:
                         act.name as activity,
                         va.duration as duration,
                         va.com_percent as com_percent,
-                        act.title as title,
+                        act.title as activity_name,
                         act.karma_points as karma_points,
                         act.start_date as start_date,
                         act.end_date as end_date,
@@ -220,7 +220,7 @@ class Activity:
                         act.name as activity,
                         va.duration as duration,
                         va.com_percent as com_percent,
-                        act.title as title,
+                        act.title as activity_name,
                         act.karma_points as karma_points,
                         act.start_date as start_date,
                         act.end_date as end_date,
@@ -448,15 +448,15 @@ class Activity:
                 
         sql_query = f"""
             SELECT 
-            opp.name as opportunity,
-            opp.opportunity_name as opportunity_name,
+            opp.name as name,
+            opp.opportunity_name as activity_name,
             opp.karma_points as karma_points,
-            opp.opportunity_type as opportunity_type,
+            opp.opportunity_type as activity_type,
             opp.start_date as start_date,
             opp.end_date as end_date,
             opp.hours as hours,
-            opp.opportunity_description as opportunity_description,
-            opp.opportunity_image as opportunity_image,
+            opp.opportunity_description as activity_description,
+            opp.opportunity_image as activity_image,
             COALESCE(
                 JSON_ARRAYAGG(
                     DISTINCT CASE 
