@@ -59,8 +59,18 @@
         <NotFound v-else />
       </div>
     </div>
-    <div v-else class="w-full h-4/5 flex items-center justify-center">
-      <p>Coming Soon...</p>
+    <div v-else class="w-full h-4/5  mt-5">
+      <div v-if="loader" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
+        <CardLoader />
+        <CardLoader />
+        <CardLoader />
+      </div>
+      <div v-else class="h-full">
+        <div v-if="opportunities.length > 0" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
+          <Card v-for="item in opportunities" :key="item.name" :item="item" />
+        </div>
+        <NotFound v-else />
+      </div>
     </div>
   </section>
 </template>
@@ -77,6 +87,9 @@ const call = inject('call')
 const store = inject('store')
 const activity = ref([])
 const loader = ref(false)
+const opportunities = ref([]);
+
+
 
 const activeTab = ref('kindness')
 const kindnes = async (filter) => {
@@ -122,8 +135,20 @@ const generateRandom = async () => {
   }
 }
 
+const relatedOpportunities = async () => {
+  try {
+    const response = await call('mykartavya.controllers.api.related_opportunities')
+    if (response) {
+      opportunities.value = response
+    }
+  } catch (err) {
+    console.error('Error fetching activity data:', err);
+  }
+}
+
 onMounted(() => {
   kindnes(store.filters)
+  relatedOpportunities()
 })
 
 watch(
