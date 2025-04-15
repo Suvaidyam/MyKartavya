@@ -119,7 +119,13 @@ const sendVerification = async () => {
         if (response) {
             verificationSent.value = true;
             startResendTimer();
-            toast.success('Verification email sent! Please check your inbox.');
+            toast.success('Verification email sent! Please check your inbox.', {
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
     } catch (error) {
         // Handle specific error messages
@@ -127,28 +133,64 @@ const sendVerification = async () => {
 
         if (errorMessage.includes('email not found in sva user')) {
             emailError.value = 'This email is not registered in our system. Please use your company email address.';
-            toast.error('Invalid company email address');
+            toast.error('Invalid company email address', {
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
         else if (errorMessage.includes('no company associated')) {
             emailError.value = 'No company is associated with this email. Please contact your company administrator.';
-            toast.error('No company association found');
+            toast.error('No company association found', {
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
         else if (errorMessage.includes('already exists')) {
             emailError.value = 'This email is already mapped to a company. Please use a different email.';
-            toast.error('Email already mapped');
+            toast.error('Email already mapped', {
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
         else if (errorMessage.includes('verification required')) {
             verificationSent.value = true;
             startResendTimer();
-            toast.info('A verification email has already been sent. Please check your inbox.');
+            toast.info('A verification email has already been sent. Please check your inbox.', {
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
         else if (errorMessage.includes('rate limit')) {
             emailError.value = 'Please wait a few minutes before requesting another verification email.';
-            toast.warning('Too many attempts. Please wait.');
+            toast.warning('Too many attempts. Please wait.', {
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
         else {
             emailError.value = 'An error occurred while processing your request. Please try again later.';
-            toast.error('Failed to process request');
+            toast.error('Failed to process request', {
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
             console.error('Company mapping error:', error);
         }
     } finally {

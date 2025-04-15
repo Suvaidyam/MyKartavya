@@ -242,7 +242,7 @@
           </div>
         </div>
 
-        <ReqForApproval />
+        <ReqForApproval v-model="showReqForApproval" />
       </div>
     </div>
   </div>
@@ -267,6 +267,7 @@ const showKarmaPopup = ref(false)
 const activityReportPopup = ref(false)
 
 const showLockedStepPopup = ref(false)
+const showReqForApproval = ref(false)
 const call = inject('call')
 const auth = inject('auth')
 const store = inject('store')
@@ -333,6 +334,14 @@ const nextStep = async (index) => {
 
   try {
     if (index == 0) {
+      // Check if user is approved first
+      // let userRes = await call('mykartavya.controllers.api.sva_user_data')
+      // if (userRes && userRes.length > 0 && userRes[0]?.workflow_state !== 'Approved') {
+      //   showReqForApproval.value = true
+      //   toast.error("Your account is pending for approval")
+      //   return
+      // }
+
       let res = await call('mykartavya.controllers.api.act_now', {
         activity: route.params.name,
         volunteer: auth.cookie.user_id
@@ -343,13 +352,27 @@ const nextStep = async (index) => {
         steps.value[index].completed = true
         currentStep.value++
       } else if (res && res.status == 201) {
-        store.req_for_approval = true
-        toast.error("Your account is pending for approval")
+        showReqForApproval.value = true
+        // toast.error("Your account is pending for approval")
         return
       } else if (res && res.status == 400) {
-        toast.error(res.msg || "Something went wrong")
+        toast.error(res.msg || "Something went wrong", {
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        })
       } else {
-        toast.error("Something went wrong")
+        toast.error("Something went wrong",
+          {
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        )
         return
       }
     }
@@ -363,7 +386,13 @@ const nextStep = async (index) => {
     }
   } catch (error) {
     console.error(error)
-    toast.error("Something went wrong")
+    toast.error("Something went wrong", {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    })
   }
 }
 
@@ -411,7 +440,13 @@ const submitReport = async () => {
 
     if (res) {
       activity_log.value.progress = res.com_percent;
-      toast.success("Activity report submitted successfully", { "autoClose": 2000 });
+      toast.success("Activity report submitted successfully", {
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       loading.value = false;
       activity_log.value = {
         hours: 0,
@@ -422,7 +457,13 @@ const submitReport = async () => {
     }
   } catch (error) {
     loading.value = false;
-    toast.error("Something went wrong");
+    toast.error("Something went wrong", {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   }
 };
 
@@ -457,7 +498,13 @@ const viewCertificate = async () => {
   })
   if (res) {
     isLoadingCertificate.value = false;
-    toast.success('Certificate visible in your profile after few minutes', { "autoClose": 1000 })
+    toast.success('Certificate visible in your profile after few minutes', {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    })
     showKarmaPopup.value = false
     setTimeout(() => {
       showKarmaPopup.value = false

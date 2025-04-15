@@ -631,3 +631,35 @@ def get_user_certificates():
 def get_all_skills():
     skills = frappe.get_all("User Skills", fields=["name", "skill_name"])
     return skills
+
+@frappe.whitelist(allow_guest=True)
+def notify_admin_approval(volunteer):
+    try:
+        # Get admin users with MyKartavya Admin role profile
+        admin_users = frappe.get_all(
+            "SVA User",
+            filters={"role_profile": "MyKartvya Admin"},
+            pluck="email"
+        )
+        if not admin_users:
+            return {"status": "error", "message": "No admin users found"}
+            
+        # Get volunteer details
+        volunteer_details = frappe.get_doc("SVA User", {'email':volunteer} )
+        # Create notification for each admin
+        for admin in admin_users:
+            frappe.get_doc({
+                "doctype": "Notification Log",
+                "for_user": admin,
+                "type": "Alert",
+                "document_type": "SVA User",
+                "document_name": volunteer_details.name,
+                "subject": f"New Approval Request from {volunteer_details.full_name}",
+                "message": f"A new volunteer {volunteer_details.full_name} has requested approval. Please review their profile.",
+                "read": 0
+            }).insert( ignore_permissions=True)
+        return {"status": "success", "message": "Admin users have been notified"}
+        
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), "notify_admin_approval Error")
+        return {"status": "error", "message": str(e)}

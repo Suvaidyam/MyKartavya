@@ -82,12 +82,30 @@ const isFormValid = computed(() => {
 const handleSubmit = async () => {
   if (!isFormValid.value) {
     if (full_name.value.trim() === '') {
-      toast.error('Full name is required')
+      toast.error('Full name is required', {
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      })
     }
     if (!email.value) {
-      toast.error('Email is required')
+      toast.error('Email is required', {
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      })
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-      toast.error('Please enter a valid email address')
+      toast.error('Please enter a valid email address', {
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      })
     }
     return
   }
@@ -101,7 +119,11 @@ const handleSubmit = async () => {
     if (response.status === 'success') {
       loading.value = false
       toast.success('OTP sent successfully', {
-        autoClose: 1000,
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
       })
       router.push({
         name: 'Verify',
@@ -110,12 +132,20 @@ const handleSubmit = async () => {
     } else {
       loading.value = false
       toast.error(response.message, {
-        autoClose: 1000,
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
       })
     }
   } catch (error) {
     toast.error('Something went wrong', {
-      autoClose: 1000,
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
     })
     loading.value = false
   }

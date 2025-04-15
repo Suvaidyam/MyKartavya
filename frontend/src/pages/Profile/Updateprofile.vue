@@ -291,7 +291,7 @@ const fields = ref({
   custom_skill: {
     label: "Skills",
     type: "multiselect",
-    required: false
+    required: true
   },
 });
 
@@ -425,7 +425,13 @@ const getDetails = async () => {
     }
   } catch (error) {
     console.error('Error fetching user details:', error);
-    toast.error('Failed to load user details. Please try again.');
+    toast.error('Failed to load user details. Please try again.', {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   }
 };
 
@@ -561,6 +567,10 @@ const onSubmit = async () => {
     if (res.status == 200) {
       await toast.success("Profile updated successfully!", {
         autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
       });
       setTimeout(() => {
         router.push('/').then(() => {
@@ -573,7 +583,13 @@ const onSubmit = async () => {
     }
   } catch (error) {
     console.error('Error in form submission:', error);
-    toast.error(error.message || "An error occurred while updating the profile.", { autoClose: 2000 });
+    toast.error(error.message || "An error occurred while updating the profile.", {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   } finally {
     loading.value = false;
   }
@@ -609,7 +625,13 @@ onMounted(async () => {
   getDetails();
 
   if (localStorage.getItem('updateprofile') == 'true') {
-    toast.error("Please update your profile to continue.", { "autoClose": 2000 });
+    toast.error("Please update your profile to continue.", {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
     localStorage.removeItem('updateprofile');
   }
 
@@ -664,13 +686,25 @@ const handleInputChange = (key, event) => {
 const handleFileUpload = async (event, field) => {
   const file = event.target.files[0]
   if (!file) {
-    toast.error('Please select a file.', { "autoClose": 2000 })
+    toast.error('Please select a file.', {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    })
     return
   }
   const maxSize = 5 * 1024 * 1024 // 5MB
 
   if (file.size > maxSize) {
-    toast.error('File size exceeds 5 MB limit.', { "autoClose": 2000 })
+    toast.error('File size exceeds 5 MB limit.', {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    })
     return
   }
 
@@ -691,14 +725,26 @@ const handleFileUpload = async (event, field) => {
       toast.success('File uploaded successfully!', { "autoClose": 1000 })
     } catch (err) {
       console.error('Error uploading file:', err)
-      toast.error('Failed to upload file. Please try again.', { "autoClose": 2000 })
+      toast.error('Failed to upload file. Please try again.', {
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      })
     }
   }
 }
 
 const removeFile = (field) => {
   formData.value[field] = null
-  toast.info('File removed.', { "autoClose": 2000 })
+  toast.info('File removed.', {
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+  })
 }
 
 const getFileName = (base64String) => {
