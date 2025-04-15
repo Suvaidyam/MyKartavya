@@ -57,7 +57,8 @@
   {
    "fieldname": "activity_image",
    "fieldtype": "Attach Image",
-   "label": "Activity Image"
+   "label": "Activity Image",
+   "reqd": 1
   },
   {
    "fieldname": "description_section",
@@ -67,7 +68,8 @@
   {
    "fieldname": "description",
    "fieldtype": "Text Editor",
-   "label": "Description"
+   "label": "Description",
+   "reqd": 1
   },
   {
    "fieldname": "date_time_section",
@@ -100,7 +102,8 @@
    "default": "0",
    "fieldname": "total_hour",
    "fieldtype": "Int",
-   "label": "Total Hours"
+   "label": "Total Hours",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_3",
@@ -110,13 +113,14 @@
    "default": "0",
    "fieldname": "total_minutes",
    "fieldtype": "Int",
-   "label": "Total Minutes"
+   "label": "Total Minutes",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-15 13:10:49.568205",
+ "modified": "2025-04-15 14:44:10.888882",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity Activity",
