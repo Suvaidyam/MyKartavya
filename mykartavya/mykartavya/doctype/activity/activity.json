@@ -65,13 +65,15 @@
   "state",
   "column_break_location1",
   "city",
+  "section_break_apqr",
   "address",
   "reward_section",
   "reward_for_activity",
-  "reward_description",
   "column_break_reward1",
   "reward_image",
-  "amended_from"
+  "amended_from",
+  "section_break_ywwd",
+  "reward_description"
  ],
  "fields": [
   {
@@ -456,8 +458,7 @@
    "depends_on": "eval:doc.reward_for_activity",
    "fieldname": "reward_description",
    "fieldtype": "Text Editor",
-   "label": "Reward Description",
-   "mandatory_depends_on": "eval:doc.reward_for_activity"
+   "label": "Reward Description"
   },
   {
    "fieldname": "column_break_reward1",
@@ -490,12 +491,20 @@
    "fieldtype": "HTML",
    "label": "SDGs Help",
    "options": "<p class='text-muted'>Select the Sustainable Development Goals that this opportunity contributes towards.</p>"
+  },
+  {
+   "fieldname": "section_break_apqr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_ywwd",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-15 13:47:59.430476",
+ "modified": "2025-04-15 18:09:03.059071",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",

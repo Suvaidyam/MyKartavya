@@ -82,13 +82,13 @@
     <!--  -->
 
     <article v-else class="flex flex-col card w-full py-2 overflow-hidden">
-        <router-link :to="auth.isLoggedIn ? '/activity/' + item.opportunity : '/kindness-volunteering/' + item.opportunity">
+        <router-link :to="auth.isLoggedIn ? '/activity/' + item.activity : '/kindness-volunteering/' + item.activity">
             <div class="w-full flex flex-col justify-between h-40 rounded-md relative">
-                <img :src="item.opportunity_image || 'https://res.cloudinary.com/dyt5jqnax/image/upload/v1742968038/mykartavya-logo_jptv31.png'"
+                <img :src="item.activity_image || 'https://res.cloudinary.com/dyt5jqnax/image/upload/v1742968038/mykartavya-logo_jptv31.png'"
                     alt="" class="h-full rounded-md">
                 <div
                     class="bg-[#FF7C3A] activity-type absolute top-2 text-white font-medium text-xs flex items-center pl-3 pr-5 h-6 ">
-                    {{ item.opportunity_type }}
+                    {{ item.activity_type }}
                 </div>
                 <div
                     class="absolute right-[5px] top-2 bg-white text-gray-800 text-xs px-2 h-6 rounded-2xl shadow flex items-center gap-1">
@@ -112,7 +112,7 @@
                 </div>
             </div>
             <h3 class="self-start truncate mt-3 text-base font-medium tracking-normal text-neutral-950">
-                {{ item.title }}
+                {{ item.activity_name }}
             </h3>
             <p class="mt-2 text-xs tracking-normal leading-3 text-justify text-[#666666]">
                 {{ item.opportunity_description }}
