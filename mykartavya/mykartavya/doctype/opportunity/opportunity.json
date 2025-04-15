@@ -7,37 +7,48 @@
  "field_order": [
   "basic_details_section",
   "opportunity_name",
-  "opportunity_description",
-  "start_date",
-  "end_date",
-  "column_break_1",
-  "need_reward",
-  "reward_activity",
-  "is_team_opportunity",
+  "opportunity_image",
+  "column_break_basic_1",
+  "opportunity_type",
   "is_featured",
-  "is_global",
   "is_private",
   "company",
+  "section_break_xmyq",
+  "opportunity_description",
+  "date_availability_section",
+  "start_date",
+  "end_date",
+  "column_break_date",
+  "is_team_opportunity",
+  "is_global",
   "category_value_section",
   "category",
   "value_type",
   "skills",
-  "work_value_points",
-  "column_break_2",
-  "karma_points",
+  "column_break_category",
   "contribution_type",
-  "section_break_sstw",
-  "sdgs",
+  "work_value_points",
+  "karma_points",
+  "rewards_section",
+  "need_reward",
+  "reward_activity",
+  "column_break_rewards",
   "time_details_section",
   "minimum_hours",
-  "buffer_minutes",
   "hours",
-  "minutes",
-  "column_break_3",
+  "column_break_time",
   "max_hours",
+  "minutes",
+  "buffer_minutes",
+  "sdgs_section",
+  "sdgs_help",
+  "sdgs",
   "organization_section",
   "ngo",
-  "amended_from"
+  "column_break_org",
+  "amended_from",
+  "planned_activities_tab",
+  "planned_activities"
  ],
  "fields": [
   {
@@ -46,6 +57,7 @@
    "label": "Basic Details"
   },
   {
+   "bold": 1,
    "fieldname": "opportunity_name",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -58,6 +70,36 @@
    "fieldtype": "Text Editor",
    "label": "Opportunity Description",
    "reqd": 1
+  },
+  {
+   "fieldname": "column_break_basic_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "is_featured",
+   "fieldtype": "Select",
+   "label": "Featured Opportunity",
+   "options": "Yes\nNo",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_private",
+   "fieldtype": "Check",
+   "label": "Private Opportunity"
+  },
+  {
+   "depends_on": "eval:doc.is_private",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "mandatory_depends_on": "eval:doc.is_private",
+   "options": "Company"
+  },
+  {
+   "fieldname": "date_availability_section",
+   "fieldtype": "Section Break",
+   "label": "Date & Availability"
   },
   {
    "fieldname": "start_date",
@@ -74,34 +116,14 @@
    "reqd": 1
   },
   {
-   "fieldname": "column_break_1",
+   "fieldname": "column_break_date",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "need_reward",
-   "fieldtype": "Select",
-   "label": "Need Reward",
-   "options": "Yes\nNo",
-   "reqd": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "reward_activity",
-   "fieldtype": "Check",
-   "label": "Reward Activity"
   },
   {
    "default": "0",
    "fieldname": "is_team_opportunity",
    "fieldtype": "Check",
-   "label": "Is Team Opportunity?"
-  },
-  {
-   "fieldname": "is_featured",
-   "fieldtype": "Select",
-   "label": "Featured Opportunity",
-   "options": "Yes\nNo",
-   "reqd": 1
+   "label": "Team Opportunity"
   },
   {
    "default": "0",
@@ -129,6 +151,25 @@
    "options": "General\nSkills\nMentoring\nTeaching\nConsulting"
   },
   {
+   "depends_on": "eval:doc.value_type=='Skills'",
+   "fieldname": "skills",
+   "fieldtype": "Table MultiSelect",
+   "label": "Skills",
+   "mandatory_depends_on": "eval:doc.value_type=='Skills'",
+   "options": "Skills Child"
+  },
+  {
+   "fieldname": "column_break_category",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contribution_type",
+   "fieldtype": "Link",
+   "label": "Contribution Type",
+   "options": "Contribution Type",
+   "reqd": 1
+  },
+  {
    "fieldname": "work_value_points",
    "fieldtype": "Int",
    "label": "Work Value Points",
@@ -141,20 +182,32 @@
    "reqd": 1
   },
   {
-   "fieldname": "column_break_2",
-   "fieldtype": "Column Break"
+   "collapsible": 1,
+   "fieldname": "rewards_section",
+   "fieldtype": "Section Break",
+   "label": "Rewards"
   },
   {
-   "fieldname": "contribution_type",
-   "fieldtype": "Link",
-   "label": "Contribution Type",
-   "options": "Contribution Type",
+   "fieldname": "need_reward",
+   "fieldtype": "Select",
+   "label": "Need Reward",
+   "options": "Yes\nNo",
    "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "reward_activity",
+   "fieldtype": "Check",
+   "label": "Reward Activity"
+  },
+  {
+   "fieldname": "column_break_rewards",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "time_details_section",
    "fieldtype": "Section Break",
-   "label": "Time Details"
+   "label": "Time Requirements"
   },
   {
    "fieldname": "minimum_hours",
@@ -164,33 +217,51 @@
    "reqd": 1
   },
   {
-   "fieldname": "buffer_minutes",
-   "fieldtype": "Int",
-   "label": "Buffer Minutes",
+   "fieldname": "hours",
+   "fieldtype": "Float",
+   "label": "Standard Hours",
+   "precision": "2",
    "reqd": 1
   },
   {
-   "fieldname": "hours",
+   "fieldname": "column_break_time",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "max_hours",
    "fieldtype": "Float",
-   "label": "Hours",
+   "label": "Maximum Hours",
    "precision": "2",
    "reqd": 1
   },
   {
    "fieldname": "minutes",
    "fieldtype": "Int",
-   "label": "Minutes",
+   "label": "Additional Minutes",
    "reqd": 1
   },
   {
-   "fieldname": "column_break_3",
-   "fieldtype": "Column Break"
+   "fieldname": "buffer_minutes",
+   "fieldtype": "Int",
+   "label": "Buffer Minutes",
+   "reqd": 1
   },
   {
-   "fieldname": "max_hours",
-   "fieldtype": "Float",
-   "label": "Max Hours",
-   "precision": "2",
+   "fieldname": "sdgs_section",
+   "fieldtype": "Section Break",
+   "label": "Sustainable Development Goals (SDGs)"
+  },
+  {
+   "fieldname": "sdgs_help",
+   "fieldtype": "HTML",
+   "label": "SDGs Help",
+   "options": "<p class='text-muted'>Select the Sustainable Development Goals that this opportunity contributes towards.</p>"
+  },
+  {
+   "fieldname": "sdgs",
+   "fieldtype": "Table MultiSelect",
+   "label": "SDGs",
+   "options": "SDGs Child",
    "reqd": 1
   },
   {
@@ -207,37 +278,8 @@
    "reqd": 1
   },
   {
-   "depends_on": "eval:doc.value_type=='Skills'",
-   "fieldname": "skills",
-   "fieldtype": "Table MultiSelect",
-   "label": "Skills",
-   "mandatory_depends_on": "eval:doc.value_type=='Skills'",
-   "options": "Skills Child"
-  },
-  {
-   "default": "0",
-   "fieldname": "is_private",
-   "fieldtype": "Check",
-   "label": "is_private"
-  },
-  {
-   "depends_on": "eval:doc.is_private",
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "mandatory_depends_on": "eval:doc.is_private",
-   "options": "Company"
-  },
-  {
-   "fieldname": "sdgs",
-   "fieldtype": "Table MultiSelect",
-   "label": "SDGs",
-   "options": "SDGs Child",
-   "reqd": 1
-  },
-  {
-   "fieldname": "section_break_sstw",
-   "fieldtype": "Section Break"
+   "fieldname": "column_break_org",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "amended_from",
@@ -248,12 +290,39 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "opportunity_image",
+   "fieldtype": "Attach",
+   "label": "Opportunity Image",
+   "reqd": 1
+  },
+  {
+   "fieldname": "opportunity_type",
+   "fieldtype": "Select",
+   "label": "Opportunity Type",
+   "options": "\nOn-Ground\nOnline\nHybrid",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_xmyq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "planned_activities_tab",
+   "fieldtype": "Tab Break",
+   "label": "Planned Activities"
+  },
+  {
+   "fieldname": "planned_activities",
+   "fieldtype": "HTML",
+   "label": "Planned Activities"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-15 12:36:47.164017",
+ "modified": "2025-04-15 13:57:51.486913",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity",
