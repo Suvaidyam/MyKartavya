@@ -24,7 +24,7 @@
   "category_value_section",
   "category",
   "value_type",
-  "skills",
+  "skill",
   "column_break_category",
   "contribution_type",
   "work_value_points",
@@ -151,14 +151,6 @@
    "options": "General\nSkills\nMentoring\nTeaching\nConsulting"
   },
   {
-   "depends_on": "eval:doc.value_type=='Skills'",
-   "fieldname": "skills",
-   "fieldtype": "Table MultiSelect",
-   "label": "Skills",
-   "mandatory_depends_on": "eval:doc.value_type=='Skills'",
-   "options": "Skills Child"
-  },
-  {
    "fieldname": "column_break_category",
    "fieldtype": "Column Break"
   },
@@ -173,7 +165,7 @@
    "fieldname": "work_value_points",
    "fieldtype": "Int",
    "label": "Work Value Points",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.value_type=='General'"
   },
   {
    "fieldname": "karma_points",
@@ -317,12 +309,20 @@
    "fieldname": "planned_activities",
    "fieldtype": "HTML",
    "label": "Planned Activities"
+  },
+  {
+   "depends_on": "eval:doc.value_type=='Skills'",
+   "fieldname": "skill",
+   "fieldtype": "Table MultiSelect",
+   "label": "Skills",
+   "mandatory_depends_on": "eval:doc.value_type=='Skills'",
+   "options": "Skills Child"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-15 13:57:51.486913",
+ "modified": "2025-04-15 18:34:52.240090",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity",
