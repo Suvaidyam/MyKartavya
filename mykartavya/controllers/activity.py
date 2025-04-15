@@ -445,7 +445,7 @@ class Activity:
             v_activity = frappe.get_list("Volunteer Activity", filters={"volunteer": user}, pluck="activity")
             if v_activity:
                 where_clause += f" AND act.name NOT IN ({', '.join(frappe.db.escape(v) for v in v_activity)})"
-
+                
         sql_query = f"""
             SELECT 
             opp.name as opportunity,
