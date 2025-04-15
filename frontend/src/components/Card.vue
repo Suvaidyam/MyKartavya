@@ -82,13 +82,13 @@
     <!--  -->
 
     <article v-else class="flex flex-col card w-full py-2 overflow-hidden">
-        <router-link :to="auth.isLoggedIn ? '/activity/' + item.activity : '/kindness-volunteering/' + item.activity">
+        <router-link :to="auth.isLoggedIn ? '/activity/' + item.opportunity : '/kindness-volunteering/' + item.opportunity">
             <div class="w-full flex flex-col justify-between h-40 rounded-md relative">
-                <img :src="item.activity_image || 'https://res.cloudinary.com/dyt5jqnax/image/upload/v1742968038/mykartavya-logo_jptv31.png'"
+                <img :src="item.opportunity_image || 'https://res.cloudinary.com/dyt5jqnax/image/upload/v1742968038/mykartavya-logo_jptv31.png'"
                     alt="" class="h-full rounded-md">
                 <div
                     class="bg-[#FF7C3A] activity-type absolute top-2 text-white font-medium text-xs flex items-center pl-3 pr-5 h-6 ">
-                    {{ item.activity_type }}
+                    {{ item.opportunity_type }}
                 </div>
                 <div
                     class="absolute right-[5px] top-2 bg-white text-gray-800 text-xs px-2 h-6 rounded-2xl shadow flex items-center gap-1">
@@ -115,7 +115,7 @@
                 {{ item.title }}
             </h3>
             <p class="mt-2 text-xs tracking-normal leading-3 text-justify text-[#666666]">
-                {{ item.description }}
+                {{ item.opportunity_description }}
             </p>
             <div class="flex flex-col gap-3 justify-between mt-2">
                 <div class="flex gap-1 items-center text-xs tracking-normal text-neutral-950">
@@ -141,8 +141,8 @@
                         <p class="text-xs font-normal">{{ item.hours }} hr</p>
                     </Tooltip>
                 </div>
-                <div class="flex items-center justify-between">
-                    <div v-if="JSON.parse(item.volunteers).length > 0 && JSON.parse(item.volunteers)[0].full_name != null"
+                <div class="flex items-center justify-end">
+                    <!-- <div v-if="JSON.parse(item.volunteers).length > 0 && JSON.parse(item.volunteers)[0].full_name != null"
                         class="flex items-center -space-x-3 ">
                         <div v-for="(el, index) in JSON?.parse(item.volunteers).slice(0, 3)" :key="index">
                             <img v-if="el.user_image" :src="el.user_image" :alt="'User ' + (index + 1)"
@@ -156,7 +156,7 @@
                             +{{ JSON.parse(item.volunteers).length - 3 }}
                         </p>
                     </div>
-                    <div v-else class="w-8 h-8"></div>
+                    <div v-else class="w-8 h-8"></div> -->
                     <div
                         class="flex gap-1 items-center text-sm font-medium tracking-normal text-right text-[#FF5722] uppercase hover:text-orange-700">
                         <p>Act now</p>
