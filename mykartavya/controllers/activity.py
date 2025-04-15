@@ -430,10 +430,9 @@ class Activity:
         except Exception as e:
             return {"status": "error", "message": str(e)}
 
-    
-    def related_opportunities(name, sdgs):
+    def related_opportunities(name="", sdgs=""):
         sdgs_list = json.loads(sdgs) if sdgs else []
-        sdgs = [frappe.db.escape(sdg["sdgs_name"]) for sdg in sdgs_list]  # Escape values properly
+        sdgs = [frappe.db.escape(sdg["sdgs_name"]) for sdg in sdgs_list]   
 
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         where_clause = ""
@@ -448,16 +447,16 @@ class Activity:
                 where_clause += f" AND act.name NOT IN ({', '.join(frappe.db.escape(v) for v in v_activity)})"
 
         sql_query = f"""
-        SELECT 
-            act.name as activity,
-            act.title as title,
-            act.karma_points as karma_points,
-            act.start_date as start_date,
-            act.end_date as end_date,
-            act.hours as hours,
-            act.activity_description as activity_description,
-            act.activity_type as activity_type,
-            act.activity_image as activity_image,
+            SELECT 
+            opp.name as opportunity,
+            opp.opportunity_name as opportunity_name,
+            opp.karma_points as karma_points,
+            opp.opportunity_type as opportunity_type,
+            opp.start_date as start_date,
+            opp.end_date as end_date,
+            opp.hours as hours,
+            opp.opportunity_description as opportunity_description,
+            opp.opportunity_image as opportunity_image,
             COALESCE(
                 JSON_ARRAYAGG(
                     DISTINCT CASE 
@@ -469,30 +468,17 @@ class Activity:
                         ELSE NULL
                     END
                 ), JSON_ARRAY()
-            ) AS sdgs,
-            COALESCE(
-                JSON_ARRAYAGG(
-                    DISTINCT JSON_OBJECT(
-                        'name', sva.name,
-                        'full_name', sva.full_name,
-                        'email', sva.email,
-                        'user_image', sva.user_image
-                    )
-                ), JSON_ARRAY()
-            ) as volunteers
-        FROM `tabActivity` as act
-        LEFT JOIN `tabVolunteer Activity` as va ON va.activity
-        LEFT JOIN `tabSVA User` as sva ON sva.name = va.volunteer
-        LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
+            ) AS sdgs
+        FROM `tabOpportunity` as opp
+        LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
         LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
-        WHERE act.end_date >= CURRENT_DATE() {where_clause}
-        AND act.name <> '{name}'
-        GROUP BY act.name
+        WHERE opp.end_date >= CURRENT_DATE()  
+        AND opp.name <> '{name}'
+        GROUP BY opp.name
         """
-
         data = frappe.db.sql(sql_query, as_dict=True)
         return data
-
+    
     def submit_feedback(name,volunteer,rating,comments):
         volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")
         exists = frappe.db.exists("Volunteer Activity", {"volunteer": volunteer, "name": name})
