@@ -368,8 +368,7 @@ class Activity:
         else:
             doc["is_assigned"] = False
         return doc
-
-
+    
     def volunteer_act_count():
         sql_query = """
         SELECT 

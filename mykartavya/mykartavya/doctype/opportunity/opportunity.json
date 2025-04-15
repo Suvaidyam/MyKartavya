@@ -16,14 +16,18 @@
   "is_team_opportunity",
   "is_featured",
   "is_global",
+  "is_private",
+  "company",
   "category_value_section",
   "category",
   "value_type",
+  "skills",
   "work_value_points",
-  "karma_points",
   "column_break_2",
-  "goal",
+  "karma_points",
   "contribution_type",
+  "section_break_sstw",
+  "sdgs",
   "time_details_section",
   "minimum_hours",
   "buffer_minutes",
@@ -32,7 +36,8 @@
   "column_break_3",
   "max_hours",
   "organization_section",
-  "ngo"
+  "ngo",
+  "amended_from"
  ],
  "fields": [
   {
@@ -140,13 +145,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "goal",
-   "fieldtype": "Link",
-   "label": "Goal",
-   "options": "Goal",
-   "reqd": 1
-  },
-  {
    "fieldname": "contribution_type",
    "fieldtype": "Link",
    "label": "Contribution Type",
@@ -207,11 +205,55 @@
    "label": "NGO",
    "options": "NGOs",
    "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.value_type=='Skills'",
+   "fieldname": "skills",
+   "fieldtype": "Table MultiSelect",
+   "label": "Skills",
+   "mandatory_depends_on": "eval:doc.value_type=='Skills'",
+   "options": "Skills Child"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_private",
+   "fieldtype": "Check",
+   "label": "is_private"
+  },
+  {
+   "depends_on": "eval:doc.is_private",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "mandatory_depends_on": "eval:doc.is_private",
+   "options": "Company"
+  },
+  {
+   "fieldname": "sdgs",
+   "fieldtype": "Table MultiSelect",
+   "label": "SDGs",
+   "options": "SDGs Child",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_sstw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Opportunity",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2025-03-24 15:02:34.658802",
+ "modified": "2025-04-15 12:36:47.164017",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity",

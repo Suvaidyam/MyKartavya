@@ -35,7 +35,6 @@
   "value_type",
   "skill",
   "work_value_rupees",
-  "goal",
   "contribution_type",
   "karma_points",
   "column_break_2",
@@ -226,13 +225,6 @@
    "mandatory_depends_on": "eval:doc.value_type=='General'",
    "non_negative": 1,
    "read_only_depends_on": "eval:doc.value_type=='Skills'"
-  },
-  {
-   "fieldname": "goal",
-   "fieldtype": "Link",
-   "label": "Goal",
-   "options": "Goal",
-   "reqd": 1
   },
   {
    "fieldname": "contribution_type",
@@ -428,7 +420,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-08 11:14:57.945471",
+ "modified": "2025-04-15 11:46:39.928025",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
