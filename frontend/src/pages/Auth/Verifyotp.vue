@@ -123,7 +123,13 @@ onUnmounted(() => {
 
 const getOTP = async () => {
   if (!email.value) {
-    toast.error('Please enter an email');
+    toast.error('Please enter an email', {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
     return;
   }
 
@@ -131,46 +137,45 @@ const getOTP = async () => {
     const response = await call('mykartavya.controllers.email.send_otp', { email: email.value })
     if (response.status === "success") {
       toast.success('OTP sent successfully', {
-        position: 'top-right',
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
+        draggable: true,
       })
     } else {
       isResendDisabled.value = false // Reset disabled state on error
       clearInterval(countdownTimer)
       toast.error('Failed to send OTP', {
-        position: 'top-right',
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
+        draggable: true,
       })
     }
   } catch (error) {
     isResendDisabled.value = false // Reset disabled state on error
     clearInterval(countdownTimer)
     toast.error('Failed to send OTP', {
-      position: 'top-right',
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
+      draggable: true,
     })
   }
 }
 
 const verifyOTP = async () => {
   if (bindValue.value.length !== 6) {
-    toast.error('Please enter a 6-digit OTP',
-      {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-      }
+    toast.error('Please enter a 6-digit OTP', {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    }
     )
     return;
   }
@@ -194,42 +199,38 @@ const verifyOTP = async () => {
       loading.value = false;
 
       if (response.status === "success") {
-        toast.success('OTP verified successfully',
-          {
-            position: 'top-right',
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-          }
+        toast.success('OTP verified successfully', {
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
         )
         // router.push('/mykarma');
         setTimeout(() => {
           window.location.reload();
         }, 2000)
       } else {
-        toast.error('Invalid OTP, please try again',
-          {
-            position: 'top-right',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-
-          }
+        toast.error('Invalid OTP, please try again', {
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
         )
       }
     } catch (error) {
       loading.value = false;
 
-      toast.error('Failed to verify OTP',
-        {
-          position: 'top-right',
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-        }
+      toast.error('Failed to verify OTP', {
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      }
       )
     }
   }
