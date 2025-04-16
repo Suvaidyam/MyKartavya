@@ -1,0 +1,46 @@
+{
+ "actions": [],
+ "autoname": "format:VOL-{#########}",
+ "creation": "2025-04-16 12:23:42.635258",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "date",
+  "duration",
+  "percent"
+ ],
+ "fields": [
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "duration",
+   "fieldtype": "Duration",
+   "in_list_view": 1,
+   "label": "Duration"
+  },
+  {
+   "fieldname": "percent",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "Percent"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2025-04-16 12:23:42.635258",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Volunteer Opportunity Log",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
