@@ -47,16 +47,16 @@
                 </div>
                 <div class="flex gap-2 items-center justify-between">
                     <div class="flex gap-2 items-center">
-                        <Tooltip text="Activity Hours" :hover-delay="1" :placement="'top'">
+                        <Tooltip text="Activity Hours">
                             <FeatherIcon name="clock" class="size-4" />
                             <p class="text-xs font-normal">{{ item.hours }} hr</p>
                         </Tooltip>
                     </div>
-                    <Tooltip text="Review under proccess" :hover-delay="1" :placement="'top'">
+                    <Tooltip text="Review under proccess">
                         <FeatherIcon v-if="item.completion_wf_state == 'Submitted'" name="clock"
                             class="size-4 text-yellow-500" />
                     </Tooltip>
-                    <Tooltip text="Completed" :hover-delay="1" :placement="'top'">
+                    <Tooltip text="Completed">
                         <FeatherIcon v-if="item.completion_wf_state == 'Approved'" name="check-circle"
                             class="size-4 text-green-500" />
                     </Tooltip>
@@ -136,7 +136,7 @@
                     </time>
                 </div>
                 <div class="flex gap-2 items-center">
-                    <Tooltip text="Hours" :hover-delay="1" :placement="'top'">
+                    <Tooltip text="Hours">
                         <FeatherIcon name="clock" class="size-4" />
                         <p class="text-xs font-normal">{{ item.hours }} hr</p>
                     </Tooltip>
@@ -190,14 +190,6 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.card {
-    transition: transform 0.2s;
-}
-
-.card:hover {
-    transform: scale(1.02);
-}
-
 .card-img {
     background-size: cover;
     background-position: center;
@@ -211,5 +203,18 @@ const props = defineProps({
 
 .activity-type {
     clip-path: polygon(0 0, 100% 0%, 89% 100%, 0% 100%);
+}
+
+.card {
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    padding: 0.5rem;
+    border: 1px solid transparent;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-color: #e5e7eb;
 }
 </style>

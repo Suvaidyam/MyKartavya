@@ -1,35 +1,63 @@
 <template>
   <div class="h-screen w-full">
     <!-- Alert Banner for Unapproved Users -->
-    <div v-if="!isUserApproved" class="w-full mt-16 bg-yellow-50 border-b border-yellow-200">
-      <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between flex-wrap">
-          <div class="w-0 flex-1 flex items-center">
-            <span class="flex p-2 rounded-lg bg-yellow-100">
-              <svg class="h-6 w-6 text-yellow-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+    <div v-if="!isUserApproved && svaUserData?.workflow_state !== 'Rejected'" class="w-full mt-16 bg-[#FF5722]">
+      <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <span class="flex p-1.5 rounded-lg bg-white/20">
+              <svg class="h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </span>
-            <p class="ml-3 font-medium text-yellow-800">
-              <span class="md:hidden">Your account is pending approval</span>
-              <span class="hidden md:inline">Your account is currently pending approval. Some features may be limited
-                until your account is approved.</span>
+            <p class="ml-2 text-sm font-medium text-white">
+              <span class="md:hidden">Account pending approval</span>
+              <span class="hidden md:inline">Your account is pending approval. Some features may be limited.</span>
             </p>
           </div>
-          <div class="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
-            <a href="/profile"
-              class="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-yellow-700 bg-yellow-100 hover:bg-yellow-200">
-              View Profile
-            </a>
+          <button @click="showReqForApproval = true"
+            class="bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded-sm text-sm font-medium text-white flex items-center gap-1.5 transition-all duration-200 button-animation">
+            Request for Approval
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Rejection Remarks Section -->
+    <div v-if="svaUserData?.workflow_state === 'Rejected' && svaUserData?.custom_remarks" class="w-full bg-red-50/50"
+      :class="{ 'mt-16': !isUserApproved }">
+      <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 min-w-8 min-h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm font-medium text-red-800">Rejection Reason</h3>
+              <span class="text-xs text-red-600 bg-red-100 px-2 py-0.5 rounded-full">Account Rejected</span>
+            </div>
+            <p class="text-sm text-red-700 mt-1 line-clamp-2">{{ svaUserData.custom_remarks }}</p>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Request for Approval Popup -->
+    <ReqForApproval v-model="showReqForApproval" />
+
     <!-- banner section image -->
-    <section :class="{ 'mt-[52px]': !isUserApproved }">
-      <div v-if="activities" class="w-full relative h-[456px] md:h-[456px] back-img flex items-center mt-[60px]">
+    <section :class="{ 'mt-[8px]': !isUserApproved }">
+      <div v-if="activities" class="w-full relative h-[456px] md:h-[456px] back-img flex items-center"
+        :class="{ 'mt-[8px]': !isUserApproved, 'mt-[60px]': isUserApproved }">
         <img :src="activities.activity_image" class="w-full h-full" alt="">
         <div
           class="absolute top-20 left-5 sm:left-10 max-w-sm w-[448px] h-[312px] bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-4 justify-center">
@@ -78,7 +106,7 @@
             <div v-if="activities.sdgs" v-for="item in JSON.parse(activities.sdgs)">
               <img v-if="item.image" :src="item.image" class="w-8 h-8" />
               <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item.sdgs_name?.charAt(0)
-              }}</span>
+                }}</span>
             </div>
           </div>
 
@@ -168,6 +196,7 @@ import { FeatherIcon } from 'frappe-ui'
 import Stepper from '../../components/Stepper.vue'
 import Card from '../../components/Card.vue'
 import NotFound from '../../components/NotFound.vue'
+import ReqForApproval from '../../components/ReqForApproval.vue'
 // import CardLoader from "../../components/CardLoader.vue";
 import {
   Facebook,
@@ -222,6 +251,8 @@ const scrollContainer = ref(null);
 const isLeftDisabled = ref(true);
 const isRightDisabled = ref(false);
 const isUserApproved = ref(false)
+const showReqForApproval = ref(false)
+const svaUserData = ref(null)
 
 const activity = async () => {
   try {
@@ -250,6 +281,7 @@ const checkUserApproval = async () => {
   try {
     const response = await call('mykartavya.controllers.api.sva_user_data');
     if (response && response.length > 0) {
+      svaUserData.value = response[0];
       isUserApproved.value = response[0]?.workflow_state === 'Approved';
     }
   } catch (err) {
@@ -354,6 +386,14 @@ const shareToSocial = (platform) => {
     `width=${width},height=${height},left=${left},top=${top}`
   );
 }
+
+// Add watcher for ReqForApproval popup
+watch(() => showReqForApproval, (newVal) => {
+  if (newVal) {
+    // When popup opens, you can add any additional logic here
+    // For example, you might want to fetch some data
+  }
+}, { deep: true });
 </script>
 
 <style>
@@ -374,6 +414,18 @@ const shareToSocial = (platform) => {
 
 /* Ensures icons have smooth hover transition */
 button {
-  transition: background 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.button-animation {
+  transition: all 0.2s ease;
+}
+
+.button-animation:hover {
+  transform: translateY(-1px);
+}
+
+.button-animation:active {
+  transform: translateY(0);
 }
 </style>

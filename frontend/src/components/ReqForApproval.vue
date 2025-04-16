@@ -1,32 +1,59 @@
 <template>
     <Dialog v-model="showDialog">
         <template #body-title>
-            <div class="flex items-center gap-2">
-                <FeatherIcon name="alert-circle" class="text-orange-500 size-5" />
-                <h3 class="text-lg font-medium">Account Status</h3>
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-orange-100 rounded-full">
+                    <FeatherIcon name="alert-circle" class="text-orange-500 size-6" />
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800">Account Status</h3>
             </div>
         </template>
         <template #body-content>
-            <div class="py-4">
-                <div class="flex items-center gap-2 mb-3">
-                    <span class="bg-[#f4d6cd] px-3 py-1.5 rounded text-sm font-medium text-[#FF5722]">
-                        Pending by Admin
-                    </span>
+            <div class="py-6">
+                <div class="flex flex-col items-center text-center mb-6">
+                    <div class="mb-4">
+                        <span
+                            class="bg-gradient-to-r from-orange-100 to-orange-50 px-4 py-2 rounded-full text-sm font-medium text-[#FF5722] border border-orange-200 shadow-sm">
+                            Pending Approval
+                        </span>
+                    </div>
+                    <div class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <p class="text-gray-600 text-base max-w-md">
+                        Your account is currently pending approval from the administrator. We'll notify you as soon as
+                        your account is approved.
+                    </p>
                 </div>
-                <p class="text-gray-600 text-sm">
-                    Your account is currently pending approval from the administrator. You'll be notified once your
-                    account is approved.
-                </p>
+                <div class="bg-orange-50 rounded-lg p-4 border border-orange-100">
+                    <div class="flex items-start gap-3">
+                        <div class="p-2 bg-white rounded-full">
+                            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-800 mb-1">What happens next?</h4>
+                            <p class="text-sm text-gray-600">Our team will review your application and get back to you
+                                shortly. You can still browse opportunities, but some features will be limited until
+                                approval.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </template>
         <template #actions>
             <div class="flex justify-end gap-3">
                 <button @click="closeDialog"
-                    class="px-4 py-2 rounded-md border border-gray-300 text-sm font-medium hover:bg-gray-50 transition-colors">
+                    class="px-5 py-2.5 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all duration-200 hover:shadow-sm">
                     Close
                 </button>
                 <button @click="notifyAdmin" :disabled="loading"
-                    class="px-4 py-2 rounded-md bg-[#FF5722] text-white text-sm font-medium hover:bg-[#FF5722]/90 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    class="px-5 py-2.5 rounded-lg bg-[#FF5722] text-white text-sm font-medium hover:bg-[#FF5722]/90 transition-all duration-200 hover:shadow-md flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <FeatherIcon v-if="!loading" name="bell" class="size-4" />
                     <div v-else class="size-4 border-2 border-white border-t-transparent rounded-full animate-spin">
                     </div>
@@ -102,3 +129,19 @@ const notifyAdmin = async () => {
     }
 }
 </script>
+
+<style scoped>
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+</style>
