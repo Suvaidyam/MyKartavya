@@ -82,7 +82,7 @@
     <!--  -->
 
     <article v-else class="flex flex-col card w-full py-2 overflow-hidden">
-        <router-link :to="auth.isLoggedIn ? '/activity/' + item.activity : '/kindness-volunteering/' + item.activity">
+        <router-link :to="dynamicLink">
             <div class="w-full flex flex-col justify-between h-40 rounded-md relative">
                 <img :src="item.activity_image || 'https://res.cloudinary.com/dyt5jqnax/image/upload/v1742968038/mykartavya-logo_jptv31.png'"
                     alt="" class="h-full rounded-md">
@@ -132,7 +132,7 @@
 
                     <time class="self-stretch my-auto">{{ formatDate(item.start_date) }} - {{
                         formatDate(item.end_date)
-                        }}
+                    }}
                     </time>
                 </div>
                 <div class="flex gap-2 items-center">
@@ -170,11 +170,12 @@
 </template>
 
 <script setup>
-import { inject, ref } from 'vue';
-
+import { inject, computed } from 'vue';
 import { FeatherIcon, Tooltip } from 'frappe-ui';
+
 const auth = inject('auth');
 const formatDate = inject('formatDate');
+
 const props = defineProps({
     type: {
         type: String,
@@ -185,9 +186,28 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    mode: {
+        type: String,
+        required: false,
+    }
+});
+
+const dynamicLink = computed(() => {
+    if (auth?.isLoggedIn) {
+        if (props.item && props.mode === 'activity') {
+            return `/activity/${props.item.activity}`;
+        } else if (props.item && props.mode === 'opportunity') {
+            return `/opportunity/${props.item.name}`;
+        } else {
+            console.log('Unknown type', props);
+        }
+    } else {
+        return `/kindness-volunteering/${props.item.activity}`;
+    }
 });
 
 </script>
+
 
 <style scoped>
 .card-img {
