@@ -2,24 +2,24 @@
   <div class="max-w-[1920px] w-full mx-auto"
     :class="{ 'pt-[62px]': !isUserApproved && svaUserData?.workflow_state !== 'Rejected' }">
     <!-- Alert Banner for Unapproved Users -->
-    <div v-if="!isUserApproved && svaUserData?.workflow_state !== 'Rejected'" class="w-full bg-[#FF5722]">
+    <div v-if="!isUserApproved && svaUserData?.workflow_state !== 'Rejected'" class="w-full bg-orange-100">
       <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between">
           <div class="flex items-center">
-            <span class="flex p-1.5 rounded-lg bg-white/20">
-              <svg class="h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            <span class="flex p-1.5 rounded-lg bg-orange-100">
+              <svg class="h-4 w-4 text-orange-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </span>
-            <p class="ml-2 text-sm font-medium text-white">
+            <p class="ml-2 text-sm font-medium text-orange-800">
               <span class="md:hidden">Account pending approval</span>
               <span class="hidden md:inline">Your account is pending approval. Some features may be limited.</span>
             </p>
           </div>
           <button @click="showReqForApproval = true"
-            class="bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded-sm text-sm font-medium text-white flex items-center gap-1.5 transition-all duration-200 button-animation">
+            class="bg-orange-100 hover:bg-orange-200 px-4 py-1.5 rounded-sm text-sm font-medium text-orange-800 flex items-center gap-1.5 transition-all duration-200 button-animation">
             Request for Approval
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
@@ -55,7 +55,8 @@
     <!-- Request for Approval Popup -->
     <ReqForApproval v-model="showReqForApproval" />
 
-    <div class="w-full flex flex-col lg:flex-row px-5" :class="{ 'mt-0': !isUserApproved }">
+    <div class="w-full flex flex-col lg:flex-row px-5"
+      :class="{ 'mt-[8px]': !isUserApproved, 'mt-[60px]': isUserApproved }">
       <Filters />
       <div class="w-full lg:pl-[270px] flex flex-col xl:flex-row">
         <main class="w-full px-3 py-3 bg-gray-50">
