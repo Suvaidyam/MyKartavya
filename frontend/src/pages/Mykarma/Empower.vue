@@ -106,7 +106,7 @@
             <div v-if="activities.sdgs" v-for="item in JSON.parse(activities.sdgs)">
               <img v-if="item.image" :src="item.image" class="w-8 h-8" />
               <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item.sdgs_name?.charAt(0)
-                }}</span>
+              }}</span>
             </div>
           </div>
 
