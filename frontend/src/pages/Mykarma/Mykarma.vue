@@ -1,6 +1,61 @@
 <template>
-  <div class="max-w-[1920px] w-full pt-[62px] mx-auto">
-    <div class="w-full flex flex-col lg:flex-row px-5">
+  <div class="max-w-[1920px] w-full mx-auto"
+    :class="{ 'pt-[62px]': !isUserApproved && svaUserData?.workflow_state !== 'Rejected' }">
+    <!-- Alert Banner for Unapproved Users -->
+    <div v-if="!isUserApproved && svaUserData?.workflow_state !== 'Rejected'" class="w-full bg-[#FF5722]">
+      <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <span class="flex p-1.5 rounded-lg bg-white/20">
+              <svg class="h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </span>
+            <p class="ml-2 text-sm font-medium text-white">
+              <span class="md:hidden">Account pending approval</span>
+              <span class="hidden md:inline">Your account is pending approval. Some features may be limited.</span>
+            </p>
+          </div>
+          <button @click="showReqForApproval = true"
+            class="bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded-sm text-sm font-medium text-white flex items-center gap-1.5 transition-all duration-200 button-animation">
+            Request for Approval
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Rejection Remarks Section -->
+    <div v-if="svaUserData?.workflow_state === 'Rejected' && svaUserData?.custom_remarks" class="w-full bg-red-50/50"
+      :class="{ 'mt-16': !isUserApproved }">
+      <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 min-w-8 min-h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm font-medium text-red-800">Rejection Reason</h3>
+              <span class="text-xs text-red-600 bg-red-100 px-2 py-0.5 rounded-full">Account Rejected</span>
+            </div>
+            <p class="text-sm text-red-700 mt-1 line-clamp-2">{{ svaUserData.custom_remarks }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Request for Approval Popup -->
+    <ReqForApproval v-model="showReqForApproval" />
+
+    <div class="w-full flex flex-col lg:flex-row px-5" :class="{ 'mt-0': !isUserApproved }">
       <Filters />
       <div class="w-full lg:pl-[270px] flex flex-col xl:flex-row">
         <main class="w-full px-3 py-3 bg-gray-50">
@@ -14,69 +69,40 @@
               <div class="flex justify-between items-center w-full">
                 <h2 class="text-lg font-medium">Current Commitments</h2>
                 <div class="flex items-center">
-                  <FeatherIcon
-                    @click="scrollLeft"
-                    :class="[
-                      'size-5 cursor-pointer',
-                      isLeftDisabled
-                        ? 'text-gray-500 disabled'
-                        : 'text-gray-700',
-                    ]"
-                    name="chevron-left"
-                    :disabled="isLeftDisabled"
-                  />
-                  <FeatherIcon
-                    @click="scrollRight"
-                    :class="[
-                      'size-5 cursor-pointer',
-                      isRightDisabled
-                        ? 'text-gray-500 disabled'
-                        : 'text-gray-700',
-                    ]"
-                    name="chevron-right"
-                    :disabled="isRightDisabled"
-                  />
+                  <FeatherIcon @click="scrollLeft" :class="[
+                    'size-5 cursor-pointer',
+                    isLeftDisabled
+                      ? 'text-gray-500 disabled'
+                      : 'text-gray-700',
+                  ]" name="chevron-left" :disabled="isLeftDisabled" />
+                  <FeatherIcon @click="scrollRight" :class="[
+                    'size-5 cursor-pointer',
+                    isRightDisabled
+                      ? 'text-gray-500 disabled'
+                      : 'text-gray-700',
+                  ]" name="chevron-right" :disabled="isRightDisabled" />
                 </div>
               </div>
-              <div
-                v-if="loader"
-                class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
-              >
+              <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 <CardLoader />
                 <CardLoader />
                 <CardLoader />
               </div>
               <div v-else class="w-full">
-                <div
-                  ref="scrollContainer"
-                  class="py-4 w-full overflow-x-scroll"
-                >
-                  <div
-                    v-if="current_commitments.length > 0"
-                    class="flex items-center gap-4"
-                  >
-                    <Card
-                      v-for="item in current_commitments"
-                      :key="item.name"
-                      :item="item"
-                      type="card"
-                      class="w-[245px] min-w-[245px]"
-                    />
+                <div ref="scrollContainer" class="py-4 w-full overflow-x-scroll">
+                  <div v-if="current_commitments.length > 0" class="flex items-center gap-4">
+                    <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card"
+                      class="w-[245px] min-w-[245px]" />
                   </div>
                   <div class="w-full h-[330px]" v-else>
-                    <NotFound message="Your Current Commitments empty!"/>
+                    <NotFound message="Your Current Commitments empty!" />
                   </div>
                 </div>
-                <div
-                  v-if="
-                    current_commitments.length > 0 &&
-                    (!isLeftDisabled || !isRightDisabled)
-                  "
-                  class="flex justify-center"
-                >
-                  <button
-                    class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary"
-                  >
+                <div v-if="
+                  current_commitments.length > 0 &&
+                  (!isLeftDisabled || !isRightDisabled)
+                " class="flex justify-center">
+                  <button class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary">
                     View All
                   </button>
                 </div>
@@ -85,33 +111,22 @@
           </section>
 
           <!-- Available Commitments Section -->
-          <section
-            class="px-4 mt-5 border rounded-[12px] bg-white overflow-y-auto min-h-[330px] max-h-[660px]"
-          >
-            <div
-              class="w-full h-12 flex items-center bg-white sticky top-0 z-10"
-            >
+          <section class="px-4 mt-5 border rounded-[12px] bg-white overflow-y-auto min-h-[330px] max-h-[660px]">
+            <div class="w-full h-12 flex items-center bg-white sticky top-0 z-10">
               <h2 class="text-lg font-medium">Available Commitments</h2>
             </div>
-            <div
-              v-if="loader"
-              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
-            >
+            <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               <CardLoader />
               <CardLoader />
               <CardLoader />
             </div>
-            
+
             <div v-else class="w-full pb-4">
               <div v-if="available_commitments.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              <Card
-                v-for="item in available_commitments"
-                :key="item.name"
-                :item="item"
-              />
-            </div>
+                <Card v-for="item in available_commitments" :key="item.name" :item="item" />
+              </div>
               <div class="w-full h-[330px]" v-else>
-                <NotFound message="Available Commitments not Found!"/>
+                <NotFound message="Available Commitments not Found!" />
               </div>
             </div>
           </section>
@@ -130,20 +145,35 @@ import MyDetails from './MyDetails.vue'
 import Card from '@/components/Card.vue'
 import CardLoader from '@/components/CardLoader.vue'
 import NotFound from '../../components/NotFound.vue'
+import ReqForApproval from '../../components/ReqForApproval.vue'
 import { FeatherIcon } from 'frappe-ui'
 
 // Data for Current Commitments
-
 const current_commitments = ref([])
 const available_commitments = ref([])
 const loader = ref(false)
 const call = inject('call')
 const store = inject('store')
 const scrollContainer = ref(null)
+const isUserApproved = ref(false)
+const showReqForApproval = ref(false)
+const svaUserData = ref(null)
 
 // Scroll state
 const isLeftDisabled = ref(true)
 const isRightDisabled = ref(false)
+
+const checkUserApproval = async () => {
+  try {
+    const response = await call('mykartavya.controllers.api.sva_user_data');
+    if (response && response.length > 0) {
+      svaUserData.value = response[0];
+      isUserApproved.value = response[0]?.workflow_state === 'Approved';
+    }
+  } catch (err) {
+    console.error('Error checking user approval status:', err);
+  }
+}
 
 const cur_commitments = async (filter) => {
   loader.value = true
@@ -157,7 +187,7 @@ const cur_commitments = async (filter) => {
     current_commitments.value = response
     setTimeout(() => {
       loader.value = false
-      checkScrollButtons()  
+      checkScrollButtons()
     }, 1000)
   } catch (err) {
     loader.value = false
@@ -172,10 +202,10 @@ const avai_commitments = async (filter) => {
       { filter: filter ?? {} }
     );
     available_commitments.value = response;
-    
+
     setTimeout(() => {
       loader.value = false;
-      checkScrollButtons(); 
+      checkScrollButtons();
     }, 1000);
   } catch (err) {
     loader.value = false;
@@ -225,6 +255,7 @@ watchEffect(() => {
 })
 
 onMounted(() => {
+  checkUserApproval()
   cur_commitments()
   avai_commitments()
 })
@@ -275,5 +306,17 @@ watch(
 
 .scroll-smooth {
   scroll-behavior: smooth;
+}
+
+.button-animation {
+  transition: all 0.2s ease;
+}
+
+.button-animation:hover {
+  transform: translateY(-1px);
+}
+
+.button-animation:active {
+  transform: translateY(0);
 }
 </style>
