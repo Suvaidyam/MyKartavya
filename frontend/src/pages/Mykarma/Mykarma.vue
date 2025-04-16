@@ -92,7 +92,7 @@
               <div v-else class="w-full">
                 <div ref="scrollContainer" class="py-4 w-full overflow-x-scroll">
                   <div v-if="current_commitments.length > 0" class="flex items-center gap-4">
-                    <Card v-for="item in current_commitments" :key="item.name" :item="item" type="card"
+                    <Card v-for="item in current_commitments" :key="item.name" :item="item" mode="activity" type="card"
                       class="w-[245px] min-w-[245px]" />
                   </div>
                   <div class="w-full h-[330px]" v-else>
@@ -124,7 +124,7 @@
 
             <div v-else class="w-full pb-4">
               <div v-if="available_commitments.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <Card v-for="item in available_commitments" :key="item.name" :item="item" />
+                <Card v-for="item in available_commitments" :key="item.name" :item="item" :mode="'activity'"/>
               </div>
               <div class="w-full h-[330px]" v-else>
                 <NotFound message="Available Commitments not Found!" />
