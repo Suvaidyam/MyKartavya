@@ -1,11 +1,11 @@
 <template>
   <div class="min-h-screen bg-pink-50 pt-[62px]">
     <div class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
+      <div class="text-center mb-12 mt-10">
         <h1 class="text-heading1 font-medium text-gray-900">Contact Us</h1>
         <p class="mt-2 text-bodyh1" style="color: #666666;">Got any query? Write to us</p>
       </div>
- 
+
       <div class="bg-white rounded-sm shadow-lg overflow-hidden">
         <div class="grid grid-cols-1 lg:grid-cols-2">
           <div class="p-8">
@@ -22,7 +22,7 @@
                   class="mt-1 block w-full px-3 py-2 border border-gray-300 text-bodyh2 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
                 <div v-if="errors.email" class="text-red-500 text-sm py-2">{{ errors.email }}</div>
               </div>
- 
+
               <div>
                 <label for="organisation" class="block text-bodyh2 font-medium text-gray-700">Organisation</label>
                 <input type="text" id="organisation" v-model="formData.organisation"
@@ -30,14 +30,14 @@
                   class="mt-1 block w-full px-3 py-2 border border-gray-300 text-bodyh2 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500" />
                 <div v-if="errors.organisation" class="text-red-500 text-sm py-2">{{ errors.organisation }}</div>
               </div>
- 
+
               <div>
                 <label for="query" class="block text-bodyh2 font-medium text-gray-700">Your query</label>
                 <textarea id="query" v-model="formData.query" rows="4" placeholder="Write to us"
                   class="mt-1 block w-full px-3 py-2 border border-gray-300 text-bodyh2 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"></textarea>
                 <div v-if="errors.query" class="text-red-500 text-sm py-2">{{ errors.query }}</div>
               </div>
- 
+
               <div class="flex justify-end">
                 <button type="submit"
                   class="bg-secondary py-2 w-full md:w-auto px-6 rounded-sm shadow-sm text-bodyh2 font-medium text-white hover:bg-orange-600 f focus:ring-orange-500">
@@ -46,7 +46,7 @@
               </div>
             </form>
           </div>
- 
+
           <div class="relative h-[400px] lg:h-auto">
             <div class="absolute inset-0 bg-gray-200">
               <iframe
@@ -58,50 +58,50 @@
         </div>
       </div>
     </div>
-  <div class="mt-14">
-      <Footer/>
-  </div>
+    <div class="mt-14">
+      <Footer />
+    </div>
   </div>
 </template>
- 
+
 <script setup>
 import { ref } from 'vue';
 import Footer from '../../components/Footer.vue';
- 
+
 const formData = ref({
   name: '',
   email: '',
   organisation: '',
   query: ''
 });
- 
+
 const errors = ref({});
- 
+
 const validateFields = () => {
   const newErrors = {};
   if (!formData.value.name.trim()) {
     newErrors.name = "Name is required.";
   }
- 
+
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!formData.value.email.trim()) {
     newErrors.email = "Email address is required.";
   } else if (!emailPattern.test(formData.value.email)) {
     newErrors.email = "Invalid email address.";
   }
- 
+
   if (!formData.value.organisation.trim()) {
     newErrors.organisation = "Organisation is required.";
   }
- 
+
   if (!formData.value.query.trim()) {
     newErrors.query = "Query is required.";
   }
- 
+
   errors.value = newErrors;
   return Object.keys(newErrors).length === 0;
 };
- 
+
 const handleSubmit = () => {
   if (validateFields()) {
     console.log("Form submitted successfully:", formData.value);

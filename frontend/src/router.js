@@ -88,24 +88,6 @@ const routes = [
     meta: { requiresAuth: false }
   },
   {
-    name: 'FAQs',
-    path: '/faqs',
-    component: () => import('@/pages/Public/FAQs.vue'),
-    meta: { requiresAuth: false }
-  },
-  {
-    name: 'Features',
-    path: '/features',
-    component: () => import('@/pages/Public/Features.vue'),
-    meta: { requiresAuth: false }
-  },
-  {
-    name: 'AboutUs',
-    path: '/about-us',
-    component: () => import('@/pages/Public/About Us.vue'),
-    meta: { requiresAuth: false }
-  },
-  {
     name: 'AllActivity',
     path: '/all-activity/:name',
     component: () => import('@/pages/View/AllActivity.vue'),
