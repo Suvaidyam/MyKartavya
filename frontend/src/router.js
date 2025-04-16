@@ -57,6 +57,13 @@ const routes = [
     component: () => import('@/pages/Mykarma/Empower.vue'),
     meta: { requiresAuth: true }
   },
+
+  {
+    path: '/opportunity/:name',
+    name: 'Opportunity',
+    component: () => import('@/pages/VolunteeringOpportunities/Opportunities.vue'),
+    meta: { requiresAuth: true }
+  },
   {
     name: 'Contact',
     path: '/contact',

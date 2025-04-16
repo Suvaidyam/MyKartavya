@@ -4,7 +4,7 @@
       <Filters  />
       <main class="w-full h-full py-3 lg:pl-[270px]">
         <div class="flex justify-between items-center pb-1">
-          <h2 class="text-3xl font-normal mb-4 text-[#0B0B0B] px-3">Kindness & Volunteering</h2>
+          <h2 class="text-[23px] font-normal my-2 font-poppins text-[#0B0B0B] px-3">Kindness & Volunteering</h2>
           <Sorting :sort="filter" />
         </div>
         <div v-if="loader" class="px-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -29,7 +29,6 @@ import { ref, watch, onMounted, inject } from 'vue';
 import Card from '../../components/Card.vue';
 import Filters from '../../components/Filters.vue';
 import Sorting from '../../components/Sorting.vue';
-import Loader from '../../components/Loader.vue';
 import CardLoader from '../../components/CardLoader.vue';
 import NotFound from '../../components/NotFound.vue';
 
@@ -39,20 +38,20 @@ const kindness_volunteering = ref([])
 const loader = ref(false)
 
 const volunteering_opportunities = async (filter) => {
-  loader.value = true
+  loader.value = true;
   try {
-    const response = await call('mykartavya.controllers.api.available_commitments', {
-      'filter': filter ?? {}
+    const response = await call('mykartavya.controllers.api.related_opportunities', {
+      filter: filter ?? {},
     });
-    kindness_volunteering.value = response
-    setTimeout(() => {
-      loader.value = false
-    }, 1000)
+    kindness_volunteering.value = response;
   } catch (err) {
-    loader.value = false
     console.error('Error fetching Kindness data:', err);
+  } finally {
+    loader.value = false;
   }
 };
+
+
 onMounted(() => {
   volunteering_opportunities()
 })

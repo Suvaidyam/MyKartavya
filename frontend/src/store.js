@@ -4,6 +4,7 @@ const filters = ref({
     sdgs: [],
     volunteering_hours: '',
     activity_type: [],
+    opportunity_type: [],
     karma_points: ''
 });
 const req_for_approavl = ref(false)
