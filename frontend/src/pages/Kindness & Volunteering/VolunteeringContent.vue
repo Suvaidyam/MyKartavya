@@ -7,9 +7,10 @@
         </h1>
         <div class="flex flex-wrap items-center gap-4">
           <button @click="generateRandom"
-            class="h-8 rounded-sm border border-[#D9D9D9] bg-white py-2 px-4 gap-1.5 flex flex-row items-center text-sm font-[400] text-[#E23D90] whitespace-nowrap">
+            class="h-8 rounded-sm border border-[#D9D9D9] bg-white py-2 px-4 gap-1.5 flex flex-row items-center text-sm font-[400] text-[#E23D90] whitespace-nowrap transition-all duration-200 active:scale-95">
             Generate Random
-            <FeatherIcon class="size-[13px]" name="refresh-ccw" />
+            <FeatherIcon class="size-[13px] transition-transform duration-200" :class="{ 'rotate-180': isRefreshing }"
+              name="refresh-ccw" />
           </button>
           <Sorting />
         </div>
@@ -88,8 +89,7 @@ const store = inject('store')
 const activity = ref([])
 const loader = ref(false)
 const opportunities = ref([]);
-
-
+const isRefreshing = ref(false)
 
 const activeTab = ref('kindness')
 const kindnes = async (filter) => {
@@ -112,6 +112,7 @@ const kindnes = async (filter) => {
 }
 
 const generateRandom = async () => {
+  isRefreshing.value = true
   loader.value = true
   try {
     const response = await call(
@@ -128,9 +129,11 @@ const generateRandom = async () => {
     }
     setTimeout(() => {
       loader.value = false
+      isRefreshing.value = false
     }, 1000)
   } catch (err) {
     loader.value = false
+    isRefreshing.value = false
     console.error('Error generating random activity:', err)
   }
 }
