@@ -55,7 +55,7 @@
       </div>
       <div v-else class="h-full">
         <div v-if="activity.length > 0" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
-          <Card v-for="item in activity" :key="item.name" :item="item" :mode="'opportunity'" />
+          <Card v-for="item in activity" :key="item.name" :item="item"  :mode="'activity'" />
         </div>
         <NotFound v-else />
       </div>
@@ -68,7 +68,7 @@
       </div>
       <div v-else class="h-full">
         <div v-if="opportunities.length > 0" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
-          <Card v-for="item in opportunities" :key="item.name" :item="item" />
+          <Card v-for="item in opportunities" :key="item.name" :item="item"  :mode="'opportunity'" />
         </div>
         <NotFound v-else />
       </div>
