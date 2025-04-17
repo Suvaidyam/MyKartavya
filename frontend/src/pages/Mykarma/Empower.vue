@@ -58,15 +58,15 @@
     <section :class="{ 'mt-[8px]': !isUserApproved }">
       <div v-if="activities" class="w-full relative h-[456px] md:h-[456px] back-img flex items-center"
         :class="{ 'mt-[8px]': !isUserApproved, 'mt-[60px]': isUserApproved }">
-        <img :src="activities.activity_image" class="w-full h-full" alt="">
+        <img :src="activities?.activity_image" class="w-full h-full" alt="">
         <div
           class="absolute top-20 left-5 sm:left-10 max-w-sm w-[448px] h-[312px] bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-4 justify-center">
           <div class="border-b pb-2">
 
             <h2 class="text-heading3 font-normal font-poppins mt-1">
-              {{ activities.title }}
+              {{ activities?.title }}
             </h2>
-            <span class="text-secondary font-medium text-caption">{{ activities.activity_type }}</span>
+            <span class="text-secondary font-medium text-caption">{{ activities?.activity_type }}</span>
           </div>
 
           <div class="flex gap-1 items-center" style="color: #666666">
@@ -82,13 +82,13 @@
             </svg>
 
             <span class="flex items-center text-bodyh2 font-normal mr-4" style="color: #0b0b0b">
-              {{ formatDate(activities.start_date) }} - {{ formatDate(activities.end_date) }}
+              {{ formatDate(activities?.start_date) }} - {{ formatDate(activities?.end_date) }}
             </span>
           </div>
           <div class="flex items-center text-gray-600 text-bodyh2 font-normal justify-between border-b pb-2">
             <span class="flex justify-center items-center gap-1" style="color: #0b0b0b">
               <FeatherIcon name="clock" class="size-4 text-[#666666]" />
-              {{ activities.hours ?? '0' }} hr
+              {{ activities?.hours ?? '0' }} hr
             </span>
             <span class="flex items-center gap-2 justify-center" style="color: #0b0b0b">
               <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -99,11 +99,11 @@
                   d="M0.5 6.9994V10.3327C0.5 11.1827 1.48917 11.9327 3 12.3844C3.945 12.6677 5.09417 12.8327 6.33333 12.8327C7.5725 12.8327 8.72167 12.6669 9.66667 12.3844C11.1775 11.9327 12.1667 11.1827 12.1667 10.3327V9.4994M0.5 6.9994C0.5 6.0019 1.8625 5.14107 3.83333 4.74023M0.5 6.9994C0.5 7.8494 1.48917 8.5994 3 9.05107C3.945 9.3344 5.09417 9.4994 6.33333 9.4994C6.9125 9.4994 7.47167 9.46357 8 9.39607"
                   stroke="#FF5722" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              <span class="text-bodyh2 font-normal"> {{ activities.karma_points?.toLocaleString() }} Points</span>
+              <span class="text-bodyh2 font-normal"> {{ activities?.karma_points?.toLocaleString() }} Points</span>
             </span>
           </div>
           <div class="flex space-x-2 border-b pb-2">
-            <div v-if="activities.sdgs" v-for="item in JSON.parse(activities.sdgs)">
+            <div v-if="activities?.sdgs" v-for="item in JSON.parse(activities?.sdgs)">
               <img v-if="item.image" :src="item.image" class="w-8 h-8" />
               <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item.sdgs_name?.charAt(0)
               }}</span>
@@ -112,15 +112,15 @@
 
           <div class="">
             <div class="w-full bg-gray-200 rounded-full h-[5px]">
-              <div class="bg-green-500 h-[5px] rounded-full" :style="`width:${activities.com_percent ?? 0}%`"></div>
+              <div class="bg-green-500 h-[5px] rounded-full" :style="`width:${activities?.com_percent ?? 0}%`"></div>
             </div>
             <div class="flex items-center justify-between gap-2">
               <p class="text-caption font-normal mt-1" style="color: #0b0b0b">
-                {{ activities.com_percent ?? 0 }} % completed
+                {{ activities?.com_percent ?? 0 }} % completed
               </p>
               <div class="flex items-center gap-2 text-xs font-normal">
                 <FeatherIcon name="clock" class="size-4 text-[#666666]" />
-                {{ activities.donet_hours ? ((activities.donet_hours / 60) / 60).toFixed(2) : '0' }} hr
+                {{ activities?.donet_hours ? ((activities?.donet_hours / 60) / 60).toFixed(2) : '0' }} hr
               </div>
             </div>
           </div>
@@ -135,7 +135,7 @@
         <div class="grid gap-6 lg:grid-cols-3">
           <!-- Left Section -->
           <div class="lg:col-span-2 flex flex-col justify-between items-start">
-            <div class="text-[14px] text-[#666666] text-justify font-normal" v-html="activities.activity_description">
+            <div class="text-[14px] text-[#666666] text-justify font-normal" v-html="activities?.activity_description">
             </div>
             <div class="flex items-center gap-[12px] flex-col justify-self-start mt-[220px]">
               <span class="text-gray-700 font-medium flex items-center space-x-2">
@@ -153,7 +153,7 @@
           </div>
           <!-- Right Section - Timeline -->
           <div>
-            <Stepper :activity="activities" :key="activities.activity" />
+            <Stepper :activity="activities" :key="activities?.activity" />
           </div>
         </div>
 
@@ -254,14 +254,26 @@ const svaUserData = ref(null)
 
 const activity = async () => {
   try {
-    const response = await call('mykartavya.controllers.api.activity_details', { 'name': route.params.name });
-    if (response) {
-      activities.value = response
+    if (route.params.name && route.params.activity) {
+      const response = await call('mykartavya.controllers.api.opportunity_activity_details', { 'name': route.params.name });
+
+      if (response) {
+        activities.value = response[0]
+      }
+    } else if (route.params.name) {
+      const response = await call('mykartavya.controllers.api.activity_details', { 'name': route.params.name });
+      if (response) {
+        activities.value = response
+      }
+    } else {
+      console.log('No name or activity');
     }
   } catch (err) {
     console.error('Error fetching activity data:', err);
   }
 };
+
+
 // Sample data for the opportunities
 const relatedactivity = ref([]);
 const relatedOpportunities = async () => {
