@@ -319,6 +319,9 @@ def get_top_users(page=1, page_size=10):
         frappe.log_error(frappe.get_traceback(), "get_top_users Error")
         return {"error": str(e)}
 
+@frappe.whitelist(allow_guest=True)
+def opportunity_activity_details(name):
+    return Opportunity.opportunity_activity_details(name)
 
 @frappe.whitelist(allow_guest=True)
 def current_commitments(filter={}):
