@@ -145,7 +145,7 @@
                 <!-- Right Section -->
                 <div class="w-full lg:w-full ">
                   <h2 class="text-xl md:text-heading4 py-2 font-medium font-poppins" style="color: #0b0b0b">
-                    Related Activity
+                    Activitys
                   </h2>
                   <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 pt-1 gap-4">
                     <CardLoader />
@@ -308,6 +308,13 @@ const opportunitiesActivity = async () => {
     console.error('Error fetching activity data:', err);
   }
 }
+
+watch(() => route.params.name, async (val, old) => {
+  if (val != old) {
+    await relatedOpportunities();
+    await opportunitiesActivity();
+  }
+}, { immediate: true, deep: true })
 
 onMounted(async () => {
   await checkUserApproval()
