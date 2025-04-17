@@ -197,6 +197,8 @@ const dynamicLink = computed(() => {
         if (props.item && props.mode === 'activity') {
             return `/activity/${props.item.activity}`;
         } else if (props.item && props.mode === 'opportunity') {
+            console.log('Opportunity', props);
+            
             return `/opportunity/${props.item.name}`;
         } else {
             console.log('Unknown type', props);
