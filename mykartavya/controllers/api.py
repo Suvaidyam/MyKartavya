@@ -3,12 +3,16 @@ from frappe import _
 from mykartavya.controllers.activity import Activity
 from mykartavya.controllers.filter import Filters
 from mykartavya.controllers.profile import Profile
+from mykartavya.controllers.opportunity import Opportunity
 from frappe.utils import validate_email_address
 from frappe.utils.pdf import get_pdf
 from frappe.utils.file_manager import save_file
 import time
 import base64
 
+@frappe.whitelist(allow_guest=True)
+def get_opportunity_activity(opportunity):
+    return Opportunity.get_opportunity_activity(opportunity)
 
 @frappe.whitelist(allow_guest=True)
 def user_testimonial():
