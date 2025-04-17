@@ -55,7 +55,7 @@
       </div>
       <div v-else class="h-full">
         <div v-if="activity.length > 0" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
-          <Card v-for="item in activity" :key="item.name" :item="item" />
+          <Card v-for="item in activity" :key="item.name" :item="item" :mode="'opportunity'" />
         </div>
         <NotFound v-else />
       </div>
@@ -83,6 +83,7 @@ import CardLoader from '../../components/CardLoader.vue'
 import NotFound from '../../components/NotFound.vue'
 import Sorting from '../../components/Sorting.vue'
 import { FeatherIcon } from 'frappe-ui'
+import { useRoute } from 'vue-router'
 
 const call = inject('call')
 const store = inject('store')
@@ -90,6 +91,7 @@ const activity = ref([])
 const loader = ref(false)
 const opportunities = ref([]);
 const isRefreshing = ref(false)
+const route = useRoute()
 
 const activeTab = ref('kindness')
 const kindnes = async (filter) => {
@@ -140,7 +142,7 @@ const generateRandom = async () => {
 
 const relatedOpportunities = async () => {
   try {
-    const response = await call('mykartavya.controllers.api.related_opportunities')
+    const response = await call('mykartavya.controllers.api.related_opportunities',{ 'name': route.params.name })
     if (response) {
       opportunities.value = response
     }
