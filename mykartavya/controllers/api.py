@@ -361,7 +361,7 @@ def check_user_fields():
 
 @frappe.whitelist(allow_guest=True)
 def related_opportunities(name="",sdgs=""):
-    return Activity.related_opportunities(name,sdgs)
+    return Opportunity.related_opportunities(name,sdgs)
 
 @frappe.whitelist(allow_guest=True)
 def submit_feedback(name,volunteer,rating,comments):

@@ -430,54 +430,7 @@ class Activity:
         except Exception as e:
             return {"status": "error", "message": str(e)}
 
-    def related_opportunities(name="", sdgs=""):
-        sdgs_list = json.loads(sdgs) if sdgs else []
-        sdgs = [frappe.db.escape(sdg["sdgs_name"]) for sdg in sdgs_list]   
-
-        user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
-        where_clause = ""
-
-        if sdgs:
-            sdgs_str = ", ".join(f"{sdg}" for sdg in sdgs)  # Ensure proper quoting
-            where_clause += f" AND sd.sdgs IN ({sdgs_str})"
-        # check user and not assigned
-        if user:
-            v_activity = frappe.get_list("Volunteer Activity", filters={"volunteer": user}, pluck="activity")
-            if v_activity:
-                where_clause += f" AND act.name NOT IN ({', '.join(frappe.db.escape(v) for v in v_activity)})"
-                
-        sql_query = f"""
-            SELECT 
-            opp.name as name,
-            opp.opportunity_name as activity_name,
-            opp.karma_points as karma_points,
-            opp.opportunity_type as activity_type,
-            opp.start_date as start_date,
-            opp.end_date as end_date,
-            opp.hours as hours,
-            opp.opportunity_description as activity_description,
-            opp.opportunity_image as activity_image,
-            COALESCE(
-                JSON_ARRAYAGG(
-                    DISTINCT CASE 
-                        WHEN sdg.sdg IS NOT NULL 
-                        THEN JSON_OBJECT(
-                            'sdgs_name', sdg.sdg,
-                            'image', sdg.sdg_image
-                        )
-                        ELSE NULL
-                    END
-                ), JSON_ARRAY()
-            ) AS sdgs
-        FROM `tabOpportunity` as opp
-        LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
-        LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
-        WHERE opp.end_date >= CURRENT_DATE()  
-        AND opp.name <> '{name}'
-        GROUP BY opp.name
-        """
-        data = frappe.db.sql(sql_query, as_dict=True)
-        return data
+  
     
     def submit_feedback(name,volunteer,rating,comments):
         volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")
