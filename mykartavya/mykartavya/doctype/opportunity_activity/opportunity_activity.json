@@ -10,6 +10,7 @@
   "activity_name",
   "opportunity",
   "column_break_1",
+  "opportunity_type",
   "image_section",
   "activity_image",
   "description_section",
@@ -115,12 +116,18 @@
    "fieldtype": "Int",
    "label": "Total Minutes",
    "reqd": 1
+  },
+  {
+   "fieldname": "opportunity_type",
+   "fieldtype": "Select",
+   "label": "Opportunity Type",
+   "options": "\nOn-Ground\nOnline\nHybrid"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-17 12:16:36.637278",
+ "modified": "2025-04-17 13:42:35.625825",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity Activity",

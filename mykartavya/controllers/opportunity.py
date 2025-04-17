@@ -5,7 +5,7 @@ class Opportunity:
     def get_opportunity_activity(opportunity):
         try:
             # Fetch the activity associated with the opportunity
-            activity = frappe.get_list("Opportunity Activity", filters={"opportunity": opportunity}, fields=["*"])
+            activity = frappe.get_list("Opportunity Activity", filters={"opportunity": opportunity}, fields=["activity_name","opportunity_type as activity_type","activity_image","start_date","end_date","total_hour","total_minutes"])
 
             if not activity:
                 raise frappe.DoesNotExist(_("No activity found for the given opportunity."))
