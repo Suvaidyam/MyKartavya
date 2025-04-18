@@ -33,7 +33,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <!-- Left Column - Main Opportunity -->
         <div class="lg:col-span-4">
-          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="bg-white rounded-md  overflow-hidden">
             <!-- Opportunity Image -->
             <div class="relative h-64 overflow-hidden">
               <img :src="selectedOpportunity?.activity_image" class="w-full h-full object-cover"
@@ -126,7 +126,7 @@
           </div>
 
           <!-- Volunteer Role -->
-          <div class="bg-white rounded-lg shadow-md mt-6 p-6 h-[800px] flex flex-col">
+          <div class="bg-white rounded-md mt-6 p-6 h-[800px] flex flex-col">
             <h2 class="text-xl font-bold text-gray-800 mb-4">Volunteer Role</h2>
             <div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
               <div class="prose prose-sm max-w-none">
@@ -160,7 +160,7 @@
 
         <!-- Right Column - Activities -->
         <div class="lg:col-span-8">
-          <h2 class="text-2xl font-bold text-gray-800 mb-6">Activities</h2>
+          <h2 class="text-lg font-medium mb-6">Activities</h2>
 
           <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 pt-1 gap-4">
             <CardLoader />
@@ -181,7 +181,7 @@
           <!-- Related Opportunities -->
           <div class="mt-12">
             <div class="flex items-center justify-between mb-6">
-              <h2 class="text-2xl font-bold text-gray-800">Related Opportunities</h2>
+              <h2 class="text-lg font-medium">Related Opportunities</h2>
               <div class="flex items-center gap-2">
                 <button @click="!isLeftDisabled && scrollLeft" :disabled="isLeftDisabled"
                   class="p-3 rounded-xl hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
@@ -281,7 +281,8 @@ const opportunitiesActivity = async () => {
 
     // First check if the API endpoint exists
     const response = await call('mykartavya.controllers.api.get_opportunity_activity', {
-      opportunity: route.params.name
+      opportunity: route.params.name,
+      sdgs: activities.value.sdgs
     }).catch(err => {
       console.error('API Error:', err);
       return null;

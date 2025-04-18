@@ -58,7 +58,7 @@
     <section :class="{ 'mt-[8px]': !isUserApproved }">
       <div v-if="activities" class="w-full relative h-[456px] md:h-[456px] back-img flex items-center"
         :class="{ 'mt-[8px]': !isUserApproved, 'mt-[60px]': isUserApproved }">
-        <img :src="activities?.activity_image" class="w-full h-full" alt="">
+        <img v-if="activity_image" :src="activities?.activity_image" class="w-full h-full" alt="">
         <div
           class="absolute top-20 left-5 sm:left-10 max-w-sm w-[448px] h-[312px] bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-4 justify-center">
           <div class="border-b pb-2">
@@ -277,7 +277,7 @@ const activity = async () => {
 // Sample data for the opportunities
 const relatedactivity = ref([]);
 const relatedOpportunities = async () => {
-  console.log(route.params.name,"route.params.name");
+  console.log(activities.value.sdgs,"route.params.name");
   
   try {
     const response = await call('mykartavya.controllers.api.related_opportunities', { 'name': route.params.name, sdgs: activities.value.sdgs });

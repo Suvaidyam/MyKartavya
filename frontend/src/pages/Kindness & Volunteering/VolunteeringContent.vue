@@ -68,7 +68,7 @@
       </div>
       <div v-else class="h-full">
         <div v-if="opportunities.length > 0" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
-          <Card v-for="item in opportunities" :key="item.name" :item="item"  :mode="'opportunity'" />
+          <Card v-for="item in opportunities" :key="item.name" :item="item" :mode="'opportunity'" />
         </div>
         <NotFound v-else />
       </div>
@@ -140,20 +140,23 @@ const generateRandom = async () => {
   }
 }
 
-const relatedOpportunities = async () => {
+const relatedOpportunities = async (filter) => {
   try {
-    const response = await call('mykartavya.controllers.api.related_opportunities',{ 'name': route.params.name })
+    console.log('Sending filter to related_opportunities:', filter);
+    const response = await call('mykartavya.controllers.api.related_opportunities',
+      { 'name': route.params.name, filter: filter ?? {} });
+    console.log('Received related opportunities response:', response);
     if (response) {
-      opportunities.value = response
+      opportunities.value = response;
     }
   } catch (err) {
     console.error('Error fetching activity data:', err);
   }
-}
+};
 
 onMounted(() => {
   kindnes(store.filters)
-  relatedOpportunities()
+  relatedOpportunities(store.filters)
 })
 
 watch(
@@ -174,4 +177,14 @@ watch(
   },
   { immediate: true, deep: true }
 )
+watch(
+  () => store.filters,
+  (newVal) => {
+    if (newVal) {
+      kindnes(newVal);
+      relatedOpportunities(newVal);
+    }
+  },
+  { immediate: true, deep: true }
+);
 </script>
