@@ -249,7 +249,7 @@
 </template>
 <script setup>
 import { ref, inject, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { FeatherIcon } from 'frappe-ui'
 import {
   RefreshCw as RefreshCwIcon,
@@ -273,6 +273,7 @@ const auth = inject('auth')
 const store = inject('store')
 const socket = inject('socket')
 const route = useRoute()
+const router = useRouter()
 const feedback = ref({
   rating: null,
   comments: '',
@@ -333,55 +334,55 @@ const nextStep = async (index) => {
   }
 
   try {
-    if (index == 0) {
-      // Check if user is approved first
-      // let userRes = await call('mykartavya.controllers.api.sva_user_data')
-      // if (userRes && userRes.length > 0 && userRes[0]?.workflow_state !== 'Approved') {
-      //   showReqForApproval.value = true
-      //   toast.error("Your account is pending for approval")
-      //   return
-      // }
-
-      let res = await call('mykartavya.controllers.api.act_now', {
-        activity: route.params.name,
-        volunteer: auth.cookie.user_id
-      })
-
-      if (res && res.status == 200) {
-        props.activity.workflow_state = 'Applied'
-        steps.value[index].completed = true
-        currentStep.value++
-      } else if (res && res.status == 201) {
-        showReqForApproval.value = true
-        // toast.error("Your account is pending for approval")
-        return
-      } else if (res && res.status == 400) {
-        toast.error(res.msg || "Something went wrong", {
+    if (index === 0) {
+      const activityId = route?.params?.activity || route?.params?.name
+      if (!activityId) {
+        toast.error("Activity ID not found", {
           autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
         })
+        return
+      }
+
+      const res = await call('mykartavya.controllers.api.act_now', {
+        activity: activityId,
+        volunteer: auth.cookie.user_id
+      })
+
+      if (res?.status === 200) {
+        props.activity.workflow_state = 'Applied'
+        steps.value[index].completed = true
+        currentStep.value++
+        toast.success("Activity approval request submitted successfully", {
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        })
+      } else if (res?.status === 201) {
+        showReqForApproval.value = true
+        return
       } else {
-        toast.error("Something went wrong",
-          {
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          }
-        )
+        toast.error(res?.msg || "Something went wrong", {
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        })
         return
       }
     }
 
-    if (index == 3) {
+    if (index === 3) {
       show_Feedback.value = true
     }
 
-    if (index == 2) {
+    if (index === 2) {
       activityReportPopup.value = true
     }
   } catch (error) {
