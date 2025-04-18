@@ -123,7 +123,8 @@
 
             <div v-else class="w-full pb-4">
               <div v-if="available_commitments.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <Card v-for="item in available_commitments" :key="item.name" :item="item" :mode="'activity'" />
+                <Card v-for="item in available_commitments" :key="item.name" :item="item" :mode="'activity'"
+                  class="w-full min-w-[280px] mx-auto" />
               </div>
               <div class="w-full h-[280px]" v-else>
                 <NotFound message="Available Commitments not Found!" />
@@ -319,23 +320,47 @@ watch(
 
 /* Responsive styles */
 @media screen and (max-width: 640px) {
-  .w-\[280px\] {
+
+  .w-\[280px\],
+  .min-w-\[280px\] {
     width: 260px;
     min-width: 260px;
   }
 }
 
 @media screen and (min-width: 641px) and (max-width: 768px) {
-  .w-\[280px\] {
+
+  .w-\[280px\],
+  .min-w-\[280px\] {
     width: 270px;
     min-width: 270px;
   }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
-  .w-\[280px\] {
+
+  .w-\[280px\],
+  .min-w-\[280px\] {
     width: 280px;
     min-width: 280px;
+  }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+
+  .w-\[280px\],
+  .min-w-\[280px\] {
+    width: 300px;
+    min-width: 300px;
+  }
+}
+
+@media screen and (min-width: 1281px) {
+
+  .w-\[280px\],
+  .min-w-\[280px\] {
+    width: 320px;
+    min-width: 320px;
   }
 }
 </style>

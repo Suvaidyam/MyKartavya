@@ -23,7 +23,7 @@
                 </div>
                 <div class="absolute bottom-3 flex items-center gap-2 px-3 overflow-auto">
                     <div v-if="item.sdgs" v-for="el in JSON.parse(item.sdgs)" class="flex-shrink-0">
-                        <img v-if="el.image" :src="el.image" class="w-8 h-8 rounded-lg shadow-sm" />
+                        <img v-if="el.image" :src="el.image" class="w-8 h-8  shadow-sm" />
                         <span v-else
                             class="w-8 h-8 flex items-center justify-center bg-gray-50 rounded-lg shadow-sm font-medium">{{
                                 el.sdgs_name?.charAt(0) }}</span>
@@ -107,7 +107,7 @@
                 </div>
                 <div class="absolute bottom-3 flex items-center gap-2 px-3 overflow-auto">
                     <div v-if="item.sdgs" v-for="el in JSON.parse(item.sdgs)" class="flex-shrink-0">
-                        <img v-if="el?.image" :src="el?.image" class="w-8 h-8 rounded-lg shadow-sm" />
+                        <img v-if="el?.image" :src="el?.image" class="w-8 h-8  shadow-sm" />
                         <span v-else
                             class="w-8 h-8 flex items-center justify-center bg-gray-50 rounded-lg shadow-sm font-medium">{{
                                 el?.sdgs_name?.charAt(0) }}</span>
@@ -205,21 +205,6 @@ const dynamicLink = computed(() => {
 </script>
 
 <style scoped>
-.card-img {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
-}
-
-.activity-type {
-    clip-path: polygon(0 0, 100% 0%, 89% 100%, 0% 100%);
-}
-
 .card {
     transition: all 0.3s ease;
     border-radius: 12px;
@@ -227,8 +212,9 @@ const dynamicLink = computed(() => {
     border: 1px solid transparent;
     background: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    min-width: 280px;
     width: 100%;
-    max-width: 100%;
+    height: fit-content;
 }
 
 .card:hover {
@@ -248,50 +234,35 @@ const dynamicLink = computed(() => {
 @media screen and (max-width: 640px) {
     .card {
         padding: 0.5rem;
-    }
-
-    .aspect-ratio {
-        aspect-ratio: 16/9;
+        min-width: 260px;
     }
 }
 
 @media screen and (min-width: 641px) and (max-width: 768px) {
     .card {
         padding: 0.625rem;
-    }
-
-    .aspect-ratio {
-        aspect-ratio: 16/9;
+        min-width: 270px;
     }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
     .card {
         padding: 0.75rem;
-    }
-
-    .aspect-ratio {
-        aspect-ratio: 16/9;
+        min-width: 280px;
     }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1280px) {
     .card {
         padding: 0.875rem;
-    }
-
-    .aspect-ratio {
-        aspect-ratio: 16/9;
+        min-width: 300px;
     }
 }
 
 @media screen and (min-width: 1281px) {
     .card {
         padding: 1rem;
-    }
-
-    .aspect-ratio {
-        aspect-ratio: 16/9;
+        min-width: 320px;
     }
 }
 </style>
