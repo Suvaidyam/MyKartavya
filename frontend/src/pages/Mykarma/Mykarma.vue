@@ -69,7 +69,7 @@
             <div class="w-full">
               <div class="flex justify-between items-center w-full">
                 <h2 class="text-base sm:text-lg font-medium">Current Commitments</h2>
-                <div class="flex items-center">
+                <div class="flex items-center lg:hidden">
                   <FeatherIcon @click="scrollLeft" :class="[
                     'size-5 cursor-pointer',
                     isLeftDisabled
@@ -84,23 +84,24 @@
                   ]" name="chevron-right" :disabled="isRightDisabled" />
                 </div>
               </div>
-              <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <CardLoader />
                 <CardLoader />
                 <CardLoader />
               </div>
               <div v-else class="w-full">
-                <div ref="scrollContainer" class="py-4 w-full overflow-x-auto">
-                  <div v-if="current_commitments.length > 0" class="flex items-center gap-4">
-                    <Card v-for="item in current_commitments" :key="item.name" :item="item" mode="activity" type="card"
-                      class="w-[280px] min-w-[280px]" />
+                <div ref="scrollContainer" class="py-4 w-full overflow-x-auto lg:overflow-x-visible">
+                  <div v-if="current_commitments.length > 0"
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <Card v-for="item in current_commitments" :key="item.name" :item="item" mode="activity"
+                      type="card" />
                   </div>
                   <div class="w-full h-[280px]" v-else>
                     <NotFound message="Your Current Commitments empty!" />
                   </div>
                 </div>
                 <div v-if="current_commitments.length > 0 && (!isLeftDisabled || !isRightDisabled)"
-                  class="flex justify-center mt-2">
+                  class="flex justify-center mt-2 lg:hidden">
                   <button
                     class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary hover:bg-orange-50 transition-colors">
                     View All
@@ -114,20 +115,43 @@
           <section class="px-3 sm:px-4 mt-5 border rounded-[12px] bg-white overflow-y-auto">
             <div class="w-full h-12 flex items-center bg-white sticky top-0 z-10">
               <h2 class="text-base sm:text-lg font-medium">Available Commitments</h2>
+              <div class="flex items-center ml-auto lg:hidden">
+                <FeatherIcon @click="scrollLeftAvailable" :class="[
+                  'size-5 cursor-pointer',
+                  isLeftDisabledAvailable
+                    ? 'text-gray-500 disabled'
+                    : 'text-gray-700',
+                ]" name="chevron-left" :disabled="isLeftDisabledAvailable" />
+                <FeatherIcon @click="scrollRightAvailable" :class="[
+                  'size-5 cursor-pointer',
+                  isRightDisabledAvailable
+                    ? 'text-gray-500 disabled'
+                    : 'text-gray-700',
+                ]" name="chevron-right" :disabled="isRightDisabledAvailable" />
+              </div>
             </div>
-            <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <CardLoader />
               <CardLoader />
               <CardLoader />
             </div>
 
             <div v-else class="w-full pb-4">
-              <div v-if="available_commitments.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <Card v-for="item in available_commitments" :key="item.name" :item="item" :mode="'activity'"
-                  class="w-full min-w-[280px] mx-auto" />
+              <div ref="scrollContainerAvailable" class="py-4 w-full overflow-x-auto lg:overflow-x-visible">
+                <div v-if="available_commitments.length > 0"
+                  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <Card v-for="item in available_commitments" :key="item.name" :item="item" :mode="'activity'" />
+                </div>
+                <div class="w-full h-[280px]" v-else>
+                  <NotFound message="Available Commitments not Found!" />
+                </div>
               </div>
-              <div class="w-full h-[280px]" v-else>
-                <NotFound message="Available Commitments not Found!" />
+              <div v-if="available_commitments.length > 0 && (!isLeftDisabledAvailable || !isRightDisabledAvailable)"
+                class="flex justify-center mt-2 lg:hidden">
+                <button
+                  class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary hover:bg-orange-50 transition-colors">
+                  View All
+                </button>
               </div>
             </div>
           </section>
@@ -164,6 +188,36 @@ const svaUserData = ref(null)
 const isLeftDisabled = ref(true)
 const isRightDisabled = ref(false)
 
+// Add new refs for Available Commitments slider
+const scrollContainerAvailable = ref(null)
+const isLeftDisabledAvailable = ref(true)
+const isRightDisabledAvailable = ref(false)
+
+// Scroll settings
+const cardWidth = 245
+const scrollStep = cardWidth
+
+// Define avai_commitments function before it's used
+const avai_commitments = async (filter) => {
+  loader.value = true;
+  try {
+    const response = await call(
+      "mykartavya.controllers.api.available_commitments",
+      { filter: filter ?? {} }
+    );
+    available_commitments.value = response;
+
+    setTimeout(() => {
+      loader.value = false;
+      checkScrollButtons();
+      checkScrollButtonsAvailable();
+    }, 1000);
+  } catch (err) {
+    loader.value = false;
+    console.error("Error fetching commitments:", err);
+  }
+};
+
 const checkUserApproval = async () => {
   try {
     const response = await call('mykartavya.controllers.api.sva_user_data');
@@ -195,29 +249,35 @@ const cur_commitments = async (filter) => {
     console.error('Error fetching Kindness data:', err)
   }
 }
-const avai_commitments = async (filter) => {
-  loader.value = true;
-  try {
-    const response = await call(
-      "mykartavya.controllers.api.available_commitments",
-      { filter: filter ?? {} }
-    );
-    available_commitments.value = response;
 
-    setTimeout(() => {
-      loader.value = false;
-      checkScrollButtons();
-    }, 1000);
-  } catch (err) {
-    loader.value = false;
-    console.error("Error fetching commitments:", err);
+// Add new scroll functions for Available Commitments
+const scrollLeftAvailable = () => {
+  if (scrollContainerAvailable.value) {
+    scrollContainerAvailable.value.scrollTo({
+      left: Math.max(0, scrollContainerAvailable.value.scrollLeft - scrollStep),
+      behavior: 'smooth',
+    })
   }
-};
+}
 
+const scrollRightAvailable = () => {
+  if (scrollContainerAvailable.value) {
+    const maxScroll =
+      scrollContainerAvailable.value.scrollWidth - scrollContainerAvailable.value.clientWidth
+    scrollContainerAvailable.value.scrollTo({
+      left: Math.min(maxScroll, scrollContainerAvailable.value.scrollLeft + scrollStep),
+      behavior: 'smooth',
+    })
+  }
+}
 
-// Scroll settings
-const cardWidth = 245
-const scrollStep = cardWidth
+// Add new check function for Available Commitments
+const checkScrollButtonsAvailable = () => {
+  if (!scrollContainerAvailable.value) return
+  const { scrollLeft, scrollWidth, clientWidth } = scrollContainerAvailable.value
+  isLeftDisabledAvailable.value = scrollLeft <= 0
+  isRightDisabledAvailable.value = scrollLeft + clientWidth >= scrollWidth
+}
 
 // Scroll functions with boundary checks
 const scrollLeft = () => {
@@ -248,10 +308,13 @@ const checkScrollButtons = () => {
   isRightDisabled.value = scrollLeft + clientWidth >= scrollWidth
 }
 
-// Watch for scroll changes and update button states
+// Update watchEffect to include Available Commitments
 watchEffect(() => {
   if (scrollContainer.value) {
     scrollContainer.value.addEventListener('scroll', checkScrollButtons)
+  }
+  if (scrollContainerAvailable.value) {
+    scrollContainerAvailable.value.addEventListener('scroll', checkScrollButtonsAvailable)
   }
 })
 
