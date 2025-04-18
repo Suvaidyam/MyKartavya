@@ -62,7 +62,7 @@ const routes = [
     path: '/opportunity/:name',
     name: 'Opportunity',
     component: () => import('@/pages/VolunteeringOpportunities/Opportunities.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: false }
   },
   {
     path: '/opportunity/:name/activity/:activity',
