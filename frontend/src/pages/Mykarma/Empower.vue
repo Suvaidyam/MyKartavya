@@ -277,6 +277,8 @@ const activity = async () => {
 // Sample data for the opportunities
 const relatedactivity = ref([]);
 const relatedOpportunities = async () => {
+  console.log(route.params.name,"route.params.name");
+  
   try {
     const response = await call('mykartavya.controllers.api.related_opportunities', { 'name': route.params.name, sdgs: activities.value.sdgs });
     if (response) {

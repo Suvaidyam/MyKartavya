@@ -132,7 +132,7 @@
 
                     <time class="self-stretch my-auto">{{ formatDate(item.start_date) }} - {{
                         formatDate(item.end_date)
-                        }}
+                    }}
                     </time>
                 </div>
                 <div class="flex gap-2 items-center">
@@ -206,7 +206,12 @@ const dynamicLink = computed(() => {
             console.log('Unknown type', props);
         }
     } else {
-        return `/kindness-volunteering/${props.item.activity}`;
+        if (props.mode === 'activity') {
+            return `/kindness-volunteering/${props.item.activity}`;
+        } else if (props.mode === 'opportunity') {
+            console.log('Opportunity', props);
+            return `/kindness-volunteering/${props.item.name}`;
+        }
     }
 });
 

@@ -122,7 +122,7 @@
             <div class="" v-else>
               <div v-if="relatedactivity?.length > 0"
                 class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 pt-1 items-center gap-4">
-                <Card v-for="(item, key) in relatedactivity" :key="key" :item="item" />
+                <Card v-for="(item, key) in relatedactivity" :key="key" :item="item" :mode="'opportunity'" />
               </div>
               <div class="w-full h-[330px]" v-else>
                 <NotFound />
