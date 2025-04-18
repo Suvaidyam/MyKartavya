@@ -1,4 +1,4 @@
-import{c}from"./twitter-DNb7AkBA.js";/**
+import{c}from"./twitter-BE0x_a-2.js";/**
  * @license lucide-vue-next v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
