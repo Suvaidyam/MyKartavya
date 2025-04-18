@@ -135,7 +135,7 @@
                         </svg>
                         <time class="self-stretch my-auto font-medium">{{ formatDate(item.start_date) }} - {{
                             formatDate(item.end_date)
-                            }}</time>
+                        }}</time>
                     </div>
                     <div class="flex gap-2 items-center text-gray-600">
                         <Tooltip text="Hours">
@@ -180,28 +180,25 @@ const props = defineProps({
 });
 
 const dynamicLink = computed(() => {
+    if (props.item && props.mode === 'opportunity') {
+        if (props.item.activity) {
+            return `/opportunity/${props.item.name}/activity/${props.item.activity}`;
+        } else {
+            return `/opportunity/${props.item.name}`;
+        }
+    }
     if (auth?.isLoggedIn) {
         if (props.item && props.mode === 'activity') {
             return `/activity/${props.item.activity}`;
-        } else if (props.item && props.mode === 'opportunity') {
-            if (props.item.activity) {
-                return `/opportunity/${props.item.name}/activity/${props.item.activity}`;
-            } else {
-                return `/opportunity/${props.item.name}`;
-            }
         } else {
             console.log('Unknown type', props);
         }
     } else {
         if (props.mode === 'activity') {
             return `/kindness-volunteering/${props.item.activity}`;
-        } else if (props.mode === 'opportunity') {
-            console.log('Opportunity', props);
-            return `/kindness-volunteering/${props.item.name}`;
         }
     }
 });
-
 </script>
 
 <style scoped>
