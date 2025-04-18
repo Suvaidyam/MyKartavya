@@ -55,20 +55,20 @@
     <!-- Request for Approval Popup -->
     <ReqForApproval v-model="showReqForApproval" />
 
-    <div class="w-full flex flex-col lg:flex-row px-5"
+    <div class="w-full flex flex-col lg:flex-row px-4 sm:px-5"
       :class="{ 'mt-[8px]': !isUserApproved, 'mt-[60px]': isUserApproved }">
       <Filters />
       <div class="w-full lg:pl-[270px] flex flex-col xl:flex-row">
-        <main class="w-full px-3 py-3 bg-gray-50">
+        <main class="w-full px-2 sm:px-3 py-3 bg-gray-50">
           <!-- Current Commitments Section -->
           <div class="flex justify-between mb-2">
-            <h1 class="text-[23px] font-normal">My Karma</h1>
+            <h1 class="text-[20px] sm:text-[23px] font-normal">My Karma</h1>
             <Sorting />
           </div>
-          <section class="p-4 border rounded-[12px] bg-white h-[390px]">
-            <div class="w-full h-full">
+          <section class="p-3 sm:p-4 border rounded-[12px] bg-white">
+            <div class="w-full">
               <div class="flex justify-between items-center w-full">
-                <h2 class="text-lg font-medium">Current Commitments</h2>
+                <h2 class="text-base sm:text-lg font-medium">Current Commitments</h2>
                 <div class="flex items-center">
                   <FeatherIcon @click="scrollLeft" :class="[
                     'size-5 cursor-pointer',
@@ -90,20 +90,19 @@
                 <CardLoader />
               </div>
               <div v-else class="w-full">
-                <div ref="scrollContainer" class="py-4 w-full overflow-x-scroll">
+                <div ref="scrollContainer" class="py-4 w-full overflow-x-auto">
                   <div v-if="current_commitments.length > 0" class="flex items-center gap-4">
                     <Card v-for="item in current_commitments" :key="item.name" :item="item" mode="activity" type="card"
-                      class="w-[245px] min-w-[245px]" />
+                      class="w-[280px] min-w-[280px]" />
                   </div>
-                  <div class="w-full h-[330px]" v-else>
+                  <div class="w-full h-[280px]" v-else>
                     <NotFound message="Your Current Commitments empty!" />
                   </div>
                 </div>
-                <div v-if="
-                  current_commitments.length > 0 &&
-                  (!isLeftDisabled || !isRightDisabled)
-                " class="flex justify-center">
-                  <button class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary">
+                <div v-if="current_commitments.length > 0 && (!isLeftDisabled || !isRightDisabled)"
+                  class="flex justify-center mt-2">
+                  <button
+                    class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary hover:bg-orange-50 transition-colors">
                     View All
                   </button>
                 </div>
@@ -112,9 +111,9 @@
           </section>
 
           <!-- Available Commitments Section -->
-          <section class="px-4 mt-5 border rounded-[12px] bg-white overflow-y-auto min-h-[330px] max-h-[660px]">
+          <section class="px-3 sm:px-4 mt-5 border rounded-[12px] bg-white overflow-y-auto">
             <div class="w-full h-12 flex items-center bg-white sticky top-0 z-10">
-              <h2 class="text-lg font-medium">Available Commitments</h2>
+              <h2 class="text-base sm:text-lg font-medium">Available Commitments</h2>
             </div>
             <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               <CardLoader />
@@ -123,10 +122,10 @@
             </div>
 
             <div v-else class="w-full pb-4">
-              <div v-if="available_commitments.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <Card v-for="item in available_commitments" :key="item.name" :item="item" :mode="'activity'"/>
+              <div v-if="available_commitments.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <Card v-for="item in available_commitments" :key="item.name" :item="item" :mode="'activity'" />
               </div>
-              <div class="w-full h-[330px]" v-else>
+              <div class="w-full h-[280px]" v-else>
                 <NotFound message="Available Commitments not Found!" />
               </div>
             </div>
@@ -290,19 +289,16 @@ watch(
 
 ::-webkit-scrollbar {
   width: 4px;
-  /* Thin width */
-  height: 0px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #b0b3b0;
-  /* Scrollbar color */
   border-radius: 8px;
 }
 
 ::-webkit-scrollbar-track {
   background: #f0f0f0;
-  /* Track color */
 }
 
 .scroll-smooth {
@@ -319,5 +315,27 @@ watch(
 
 .button-animation:active {
   transform: translateY(0);
+}
+
+/* Responsive styles */
+@media screen and (max-width: 640px) {
+  .w-\[280px\] {
+    width: 260px;
+    min-width: 260px;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 768px) {
+  .w-\[280px\] {
+    width: 270px;
+    min-width: 270px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .w-\[280px\] {
+    width: 280px;
+    min-width: 280px;
+  }
 }
 </style>
