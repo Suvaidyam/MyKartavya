@@ -173,12 +173,12 @@ const allChecked = computed({
 
 const allType = computed({
     get: () => {
-        const activityType = filter_by.value.find(f => f.key === 'activity_type');
-        return activityType && store.filters.activity_type.length === activityType.options.length;
+        const activityType = filter_by.value.find(f => f.key === 'types');
+        return activityType && store.filters.types.length === activityType.options.length;
     },
     set: (value) => {
-        const activityType = filter_by.value.find(f => f.key === 'activity_type');
-        store.filters.activity_type = value && activityType ? [...activityType.options.map(e => e.name)] : [];
+        const activityType = filter_by.value.find(f => f.key === 'types');
+        store.filters.types = value && activityType ? [...activityType.options.map(e => e.name)] : [];
     }
 });
 
