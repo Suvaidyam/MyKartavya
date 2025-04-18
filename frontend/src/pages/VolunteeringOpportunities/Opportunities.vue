@@ -170,7 +170,7 @@
           </div>
           <div v-else>
             <div v-if="opportunitiesActivities?.length > 0"
-              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 pt-1 gap-4">
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <Card v-for="(item) in opportunitiesActivities" :key="item.name" :item="item" :mode="'opportunity'" />
             </div>
             <div class="w-full h-[300px]" v-else>
