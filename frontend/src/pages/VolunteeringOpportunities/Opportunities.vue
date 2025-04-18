@@ -115,19 +115,19 @@
 
               <!-- CTA Button -->
               <button
-                class="w-fit bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded-lg font-medium transition-all duration-300 flex items-center justify-start gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                class="w-fit bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-sm font-medium transition-all duration-300 flex items-center justify-start gap-2">
+                <svg class="w-3 h-3  " fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
                   </path>
                 </svg>
-                <span>Act Now</span>
+                <span class="text-sm">Act Now</span>
               </button>
             </div>
           </div>
 
           <!-- Volunteer Role -->
           <div class="bg-white rounded-md mt-6 p-6 h-[800px] flex flex-col">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">Volunteer Role</h2>
+            <h2 class="text-lg font-medium mb-4">Volunteer Role</h2>
             <div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
               <div class="prose prose-sm max-w-none">
                 <p class="text-gray-600 whitespace-pre-wrap" v-html="selectedOpportunity?.activity_description"></p>
@@ -282,7 +282,7 @@ const opportunitiesActivity = async () => {
     // First check if the API endpoint exists
     const response = await call('mykartavya.controllers.api.get_opportunity_activity', {
       opportunity: route.params.name,
-      sdgs: activities.value.sdgs
+      filter: { sdgs: activities.value.sdgs }
     }).catch(err => {
       console.error('API Error:', err);
       return null;
@@ -297,8 +297,9 @@ const opportunitiesActivity = async () => {
     // Process the response
     if (Array.isArray(response)) {
       const processedResponse = response.map(item => ({
+
         ...item,
-        activity: item.activity_name,
+        activity: item.activity,
         name: route.params.name
       }));
       opportunitiesActivities.value = processedResponse;

@@ -58,7 +58,8 @@
     <section :class="{ 'mt-[8px]': !isUserApproved }">
       <div v-if="activities" class="w-full relative h-[456px] md:h-[456px] back-img flex items-center"
         :class="{ 'mt-[8px]': !isUserApproved, 'mt-[60px]': isUserApproved }">
-        <img v-if="activity_image" :src="activities?.activity_image" class="w-full h-full" alt="">
+        <img v-if="activities?.activity_image"
+          :src="activities?.activity_image || 'https://via.placeholder.com/456x456'" class="w-full h-full" alt="">
         <div
           class="absolute top-20 left-5 sm:left-10 max-w-sm w-[448px] h-[312px] bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-4 justify-center">
           <div class="border-b pb-2">
@@ -104,9 +105,9 @@
           </div>
           <div class="flex space-x-2 border-b pb-2">
             <div v-if="activities?.sdgs" v-for="item in JSON.parse(activities?.sdgs)">
-              <img v-if="item.image" :src="item.image" class="w-8 h-8" />
-              <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item.sdgs_name?.charAt(0)
-              }}</span>
+              <img v-if="item?.image" :src="item.image" class="w-8 h-8" />
+              <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item?.sdgs_name?.charAt(0)
+                }}</span>
             </div>
           </div>
 
@@ -255,13 +256,12 @@ const svaUserData = ref(null)
 const activity = async () => {
   try {
     if (route.params.name && route.params.activity) {
-      const response = await call('mykartavya.controllers.api.opportunity_activity_details', { 'name': route.params.name });
-
+      const response = await call('mykartavya.controllers.api.activity_details', { 'name': route?.params?.activity });
       if (response) {
-        activities.value = response[0]
+        activities.value = response
       }
     } else if (route.params.name) {
-      const response = await call('mykartavya.controllers.api.activity_details', { 'name': route.params.name });
+      const response = await call('mykartavya.controllers.api.activity_details', { 'name': route?.params?.name });
       if (response) {
         activities.value = response
       }
@@ -277,10 +277,10 @@ const activity = async () => {
 // Sample data for the opportunities
 const relatedactivity = ref([]);
 const relatedOpportunities = async () => {
-  console.log(activities.value.sdgs,"route.params.name");
-  
+  // console.log(activities.value.sdgs, "route.params.name");
+
   try {
-    const response = await call('mykartavya.controllers.api.related_opportunities', { 'name': route.params.name, sdgs: activities.value.sdgs });
+    const response = await call('mykartavya.controllers.api.related_opportunities', { 'name': route?.params?.name, sdgs: activities?.value?.sdgs });
     if (response) {
       relatedactivity.value = response
     }
@@ -313,7 +313,7 @@ watch(() => store.refresh_step, (val) => {
   }
 }, { immediate: true, deep: true })
 
-watch(() => route.params.name, async (val, old) => {
+watch(() => route?.params?.name, async (val, old) => {
   if (val != old) {
     await activity()
     await relatedOpportunities()

@@ -11,8 +11,8 @@ import time
 import base64
 
 @frappe.whitelist(allow_guest=True)
-def get_opportunity_activity(opportunity):
-    return Opportunity.get_opportunity_activity(opportunity)
+def get_opportunity_activity(opportunity, filter={}):
+    return Opportunity.get_opportunity_activity(opportunity, filter)
 
 @frappe.whitelist(allow_guest=True)
 def user_testimonial():
