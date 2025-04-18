@@ -135,7 +135,7 @@
                         </svg>
                         <time class="self-stretch my-auto font-medium">{{ formatDate(item.start_date) }} - {{
                             formatDate(item.end_date)
-                        }}</time>
+                            }}</time>
                     </div>
                     <div class="flex gap-2 items-center text-gray-600">
                         <Tooltip text="Hours">
@@ -212,7 +212,6 @@ const dynamicLink = computed(() => {
     border: 1px solid transparent;
     background: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    min-width: 280px;
     width: 100%;
     height: fit-content;
 }
@@ -234,35 +233,53 @@ const dynamicLink = computed(() => {
 @media screen and (max-width: 640px) {
     .card {
         padding: 0.5rem;
-        min-width: 260px;
     }
 }
 
 @media screen and (min-width: 641px) and (max-width: 768px) {
     .card {
         padding: 0.625rem;
-        min-width: 270px;
     }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
     .card {
         padding: 0.75rem;
-        min-width: 280px;
     }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1280px) {
     .card {
         padding: 0.875rem;
-        min-width: 300px;
     }
 }
 
-@media screen and (min-width: 1281px) {
+@media screen and (min-width: 1281px) and (max-width: 1920px) {
     .card {
         padding: 1rem;
-        min-width: 320px;
+    }
+}
+
+/* Ensure proper spacing and prevent overlapping */
+.grid {
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+}
+
+.grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+    .sm\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .lg\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
 </style>
