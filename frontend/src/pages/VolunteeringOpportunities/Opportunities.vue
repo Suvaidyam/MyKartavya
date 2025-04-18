@@ -126,7 +126,7 @@
           </div>
 
           <!-- Volunteer Role -->
-          <div class="bg-white rounded-md mt-6 p-6 h-[800px] flex flex-col">
+          <div class="bg-white rounded-md mt-6 p-6 h-[600px] flex flex-col sticky top-20">
             <h2 class="text-lg font-medium mb-4">Volunteer Role</h2>
             <div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
               <div class="prose prose-sm max-w-none">
