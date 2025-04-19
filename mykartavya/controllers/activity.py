@@ -9,7 +9,7 @@ class Activity:
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         if not user:
             return []
-        base_url = frappe.get_conf().get("hostname","")
+        base_url = frappe.get_conf().get("hostname", "")
         where_clauses = ["va.volunteer = %(user)s"]
         order_by_clauses = []
         params = {"user": user}
@@ -23,17 +23,27 @@ class Activity:
                 params["activity_types"] = tuple(filter["activity_type"])
 
             if "karma_points" in filter and filter["karma_points"]:
-                order_by_clauses.append("act.karma_points ASC" if filter["karma_points"] == "Low to High" else "act.karma_points DESC")
+                order_by_clauses.append(
+                    "act.karma_points ASC"
+                    if filter["karma_points"] == "Low to High"
+                    else "act.karma_points DESC"
+                )
 
             if "sdgs" in filter and filter["sdgs"]:
                 where_clauses.append("sd.sdgs IN %(sdgs_values)s")
                 params["sdgs_values"] = tuple(filter["sdgs"])
 
             if "volunteering_hours" in filter and filter["volunteering_hours"]:
-                order_by_clauses.append("act.hours ASC" if filter["volunteering_hours"] == "Low to High" else "act.hours DESC")
+                order_by_clauses.append(
+                    "act.hours ASC"
+                    if filter["volunteering_hours"] == "Low to High"
+                    else "act.hours DESC"
+                )
 
         where_clause = " AND ".join(where_clauses)
-        order_by_clause = " ORDER BY " + ", ".join(order_by_clauses) if order_by_clauses else ""
+        order_by_clause = (
+            " ORDER BY " + ", ".join(order_by_clauses) if order_by_clauses else ""
+        )
 
         sql = f"""
         SELECT
@@ -81,8 +91,16 @@ class Activity:
         where_clause = ""
         order_by_clause = ""
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
-        company = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "custom_company")
-        companies = frappe.db.get_list("User Permission", filters={"user": frappe.session.user, "allow": "Company"}, pluck="for_value",limit=100,ignore_permissions=True)
+        company = frappe.db.get_value(
+            "SVA User", {"email": frappe.session.user}, "custom_company"
+        )
+        companies = frappe.db.get_list(
+            "User Permission",
+            filters={"user": frappe.session.user, "allow": "Company"},
+            pluck="for_value",
+            limit=100,
+            ignore_permissions=True,
+        )
         if user:
             where_clause += f" AND act.name NOT IN (SELECT activity FROM `tabVolunteer Activity` WHERE volunteer = '{user}')"
         if company and len(companies) > 0:
@@ -114,12 +132,13 @@ class Activity:
                     WHERE sub_sd.parent = act.name
                     AND sub_sd.sdgs IN ({sdgs_values})
                 )"""
-            
+
             if "volunteering_hours" in filter and filter["volunteering_hours"]:
                 if filter["volunteering_hours"] == "Low to High":
                     order_by_clause = " ORDER BY act.hours ASC"
                 elif filter["volunteering_hours"] == "High to Low":
                     order_by_clause = " ORDER BY act.hours DESC"
+
         sql_query = f"""
                     SELECT 
                         va.name as name,
@@ -162,6 +181,7 @@ class Activity:
                     LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
                     LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
                     WHERE act.end_date >= CURRENT_DATE() AND act.status IN ('Published', 'Ongoing')
+                    AND (act.opportunity IS NULL OR act.opportunity = '')
                     AND act.docstatus = 1 
                        {where_clause}
                     GROUP BY act.name
@@ -179,8 +199,16 @@ class Activity:
         where_clause = ""
         order_by_clause = ""
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
-        company = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "custom_company")
-        companies = frappe.db.get_list("User Permission", filters={"user": frappe.session.user, "allow": "Company"}, pluck="for_value",limit=100,ignore_permissions=True)
+        company = frappe.db.get_value(
+            "SVA User", {"email": frappe.session.user}, "custom_company"
+        )
+        companies = frappe.db.get_list(
+            "User Permission",
+            filters={"user": frappe.session.user, "allow": "Company"},
+            pluck="for_value",
+            limit=100,
+            ignore_permissions=True,
+        )
         if user:
             where_clause += f" AND act.name NOT IN (SELECT activity FROM `tabVolunteer Activity` WHERE volunteer = '{user}')"
         if company and len(companies) > 0:
@@ -207,13 +235,12 @@ class Activity:
             if "sdgs" in filter and filter["sdgs"]:
                 sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
                 where_clause += f" AND sd.sdgs IN ({sdgs_values})"
-            
+
             if "volunteering_hours" in filter and filter["volunteering_hours"]:
                 if filter["volunteering_hours"] == "Low to High":
                     order_by_clause = " ORDER BY act.max_hours ASC"
                 elif filter["volunteering_hours"] == "High to Low":
                     order_by_clause = " ORDER BY act.max_hours DESC"
-
         sql_query = f"""
                     SELECT 
                         va.name as name,
@@ -228,6 +255,7 @@ class Activity:
                         act.activity_description as activity_description,
                         act.activity_type as activity_type,
                         act.activity_image as activity_image,
+                        act.portunity as opportunity,
                         COALESCE(
                             JSON_ARRAYAGG(
                                 DISTINCT CASE 
@@ -258,7 +286,7 @@ class Activity:
                     WHERE act.end_date >= CURRENT_DATE() 
                     AND act.status IN ('Published', 'Ongoing')
                     AND act.is_featured = 'Yes' 
-                    AND act.docstatus = 1  
+                    AND act.docstatus = 1 
                     GROUP BY act.name
                     {order_by_clause}
                 """
@@ -268,12 +296,15 @@ class Activity:
         except Exception as e:
             frappe.log_error(f"Syntax error in query:\n{sql_query}")
             raise
+
     # act_now
     def act_now(activity, volunteer):
         # Check if the volunteer is approved
-        workflow_state = frappe.db.get_value("SVA User", {"email": volunteer}, "workflow_state")
+        workflow_state = frappe.db.get_value(
+            "SVA User", {"email": volunteer}, "workflow_state"
+        )
         volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")
-        if workflow_state != "Approved":    
+        if workflow_state != "Approved":
             return {"msg": "Volunteer is not approved", "status": 201}
 
         # Check if the activity is already assigned to the volunteer
@@ -285,11 +316,17 @@ class Activity:
         if act:
             return {"msg": "Activity already assigned to the volunteer", "status": 400}
 
-        unlimited_vacancies = frappe.db.get_value("Activity", activity, "unlimited_vacancies")
+        unlimited_vacancies = frappe.db.get_value(
+            "Activity", activity, "unlimited_vacancies"
+        )
 
         if not unlimited_vacancies:
-            total_vacancies = frappe.db.get_value("Activity", activity, "total_vacancies") or 0
-            current_count = frappe.db.count("Volunteer Activity", filters={"activity": activity})
+            total_vacancies = (
+                frappe.db.get_value("Activity", activity, "total_vacancies") or 0
+            )
+            current_count = frappe.db.count(
+                "Volunteer Activity", filters={"activity": activity}
+            )
 
             if current_count >= total_vacancies:
                 return {
@@ -306,17 +343,21 @@ class Activity:
 
         return {"msg": "Activity assigned to the volunteer", "status": 200, "data": doc}
 
-    
     def workflow_state():
-        doc = frappe.get_doc('Workflow', 'Volunteer_activity')
+        doc = frappe.get_doc("Workflow", "Volunteer_activity")
         return doc
+
     # activity_details
     def activity_details(name):
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
-        exists = frappe.db.exists("Volunteer Activity", {"volunteer": user, "activity": name})
+        exists = frappe.db.exists(
+            "Volunteer Activity", {"volunteer": user, "activity": name}
+        )
         where_clause = ""
 
-        volunteer_condition = f"AND va.volunteer = '{user}'" if exists else "AND va.volunteer IS NULL"
+        volunteer_condition = (
+            f"AND va.volunteer = '{user}'" if exists else "AND va.volunteer IS NULL"
+        )
 
         sql_query = f"""
             SELECT
@@ -362,13 +403,13 @@ class Activity:
             """
         data = frappe.db.sql(sql_query, as_dict=True)
         doc = data[0] if data else data
-        
+
         if exists:
             doc["is_assigned"] = True
         else:
             doc["is_assigned"] = False
         return doc
-    
+
     def volunteer_act_count():
         sql_query = """
         SELECT 
@@ -386,10 +427,14 @@ class Activity:
         """
         result = frappe.db.sql(sql_query, as_dict=True)
         return result
-    
-    def submit_activity_report(name,data):
-        volunteer = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
-        exists = frappe.db.exists("Volunteer Activity", {"volunteer": volunteer, "name": name})
+
+    def submit_activity_report(name, data):
+        volunteer = frappe.db.get_value(
+            "SVA User", {"email": frappe.session.user}, "name"
+        )
+        exists = frappe.db.exists(
+            "Volunteer Activity", {"volunteer": volunteer, "name": name}
+        )
         if not exists:
             return {"error": "Activity not assigned to the volunteer", "status": 400}
         doc = frappe.get_doc("Volunteer Activity", exists)
@@ -397,21 +442,23 @@ class Activity:
         if len(images):
 
             for image in images:
-              Activity.upload_file(image,doc)
-            
-        doc.append("volunteer_activity_log", {
-            "date": frappe.utils.now(),
-            "duration": data.get("duration"),
-            "percent": data.get("percent"),
-            
-        })
+                Activity.upload_file(image, doc)
+
+        doc.append(
+            "volunteer_activity_log",
+            {
+                "date": frappe.utils.now(),
+                "duration": data.get("duration"),
+                "percent": data.get("percent"),
+            },
+        )
         doc.save(ignore_permissions=True)
-        frappe.db.commit() 
+        frappe.db.commit()
         return doc
-    
-    def upload_file(data,doc):
+
+    def upload_file(data, doc):
         try:
-            base64_string = data.get("preview")    
+            base64_string = data.get("preview")
             if "," in base64_string:
                 base64_string = base64_string.split(",")[1]
             file_name = f"{doc.name}_{frappe.utils.now().replace(' ', '_')}.png"
@@ -423,23 +470,52 @@ class Activity:
                 dn=doc.name,
                 is_private=0,
             )
-            doc.append("images",{
-                    "image": file_path.file_url,
-                    "parent": doc.name
-                })
+            doc.append("images", {"image": file_path.file_url, "parent": doc.name})
         except Exception as e:
             return {"status": "error", "message": str(e)}
 
-  
-    
-    def submit_feedback(name,volunteer,rating,comments):
+    def submit_feedback(name, volunteer, rating, comments):
         volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")
-        exists = frappe.db.exists("Volunteer Activity", {"volunteer": volunteer, "name": name})
+        exists = frappe.db.exists(
+            "Volunteer Activity", {"volunteer": volunteer, "name": name}
+        )
         if not exists:
             return {"error": "Activity not assigned to the volunteer", "status": 400}
         doc = frappe.get_doc("Volunteer Activity", exists)
         doc.rating = rating
         doc.remarks = comments
         doc.save()
-        frappe.db.commit() 
+        frappe.db.commit()
         return doc
+
+    def get_activity_data():
+        doc = frappe.get_all(
+            "Activity",
+            fields=[
+                "title",
+                "karma_points",
+                "start_date",
+                "end_date",
+                "hours",
+                "reward_description",
+                "reward_image",
+            ],
+        )
+        return doc
+
+    def add_activity_images(docname, images):
+        """Save uploaded images to the Volunteer Activity's child table."""
+        doc = frappe.get_doc("Volunteer Activity", docname)
+        # Ensure images is a list
+        if isinstance(images, str):
+            import json
+
+            images = json.loads(images)
+        for image in images:
+            new_row = doc.append("images", {})
+            new_row.image = image.get("file_url")
+            new_row.file_name = image.get("file_name")
+
+        doc.save()
+        frappe.db.commit()
+        return {"message": "Images added successfully"}
