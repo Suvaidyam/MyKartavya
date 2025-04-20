@@ -7,7 +7,7 @@
                     class="h-full w-full object-cover rounded-lg transition-transform duration-300 hover:scale-105">
                 <div
                     class="bg-[#FF7C3A] activity-type absolute top-3 text-white font-semibold text-xs flex items-center pl-3 pr-5 h-7 shadow-sm">
-                    {{ item.activity_type }}
+                    {{ item.types }}
                 </div>
                 <div
                     class="absolute right-3 top-3 bg-white/90 backdrop-blur-sm text-gray-800 text-xs px-3 h-7 rounded-full shadow-sm flex items-center gap-1.5">
@@ -91,7 +91,7 @@
                     class="h-full w-full object-cover rounded-lg transition-transform duration-300 hover:scale-105">
                 <div
                     class="bg-[#FF7C3A] activity-type absolute top-3 text-white font-semibold text-xs flex items-center pl-3 pr-5 h-7 shadow-sm">
-                    {{ item.activity_type }}
+                    {{ item.types }}
                 </div>
                 <div
                     class="absolute right-3 top-3 bg-white/90 backdrop-blur-sm text-gray-800 text-xs px-3 h-7 rounded-full shadow-sm flex items-center gap-1.5">
@@ -143,7 +143,11 @@
                             <p class="text-xs font-medium">{{ item.hours }} hr</p>
                         </Tooltip>
                     </div>
-                    <div class="flex items-center justify-end">
+                    <div class="flex items-center justify-between">
+                       <div class="flex -pl-10">
+                        <div class=" bg-white shadow-lg w-8 h-8 rounded-full"> 
+                        </div>
+                       </div>
                         <div
                             class="flex gap-1 items-center text-sm font-semibold tracking-normal text-[#FF5722] uppercase hover:text-orange-700 transition-colors">
                             <p>Act now</p>
