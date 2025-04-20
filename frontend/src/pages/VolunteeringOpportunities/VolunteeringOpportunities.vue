@@ -41,10 +41,7 @@ const volunteering_opportunities = async (filter) => {
   loader.value = true;
   try {
     const response = await call('mykartavya.controllers.api.related_opportunities', {
-      filter,
-      sdgs: JSON.stringify(
-        filter.sdgs?.map((sdg) => ({ sdgs_name: sdg })) ?? []
-      ),
+      filter: filter ?? {},
     });
     kindness_volunteering.value = response;
   } catch (err) {
