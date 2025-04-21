@@ -135,7 +135,7 @@
                         </svg>
                         <time class="self-stretch my-auto font-medium">{{ formatDate(item.start_date) }} - {{
                             formatDate(item.end_date)
-                            }}</time>
+                        }}</time>
                     </div>
                     <div class="flex gap-2 items-center text-gray-600">
                         <Tooltip text="Hours">
@@ -143,7 +143,7 @@
                             <p class="text-xs font-medium">{{ item.hours }} hr</p>
                         </Tooltip>
                     </div>
-                    <div class="flex items-center justify-between">
+                    <!-- <div class="flex items-center justify-between">
                        <div class="flex -pl-10">
                         <div class=" bg-white shadow-lg w-8 h-8 rounded-full"> 
                         </div>
@@ -153,20 +153,20 @@
                             <p>Act now</p>
                             <FeatherIcon name="arrow-up-right" class="size-4" />
                         </div>
-                    </div>
-                    <!-- <div class="flex items-center justify-between">
-                        <div v-if="JSON.parse(item.volunteers).length > 0 && JSON.parse(item.volunteers)[0].full_name != null"
-                            class="flex items-center -space-x-3 ">
-                            <div v-for="(el, index) in JSON?.parse(item.volunteers).slice(0, 3)" :key="index">
-                                <img v-if="el.user_image" :src="el.user_image" :alt="'User ' + (index + 1)"
+                    </div> -->
+                    <div class="flex items-center justify-between">
+                        <div v-if="parseVolunteers(item?.volunteers).length > 0 && parseVolunteers(item?.volunteers)[0]?.full_name"
+                            class="flex items-center -space-x-3">
+                            <div v-for="(el, index) in parseVolunteers(item?.volunteers).slice(0, 3)" :key="index">
+                                <img v-if="el?.user_image" :src="el.user_image" :alt="'User ' + (index + 1)"
                                     class="w-8 h-8 rounded-full border-2 border-white" />
                                 <div v-else
                                     class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-[#e86c13] text-sm">
-                                    {{ el.full_name?.charAt(0) }}
+                                    {{ el?.full_name?.charAt(0) }}
                                 </div>
                             </div>
-                            <p v-if="JSON.parse(item.volunteers).length > 3" class="pl-4 text-sm text-center">
-                                +{{ JSON.parse(item.volunteers).length - 3 }}
+                            <p v-if="parseVolunteers(item?.volunteers).length > 3" class="pl-4 text-sm text-center">
+                                +{{ parseVolunteers(item?.volunteers).length - 3 }}
                             </p>
                         </div>
                         <div v-else class="w-8 h-8"></div>
@@ -175,7 +175,7 @@
                             <p>Act now</p>
                             <FeatherIcon name="arrow-up-right" class="size-4" />
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </router-link>
@@ -204,6 +204,15 @@ const props = defineProps({
         required: false,
     }
 });
+
+const parseVolunteers = (volunteers) => {
+  try {
+    const parsed = JSON.parse(volunteers);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    return [];
+  }
+};
 
 const dynamicLink = computed(() => {
     if (props.item && props.mode === 'opportunity') {

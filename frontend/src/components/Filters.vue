@@ -91,8 +91,8 @@
                         <div v-if="item.key === 'types'" class="flex px-2 items-center py-1 gap-2 text-sm">
                             <input v-model="allChecked" type="checkbox"
                                 class="rounded-sm focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
-                                id="both-activity_type">
-                            <label class="text-[12px] font-normal" for="both-activity_type">Both</label>
+                                id="both_activity_type">
+                            <label class="text-[12px] font-normal" for="both_activity_type">Both</label>
                         </div>
                     </MenuItems>
                 </transition>
@@ -158,7 +158,6 @@ const fetchSDGs = async () => {
         setTimeout(() => { loader.value = false; }, 500);
     }
 };
-
 
 const allChecked = computed({
     get: () => {

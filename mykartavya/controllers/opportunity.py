@@ -1,6 +1,4 @@
 import frappe
-import json
-
 
 class Opportunity:
 
@@ -201,10 +199,53 @@ class Opportunity:
                 GROUP BY opp.name
                 {order_by_clause}
             """
+            data = frappe.db.sql(sql_query, as_dict=True)
+            return data
 
-            # Optional: Debug
-            # frappe.log_error("related_opportunities SQL", sql_query)
+        except Exception as e:
+            frappe.log_error("related_opportunities Error", frappe.get_traceback())
+            return None
 
+    def get_activity_opportunity(name=""):
+        try:
+            
+            where_clauses = [f"act.name = {frappe.db.escape(name)}"]
+            order_by_clause = ""
+
+            where_clause = "WHERE " + " AND ".join(where_clauses)
+            sql_query = f"""
+
+                SELECT
+                opp.name as name,
+                        opp.opportunity_name as activity_name,
+                        opp.karma_points as karma_points,
+                        opp.opportunity_type as types,
+                        opp.start_date as start_date,
+                        opp.end_date as end_date,
+                        opp.hours as hours,
+                        opp.opportunity_description as activity_description,
+                        opp.opportunity_image as activity_image,
+                        COALESCE(
+                            JSON_ARRAYAGG(
+                                DISTINCT CASE 
+                                    WHEN sdg.sdg IS NOT NULL 
+                                    THEN JSON_OBJECT(
+                                        'sdgs_name', sdg.sdg,
+                                        'image', sdg.sdg_image
+                                    )
+                                END
+                            ), JSON_ARRAY()
+                        ) AS sdgs
+                FROM `tabActivity` AS act
+                LEFT JOIN `tabOpportunity` AS opp
+                    ON act.opportunity = opp.name
+                LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
+                    LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
+                    
+                    {where_clause}
+                    GROUP BY opp.name
+                    {order_by_clause}
+            """
             data = frappe.db.sql(sql_query, as_dict=True)
             return data
 
