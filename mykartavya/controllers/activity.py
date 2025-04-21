@@ -9,6 +9,7 @@ class Activity:
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         if not user:
             return []
+
         base_url = frappe.get_conf().get("hostname", "")
         where_clauses = ["va.volunteer = %(user)s"]
         order_by_clauses = []
@@ -18,13 +19,9 @@ class Activity:
             filter = frappe.parse_json(filter)
 
         if filter:
-            # if "types" in filter and filter["types"]:
-            #     where_clauses.append("act.activity_types IN %(activity_types)s")
-            #     params["activity_types"] = tuple(filter["activity_types"])
-            
             if "types" in filter and filter["types"]:
-                activity_types = ", ".join(f"'{at}'" for at in filter["types"])
-                where_clause += f" AND act.activity_type IN ({activity_types})"
+                where_clauses.append("act.activity_type IN %(activity_types)s")
+                params["activity_types"] = tuple(filter["types"])
 
             if "karma_points" in filter and filter["karma_points"]:
                 order_by_clauses.append(
@@ -80,7 +77,7 @@ class Activity:
         LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
         WHERE {where_clause}
         AND (act.opportunity IS NULL OR act.opportunity = '')
-        GROUP BY act.name
+        GROUP BY va.name
         {order_by_clause}
         """
 
@@ -90,6 +87,7 @@ class Activity:
         except Exception as e:
             frappe.log_error(f"Error in current_commitments query: {e}")
             raise
+
 
     # available_commitments
     def available_commitments(filter={}):
