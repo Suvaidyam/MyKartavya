@@ -546,3 +546,30 @@ def notify_admin_approval(volunteer):
     except Exception as e:
         frappe.log_error(frappe.get_traceback(), "notify_admin_approval Error")
         return {"status": "error", "message": str(e)}
+
+@frappe.whitelist(allow_guest=True)
+def get_opportunity_by_activity(activity=None):
+    try:
+        if not activity:
+            frappe.throw(_("Activity is required"))
+
+        opportunities = frappe.db.sql("""
+            SELECT 
+                opp.*
+            FROM 
+                `tabOpportunity` AS opp
+            JOIN 
+                `tabPlanned Activity` AS pa ON pa.parent = opp.name
+            WHERE 
+                pa.activity = %s AND pa.parenttype = 'Opportunity'
+        """, (activity,), as_dict=True)
+
+        frappe.log_error(title="Debug: Opportunities Found", message=frappe.as_json(opportunities))
+        return opportunities
+
+    except Exception as e:
+        frappe.log_error(f"Error fetching opportunities: {e}", "get_opportunity_by_activity")
+        raise
+
+
+

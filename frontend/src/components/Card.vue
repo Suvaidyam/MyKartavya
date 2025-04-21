@@ -135,7 +135,7 @@
                         </svg>
                         <time class="self-stretch my-auto font-medium">{{ formatDate(item.start_date) }} - {{
                             formatDate(item.end_date)
-                        }}</time>
+                            }}</time>
                     </div>
                     <div class="flex gap-2 items-center text-gray-600">
                         <Tooltip text="Hours">
@@ -154,6 +154,28 @@
                             <FeatherIcon name="arrow-up-right" class="size-4" />
                         </div>
                     </div>
+                    <!-- <div class="flex items-center justify-between">
+                        <div v-if="JSON.parse(item.volunteers).length > 0 && JSON.parse(item.volunteers)[0].full_name != null"
+                            class="flex items-center -space-x-3 ">
+                            <div v-for="(el, index) in JSON?.parse(item.volunteers).slice(0, 3)" :key="index">
+                                <img v-if="el.user_image" :src="el.user_image" :alt="'User ' + (index + 1)"
+                                    class="w-8 h-8 rounded-full border-2 border-white" />
+                                <div v-else
+                                    class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-[#e86c13] text-sm">
+                                    {{ el.full_name?.charAt(0) }}
+                                </div>
+                            </div>
+                            <p v-if="JSON.parse(item.volunteers).length > 3" class="pl-4 text-sm text-center">
+                                +{{ JSON.parse(item.volunteers).length - 3 }}
+                            </p>
+                        </div>
+                        <div v-else class="w-8 h-8"></div>
+                        <div
+                            class="flex gap-1 items-center text-sm font-medium tracking-normal text-right text-[#FF5722] uppercase hover:text-orange-700">
+                            <p>Act now</p>
+                            <FeatherIcon name="arrow-up-right" class="size-4" />
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </router-link>

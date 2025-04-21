@@ -147,9 +147,6 @@ const relatedOpportunities = async (filter) => {
       'mykartavya.controllers.api.related_opportunities',
       {
         filter: filter ?? {},
-        sdgs: JSON.stringify(
-          filter.sdgs?.map((sdg) => ({ sdgs_name: sdg })) ?? []
-        ),
       } 
     )
     console.log('Received related opportunities response:', response)
