@@ -1,8 +1,7 @@
 import frappe
-
 class Opportunity:
 
-    def get_opportunity_activity(opportunity, filter={}):
+    def get_opportunity_activity(opportunity=None, filter={}):
         where_clause = ""
         order_by_clause = ""
 
@@ -143,15 +142,15 @@ class Opportunity:
                 f"Unexpected error fetching activity for opportunity {name}: {str(e)}"
             )
             return None
+    def related_opportunities(filter={}):
 
-    def related_opportunities(name="", filter={}):
         try:
             if isinstance(filter, str):
                 filter = frappe.parse_json(filter)
 
             # Initialize clauses
             where_clauses = ["1=1"]
-            order_by_clause = ""
+            order_by_clause = ""  
 
             if filter:
                 if "types" in filter and filter["types"]:
@@ -180,8 +179,8 @@ class Opportunity:
                     elif filter["volunteering_hours"] == "High to Low":
                         order_by_clause = " ORDER BY opp.hours DESC"
 
-            where_clause = "WHERE " + " AND ".join(where_clauses)
 
+            where_clause = "WHERE " + " AND ".join(where_clauses)
             sql_query = f"""
                 SELECT 
                     opp.name as name,
@@ -218,9 +217,11 @@ class Opportunity:
             frappe.log_error("related_opportunities Error", frappe.get_traceback())
             return None
 
-    def get_activity_opportunity(name=""):
+    def get_activity_opportunity(name=None):
         try:
-            
+            if not name:
+                return None
+
             where_clauses = [f"act.name = {frappe.db.escape(name)}"]
             order_by_clause = ""
 

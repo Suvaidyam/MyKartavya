@@ -135,7 +135,7 @@
                         </svg>
                         <time class="self-stretch my-auto font-medium">{{ formatDate(item.start_date) }} - {{
                             formatDate(item.end_date)
-                        }}</time>
+                            }}</time>
                     </div>
                     <div class="flex gap-2 items-center text-gray-600">
                         <Tooltip text="Hours">
@@ -195,12 +195,12 @@ const props = defineProps({
 });
 
 const parseVolunteers = (volunteers) => {
-  try {
-    const parsed = JSON.parse(volunteers);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (e) {
-    return [];
-  }
+    try {
+        const parsed = JSON.parse(volunteers);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+        return [];
+    }
 };
 
 const dynamicLink = computed(() => {
