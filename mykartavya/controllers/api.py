@@ -16,6 +16,10 @@ def get_opportunity_activity(opportunity, filter={}):
     return Opportunity.get_opportunity_activity(opportunity, filter)
 
 @frappe.whitelist(allow_guest=True)
+def get_activity_opportunity(name):
+    return Opportunity.get_activity_opportunity(name)
+
+@frappe.whitelist(allow_guest=True)
 def user_testimonial():
     try:
         # Fetch testimonials with `sva_user`
@@ -249,8 +253,8 @@ def check_user_fields():
 
 
 @frappe.whitelist(allow_guest=True)
-def related_opportunities(name="", sdgs=""):
-    return Opportunity.related_opportunities(name, sdgs)
+def related_opportunities(name="", filter={}):
+    return Opportunity.related_opportunities(name, filter)
 
 
 @frappe.whitelist(allow_guest=True)

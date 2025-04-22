@@ -1,5 +1,4 @@
 import frappe
-import json
 
 class Opportunity:
 
@@ -7,13 +6,15 @@ class Opportunity:
         where_clause = ""
         order_by_clause = ""
 
-        company = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "custom_company")
+        company = frappe.db.get_value(
+            "SVA User", {"email": frappe.session.user}, "custom_company"
+        )
         companies = frappe.db.get_list(
             "User Permission",
             filters={"user": frappe.session.user, "allow": "Company"},
             pluck="for_value",
             limit=100,
-            ignore_permissions=True
+            ignore_permissions=True,
         )
 
         if company and companies:
@@ -37,8 +38,10 @@ class Opportunity:
 
         # Other filters
         if filter:
-            if "activity_type" in filter and filter["activity_type"]:
-                activity_types = ", ".join(frappe.db.escape(at) for at in filter["activity_type"])
+            if "types" in filter and filter["types"]:
+                activity_types = ", ".join(
+                    frappe.db.escape(at) for at in filter["types"]
+                )
                 where_clause += f" AND act.activity_type IN ({activity_types})"
 
             if "karma_points" in filter and filter["karma_points"]:
@@ -72,7 +75,7 @@ class Opportunity:
                 act.end_date as end_date,
                 act.hours as hours,
                 act.activity_description as activity_description,
-                act.activity_type as activity_type,
+                act.activity_type as types,
                 act.activity_image as activity_image,
                 COALESCE(
                     JSON_ARRAYAGG(
@@ -100,32 +103,57 @@ class Opportunity:
         try:
             return frappe.db.sql(sql_query, as_dict=True)
         except Exception as e:
-            frappe.log_error(f"Query Error: {e}\n\nQuery:\n{sql_query}", "get_opportunity_activity")
+            frappe.log_error(
+                f"Query Error: {e}\n\nQuery:\n{sql_query}", "get_opportunity_activity"
+            )
             raise
-        
-        
-        
-    def related_opportunities(name="", sdgs="", filter={}):
+
+    def opportunity_activity_details(name):
         try:
-            sdgs_list = json.loads(sdgs) if sdgs else []
-            sdg_names = [frappe.db.escape(sdg["sdgs_name"]) for sdg in sdgs_list]
+            # Fetch the activity associated with the opportunity
+            activity = frappe.get_list(
+                "Opportunity Activity",
+                {"opportunity": name},
+                [
+                    "activity_name as title",
+                    "opportunity_type as types",
+                    "activity_image",
+                    "start_date",
+                    "end_date",
+                    "total_hour as hours",
+                    "total_minutes",
+                    "description",
+                ],
+            )
+            return activity
+        except Exception as e:
+            frappe.log_error(
+                f"Unexpected error fetching activity for opportunity {name}: {str(e)}"
+            )
+            return None
 
-            where_clauses = ["opp.end_date >= CURRENT_DATE()"]
-            where_clauses.append(f"opp.name <> {frappe.db.escape(name)}")
+    def related_opportunities(name="", filter={}):
+        try:
+            if isinstance(filter, str):
+                filter = frappe.parse_json(filter)
 
-            if sdg_names:
-                sdg_str = ", ".join(sdg_names)
-                where_clauses.append(f"sdg.sdg IN ({sdg_str})")
-
+            # Initialize clauses
+            where_clauses = ["1=1"]
             order_by_clause = ""
 
             if filter:
-                if "activity_type" in filter and filter["activity_type"]:
-                    activity_types = ", ".join(frappe.db.escape(at) for at in filter["activity_type"])
-                    where_clauses.append(f"opp.opportunity_type IN ({activity_types})")
+                if "types" in filter and filter["types"]:
+                    types_list = [f"'{at}'" for at in filter["types"]]
+                    where_clauses.append(f"opp.opportunity_type IN ({', '.join(types_list)})")
+
+                if "karma_points" in filter and filter["karma_points"]:
+                    if filter["karma_points"] == "Low to High":
+                        order_by_clause = " ORDER BY opp.karma_points ASC"
+                    elif filter["karma_points"] == "High to Low":
+                        order_by_clause = " ORDER BY opp.karma_points DESC"
 
                 if "sdgs" in filter and filter["sdgs"]:
-                    sdgs_values = ", ".join(frappe.db.escape(sdg) for sdg in filter["sdgs"])
+                    sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
                     where_clauses.append(f"""
                         EXISTS (
                             SELECT 1 FROM `tabSDGs Child` AS sub_sd
@@ -134,27 +162,20 @@ class Opportunity:
                         )
                     """)
 
-                if "karma_points" in filter and filter["karma_points"]:
-                    if filter["karma_points"] == "Low to High":
-                        order_by_clause = "ORDER BY opp.karma_points ASC"
-                    elif filter["karma_points"] == "High to Low":
-                        order_by_clause = "ORDER BY opp.karma_points DESC"
-
                 if "volunteering_hours" in filter and filter["volunteering_hours"]:
                     if filter["volunteering_hours"] == "Low to High":
-                        order_by_clause = "ORDER BY opp.hours ASC"
+                        order_by_clause = " ORDER BY opp.hours ASC"
                     elif filter["volunteering_hours"] == "High to Low":
-                        order_by_clause = "ORDER BY opp.hours DESC"
+                        order_by_clause = " ORDER BY opp.hours DESC"
 
-            # Combine WHERE conditions
-            full_where = "WHERE " + " AND ".join(where_clauses)
+            where_clause = "WHERE " + " AND ".join(where_clauses)
 
             sql_query = f"""
                 SELECT 
                     opp.name as name,
                     opp.opportunity_name as activity_name,
                     opp.karma_points as karma_points,
-                    opp.opportunity_type as activity_type,
+                    opp.opportunity_type as types,
                     opp.start_date as start_date,
                     opp.end_date as end_date,
                     opp.hours as hours,
@@ -174,15 +195,60 @@ class Opportunity:
                 FROM `tabOpportunity` AS opp
                 LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
                 LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
-                {full_where}
+                {where_clause}
                 GROUP BY opp.name
                 {order_by_clause}
             """
-
             data = frappe.db.sql(sql_query, as_dict=True)
             return data
 
         except Exception as e:
-            frappe.log_error(f"Unexpected error fetching related opportunities: {str(e)}")
+            frappe.log_error("related_opportunities Error", frappe.get_traceback())
             return None
 
+    def get_activity_opportunity(name=""):
+        try:
+            
+            where_clauses = [f"act.name = {frappe.db.escape(name)}"]
+            order_by_clause = ""
+
+            where_clause = "WHERE " + " AND ".join(where_clauses)
+            sql_query = f"""
+
+                SELECT
+                opp.name as name,
+                        opp.opportunity_name as activity_name,
+                        opp.karma_points as karma_points,
+                        opp.opportunity_type as types,
+                        opp.start_date as start_date,
+                        opp.end_date as end_date,
+                        opp.hours as hours,
+                        opp.opportunity_description as activity_description,
+                        opp.opportunity_image as activity_image,
+                        COALESCE(
+                            JSON_ARRAYAGG(
+                                DISTINCT CASE 
+                                    WHEN sdg.sdg IS NOT NULL 
+                                    THEN JSON_OBJECT(
+                                        'sdgs_name', sdg.sdg,
+                                        'image', sdg.sdg_image
+                                    )
+                                END
+                            ), JSON_ARRAY()
+                        ) AS sdgs
+                FROM `tabActivity` AS act
+                LEFT JOIN `tabOpportunity` AS opp
+                    ON act.opportunity = opp.name
+                LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
+                    LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
+                    
+                    {where_clause}
+                    GROUP BY opp.name
+                    {order_by_clause}
+            """
+            data = frappe.db.sql(sql_query, as_dict=True)
+            return data
+
+        except Exception as e:
+            frappe.log_error("related_opportunities Error", frappe.get_traceback())
+            return None

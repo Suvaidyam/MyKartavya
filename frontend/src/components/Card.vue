@@ -7,7 +7,7 @@
                     class="h-full w-full object-cover rounded-lg transition-transform duration-300 hover:scale-105">
                 <div
                     class="bg-[#FF7C3A] activity-type absolute top-3 text-white font-semibold text-xs flex items-center pl-3 pr-5 h-7 shadow-sm">
-                    {{ item.activity_type }}
+                    {{ item.types }}
                 </div>
                 <div
                     class="absolute right-3 top-3 bg-white/90 backdrop-blur-sm text-gray-800 text-xs px-3 h-7 rounded-full shadow-sm flex items-center gap-1.5">
@@ -91,7 +91,7 @@
                     class="h-full w-full object-cover rounded-lg transition-transform duration-300 hover:scale-105">
                 <div
                     class="bg-[#FF7C3A] activity-type absolute top-3 text-white font-semibold text-xs flex items-center pl-3 pr-5 h-7 shadow-sm">
-                    {{ item.activity_type }}
+                    {{ item.types }}
                 </div>
                 <div
                     class="absolute right-3 top-3 bg-white/90 backdrop-blur-sm text-gray-800 text-xs px-3 h-7 rounded-full shadow-sm flex items-center gap-1.5">
@@ -143,9 +143,35 @@
                             <p class="text-xs font-medium">{{ item.hours }} hr</p>
                         </Tooltip>
                     </div>
-                    <div class="flex items-center justify-end">
+                    <!-- <div class="flex items-center justify-between">
+                       <div class="flex -pl-10">
+                        <div class=" bg-white shadow-lg w-8 h-8 rounded-full"> 
+                        </div>
+                       </div>
                         <div
                             class="flex gap-1 items-center text-sm font-semibold tracking-normal text-[#FF5722] uppercase hover:text-orange-700 transition-colors">
+                            <p>Act now</p>
+                            <FeatherIcon name="arrow-up-right" class="size-4" />
+                        </div>
+                    </div> -->
+                    <div class="flex items-center justify-between">
+                        <div v-if="parseVolunteers(item?.volunteers).length > 0 && parseVolunteers(item?.volunteers)[0]?.full_name"
+                            class="flex items-center -space-x-3">
+                            <div v-for="(el, index) in parseVolunteers(item?.volunteers).slice(0, 3)" :key="index">
+                                <img v-if="el?.user_image" :src="el.user_image" :alt="'User ' + (index + 1)"
+                                    class="w-8 h-8 rounded-full border-2 border-white" />
+                                <div v-else
+                                    class="w-8 h-8 flex items-center justify-center rounded-full border-2 border-[#e86c13] text-sm">
+                                    {{ el?.full_name?.charAt(0) }}
+                                </div>
+                            </div>
+                            <p v-if="parseVolunteers(item?.volunteers).length > 3" class="pl-4 text-sm text-center">
+                                +{{ parseVolunteers(item?.volunteers).length - 3 }}
+                            </p>
+                        </div>
+                        <div v-else class="w-8 h-8"></div>
+                        <div
+                            class="flex gap-1 items-center text-sm font-medium tracking-normal text-right text-[#FF5722] uppercase hover:text-orange-700">
                             <p>Act now</p>
                             <FeatherIcon name="arrow-up-right" class="size-4" />
                         </div>
@@ -178,6 +204,15 @@ const props = defineProps({
         required: false,
     }
 });
+
+const parseVolunteers = (volunteers) => {
+  try {
+    const parsed = JSON.parse(volunteers);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    return [];
+  }
+};
 
 const dynamicLink = computed(() => {
     if (props.item && props.mode === 'opportunity') {

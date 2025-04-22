@@ -77,7 +77,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, inject, watch } from 'vue'
+import { ref, onMounted, inject, watch } from 'vue'
 import Card from '../../components/Card.vue'
 import CardLoader from '../../components/CardLoader.vue'
 import NotFound from '../../components/NotFound.vue'
@@ -89,11 +89,12 @@ const call = inject('call')
 const store = inject('store')
 const activity = ref([])
 const loader = ref(false)
-const opportunities = ref([]);
+const opportunities = ref([])
 const isRefreshing = ref(false)
 const route = useRoute()
 
 const activeTab = ref('kindness')
+
 const kindnes = async (filter) => {
   loader.value = true
   try {
@@ -142,17 +143,20 @@ const generateRandom = async () => {
 
 const relatedOpportunities = async (filter) => {
   try {
-    console.log('Sending filter to related_opportunities:', filter);
-    const response = await call('mykartavya.controllers.api.related_opportunities',
-      { 'name': route.params.name, filter: filter ?? {} });
-    console.log('Received related opportunities response:', response);
+    const response = await call(
+      'mykartavya.controllers.api.related_opportunities',
+      {
+        filter: filter ?? {},
+      } 
+    )
+    console.log('Received related opportunities response:', response)
     if (response) {
-      opportunities.value = response;
+      opportunities.value = response
     }
   } catch (err) {
-    console.error('Error fetching activity data:', err);
+    console.error('Error fetching activity data:', err)
   }
-};
+}
 
 onMounted(() => {
   kindnes(store.filters)
@@ -168,23 +172,15 @@ watch(
   },
   { immediate: true }
 )
+
 watch(
   () => store.filters,
   (newVal) => {
     if (newVal) {
       kindnes(newVal)
+      relatedOpportunities(newVal)
     }
   },
   { immediate: true, deep: true }
 )
-watch(
-  () => store.filters,
-  (newVal) => {
-    if (newVal) {
-      kindnes(newVal);
-      relatedOpportunities(newVal);
-    }
-  },
-  { immediate: true, deep: true }
-);
 </script>

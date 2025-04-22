@@ -13,7 +13,7 @@
           <CardLoader />
         </div>
         <div v-else class="h-full w-full px-3">
-          <div v-if="kindness_volunteering.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div v-if="kindness_volunteering?.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <Card v-for="item in kindness_volunteering" :key="item.name" :item="item" :mode="'opportunity'" />
           </div>
           <NotFound v-else />
@@ -41,10 +41,7 @@ const volunteering_opportunities = async (filter) => {
   loader.value = true;
   try {
     const response = await call('mykartavya.controllers.api.related_opportunities', {
-      filter,
-      sdgs: JSON.stringify(
-        filter.sdgs?.map((sdg) => ({ sdgs_name: sdg })) ?? []
-      ),
+      filter: filter ?? {},
     });
     kindness_volunteering.value = response;
   } catch (err) {

@@ -9,6 +9,7 @@ class Activity:
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         if not user:
             return []
+
         base_url = frappe.get_conf().get("hostname", "")
         where_clauses = ["va.volunteer = %(user)s"]
         order_by_clauses = []
@@ -18,9 +19,9 @@ class Activity:
             filter = frappe.parse_json(filter)
 
         if filter:
-            if "activity_type" in filter and filter["activity_type"]:
+            if "types" in filter and filter["types"]:
                 where_clauses.append("act.activity_type IN %(activity_types)s")
-                params["activity_types"] = tuple(filter["activity_type"])
+                params["activity_types"] = tuple(filter["types"])
 
             if "karma_points" in filter and filter["karma_points"]:
                 order_by_clauses.append(
@@ -59,7 +60,7 @@ class Activity:
             va.duration as donet_hours,
             va.completion_wf_state as completion_wf_state,
             act.activity_description as activity_description,
-            act.activity_type as activity_type,
+            act.activity_type as types,
             CONCAT('{base_url}', act.activity_image) as activity_image,
             COALESCE(
                 JSON_ARRAYAGG(
@@ -75,7 +76,8 @@ class Activity:
         LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
         LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
         WHERE {where_clause}
-        GROUP BY act.name
+        AND (act.opportunity IS NULL OR act.opportunity = '')
+        GROUP BY va.name
         {order_by_clause}
         """
 
@@ -85,6 +87,7 @@ class Activity:
         except Exception as e:
             frappe.log_error(f"Error in current_commitments query: {e}")
             raise
+
 
     # available_commitments
     def available_commitments(filter={}):
@@ -114,8 +117,8 @@ class Activity:
         if isinstance(filter, str):
             filter = frappe.parse_json(filter)
         if filter:
-            if "activity_type" in filter and filter["activity_type"]:
-                activity_types = ", ".join(f"'{at}'" for at in filter["activity_type"])
+            if "types" in filter and filter["types"]:
+                activity_types = ", ".join(f"'{at}'" for at in filter["types"])
                 where_clause += f" AND act.activity_type IN ({activity_types})"
 
             if "karma_points" in filter and filter["karma_points"]:
@@ -151,7 +154,7 @@ class Activity:
                         act.end_date as end_date,
                         act.hours as hours,
                         act.activity_description as activity_description,
-                        act.activity_type as activity_type,
+                        act.activity_type as types,
                         act.activity_image as activity_image,
                         COALESCE(
                             JSON_ARRAYAGG(
@@ -222,8 +225,8 @@ class Activity:
         if isinstance(filter, str):
             filter = frappe.parse_json(filter)
         if filter:
-            if "activity_type" in filter and filter["activity_type"]:
-                activity_types = ", ".join(f"'{at}'" for at in filter["activity_type"])
+            if "types" in filter and filter["types"]:
+                activity_types = ", ".join(f"'{at}'" for at in filter["types"])
                 where_clause += f" AND act.activity_type IN ({activity_types})"
 
             if "karma_points" in filter and filter["karma_points"]:
@@ -253,7 +256,7 @@ class Activity:
                         act.end_date as end_date,
                         act.hours as hours,
                         act.activity_description as activity_description,
-                        act.activity_type as activity_type,
+                        act.activity_type as types,
                         act.activity_image as activity_image,
                         act.portunity as opportunity,
                         COALESCE(
@@ -373,7 +376,7 @@ class Activity:
                 act.hours as hours,
                 va.duration as donet_hours,
                 act.activity_description as activity_description,
-                act.activity_type as activity_type,
+                act.activity_type as types,
                 act.activity_image as activity_image,
                 act.require_feedback_images as require_feedback_images,
                 va.workflow_state as workflow_state,

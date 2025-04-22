@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "basic_info_section",
+  "volunteer",
   "activity_name",
   "opportunity",
   "column_break_1",
@@ -122,12 +123,21 @@
    "fieldtype": "Select",
    "label": "Opportunity Type",
    "options": "\nOn-Ground\nOnline\nHybrid"
+  },
+  {
+   "fieldname": "volunteer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Volunteer",
+   "options": "SVA User",
+   "reqd": 1,
+   "unique": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-17 13:42:35.625825",
+ "modified": "2025-04-21 18:36:57.811455",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity Activity",
