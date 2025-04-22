@@ -20,6 +20,10 @@ def get_activity_opportunity(name):
     return Opportunity.get_activity_opportunity(name)
 
 @frappe.whitelist(allow_guest=True)
+def current_commitments_in_opportunity(filter={}):
+    return Activity.current_commitments_in_opportunity(filter)
+
+@frappe.whitelist(allow_guest=True)
 def user_testimonial():
     try:
         # Fetch testimonials with `sva_user`

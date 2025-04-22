@@ -80,7 +80,6 @@ class Activity:
         GROUP BY va.name
         {order_by_clause}
         """
-
         try:
             acts = frappe.db.sql(sql, params, as_dict=True)
             return acts
@@ -88,6 +87,91 @@ class Activity:
             frappe.log_error(f"Error in current_commitments query: {e}")
             raise
 
+
+    def current_commitments_in_opportunity(filter={}):
+            user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+            if not user:
+                return []
+
+            base_url = frappe.get_conf().get("hostname", "")
+            where_clauses = ["va.volunteer = %(user)s"]
+            order_by_clauses = []
+            params = {"user": user}
+
+            if isinstance(filter, str):
+                filter = frappe.parse_json(filter)
+
+            if filter:
+                if "types" in filter and filter["types"]:
+                    where_clauses.append("act.activity_type IN %(activity_types)s")
+                    params["activity_types"] = tuple(filter["types"])
+
+                if "karma_points" in filter and filter["karma_points"]:
+                    order_by_clauses.append(
+                        "act.karma_points ASC"
+                        if filter["karma_points"] == "Low to High"
+                        else "act.karma_points DESC"
+                    )
+
+                if "sdgs" in filter and filter["sdgs"]:
+                    where_clauses.append("sd.sdgs IN %(sdgs_values)s")
+                    params["sdgs_values"] = tuple(filter["sdgs"])
+
+                if "volunteering_hours" in filter and filter["volunteering_hours"]:
+                    order_by_clauses.append(
+                        "act.hours ASC"
+                        if filter["volunteering_hours"] == "Low to High"
+                        else "act.hours DESC"
+                    )
+
+                if "opportunity" in filter and filter["opportunity"]:
+                    where_clauses.append("va.opportunity = %(opportunity)s")
+                    params["opportunity"] = filter["opportunity"]
+
+            where_clause = " AND ".join(where_clauses)
+            order_by_clause = (
+                " ORDER BY " + ", ".join(order_by_clauses) if order_by_clauses else ""
+            )
+
+            sql = f"""
+            SELECT
+                va.name as name,
+                act.name as activity,
+                va.duration as duration,
+                va.com_percent as com_percent,
+                act.title as title,
+                act.karma_points as karma_points,
+                act.start_date as start_date,
+                act.end_date as end_date,
+                act.hours as hours,
+                va.duration as donet_hours,
+                va.completion_wf_state as completion_wf_state,
+                act.activity_description as activity_description,
+                act.activity_type as types,
+                CONCAT('{base_url}', act.activity_image) as activity_image,
+                COALESCE(
+                    JSON_ARRAYAGG(
+                        JSON_OBJECT(
+                            'sdgs_name', sdg.sdg,
+                            'image', sdg.sdg_image
+                        )
+                    ), JSON_ARRAY()
+                ) AS sdgs
+            FROM
+                `tabVolunteer Activity` AS va
+            INNER JOIN `tabActivity` AS act ON va.activity = act.name
+            LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
+            LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
+            WHERE {where_clause}
+            GROUP BY va.name
+            {order_by_clause}
+            """
+            try:
+                acts = frappe.db.sql(sql, params, as_dict=True)
+                return acts
+            except Exception as e:
+                frappe.log_error(f"Error in current_commitments query: {e}")
+                raise
 
     # available_commitments
     def available_commitments(filter={}):
@@ -190,7 +274,6 @@ class Activity:
                     GROUP BY act.name
                     {order_by_clause}
                 """
-
         try:
             acts = frappe.db.sql(sql_query, as_dict=True)
             return acts

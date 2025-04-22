@@ -42,7 +42,7 @@
               <div class="absolute bottom-0 left-0 p-4">
                 <h1 class="text-2xl font-bold text-white">{{ selectedOpportunity?.activity_name }}</h1>
                 <span class="inline-block bg-orange-500 text-white px-2 py-1 rounded text-sm mt-2">{{
-                  selectedOpportunity?.activity_type }}</span>
+                  selectedOpportunity?.types }}</span>
               </div>
             </div>
 
@@ -85,9 +85,8 @@
                     :style="`width: ${selectedOpportunity?.com_percent ?? 0}%`"></div>
                 </div>
                 <div class="flex items-center justify-between mt-2 text-sm text-gray-600">
-                  <span>{{ selectedOpportunity?.com_percent ?? 0 }}% completed</span>
-                  <span>{{ selectedOpportunity?.donet_hours ? ((selectedOpportunity?.donet_hours / 60) / 60).toFixed(2)
-                    : '0' }} hr</span>
+                  <span>{{ selectedOpportunity?.com_percent != null ? selectedOpportunity.com_percent : 0 }}% completed</span>
+                  <span>{{ selectedOpportunity?.donet_hours != null ? ((selectedOpportunity.donet_hours / 60) / 60).toFixed(2) : '0' }} hr</span>
                 </div>
               </div>
 
