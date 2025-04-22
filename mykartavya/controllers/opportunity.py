@@ -88,8 +88,20 @@ class Opportunity:
                             ELSE NULL
                         END
                     ), JSON_ARRAY()
-                ) AS sdgs
+                ) AS sdgs,
+                COALESCE(
+                        JSON_ARRAYAGG(
+                            DISTINCT JSON_OBJECT(
+                                'name', sva.name,
+                                'full_name', sva.full_name,
+                                'email', sva.email,
+                                'user_image', sva.user_image
+                            )
+                        ), JSON_ARRAY()
+                    ) as volunteers
             FROM `tabActivity` as act
+            LEFT JOIN `tabVolunteer Activity` as va ON va.activity = act.name
+            LEFT JOIN `tabSVA User` as sva ON sva.name = va.volunteer
             LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
             LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
             WHERE act.end_date >= CURRENT_DATE()
