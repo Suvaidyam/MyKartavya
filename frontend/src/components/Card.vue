@@ -143,17 +143,6 @@
                             <p class="text-xs font-medium">{{ item.hours }} hr</p>
                         </Tooltip>
                     </div>
-                    <!-- <div class="flex items-center justify-between">
-                       <div class="flex -pl-10">
-                        <div class=" bg-white shadow-lg w-8 h-8 rounded-full"> 
-                        </div>
-                       </div>
-                        <div
-                            class="flex gap-1 items-center text-sm font-semibold tracking-normal text-[#FF5722] uppercase hover:text-orange-700 transition-colors">
-                            <p>Act now</p>
-                            <FeatherIcon name="arrow-up-right" class="size-4" />
-                        </div>
-                    </div> -->
                     <div class="flex items-center justify-between">
                         <div v-if="parseVolunteers(item?.volunteers).length > 0 && parseVolunteers(item?.volunteers)[0]?.full_name"
                             class="flex items-center -space-x-3">
