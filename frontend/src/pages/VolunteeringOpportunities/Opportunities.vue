@@ -85,8 +85,10 @@
                     :style="`width: ${selectedOpportunity?.com_percent ?? 0}%`"></div>
                 </div>
                 <div class="flex items-center justify-between mt-2 text-sm text-gray-600">
-                  <span>{{ selectedOpportunity?.com_percent != null ? selectedOpportunity.com_percent : 0 }}% completed</span>
-                  <span>{{ selectedOpportunity?.donet_hours != null ? ((selectedOpportunity.donet_hours / 60) / 60).toFixed(2) : '0' }} hr</span>
+                  <span>{{ selectedOpportunity?.com_percent != null ? selectedOpportunity.com_percent : 0 }}%
+                    completed</span>
+                  <span>{{ selectedOpportunity?.donet_hours != null ? ((selectedOpportunity.donet_hours / 60) /
+                    60).toFixed(2) : '0' }} hr</span>
                 </div>
               </div>
 
@@ -242,13 +244,20 @@ const loader = ref(true);
 
 // Define functions first
 const relatedOpportunities = async () => {
+
+  console.log(activities.value, "activities?.value?.sdgs", route?.params)
   try {
-    const response = await call('mykartavya.controllers.api.related_opportunities', { sdgs: activities.value.sdgs });
+    let sdgs = activities?.value?.sdgs
+    if (typeof sdgs === 'string') {
+      sdgs = JSON.parse(sdgs)
+    }
+    let filter = { sdgs: sdgs?.map(item => item.sdgs_name) }
+    const response = await call('mykartavya.controllers.api.related_opportunities', { filter: filter });
     if (response) {
       if (response.length > 0) {
-        if (route.params.name) {
-          opportunities.value = response.filter(item => item.name !== route.params.name)
-          selectedOpportunity.value = response.find(item => item.name === route.params.name)
+        if (route?.params?.name) {
+          opportunities.value = response.filter(item => item.name !== route?.params?.name)
+          selectedOpportunity.value = response.find(item => item.name === route?.params?.name)
         } else {
           opportunities.value = response
           selectedOpportunity.value = response[0]
@@ -273,14 +282,14 @@ const checkUserApproval = async () => {
 
 const opportunitiesActivity = async () => {
   try {
-    if (!route.params.name) {
+    if (!route?.params?.name) {
       opportunitiesActivities.value = [];
       return;
     }
 
     // First check if the API endpoint exists
     const response = await call('mykartavya.controllers.api.get_opportunity_activity', {
-      opportunity: route.params.name,
+      opportunity: route?.params?.name,
       filter: { sdgs: activities.value.sdgs }
     }).catch(err => {
       console.error('API Error:', err);
@@ -296,10 +305,9 @@ const opportunitiesActivity = async () => {
     // Process the response
     if (Array.isArray(response)) {
       const processedResponse = response.map(item => ({
-
         ...item,
         activity: item.activity,
-        name: route.params.name
+        name: route?.params?.name
       }));
       opportunitiesActivities.value = processedResponse;
     } else {

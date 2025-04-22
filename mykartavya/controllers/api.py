@@ -16,7 +16,7 @@ def get_opportunity_activity(opportunity, filter={}):
     return Opportunity.get_opportunity_activity(opportunity, filter)
 
 @frappe.whitelist(allow_guest=True)
-def get_activity_opportunity(name):
+def get_activity_opportunity(name=None):
     return Opportunity.get_activity_opportunity(name)
 
 @frappe.whitelist(allow_guest=True)
@@ -257,8 +257,8 @@ def check_user_fields():
 
 
 @frappe.whitelist(allow_guest=True)
-def related_opportunities(name="", filter={}):
-    return Opportunity.related_opportunities(name, filter)
+def related_opportunities(filter={}):
+    return Opportunity.related_opportunities(filter)
 
 
 @frappe.whitelist(allow_guest=True)
