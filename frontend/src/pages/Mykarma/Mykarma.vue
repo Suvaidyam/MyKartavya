@@ -137,10 +137,53 @@
             </div>
 
             <div v-else class="w-full pb-4">
-              <div ref="scrollContainerAvailable" class="py-4 w-full overflow-x-auto lg:overflow-x-visible">
+              <div ref="scrollContainerAvailable" class="py-2 w-full overflow-x-auto lg:overflow-x-visible">
                 <div v-if="available_commitments.length > 0"
                   class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   <Card v-for="item in available_commitments" :key="item.name" :item="item" :mode="'activity'" />
+                </div>
+                <div class="w-full h-[280px]" v-else>
+                  <NotFound message="Available Commitments not Found!" />
+                </div>
+              </div>
+              <div v-if="available_commitments.length > 0 && (!isLeftDisabledAvailable || !isRightDisabledAvailable)"
+                class="flex justify-center mt-2 lg:hidden">
+                <button
+                  class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary hover:bg-orange-50 transition-colors">
+                  View All
+                </button>
+              </div>
+            </div>
+          </section>
+          <section class="px-3 sm:px-4 mt-5 border rounded-[12px] bg-white overflow-y-auto">
+            <div class="w-full h-12 flex items-center bg-white sticky top-0 z-10">
+              <h2 class="text-base sm:text-lg font-medium">Available Opportunities</h2>
+              <div class="flex items-center ml-auto lg:hidden">
+                <FeatherIcon @click="scrollLeftAvailable" :class="[
+                  'size-5 cursor-pointer',
+                  isLeftDisabledAvailable
+                    ? 'text-gray-500 disabled'
+                    : 'text-gray-700',
+                ]" name="chevron-left" :disabled="isLeftDisabledAvailable" />
+                <FeatherIcon @click="scrollRightAvailable" :class="[
+                  'size-5 cursor-pointer',
+                  isRightDisabledAvailable
+                    ? 'text-gray-500 disabled'
+                    : 'text-gray-700',
+                ]" name="chevron-right" :disabled="isRightDisabledAvailable" />
+              </div>
+            </div>
+            <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <CardLoader />
+              <CardLoader />
+              <CardLoader />
+            </div>
+
+            <div v-else class="w-full pb-4">
+              <div ref="scrollContainerAvailable" class="py-2 w-full overflow-x-auto lg:overflow-x-visible">
+                <div v-if="opportunitiy.length > 0"
+                  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <Card v-for="item in opportunitiy" :key="item.name" :item="item" :mode="'opportunity'" />
                 </div>
                 <div class="w-full h-[280px]" v-else>
                   <NotFound message="Available Commitments not Found!" />
@@ -183,6 +226,7 @@ const scrollContainer = ref(null)
 const isUserApproved = ref(false)
 const showReqForApproval = ref(false)
 const svaUserData = ref(null)
+const opportunitiy = ref([])
 
 // Scroll state
 const isLeftDisabled = ref(true)
@@ -250,6 +294,19 @@ const cur_commitments = async (filter) => {
   }
 }
 
+const volunteering_opportunities = async (filter) => {
+  loader.value = true;
+  try {
+    const response = await call('mykartavya.controllers.api.related_opportunities', {
+      filter: filter ?? {},
+    });
+    opportunitiy.value = response;
+  } catch (err) {
+    console.error('Error fetching Kindness data:', err);
+  } finally {
+    loader.value = false;
+  }
+};
 // Add new scroll functions for Available Commitments
 const scrollLeftAvailable = () => {
   if (scrollContainerAvailable.value) {
@@ -322,6 +379,7 @@ onMounted(() => {
   checkUserApproval()
   cur_commitments()
   avai_commitments()
+  volunteering_opportunities()
 })
 
 // Watch filter changes
@@ -331,6 +389,7 @@ watch(
     if (newVal) {
       cur_commitments(newVal)
       avai_commitments(newVal)
+      volunteering_opportunities(newVal)
     }
   },
   { deep: true, immediate: true }
