@@ -4,8 +4,6 @@ frappe.ui.form.on("Activity", {
             frappe.validated = false;
             frm.image_uploaded = false;  
         }
-
-       
     },
 
     activity_image: function (frm) {
