@@ -91,7 +91,7 @@
               <FeatherIcon name="clock" class="size-4 text-[#666666]" />
               {{ activities?.hours ?? '0' }} hr
             </span>
-            <span class="flex items-center gap-2 justify-center" style="color: #0b0b0b">
+            <span v-if="activities?.karma_points" class="flex items-center gap-2 justify-center" style="color: #0b0b0b">
               <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M15.5002 3.66602C15.5002 2.28518 12.8885 1.16602 9.66683 1.16602C6.44516 1.16602 3.8335 2.28518 3.8335 3.66602M15.5002 3.66602V6.99935C15.5002 7.84935 14.5118 8.59935 13.0002 9.05102C12.0552 9.33435 10.906 9.49935 9.66683 9.49935C8.42766 9.49935 7.2785 9.33352 6.3335 9.05102C4.82266 8.59935 3.8335 7.84935 3.8335 6.99935V3.66602M15.5002 3.66602C15.5002 4.51602 14.5118 5.26602 13.0002 5.71768C12.0552 6.00102 10.906 6.16602 9.66683 6.16602C8.42766 6.16602 7.2785 6.00018 6.3335 5.71768C4.82266 5.26602 3.8335 4.51602 3.8335 3.66602"
@@ -255,13 +255,14 @@ const svaUserData = ref(null)
 
 const activity = async () => {
   try {
+    console.log(route.params);
     if (route.params.name && route.params.activity) {
-      const response = await call('mykartavya.controllers.api.activity_details', { 'name': route?.params?.activity });
+      const response = await call('mykartavya.controllers.api.opportunity_activity_details', { name: route?.params?.activity });
       if (response) {
         activities.value = response
       }
     } else if (route.params.name) {
-      const response = await call('mykartavya.controllers.api.activity_details', { 'name': route?.params?.name });
+      const response = await call('mykartavya.controllers.api.activity_details', { name: route?.params?.name });
       if (response) {
         activities.value = response
       }

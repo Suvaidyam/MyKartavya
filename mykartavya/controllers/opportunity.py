@@ -5,7 +5,8 @@ class Opportunity:
     def get_opportunity_activity(opportunity):
         try:
             return frappe.db.sql("""
-                SELECT 
+                SELECT  
+                     opac.name   ,         
                     opac.activity_name,
                     opac.types,
                     opac.activity_image,
@@ -19,26 +20,32 @@ class Opportunity:
             frappe.log_error(frappe.get_traceback(), "Error in get_opportunity_activity")
             return []
 
+    
     def opportunity_activity_details(name):
+        if not name:
+            frappe.log_error("Opportunity name is required", "opportunity_activity_details")
+            return None
+            
         try:
-            activity = frappe.get_list(
-                "Opportunity Activity",
-                {"opportunity": name},
-                [
-                    "activity_name as title",
-                    "opportunity_type as types",
-                    "activity_image",
-                    "start_date",
-                    "end_date",
-                    "total_hour as hours",
-                    "total_minutes",
-                    "description",
-                ],
-            )
-            return activity
+            activity = frappe.get_doc("Opportunity Activity", name)
+            return {
+                "title": activity.activity_name,
+                "types": activity.types,
+                "activity_image": activity.activity_image,
+                "start_date": activity.start_date,
+                "end_date": activity.end_date,
+                "hours": activity.hours,
+                "total_minutes": activity.total_minutes,
+                "description": activity.description
+            }
+        
+        except frappe.DoesNotExistError:
+            frappe.log_error(f"Opportunity Activity not found for opportunity {name}", "opportunity_activity_details")
+            return None
         except Exception as e:
             frappe.log_error(
-                f"Unexpected error fetching activity for opportunity {name}: {str(e)}"
+                f"Unexpected error fetching activity for opportunity {name}: {str(e)}",
+                "opportunity_activity_details"
             )
             return None
 
