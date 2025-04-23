@@ -288,9 +288,9 @@ const opportunitiesActivity = async () => {
     }
 
     // First check if the API endpoint exists
+
     const response = await call('mykartavya.controllers.api.get_opportunity_activity', {
-      opportunity: route?.params?.name,
-      filter: { sdgs: activities.value.sdgs }
+      opportunity: route?.params?.name
     }).catch(err => {
       console.error('API Error:', err);
       return null;
@@ -304,9 +304,9 @@ const opportunitiesActivity = async () => {
 
     // Process the response
     if (Array.isArray(response)) {
-      const processedResponse = response.map(item => ({
+      const processedResponse = response?.map(item => ({
         ...item,
-        activity: item.activity,
+        activity: item?.name,
         name: route?.params?.name
       }));
       opportunitiesActivities.value = processedResponse;
