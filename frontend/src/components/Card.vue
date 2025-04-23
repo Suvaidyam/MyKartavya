@@ -81,8 +81,6 @@
             </div>
         </router-link>
     </div>
-    <!--  -->
-
     <article v-else class="flex flex-col card w-full py-2 overflow-hidden">
         <router-link :to="dynamicLink" class="block">
             <div class="w-full flex flex-col justify-between aspect-[16/9] rounded-lg relative overflow-hidden">
@@ -93,7 +91,7 @@
                     class="bg-[#FF7C3A] activity-type absolute top-3 text-white font-semibold text-xs flex items-center pl-3 pr-5 h-7 shadow-sm">
                     {{ item.types }}
                 </div>
-                <div
+                <div v-if="item.karma_points"
                     class="absolute right-3 top-3 bg-white/90 backdrop-blur-sm text-gray-800 text-xs px-3 h-7 rounded-full shadow-sm flex items-center gap-1.5">
                     <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
