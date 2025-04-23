@@ -12,8 +12,8 @@ from frappe.utils.pdf import get_pdf
 
 
 @frappe.whitelist(allow_guest=True)
-def get_opportunity_activity(opportunity, filter={}):
-    return Opportunity.get_opportunity_activity(opportunity, filter)
+def get_opportunity_activity(opportunity):
+    return Opportunity.get_opportunity_activity(opportunity)
 
 @frappe.whitelist(allow_guest=True)
 def get_activity_opportunity(name=None):
