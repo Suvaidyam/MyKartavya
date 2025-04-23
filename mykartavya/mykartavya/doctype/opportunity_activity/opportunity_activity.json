@@ -7,11 +7,10 @@
  "engine": "InnoDB",
  "field_order": [
   "basic_info_section",
-  "volunteer",
   "activity_name",
   "opportunity",
   "column_break_1",
-  "opportunity_type",
+  "types",
   "image_section",
   "activity_image",
   "description_section",
@@ -21,7 +20,7 @@
   "column_break_2",
   "end_date",
   "duration_section",
-  "total_hour",
+  "hours",
   "column_break_3",
   "total_minutes"
  ],
@@ -101,13 +100,6 @@
    "label": "Duration"
   },
   {
-   "default": "0",
-   "fieldname": "total_hour",
-   "fieldtype": "Int",
-   "label": "Total Hours",
-   "reqd": 1
-  },
-  {
    "fieldname": "column_break_3",
    "fieldtype": "Column Break"
   },
@@ -119,25 +111,23 @@
    "reqd": 1
   },
   {
-   "fieldname": "opportunity_type",
-   "fieldtype": "Select",
-   "label": "Opportunity Type",
-   "options": "\nOn-Ground\nOnline\nHybrid"
+   "fetch_from": "opportunity.opportunity_type",
+   "fieldname": "types",
+   "fieldtype": "Data",
+   "label": "Opportunity Type"
   },
   {
-   "fieldname": "volunteer",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Volunteer",
-   "options": "SVA User",
-   "reqd": 1,
-   "unique": 1
+   "default": "0",
+   "fieldname": "hours",
+   "fieldtype": "Int",
+   "label": "Total Hours",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-21 18:36:57.811455",
+ "modified": "2025-04-23 11:51:49.125826",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity Activity",

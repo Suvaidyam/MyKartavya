@@ -272,8 +272,6 @@ const activity = async () => {
     console.error('Error fetching activity data:', err);
   }
 };
-
-
 // Sample data for the opportunities
 const relatedactivity = ref([]);
 const relatedOpportunities = async () => {

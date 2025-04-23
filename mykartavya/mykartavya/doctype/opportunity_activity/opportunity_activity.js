@@ -4,7 +4,12 @@ frappe.ui.form.on('Opportunity Activity', {
     },
 
     validate: function (frm) {
-        // Validate end date is after or equal to start date
+
+        if (frm.image_uploaded) {
+            frappe.validated = false;
+            frm.image_uploaded = false;  
+        }
+
         if (frm.doc.start_date && frm.doc.end_date) {
             if (frm.doc.end_date < frm.doc.start_date) {
                 frappe.msgprint(__('End Date cannot be before Start Date'));
@@ -38,6 +43,12 @@ frappe.ui.form.on('Opportunity Activity', {
         }
     },
 
+    activity_image: function (frm) {
+        if (frm.doc.activity_image) {
+            frm.image_uploaded = true;
+        }
+    },
+    
     start_date: function (frm) {
         // Auto-set end date to start date if empty
         if (!frm.doc.end_date) {

@@ -17,7 +17,6 @@
   "ngo",
   "is_private",
   "company",
-  "opportunity",
   "activity_details_section",
   "activity_description",
   "sustainable_development_goals_sdgs_section",
@@ -500,18 +499,12 @@
   {
    "fieldname": "section_break_ywwd",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "opportunity",
-   "fieldtype": "Link",
-   "label": "Opportunity",
-   "options": "Opportunity"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-18 11:27:25.663106",
+ "modified": "2025-04-23 11:38:49.074670",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
