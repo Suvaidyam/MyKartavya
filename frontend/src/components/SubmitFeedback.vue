@@ -125,6 +125,7 @@ const showCompletionPopup = ref(false)
 const call = inject('call')
 const auth = inject('auth')
 const route = useRoute()
+const store = inject('store');
 const router = useRouter()
 
 const props = defineProps({
@@ -206,7 +207,8 @@ const submitReport = async () => {
                 minutes: 0,
                 progress: 0,
             };
-            showCompletionPopup.value = true;
+            store.refresh_step = true;
+            // showCompletionPopup.value = false;
         }
     } catch (error) {
         loading.value = false;

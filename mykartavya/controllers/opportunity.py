@@ -23,32 +23,46 @@ class Opportunity:
 
     
     def opportunity_activity_details(name):
-        if not name:
-            frappe.log_error("Opportunity name is required", "opportunity_activity_details")
-            return None
-            
-        try:
-            activity = frappe.get_doc("Opportunity Activity", name)
-            return {
-                "title": activity.activity_name,
-                "types": activity.types,
-                "activity_image": activity.activity_image,
-                "start_date": activity.start_date,
-                "end_date": activity.end_date,
-                "hours": activity.hours,
-                "total_minutes": activity.total_minutes,
-                "activity_description": activity.description
-            }
-        
-        except frappe.DoesNotExistError:
-            frappe.log_error(f"Opportunity Activity not found for opportunity {name}", "opportunity_activity_details")
-            return None
-        except Exception as e:
-            frappe.log_error(
-                f"Unexpected error fetching activity for opportunity {name}: {str(e)}",
-                "opportunity_activity_details"
-            )
-            return None
+        user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+        exists = frappe.db.exists(
+            "Volunteer Opportunity Activity Log", {"volunteer": user, "opportunity_activity": name}
+        )
+        where_clause = ""
+
+        volunteer_condition = (
+            f"AND voal.volunteer = '{user}'" if exists else "AND voal.volunteer IS NULL"
+        )
+
+        sql_query = f"""
+            SELECT
+                voal.name as name,
+                oa.name as activity,
+                voal.duration as donet_hours,
+                voal.com_percent as com_percent,
+                oa.activity_name as title,
+                oa.start_date as start_date,
+                oa.end_date as end_date,
+                oa.hours as hours,
+                oa.total_minutes as total_minutes,
+                oa.description as activity_description,
+                oa.types as types,
+                oa.activity_image as activity_image
+
+            FROM
+                `tabOpportunity Activity` AS oa
+            LEFT JOIN `tabVolunteer Opportunity Activity Log` AS voal ON voal.opportunity_activity = oa.name
+            {volunteer_condition}
+            WHERE oa.name = '{name}'
+            {where_clause}
+            """
+        data = frappe.db.sql(sql_query, as_dict=True)
+        doc = data[0] if data else data
+
+        if exists:
+            doc["is_assigned"] = True
+        else:
+            doc["is_assigned"] = False
+        return doc
 
     def related_opportunities(filter={}):
         try:

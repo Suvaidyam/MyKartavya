@@ -8,7 +8,6 @@
  "field_order": [
   "volunteer",
   "opportunity_activity",
-  "enrollment_wf_state",
   "opportunity",
   "column_break_uoat",
   "duration",
@@ -32,22 +31,11 @@
    "reqd": 1
   },
   {
-   "depends_on": "eval:doc.activity",
    "fieldname": "opportunity_activity",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Opportunity Activity",
    "options": "Opportunity Activity",
-   "read_only": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "enrollment_wf_state",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Enrollment Status",
-   "options": "Applied\nApproved\nRejected\nWithdrawn",
-   "read_only": 1,
    "reqd": 1
   },
   {
@@ -112,13 +100,12 @@
    "fieldname": "opportunity",
    "fieldtype": "Link",
    "label": "Opportunity",
-   "options": "Opportunity",
-   "reqd": 1
+   "options": "Opportunity"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-24 16:02:08.948129",
+ "modified": "2025-04-24 17:59:57.003457",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Opportunity Activity Log",
