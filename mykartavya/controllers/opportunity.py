@@ -50,7 +50,7 @@ class Opportunity:
             )
             return None
 
-    def related_opportunities(name="", filter={}):
+    def related_opportunities(filter={}):
         try:
             if isinstance(filter, str):
                 filter = frappe.parse_json(filter)
