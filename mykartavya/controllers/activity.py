@@ -268,7 +268,6 @@ class Activity:
                     LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
                     LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
                     WHERE act.end_date >= CURRENT_DATE() AND act.status IN ('Published', 'Ongoing')
-                    AND (act.opportunity IS NULL OR act.opportunity = '')
                     AND act.docstatus = 1 
                        {where_clause}
                     GROUP BY act.name
