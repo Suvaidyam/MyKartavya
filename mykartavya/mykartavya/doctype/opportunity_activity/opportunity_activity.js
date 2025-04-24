@@ -1,13 +1,34 @@
 frappe.ui.form.on('Opportunity Activity', {
     refresh: function (frm) {
-        // Any refresh logic here
+        // Set filter for parent field based on selected opportunity
+        frm.set_query('parent1', function () {
+            return {
+                filters: {
+                    'opportunity': frm.doc.opportunity
+                }
+            };
+        });
+    },
+
+    opportunity: function (frm) {
+        // Clear parent field when opportunity changes
+        frm.set_value('parent1', '');
+
+        // Set filter for parent field based on selected opportunity
+        frm.set_query('parent1', function () {
+            return {
+                filters: {
+                    'opportunity': frm.doc.opportunity
+                }
+            };
+        });
     },
 
     validate: function (frm) {
 
         if (frm.image_uploaded) {
             frappe.validated = false;
-            frm.image_uploaded = false;  
+            frm.image_uploaded = false;
         }
 
         if (frm.doc.start_date && frm.doc.end_date) {
@@ -48,7 +69,7 @@ frappe.ui.form.on('Opportunity Activity', {
             frm.image_uploaded = true;
         }
     },
-    
+
     start_date: function (frm) {
         // Auto-set end date to start date if empty
         if (!frm.doc.end_date) {

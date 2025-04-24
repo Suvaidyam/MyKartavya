@@ -11,6 +11,7 @@
   "opportunity",
   "column_break_1",
   "types",
+  "parent1",
   "image_section",
   "activity_image",
   "description_section",
@@ -133,13 +134,19 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "parent1",
+   "fieldtype": "Link",
+   "label": "Parent",
+   "options": "Opportunity Activity"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-24 12:47:23.074750",
+ "modified": "2025-04-24 14:56:19.314913",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity Activity",
