@@ -235,6 +235,10 @@ def act_now(activity, volunteer):
 def submit_activity_report(name, data):
     return Activity.submit_activity_report(name, data)
 
+@frappe.whitelist(allow_guest=True)
+def submit_opportunity_activity_report(name, data):
+    return Activity.submit_opportunity_activity_report(name, data)
+
 
 @frappe.whitelist(allow_guest=True)
 def activity_details(name):

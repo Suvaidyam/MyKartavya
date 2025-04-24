@@ -513,6 +513,10 @@ class Activity:
         result = frappe.db.sql(sql_query, as_dict=True)
         return result
 
+    def submit_opportunity_activity_report(name,data):
+        print(name,data)
+
+        
     def submit_activity_report(name, data):
         volunteer = frappe.db.get_value(
             "SVA User", {"email": frappe.session.user}, "name"

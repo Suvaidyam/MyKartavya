@@ -154,7 +154,9 @@
           </div>
           <!-- Right Section - Timeline -->
           <div>
-            <Stepper :activity="activities" :key="activities?.activity" />
+            <SubmitFeedback v-if="route.params.name && route.params.activity" :activity="activities"
+              :opportunity_activity="route.params.activity" :key="'feedback-' + activities?.activity" />
+            <Stepper v-else :activity="activities" :key="'stepper-' + activities?.activity" />
           </div>
         </div>
 
@@ -193,6 +195,7 @@
 import { inject, ref, onMounted, watch, watchEffect, computed, onUnmounted } from 'vue'
 import { FeatherIcon } from 'frappe-ui'
 import Stepper from '../../components/Stepper.vue'
+import SubmitFeedback from '../../components/SubmitFeedback.vue'
 import Card from '../../components/Card.vue'
 import NotFound from '../../components/NotFound.vue'
 import ReqForApproval from '../../components/ReqForApproval.vue'
@@ -255,7 +258,6 @@ const svaUserData = ref(null)
 
 const activity = async () => {
   try {
-    console.log(route.params);
     if (route.params.name && route.params.activity) {
       const response = await call('mykartavya.controllers.api.opportunity_activity_details', { name: route?.params?.activity });
       if (response) {
