@@ -514,8 +514,70 @@ class Activity:
         result = frappe.db.sql(sql_query, as_dict=True)
         return result
 
-    def submit_opportunity_activity_report(name,data):
-        print(name,data)
+    def submit_opportunity_activity_report(name, data):
+        volunteer = frappe.db.get_value(
+            "SVA User", {"email": frappe.session.user}, "name"
+        )
+        if not volunteer:
+            return {"error": "Volunteer not found", "status": 400}
+
+        # Check if log entry exists
+        existing_log = frappe.db.exists(
+            "Volunteer Opportunity Activity Log", 
+            {"volunteer": volunteer, "opportunity_activity": name}
+        )
+
+        if existing_log:
+            # Update existing log
+            doc = frappe.get_doc("Volunteer Opportunity Activity Log", existing_log)
+        else:
+            # Create new log
+            doc = frappe.new_doc("Volunteer Opportunity Activity Log")
+            doc.volunteer = volunteer
+            doc.opportunity_activity = name
+            # Get opportunity from activity
+            opportunity = frappe.db.get_value("Opportunity Activity", name, "opportunity")
+            doc.opportunity = opportunity
+
+        # Handle image uploads
+        images = data.get("images", [])
+        if images:
+            for image in images:
+                Activity.upload_file(image, doc)
+
+        # Add activity log entry
+        doc.append(
+            "volunteer_activity_log",
+            {
+                "date": frappe.utils.now(),
+                "duration": data.get("duration"),
+                "percent": data.get("percent"),
+            },
+        )
+
+        # Update completion percentage
+        current_percent = doc.com_percent or 0
+        new_percent = current_percent + data.get("percent", 0)
+        doc.com_percent = min(new_percent, 100)  # Ensure it doesn't exceed 100%
+
+        # Update total duration
+        current_duration = doc.duration or 0
+        doc.duration = current_duration + data.get("duration", 0)
+
+        # Set completion workflow state
+        if doc.com_percent >= 100:
+            doc.completion_wf_state = "Submitted"
+        else:
+            doc.completion_wf_state = "Pending"
+
+        doc.save(ignore_permissions=True)
+        frappe.db.commit()
+
+        return {
+            "status": "success",
+            "message": "Activity report submitted successfully",
+            "data": doc
+        }
 
         
     def submit_activity_report(name, data):
@@ -548,20 +610,58 @@ class Activity:
 
     def upload_file(data, doc):
         try:
+            if not data or not data.get("preview"):
+                return {"status": "error", "message": "No image data provided"}
+
             base64_string = data.get("preview")
             if "," in base64_string:
                 base64_string = base64_string.split(",")[1]
-            file_name = f"{doc.name}_{frappe.utils.now().replace(' ', '_')}.png"
-            file_content = base64.b64decode(base64_string)
-            file_path = save_file(
-                fname=file_name,
-                content=file_content,
-                dt="Volunteer Activity",
-                dn=doc.name,
-                is_private=0,
-            )
-            doc.append("images", {"image": file_path.file_url, "parent": doc.name})
+
+            # Generate unique filename with timestamp
+            timestamp = frappe.utils.now().replace(" ", "_").replace(":", "_")
+            file_name = f"{doc.doctype}_{doc.name}_{timestamp}.png"
+
+            # Decode base64 content
+            try:
+                file_content = base64.b64decode(base64_string)
+            except Exception as e:
+                return {"status": "error", "message": "Invalid image data format"}
+
+            # Save file based on document type
+            if doc.doctype == "Volunteer Activity":
+                file_path = save_file(
+                    fname=file_name,
+                    content=file_content,
+                    dt="Volunteer Activity",
+                    dn=doc.name,
+                    is_private=0,
+                )
+            elif doc.doctype == "Volunteer Opportunity Activity Log":
+                file_path = save_file(
+                    fname=file_name,
+                    content=file_content,
+                    dt="Volunteer Opportunity Activity Log",
+                    dn=doc.name,
+                    is_private=0,
+                )
+            else:
+                return {"status": "error", "message": "Unsupported document type"}
+
+            if not file_path:
+                return {"status": "error", "message": "Failed to save file"}
+
+            # Append image to document
+            doc.append("images", {
+                "image": file_path.file_url,
+                "parent": doc.name,
+                "parentfield": "images",
+                "parenttype": doc.doctype
+            })
+
+            return {"status": "success", "message": "File uploaded successfully", "file_url": file_path.file_url}
+
         except Exception as e:
+            frappe.log_error(f"Error in upload_file: {str(e)}", "File Upload Error")
             return {"status": "error", "message": str(e)}
 
     def submit_feedback(name, volunteer, rating, comments):
