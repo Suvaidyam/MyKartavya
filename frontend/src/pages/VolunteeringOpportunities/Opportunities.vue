@@ -48,7 +48,7 @@
 
             <!-- Opportunity Details -->
             <div class="p-6">
-              <div class="flex items-center gap-4 mb-4">
+              <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-2">
                   <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -230,8 +230,7 @@ const loader = ref(true);
 
 // Define functions first
 const relatedOpportunities = async () => {
-
-  console.log(activities.value, "activities?.value?.sdgs", route?.params)
+  // console.log(activities.value, "activities?.value?.sdgs", route?.params)
   try {
     let sdgs = activities?.value?.sdgs
     if (typeof sdgs === 'string') {
