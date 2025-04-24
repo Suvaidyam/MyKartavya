@@ -2,17 +2,34 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Opportunity", {
-    start_date: function(frm) {
+    setup(frm) {
+        frm['dt_events'] = {
+            "Opportunity Activity": {
+                after_render: function (dt, mode) {
+                    let form = dt.form_dialog;
+                    let opportunity = form.get_value('opportunity');
+                    form.set_query('parent1', () => {
+                        return {
+                            filters: {
+                                'opportunity': opportunity || `Select opportunity`
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    },
+    start_date: function (frm) {
         if (frm.doc.start_date) {
             frm.set_value('end_date', null);
             const minEndDate = frappe.datetime.add_days(frm.doc.start_date, 1);
-    
+
             frm.fields_dict.end_date.datepicker.update({
                 minDate: frappe.datetime.str_to_obj(minEndDate)
             });
         }
     },
-    is_private: function(frm) {
+    is_private: function (frm) {
         if (!frm.doc.is_private) {
             frm.set_value('company', null);
         }
@@ -20,8 +37,8 @@ frappe.ui.form.on("Opportunity", {
             frm.set_value('is_global', 0);
         }
     },
-    
-    is_global: function(frm) {
+
+    is_global: function (frm) {
         if (frm.doc.is_private) {
             frm.set_value('is_private', 0);
         }
@@ -54,7 +71,7 @@ frappe.ui.form.on("Opportunity", {
         }
     },
 
-	refresh(frm) {
+    refresh(frm) {
         let today = frappe.datetime.get_today();
         frm.set_df_property('start_date', 'min_date', today);
         formatted_today = new Date(today);
@@ -65,11 +82,11 @@ frappe.ui.form.on("Opportunity", {
 
         if (frm.doc.start_date) {
             const minEndDate = frappe.datetime.add_days(frm.doc.start_date, 1);
-    
+
             frm.fields_dict.end_date.datepicker.update({
                 minDate: frappe.datetime.str_to_obj(minEndDate)
             });
         }
-        
-	},
+
+    },
 });

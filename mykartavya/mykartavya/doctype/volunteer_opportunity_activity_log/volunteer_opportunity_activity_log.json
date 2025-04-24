@@ -1,13 +1,13 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:VO-{#####}",
- "creation": "2025-04-16 12:21:26.351272",
+ "autoname": "format:VOAL-{#####}",
+ "creation": "2025-04-24 15:28:34.935624",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "volunteer",
-  "activity",
+  "opportunity_activity",
   "enrollment_wf_state",
   "column_break_uoat",
   "duration",
@@ -15,14 +15,10 @@
   "completion_wf_state",
   "section_break_eeob",
   "column_break_zxdk",
-  "karma_points",
   "images",
   "section_break_totr",
   "column_break_mhyw",
-  "certificate",
-  "volunteer_opportunity_activity",
-  "rating",
-  "remarks"
+  "volunteer_activity_log"
  ],
  "fields": [
   {
@@ -31,15 +27,17 @@
    "in_list_view": 1,
    "label": "Volunteer",
    "options": "SVA User",
+   "read_only": 1,
    "reqd": 1
   },
   {
-   "fieldname": "activity",
+   "depends_on": "eval:doc.activity",
+   "fieldname": "opportunity_activity",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Opportunity",
-   "options": "Opportunity",
-   "reqd": 1
+   "label": "Opportunity Activity",
+   "options": "Opportunity Activity",
+   "read_only": 1
   },
   {
    "fieldname": "enrollment_wf_state",
@@ -47,6 +45,7 @@
    "in_list_view": 1,
    "label": "Enrollment Status",
    "options": "Applied\nApproved\nRejected\nWithdrawn",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -54,16 +53,19 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": " ",
    "fieldname": "duration",
    "fieldtype": "Duration",
    "in_list_view": 1,
-   "label": "Duration"
+   "label": "Duration",
+   "read_only": 1
   },
   {
    "fieldname": "com_percent",
    "fieldtype": "Float",
    "label": "Completion Percent",
-   "precision": "1"
+   "precision": "1",
+   "read_only": 1
   },
   {
    "fieldname": "completion_wf_state",
@@ -71,7 +73,7 @@
    "in_list_view": 1,
    "label": "Completion Status",
    "options": "Pending\nSubmitted\nApproved\nRejected",
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "section_break_eeob",
@@ -80,14 +82,6 @@
   {
    "fieldname": "column_break_zxdk",
    "fieldtype": "Column Break",
-   "read_only": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "karma_points",
-   "fieldtype": "Int",
-   "label": "Karma Points",
-   "non_negative": 1,
    "read_only": 1
   },
   {
@@ -106,39 +100,19 @@
    "read_only": 1
   },
   {
-   "fieldname": "certificate",
-   "fieldtype": "Attach",
-   "label": "Certificate",
-   "read_only": 1
-  },
-  {
-   "fieldname": "rating",
-   "fieldtype": "Rating",
-   "label": "Rating",
-   "options": "5",
-   "read_only": 1
-  },
-  {
-   "fieldname": "remarks",
-   "fieldtype": "Small Text",
-   "label": "Remarks",
-   "length": 500,
-   "read_only": 1
-  },
-  {
-   "fieldname": "volunteer_opportunity_activity",
+   "fieldname": "volunteer_activity_log",
    "fieldtype": "Table",
-   "label": "Volunteer Opportunity Activity",
-   "options": "Volunteer Opportunity Activity",
+   "label": "Volunteer Activity Log",
+   "options": "Volunteer Activity Log",
    "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-24 15:23:23.372531",
+ "modified": "2025-04-24 15:29:44.559786",
  "modified_by": "Administrator",
  "module": "Mykartavya",
- "name": "Volunteer Opportunity",
+ "name": "Volunteer Opportunity Activity Log",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
