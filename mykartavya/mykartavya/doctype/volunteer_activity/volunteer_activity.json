@@ -8,6 +8,7 @@
  "field_order": [
   "volunteer",
   "activity",
+  "opportunity_activity",
   "enrollment_wf_state",
   "column_break_uoat",
   "duration",
@@ -40,8 +41,7 @@
    "in_list_view": 1,
    "label": "Activity",
    "options": "Activity",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "enrollment_wf_state",
@@ -137,11 +137,19 @@
    "fieldname": "column_break_mhyw",
    "fieldtype": "Column Break",
    "read_only": 1
+  },
+  {
+   "fieldname": "opportunity_activity",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Opportunity Activity",
+   "options": "Opportunity Activity",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-31 17:54:35.340670",
+ "modified": "2025-04-24 10:02:46.663589",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",
