@@ -6,13 +6,14 @@ class Opportunity:
         try:
             return frappe.db.sql("""
                 SELECT  
-                     opac.name   ,         
+                    opac.name,         
                     opac.activity_name,
                     opac.types,
                     opac.activity_image,
                     opac.start_date,
                     opac.end_date,
-                    opac.hours
+                    opac.hours,
+                    opac.description as activity_description
                 FROM `tabOpportunity Activity` opac
                 WHERE opac.opportunity = %s
             """, (opportunity,), as_dict=True)
@@ -36,7 +37,7 @@ class Opportunity:
                 "end_date": activity.end_date,
                 "hours": activity.hours,
                 "total_minutes": activity.total_minutes,
-                "description": activity.description
+                "activity_description": activity.description
             }
         
         except frappe.DoesNotExistError:
@@ -57,7 +58,13 @@ class Opportunity:
             # Initialize clauses
             where_clauses = ["1=1"]
             order_by_clause = ""
-
+            # Initialize clauses
+            where_clauses = [
+                """EXISTS (
+                    SELECT 1 FROM `tabOpportunity Activity` as oact
+                    WHERE oact.opportunity = opp.name
+                )"""
+            ]
             if filter:
                 if "types" in filter and filter["types"]:
                     types_list = [f"'{at}'" for at in filter["types"]]
