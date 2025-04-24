@@ -16,6 +16,10 @@ def get_opportunity_activity(opportunity):
     return Opportunity.get_opportunity_activity(opportunity)
 
 @frappe.whitelist(allow_guest=True)
+def act_now_opp(activity,volunteer):
+    return Opportunity.act_now_opp(activity,volunteer)
+
+@frappe.whitelist(allow_guest=True)
 def get_activity_opportunity(name=None):
     return Opportunity.get_activity_opportunity(name)
 
