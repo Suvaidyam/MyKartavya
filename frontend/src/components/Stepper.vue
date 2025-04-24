@@ -346,8 +346,8 @@ const nextStep = async (index) => {
         })
         return
       }
-
       const res = await call('mykartavya.controllers.api.act_now', {
+        
         activity: activityId,
         volunteer: auth.cookie.user_id
       })

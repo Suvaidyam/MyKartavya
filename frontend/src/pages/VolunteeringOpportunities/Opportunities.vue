@@ -203,7 +203,7 @@ import { FeatherIcon } from 'frappe-ui'
 import Card from '../../components/Card.vue'
 import NotFound from '../../components/NotFound.vue'
 import CardLoader from '../../components/CardLoader.vue'
-import Stepper from '../../components/Stepper.vue'
+import Stepper from '../../components/OpprtunityStepper.vue'
 import { useRouter, useRoute } from 'vue-router'
 import {
   Facebook,
