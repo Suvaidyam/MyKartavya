@@ -181,7 +181,7 @@
 
             <div v-else class="w-full pb-4">
               <div ref="scrollContainerAvailable" class="py-2 w-full overflow-x-auto lg:overflow-x-visible">
-                <div v-if="opportunitiy.length > 0"
+                <div v-if="opportunitiy?.length > 0"
                   class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   <Card v-for="item in opportunitiy" :key="item.name" :item="item" :mode="'opportunity'" />
                 </div>
@@ -189,7 +189,7 @@
                   <NotFound message="Available Commitments not Found!" />
                 </div>
               </div>
-              <div v-if="available_commitments.length > 0 && (!isLeftDisabledAvailable || !isRightDisabledAvailable)"
+              <div v-if="available_commitments?.length > 0 && (!isLeftDisabledAvailable || !isRightDisabledAvailable)"
                 class="flex justify-center mt-2 lg:hidden">
                 <button
                   class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary hover:bg-orange-50 transition-colors">

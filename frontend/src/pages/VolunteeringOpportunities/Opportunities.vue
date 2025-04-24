@@ -91,7 +91,6 @@
                     60).toFixed(2) : '0' }} hr</span>
                 </div>
               </div>
-
               <!-- SDG Goals -->
               <div class="mb-6">
                 <h3 class="text-lg font-medium text-gray-800 mb-3">SDG Goals</h3>
@@ -104,25 +103,11 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Activity Type -->
-              <!-- <div class="mb-6">
-                <h3 class="text-lg font-medium text-gray-800 mb-3">Activity Type</h3>
-                <div class="flex items-center gap-2">
-                  <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">{{
-                    selectedOpportunity?.activity_type }}</span>
-                </div>
-              </div> -->
-
-              <!-- CTA Button -->
-              <button
-                class="w-fit bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-sm font-medium transition-all duration-300 flex items-center justify-start gap-2">
-                <svg class="w-3 h-3  " fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
-                  </path>
-                </svg>
-                <span class="text-sm">Act Now</span>
-              </button>
+              
+              <div class="border "></div>
+              <div class="">
+                <Stepper :activity="activities" :key="activities?.activity" />
+              </div>
             </div>
           </div>
 
@@ -218,6 +203,7 @@ import { FeatherIcon } from 'frappe-ui'
 import Card from '../../components/Card.vue'
 import NotFound from '../../components/NotFound.vue'
 import CardLoader from '../../components/CardLoader.vue'
+import Stepper from '../../components/Stepper.vue'
 import { useRouter, useRoute } from 'vue-router'
 import {
   Facebook,
