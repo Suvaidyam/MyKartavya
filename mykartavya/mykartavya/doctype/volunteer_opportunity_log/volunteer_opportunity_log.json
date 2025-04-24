@@ -5,9 +5,11 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "date",
+  "volunteer_activity",
   "duration",
-  "percent"
+  "percent",
+  "date",
+  "activity"
  ],
  "fields": [
   {
@@ -28,11 +30,26 @@
    "fieldtype": "Percent",
    "in_list_view": 1,
    "label": "Percent"
+  },
+  {
+   "fieldname": "volunteer_activity",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Volunteer Activity",
+   "options": "Volunteer Activity",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "volunteer_activity.opportunity_activity",
+   "fieldname": "activity",
+   "fieldtype": "Link",
+   "label": "Activity",
+   "options": "Opportunity Activity"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2025-04-16 12:23:42.635258",
+ "modified": "2025-04-24 10:04:45.581274",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Opportunity Log",
