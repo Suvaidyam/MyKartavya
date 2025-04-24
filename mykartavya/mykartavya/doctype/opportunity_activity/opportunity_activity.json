@@ -22,7 +22,8 @@
   "duration_section",
   "hours",
   "column_break_3",
-  "total_minutes"
+  "total_minutes",
+  "amended_from"
  ],
  "fields": [
   {
@@ -122,12 +123,23 @@
    "fieldtype": "Int",
    "label": "Total Hours",
    "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Opportunity Activity",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2025-04-23 14:31:03.771809",
+ "modified": "2025-04-24 12:47:23.074750",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity Activity",

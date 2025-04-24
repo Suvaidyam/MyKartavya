@@ -175,3 +175,30 @@ class Opportunity:
             except Exception as e:
                 frappe.log_error("related_opportunities Error", frappe.get_traceback())
                 return None
+            
+    def act_now_opp(activity, volunteer):
+        workflow_state = frappe.db.get_value(
+            "SVA User", {"email": volunteer}, "workflow_state"
+        )
+        volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")
+        if workflow_state != "Approved":
+            return {"msg": "Volunteer is not approved", "status": 201}
+
+        act = frappe.get_list(
+            "Volunteer Opportunity",
+            filters={"activity": activity, "volunteer": volunteer},
+            pluck="name",
+        )
+        if act:
+            return {"msg": "Activity already assigned to the volunteer", "status": 400}
+
+        # Assign activity to the volunteer
+        doc = frappe.new_doc("Volunteer Opportunity")
+        doc.activity = activity
+        doc.volunteer = volunteer
+        doc.flags.ignore_permissions = True
+        doc.flags.ignore_mandatory = True
+        doc.save()
+
+        return {"msg": "Activity assigned to the volunteer", "status": 200, "data": doc}
+
