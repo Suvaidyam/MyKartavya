@@ -9,6 +9,7 @@
   "volunteer",
   "opportunity_activity",
   "enrollment_wf_state",
+  "opportunity",
   "column_break_uoat",
   "duration",
   "com_percent",
@@ -37,7 +38,8 @@
    "in_list_view": 1,
    "label": "Opportunity Activity",
    "options": "Opportunity Activity",
-   "read_only": 1
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "fieldname": "enrollment_wf_state",
@@ -105,11 +107,18 @@
    "label": "Volunteer Activity Log",
    "options": "Volunteer Activity Log",
    "read_only": 1
+  },
+  {
+   "fieldname": "opportunity",
+   "fieldtype": "Link",
+   "label": "Opportunity",
+   "options": "Opportunity",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-24 15:29:44.559786",
+ "modified": "2025-04-24 16:02:08.948129",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Opportunity Activity Log",
