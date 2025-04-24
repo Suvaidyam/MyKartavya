@@ -103,13 +103,14 @@
               <span class="text-bodyh2 font-normal"> {{ activities?.karma_points?.toLocaleString() }} Points</span>
             </span>
           </div>
-          <div class="flex space-x-2 border-b pb-2">
+          <div v-if="activities?.sdgs"  class="flex space-x-2 border-b pb-2">
             <div v-if="activities?.sdgs" v-for="item in JSON.parse(activities?.sdgs)">
               <img v-if="item?.image" :src="item.image" class="w-8 h-8" />
               <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item?.sdgs_name?.charAt(0)
                 }}</span>
             </div>
           </div>
+          <div v-else class="pt-4"></div>
 
           <div class="">
             <div class="w-full bg-gray-200 rounded-full h-[5px]">
@@ -154,9 +155,7 @@
           </div>
           <!-- Right Section - Timeline -->
           <div>
-            <SubmitFeedback v-if="route.params.name && route.params.activity" :activity="activities"
-              :opportunity_activity="route.params.activity" :key="'feedback-' + activities?.activity" />
-            <Stepper v-else :activity="activities" :key="'stepper-' + activities?.activity" />
+            <Stepper :activity="activities" :key="activities?.activity" />
           </div>
         </div>
 
@@ -195,7 +194,6 @@
 import { inject, ref, onMounted, watch, watchEffect, computed, onUnmounted } from 'vue'
 import { FeatherIcon } from 'frappe-ui'
 import Stepper from '../../components/Stepper.vue'
-import SubmitFeedback from '../../components/SubmitFeedback.vue'
 import Card from '../../components/Card.vue'
 import NotFound from '../../components/NotFound.vue'
 import ReqForApproval from '../../components/ReqForApproval.vue'
@@ -258,6 +256,7 @@ const svaUserData = ref(null)
 
 const activity = async () => {
   try {
+    // console.log(route.params);
     if (route.params.name && route.params.activity) {
       const response = await call('mykartavya.controllers.api.opportunity_activity_details', { name: route?.params?.activity });
       if (response) {
