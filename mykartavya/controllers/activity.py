@@ -515,19 +515,6 @@ class Activity:
         return result
 
     def submit_opportunity_activity_report(name, data):
-        """
-        Submit an activity report for an opportunity activity.
-        
-        Args:
-            name (str): The name of the opportunity activity
-            data (dict): Activity report data containing:
-                - duration: Time spent on activity in seconds
-                - percent: Completion percentage
-                - images: List of image data (optional)
-                
-        Returns:
-            dict: Response containing status, message and data
-        """
         try:
             # Validate volunteer
             volunteer = frappe.db.get_value(
@@ -678,25 +665,22 @@ class Activity:
 
             # Save document
             doc.save(ignore_permissions=True)
-            frappe.db.commit()
+            # frappe.db.commit()
 
             # Update Volunteer Opportunity Activity child table
             volunteer_opportunity_doc = frappe.get_doc("Volunteer Opportunity", volunteer_opportunity.name)
             
             # Check if activity log entry exists in child table
-            existing_activity = None
+            existing_activity = False
             for activity in volunteer_opportunity_doc.volunteer_opportunity_activity:
                 if activity.opportunity_activity == name:
-                    existing_activity = activity
+                    existing_activity = True
+                    activity.duration = doc.duration
+                    activity.percent = doc.com_percent
+                    activity.date = current_date
                     break
-
-            if existing_activity:
-                # Update existing activity
-                existing_activity.duration = doc.duration
-                existing_activity.percent = doc.com_percent
-                existing_activity.date = current_date
-            else:
-                # Add new activity
+            
+            if not existing_activity:
                 volunteer_opportunity_doc.append("volunteer_opportunity_activity", {
                     "volunteer_opportunity_activity": doc.name,
                     "opportunity_activity": name,
@@ -704,10 +688,7 @@ class Activity:
                     "percent": doc.com_percent,
                     "date": current_date
                 })
-
-            # Save Volunteer Opportunity
             volunteer_opportunity_doc.save(ignore_permissions=True)
-            frappe.db.commit()
 
             return {
                 "status": "success",
