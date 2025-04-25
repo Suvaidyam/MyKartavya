@@ -119,6 +119,10 @@ class Opportunity:
                     opp.hours as hours,
                     opp.opportunity_description as activity_description,
                     opp.opportunity_image as activity_image,
+                    vo.workflow_state as workflow_state,
+                    vo.completion_wf_state as completion_wf_state,
+                    vo.rating as rating,
+                    vo.remarks as remarks,
                     COALESCE(
                         JSON_ARRAYAGG(
                             DISTINCT CASE 
@@ -131,6 +135,7 @@ class Opportunity:
                         ), JSON_ARRAY()
                     ) AS sdgs
                 FROM `tabOpportunity` AS opp
+                LEFT JOIN `tabVolunteer Opportunity` AS vo ON vo.activity = opp.name
                 LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
                 LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
                 {where_clause}
@@ -216,3 +221,49 @@ class Opportunity:
 
         return {"msg": "Activity assigned to the volunteer", "status": 200, "data": doc}
 
+
+    def public_opportunities(name=None):
+        try:
+        
+            where_clauses = [
+                """EXISTS (
+                    SELECT 1 FROM `tabOpportunity Activity` AS oact
+                    WHERE oact.opportunity = opp.name
+                )"""
+            ]
+            where_clause = "WHERE " + " AND ".join(where_clauses)
+            sql_query = f"""
+                SELECT 
+                    opp.name AS name,
+                    opp.opportunity_name AS opportunity,
+                    opp.karma_points AS karma_points,
+                    opp.opportunity_type AS types,
+                    opp.start_date AS start_date,
+                    opp.end_date AS end_date,
+                    opp.hours AS hours,
+                    opp.opportunity_description AS activity_description,
+                    opp.opportunity_image AS activity_image,
+
+                    COALESCE(
+                        JSON_ARRAYAGG(
+                            DISTINCT CASE 
+                                WHEN sdg.sdg IS NOT NULL THEN JSON_OBJECT(
+                                    'sdgs_name', sdg.sdg,
+                                    'image', sdg.sdg_image
+                                )
+                            END
+                        ), JSON_ARRAY()
+                    ) AS sdgs
+                FROM `tabOpportunity` AS opp
+                LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
+                LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
+                {where_clause}
+                GROUP BY opp.name
+            """
+            data = frappe.db.sql(sql_query, as_dict=True)
+            return data
+
+        except Exception as e:
+            frappe.log_error("related_opportunities Error", frappe.get_traceback())
+            return None
+    

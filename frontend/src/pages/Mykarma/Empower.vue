@@ -257,6 +257,8 @@ const showReqForApproval = ref(false)
 const svaUserData = ref(null)
 
 const activity = async () => {
+  console.log(route.params);
+  
   try {
     if (route.params.activity) {
       const response = await call('mykartavya.controllers.api.opportunity_activity_details', { name: route?.params?.activity });
@@ -313,7 +315,6 @@ onMounted(async () => {
 })
 watch(() => store.refresh_step, (val) => {
   if (val) {
-    console.log('refresh_step...');
     activity()
     store.refresh_step = false
   }
@@ -321,7 +322,6 @@ watch(() => store.refresh_step, (val) => {
 
 watch(() => route?.params?.name, async (val, old) => {
   if (val != old) {
-    console.log('param.name');
     await activity()
     await relatedOpportunities()
   }

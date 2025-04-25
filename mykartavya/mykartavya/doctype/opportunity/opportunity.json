@@ -8,6 +8,7 @@
   "basic_details_section",
   "opportunity_name",
   "opportunity_image",
+  "need_certificate",
   "column_break_basic_1",
   "opportunity_type",
   "is_featured",
@@ -48,6 +49,7 @@
   "column_break_org",
   "amended_from",
   "planned_activities_tab",
+  "section_break_gswa",
   "planned_activities"
  ],
  "fields": [
@@ -316,12 +318,23 @@
    "label": "Skills",
    "mandatory_depends_on": "eval:doc.value_type=='Skills'",
    "options": "Skills Child"
+  },
+  {
+   "fieldname": "need_certificate",
+   "fieldtype": "Select",
+   "label": "Need Certificate",
+   "options": "Yes\nNo",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_gswa",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-15 18:42:11.087750",
+ "modified": "2025-04-25 07:43:21.891339",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity",
