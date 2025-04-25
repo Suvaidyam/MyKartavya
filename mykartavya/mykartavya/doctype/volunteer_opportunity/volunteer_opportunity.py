@@ -63,8 +63,24 @@ class VolunteerOpportunity(Document):
 		self.update_durations()
 		self.validate_mandatory_fields()
 		self.calculate_average_percent()
+		self.check_completion_status()
 		if self.is_new() and self.activity:
 			self.populate_activity_table()
+
+	def check_completion_status(self):
+		"""Check if all activities are 100% complete and update completion_wf_state"""
+		if not self.volunteer_opportunity_activity:
+			return
+
+		all_complete = True
+		for row in self.volunteer_opportunity_activity:
+			if row.percent != 100:
+				all_complete = False
+				break
+
+		if all_complete and self.completion_wf_state != "Submitted":
+			self.completion_wf_state = "Submitted"
+			frappe.msgprint("All activities are 100% complete. Completion status has been set to Submitted.", alert=True)
 
 	def calculate_average_percent(self):
 		"""Calculate and update the average percentage from child table"""
