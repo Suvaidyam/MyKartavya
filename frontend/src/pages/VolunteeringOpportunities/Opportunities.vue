@@ -157,7 +157,8 @@
           <div v-else>
             <div v-if="opportunitiesActivities?.length > 0"
               class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Card v-for="(item) in opportunitiesActivities" :key="item.name" :item="item" :mode="'opportunity'" />
+              <OpportunityCard v-for="(item) in opportunitiesActivities" :key="item.name" :item="item"
+                :mode="'opportunity'" />
             </div>
             <div class="w-full h-[300px]" v-else>
               <NotFound />
@@ -200,7 +201,7 @@
 <script setup>
 import { inject, ref, onMounted, watch, watchEffect, computed, onUnmounted } from 'vue'
 import { FeatherIcon } from 'frappe-ui'
-import Card from '../../components/Card.vue'
+import OpportunityCard from '../../components/Card.vue'
 import NotFound from '../../components/NotFound.vue'
 import CardLoader from '../../components/CardLoader.vue'
 import Stepper from '../../components/OpprtunityStepper.vue'
