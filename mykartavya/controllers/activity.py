@@ -515,69 +515,190 @@ class Activity:
         return result
 
     def submit_opportunity_activity_report(name, data):
-        volunteer = frappe.db.get_value(
-            "SVA User", {"email": frappe.session.user}, "name"
-        )
-        if not volunteer:
-            return {"error": "Volunteer not found", "status": 400}
+        """
+        Submit an activity report for an opportunity activity.
+        
+        Args:
+            name (str): The name of the opportunity activity
+            data (dict): Activity report data containing:
+                - duration: Time spent on activity in seconds
+                - percent: Completion percentage
+                - images: List of image data (optional)
+                
+        Returns:
+            dict: Response containing status, message and data
+        """
+        try:
+            # Validate volunteer
+            volunteer = frappe.db.get_value(
+                "SVA User", {"email": frappe.session.user}, "name"
+            )
+            if not volunteer:
+                return {
+                    "status": "error",
+                    "error": "Volunteer not found. Please ensure you are logged in correctly.",
+                    "status_code": 400
+                }
 
-        # Check if log entry exists
-        existing_log = frappe.db.exists(
-            "Volunteer Opportunity Activity Log", 
-            {"volunteer": volunteer, "opportunity_activity": name}
-        )
+            # Validate opportunity activity exists
+            opportunity_activity = frappe.db.get_value(
+                "Opportunity Activity", 
+                name, 
+                ["name", "activity_name as title", "opportunity"], 
+                as_dict=True
+            )
+            if not opportunity_activity:
+                return {
+                    "status": "error",
+                    "error": f"Opportunity Activity '{name}' not found. It may have been deleted or is no longer available.",
+                    "status_code": 404
+                }
 
-        if existing_log:
-            # Update existing log
-            doc = frappe.get_doc("Volunteer Opportunity Activity Log", existing_log)
-        else:
-            # Create new log
-            doc = frappe.new_doc("Volunteer Opportunity Activity Log")
-            doc.volunteer = volunteer
-            doc.opportunity_activity = name
             # Get opportunity from activity
-            opportunity = frappe.db.get_value("Opportunity Activity", name, "opportunity")
-            doc.opportunity = opportunity
+            opportunity = opportunity_activity.opportunity
+            if not opportunity:
+                return {
+                    "status": "error",
+                    "error": f"Parent opportunity not found for activity '{opportunity_activity.title}'",
+                    "status_code": 404
+                }
 
-        # Handle image uploads
-        images = data.get("images", [])
-        if images:
-            for image in images:
-                Activity.upload_file(image, doc)
+            # Validate Volunteer Opportunity exists and is correctly linked
+            volunteer_opportunity = frappe.db.get_value(
+                "Volunteer Opportunity",
+                {"volunteer": volunteer, "activity": opportunity},
+                ["name", "enrollment_wf_state", "workflow_state"],
+                as_dict=True
+            )
+            
+            if not volunteer_opportunity:
+                return {
+                    "status": "error",
+                    "error": f"You are not enrolled in the opportunity '{opportunity}'. Please enroll first before submitting reports.",
+                    "status_code": 403
+                }
 
-        # Add activity log entry
-        doc.append(
-            "volunteer_activity_log",
-            {
-                "date": frappe.utils.now(),
-                "duration": data.get("duration"),
-                "percent": data.get("percent"),
-            },
-        )
+            # Validate enrollment workflow state
+            if volunteer_opportunity.enrollment_wf_state != "Approved":
+                return {
+                    "status": "error",
+                    "error": f"Your enrollment in opportunity '{opportunity}' is not approved. Current status: {volunteer_opportunity.enrollment_wf_state}",
+                    "status_code": 403
+                }
 
-        # Update completion percentage
-        current_percent = doc.com_percent or 0
-        new_percent = current_percent + data.get("percent", 0)
-        doc.com_percent = min(new_percent, 100)  # Ensure it doesn't exceed 100%
+            # Validate required data
+            if not data.get("duration"):
+                return {
+                    "status": "error",
+                    "error": "Duration is required. Please specify the time spent on the activity.",
+                    "status_code": 400
+                }
+            
+            if not data.get("percent"):
+                return {
+                    "status": "error",
+                    "error": "Completion percentage is required. Please specify how much of the activity you completed.",
+                    "status_code": 400
+                }
 
-        # Update total duration
-        current_duration = doc.duration or 0
-        doc.duration = current_duration + data.get("duration", 0)
+            # Validate percent is positive and not exceeding 100
+            if data.get("percent") < 0:
+                return {
+                    "status": "error",
+                    "error": "Completion percentage cannot be negative.",
+                    "status_code": 400
+                }
+            
+            if data.get("percent") > 100:
+                return {
+                    "status": "error",
+                    "error": "Completion percentage cannot exceed 100%.",
+                    "status_code": 400
+                }
 
-        # Set completion workflow state
-        if doc.com_percent >= 100:
-            doc.completion_wf_state = "Submitted"
-        else:
-            doc.completion_wf_state = "Pending"
+            # Check if log entry exists
+            existing_log = frappe.db.exists(
+                "Volunteer Opportunity Activity Log", 
+                {"volunteer": volunteer, "opportunity_activity": name}
+            )
 
-        doc.save(ignore_permissions=True)
-        frappe.db.commit()
+            if existing_log:
+                # Update existing log
+                doc = frappe.get_doc("Volunteer Opportunity Activity Log", existing_log)
+            else:
+                # Create new log
+                doc = frappe.new_doc("Volunteer Opportunity Activity Log")
+                doc.volunteer = volunteer
+                doc.opportunity_activity = name
+                doc.opportunity = opportunity
 
-        return {
-            "status": "success",
-            "message": "Activity report submitted successfully",
-            "data": doc
-        }
+            # Handle image uploads
+            images = data.get("images", [])
+            if images:
+                for image in images:
+                    if not isinstance(image, dict) or not image.get("preview"):
+                        return {
+                            "status": "error",
+                            "error": "Invalid image data format. Please ensure all images are properly uploaded.",
+                            "status_code": 400
+                        }
+                    upload_result = Activity.upload_file(image, doc)
+                    if upload_result.get("status") == "error":
+                        return {
+                            "status": "error",
+                            "error": f"Failed to upload image: {upload_result.get('message')}",
+                            "status_code": 400
+                        }
+
+            # Add activity log entry
+            doc.append(
+                "volunteer_activity_log",
+                {
+                    "date": frappe.utils.now(),
+                    "duration": data.get("duration"),
+                    "percent": data.get("percent"),
+                },
+            )
+
+            # Update completion percentage
+            current_percent = doc.com_percent or 0
+            new_percent = current_percent + data.get("percent", 0)
+            doc.com_percent = min(new_percent, 100)  # Ensure it doesn't exceed 100%
+
+            # Update total duration
+            current_duration = doc.duration or 0
+            doc.duration = current_duration + data.get("duration", 0)
+
+            # Set completion workflow state
+            if doc.com_percent >= 100:
+                doc.completion_wf_state = "Submitted"
+            else:
+                doc.completion_wf_state = "Pending"
+
+            # Save document
+            doc.save(ignore_permissions=True)
+            frappe.db.commit()
+
+            return {
+                "status": "success",
+                "message": f"Activity report for '{opportunity_activity.title}' submitted successfully. Completion: {doc.com_percent}%",
+                "data": {
+                    "com_percent": doc.com_percent,
+                    "duration": doc.duration,
+                    "completion_wf_state": doc.completion_wf_state
+                }
+            }
+
+        except Exception as e:
+            frappe.log_error(
+                f"Error in submit_opportunity_activity_report: {str(e)}\nActivity: {name}\nData: {data}",
+                "Activity Report Error"
+            )
+            return {
+                "status": "error",
+                "error": f"An error occurred while submitting the activity report: {str(e)}",
+                "status_code": 500
+            }
 
         
     def submit_activity_report(name, data):

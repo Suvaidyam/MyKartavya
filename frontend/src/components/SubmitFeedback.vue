@@ -3,9 +3,8 @@
         <div class="bg-white rounded-lg">
             <div class="bg-white p-6 rounded-lg w-full relative">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-heading4 font-medium">Submit Report</h2>
+                    <h2 class="text-[19px] font-medium">Submit Report</h2>
                 </div>
-
                 <!-- Activity Report Popup -->
                 <div class="bg-white rounded-lg shadow-lg p-6 w-full">
                     <div class="mb-6">
@@ -13,7 +12,7 @@
                             working on
                             the activity?</label>
                         <div class="relative">
-                            <div class="flex flex-col sm:flex-row gap-2">
+                            <div class="flex flex-col sm:flex-row gap-4">
                                 <div class="flex gap-2 items-center relative w-full sm:w-auto">
                                     <label class="text-base font-normal">Hours</label>
                                     <input type="number" v-model="activity_log.hours"
@@ -75,9 +74,9 @@
                         </div>
                     </div>
                     <div class="flex justify-end">
-                        <button @click="submitReport"
-                            class="bg-[#FF5722] flex items-center justify-center text-white h-[38px] text-sm sm:text-base w-full sm:w-48 rounded-sm text-center font-medium hover:bg-orange-600 transition-all duration-200 active:scale-95 disabled:transform-none disabled:cursor-not-allowed">
-                            <p>MARK AS COMPLETE</p>
+                        <button @click="submitReport" :disabled="props.activity.com_percent === 100"
+                            class="bg-[#FF5722] flex items-center justify-center text-white h-[38px] text-sm sm:text-base w-full sm:w-48 rounded-sm text-center font-medium hover:bg-orange-600 transition-all duration-200 active:scale-95 disabled:transform-none disabled:cursor-not-allowed disabled:bg-gray-400">
+                            <p>{{ props.activity.com_percent === 100 ? 'COMPLETE' : 'MARK AS COMPLETE' }}</p>
                             <div class="h-5 w-5" v-if="loading">
                                 <div
                                     class="animate-spin h-full w-full rounded-full border-[2px] flex justify-center items-center border-dotted border-[#fff]">
@@ -115,7 +114,7 @@
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'
+import { ref, inject, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
 import { FeatherIcon } from 'frappe-ui'
@@ -147,7 +146,18 @@ const loading = ref(false)
 const activity_log = ref({
     hours: 0,
     minutes: 0,
-    progress: 0,
+    progress: props.activity.com_percent || 0,
+})
+
+// Add watcher for progress changes
+watch(() => activity_log.value.progress, (newValue) => {
+    store.refresh_step = true;
+})
+
+// Add watcher for props.activity.com_percent changes
+watch(() => props.activity.com_percent, (newValue) => {
+    activity_log.value.progress = newValue || 0;
+    store.refresh_step = true;
 })
 
 const activity_err = ref({
@@ -192,9 +202,9 @@ const submitReport = async () => {
             },
         });
 
-        if (res) {
-            activity_log.value.progress = res.com_percent;
-            toast.success("Activity report submitted successfully", {
+        if (res && res.status === "success") {
+            activity_log.value.progress = res.data.com_percent;
+            toast.success(res.message || "Activity report submitted successfully", {
                 autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -205,20 +215,30 @@ const submitReport = async () => {
             activity_log.value = {
                 hours: 0,
                 minutes: 0,
-                progress: 0,
+                progress: res.data.com_percent,
             };
             store.refresh_step = true;
             // showCompletionPopup.value = false;
+        } else if (res && res.error) {
+            toast.error(res.error, {
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
     } catch (error) {
         loading.value = false;
-        toast.error("Something went wrong", {
-            autoClose: 2000,
+        toast.error(error.message || "Something went wrong while submitting the report", {
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
         });
+    } finally {
+        loading.value = false;
     }
 };
 
