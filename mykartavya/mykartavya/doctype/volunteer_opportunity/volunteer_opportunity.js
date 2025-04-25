@@ -19,11 +19,15 @@ frappe.ui.form.on("Volunteer Opportunity Activity", {
     percent: function (frm, cdt, cdn) {
         let total_percent = 0;
         let valid_rows = 0;
+        let all_complete = true;
 
         frm.doc.volunteer_opportunity_activity.forEach(function (row) {
             if (row.percent !== undefined && row.percent !== null) {
                 total_percent += row.percent;
                 valid_rows++;
+                if (row.percent != 100) {
+                    all_complete = false;
+                }
             }
         });
 
@@ -32,17 +36,31 @@ frappe.ui.form.on("Volunteer Opportunity Activity", {
         } else {
             frm.set_value('com_percent', 0);
         }
+
+        // If all activities are 100% complete, save the form to trigger the Python check
+        if (all_complete && frm.doc.completion_wf_state != "Submitted") {
+            frm.save().then(() => {
+                frappe.show_alert({
+                    message: "All activities are 100% complete. Completion status has been set to Submitted.",
+                    indicator: 'green'
+                });
+            });
+        }
     },
 
     // Update average when a row is removed
     remove: function (frm, cdt, cdn) {
         let total_percent = 0;
         let valid_rows = 0;
+        let all_complete = true;
 
         frm.doc.volunteer_opportunity_activity.forEach(function (row) {
             if (row.percent !== undefined && row.percent !== null) {
                 total_percent += row.percent;
                 valid_rows++;
+                if (row.percent != 100) {
+                    all_complete = false;
+                }
             }
         });
 
@@ -50,6 +68,16 @@ frappe.ui.form.on("Volunteer Opportunity Activity", {
             frm.set_value('com_percent', total_percent / valid_rows);
         } else {
             frm.set_value('com_percent', 0);
+        }
+
+        // If all activities are 100% complete, save the form to trigger the Python check
+        if (all_complete && frm.doc.completion_wf_state != "Submitted") {
+            frm.save().then(() => {
+                frappe.show_alert({
+                    message: "All activities are 100% complete. Completion status has been set to Submitted.",
+                    indicator: 'green'
+                });
+            });
         }
     }
 });
