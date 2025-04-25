@@ -106,7 +106,7 @@
               
               <div class="border "></div>
               <div class="">
-                <Stepper :activity="activities" :key="activities?.activity" />
+                <Stepper :activity="selectedOpportunity" :key="selectedOpportunity?.activity" />
               </div>
             </div>
           </div>
@@ -227,6 +227,7 @@ const opportunitiesActivities = ref([]);
 const opportunities = ref([]);
 const selectedOpportunity = ref({});
 const loader = ref(true);
+const store = inject('store');
 
 // Define functions first
 const relatedOpportunities = async () => {
@@ -358,6 +359,14 @@ watch(() => route.params.name, async (newName) => {
     opportunitiesActivities.value = [];
   }
 }, { immediate: false });
+
+
+watch(() => store.refresh_step, (val) => {
+  if (val) {
+    relatedOpportunities()
+    store.refresh_step = false
+  }
+}, { immediate: true, deep: true })
 
 // Scroll settings
 const cardWidth = 450;

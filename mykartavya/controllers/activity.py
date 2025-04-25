@@ -340,7 +340,6 @@ class Activity:
                         act.activity_description as activity_description,
                         act.activity_type as types,
                         act.activity_image as activity_image,
-                        act.portunity as opportunity,
                         COALESCE(
                             JSON_ARRAYAGG(
                                 DISTINCT CASE 

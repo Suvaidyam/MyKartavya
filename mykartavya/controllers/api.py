@@ -268,6 +268,10 @@ def check_user_fields():
 def related_opportunities(filter={}):
     return Opportunity.related_opportunities(filter)
 
+@frappe.whitelist(allow_guest=True)
+def public_opportunities():
+    return Opportunity.public_opportunities()
+
 
 @frappe.whitelist(allow_guest=True)
 def submit_feedback(name, volunteer, rating, comments):
