@@ -103,7 +103,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="border "></div>
               <div class="">
                 <Stepper :activity="selectedOpportunity" :key="selectedOpportunity?.activity" />

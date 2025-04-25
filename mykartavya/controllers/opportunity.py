@@ -119,6 +119,8 @@ class Opportunity:
                     opp.hours as hours,
                     opp.opportunity_description as activity_description,
                     opp.opportunity_image as activity_image,
+                    vo.com_percent ,
+                    vo.duration as donet_hours,
                     vo.workflow_state as workflow_state,
                     vo.completion_wf_state as completion_wf_state,
                     vo.rating as rating,
