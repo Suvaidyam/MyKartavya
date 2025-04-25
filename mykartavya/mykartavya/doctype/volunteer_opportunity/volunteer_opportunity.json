@@ -16,7 +16,6 @@
   "section_break_eeob",
   "column_break_zxdk",
   "karma_points",
-  "images",
   "section_break_totr",
   "column_break_mhyw",
   "certificate",
@@ -91,12 +90,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "images",
-   "fieldtype": "Table",
-   "label": "Images",
-   "options": "Activity Images"
-  },
-  {
    "fieldname": "section_break_totr",
    "fieldtype": "Section Break"
   },
@@ -129,13 +122,12 @@
    "fieldname": "volunteer_opportunity_activity",
    "fieldtype": "Table",
    "label": "Volunteer Opportunity Activity",
-   "options": "Volunteer Opportunity Activity",
-   "read_only": 1
+   "options": "Volunteer Opportunity Activity"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-24 15:23:23.372531",
+ "modified": "2025-04-25 10:36:41.166978",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Opportunity",
