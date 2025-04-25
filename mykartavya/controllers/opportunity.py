@@ -4,7 +4,7 @@ class Opportunity:
 
     def get_opportunity_activity(opportunity):
         try:
-            return frappe.db.sql("""
+            return frappe.db.sql(f"""
                 SELECT  
                     opac.name,         
                     opac.activity_name,
@@ -13,10 +13,19 @@ class Opportunity:
                     opac.start_date,
                     opac.end_date,
                     opac.hours,
-                    opac.description as activity_description
+                    opac.parent1,
+                    opac.description AS activity_description,
+                    CASE
+                        WHEN opac.parent1 IS NULL OR opac.parent1 = '' THEN FALSE
+                        WHEN parent_voal.com_percent = 100 THEN FALSE
+                        ELSE TRUE
+                    END AS is_locked
                 FROM `tabOpportunity Activity` opac
-                WHERE opac.opportunity = %s
-            """, (opportunity,), as_dict=True)
+                LEFT JOIN `tabVolunteer Opportunity Activity Log` AS parent_voal 
+                    ON opac.parent1 = parent_voal.opportunity_activity
+                WHERE opac.opportunity = '{opportunity}'
+                ORDER BY opac.creation ASC;
+            """, as_dict=True)
         except Exception as e:
             frappe.log_error(frappe.get_traceback(), "Error in get_opportunity_activity")
             return []

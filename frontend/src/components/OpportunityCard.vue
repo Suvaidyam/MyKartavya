@@ -133,7 +133,7 @@
                         </svg>
                         <time class="self-stretch my-auto font-medium">{{ formatDate(item.start_date) }} - {{
                             formatDate(item.end_date)
-                        }}</time>
+                            }}</time>
                     </div>
                     <div class="flex gap-2 items-center text-gray-600">
                         <Tooltip text="Hours">
@@ -162,6 +162,7 @@
                             <p>Act now</p>
                             <FeatherIcon name="arrow-up-right" class="size-4" />
                         </div>
+
                     </div>
                 </div>
             </div>
