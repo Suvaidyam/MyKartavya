@@ -651,10 +651,11 @@ class Activity:
                         }
 
             # Add activity log entry
+            current_date = frappe.utils.now()
             doc.append(
                 "volunteer_activity_log",
                 {
-                    "date": frappe.utils.now(),
+                    "date": current_date,
                     "duration": data.get("duration"),
                     "percent": data.get("percent"),
                 },
@@ -677,6 +678,35 @@ class Activity:
 
             # Save document
             doc.save(ignore_permissions=True)
+            frappe.db.commit()
+
+            # Update Volunteer Opportunity Activity child table
+            volunteer_opportunity_doc = frappe.get_doc("Volunteer Opportunity", volunteer_opportunity.name)
+            
+            # Check if activity log entry exists in child table
+            existing_activity = None
+            for activity in volunteer_opportunity_doc.volunteer_opportunity_activity:
+                if activity.opportunity_activity == name:
+                    existing_activity = activity
+                    break
+
+            if existing_activity:
+                # Update existing activity
+                existing_activity.duration = doc.duration
+                existing_activity.percent = doc.com_percent
+                existing_activity.date = current_date
+            else:
+                # Add new activity
+                volunteer_opportunity_doc.append("volunteer_opportunity_activity", {
+                    "volunteer_opportunity_activity": doc.name,
+                    "opportunity_activity": name,
+                    "duration": doc.duration,
+                    "percent": doc.com_percent,
+                    "date": current_date
+                })
+
+            # Save Volunteer Opportunity
+            volunteer_opportunity_doc.save(ignore_permissions=True)
             frappe.db.commit()
 
             return {
