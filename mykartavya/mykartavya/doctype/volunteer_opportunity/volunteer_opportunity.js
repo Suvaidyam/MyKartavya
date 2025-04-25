@@ -2,6 +2,20 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Volunteer Opportunity", {
+    refresh: function (frm) {
+
+        if (frm.doc.completion_wf_state === 'Submitted') {
+            frm.add_custom_button("Activity Approve", function () {
+                frm.set_value('completion_wf_state', 'Approved');
+                frm.save();
+            });
+
+            frm.add_custom_button("Activity Reject", function () {
+                frm.set_value('completion_wf_state', 'Rejected');
+                frm.save();
+            }).addClass('btn-danger');
+        }
+    },
     activity: function (frm) {
         if (!frm.doc.activity) return;
 

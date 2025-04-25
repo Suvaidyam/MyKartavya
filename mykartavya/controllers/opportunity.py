@@ -278,3 +278,16 @@ class Opportunity:
             frappe.log_error("related_opportunities Error", frappe.get_traceback())
             return None
     
+    def submit_feedbacks(name, volunteer, rating, comments):
+        volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")
+        exists = frappe.db.exists(
+            "Volunteer Activity", {"volunteer": volunteer, "name": name}
+        )
+        if not exists:
+            return {"error": "Activity not assigned to the volunteer", "status": 400}
+        doc = frappe.get_doc("Volunteer Activity", exists)
+        doc.rating = rating
+        doc.remarks = comments
+        doc.save()
+        frappe.db.commit()
+        return doc

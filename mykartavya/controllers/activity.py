@@ -443,7 +443,6 @@ class Activity:
         volunteer_condition = (
             f"AND va.volunteer = '{user}'" if exists else "AND va.volunteer IS NULL"
         )
-
         sql_query = f"""
             SELECT
                 va.name as name,
