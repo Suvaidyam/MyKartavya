@@ -21,9 +21,9 @@ fixtures=[
     # 'Skills',
     # 'Property Setter',
     # 'SVADatatable Configuration',
-    "Workflow",
-    "Workflow State", 
-    "Workflow Action",
+    # "Workflow",
+    # "Workflow State", 
+    # "Workflow Action",
     # "State",
     # "District"
     # "Builder Client Script",
