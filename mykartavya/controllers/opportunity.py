@@ -15,6 +15,9 @@ class Opportunity:
                     opac.hours,
                     opac.parent1,
                     opac.description AS activity_description,
+                    self_voal.duration AS donet_hours,
+                    self_voal.com_percent,
+                    self_voal.completion_wf_state,
                     CASE
                         WHEN opac.parent1 IS NULL OR opac.parent1 = '' THEN FALSE
                         WHEN parent_voal.com_percent = 100 THEN FALSE
@@ -23,12 +26,15 @@ class Opportunity:
                 FROM `tabOpportunity Activity` opac
                 LEFT JOIN `tabVolunteer Opportunity Activity Log` AS parent_voal 
                     ON opac.parent1 = parent_voal.opportunity_activity
+                LEFT JOIN `tabVolunteer Opportunity Activity Log` AS self_voal 
+                    ON opac.name = self_voal.opportunity_activity
                 WHERE opac.opportunity = '{opportunity}'
-                ORDER BY opac.creation ASC;
-            """, as_dict=True)
+                ORDER BY opac.creation DESC
+            """, as_dict=True) 
         except Exception as e:
-            frappe.log_error(frappe.get_traceback(), "Error in get_opportunity_activity")
-            return []
+                frappe.log_error(frappe.get_traceback(), "Error in get_opportunity_activity")
+                return []
+
 
     
     def opportunity_activity_details(name):

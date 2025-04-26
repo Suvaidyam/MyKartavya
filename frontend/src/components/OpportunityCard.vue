@@ -1,6 +1,17 @@
 <template>
-    <div v-if="type != 'group'" class="card bg-white overflow-hidden">
-        <router-link :to="`/activity/${item.activity}`" class="block">
+    <div v-if="type != 'group'" class="card bg-white overflow-hidden relative"
+        :class="{ 'opacity-75': item.is_locked }">
+        <div v-if="item.is_locked" class="absolute inset-0 bg-gray-900/70 flex items-center justify-center z-10">
+            <div class="flex flex-col items-center gap-3 p-4">
+                <div class="bg-white/10 p-3 rounded-full">
+                    <FeatherIcon name="lock" class="size-6 text-white" />
+                </div>
+                <span class="text-white font-medium text-sm text-center">Complete previous activity to unlock</span>
+                <span class="text-white/80 text-xs text-center">This activity will be available after completing the
+                    prerequisite</span>
+            </div>
+        </div>
+        <router-link :to="item.is_locked ? '#' : dynamicLink" class="block">
             <div class="w-full flex flex-col justify-between aspect-[16/9] rounded-lg relative overflow-hidden">
                 <img :src="item.activity_image || 'https://res.cloudinary.com/dyt5jqnax/image/upload/v1742968038/mykartavya-logo_jptv31.png'"
                     alt=""
@@ -81,8 +92,19 @@
             </div>
         </router-link>
     </div>
-    <article v-else class="flex flex-col card w-full py-2 overflow-hidden">
-        <router-link :to="dynamicLink" class="block">
+    <article v-else class="flex flex-col card w-full py-2 overflow-hidden relative"
+        :class="{ 'opacity-75': item.is_locked }">
+        <div v-if="item.is_locked" class="absolute inset-0 bg-gray-900/70 flex items-center justify-center z-10">
+            <div class="flex flex-col items-center gap-3 p-4">
+                <div class="bg-white/10 p-3 rounded-full">
+                    <FeatherIcon name="lock" class="size-6 text-white" />
+                </div>
+                <span class="text-white font-medium text-sm text-center">Complete previous activity to unlock</span>
+                <span class="text-white/80 text-xs text-center">This activity will be available after completing the
+                    prerequisite</span>
+            </div>
+        </div>
+        <router-link :to="item.is_locked ? '#' : dynamicLink" class="block">
             <div class="w-full flex flex-col justify-between aspect-[16/9] rounded-lg relative overflow-hidden">
                 <img :src="item.activity_image || 'https://res.cloudinary.com/dyt5jqnax/image/upload/v1742968038/mykartavya-logo_jptv31.png'"
                     alt=""
