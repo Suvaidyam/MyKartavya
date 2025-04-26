@@ -203,12 +203,10 @@ import { inject, ref, onMounted, watch, watchEffect, computed, onUnmounted } fro
 import { FeatherIcon } from 'frappe-ui'
 import OpportunityCard from '../../components/OpportunityCard.vue'
 import Card from '../../components/Card.vue'
-
 import NotFound from '../../components/NotFound.vue'
 import CardLoader from '../../components/CardLoader.vue'
 import Stepper from '../../components/OpprtunityStepper.vue'
 import { useRouter, useRoute } from 'vue-router'
-import Card from '../../components/Card.vue'
 import {
   Facebook,
   Twitter,
