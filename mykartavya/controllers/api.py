@@ -277,6 +277,11 @@ def public_opportunities():
 def submit_feedback(name, volunteer, rating, comments):
     return Activity.submit_feedback(name, volunteer, rating, comments)
 
+@frappe.whitelist(allow_guest=True)
+def submit_feedbacks(name, volunteer, rating, comments):
+    return Opportunity.submit_feedbacks(name, volunteer, rating, comments)
+
+
 
 # master data
 @frappe.whitelist(allow_guest=True)

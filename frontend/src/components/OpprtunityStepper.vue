@@ -77,7 +77,7 @@
 
                             <!-- Step buttons -->
                             <div v-if="index == 0">
-                                <button
+                                <button 
                                     v-if="!step.completed && props.activity.workflow_state !== 'Applied' && props.activity.workflow_state !== 'Approved'"
                                     @click="nextStep(index)"
                                     class="mt-3 h-[28px] px-3 uppercase rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
@@ -98,7 +98,7 @@
                             </div>
 
                             <div v-if="index == 2">
-                                <button
+                                <button 
                                     v-if="!step.completed && activity.workflow_state == 'Approved' && activity.completion_wf_state == 'Submitted'"
                                     @click="nextStep(index)"
                                     class="mt-3 h-[28px] px-3 uppercase rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
@@ -182,7 +182,7 @@
     </div>
 </template>
 <script setup>
-import { ref, inject, watch, nextTick } from 'vue'
+import { ref, inject, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
     RefreshCw as RefreshCwIcon,
@@ -336,13 +336,15 @@ const submit_your_feedback = async () => {
         return
     }
 
-    let res = await call('mykartavya.controllers.api.submit_feedback', {
+    let res = await call('mykartavya.controllers.api.submit_feedbacks', {
         name: props.activity.name,
         volunteer: auth.cookie.user_id,
         rating: feedback.value.rating,
         comments: feedback.value.comments,
     })
 
+    console.log(res);
+        
     if (res.rating) {
         show_Feedback.value = false
         showKarmaPopup.value = true
@@ -388,6 +390,32 @@ const emojis = ref([
     { icon: '😀', label: 1 },
 ])
 
+watch(() => store.refresh_step, async (newVal) => {
+    if (!newVal) return;
+
+    try {
+        if (newVal.is_assigned) {
+
+            if (props.activity.workflow_state === 'Applied') {
+                steps.value[0].completed = true
+                currentStep.value = 1
+            } else if (newVal.workflow_state == 'Approved' && newVal.completion_wf_state == 'Pending') {
+                steps.value[0].completed = true
+                steps.value[1].completed = true
+                currentStep.value = 2
+            } else if (activity.workflow_state == 'Approved' && activity.completion_wf_state == 'Submitted') {
+                steps.value[0].completed = true
+                steps.value[1].completed = true
+                currentStep.value = 2
+            }
+        }
+    } finally {
+        store.refresh_step = false;
+    }
+}, { immediate: true, deep: true });
+
+
+
 watch(() => showKarmaPopup.value, (newValue) => {
     if (newValue && props.activity.need_certificate == 'No') {
         setTimeout(() => {
@@ -395,40 +423,6 @@ watch(() => showKarmaPopup.value, (newValue) => {
         }, 3000);
     }
 });
-
-// Update the refresh watch effect
-watch(() => store.refresh_step, async (newVal) => {
-    if (!newVal) return;
-
-    try {
-        if (props.activity.is_assigned) {
-            nextTick(() => {
-                if (props.activity.workflow_state === 'Applied') {
-                    steps.value[0].completed = true;
-                    currentStep.value = Math.max(currentStep.value, 1);
-                }
-
-                if (props.activity.workflow_state === 'Approved') {
-                    steps.value[0].completed = true;
-
-                    if (props.activity.completion_wf_state === 'Submitted') {
-                        steps.value[1].completed = true;
-                        currentStep.value = Math.max(currentStep.value, 2);
-                    }
-
-                    if (props.activity.completion_wf_state === 'Approved') {
-                        steps.value[2].completed = true;
-                        currentStep.value = 3;
-                        show_Feedback.value = true;
-                        showKarmaPopup.value = true;
-                    }
-                }
-            });
-        }
-    } finally {
-        store.refresh_step = false;
-    }
-}, { immediate: true });
 </script>
 <style scoped>
 .border-l {
