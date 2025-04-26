@@ -1,5 +1,5 @@
 <template>
-    <div v-if="type != 'group'" class="card bg-white overflow-hidden relative"
+    <div v-if="item.completion_wf_state == 'Submitted'" class="card bg-white overflow-hidden relative"
         :class="{ 'opacity-75': item.is_locked }">
         <div v-if="item.is_locked" class="absolute inset-0 bg-gray-900/70 flex items-center justify-center z-10">
             <div class="flex flex-col items-center gap-3 p-4">
@@ -42,7 +42,8 @@
                 </div>
             </div>
             <div class="flex flex-col gap-2.5 pt-3 px-1">
-                <h3 class="text-bodyh1 font-semibold truncate text-gray-900">{{ item.title }}</h3>
+                <h3 class="self-start truncate mt-3 text-base font-semibold tracking-normal text-gray-900">{{
+                    item.activity_name }}</h3>
                 <div class="flex gap-2 items-center text-gray-600">
                     <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
