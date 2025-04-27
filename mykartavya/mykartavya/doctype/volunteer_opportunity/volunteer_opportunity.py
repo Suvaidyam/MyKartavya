@@ -9,12 +9,12 @@ from frappe.model.document import Document
 
 class VolunteerOpportunity(Document):
 
-	def before_save(self):
-		try:
-			if self.workflow_state and self.workflow_state != self.enrollment_wf_state:
-				self.enrollment_wf_state = self.workflow_state
-		except Exception as e:
-			frappe.log_error(f"Error syncing workflow and enrollment state: {str(e)}")
+	# def before_save(self):
+	# 	try:
+	# 		if self.workflow_state and self.workflow_state != self.enrollment_wf_state:
+	# 			self.enrollment_wf_state = self.workflow_state
+	# 	except Exception as e:
+	# 		frappe.log_error(f"Error syncing workflow and enrollment state: {str(e)}")
 
 
 	def on_update(self):

@@ -320,6 +320,7 @@
    "options": "Skills Child"
   },
   {
+   "default": "Yes",
    "fieldname": "need_certificate",
    "fieldtype": "Select",
    "label": "Need Certificate",
@@ -334,7 +335,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-25 07:43:21.891339",
+ "modified": "2025-04-26 13:52:58.743353",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity",
