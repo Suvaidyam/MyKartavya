@@ -24,6 +24,10 @@ def get_activity_opportunity(name=None):
     return Opportunity.get_activity_opportunity(name)
 
 @frappe.whitelist(allow_guest=True)
+def view_certificate_opp(opportunity):
+    return Opportunity.view_certificate_opp(opportunity)
+
+@frappe.whitelist(allow_guest=True)
 def current_commitments_in_opportunity(filter={}):
     return Activity.current_commitments_in_opportunity(filter)
 
