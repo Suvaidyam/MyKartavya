@@ -20,6 +20,10 @@ class VolunteerOpportunity(Document):
 	def on_update(self):
 		"""Handle workflow state changes and related actions."""
 		try:
+			# Verify document exists before proceeding
+			if not frappe.db.exists("Volunteer Opportunity", self.name):
+				frappe.throw(_("Volunteer Opportunity {0} not found").format(self.name))
+
 			# Set enrollment_wf_state based on workflow_state
 			if self.workflow_state == "Approved":
 				self.enrollment_wf_state = "Approved"
@@ -28,36 +32,49 @@ class VolunteerOpportunity(Document):
 			
 			# Handle completion workflow state changes
 			if self.completion_wf_state == "Approved" and not self.karma_points:
-				# Get activity document and set karma points
-				activity = frappe.get_doc("Volunteer Opportunity", self.activity)
-				self.karma_points = activity.karma_points
-				frappe.db.set_value("Volunteer Opportunity", self.name, "karma_points", self.karma_points)
+				try:
+					# Get activity document and set karma points
+					activity = frappe.get_doc("Opportunity", self.activity)
+					self.karma_points = activity.karma_points
+					frappe.db.set_value("Volunteer Opportunity", self.name, "karma_points", self.karma_points)
+				except Exception as e:
+					frappe.log_error(f"Error setting karma points: {str(e)}")
+					# Don't throw error, just log it
 			elif self.completion_wf_state == "Rejected" and self.karma_points:
 				# Reset karma points if completion is rejected
 				self.karma_points = 0
 				frappe.db.set_value("Volunteer Opportunity", self.name, "karma_points", 0)
 			
 			# Existing logic for updating workflow state
-			if self.enrollment_wf_state == "Approved":
-				frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Approved")
-			elif self.enrollment_wf_state == "Rejected":
-				frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Rejected")
+			try:
+				if self.enrollment_wf_state == "Approved":
+					frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Approved")
+				elif self.enrollment_wf_state == "Rejected":
+					frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Rejected")
+			except Exception as e:
+				frappe.log_error(f"Error updating workflow state: {str(e)}")
+				# Don't throw error, just log it
+
+			# socket notification aproved by mykartavya admin
+			try:
+				user = frappe.db.get_value("SVA User", {'name': self.volunteer}, 'email')
+				if self.workflow_state == "Approved":
+					frappe.publish_realtime("volunteer_activity_approved", {"Volunteer Opportunity": self.name})
+				elif self.workflow_state == "Rejected":
+					frappe.publish_realtime("volunteer_activity_rejected", {"Volunteer Opportunity": self.name})
+
+				# Handle completion workflow state separately
+				if self.completion_wf_state == "Approved":
+					frappe.publish_realtime("volunteer_activity_completion_approved", {"Volunteer Opportunity": self.name})
+				elif self.completion_wf_state == "Rejected":
+					frappe.publish_realtime("volunteer_activity_completion_rejected", {"Volunteer Opportunity": self.name})
+			except Exception as e:
+				frappe.log_error(f"Error in realtime notifications: {str(e)}")
+				# Don't throw error, just log it
+
 		except Exception as e:
-			frappe.log_error(f"Error updating workflow state: {str(e)}")
+			frappe.log_error(f"Error in on_update: {str(e)}")
 			raise
-
-		# socket notification aproved by mykartavya admin
-		user = frappe.db.get_value("SVA User", {'name': self.volunteer}, 'email')
-		if self.workflow_state == "Approved":
-			frappe.publish_realtime("volunteer_activity_approved", {"Volunteer Opportunity": self.name})
-		elif self.workflow_state == "Rejected":
-			frappe.publish_realtime("volunteer_activity_rejected", {"Volunteer Opportunity": self.name})
-
-		# Handle completion workflow state separately
-		if self.completion_wf_state == "Approved":
-			frappe.publish_realtime("volunteer_activity_completion_approved", {"Volunteer Opportunity": self.name})
-		elif self.completion_wf_state == "Rejected":
-			frappe.publish_realtime("volunteer_activity_completion_rejected", {"Volunteer Opportunity": self.name})
 
 	def validate(self):
 		self.update_durations()
@@ -72,15 +89,22 @@ class VolunteerOpportunity(Document):
 		if not self.volunteer_opportunity_activity:
 			return
 
+		# Don't check completion if state is being changed to Approved or Rejected
+		if self.completion_wf_state in ["Approved", "Rejected"]:
+			return
+
 		all_complete = True
 		for row in self.volunteer_opportunity_activity:
 			if row.percent != 100:
 				all_complete = False
 				break
 
+		# Only show message and update state if all activities are complete AND state is not already Submitted
 		if all_complete and self.completion_wf_state != "Submitted":
+			previous_state = self.completion_wf_state
 			self.completion_wf_state = "Submitted"
-			frappe.msgprint("All activities are 100% complete. Completion status has been set to Submitted.", alert=True)
+			if previous_state != "Submitted":  # Only show message if state actually changed
+				frappe.msgprint("All activities are 100% complete. Completion status has been set to Submitted.", alert=True)
 
 	def calculate_average_percent(self):
 		"""Calculate and update the average percentage from child table"""
