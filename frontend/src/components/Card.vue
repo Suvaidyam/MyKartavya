@@ -1,6 +1,6 @@
 <template>
     <div v-if="type != 'group'" class="card bg-white overflow-hidden">
-        <router-link :to="`/activity/${item.activity}`" class="block">
+        <router-link :to="dynamicLinks" class="block">
             <div class="w-full flex flex-col justify-between aspect-[16/9] rounded-lg relative overflow-hidden">
                 <img :src="item.activity_image || 'https://res.cloudinary.com/dyt5jqnax/image/upload/v1742968038/mykartavya-logo_jptv31.png'"
                     alt=""
@@ -133,7 +133,7 @@
                         </svg>
                         <time class="self-stretch my-auto font-medium">{{ formatDate(item.start_date) }} - {{
                             formatDate(item.end_date)
-                            }}</time>
+                        }}</time>
                     </div>
                     <div class="flex gap-2 items-center text-gray-600">
                         <Tooltip text="Hours">
@@ -200,6 +200,25 @@ const parseVolunteers = (volunteers) => {
         return [];
     }
 };
+
+const dynamicLinks = computed(() => {
+    if (props.item && props.mode === 'opportunity') {
+        if (props.item.activity) {
+            return `/opportunity/${props.item.activity}`;
+        }
+    }
+    if (auth?.isLoggedIn) {
+        if (props.item && props.mode === 'activity') {
+            return `/activity/${props.item.activity}`;
+        } else {
+            console.log('Unknown type', props);
+        }
+    } else {
+        if (props.mode === 'activity') {
+            return `/kindness-volunteering/${props.item.activity}`;
+        }
+    }
+});
 
 const dynamicLink = computed(() => {
     if (props.item && props.mode === 'opportunity') {

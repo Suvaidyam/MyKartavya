@@ -273,49 +273,94 @@
                 </div>
                 <div class="bg-white rounded-lg p-6 shadow-sm">
                     <h2 class="text-xl font-semibold mb-6">My Certificates</h2>
-                    <div v-if="certificates.length === 0" class="text-gray-500 text-center py-8">
-                        No certificates earned yet
-                    </div>
-                    <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                        <div v-for="certificate in certificates" :key="certificate.name"
-                            class="relative group w-full max-w-[250px] mx-auto">
-                            <!-- Certificate Card -->
-                            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-                                <!-- Certificate Preview -->
-                                <div class="aspect-[1.4/1] relative">
-                                    <!-- Default Certificate Background -->
-                                    <iframe :src="certificate.certificate" frameborder="0" class="w-full h-full"
-                                        style="aspect-ratio: 1.4 / 1; object-fit: cover; overflow: hidden; scrollbar-width: none;"></iframe>
-                                    <!-- Hover Overlay -->
-                                    <div
-                                        class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
-                                        <a :href="certificate.certificate" target="_blank"
-                                            class="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors duration-200">
-                                            <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                        </a>
-                                        <a :href="certificate.certificate" download
-                                            class="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors duration-200">
-                                            <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                            </svg>
-                                        </a>
+                        <div v-if="certificates.length === 0" class="text-gray-500 text-center py-8">
+                            No certificates earned yet
+                        </div>
+                        <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                            <div v-for="certificate in certificates" :key="certificate.name"
+                                class="relative group w-full max-w-[250px] mx-auto">
+                                <!-- Certificate Card -->
+                                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                                    <!-- Certificate Preview -->
+                                    <div class="aspect-[1.4/1] relative">
+                                        <!-- Default Certificate Background -->
+                                        <iframe :src="certificate.certificate" frameborder="0" class="w-full h-full"
+                                            style="aspect-ratio: 1.4 / 1; object-fit: cover; overflow: hidden; scrollbar-width: none;"></iframe>
+                                        <!-- Hover Overlay -->
+                                        <div
+                                            class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
+                                            <a :href="certificate.certificate" target="_blank"
+                                                class="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors duration-200">
+                                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                            </a>
+                                            <a :href="certificate.certificate" download
+                                                class="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors duration-200">
+                                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- Certificate Info -->
+                                    <div class="p-3 border-t border-gray-200">
+                                        <h3 class="font-medium text-gray-900 text-sm line-clamp-1">
+                                            {{ certificate.activity_title }}
+                                        </h3>
+                                        <p class="text-xs text-gray-500 mt-1">{{ certificate.date }}</p>
                                     </div>
                                 </div>
-
-                                <!-- Certificate Info -->
-                                <div class="p-3 border-t border-gray-200">
-                                    <h3 class="font-medium text-gray-900 text-sm line-clamp-1">
-                                        {{ certificate.activity_title }}
-                                    </h3>
-                                    <p class="text-xs text-gray-500 mt-1">{{ certificate.date }}</p>
+                            </div>
+                    <!-- Certificate opportunity-->
+                            <div v-for="certificate in opportunityctf" :key="certificate.name"
+                                class="relative group w-full max-w-[250px] mx-auto">
+                                <!-- Certificate Card -->
+                                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                                    <!-- Certificate Preview -->
+                                    <div class="aspect-[1.4/1] relative">
+                                        <!-- Default Certificate Background -->
+                                        <iframe :src="certificate.certificate" frameborder="0" class="w-full h-full"
+                                            style="aspect-ratio: 1.4 / 1; object-fit: cover; overflow: hidden; scrollbar-width: none;"></iframe>
+                                        <!-- Hover Overlay -->
+                                        <div
+                                            class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
+                                            <a :href="certificate.certificate" target="_blank"
+                                                class="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors duration-200">
+                                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                            </a>
+                                            <a :href="certificate.certificate" download
+                                                class="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors duration-200">
+                                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 border-t border-gray-200">
+                                        <h3 class="font-medium text-gray-900 text-sm line-clamp-1">
+                                            {{ certificate.opportunity_name }}
+                                        </h3>
+                                        <p class="text-xs text-gray-500 mt-1">{{ certificate.date }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -343,7 +388,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </template>
 
 <script setup>
@@ -356,6 +400,7 @@ const svaUserData = ref(null)
 const mappedCompanies = ref([]);
 const certificates = ref([]);
 const allSkills = ref([]);
+const opportunityctf = ref([]);
 
 const fetchAllSkills = async () => {
     try {
@@ -435,6 +480,19 @@ const fetchCertificates = async () => {
     }
 };
 
+const Certificates_opp = async () => {
+    try {
+        const response = await call('mykartavya.controllers.api.get_user_certificates_opp');
+        if (response.success) {
+            opportunityctf.value = response.certificates;
+        } else {
+            console.error('Error fetching certificates:', response.message);
+        }
+    } catch (error) {
+        console.error('Error fetching certificates:', error);
+    }
+};
+
 const closePreview = () => {
     // Close the preview modal
     const modal = document.querySelector('.group-hover\\:flex');
@@ -456,6 +514,7 @@ onMounted(() => {
     get();
     fetchCertificates();
     fetchMappedCompanies()
+    Certificates_opp();
     // Close modal on escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closePreview();

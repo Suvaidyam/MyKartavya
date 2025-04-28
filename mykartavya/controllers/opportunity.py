@@ -3,6 +3,7 @@ from frappe.utils.pdf import get_pdf
 
 class Opportunity:
 
+    # Function to get opportunity details
     def get_opportunity_activity(opportunity):
         try:
             return frappe.db.sql(f"""
@@ -36,6 +37,7 @@ class Opportunity:
                 frappe.log_error(frappe.get_traceback(), "Error in get_opportunity_activity")
                 return []
 
+    # Function to get opportunity activity details
     def opportunity_activity_details(name):
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         exists = frappe.db.exists(
@@ -46,7 +48,6 @@ class Opportunity:
         volunteer_condition = (
             f"AND voal.volunteer = '{user}'" if exists else "AND voal.volunteer IS NULL"
         )
-
         sql_query = f"""
             SELECT
                 voal.name as name,
@@ -78,6 +79,7 @@ class Opportunity:
             doc["is_assigned"] = False
         return doc
 
+    # Function to get related opportunities
     def related_opportunities(filter={}):
         try:
             if isinstance(filter, str):
@@ -150,9 +152,20 @@ class Opportunity:
                                 )
                             END
                         ), JSON_ARRAY()
-                    ) AS sdgs
+                    ) AS sdgs,
+                     COALESCE(
+                            JSON_ARRAYAGG(
+                                DISTINCT JSON_OBJECT(
+                                    'name', sva.name,
+                                    'full_name', sva.full_name,
+                                    'email', sva.email,
+                                    'user_image', sva.user_image
+                                )
+                            ), JSON_ARRAY()
+                        ) as volunteers
                 FROM `tabOpportunity` AS opp
                 LEFT JOIN `tabVolunteer Opportunity` AS vo ON vo.activity = opp.name
+                LEFT JOIN `tabSVA User` as sva ON sva.name = vo.volunteer
                 LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
                 LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
                 {where_clause}
@@ -165,53 +178,8 @@ class Opportunity:
         except Exception as e:
             frappe.log_error("related_opportunities Error", frappe.get_traceback())
             return None
-
-    def get_activity_opportunity(name=""):
-            try:
-                
-                where_clauses = [f"act.name = {frappe.db.escape(name)}"]
-                order_by_clause = ""
-
-                where_clause = "WHERE " + " AND ".join(where_clauses)
-                sql_query = f"""
-
-                    SELECT
-                    opp.name as name,
-                            opp.opportunity_name as activity_name,
-                            opp.karma_points as karma_points,
-                            opp.opportunity_type as types,
-                            opp.start_date as start_date,
-                            opp.end_date as end_date,
-                            opp.hours as hours,
-                            opp.opportunity_description as activity_description,
-                            opp.opportunity_image as activity_image,
-                            COALESCE(
-                                JSON_ARRAYAGG(
-                                    DISTINCT CASE 
-                                        WHEN sdg.sdg IS NOT NULL 
-                                        THEN JSON_OBJECT(
-                                            'sdgs_name', sdg.sdg,
-                                            'image', sdg.sdg_image
-                                        )
-                                    END
-                                ), JSON_ARRAY()
-                            ) AS sdgs
-                    FROM `tabActivity` AS act
-                    LEFT JOIN `tabOpportunity` AS opp
-                        ON act.opportunity = opp.name
-                    LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
-                    LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
-                        {where_clause}
-                        GROUP BY opp.name
-                        {order_by_clause}
-                """
-                data = frappe.db.sql(sql_query, as_dict=True)
-                return data
-
-            except Exception as e:
-                frappe.log_error("related_opportunities Error", frappe.get_traceback())
-                return None
-            
+        
+    # Function to act now opportunity    
     def act_now_opp(activity, volunteer):
         workflow_state = frappe.db.get_value(
             "SVA User", {"email": volunteer}, "workflow_state"
@@ -220,12 +188,12 @@ class Opportunity:
         if workflow_state != "Approved":
             return {"msg": "Volunteer is not approved", "status": 201}
 
-        act = frappe.get_list(
+        opp = frappe.get_list(
             "Volunteer Opportunity",
             filters={"activity": activity, "volunteer": volunteer},
             pluck="name",
         )
-        if act:
+        if opp:
             return {"msg": "Activity already assigned to the volunteer", "status": 400}
 
         # Assign activity to the volunteer
@@ -238,10 +206,9 @@ class Opportunity:
 
         return {"msg": "Activity assigned to the volunteer", "status": 200, "data": doc}
 
-
+    # Function to get public opportunities
     def public_opportunities(name=None):
         try:
-        
             where_clauses = [
                 """EXISTS (
                     SELECT 1 FROM `tabOpportunity Activity` AS oact
@@ -284,6 +251,7 @@ class Opportunity:
             frappe.log_error("related_opportunities Error", frappe.get_traceback())
             return None
     
+    # Function to submit feedbacks
     def submit_feedbacks(name, volunteer_email, rating, comments):
         volunteer = frappe.db.get_value("SVA User", {"email": volunteer_email}, "name")
         if not volunteer:
@@ -301,4 +269,206 @@ class Opportunity:
         else:
             return("Volunteer Opportunity not found")
         
+    # Function to get current opportunity
+    def current_opportunity(filter={}):
+            user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+            if not user:
+                return []
 
+            base_url = frappe.get_conf().get("hostname", "")
+            where_clauses = ["vo.volunteer = %(user)s"]
+            order_by_clauses = []
+            params = {"user": user}
+
+            if isinstance(filter, str):
+                filter = frappe.parse_json(filter)
+
+            if filter:
+                if "types" in filter and filter["types"]:
+                    where_clauses.append("opp.activity_type IN %(activity_types)s")
+                    params["activity_types"] = tuple(filter["types"])
+
+                if "karma_points" in filter and filter["karma_points"]:
+                    order_by_clauses.append(
+                        "opp.karma_points ASC"
+                        if filter["karma_points"] == "Low to High"
+                        else "opp.karma_points DESC"
+                    )
+
+                if "sdgs" in filter and filter["sdgs"]:
+                    where_clauses.append("sd.sdgs IN %(sdgs_values)s")
+                    params["sdgs_values"] = tuple(filter["sdgs"])
+
+                if "volunteering_hours" in filter and filter["volunteering_hours"]:
+                    order_by_clauses.append(
+                        "opp.hours ASC"
+                        if filter["volunteering_hours"] == "Low to High"
+                        else "opp.hours DESC"
+                    )
+
+            where_clause = " AND ".join(where_clauses)
+            order_by_clause = (
+                " ORDER BY " + ", ".join(order_by_clauses) if order_by_clauses else ""
+            )
+
+            sql = f"""
+            SELECT
+                vo.name as name,
+                opp.name as activity,
+                vo.duration as duration,
+                vo.com_percent as com_percent,
+                opp.opportunity_name as title,
+                opp.karma_points as karma_points,
+                opp.start_date as start_date,
+                opp.end_date as end_date,
+                opp.minimum_hours as hours,
+                vo.duration as donet_hours,
+                vo.completion_wf_state as completion_wf_state,
+                opp.opportunity_description as activity_description,
+                opp.opportunity_type as types,
+                CONCAT('{base_url}', opp.opportunity_image) as activity_image,
+                COALESCE(
+                    JSON_ARRAYAGG(
+                        JSON_OBJECT(
+                            'sdgs_name', sdg.sdg,
+                            'image', sdg.sdg_image
+                        )
+                    ), JSON_ARRAY()
+                ) AS sdgs
+            FROM
+                `tabVolunteer Opportunity` AS vo
+            INNER JOIN `tabOpportunity` AS opp ON vo.activity = opp.name
+            LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
+            LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
+            WHERE {where_clause}
+            GROUP BY vo.name
+            {order_by_clause}
+            """
+            try:
+                acts = frappe.db.sql(sql, params, as_dict=True)
+                return acts
+            except Exception as e:
+                frappe.log_error(f"Error in current_commitments query: {e}")
+                raise
+
+    # Function to view opportunity certificate
+    def view_opportunity_certificate(opportunity):
+        try:
+            # Get current user's SVA User record
+            user = frappe.db.get_value(
+                "SVA User",
+                {"email": frappe.session.user},
+                ["name", "full_name"],
+                as_dict=True,
+            )
+            if not user:
+                frappe.throw("User not found")
+
+            volunteer_opportunity = frappe.db.get_value(
+                "Volunteer Opportunity",
+                filters={"activity": opportunity, "volunteer": user.name},
+                fieldname=["name", "duration", "karma_points", "certificate"],
+                as_dict=True,
+            ) 
+
+            if volunteer_opportunity.certificate:
+                return {
+                    "success": True,
+                    "message": "Certificate already exists",
+                    "certificate_url": volunteer_opportunity.certificate,
+                }
+
+            opportunity_doc = frappe.get_doc("Opportunity", opportunity)
+
+            # completion_date = frappe.utils.now_datetime()  
+            certificate_data = {
+                "full_name": user.full_name,
+                "activity_title": opportunity_doc.opportunity_name,
+                # "completion_date": completion_date.strftime(
+                #     "%d %B %Y"
+                # ),  # Convert to string
+                "hours_contributed": str(
+                    round((volunteer_opportunity.duration or 0) / 3600, 2)
+                ),
+                "karma_points": str(opportunity_doc.karma_points or 0),
+            }
+
+            template = frappe.get_template("mykartavya/templates/pages/certificate.html")
+            if not template:
+                frappe.throw("Certificate template not found")
+
+            html = template.render(certificate_data)
+
+            # Generate PDF
+            if not get_pdf:
+                frappe.throw("get_pdf function is missing. Check your Frappe installation.")
+
+            pdf_data = get_pdf(html)
+
+            # Generate unique filename
+            filename = f"certificate_{opportunity}_{frappe.session.user}.pdf"
+            file_path = frappe.get_site_path("public", "files", filename)
+
+            # Save PDF file
+            with open(file_path, "wb") as f:
+                f.write(pdf_data)
+
+            # Create File document in Frappe
+            file_url = f"/files/{filename}"
+            file_doc = frappe.get_doc(
+                {
+                    "doctype": "File",
+                    "file_url": file_url,
+                    "file_name": filename,
+                    "attached_to_doctype": "Volunteer Opportunity",
+                    "attached_to_name": volunteer_opportunity.name,
+                    "attached_to_field": "certificate",
+                    "is_private": 0,
+                }
+            )
+            file_doc.insert(ignore_permissions=True)
+            frappe.db.set_value(
+                "Volunteer Opportunity", volunteer_opportunity.name, "certificate", file_url
+            )
+
+            return {
+                "success": True,
+                "message": "Certificate generated successfully",
+                "certificate_url": file_url,
+            }
+
+        except Exception as e:
+            frappe.log_error(
+                f"Error generating certificate: {str(e)}", "Certificate Generation Error"
+            )
+            return {"success": False, "message": str(e)}
+        
+    # Function to show user certificates in frontend
+    def get_user_certificates_opp():
+        try:
+            user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+            if not user:
+                return {"success": False, "message": "User not found"}
+
+            certificates = frappe.get_all(
+                "Volunteer Opportunity",
+                filters={
+                    "volunteer": user,
+                    "certificate": ["is", "set"],  
+                },
+                fields=["name", "activity", "certificate", "creation"],
+            )
+
+            # Get activity titles
+            for cert in certificates:
+                activity = frappe.get_doc("Opportunity", cert.activity)
+                cert.opportunity_name = activity.opportunity_name
+                cert.date = frappe.utils.format_date(cert.creation)
+
+            return {"success": True, "certificates": certificates}
+
+        except Exception as e:
+            frappe.log_error(
+                f"Error fetching certificates: {str(e)}", "Certificate Fetch Error"
+            )
+            return {"success": False, "message": str(e)}

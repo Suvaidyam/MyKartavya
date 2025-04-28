@@ -76,7 +76,6 @@ class Activity:
         LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
         LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
         WHERE {where_clause}
-        AND (act.opportunity IS NULL OR act.opportunity = '')
         GROUP BY va.name
         {order_by_clause}
         """

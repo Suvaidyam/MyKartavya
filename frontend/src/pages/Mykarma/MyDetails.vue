@@ -46,7 +46,7 @@
             Completed Opportunities 
           </h4>
           <p class="text-lg font-semibold text-gray-800">
-            {{ activities.activity_completed }}
+            {{ opportunitie.activity_completed }}
           </p>
         </div>
         <div class="border border-gray-200 rounded-lg px-4 py-3 text-center hover:shadow-md transition-shadow">
@@ -286,14 +286,27 @@ const users_top_3 = ref()
 const activities = ref({})
 const activitiestopuser = ref([])
 const sdgs = ref([])
+const opportunitie = ref([])
 
 
 
-const opportunities = async () => {
+const activitiy = async () => {
   try {
     const response = await call('mykartavya.controllers.api.user_count')
     if (response) {
       activities.value = response
+    }
+  } catch (err) {
+    console.error('Error fetching activity data:', err)
+  }
+}
+
+
+const opportunities = async () => {
+  try {
+    const response = await call('mykartavya.controllers.api.user_count_opp')
+    if (response) {
+      opportunitie.value = response
     }
   } catch (err) {
     console.error('Error fetching activity data:', err)
@@ -339,6 +352,7 @@ onMounted(() => {
   topvolunteer()
   get_all_user()
   opportunities()
+  activitiy()
   sdgimpacted()
 })
 const sec_to_hours = (sec) => {
