@@ -30,14 +30,12 @@ class Opportunity:
                 LEFT JOIN `tabVolunteer Opportunity Activity Log` AS self_voal 
                     ON opac.name = self_voal.opportunity_activity
                 WHERE opac.opportunity = '{opportunity}'
-                ORDER BY opac.creation DESC
+                ORDER BY opac.creation ASC
             """, as_dict=True) 
         except Exception as e:
                 frappe.log_error(frappe.get_traceback(), "Error in get_opportunity_activity")
                 return []
 
-
-    
     def opportunity_activity_details(name):
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         exists = frappe.db.exists(

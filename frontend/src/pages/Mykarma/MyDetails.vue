@@ -43,10 +43,10 @@
             <img src="../../assets/opportunity.png" alt="" class="mx-auto" />
           </span>
           <h4 class="font-medium text-[11px] pb-1 text-gray-600">
-            Completed Opportunities
+            Completed Opportunities 
           </h4>
           <p class="text-lg font-semibold text-gray-800">
-            0
+            {{ activities.activity_completed }}
           </p>
         </div>
         <div class="border border-gray-200 rounded-lg px-4 py-3 text-center hover:shadow-md transition-shadow">
