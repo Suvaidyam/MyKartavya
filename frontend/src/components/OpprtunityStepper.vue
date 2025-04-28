@@ -62,14 +62,6 @@
                             class="mt-3 h-[28px] uppercase cursor-not-allowed px-3 rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
                             Pending by Admin
                         </button>
-
-                        <!-- Get Started - Active button -->
-                        <button v-if="index === 1 && !step.completed && props.activity.workflow_state === 'Approved'"
-                            @click="nextStep(index)"
-                            class="mt-3 h-[28px] px-3 uppercase rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
-                            {{ step.button }}
-                        </button>
-
                         <button
                             v-if="index === 2 && !step.completed && props.activity.workflow_state === 'Approved' && props.activity.completion_wf_state === 'Pending'"
                             @click="nextStep(index)"
@@ -78,13 +70,13 @@
                         </button>
 
                         <button
-                            v-if="index === 2 && !step.completed && props.activity.workflow_state === 'Approved' && props.activity.completion_wf_state === 'Submitted'"
+                            v-if="!step.completed && ['Opportunity Report'].includes(step.title) && (['Approved'].includes(activity.workflow_state) && activity.completion_wf_state == 'Submitted')"
                             @click="nextStep(index)"
-                            class="mt-3 h-[28px] uppercase  px-3 rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
-                            Review under Admin
+                            class="mt-2 h-[28px] uppercase cursor-not-allowed px-3 rounded-sm text-caption font-medium text-white ml-2 bg-[#FF5722] button-animation">
+                            {{ step.title == 'Get Started' ? 'Pending by Admin' : 'Review under Admin' }}
                         </button>
                         <button
-                            v-if="index === 3 && props.activity.workflow_state === 'Approved' && props.activity.completion_wf_state === 'Submitted'"
+                            v-if="index === 3 && !step.completed && props.activity.workflow_state === 'Approved' && props.activity.completion_wf_state === 'Approved'"
                             @click="nextStep(index)"
                             class="mt-3 h-[28px] px-3 uppercase rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
                             {{ step.button }}
@@ -294,9 +286,13 @@ const nextStep = async (index) => {
         }
         if (index == 2) {
             if (props.activity.workflow_state == 'Approved' && props.activity.completion_wf_state == 'Submitted') {
+                // steps.value[index].completed = true;
+                currentStep.value = Math.max(currentStep.value, 2);
+            } else if (props.activity.workflow_state == 'Approved' && props.activity.completion_wf_state == 'Approved') {
                 steps.value[index].completed = true;
                 currentStep.value = Math.max(currentStep.value, 4);
-            } else {
+             }
+            else {
                 toast.error("You must complete the activity!", {
                     autoClose: 2000,
                     hideProgressBar: false,
@@ -410,16 +406,16 @@ watch(() => props.activity, (newVal, oldVal) => {
         if (newVal.completion_wf_state === 'Pending') {
             currentStep.value = 2;
         } else if (newVal.completion_wf_state === 'Submitted') {
-            steps.value[2].completed = true;
-            currentStep.value = 3;
+            currentStep.value = 2;
         } else if (newVal.completion_wf_state === 'Approved') {
             steps.value[2].completed = true;
-            if (newVal.rating && newVal.rating > 0) {
-                steps.value[3].completed = true;
-                currentStep.value = 4;
-            } else {
-                currentStep.value = 3;
-            }
+            currentStep.value = 4;
+            // if (newVal.rating && newVal.rating > 0) {
+            //     steps.value[3].completed = true;
+            //     currentStep.value = 4;
+            // } else {
+            //     currentStep.value = 3;
+            // }
         }
     }
 }, { immediate: true, deep: true });
