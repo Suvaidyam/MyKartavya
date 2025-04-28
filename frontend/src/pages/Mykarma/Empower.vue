@@ -107,7 +107,7 @@
             <div v-if="activities?.sdgs" v-for="item in JSON.parse(activities?.sdgs)">
               <img v-if="item?.image" :src="item.image" class="w-8 h-8" />
               <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item?.sdgs_name?.charAt(0)
-                }}</span>
+              }}</span>
             </div>
           </div>
 
@@ -257,12 +257,10 @@ const showReqForApproval = ref(false)
 const svaUserData = ref(null)
 
 const activity = async () => {
-  console.log(route.params);
-  
+
   try {
     if (route.params.activity) {
       const response = await call('mykartavya.controllers.api.opportunity_activity_details', { name: route?.params?.activity });
-      console.log(response);
       if (response) {
         activities.value = response
       }
