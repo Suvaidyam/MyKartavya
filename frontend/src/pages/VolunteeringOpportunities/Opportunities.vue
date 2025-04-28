@@ -79,7 +79,7 @@
               </div>
 
               <!-- Progress Bar -->
-              <div class="mb-6">
+              <div v-if="auth?.isLoggedIn" class="mb-6">
                 <div class="w-full bg-gray-200 rounded-full h-2">
                   <div class="bg-green-500 h-2 rounded-full"
                     :style="`width: ${selectedOpportunity?.com_percent ?? 0}%`"></div>
@@ -104,9 +104,19 @@
                 </div>
               </div>
 
-              <div class="border "></div>
-              <div class="">
-                <Stepper :activity="selectedOpportunity" :key="selectedOpportunity?.activity" />
+              <div v-if="auth?.isLoggedIn" class=" ">
+                <div class="border "></div>
+                <div class="">
+                  <Stepper :activity="selectedOpportunity" :key="selectedOpportunity?.activity" />
+                </div>
+              </div>
+              <div v-else class="flex h-full justify-end">
+              <router-link to="/login">
+                <button
+                  class="h-[28px] uppercase px-3 rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
+                  ACT NOW
+                </button>
+              </router-link>
               </div>
             </div>
           </div>
@@ -217,6 +227,7 @@ import {
 } from 'lucide-vue-next'
 
 const router = useRouter()
+const auth = inject('auth');
 const call = inject('call');
 const activities = ref([]);
 const route = useRoute();
