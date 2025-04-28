@@ -673,6 +673,7 @@ class Activity:
             for activity in volunteer_opportunity_doc.volunteer_opportunity_activity:
                 if activity.opportunity_activity == name:
                     existing_activity = True
+                    activity.volunteer_opportunity_activity= doc.name
                     activity.duration = doc.duration
                     activity.percent = doc.com_percent
                     activity.date = current_date

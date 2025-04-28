@@ -1,4 +1,4 @@
-import{c as e}from"./twitter-_HW7Eh1y.js";const a="/assets/mykartavya/frontend/assets/certificate-DlJf-9iL.png";/**
+import{c as e}from"./twitter-CdclJPey.js";const a="/assets/mykartavya/frontend/assets/certificate-DlJf-9iL.png";/**
  * @license lucide-vue-next v0.475.0 - ISC
  *
  * This source code is licensed under the ISC license.
