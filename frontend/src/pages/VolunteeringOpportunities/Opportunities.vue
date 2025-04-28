@@ -283,7 +283,6 @@ const opportunitiesActivity = async () => {
       console.error('API Error:', err);
       return null;
     });
-    console.log(response, "response");
     if (!response) {
       console.warn('No response from get_opportunity_activity API');
       opportunitiesActivities.value = [];

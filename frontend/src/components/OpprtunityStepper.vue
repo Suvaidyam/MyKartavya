@@ -393,41 +393,34 @@ const emojis = ref([
     { icon: '😀', label: 1 },
 ]);
 
-watch(() => store.refresh_step, async (newVal) => {
+watch(() => props.activity, (newVal, oldVal) => {
     if (!newVal) return;
 
-    try {
-        if (newVal.is_assigned) {
-            if (props.activity.workflow_state === 'Applied') {
-                steps.value[0].completed = true
-                currentStep.value = 1
-            } else if (newVal.workflow_state == 'Approved') {
-                steps.value[0].completed = true
-                steps.value[1].completed = true
-                currentStep.value = 2
-            } else if (props.activity.workflow_state == 'Approved' && props.activity.completion_wf_state == 'Pending') {
-                steps.value[0].completed = true
-                steps.value[1].completed = true
-                steps.value[2].completed = true
-                currentStep.value = 3
-            }
-            else if (props.activity.workflow_state == 'Approved' && props.activity.completion_wf_state == 'Submitted') {
-                steps.value[0].completed = true
-                steps.value[1].completed = true
-                steps.value[2].completed = true
-                steps.value[3].completed = true
-                currentStep.value = 4
-            }
+    // Reset steps first
+    steps.value.forEach(step => step.completed = false);
+    currentStep.value = 0;
 
+    if (newVal.workflow_state === 'Applied') {
+        steps.value[0].completed = true;
+        currentStep.value = 1;
+    } else if (newVal.workflow_state === 'Approved') {
+        steps.value[0].completed = true;
+        steps.value[1].completed = true;
+
+        if (newVal.completion_wf_state === 'Pending') {
+            currentStep.value = 2;
+        } else if (newVal.completion_wf_state === 'Submitted') {
+            steps.value[2].completed = true;
+            currentStep.value = 3;
+        } else if (newVal.completion_wf_state === 'Approved') {
+            steps.value[2].completed = true;
+            if (newVal.rating && newVal.rating > 0) {
+                steps.value[3].completed = true;
+                currentStep.value = 4;
+            } else {
+                currentStep.value = 3;
+            }
         }
-        // else if (props.activity.workflow_state == 'Approved' && props.activity.completion_wf_state == 'Approved') {
-        //     steps.value[0].completed = true
-        //     steps.value[1].completed = true
-        //     steps.value[2].completed = true
-        //     currentStep.value = 3
-        // }
-    } finally {
-        store.refresh_step = false;
     }
 }, { immediate: true, deep: true });
 
