@@ -291,7 +291,7 @@ const nextStep = async (index) => {
             } else if (props.activity.workflow_state == 'Approved' && props.activity.completion_wf_state == 'Approved') {
                 steps.value[index].completed = true;
                 currentStep.value = Math.max(currentStep.value, 4);
-             }
+            }
             else {
                 toast.error("You must complete the activity!", {
                     autoClose: 2000,
@@ -357,29 +357,46 @@ const isLoadingCertificate = ref(false);
 
 const viewCertificate = async () => {
     isLoadingCertificate.value = true;
-    if (!props) {
+
+    if (!props.activity.name) {
         throw new Error('Activity ID not found');
     }
-    let res = await call('mykartavya.controllers.api.view_certificate_opp', {
-        opportunity: props.activity.activity
-    })
-    console.log(res, " certificate");
 
-    if (res) {
+    try {
+        const res = await call('mykartavya.controllers.api.view_opportunity_certificate', {
+            opportunity: props.activity.name,
+        });
         isLoadingCertificate.value = false;
-        toast.success('Certificate visible in your profile after few minutes', {
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-        })
-        showKarmaPopup.value = false
-        setTimeout(() => {
-            router.push('/profile')
-        }, 3000)
+        if (res && res.success) {
+            if (res.certificate_url) {
+                toast.error(res.message, {
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+            } else {
+                toast.success('Certificate will be visible in your profile after a few minutes', {
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+                showKarmaPopup.value = false;
+                setTimeout(() => {
+                    router.push('/profile');
+                }, 3000);
+            }
+        }
+    } catch (error) {
+        isLoadingCertificate.value = false;
+        console.error('Error fetching certificate:', error);
+        toast.error('Something went wrong. Please try again.');
     }
-}
+};
+
 
 const emojis = ref([
     { icon: '😞', label: 0.2 },

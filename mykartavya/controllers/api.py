@@ -23,9 +23,9 @@ def act_now_opp(activity,volunteer):
 def get_activity_opportunity(name=None):
     return Opportunity.get_activity_opportunity(name)
 
-@frappe.whitelist(allow_guest=True)
-def view_certificate_opp(opportunity):
-    return Opportunity.view_certificate_opp(opportunity)
+# @frappe.whitelist(allow_guest=True)
+# def view_opportunity_certificate(opportunity):
+#     return Opportunity.view_opportunity_certificate(opportunity)
 
 @frappe.whitelist(allow_guest=True)
 def current_commitments_in_opportunity(filter={}):
@@ -402,8 +402,97 @@ def get_faqs():
         return {"success": False, "message": "Failed to fetch FAQs", "error": str(e)}
 
 
+@frappe.whitelist(allow_guest=True)
+def view_opportunity_certificate(opportunity):
+    try:
+        # Get current user's SVA User record
+        user = frappe.db.get_value(
+            "SVA User",
+            {"email": frappe.session.user},
+            ["name", "full_name"],
+            as_dict=True,
+        )
+        if not user:
+            frappe.throw("User not found")
 
+        volunteer_opportunity = frappe.db.get_value(
+            "Volunteer Opportunity",
+            filters={"activity": opportunity, "volunteer": user.name},
+            fieldname=["name", "duration", "karma_points", "certificate"],
+            as_dict=True,
+        ) 
 
+        if volunteer_opportunity.certificate:
+            return {
+                "success": True,
+                "message": "Certificate already exists",
+                "certificate_url": volunteer_opportunity.certificate,
+            }
+
+        opportunity_doc = frappe.get_doc("Opportunity", opportunity)
+
+        # completion_date = frappe.utils.now_datetime()  
+        certificate_data = {
+            "full_name": user.full_name,
+            "activity_title": opportunity_doc.opportunity_name,
+            # "completion_date": completion_date.strftime(
+            #     "%d %B %Y"
+            # ),  # Convert to string
+            "hours_contributed": str(
+                round((volunteer_opportunity.duration or 0) / 3600, 2)
+            ),
+            "karma_points": str(opportunity_doc.karma_points or 0),
+        }
+
+        template = frappe.get_template("mykartavya/templates/pages/certificate.html")
+        if not template:
+            frappe.throw("Certificate template not found")
+
+        html = template.render(certificate_data)
+
+        # Generate PDF
+        if not get_pdf:
+            frappe.throw("get_pdf function is missing. Check your Frappe installation.")
+
+        pdf_data = get_pdf(html)
+
+        # Generate unique filename
+        filename = f"certificate_{opportunity}_{frappe.session.user}.pdf"
+        file_path = frappe.get_site_path("public", "files", filename)
+
+        # Save PDF file
+        with open(file_path, "wb") as f:
+            f.write(pdf_data)
+
+        # Create File document in Frappe
+        file_url = f"/files/{filename}"
+        file_doc = frappe.get_doc(
+            {
+                "doctype": "File",
+                "file_url": file_url,
+                "file_name": filename,
+                "attached_to_doctype": "Volunteer Opportunity",
+                "attached_to_name": volunteer_opportunity.name,
+                "attached_to_field": "certificate",
+                "is_private": 0,
+            }
+        )
+        file_doc.insert(ignore_permissions=True)
+        frappe.db.set_value(
+            "Volunteer Opportunity", volunteer_opportunity.name, "certificate", file_url
+        )
+
+        return {
+            "success": True,
+            "message": "Certificate generated successfully",
+            "certificate_url": file_url,
+        }
+
+    except Exception as e:
+        frappe.log_error(
+            f"Error generating certificate: {str(e)}", "Certificate Generation Error"
+        )
+        return {"success": False, "message": str(e)}
 
 @frappe.whitelist()
 def view_certificate(activity):
