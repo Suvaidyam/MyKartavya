@@ -1,4 +1,5 @@
 import frappe
+from frappe.utils.pdf import get_pdf
 
 class Opportunity:
 
@@ -134,6 +135,7 @@ class Opportunity:
                     opp.hours as hours,
                     opp.opportunity_description as activity_description,
                     opp.opportunity_image as activity_image,
+                    opp.need_certificate as need_certificate,
                     vo.com_percent ,
                     vo.duration as donet_hours,
                     vo.workflow_state as workflow_state,
@@ -260,7 +262,7 @@ class Opportunity:
                     opp.hours AS hours,
                     opp.opportunity_description AS activity_description,
                     opp.opportunity_image AS activity_image,
-
+                
                     COALESCE(
                         JSON_ARRAYAGG(
                             DISTINCT CASE 
@@ -286,19 +288,120 @@ class Opportunity:
     
     def submit_feedbacks(name, volunteer_email, rating, comments):
         volunteer = frappe.db.get_value("SVA User", {"email": volunteer_email}, "name")
-        print(volunteer,"==================================================================")
         if not volunteer:
             return {"error": "Volunteer not found", "status": 404}
+        if (frappe.db.exists("Volunteer Opportunity", {"volunteer": volunteer})):
+            volunteer_name = frappe.db.get_value("Volunteer Opportunity", {"volunteer": volunteer}, "name")
+            if not volunteer_name:
+                return {"error": "Opportunity not assigned to the volunteer", "status": 400}
+            doc = frappe.get_doc("Volunteer Opportunity", volunteer_name)
+            doc.rating = rating
+            doc.remarks = comments
+            doc.save()
+            frappe.db.commit()
+            return doc
+        else:
+            return("Volunteer Opportunity not found")
+        
 
-        exists = frappe.db.exists(
-            "Volunteer Opportunity", {"volunteer": volunteer, "name": name}
-        )
-        if not exists:
-            return {"error": "Opportunity not assigned to the volunteer", "status": 400}
 
-        doc = frappe.get_doc("Volunteer Opportunity", exists)
-        doc.rating = rating
-        doc.remarks = comments
-        doc.save()
-        frappe.db.commit()
-        return doc
+    def view_certificate_opp(opportunity):
+        print("opportunity====================================================", opportunity);   
+        try:
+            # Get current user's SVA User record
+            user = frappe.db.get_value(
+                "SVA User",
+                {"email": frappe.session.user},
+                ["name", "full_name"],
+                as_dict=True,
+            )
+            if not user:
+                frappe.throw("User not found")
+
+            # Get volunteer activity details
+            volunteer_activity = frappe.db.get_value(
+                "Volunteer Opportunity",
+                filters={"activity": opportunity, "volunteer": user.name},
+                fieldname=["name", "duration", "karma_points", "certificate"],
+                as_dict=True,
+            )
+            if not volunteer_activity:
+                frappe.throw("No volunteer activity found for this user and activity")
+
+            # Return existing certificate if already generated
+            if volunteer_activity.certificate:
+                return {
+                    "success": True,
+                    "message": "Certificate already exists",
+                    "certificate_url": volunteer_activity.certificate,
+                }
+
+            # Get activity details
+            activity_doc = frappe.get_doc("Opportunity", opportunity)
+
+            # Prepare certificate data
+            completion_date = frappe.utils.now_datetime()  # Ensure it's a datetime object
+            certificate_data = {
+                "full_name": user.full_name,
+                "activity_title": activity_doc.title,
+                "completion_date": completion_date.strftime(
+                    "%d %B %Y"
+                ),  # Convert to string
+                "hours_contributed": str(
+                    round((volunteer_activity.duration or 0) / 3600, 2)
+                ),
+                "karma_points": str(volunteer_activity.karma_points or 0),
+            }
+
+            # Load HTML template
+            template = frappe.get_template("mykartavya/templates/pages/certificate.html")
+            if not template:
+                frappe.throw("Certificate template not found")
+
+            html = template.render(certificate_data)
+
+            # Generate PDF
+            if not get_pdf:
+                frappe.throw("get_pdf function is missing. Check your Frappe installation.")
+
+            pdf_data = get_pdf(html)
+
+            # Generate unique filename
+            filename = f"certificate_{opportunity}_{frappe.session.user}_{completion_date.strftime('%Y%m%d%H%M%S')}.pdf"
+            file_path = frappe.get_site_path("public", "files", filename)
+
+            # Save PDF file
+            with open(file_path, "wb") as f:
+                f.write(pdf_data)
+
+            # Create File document in Frappe
+            file_url = f"/files/{filename}"
+            file_doc = frappe.get_doc(
+                {
+                    "doctype": "File",
+                    "file_url": file_url,
+                    "file_name": filename,
+                    "attached_to_doctype": "Volunteer Opportunity",
+                    "attached_to_name": volunteer_activity.name,
+                    "attached_to_field": "certificate",
+                    "is_private": 0,
+                }
+            )
+            file_doc.insert(ignore_permissions=True)
+
+            # Update volunteer activity with certificate link
+            frappe.db.set_value(
+                "Volunteer Opportunity", volunteer_activity.name, "certificate", file_url
+            )
+
+            return {
+                "success": True,
+                "message": "Certificate generated successfully",
+                "certificate_url": file_url,
+            }
+
+        except Exception as e:
+            frappe.log_error(
+                f"Error generating certificate: {str(e)}", "Certificate Generation Error"
+            )
+            return {"success": False, "message": str(e)}

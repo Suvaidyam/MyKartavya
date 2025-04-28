@@ -52,14 +52,14 @@ frappe.ui.form.on("Volunteer Opportunity Activity", {
         }
 
         // If all activities are 100% complete, save the form to trigger the Python check
-        if (all_complete && frm.doc.completion_wf_state != "Submitted") {
-            frm.save().then(() => {
-                frappe.show_alert({
-                    message: "All activities are 100% complete. Completion status has been set to Submitted.",
-                    indicator: 'green'
-                });
-            });
-        }
+        // if (all_complete && frm.doc.completion_wf_state != "Submitted") {
+        //     frm.save().then(() => {
+        //         frappe.show_alert({
+        //             message: "All activities are 100% complete. Completion status has been set to Submitted.",
+        //             indicator: 'green'
+        //         });
+        //     });
+        // }
     },
 
     // Update average when a row is removed
@@ -85,13 +85,13 @@ frappe.ui.form.on("Volunteer Opportunity Activity", {
         }
 
         // If all activities are 100% complete, save the form to trigger the Python check
-        if (all_complete && frm.doc.completion_wf_state != "Submitted") {
-            frm.save().then(() => {
-                frappe.show_alert({
-                    message: "All activities are 100% complete. Completion status has been set to Submitted.",
-                    indicator: 'green'
-                });
-            });
-        }
+        // if (all_complete && frm.doc.completion_wf_state != "Submitted") {
+        //     frm.save().then(() => {
+        //         frappe.show_alert({
+        //             message: "All activities are 100% complete. Completion status has been set to Submitted.",
+        //             indicator: 'green'
+        //         });
+        //     });
+        // }
     }
 });

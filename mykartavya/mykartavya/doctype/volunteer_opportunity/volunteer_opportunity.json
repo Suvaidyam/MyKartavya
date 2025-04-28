@@ -115,8 +115,7 @@
    "fieldname": "remarks",
    "fieldtype": "Small Text",
    "label": "Remarks",
-   "length": 500,
-   "read_only": 1
+   "length": 500
   },
   {
    "fieldname": "volunteer_opportunity_activity",
@@ -127,7 +126,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-25 10:36:41.166978",
+ "modified": "2025-04-26 11:41:28.387247",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Opportunity",
