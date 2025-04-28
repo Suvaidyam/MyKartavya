@@ -471,7 +471,6 @@ const submitReport = async () => {
   }
 };
 
-
 const submit_your_feedback = async () => {
   let res = await call('mykartavya.controllers.api.submit_feedback', {
     name: props.activity.name,
@@ -492,9 +491,7 @@ const submit_your_feedback = async () => {
     }
   }
 }
-
 const isLoadingCertificate = ref(false);
-
 const viewCertificate = async () => {
   isLoadingCertificate.value = true;
   let res = await call('mykartavya.controllers.api.view_certificate', {
