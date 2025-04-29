@@ -37,7 +37,7 @@
             <!-- Opportunity Image -->
             <div class="relative h-64 overflow-hidden">
               <img :src="selectedOpportunity?.activity_image" class="w-full h-full object-cover"
-                :alt="selectedOpportunity.activity_image" />
+                :alt="selectedOpportunity?.activity_image" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
               <div class="absolute bottom-0 left-0 p-4">
                 <h1 class="text-2xl font-bold text-white">{{ selectedOpportunity?.activity_name }}</h1>
