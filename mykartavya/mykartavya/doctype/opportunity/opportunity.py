@@ -2,9 +2,10 @@
 # For license information, please see license.txt
 
 import frappe
-from frappe.model.document import Document
 from frappe import _
-from datetime import datetime
+from frappe.model.document import Document
+from frappe.utils import getdate, today,get_datetime
+from datetime import time
 
 class Opportunity(Document):
     def validate(self):
@@ -67,6 +68,27 @@ class Opportunity(Document):
     def before_save(self):
         # Strip whitespace from text fields
         self.opportunity_name = self.opportunity_name.strip()
-        # Remove HTML tags from description if needed
         if self.opportunity_description:
             self.opportunity_description = frappe.utils.strip_html(self.opportunity_description)
+
+        if self.is_global:
+            self.country = None
+            self.state = None
+            self.city = None
+            self.address = None
+
+        today_date = today()
+        publish_date = self.publish_date.split(" ")[0] if self.publish_date else None
+        start_date = self.start_date.split(" ")[0] if self.start_date else None
+        end_date = self.end_date.split(" ")[0] if self.end_date else None
+
+        if publish_date == today_date:
+            self.status = "Published"
+            # self.docstatus = 1
+        elif start_date == today_date:
+            self.status = "Ongoing"
+        elif end_date == today_date:
+            self.status = "Ended"
+        else:
+            self.status = "Draft"
+    

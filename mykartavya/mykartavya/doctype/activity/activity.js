@@ -24,6 +24,9 @@ frappe.ui.form.on("Activity", {
                     if (response.message && response.message.role_profile === "Company Admin") {
                         frm.set_value('is_private', 1);
                     }
+                    // if (response.message && response.message.role_profile === "NGO Admin") {
+                    //     frm.set_df_property('is_private', 'read_only', 1);
+                    // }
                     if (response.message.custom_company) {
                         frm.set_value('company', response.message.custom_company);
                         frm.set_df_property('company', 'read_only', 1);
