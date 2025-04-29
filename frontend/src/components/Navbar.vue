@@ -11,7 +11,7 @@
   </div>
   <div class="bg-white h-[60px] shadow-md">
     <nav
-      v-if="['/', '/volunteering-opportunities', '/profile', '/activity', '/updateprofile', '/all-activity', '/all-volunteer'].includes('/' + route.fullPath.split('/')[1])"
+      v-if="auth.isLoggedIn && ['/', '/volunteering-opportunities', '/profile', '/activity', '/updateprofile', '/all-activity', '/all-volunteer', '/opportunity'].includes('/' + route.fullPath.split('/')[1])"
       class="flex items-center justify-between w-full px-3 sm:px-[36px] max-w-[1920px] mx-auto h-full">
       <a href="#" @click="handleLogoClick" class="flex items-center space-x-4">
         <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="h-8" />
@@ -62,11 +62,9 @@
           </Button>
         </Dropdown>
       </div>
-
-
     </nav>
 
-    <!--  -->
+    <!-- Public Navigation -->
     <nav v-else class="flex items-center justify-between h-full px-3 sm:px-[36px] max-w-[1920px] mx-auto">
       <a href="#" @click="handleLogoClick" class="flex items-center space-x-4">
         <img src="../assets/mykartavya-logo (1).png" alt="MyKartavya" class="w-44 sm:w-auto sm:h-8" />
@@ -135,7 +133,6 @@
             </template>
           </Button>
         </Dropdown>
-
       </div>
     </nav>
   </div>
