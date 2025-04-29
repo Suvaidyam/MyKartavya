@@ -99,9 +99,9 @@
                   <div class="w-full h-[280px]" v-else>
                     <NotFound message="Your Current Commitments empty!" />
                   </div>
-                  <div v-if="current_opportunity?.length > 0"
-                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Card v-for="item in current_opportunity" :key="item.name" :item="item" mode="opportunity"
+                  <div v-if="current_opportunities?.length > 0"
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
+                    <Card v-for="item in current_opportunities" :key="item.name" :item="item" mode="opportunity"
                       type="card" />
                   </div>
                   <div class="w-full h-[280px]" v-else>
@@ -235,7 +235,7 @@ const isUserApproved = ref(false)
 const showReqForApproval = ref(false)
 const svaUserData = ref(null)
 const opportunitiy = ref([])
-const current_opportunity = ref([])
+const current_opportunities = ref([])
 
 // Scroll state
 const isLeftDisabled = ref(true)
@@ -312,7 +312,7 @@ const cur_opp = async (filter) => {
         filter: filter ?? {},
       }
     )
-    current_opportunity.value = response
+    current_opportunities.value = response
     setTimeout(() => {
       loader.value = false
       checkScrollButtons()

@@ -285,7 +285,7 @@ class Opportunity:
 
             if filter:
                 if "types" in filter and filter["types"]:
-                    where_clauses.append("opp.activity_type IN %(activity_types)s")
+                    where_clauses.append("opp.opportunity_type IN %(activity_types)s")
                     params["activity_types"] = tuple(filter["types"])
 
                 if "karma_points" in filter and filter["karma_points"]:

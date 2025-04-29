@@ -285,8 +285,7 @@ let props = defineProps({
     default: () => ({}),
   },
 })
-
-console.log(props.activity);
+// console.log(props.activity);
 
 const activity_log = ref({
   hours: 0,
