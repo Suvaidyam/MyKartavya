@@ -411,6 +411,9 @@ const viewCertificate = async () => {
                     draggable: true,
                 });
                 showKarmaPopup.value = false;
+                setTimeout(() => {
+                    router.push('/profile');
+                }, 3000);
             } else {
                 toast.success('Certificate will be visible in your profile after a few minutes', {
                     autoClose: 2000,

@@ -118,66 +118,35 @@ class Profile:
         return results[0]
 
     def user_count_opp():
-        try:
-            users = []
-
-            # Get the main user
-            user = frappe.db.get_value(
-                "SVA User", {"email": frappe.session.user}, "name"
+        users = []
+        user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+        users.append(user)
+        volunteer_emails = frappe.db.get_all(
+            "Volunteer Company Mapper", {"volunteer": user}, pluck="volunteer_email"
+        )
+        if len(volunteer_emails):
+            volunteer_ids = frappe.db.get_all(
+                "SVA User", {"email": ["IN", volunteer_emails]}, pluck="name"
             )
-            if user:
-                users.append(user)
+            if len(volunteer_ids):
+                users.extend(volunteer_ids)
 
-            # Get additional volunteer emails
-            volunteer_emails = frappe.db.get_all(
-                "Volunteer Company Mapper",
-                filters={"volunteer": user},
-                pluck="volunteer_email",
-            )
+        if users:
+            users = f"({', '.join(repr(user) for user in users)})"
 
-            if volunteer_emails:
-                volunteer_ids = frappe.db.get_all(
-                    "SVA User",
-                    filters={"email": ["IN", volunteer_emails]},
-                    pluck="name",
-                )
-                if volunteer_ids:
-                    users.extend(volunteer_ids)
-
-            if not users:
-                return {
-                    "karma_points": 0,
-                    "work_value_rupees": 0,
-                    "total_hours": 0,
-                    "opportunity_completed": 0,
-                }
-
-            # Escape users properly for SQL
-            users_sql = ", ".join(frappe.db.escape(u) for u in users)
-
-            sql_query = f"""
-                SELECT 
-                    COALESCE(SUM(vo.karma_points), 0) AS karma_points,
-                    COALESCE(SUM(a.work_value_rupees), 0) AS work_value_rupees,
-                    COALESCE(SUM(vo.duration), 0) AS total_hours,
-                    COALESCE(COUNT(vo.activity), 0) AS opportunity_completed
-                FROM `tabVolunteer Opportunity` AS vo
-                INNER JOIN `tabOpportunity` AS a ON vo.activity = a.name
-                WHERE vo.volunteer IN ({users_sql})
-                AND vo.completion_wf_state = 'Approved'
-            """
-
-            results = frappe.db.sql(sql_query, as_dict=True)
-            return results[0] if results else {}
-
-        except Exception as e:
-            frappe.log_error("user_count_opp Error", frappe.get_traceback())
-            return {
-                "karma_points": 0,
-                "work_value_rupees": 0,
-                "total_hours": 0,
-                "opportunity_completed": 0,
-            }
+        sql_query = f"""
+        SELECT 
+            SUM(vo.karma_points) AS karma_points,
+            SUM(o.work_value_points) AS work_value_rupees,
+            SUM(vo.duration)AS total_hours,
+            COUNT(vo.activity) AS opportunity_completed
+        FROM `tabVolunteer Opportunity` AS vo
+        INNER JOIN `tabOpportunity` AS o ON vo.activity = o.name
+        WHERE vo.volunteer IN {users} AND vo.completion_wf_state='Approved';
+        """
+        results = frappe.db.sql(sql_query, as_dict=True)
+        return results[0]
+      
 
     @frappe.whitelist(allow_guest=True)
     def top_three_volunteer():
