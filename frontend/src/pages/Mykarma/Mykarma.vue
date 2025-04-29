@@ -104,9 +104,6 @@
                     <Card v-for="item in current_opportunities" :key="item.name" :item="item" mode="opportunity"
                       type="card" />
                   </div>
-                  <div class="w-full h-[280px]" v-else>
-                    <NotFound message="Your Current Commitments empty!" />
-                  </div>
                 </div>
                 <div v-if="current_commitments.length > 0 && (!isLeftDisabled || !isRightDisabled)"
                   class="flex justify-center mt-2 lg:hidden">
@@ -326,7 +323,7 @@ const cur_opp = async (filter) => {
 const volunteering_opportunities = async (filter) => {
   loader.value = true;
   try {
-    const response = await call('mykartavya.controllers.api.related_opportunities', {
+    const response = await call('mykartavya.controllers.api.available_opportunities', {
       filter: filter ?? {},
     });
     opportunitiy.value = response;
