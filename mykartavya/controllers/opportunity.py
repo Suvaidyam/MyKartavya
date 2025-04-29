@@ -6,7 +6,8 @@ class Opportunity:
     # Function to get opportunity details
     def get_opportunity_activity(opportunity):
         try:
-            return frappe.db.sql(f"""
+            user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+            query = f"""
                 SELECT  
                     opac.name,         
                     opac.activity_name,
@@ -26,13 +27,16 @@ class Opportunity:
                         ELSE TRUE
                     END AS is_locked
                 FROM `tabOpportunity Activity` opac
-                LEFT JOIN `tabVolunteer Opportunity Activity Log` AS parent_voal 
-                    ON opac.parent1 = parent_voal.opportunity_activity
                 LEFT JOIN `tabVolunteer Opportunity Activity Log` AS self_voal 
-                    ON opac.name = self_voal.opportunity_activity
+                    ON (opac.name = self_voal.opportunity_activity AND self_voal.volunteer = '{user}')
+                LEFT JOIN `tabVolunteer Opportunity Activity Log` AS parent_voal 
+                    ON (opac.parent1 = parent_voal.opportunity_activity AND parent_voal.volunteer = '{user}')
                 WHERE opac.opportunity = '{opportunity}'
+                GROUP BY opac.name
                 ORDER BY opac.creation ASC
-            """, as_dict=True) 
+            """
+            print(query,'query')
+            return frappe.db.sql(query, as_dict=True) 
         except Exception as e:
                 frappe.log_error(frappe.get_traceback(), "Error in get_opportunity_activity")
                 return []
@@ -84,7 +88,7 @@ class Opportunity:
         try:
             if isinstance(filter, str):
                 filter = frappe.parse_json(filter)
-
+            user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
             # Initialize clauses
             where_clauses = ["1=1"]
             order_by_clause = ""
@@ -164,7 +168,7 @@ class Opportunity:
                             ), JSON_ARRAY()
                         ) as volunteers
                 FROM `tabOpportunity` AS opp
-                LEFT JOIN `tabVolunteer Opportunity` AS vo ON vo.activity = opp.name
+                LEFT JOIN `tabVolunteer Opportunity` AS vo ON (vo.activity = opp.name AND vo.volunteer = '{user}')
                 LEFT JOIN `tabSVA User` as sva ON sva.name = vo.volunteer
                 LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
                 LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs

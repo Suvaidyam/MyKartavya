@@ -1,5 +1,5 @@
 <template>
-    <div v-if="item.completion_wf_state == 'Submitted'" class="card bg-white overflow-hidden relative"
+    <div v-if="item.com_percent > 0" class="card bg-white overflow-hidden relative"
         :class="{ 'opacity-75': item.is_locked }">
         <div v-if="item.is_locked" class="absolute inset-0 bg-gray-900/70 flex items-center justify-center z-10">
             <div class="flex flex-col items-center gap-3 p-4">
@@ -20,7 +20,7 @@
                     class="bg-[#FF7C3A] activity-type absolute top-3 text-white font-semibold text-xs flex items-center pl-3 pr-5 h-7 shadow-sm">
                     {{ item.types }}
                 </div>
-                <div
+                <div v-if="item.karma_points"
                     class="absolute right-3 top-3 bg-white/90 backdrop-blur-sm text-gray-800 text-xs px-3 h-7 rounded-full shadow-sm flex items-center gap-1.5">
                     <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -156,7 +156,7 @@
                         </svg>
                         <time class="self-stretch my-auto font-medium">{{ formatDate(item.start_date) }} - {{
                             formatDate(item.end_date)
-                            }}</time>
+                        }}</time>
                     </div>
                     <div class="flex gap-2 items-center text-gray-600">
                         <Tooltip text="Hours">
