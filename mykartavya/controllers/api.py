@@ -36,6 +36,10 @@ def current_opportunity(filter={}):
     return Opportunity.current_opportunity(filter)
 
 @frappe.whitelist(allow_guest=True)
+def available_opportunities(filter={}):
+    return Opportunity.available_opportunities(filter)
+
+@frappe.whitelist(allow_guest=True)
 def current_commitments_in_opportunity(filter={}):
     return Activity.current_commitments_in_opportunity(filter)
 
