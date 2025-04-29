@@ -68,7 +68,7 @@
           <section class="p-3 sm:p-4 border rounded-[12px] bg-white">
             <div class="w-full">
               <div class="flex justify-between items-center w-full">
-                <h2 class="text-base sm:text-lg font-medium">Current Commitments</h2>
+                <h2 class="text-base sm:text-lg font-medium">Current Commitments & Opportunities</h2>
                 <div class="flex items-center lg:hidden">
                   <FeatherIcon @click="scrollLeft" :class="[
                     'size-5 cursor-pointer',
@@ -91,9 +91,17 @@
               </div>
               <div v-else class="w-full">
                 <div ref="scrollContainer" class="py-4 w-full overflow-x-auto lg:overflow-x-visible">
-                  <div v-if="current_commitments.length > 0"
+                  <div v-if="current_commitments?.length > 0"
                     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <Card v-for="item in current_commitments" :key="item.name" :item="item" mode="activity"
+                      type="card" />
+                  </div>
+                  <div class="w-full h-[280px]" v-else>
+                    <NotFound message="Your Current Commitments empty!" />
+                  </div>
+                  <div v-if="current_opportunities?.length > 0"
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
+                    <Card v-for="item in current_opportunities" :key="item.name" :item="item" mode="opportunity"
                       type="card" />
                   </div>
                   <div class="w-full h-[280px]" v-else>
@@ -227,6 +235,7 @@ const isUserApproved = ref(false)
 const showReqForApproval = ref(false)
 const svaUserData = ref(null)
 const opportunitiy = ref([])
+const current_opportunities = ref([])
 
 // Scroll state
 const isLeftDisabled = ref(true)
@@ -284,6 +293,26 @@ const cur_commitments = async (filter) => {
       }
     )
     current_commitments.value = response
+    setTimeout(() => {
+      loader.value = false
+      checkScrollButtons()
+    }, 1000)
+  } catch (err) {
+    loader.value = false
+    console.error('Error fetching Kindness data:', err)
+  }
+}
+
+const cur_opp = async (filter) => {
+  loader.value = true
+  try {
+    const response = await call(
+      'mykartavya.controllers.api.current_opportunity',
+      {
+        filter: filter ?? {},
+      }
+    )
+    current_opportunities.value = response
     setTimeout(() => {
       loader.value = false
       checkScrollButtons()
@@ -380,6 +409,7 @@ onMounted(() => {
   cur_commitments()
   avai_commitments()
   volunteering_opportunities()
+  cur_opp()
 })
 
 // Watch filter changes
@@ -390,6 +420,7 @@ watch(
       cur_commitments(newVal)
       avai_commitments(newVal)
       volunteering_opportunities(newVal)
+      cur_opp(newVal)
     }
   },
   { deep: true, immediate: true }

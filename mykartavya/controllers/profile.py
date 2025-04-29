@@ -5,33 +5,59 @@ from frappe.utils.file_manager import save_file
 import time
 import base64
 
+
 class Profile:
     def sva_user_data():
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         doc = frappe.get_list(
-            "SVA User", 
-            filters={"name": user}, 
-            fields=["name","mobile_number","full_name","first_name","last_name","email","user_image","custom_employee_id","custom_date_of_birth","custom_background_image","custom_company","custom_country","custom_state","custom_state.state_name as state","custom_city","custom_city.district_name as city","custom_portfolio","custom_cv","custom_designation" ,"custom_linkedin" ,'workflow_state','custom_gender','custom_remarks','custom_phone_number' ],
-            ignore_permissions=True
+            "SVA User",
+            filters={"name": user},
+            fields=[
+                "name",
+                "mobile_number",
+                "full_name",
+                "first_name",
+                "last_name",
+                "email",
+                "user_image",
+                "custom_employee_id",
+                "custom_date_of_birth",
+                "custom_background_image",
+                "custom_company",
+                "custom_country",
+                "custom_state",
+                "custom_state.state_name as state",
+                "custom_city",
+                "custom_city.district_name as city",
+                "custom_portfolio",
+                "custom_cv",
+                "custom_designation",
+                "custom_linkedin",
+                "workflow_state",
+                "custom_gender",
+                "custom_remarks",
+                "custom_phone_number",
+            ],
+            ignore_permissions=True,
         )
-        
+
         # Get user skills
         if doc and len(doc) > 0:
             skills = frappe.get_all(
                 "User Skills Child",
                 filters={"parent": doc[0].name},
                 fields=["skill"],
-                order_by="idx"
+                order_by="idx",
             )
             doc[0]["custom_skill"] = [skill.skill for skill in skills]
-        
+
         return doc
 
     # def update_sva_user(data):
     #     data['password'] = 'admin@123'
     #     data['confirm_password'] = 'admin@123'
-    #     name = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")   
-        
+    #     name = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+
     #     if name:
     #         # Ensure phone number is in the correct format
     #         if 'custom_phone_number' in data:
@@ -42,12 +68,12 @@ class Profile:
     #             elif '-' not in data['custom_phone_number']:
     #                 data['custom_phone_number'] = data['custom_phone_number'].replace('+', '+', 1)
     #                 data['custom_phone_number'] = f"{data['custom_phone_number']}-{data['custom_phone_number'].split('+')[1]}"
-            
+
     #         # Handle skills
     #         if 'custom_skill' in data:
     #             # Delete existing skills
     #             frappe.db.delete("User Skills Child", {"parent": name})
-                
+
     #             # Add new skills
     #             for skill in data['custom_skill']:
     #                 data.append('custom_skill', {
@@ -65,15 +91,19 @@ class Profile:
         users = []
         user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
         users.append(user)
-        volunteer_emails = frappe.db.get_all("Volunteer Company Mapper",{"volunteer":user},pluck='volunteer_email')
+        volunteer_emails = frappe.db.get_all(
+            "Volunteer Company Mapper", {"volunteer": user}, pluck="volunteer_email"
+        )
         if len(volunteer_emails):
-            volunteer_ids = frappe.db.get_all("SVA User",{"email":["IN",volunteer_emails]},pluck='name')
+            volunteer_ids = frappe.db.get_all(
+                "SVA User", {"email": ["IN", volunteer_emails]}, pluck="name"
+            )
             if len(volunteer_ids):
                 users.extend(volunteer_ids)
 
         if users:
             users = f"({', '.join(repr(user) for user in users)})"
-        
+
         sql_query = f"""
         SELECT 
             SUM(va.karma_points) AS karma_points,
@@ -87,7 +117,37 @@ class Profile:
         results = frappe.db.sql(sql_query, as_dict=True)
         return results[0]
 
-    
+    def user_count_opp():
+        users = []
+        user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+        users.append(user)
+        volunteer_emails = frappe.db.get_all(
+            "Volunteer Company Mapper", {"volunteer": user}, pluck="volunteer_email"
+        )
+        if len(volunteer_emails):
+            volunteer_ids = frappe.db.get_all(
+                "SVA User", {"email": ["IN", volunteer_emails]}, pluck="name"
+            )
+            if len(volunteer_ids):
+                users.extend(volunteer_ids)
+
+        if users:
+            users = f"({', '.join(repr(user) for user in users)})"
+
+        sql_query = f"""
+        SELECT 
+            SUM(vo.karma_points) AS karma_points,
+            SUM(o.work_value_points) AS work_value_rupees,
+            SUM(vo.duration)AS total_hours,
+            COUNT(vo.activity) AS opportunity_completed
+        FROM `tabVolunteer Opportunity` AS vo
+        INNER JOIN `tabOpportunity` AS o ON vo.activity = o.name
+        WHERE vo.volunteer IN {users} AND vo.completion_wf_state='Approved';
+        """
+        results = frappe.db.sql(sql_query, as_dict=True)
+        return results[0]
+      
+
     @frappe.whitelist(allow_guest=True)
     def top_three_volunteer():
         sql_query = """
@@ -107,7 +167,7 @@ class Profile:
         """
         res = frappe.db.sql(sql_query, as_dict=True)
         return res
-    
+
     @frappe.whitelist(allow_guest=True)
     def sdg_impacted():
         sql_query = """
@@ -126,13 +186,21 @@ class Profile:
         res = frappe.db.sql(sql_query, as_dict=True)
         return res
 
-    
-    @frappe.whitelist(allow_guest=True) 
+    @frappe.whitelist(allow_guest=True)
     def check_user_fields():
         validated = True
-        required_fields = ["first_name", "custom_date_of_birth","custom_country","custom_state","custom_city" , "custom_phone_number"]
+        required_fields = [
+            "first_name",
+            "custom_date_of_birth",
+            "custom_country",
+            "custom_state",
+            "custom_city",
+            "custom_phone_number",
+        ]
         for field in required_fields:
-            if not frappe.db.get_value("SVA User", {"email": frappe.session.user}, field):
+            if not frappe.db.get_value(
+                "SVA User", {"email": frappe.session.user}, field
+            ):
                 validated = False
                 break
         return {"success": validated}
@@ -141,7 +209,6 @@ class Profile:
     def get_all_skills():
         skills = frappe.get_all("Skills", fields=["name", "skill_name"])
         return skills
-    
 
     def update_sva_user(data):
         try:
