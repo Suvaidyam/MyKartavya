@@ -94,6 +94,7 @@ class Activity:
         company = frappe.db.get_value(
             "SVA User", {"email": frappe.session.user}, "custom_company"
         )
+        
         companies = frappe.db.get_list(
             "User Permission",
             filters={"user": frappe.session.user, "allow": "Company"},
