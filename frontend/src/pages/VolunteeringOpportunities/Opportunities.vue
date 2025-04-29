@@ -1,208 +1,244 @@
 <template>
-  <div class="min-h-screen bg-gray-100">
+  <div class="max-w-[1920px] w-full mx-auto"
+    :class="{ 'pt-[62px]': auth?.isLoggedIn && !isUserApproved && svaUserData?.workflow_state !== 'Rejected' }">
     <!-- Alert Banner for Unapproved Users -->
-    <div v-if="!isUserApproved" class="w-full bg-orange-100">
-      <div class="max-w-[1920px] mx-auto py-3 px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between flex-wrap">
-          <div class="w-0 flex-1 flex items-center">
-            <span class="flex p-2 rounded-lg bg-white/20">
-              <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+    <div v-if="auth?.isLoggedIn && !isUserApproved && svaUserData?.workflow_state !== 'Rejected'"
+      class="w-full bg-orange-100">
+      <div class="max-w-[1920px] mx-auto py-2 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <span class="flex p-1.5 rounded-lg bg-orange-100">
+              <svg class="h-4 w-4 text-orange-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </span>
-            <p class="ml-3 font-medium text-white">
-              <span class="md:hidden">Your account is pending approval</span>
-              <span class="hidden md:inline">Your account is currently pending approval. Some features may
-                be limited until your account is approved.</span>
+            <p class="ml-2 text-sm font-medium text-orange-800">
+              <span class="md:hidden">Account pending approval</span>
+              <span class="hidden md:inline">Your account is pending approval. Some features may be limited.</span>
             </p>
           </div>
-          <div class="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
-            <a href="/profile"
-              class="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-yellow-600 bg-white hover:bg-white/90 transition-all duration-300">
-              View Profile
-            </a>
+          <button @click="showReqForApproval = true"
+            class="bg-orange-100 hover:bg-orange-200 px-4 py-1.5 rounded-sm text-sm font-medium text-orange-800 flex items-center gap-1.5 transition-all duration-200 button-animation">
+            Request for Approval
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Rejection Remarks Section -->
+    <div v-if="auth?.isLoggedIn && svaUserData?.workflow_state === 'Rejected' && svaUserData?.custom_remarks"
+      class="w-full bg-red-50/50" :class="{ 'mt-16': !isUserApproved }">
+      <div class="max-w-[1920px] mx-auto py-3 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 min-w-8 min-h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm font-medium text-red-800">Rejection Reason</h3>
+              <span class="text-xs text-red-600 bg-red-100 px-2 py-0.5 rounded-full">Account Rejected</span>
+            </div>
+            <p class="text-sm text-red-700 mt-1 line-clamp-2">{{ svaUserData.custom_remarks }}</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-10 ">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <!-- Left Column - Main Opportunity -->
-        <div class="lg:col-span-4">
-          <div class="bg-white rounded-md  overflow-hidden">
-            <!-- Opportunity Image -->
-            <div class="relative h-64 overflow-hidden">
-              <img :src="selectedOpportunity?.activity_image" class="w-full h-full object-cover"
-                :alt="selectedOpportunity?.activity_image" />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-              <div class="absolute bottom-0 left-0 p-4">
-                <h1 class="text-2xl font-bold text-white">{{ selectedOpportunity?.activity_name }}</h1>
-                <span class="inline-block bg-orange-500 text-white px-2 py-1 rounded text-sm mt-2">{{
-                  selectedOpportunity?.types }}</span>
-              </div>
-            </div>
+    <!-- Request for Approval Popup -->
+    <ReqForApproval v-model="showReqForApproval" />
 
-            <!-- Opportunity Details -->
-            <div class="p-6">
-              <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center gap-2">
-                  <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span class="text-gray-700">{{ formatDate(selectedOpportunity?.start_date) }} - {{
-                    formatDate(selectedOpportunity?.end_date) }}</span>
+    <div class="max-w-[1920px] w-full flex flex-col lg:flex-row px-4 sm:px-5" :class="{
+      'mt-[8px]': auth?.isLoggedIn && !isUserApproved,
+      'mt-[60px]': auth?.isLoggedIn && isUserApproved,
+      'mt-[85px]': !auth?.isLoggedIn
+    }">
+      <div class="max-w-[1920px] w-full flex flex-col xl:flex-row">
+        <main class="max-w-[1920px] w-full px-2 sm:px-3 py-3 bg-gray-50">
+          <div class="max-w-[1920px] grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left Column - Main Opportunity -->
+            <div class="lg:col-span-4">
+              <div class="bg-white rounded-md  overflow-hidden">
+                <!-- Opportunity Image -->
+                <div class="relative aspect-[16/9] overflow-hidden rounded-t-md">
+                  <img :src="selectedOpportunity?.activity_image" class="w-full h-full object-cover object-center"
+                    :alt="selectedOpportunity?.activity_name" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                  <div class="absolute bottom-0 left-0 p-4 sm:p-6">
+                    <h1 class="text-xl sm:text-2xl font-bold text-white">{{ selectedOpportunity?.activity_name }}</h1>
+                    <span class="inline-block bg-orange-500 text-white px-2 py-1 rounded text-sm mt-2">{{
+                      selectedOpportunity?.types }}</span>
+                  </div>
                 </div>
-                <div class="flex items-center gap-2">
-                  <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span class="text-gray-700">{{ selectedOpportunity?.hours ?? '0' }} hr</span>
-                </div>
-              </div>
 
-              <div class="flex items-center gap-2 mb-6">
-                <svg class="w-5 h-5 text-orange-500" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M15.5002 3.66602C15.5002 2.28518 12.8885 1.16602 9.66683 1.16602C6.44516 1.16602 3.8335 2.28518 3.8335 3.66602M15.5002 3.66602V6.99935C15.5002 7.84935 14.5118 8.59935 13.0002 9.05102C12.0552 9.33435 10.906 9.49935 9.66683 9.49935C8.42766 9.49935 7.2785 9.33352 6.3335 9.05102C4.82266 8.59935 3.8335 7.84935 3.8335 6.99935V3.66602M15.5002 3.66602C15.5002 4.51602 14.5118 5.26602 13.0002 5.71768C12.0552 6.00102 10.906 6.16602 9.66683 6.16602C8.42766 6.16602 7.2785 6.00018 6.3335 5.71768C4.82266 5.26602 3.8335 4.51602 3.8335 3.66602"
-                    stroke="#FF5722" stroke-linecap="round" stroke-linejoin="round" />
-                  <path
-                    d="M0.5 6.9994V10.3327C0.5 11.1827 1.48917 11.9327 3 12.3844C3.945 12.6677 5.09417 12.8327 6.33333 12.8327C7.5725 12.8327 8.72167 12.6669 9.66667 12.3844C11.1775 11.9327 12.1667 11.1827 12.1667 10.3327V9.4994M0.5 6.9994C0.5 6.0019 1.8625 5.14107 3.83333 4.74023M0.5 6.9994C0.5 7.8494 1.48917 8.5994 3 9.05107C3.945 9.3344 5.09417 9.4994 6.33333 9.4994C6.9125 9.4994 7.47167 9.46357 8 9.39607"
-                    stroke="#FF5722" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <span class="text-gray-700">{{ selectedOpportunity?.karma_points?.toLocaleString() }} Points</span>
-              </div>
+                <!-- Opportunity Details -->
+                <div class="p-6">
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2">
+                      <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span class="text-gray-700">{{ formatDate(selectedOpportunity?.start_date) }} - {{
+                        formatDate(selectedOpportunity?.end_date) }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span class="text-gray-700">{{ selectedOpportunity?.hours ?? '0' }} hr</span>
+                    </div>
+                  </div>
 
-              <!-- Progress Bar -->
-              <div v-if="auth?.isLoggedIn" class="mb-6">
-                <div class="w-full bg-gray-200 rounded-full h-2">
-                  <div class="bg-green-500 h-2 rounded-full"
-                    :style="`width: ${selectedOpportunity?.com_percent ?? 0}%`"></div>
-                </div>
-                <div class="flex items-center justify-between mt-2 text-sm text-gray-600">
-                  <span>{{ selectedOpportunity?.com_percent != null ? selectedOpportunity.com_percent : 0 }}%
-                    completed</span>
-                  <span>{{ selectedOpportunity?.donet_hours != null ? ((selectedOpportunity.donet_hours / 60) /
-                    60).toFixed(2) : '0' }} hr</span>
-                </div>
-              </div>
-              <!-- SDG Goals -->
-              <div class="mb-6">
-                <h3 class="text-lg font-medium text-gray-800 mb-3">SDG Goals</h3>
-                <div class="flex flex-wrap gap-2">
-                  <div v-if="selectedOpportunity?.sdgs" v-for="(sdg, index) in JSON.parse(selectedOpportunity.sdgs)"
-                    :key="index"
-                    class="bg-gray-100 p-2 rounded-lg flex items-center gap-2 hover:bg-gray-200 transition-all duration-300">
-                    <img v-if="sdg?.image" :src="sdg.image" alt="SDG Icon" class="w-6 h-6">
-                    <span v-else class="text-sm text-gray-700">{{ sdg?.sdgs_name }}</span>
+                  <div class="flex items-center gap-2 mb-6">
+                    <svg class="w-5 h-5 text-orange-500" viewBox="0 0 16 14" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M15.5002 3.66602C15.5002 2.28518 12.8885 1.16602 9.66683 1.16602C6.44516 1.16602 3.8335 2.28518 3.8335 3.66602M15.5002 3.66602V6.99935C15.5002 7.84935 14.5118 8.59935 13.0002 9.05102C12.0552 9.33435 10.906 9.49935 9.66683 9.49935C8.42766 9.49935 7.2785 9.33352 6.3335 9.05102C4.82266 8.59935 3.8335 7.84935 3.8335 6.99935V3.66602M15.5002 3.66602C15.5002 4.51602 14.5118 5.26602 13.0002 5.71768C12.0552 6.00102 10.906 6.16602 9.66683 6.16602C8.42766 6.16602 7.2785 6.00018 6.3335 5.71768C4.82266 5.26602 3.8335 4.51602 3.8335 3.66602"
+                        stroke="#FF5722" stroke-linecap="round" stroke-linejoin="round" />
+                      <path
+                        d="M0.5 6.9994V10.3327C0.5 11.1827 1.48917 11.9327 3 12.3844C3.945 12.6677 5.09417 12.8327 6.33333 12.8327C7.5725 12.8327 8.72167 12.6669 9.66667 12.3844C11.1775 11.9327 12.1667 11.1827 12.1667 10.3327V9.4994M0.5 6.9994C0.5 6.0019 1.8625 5.14107 3.83333 4.74023M0.5 6.9994C0.5 7.8494 1.48917 8.5994 3 9.05107C3.945 9.3344 5.09417 9.4994 6.33333 9.4994C6.9125 9.4994 7.47167 9.46357 8 9.39607"
+                        stroke="#FF5722" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span class="text-gray-700">{{ selectedOpportunity?.karma_points?.toLocaleString() }} Points</span>
+                  </div>
+
+                  <!-- Progress Bar -->
+                  <div v-if="auth?.isLoggedIn" class="mb-6">
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                      <div class="bg-green-500 h-2 rounded-full"
+                        :style="`width: ${selectedOpportunity?.com_percent ?? 0}%`"></div>
+                    </div>
+                    <div class="flex items-center justify-between mt-2 text-sm text-gray-600">
+                      <span>{{ selectedOpportunity?.com_percent != null ? selectedOpportunity.com_percent : 0 }}%
+                        completed</span>
+                      <span>{{ selectedOpportunity?.donet_hours != null ? ((selectedOpportunity.donet_hours / 60) /
+                        60).toFixed(2) : '0' }} hr</span>
+                    </div>
+                  </div>
+                  <!-- SDG Goals -->
+                  <div class="mb-6">
+                    <h3 class="text-lg font-medium text-gray-800 mb-3">SDG Goals</h3>
+                    <div class="flex flex-wrap gap-2">
+                      <div v-if="selectedOpportunity?.sdgs" v-for="(sdg, index) in JSON.parse(selectedOpportunity.sdgs)"
+                        :key="index"
+                        class="bg-gray-100 p-2 rounded-lg flex items-center gap-2 hover:bg-gray-200 transition-all duration-300">
+                        <img v-if="sdg?.image" :src="sdg.image" alt="SDG Icon" class="w-6 h-6">
+                        <span v-else class="text-sm text-gray-700">{{ sdg?.sdgs_name }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div v-if="auth?.isLoggedIn" class=" ">
+                    <div class="border "></div>
+                    <div class="">
+                      <Stepper :activity="selectedOpportunity" :key="selectedOpportunity?.activity" />
+                    </div>
+                  </div>
+                  <div v-else class="flex h-full justify-end">
+                    <router-link to="/login">
+                      <button
+                        class="h-[28px] uppercase px-3 rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
+                        ACT NOW
+                      </button>
+                    </router-link>
                   </div>
                 </div>
               </div>
 
-              <div v-if="auth?.isLoggedIn" class=" ">
-                <div class="border "></div>
-                <div class="">
-                  <Stepper :activity="selectedOpportunity" :key="selectedOpportunity?.activity" />
+              <!-- Volunteer Role -->
+              <div class="bg-white rounded-md mt-6 p-6 h-[600px] flex flex-col sticky top-20">
+                <h2 class="text-lg font-medium mb-4">Volunteer Role</h2>
+                <div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                  <div class="prose prose-sm max-w-none">
+                    <p class="text-gray-600 whitespace-pre-wrap" v-html="selectedOpportunity?.activity_description"></p>
+                  </div>
+                </div>
+                <!-- Social Share Buttons -->
+                <div class="mt-4 pt-4 border-t border-gray-200">
+                  <h3 class="text-sm font-medium text-gray-700 mb-3">Share this opportunity</h3>
+                  <div class="flex items-center gap-3">
+                    <button @click="shareToSocial('facebook')"
+                      class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
+                      <Facebook class="w-5 h-5" />
+                    </button>
+                    <button @click="shareToSocial('twitter')"
+                      class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
+                      <Twitter class="w-5 h-5" />
+                    </button>
+                    <button @click="shareToSocial('linkedin')"
+                      class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
+                      <Linkedin class="w-5 h-5" />
+                    </button>
+                    <button @click="shareToSocial('whatsapp')"
+                      class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
+                      <MessageCircle class="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div v-else class="flex h-full justify-end">
-              <router-link to="/login">
-                <button
-                  class="h-[28px] uppercase px-3 rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
-                  ACT NOW
-                </button>
-              </router-link>
+            </div>
+
+            <!-- Right Column - Activities -->
+            <div class="lg:col-span-8">
+              <h2 class="text-lg font-medium mb-6">Activities</h2>
+
+              <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 pt-1 gap-4">
+                <CardLoader />
+                <CardLoader />
+                <CardLoader />
+                <CardLoader />
+              </div>
+              <div v-else>
+                <div v-if="opportunitiesActivities?.length > 0"
+                  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <OpportunityCard v-for="(item) in opportunitiesActivities" :key="item.name" :item="item"
+                    :mode="'opportunity'" />
+                </div>
+                <div class="w-full h-[300px]" v-else>
+                  <NotFound />
+                </div>
+              </div>
+
+              <!-- Related Opportunities -->
+              <div class="mt-12">
+                <div class="flex items-center justify-between mb-6">
+                  <h2 class="text-lg font-medium">Related Opportunities</h2>
+                  <div class="flex items-center gap-2">
+                    <button @click="!isLeftDisabled && scrollLeft" :disabled="isLeftDisabled"
+                      class="p-3 rounded-xl hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
+                      <FeatherIcon name="chevron-left" class="w-6 h-6" />
+                    </button>
+                    <button @click="!isRightDisabled && scrollRight" :disabled="isRightDisabled"
+                      class="p-3 rounded-xl hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
+                      <FeatherIcon name="chevron-right" class="w-6 h-6" />
+                    </button>
+                  </div>
+                </div>
+
+                <div ref="scrollContainer" class="relative">
+                  <div v-if="opportunities?.length > 0" class="flex gap-4 pb-4 overflow-x-auto scrollbar-hide">
+                    <Card v-for="(item) in opportunities" :key="item.name" :item="item" :mode="'opportunity'"
+                      @click="handleCardClick(item)"
+                      class="w-[280px] min-w-[280px] max-w-[280px] lg:w-[450px] lg:min-w-[450px] lg:max-w-[450px] transform hover:scale-105 transition-all duration-300 cursor-pointer" />
+                  </div>
+                  <div v-else class="w-full h-[300px]">
+                    <NotFound />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-
-          <!-- Volunteer Role -->
-          <div class="bg-white rounded-md mt-6 p-6 h-[600px] flex flex-col sticky top-20">
-            <h2 class="text-lg font-medium mb-4">Volunteer Role</h2>
-            <div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-              <div class="prose prose-sm max-w-none">
-                <p class="text-gray-600 whitespace-pre-wrap" v-html="selectedOpportunity?.activity_description"></p>
-              </div>
-            </div>
-            <!-- Social Share Buttons -->
-            <div class="mt-4 pt-4 border-t border-gray-200">
-              <h3 class="text-sm font-medium text-gray-700 mb-3">Share this opportunity</h3>
-              <div class="flex items-center gap-3">
-                <button @click="shareToSocial('facebook')"
-                  class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
-                  <Facebook class="w-5 h-5" />
-                </button>
-                <button @click="shareToSocial('twitter')"
-                  class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
-                  <Twitter class="w-5 h-5" />
-                </button>
-                <button @click="shareToSocial('linkedin')"
-                  class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
-                  <Linkedin class="w-5 h-5" />
-                </button>
-                <button @click="shareToSocial('whatsapp')"
-                  class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
-                  <MessageCircle class="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Column - Activities -->
-        <div class="lg:col-span-8">
-          <h2 class="text-lg font-medium mb-6">Activities</h2>
-
-          <div v-if="loader" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 pt-1 gap-4">
-            <CardLoader />
-            <CardLoader />
-            <CardLoader />
-            <CardLoader />
-          </div>
-          <div v-else>
-            <div v-if="opportunitiesActivities?.length > 0"
-              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <OpportunityCard v-for="(item) in opportunitiesActivities" :key="item.name" :item="item"
-                :mode="'opportunity'" />
-            </div>
-            <div class="w-full h-[300px]" v-else>
-              <NotFound />
-            </div>
-          </div>
-
-          <!-- Related Opportunities -->
-          <div class="mt-12">
-            <div class="flex items-center justify-between mb-6">
-              <h2 class="text-lg font-medium">Related Opportunities</h2>
-              <div class="flex items-center gap-2">
-                <button @click="!isLeftDisabled && scrollLeft" :disabled="isLeftDisabled"
-                  class="p-3 rounded-xl hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
-                  <FeatherIcon name="chevron-left" class="w-6 h-6" />
-                </button>
-                <button @click="!isRightDisabled && scrollRight" :disabled="isRightDisabled"
-                  class="p-3 rounded-xl hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
-                  <FeatherIcon name="chevron-right" class="w-6 h-6" />
-                </button>
-              </div>
-            </div>
-
-            <div ref="scrollContainer" class="relative">
-              <div v-if="opportunities?.length > 0" class="flex gap-4 pb-4 overflow-x-auto scrollbar-hide">
-                <Card v-for="(item) in opportunities" :key="item.name" :item="item" :mode="'opportunity'"
-                  @click="handleCardClick(item)"
-                  class="w-[280px] min-w-[280px] max-w-[280px] lg:w-[450px] lg:min-w-[450px] lg:max-w-[450px] transform hover:scale-105 transition-all duration-300 cursor-pointer" />
-              </div>
-              <div v-else class="w-full h-[300px]">
-                <NotFound />
-              </div>
-            </div>
-          </div>
-        </div>
+        </main>
       </div>
     </div>
   </div>
@@ -216,6 +252,7 @@ import Card from '../../components/Card.vue'
 import NotFound from '../../components/NotFound.vue'
 import CardLoader from '../../components/CardLoader.vue'
 import Stepper from '../../components/OpprtunityStepper.vue'
+import ReqForApproval from '../../components/ReqForApproval.vue'
 import { useRouter, useRoute } from 'vue-router'
 import {
   Facebook,
@@ -236,6 +273,8 @@ const scrollContainer = ref(null);
 const isLeftDisabled = ref(true);
 const isRightDisabled = ref(false);
 const isUserApproved = ref(false)
+const svaUserData = ref(null)
+const showReqForApproval = ref(false)
 const opportunitiesActivities = ref([]);
 const opportunities = ref([]);
 const selectedOpportunity = ref({});
@@ -272,6 +311,7 @@ const checkUserApproval = async () => {
   try {
     const response = await call('mykartavya.controllers.api.sva_user_data');
     if (response && response.length > 0) {
+      svaUserData.value = response[0];
       isUserApproved.value = response[0]?.workflow_state === 'Approved';
     }
   } catch (err) {

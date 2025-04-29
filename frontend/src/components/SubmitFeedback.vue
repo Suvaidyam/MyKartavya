@@ -74,7 +74,8 @@
                         </div>
                     </div>
                     <div class="flex justify-end">
-                        <button @click="submitReport" :disabled="props.activity.com_percent === 100"
+                        <button @click="submitReport"
+                            :disabled="props.activity.com_percent === 100 || !props.isOpportunityApproved"
                             class="bg-[#FF5722] flex items-center justify-center text-white h-[38px] text-sm sm:text-base w-full sm:w-48 rounded-sm text-center font-medium hover:bg-orange-600 transition-all duration-200 active:scale-95 disabled:transform-none disabled:cursor-not-allowed disabled:bg-gray-400">
                             <p>{{ props.activity.com_percent === 100 ? 'COMPLETE' : 'MARK AS COMPLETE' }}</p>
                             <div class="h-5 w-5" v-if="loading">
@@ -86,6 +87,9 @@
                             </div>
                         </button>
                     </div>
+                    <p v-if="!props.isOpportunityApproved" class="text-red-500 text-sm mt-2 text-center">
+                        This opportunity is not approved yet. You cannot submit feedback until it is approved.
+                    </p>
                 </div>
 
                 <!-- Completion Popup -->
@@ -137,6 +141,11 @@ const props = defineProps({
         type: Object,
         required: false,
         default: () => ({}),
+    },
+    isOpportunityApproved: {
+        type: Boolean,
+        required: false,
+        default: true
     }
 })
 
