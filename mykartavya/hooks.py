@@ -32,6 +32,8 @@ fixtures=[
     # "Server Script",
     # "FAQs"
     # "Translation",
+    # 'Custom DocPerm',
+    # 'My Theme',
 ]
 
 

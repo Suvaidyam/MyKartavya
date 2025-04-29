@@ -15,7 +15,7 @@
  "label": "Volunteer Activity Approval",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-03-24 09:45:59.604327",
+ "modified": "2025-04-29 16:39:09.379705",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity Approval",
@@ -33,7 +33,12 @@
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
- "roles": [],
+ "roles": [
+  {
+   "role": "MyKartvya Admin"
+  },
+  {}
+ ],
  "sequence_id": 28.0,
  "shortcuts": [],
  "title": "Volunteer Activity Approval",

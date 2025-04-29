@@ -15,7 +15,7 @@
  "label": "Volunteer Opportunity Approval",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-04-28 00:27:21.120980",
+ "modified": "2025-04-29 16:39:27.298040",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Opportunity Approval",
@@ -33,7 +33,11 @@
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
- "roles": [],
+ "roles": [
+  {
+   "role": "MyKartvya Admin"
+  }
+ ],
  "sequence_id": 29.0,
  "shortcuts": [],
  "title": "Volunteer Opportunity Approval",
