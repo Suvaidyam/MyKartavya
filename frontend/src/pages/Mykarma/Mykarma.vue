@@ -91,7 +91,7 @@
               </div>
               <div v-else class="w-full">
                 <div ref="scrollContainer" class="py-4 w-full overflow-x-auto lg:overflow-x-visible">
-                  <div v-if="current_commitments?.length > 0"
+                  <div v-if="current_commitments?.length > 0 || current_opportunities.length > 0"
                     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <Card v-for="item in current_commitments" :key="item.name" :item="item" mode="activity"
                       type="card" />
@@ -99,7 +99,7 @@
                       type="card" />
                   </div>
                   <div class="w-full h-[280px]" v-if="current_commitments.length === 0 && current_opportunities.length === 0">
-                    <NotFound message="Your Current Commitments empty!" />
+                    <NotFound/>
                   </div>
                 </div>
                 <div v-if="current_commitments.length > 0 && (!isLeftDisabled || !isRightDisabled)"

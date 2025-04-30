@@ -83,13 +83,13 @@
                 v-if="!step.completed && ['Get Started'].includes(step.title) && ['Applied'].includes(activity.workflow_state)"
                 @click="nextStep(index)"
                 class="mt-3 h-[28px] uppercase cursor-not-allowed px-3 rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
-                {{ step.title == 'Get Started' ? 'Pending by Admin' : 'Review under Admin' }}
+                {{ step.title == 'Get Started' ? 'Approval in Progress' : 'Review under Admin' }}
               </button>
               <button disabled
                 v-if="!step.completed && ['Activity Report'].includes(step.title) && (['Approved'].includes(activity.workflow_state) && activity.completion_wf_state == 'Submitted')"
                 @click="nextStep(index)"
                 class="mt-2 h-[28px] uppercase cursor-not-allowed px-3 rounded-sm text-caption font-medium text-white ml-2 bg-[#FF5722] button-animation">
-                {{ step.title == 'Get Started' ? 'Pending by Admin' : 'Review under Admin' }}
+                {{ step.title == 'Get Started' ? 'Approval in Progress' : 'Review under Admin' }}
               </button>
             </div>
           </div>

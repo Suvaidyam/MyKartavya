@@ -94,7 +94,7 @@
                         <button v-if="index === 1 && !step.completed && props.activity.workflow_state === 'Applied'"
                             disabled
                             class="mt-3 h-[28px] uppercase cursor-not-allowed px-3 rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
-                            Pending by Admin
+                            Approval in Progress
                         </button>
                         <button
                             v-if="index === 2 && !step.completed && props.activity.workflow_state === 'Approved' && props.activity.completion_wf_state === 'Pending'"
