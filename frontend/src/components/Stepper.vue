@@ -581,6 +581,11 @@ watch(() => showKarmaPopup, (newValue) => {
     }, 3000); // 3000 milliseconds = 3 seconds
   }
 });
+watch(uploadedImages, (newImages) => {
+    if (newImages.length > 0) {
+        activity_err.value.image = false
+    }
+}, { deep: true })
 </script>
 <style scoped>
 .border-l {

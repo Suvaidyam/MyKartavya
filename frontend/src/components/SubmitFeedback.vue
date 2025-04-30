@@ -212,6 +212,7 @@ const req_field = () => {
 const submitReport = async () => {
     if (req_field()) {
         return;
+
     }
 
     loading.value = true;
@@ -282,15 +283,34 @@ const closeCompletionPopup = () => {
 const uploadFiles = (event) => {
     const files = event.target.files
     if (files.length) {
+        
         for (let file of files) {
             const reader = new FileReader()
             reader.onload = (e) => {
                 uploadedImages.value.push({ file: file, preview: reader.result })
             }
             reader.readAsDataURL(file)
+            
         }
+        
     }
 }
+watch(() => activity_log.value.progress, (newVal, oldVal) => {
+  if (props.activity.com_percent <= newVal) {
+    activity_err.value.progress = false
+  }  
+})
+
+watch(() => activity_log.value.hours, (newVal, oldVal) => {
+  if (props.activity.hours <= newVal) {
+    activity_err.value.hours = false
+  }  
+})
+watch(uploadedImages, (newImages) => {
+    if (newImages.length > 0) {
+        activity_err.value.image = false
+    }
+}, { deep: true })
 </script>
 
 <style scoped>
