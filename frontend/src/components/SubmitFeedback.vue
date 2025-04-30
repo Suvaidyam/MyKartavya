@@ -13,19 +13,19 @@
                             the activity?</label>
                         <div class="relative">
                             <div class="flex flex-col sm:flex-row gap-4">
-                                <div class="flex gap-2 items-center time-input-group">
+                                <div class="flex gap-2 items-center relative w-full sm:w-auto">
                                     <label class="text-base font-normal">Hours</label>
                                     <input type="number" v-model="activity_log.hours"
-                                        class="time-input border rounded-sm px-2 h-8 sm:h-8"
+                                        class="w-full sm:w-24 border rounded-sm px-2 h-8 sm:h-8"
                                         @input="activity_log.hours = Math.max(0, activity_log.hours)" />
-                                    <FeatherIcon class="clock-icon size-4" name="clock" />
+                                    <FeatherIcon class="absolute right-2 top-2 size-4" name="clock" />
                                 </div>
-                                <div class="flex gap-2 items-center time-input-group">
+                                <div class="flex gap-2 items-center relative w-full sm:w-auto">
                                     <label class="text-base font-normal">Minutes</label>
                                     <input type="number" v-model="activity_log.minutes"
                                         @input="activity_log.minutes = Math.max(0, activity_log.minutes)"
-                                        class="time-input border rounded-sm px-2 h-8 sm:h-8" />
-                                    <FeatherIcon class="clock-icon size-4" name="clock" />
+                                        class="w-full sm:w-24 border rounded-sm px-2 h-8 sm:h-8" />
+                                    <FeatherIcon class="absolute right-2 top-2 size-4" name="clock" />
                                 </div>
                             </div>
                             <p class="text-red-500 absolute text-xs -bottom-5" v-if="activity_err.time">Donation
@@ -70,7 +70,7 @@
                                 <p class="text-xs font-normal pt-2 text-[#999999]">Supported formats: JPEG, PNG</p>
                             </div>
                         </div>
-                        <p class="text-red-500 absolute text-xs -bottom-2" v-if="activity_err.image">
+                        <p class="text-red-500 absolute text-xs py-2 pl-1" v-if="activity_err.image">
                             Image upload is required. Please upload an image to continue.
                         </p>
                         <div class="flex flex-wrap gap-2 mt-3">
@@ -96,7 +96,6 @@
                         This opportunity is not approved yet. You cannot submit feedback until it is approved.
                     </p>
                 </div>
-
                 <!-- Completion Popup -->
                 <div v-if="showCompletionPopup"
                     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -153,6 +152,8 @@ const props = defineProps({
         default: true
     }
 })
+console.log("Require feedback images?", props.activity.required_feedback_images);
+
 
 const uploadedImages = ref([])
 const loading = ref(false)
@@ -197,7 +198,7 @@ const req_field = () => {
         activity_err.value.progress = true;
         hasError = true;
     }
-    if (uploadedImages.value.length === 0 && props.activity.require_feedback_images) {
+    if (uploadedImages.value.length === 0 && props.activity.required_feedback_images) {
         activity_err.value.image = true;
         hasError = true;
     }
@@ -217,13 +218,16 @@ const submitReport = async () => {
 
     try {
         let res = await call("mykartavya.controllers.api.submit_opportunity_activity_report", {
+
             name: props.opportunity_activity,
             data: {
                 duration: activity_log.value.hours * 3600 + activity_log.value.minutes * 60,
                 percent: activity_log.value.progress - (props.activity.com_percent || 0),
                 images: uploadedImages.value,
             },
+
         });
+
 
         if (res && res.status === "success") {
             activity_log.value.progress = res.data.com_percent;
@@ -323,43 +327,6 @@ const uploadFiles = (event) => {
         width: 100%;
         max-width: 4rem;
         margin: 0 auto;
-    }
-}
-
-.time-input-group {
-    width: 100%;
-    max-width: 220px;
-    position: relative;
-}
-
-.time-input {
-    width: 100%;
-    min-width: 0;
-}
-
-.clock-icon {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-}
-
-@media (max-width: 640px) {
-    .flex.flex-col.sm\:flex-row.gap-4 {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .time-input-group {
-        max-width: 100%;
-        width: 100%;
-    }
-
-    .clock-icon {
-        right: 8px;
-        top: 50%;
-        transform: translateY(-50%);
     }
 }
 </style>

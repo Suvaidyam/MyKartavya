@@ -61,7 +61,6 @@
   "auto_approve_volunteers",
   "team_opportunity",
   "column_break_org",
-  "required_feedback_images",
   "is_global",
   "section_break_pdxp",
   "amended_from",
@@ -431,12 +430,6 @@
    "label": "Team Opportunity"
   },
   {
-   "default": "0",
-   "fieldname": "required_feedback_images",
-   "fieldtype": "Check",
-   "label": "Required Feedback Images"
-  },
-  {
    "fieldname": "section_break_pdxp",
    "fieldtype": "Section Break"
   }
@@ -445,7 +438,7 @@
  "is_submittable": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-04-30 12:34:32.284891",
+ "modified": "2025-04-30 15:11:10.914283",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity",

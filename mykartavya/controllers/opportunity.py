@@ -65,8 +65,8 @@ class Opportunity:
                 oa.total_minutes as total_minutes,
                 oa.description as activity_description,
                 oa.types as types,
-                oa.activity_image as activity_image
-
+                oa.activity_image as activity_image,
+                oa.required_feedback_images
             FROM
                 `tabOpportunity Activity` AS oa
             LEFT JOIN `tabVolunteer Opportunity Activity Log` AS voal ON voal.opportunity_activity = oa.name
