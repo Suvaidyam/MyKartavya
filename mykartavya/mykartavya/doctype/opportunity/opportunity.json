@@ -62,6 +62,7 @@
   "team_opportunity",
   "column_break_org",
   "is_global",
+  "required_feedback_images",
   "section_break_pdxp",
   "amended_from",
   "planned_activities_tab",
@@ -399,7 +400,8 @@
    "fieldname": "vacancies",
    "fieldtype": "Int",
    "label": "vacancies",
-   "mandatory_depends_on": "eval:!doc.unlimited_vacancies"
+   "mandatory_depends_on": "eval:!doc.unlimited_vacancies",
+   "non_negative": 1
   },
   {
    "fieldname": "column_break_oadl",
@@ -410,12 +412,8 @@
    "fieldname": "buffer_vacancies",
    "fieldtype": "Int",
    "label": "Buffer Vacancies",
-   "mandatory_depends_on": "eval:!doc.unlimited_vacancies"
-  },
-  {
-   "fieldname": "total_vacancies",
-   "fieldtype": "Int",
-   "label": "Total Vacancies"
+   "mandatory_depends_on": "eval:!doc.unlimited_vacancies",
+   "non_negative": 1
   },
   {
    "default": "0",
@@ -432,13 +430,26 @@
   {
    "fieldname": "section_break_pdxp",
    "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "required_feedback_images",
+   "fieldtype": "Check",
+   "label": " Required Feedback Images"
+  },
+  {
+   "fieldname": "total_vacancies",
+   "fieldtype": "Int",
+   "label": "Total Vacancies",
+   "non_negative": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-04-30 15:11:10.914283",
+ "modified": "2025-04-30 16:35:18.132064",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity",

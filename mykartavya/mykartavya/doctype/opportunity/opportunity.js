@@ -6,7 +6,7 @@ frappe.ui.form.on("Opportunity", {
     validate: function (frm) {
         if (frm.image_uploaded) {
             frappe.validated = false;
-            frm.image_uploaded = false;  
+            frm.image_uploaded = false;
         }
     },
 
@@ -45,10 +45,23 @@ frappe.ui.form.on("Opportunity", {
     is_global: function (frm) {
         if (frm.doc.is_private) {
             frm.set_value('is_private', 0);
-
         }
     },
 
+
+    unlimited_vacancies: function (frm) {
+        if (frm.doc.unlimited_vacancies) {
+            frm.set_value('vacancies', 0);
+            frm.set_value('buffer_vacancies', 0);
+        }
+    },
+
+    vacancies: function (frm) {
+        update_total_vacancies(frm);
+    },
+    buffer_vacancies: function (frm) {
+        update_total_vacancies(frm);
+    },
     skill: function (frm) {
         if (frm.doc.value_type === "Skills") {
             frm.set_value("work_value_points", 0);
@@ -181,8 +194,10 @@ frappe.ui.form.on("Opportunity", {
 });
 
 function update_total_vacancies(frm) {
-    let vacancy = frm.doc.vacancy || 0;
-    let buffer_vacancy = frm.doc.buffer_vacancy || 0;
-    let total = vacancy + buffer_vacancy;
+    let vacancies = frm.doc.vacancies || 0;
+    let buffer_vacancies = frm.doc.buffer_vacancies || 0;
+    let total = vacancies + buffer_vacancies;
+    console.log(total,"===================================");
+    
     frm.set_value('total_vacancies', total);
 }
