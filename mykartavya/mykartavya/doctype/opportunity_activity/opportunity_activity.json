@@ -14,8 +14,6 @@
   "parent1",
   "image_section",
   "activity_image",
-  "column_break_cdsu",
-  "required_feedback_images",
   "description_section",
   "description",
   "date_time_section",
@@ -134,16 +132,6 @@
    "options": "Opportunity Activity"
   },
   {
-   "fieldname": "column_break_cdsu",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "required_feedback_images",
-   "fieldtype": "Check",
-   "label": " Required Feedback Images"
-  },
-  {
    "fieldname": "amended_from",
    "fieldtype": "Link",
    "label": "Amended From",
@@ -158,7 +146,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-04-30 15:01:50.646126",
+ "modified": "2025-04-30 15:33:00.108226",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity Activity",

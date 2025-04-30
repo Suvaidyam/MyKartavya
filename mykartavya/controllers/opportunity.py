@@ -66,10 +66,11 @@ class Opportunity:
                 oa.description as activity_description,
                 oa.types as types,
                 oa.activity_image as activity_image,
-                oa.required_feedback_images
+                opp.required_feedback_images
             FROM
                 `tabOpportunity Activity` AS oa
             LEFT JOIN `tabVolunteer Opportunity Activity Log` AS voal ON voal.opportunity_activity = oa.name
+            LEFT JOIN `tabOpportunity` AS opp ON oa.opportunity = opp.name
             {volunteer_condition}
             WHERE oa.name = '{name}'
             {where_clause}
@@ -322,6 +323,25 @@ class Opportunity:
         )
         if opp:
             return {"msg": "Activity already assigned to the volunteer", "status": 400}
+        
+
+        unlimited_vacancies = frappe.db.get_value(
+            "Opportunity", activity, "unlimited_vacancies"
+        )
+
+        if not unlimited_vacancies:
+            total_vacancies = (
+                frappe.db.get_value("Opportunity", activity, "total_vacancies") or 0
+            )
+            current_count = frappe.db.count(
+                "Volunteer Opportunity", filters={"activity": activity}
+            )
+
+            if current_count >= total_vacancies:
+                return {
+                    "msg": f"Vacancies for this activity are already filled. No more users can be added.",
+                    "status": 400,
+                }
 
         # Assign activity to the volunteer
         doc = frappe.new_doc("Volunteer Opportunity")
