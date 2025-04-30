@@ -83,6 +83,7 @@ class Filters:
             FROM `tabOpportunity` AS opp 
             LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
             LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
+            WHERE opp.status = 'Published'
         """,
             as_dict=1,
         )
@@ -106,6 +107,7 @@ class Filters:
             """
             SELECT DISTINCT opp.opportunity_type AS name
             FROM `tabOpportunity` AS opp 
+            WHERE opp.status = 'Published'
         """,
             as_dict=1,
         )
