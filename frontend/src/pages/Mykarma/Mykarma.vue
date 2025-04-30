@@ -95,14 +95,11 @@
                     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <Card v-for="item in current_commitments" :key="item.name" :item="item" mode="activity"
                       type="card" />
-                  </div>
-                  <div class="w-full h-[280px]" v-else>
-                    <NotFound message="Your Current Commitments empty!" />
-                  </div>
-                  <div v-if="current_opportunities?.length > 0"
-                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
-                    <Card v-for="item in current_opportunities" :key="item.name" :item="item" mode="opportunity"
+                      <Card v-for="item in current_opportunities" :key="item.name" :item="item" mode="opportunity"
                       type="card" />
+                  </div>
+                  <div class="w-full h-[280px]" v-if="current_commitments.length === 0 && current_opportunities.length === 0">
+                    <NotFound message="Your Current Commitments empty!" />
                   </div>
                 </div>
                 <div v-if="current_commitments.length > 0 && (!isLeftDisabled || !isRightDisabled)"
@@ -115,7 +112,6 @@
               </div>
             </div>
           </section>
-
           <!-- Available Commitments Section -->
           <section class="px-3 sm:px-4 mt-5 border rounded-[12px] bg-white overflow-y-auto">
             <div class="w-full h-12 flex items-center bg-white sticky top-0 z-10">
@@ -323,7 +319,7 @@ const cur_opp = async (filter) => {
 const volunteering_opportunities = async (filter) => {
   loader.value = true;
   try {
-    const response = await call('mykartavya.controllers.api.available_opportunities', {
+    const response = await call('mykartavya.controllers.api.related_opportunities', {
       filter: filter ?? {},
     });
     opportunitiy.value = response;
