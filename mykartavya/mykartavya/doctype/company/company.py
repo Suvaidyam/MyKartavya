@@ -190,7 +190,7 @@ def insert_sva_user(doc):
                 "first_name": doc.volunteering_incharge_name,
                 "last_name": "",
                 "password": incharge_password,
-                "custom_phone_number": doc.volunteering_incharge_phone,
+                # "custom_phone_number": doc.volunteering_incharge_phone,
                 "confirm_password": incharge_password,
                 "custom_company": doc.name,
                 "custom_country": country,
