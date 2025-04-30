@@ -27,7 +27,6 @@
           {{ (activities?.karma_points || 0) + (opportunitie?.karma_points || 0)
             ? ((activities?.karma_points || 0) + (opportunitie?.karma_points || 0)).toLocaleString()
           : '0' }}
-
         </p>
       </div>
       <div class="grid grid-cols-2 gap-4 pt-4">
@@ -71,8 +70,8 @@
             Money Saved
           </h4>
           <p class="text-lg font-semibold text-gray-800">
-            ₹ {{ ((activities?.work_value_rupees || " ") + (opportunitie?.work_value_rupees || " ")).toLocaleString() ||
-            '0' }}
+            ₹ {{ (activities?.work_value_rupees || 0) + (opportunitie?.work_value_rupees || 0)
+              ? ((activities?.work_value_rupees || 0) + (opportunitie?.work_value_rupees || 0)).toLocaleString(): '0' }}
           </p>
         </div>
       </div>
