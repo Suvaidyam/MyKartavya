@@ -227,7 +227,12 @@ const submitReport = async () => {
                 progress: res.data.com_percent,
             };
             store.refresh_step = true;
-            // showCompletionPopup.value = false;
+
+            // Redirect to specific opportunity page if activity is 100% complete
+            if (res.data.com_percent === 100) {
+                const opportunityName = route.params.name;
+                router.push(`/opportunity/${opportunityName}/`);
+            }
         } else if (res && res.error) {
             toast.error(res.error, {
                 autoClose: 3000,
