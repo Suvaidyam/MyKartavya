@@ -8,20 +8,29 @@
   "basic_details_section",
   "opportunity_name",
   "opportunity_image",
-  "need_certificate",
-  "column_break_basic_1",
   "opportunity_type",
+  "column_break_basic_1",
+  "status",
+  "need_certificate",
   "is_featured",
+  "column_break_wvwm",
+  "ngo",
   "is_private",
   "company",
   "section_break_xmyq",
   "opportunity_description",
-  "date_availability_section",
+  "sdgs_section",
+  "sdgs_help",
+  "sdgs",
+  "dates_deadlines_section",
+  "publish_date",
+  "application_deadline",
+  "column_break_ddrr",
   "start_date",
   "end_date",
-  "column_break_date",
-  "is_team_opportunity",
-  "is_global",
+  "column_break_blms",
+  "activity_starts_on_published_date",
+  "reporting_deadline",
   "category_value_section",
   "category",
   "value_type",
@@ -41,12 +50,20 @@
   "max_hours",
   "minutes",
   "buffer_minutes",
-  "sdgs_section",
-  "sdgs_help",
-  "sdgs",
+  "vacancies_section",
+  "unlimited_vacancies",
+  "vacancies",
+  "column_break_oadl",
+  "buffer_vacancies",
+  "total_vacancies",
   "organization_section",
-  "ngo",
+  "column_break_jcsg",
+  "auto_approve_volunteers",
+  "team_opportunity",
   "column_break_org",
+  "required_feedback_images",
+  "is_global",
+  "section_break_pdxp",
   "amended_from",
   "planned_activities_tab",
   "section_break_gswa",
@@ -235,7 +252,7 @@
   {
    "fieldname": "organization_section",
    "fieldtype": "Section Break",
-   "label": "Organization Details"
+   "label": "Opportunity Settings"
   },
   {
    "fieldname": "ngo",
@@ -274,7 +291,8 @@
   },
   {
    "fieldname": "section_break_xmyq",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Opportunity Details"
   },
   {
    "fieldname": "planned_activities_tab",
@@ -310,33 +328,123 @@
    "default": "0",
    "fieldname": "is_global",
    "fieldtype": "Check",
-   "label": "Global Activity"
-  },
-  {
-   "fieldname": "date_availability_section",
-   "fieldtype": "Section Break",
-   "label": "Date & Availability"
-  },
-  {
-   "fieldname": "column_break_date",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "is_team_opportunity",
-   "fieldtype": "Check",
-   "label": "Team Opportunity"
+   "label": "Global Opportunity"
   },
   {
    "fieldname": "column_break_rewards",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nPublished\nOngoing\nEnded"
+  },
+  {
+   "fieldname": "column_break_wvwm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_jcsg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dates_deadlines_section",
+   "fieldtype": "Section Break",
+   "label": "Dates Deadlines"
+  },
+  {
+   "fieldname": "publish_date",
+   "fieldtype": "Datetime",
+   "label": "Opportunity Publish Date"
+  },
+  {
+   "fieldname": "application_deadline",
+   "fieldtype": "Datetime",
+   "label": "Application Deadline"
+  },
+  {
+   "fieldname": "column_break_ddrr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_blms",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "activity_starts_on_published_date",
+   "fieldtype": "Check",
+   "label": "Activity Starts on Published Date"
+  },
+  {
+   "fieldname": "reporting_deadline",
+   "fieldtype": "Datetime",
+   "label": "Reporting Deadline"
+  },
+  {
+   "fieldname": "vacancies_section",
+   "fieldtype": "Section Break",
+   "label": "Vacancies"
+  },
+  {
+   "default": "0",
+   "fieldname": "unlimited_vacancies",
+   "fieldtype": "Check",
+   "label": "Unlimited Vacancies"
+  },
+  {
+   "depends_on": "eval:!doc.unlimited_vacancies",
+   "fieldname": "vacancies",
+   "fieldtype": "Int",
+   "label": "vacancies",
+   "mandatory_depends_on": "eval:!doc.unlimited_vacancies"
+  },
+  {
+   "fieldname": "column_break_oadl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:!doc.unlimited_vacancies",
+   "fieldname": "buffer_vacancies",
+   "fieldtype": "Int",
+   "label": "Buffer Vacancies",
+   "mandatory_depends_on": "eval:!doc.unlimited_vacancies"
+  },
+  {
+   "fieldname": "total_vacancies",
+   "fieldtype": "Int",
+   "label": "Total Vacancies"
+  },
+  {
+   "default": "0",
+   "fieldname": "auto_approve_volunteers",
+   "fieldtype": "Check",
+   "label": "Auto Approve Volunteers"
+  },
+  {
+   "default": "0",
+   "fieldname": "team_opportunity",
+   "fieldtype": "Check",
+   "label": "Team Opportunity"
+  },
+  {
+   "default": "0",
+   "fieldname": "required_feedback_images",
+   "fieldtype": "Check",
+   "label": "Required Feedback Images"
+  },
+  {
+   "fieldname": "section_break_pdxp",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-04-30 10:29:17.939685",
+ "modified": "2025-04-30 12:24:16.850412",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity",
