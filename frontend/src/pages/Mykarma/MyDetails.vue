@@ -24,9 +24,12 @@
       <div class="border-b pb-4">
         <h3 class="text-[19px] font-medium text-gray-800">Total Karma Points</h3>
         <p class="text-[47px] font-semibold text-red-500">
-          {{(( activities?.karma_points ||'')+(opportunitie?.karma_points||" "))?.toLocaleString() || '0' }}
+          {{ (activities?.karma_points || 0) + (opportunitie?.karma_points || 0)
+            ? ((activities?.karma_points || 0) + (opportunitie?.karma_points || 0)).toLocaleString()
+          : '0' }}
+
         </p>
-      </div> 
+      </div>
       <div class="grid grid-cols-2 gap-4 pt-4">
         <div class="border border-gray-200 rounded-lg px-4 py-3 text-center hover:shadow-md transition-shadow">
           <span class="block text-blue-500 text-xl pb-2">
@@ -35,14 +38,14 @@
           <h4 class="font-medium text-[11px] pb-1 text-gray-600">
             Act of Random Kindness
           </h4>
-          <p class="text-lg font-semibold text-gray-800">{{ activities?.activity_completed ||'0' }}</p>
+          <p class="text-lg font-semibold text-gray-800">{{ activities?.activity_completed || '0' }}</p>
         </div>
         <div class="border border-gray-200 rounded-lg px-4 py-3 text-center hover:shadow-md transition-shadow">
           <span class="block text-blue-500 text-xl pb-2">
             <img src="../../assets/opportunity.png" alt="" class="mx-auto" />
           </span>
           <h4 class="font-medium text-[11px] pb-1 text-gray-600">
-            Completed Opportunities 
+            Completed Opportunities
           </h4>
           <p class="text-lg font-semibold text-gray-800">
             {{ opportunitie?.opportunity_completed || '0' }}
@@ -56,7 +59,8 @@
             Time Donated
           </h4>
           <p class="text-lg font-semibold text-gray-800">
-            {{ activities?.total_hours+ opportunitie?.total_hours ? sec_to_hours(activities?.total_hours+opportunitie?.total_hours) + ' hrs ' : '0' }}  </p>
+            {{ activities?.total_hours + opportunitie?.total_hours ?
+              sec_to_hours(activities?.total_hours + opportunitie?.total_hours) + ' hrs ' : '0' }} </p>
         </div>
 
         <div class="border border-gray-200 rounded-lg px-4 py-3 text-center hover:shadow-md transition-shadow">
@@ -67,7 +71,8 @@
             Money Saved
           </h4>
           <p class="text-lg font-semibold text-gray-800">
-            ₹ {{ ((activities?.work_value_rupees || " ") + (opportunitie?.work_value_rupees || " ")).toLocaleString() || '0' }}
+            ₹ {{ ((activities?.work_value_rupees || " ") + (opportunitie?.work_value_rupees || " ")).toLocaleString() ||
+            '0' }}
           </p>
         </div>
       </div>
@@ -217,7 +222,7 @@
                   </div>
                   <span class="text-gray-700 font-medium text-[11px] ml-2">{{
                     user?.full_name
-                  }}</span>
+                    }}</span>
                 </div>
               </td>
               <td class="text-[11px] font-normal text-center py-2 text-gray-600">
