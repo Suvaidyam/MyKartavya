@@ -37,15 +37,20 @@
                         <label class="block text-lg font-normal mb-1">How much percent work has completed?</label>
                         <div class="flex items-center gap-2">
                             <input type="range" min="0" max="100" v-model="activity_log.progress"
-                                class="w-full h-[6px] accent-green-500" />
+                                class="w-full h-[6px] accent-green-500" @input="validateProgress" />
                             <span
                                 class="h-8 w-16 flex items-center justify-center border rounded-sm text-base font-normal text-center">
                                 {{ activity_log.progress }}%
                             </span>
                         </div>
-                        <p class="text-red-500 absolute text-xs -bottom-2" v-if="activity_err.progress">
-                            Please update the current progress before proceeding.
-                        </p>
+                        <div class="mt-1 space-y-1">
+                            <p class="text-red-500 text-xs" v-if="activity_err.progress">
+                                Please update the current progress before proceeding.
+                            </p>
+                            <p class="text-red-500 text-xs" v-if="activity_err.progress_less">
+                                Progress cannot be less than current progress ({{ props.activity.com_percent }}%).
+                            </p>
+                        </div>
                     </div>
                     <div class="mb-4 relative">
                         <label class="block font-medium mb-2">Upload Media</label>
@@ -158,26 +163,31 @@ const activity_log = ref({
     progress: props.activity.com_percent || 0,
 })
 
-// Add watcher for progress changes
-watch(() => activity_log.value.progress, (newValue) => {
-    store.refresh_step = true;
-})
-
-// Add watcher for props.activity.com_percent changes
-watch(() => props.activity.com_percent, (newValue) => {
-    activity_log.value.progress = newValue || 0;
-    store.refresh_step = true;
-})
-
 const activity_err = ref({
     time: false,
     progress: false,
     image: false,
+    progress_less: false,
 })
+
+const validateProgress = () => {
+    // Prevent negative values
+    if (activity_log.value.progress < 0) {
+        activity_log.value.progress = 0;
+    }
+
+    // Ensure progress is not less than current progress
+    if (activity_log.value.progress < props.activity.com_percent) {
+        activity_log.value.progress = props.activity.com_percent;
+        activity_err.value.progress_less = true;
+    } else {
+        activity_err.value.progress_less = false;
+    }
+}
 
 const req_field = () => {
     let hasError = false;
-    activity_err.value = { time: false, progress: false, image: false };
+    activity_err.value = { time: false, progress: false, image: false, progress_less: false };
 
     if (activity_log.value.hours === 0 && activity_log.value.minutes === 0) {
         activity_err.value.time = true;
@@ -189,6 +199,10 @@ const req_field = () => {
     }
     if (uploadedImages.value.length === 0 && props.activity.require_feedback_images) {
         activity_err.value.image = true;
+        hasError = true;
+    }
+    if (activity_log.value.progress < props.activity.com_percent) {
+        activity_err.value.progress_less = true;
         hasError = true;
     }
     return hasError;
@@ -291,5 +305,24 @@ const uploadFiles = (event) => {
 .button-animation:disabled {
     transform: none;
     cursor: not-allowed;
+}
+
+/* Add responsive styles for the percentage section */
+@media (max-width: 640px) {
+    .mb-4.relative {
+        margin-bottom: 1.5rem;
+    }
+
+    .flex.items-center.gap-2 {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .h-8.w-16 {
+        width: 100%;
+        max-width: 4rem;
+        margin: 0 auto;
+    }
 }
 </style>
