@@ -13,19 +13,19 @@
                             the activity?</label>
                         <div class="relative">
                             <div class="flex flex-col sm:flex-row gap-4">
-                                <div class="flex gap-2 items-center relative w-full sm:w-auto">
+                                <div class="flex gap-2 items-center time-input-group">
                                     <label class="text-base font-normal">Hours</label>
                                     <input type="number" v-model="activity_log.hours"
-                                        class="w-full sm:w-24 border rounded-sm px-2 h-8 sm:h-8"
+                                        class="time-input border rounded-sm px-2 h-8 sm:h-8"
                                         @input="activity_log.hours = Math.max(0, activity_log.hours)" />
-                                    <FeatherIcon class="absolute right-2 top-2 size-4" name="clock" />
+                                    <FeatherIcon class="clock-icon size-4" name="clock" />
                                 </div>
-                                <div class="flex gap-2 items-center relative w-full sm:w-auto">
+                                <div class="flex gap-2 items-center time-input-group">
                                     <label class="text-base font-normal">Minutes</label>
                                     <input type="number" v-model="activity_log.minutes"
                                         @input="activity_log.minutes = Math.max(0, activity_log.minutes)"
-                                        class="w-full sm:w-24 border rounded-sm px-2 h-8 sm:h-8" />
-                                    <FeatherIcon class="absolute right-2 top-2 size-4" name="clock" />
+                                        class="time-input border rounded-sm px-2 h-8 sm:h-8" />
+                                    <FeatherIcon class="clock-icon size-4" name="clock" />
                                 </div>
                             </div>
                             <p class="text-red-500 absolute text-xs -bottom-5" v-if="activity_err.time">Donation
@@ -323,6 +323,43 @@ const uploadFiles = (event) => {
         width: 100%;
         max-width: 4rem;
         margin: 0 auto;
+    }
+}
+
+.time-input-group {
+    width: 100%;
+    max-width: 220px;
+    position: relative;
+}
+
+.time-input {
+    width: 100%;
+    min-width: 0;
+}
+
+.clock-icon {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+@media (max-width: 640px) {
+    .flex.flex-col.sm\:flex-row.gap-4 {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .time-input-group {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .clock-icon {
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
     }
 }
 </style>
