@@ -89,9 +89,7 @@ class Opportunity:
             if isinstance(filter, str):
                 filter = frappe.parse_json(filter)
             user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
-            # Initialize clauses
-            where_clauses = ["1=1"]
-            order_by_clause = ""
+            
             # Initialize clauses
             where_clauses = [
                 """EXISTS (
@@ -99,6 +97,8 @@ class Opportunity:
                     WHERE oact.opportunity = opp.name
                 )"""
             ]
+            order_by_clause = ""
+            
             if filter:
                 if "types" in filter and filter["types"]:
                     types_list = [f"'{at}'" for at in filter["types"]]
@@ -126,8 +126,17 @@ class Opportunity:
                     elif filter["volunteering_hours"] == "High to Low":
                         order_by_clause = " ORDER BY opp.hours DESC"
 
-            where_clause = "WHERE " + " AND ".join(where_clauses)
-
+            # Build the main WHERE clause
+            main_where_conditions = [
+                "opp.end_date >= CURRENT_DATE()",
+                "opp.status IN ('Published', 'Ongoing')",
+                "opp.docstatus = 1"
+            ]
+            
+            # Combine all conditions
+            all_conditions = main_where_conditions + where_clauses
+            combined_where_clause = " AND ".join(all_conditions)
+            
             sql_query = f"""
                 SELECT 
                     opp.name as name,
@@ -140,7 +149,7 @@ class Opportunity:
                     opp.opportunity_description as activity_description,
                     opp.opportunity_image as activity_image,
                     opp.need_certificate as need_certificate,
-                    vo.com_percent ,
+                    vo.com_percent,
                     vo.duration as donet_hours,
                     vo.workflow_state as workflow_state,
                     vo.completion_wf_state as completion_wf_state,
@@ -157,22 +166,22 @@ class Opportunity:
                             END
                         ), JSON_ARRAY()
                     ) AS sdgs,
-                     COALESCE(
-                            JSON_ARRAYAGG(
-                                DISTINCT JSON_OBJECT(
-                                    'name', sva.name,
-                                    'full_name', sva.full_name,
-                                    'email', sva.email,
-                                    'user_image', sva.user_image
-                                )
-                            ), JSON_ARRAY()
-                        ) as volunteers
+                    COALESCE(
+                        JSON_ARRAYAGG(
+                            DISTINCT JSON_OBJECT(
+                                'name', sva.name,
+                                'full_name', sva.full_name,
+                                'email', sva.email,
+                                'user_image', sva.user_image
+                            )
+                        ), JSON_ARRAY()
+                    ) as volunteers
                 FROM `tabOpportunity` AS opp
                 LEFT JOIN `tabVolunteer Opportunity` AS vo ON (vo.activity = opp.name AND vo.volunteer = '{user}')
                 LEFT JOIN `tabSVA User` as sva ON sva.name = vo.volunteer
                 LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
                 LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
-                {where_clause}
+                WHERE {combined_where_clause}
                 GROUP BY opp.name
                 {order_by_clause}
             """

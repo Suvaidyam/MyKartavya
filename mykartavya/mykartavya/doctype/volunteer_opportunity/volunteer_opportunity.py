@@ -9,6 +9,18 @@ from frappe.model.document import Document
 
 class VolunteerOpportunity(Document):
 
+	def before_insert(self):
+		self.set_enrollment_status()
+	 
+	def set_enrollment_status(self):
+		try:
+			activity = frappe.get_doc("Opportunity", self.activity)
+			if activity.auto_approve_volunteers:
+				frappe.db.set_value("Volunteer Opportunity", self.name, "workflow_state", "Approved")
+				self.enrollment_wf_state = "Approved"
+		except Exception as e:
+			frappe.log_error(f"Error setting enrollment status: {str(e)}")
+
 	def before_save(self):
 		try:
 			if self.workflow_state and self.workflow_state != self.enrollment_wf_state:
@@ -48,9 +60,9 @@ class VolunteerOpportunity(Document):
 			# Existing logic for updating workflow state
 			try:
 				if self.enrollment_wf_state == "Approved":
-					frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Approved")
+					frappe.db.set_value("Volunteer Opportunity", self.name, "workflow_state", "Approved")
 				elif self.enrollment_wf_state == "Rejected":
-					frappe.db.set_value("Volunteer Activity", self.name, "workflow_state", "Rejected")
+					frappe.db.set_value("Volunteer Opportunity", self.name, "workflow_state", "Rejected")
 			except Exception as e:
 				frappe.log_error(f"Error updating workflow state: {str(e)}")
 				# Don't throw error, just log it

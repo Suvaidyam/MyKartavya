@@ -168,8 +168,8 @@ frappe.ui.form.on("Opportunity", {
             });
         }
     },
-    activity_published_date_starts: function (frm) {
-        if (frm.doc.activity_published_date_starts) {
+    activity_starts_on_published_date: function (frm) {
+        if (frm.doc.activity_starts_on_published_date) {
             frm.set_value('application_deadline', null);
             frm.set_value('auto_approve_volunteers', !frm.doc.auto_approve_volunteers);
             frm.set_value('start_date', frm.doc.publish_date);

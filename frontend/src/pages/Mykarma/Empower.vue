@@ -28,7 +28,6 @@
         </div>
       </div>
     </div>
-
     <!-- Add Rejection Remarks Section -->
     <div v-if="svaUserData?.workflow_state === 'Rejected' && svaUserData?.custom_remarks" class="w-full bg-red-50/50"
       :class="{ 'mt-16': !isUserApproved }">

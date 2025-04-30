@@ -360,6 +360,7 @@
    "label": "Opportunity Publish Date"
   },
   {
+   "depends_on": "eval:!doc.activity_starts_on_published_date",
    "fieldname": "application_deadline",
    "fieldtype": "Datetime",
    "label": "Application Deadline"
@@ -376,7 +377,7 @@
    "default": "0",
    "fieldname": "activity_starts_on_published_date",
    "fieldtype": "Check",
-   "label": "Activity Starts on Published Date"
+   "label": "Opportunity Starts on Published Date"
   },
   {
    "fieldname": "reporting_deadline",
@@ -444,7 +445,7 @@
  "is_submittable": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-04-30 12:24:16.850412",
+ "modified": "2025-04-30 12:34:32.284891",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity",
