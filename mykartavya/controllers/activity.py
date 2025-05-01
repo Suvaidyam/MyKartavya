@@ -652,11 +652,15 @@ class Activity:
         doc.save(ignore_permissions=True)
         frappe.db.commit()
         return doc
+    
 
     def upload_file(data, doc):
         try:
             if not data or not data.get("preview"):
                 return {"status": "error", "message": "No image data provided"}
+
+            if not doc.name:
+                doc.insert()
 
             base64_string = data.get("preview")
             if "," in base64_string:
@@ -708,6 +712,7 @@ class Activity:
         except Exception as e:
             frappe.log_error(f"Error in upload_file: {str(e)}", "File Upload Error")
             return {"status": "error", "message": str(e)}
+
 
     def submit_feedback(name, volunteer, rating, comments):
         volunteer = frappe.db.get_value("SVA User", {"email": volunteer}, "name")

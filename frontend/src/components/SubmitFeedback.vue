@@ -152,8 +152,6 @@ const props = defineProps({
         default: true
     }
 })
-console.log("Require feedback images?", props.activity.required_feedback_images);
-
 
 const uploadedImages = ref([])
 const loading = ref(false)
@@ -228,7 +226,8 @@ const submitReport = async () => {
             },
 
         });
-
+        console.log(props.opportunity_activity),"==============";
+        
 
         if (res && res.status === "success") {
             activity_log.value.progress = res.data.com_percent;
