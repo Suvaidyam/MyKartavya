@@ -30,6 +30,7 @@
    "in_list_view": 1,
    "label": "Volunteer",
    "options": "SVA User",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -38,6 +39,7 @@
    "in_list_view": 1,
    "label": "Opportunity",
    "options": "Opportunity",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -46,6 +48,7 @@
    "in_list_view": 1,
    "label": "Enrollment Status",
    "options": "Applied\nApproved\nRejected\nWithdrawn",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -56,13 +59,15 @@
    "fieldname": "duration",
    "fieldtype": "Duration",
    "in_list_view": 1,
-   "label": "Duration"
+   "label": "Duration",
+   "read_only": 1
   },
   {
    "fieldname": "com_percent",
    "fieldtype": "Float",
    "label": "Completion Percent",
-   "precision": "1"
+   "precision": "1",
+   "read_only": 1
   },
   {
    "fieldname": "completion_wf_state",
@@ -70,6 +75,7 @@
    "in_list_view": 1,
    "label": "Completion Status",
    "options": "Pending\nSubmitted\nApproved\nRejected",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -115,18 +121,20 @@
    "fieldname": "remarks",
    "fieldtype": "Small Text",
    "label": "Remarks",
-   "length": 500
+   "length": 500,
+   "read_only": 1
   },
   {
    "fieldname": "volunteer_opportunity_activity",
    "fieldtype": "Table",
    "label": "Volunteer Opportunity Activity",
-   "options": "Volunteer Opportunity Activity"
+   "options": "Volunteer Opportunity Activity",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-26 11:41:28.387247",
+ "modified": "2025-05-01 17:19:28.215851",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Opportunity",

@@ -63,6 +63,11 @@
   "column_break_org",
   "is_global",
   "required_feedback_images",
+  "location_details_section",
+  "country",
+  "state",
+  "column_break_grvo",
+  "city",
   "section_break_pdxp",
   "amended_from",
   "planned_activities_tab",
@@ -443,13 +448,44 @@
    "label": "Total Vacancies",
    "non_negative": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "location_details_section",
+   "fieldtype": "Section Break",
+   "label": "Location Details"
+  },
+  {
+   "depends_on": "eval:!doc.is_global",
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "mandatory_depends_on": "eval:!doc.is_global",
+   "options": "Country"
+  },
+  {
+   "depends_on": "eval:!doc.is_global",
+   "fieldname": "state",
+   "fieldtype": "Link",
+   "label": "State",
+   "options": "State"
+  },
+  {
+   "fieldname": "column_break_grvo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:!doc.is_global",
+   "fieldname": "city",
+   "fieldtype": "Link",
+   "label": "City",
+   "options": "District"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-04-30 16:35:18.132064",
+ "modified": "2025-05-01 13:55:57.146948",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity",
