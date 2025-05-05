@@ -13,6 +13,7 @@ class VolunteerCompanyMapper(Document):
 		return f"{prefix}_{self.volunteer_email}"
 
 	def validate(self):
+		
 		if not self.is_email_verified:
 			verification_cache_key = self.get_cache_key("volunteer_verification")
 			sent_cache_key = self.get_cache_key("verification_sent")
@@ -45,15 +46,12 @@ class VolunteerCompanyMapper(Document):
 					expires_in_sec=3600
 				)
 				
-				self.send_verification_email()
-				frappe.cache().set_value(sent_cache_key, 1, expires_in_sec=3600)
-			
-			# Use throw to completely block record creation until verified
-			frappe.throw(
-				"Email verification required. Please check your inbox and verify your email before proceeding.",
-				title="Verification Required"
-			)
+			self.send_verification_email()
+			frappe.cache().set_value(sent_cache_key, 1, expires_in_sec=3600)
 
+		# if self.is_email_verified == 1:
+		# 	return {"reload": True}
+	
 	# def before_insert(self):
 	# 	# Only allow insert if email is verified or if being created during verification
 	# 	if not self.is_email_verified and not self.flags.ignore_permissions:
@@ -67,7 +65,7 @@ class VolunteerCompanyMapper(Document):
 			frappe.throw("Please wait a few minutes before requesting another verification email")
 		
 		# Set rate limit for 5 minutes
-		frappe.cache().set_value(rate_limit_key, 1, expires_in_sec=300)
+		frappe.cache().set_value(rate_limit_key, 1, expires_in_sec=10)
 		
 		params = {
 			"email": self.volunteer_email
@@ -245,69 +243,6 @@ def verify_email(**kwargs):
 		# Return JSON response with redirect URL
 		frappe.response.type = "redirect"
 		frappe.response.location = redirect_url
-		# return {
-		# 	"status": "success",
-		# 	"redirect_url": redirect_url,
-		# 	"message": """
-		# 		<!DOCTYPE html>
-		# 		<html>
-		# 		<head>
-		# 			<style>
-		# 				body {
-		# 					font-family: Arial, sans-serif;
-		# 					background-color: #f0f2f5;
-		# 					display: flex;
-		# 					justify-content: center;
-		# 					align-items: center;
-		# 					height: 100vh;
-		# 					margin: 0;
-		# 				}
-		# 				.success-container {
-		# 					background-color: white;
-		# 					padding: 30px;
-		# 					border-radius: 10px;
-		# 					box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-		# 					text-align: center;
-		# 					max-width: 500px;
-		# 				}
-		# 				.success-icon {
-		# 					color: #4CAF50;
-		# 					font-size: 48px;
-		# 					margin-bottom: 20px;
-		# 				}
-		# 				h3 {
-		# 					color: #4CAF50;
-		# 					margin-bottom: 20px;
-		# 				}
-		# 				p {
-		# 					color: #666;
-		# 					line-height: 1.6;
-		# 				}
-		# 				.close-message {
-		# 					margin-top: 20px;
-		# 					font-size: 14px;
-		# 					color: #999;
-		# 				}
-		# 			</style>
-		# 		</head>
-		# 		<body>
-		# 			<div class="success-container">
-		# 				<div class="success-icon">✓</div>
-		# 				<h3>Email Verified Successfully!</h3>
-		# 				<p>Your volunteer company mapping has been created successfully.</p>
-		# 				<p>You can now access the volunteer portal with your verified credentials.</p>
-		# 				<p class="close-message">Redirecting to profile page...</p>
-		# 			</div>
-		# 			<script>
-		# 				setTimeout(function() {
-		# 					window.location.href = "%s";
-		# 				}, 2000);
-		# 			</script>
-		# 		</body>
-		# 		</html>
-		# 	""" % redirect_url
-		# }
-		
 	except Exception as e:
 		frappe.log_error(f"Volunteer Mapping Error: {str(e)}")
 		return {

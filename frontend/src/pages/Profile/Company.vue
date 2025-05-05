@@ -113,6 +113,8 @@ const sendVerification = async () => {
                 doctype: 'Volunteer Company Mapper',
                 volunteer_email: email.value,
                 volunteer: auth.cookie.name
+                // is_email_verified: 1,
+
             }
         });
 
