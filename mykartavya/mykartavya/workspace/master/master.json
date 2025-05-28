@@ -1,40 +1,36 @@
 {
  "app": "mykartavya",
  "charts": [],
- "content": "[{\"type\":\"header\",\"data\":{\"text\":\"NGO\"}}]",
- "creation": "2025-05-28 19:09:15.844090",
+ "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Master\"}}]",
+ "creation": "2025-05-28 19:39:57.908134",
  "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
  "for_user": "",
  "hide_custom": 0,
- "icon": "organization",
+ "icon": "folder-normal",
  "idx": 0,
  "indicator_color": "green",
  "is_hidden": 0,
- "label": "NGO",
- "link_to": "NGOs",
+ "label": "Master",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-05-28 19:40:58.684241",
+ "modified": "2025-05-28 19:40:49.986413",
  "modified_by": "Administrator",
  "module": "Mykartavya",
- "name": "NGO",
+ "name": "Master",
  "number_cards": [],
  "owner": "Administrator",
- "parent_page": "Master",
+ "parent_page": "",
  "public": 1,
  "quick_lists": [],
  "roles": [
   {
    "role": "MyKartvya Admin"
-  },
-  {
-   "role": "NGO Admin"
   }
  ],
- "sequence_id": 3.0,
+ "sequence_id": 23.0,
  "shortcuts": [],
- "title": "NGO",
- "type": "Link"
+ "title": "Master",
+ "type": "Workspace"
 }
