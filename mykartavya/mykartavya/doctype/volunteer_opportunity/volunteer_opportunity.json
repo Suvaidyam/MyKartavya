@@ -132,9 +132,10 @@
    "read_only": 1
   }
  ],
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-05-01 17:19:28.215851",
+ "modified": "2025-05-29 13:33:57.618830",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Opportunity",
