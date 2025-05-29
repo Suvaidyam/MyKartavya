@@ -2,8 +2,20 @@
  "app": "mykartavya",
  "charts": [
   {
+   "chart_name": "Overall Opportunities",
+   "label": "Overall Opportunities"
+  },
+  {
+   "chart_name": "Private Oppurtunities",
+   "label": "Private Oppurtunities"
+  },
+  {
    "chart_name": "Charts for hours Donated",
    "label": "Charts for hours Donated"
+  },
+  {
+   "chart_name": "Public Opportunities",
+   "label": "Public Opportunities"
   },
   {
    "chart_name": "Activity status chart",
@@ -26,7 +38,7 @@
    "label": "Chart for Amount Saved"
   }
  ],
- "content": "[{\"id\":\"uNZvG-yuGY\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Dashboard</span>\",\"col\":12}},{\"id\":\"H6PFhd_-cu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"COMPANIES REGISTERED\",\"col\":6}},{\"id\":\"Zx_48P2ZOJ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"AMOUNT SAVED\",\"col\":6}},{\"id\":\"T-dg5rjgLb\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"OVER ALL ACTIVIES\",\"col\":6}},{\"id\":\"LyUBj8ZFKo\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"PRIVATE ACTIVITIES\",\"col\":6}},{\"id\":\"BXIR-epZXe\",\"type\":\"chart\",\"data\":{\"chart_name\":\"ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"W99NVoH3NB\",\"type\":\"chart\",\"data\":{\"chart_name\":\"PRIVATE ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"NPbvmjdzrR\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"PUBLIC ACTIVITIES\",\"col\":6}},{\"id\":\"2Ua9h9ajQX\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"VOLUNTEER REGISTERED\",\"col\":6}},{\"id\":\"rd9BZ0C6YN\",\"type\":\"chart\",\"data\":{\"chart_name\":\"PUBLIC ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"jTuzwSgY2z\",\"type\":\"chart\",\"data\":{\"chart_name\":\"VOLUNTEER REGISTED STATUS CHART\",\"col\":6}},{\"id\":\"3O02SOOTrR\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Leadboard\",\"col\":6}},{\"id\":\"d0KmHKIR0v\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"SDG Details\",\"col\":6}},{\"id\":\"vgBw7kBkOR\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Charts for hours Donated\",\"col\":12}},{\"id\":\"0kyaj2SLp-\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Chart for Amount Saved\",\"col\":12}}]",
+ "content": "[{\"id\":\"uNZvG-yuGY\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Dashboard</span>\",\"col\":12}},{\"id\":\"H6PFhd_-cu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"COMPANIES REGISTERED\",\"col\":6}},{\"id\":\"Zx_48P2ZOJ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"AMOUNT SAVED\",\"col\":6}},{\"id\":\"WHVmnTdTKK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overall Opportunities\",\"col\":6}},{\"id\":\"Sv4oC6JIgd\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Public Opportunities\",\"col\":6}},{\"id\":\"ViwHqjpC9e\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Overall Opportunities\",\"col\":6}},{\"id\":\"YuBlckFDD4\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Public Opportunities\",\"col\":6}},{\"id\":\"gD_R3YbGjm\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Private Opportunities\",\"col\":12}},{\"id\":\"wF5-bYzpHo\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Private Oppurtunities\",\"col\":12}},{\"id\":\"T-dg5rjgLb\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"OVER ALL ACTIVIES\",\"col\":6}},{\"id\":\"LyUBj8ZFKo\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"PRIVATE ACTIVITIES\",\"col\":6}},{\"id\":\"BXIR-epZXe\",\"type\":\"chart\",\"data\":{\"chart_name\":\"ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"W99NVoH3NB\",\"type\":\"chart\",\"data\":{\"chart_name\":\"PRIVATE ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"NPbvmjdzrR\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"PUBLIC ACTIVITIES\",\"col\":6}},{\"id\":\"2Ua9h9ajQX\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"VOLUNTEER REGISTERED\",\"col\":6}},{\"id\":\"rd9BZ0C6YN\",\"type\":\"chart\",\"data\":{\"chart_name\":\"PUBLIC ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"jTuzwSgY2z\",\"type\":\"chart\",\"data\":{\"chart_name\":\"VOLUNTEER REGISTED STATUS CHART\",\"col\":6}},{\"id\":\"3O02SOOTrR\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Leadboard\",\"col\":12}},{\"id\":\"c9nCp7__97\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"SDG Details\",\"col\":12}},{\"id\":\"vgBw7kBkOR\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Charts for hours Donated\",\"col\":12}},{\"id\":\"0kyaj2SLp-\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Chart for Amount Saved\",\"col\":12}}]",
  "creation": "2025-03-11 13:11:04.885163",
  "custom_blocks": [
   {
@@ -49,7 +61,7 @@
  "label": "Dashboard",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-05-29 12:48:31.086404",
+ "modified": "2025-05-29 14:52:44.654609",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Dashboard",
@@ -59,12 +71,24 @@
    "number_card_name": "Private Activities"
   },
   {
+   "label": "Overall Opportunities",
+   "number_card_name": "Overall Opportunities"
+  },
+  {
    "label": "COMPANIES REGISTERED",
    "number_card_name": "copanies registered"
   },
   {
+   "label": "Public Opportunities",
+   "number_card_name": "Public Opportunity"
+  },
+  {
    "label": "OVER ALL ACTIVIES",
    "number_card_name": "over-all activity"
+  },
+  {
+   "label": "Private Opportunities",
+   "number_card_name": "Private Opportunity"
   },
   {
    "label": "VOLUNTEER REGISTERED",
