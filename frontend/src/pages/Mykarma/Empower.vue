@@ -1,17 +1,72 @@
 <template>
   <div class="h-screen w-full">
+    <!-- Alert Banner for Unapproved Users -->
+    <div v-if="!isUserApproved && svaUserData?.workflow_state !== 'Rejected'" class="w-full bg-orange-100">
+      <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <span class="flex p-1.5 rounded-lg bg-orange-100">
+              <svg class="h-4 w-4 text-orange-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </span>
+            <p class="ml-2 text-sm font-medium text-orange-800">
+              <span class="md:hidden">Account pending approval</span>
+              <span class="hidden md:inline">Your account is pending approval. Some features may be limited.</span>
+            </p>
+          </div>
+          <button @click="showReqForApproval = true"
+            class="bg-orange-100 hover:bg-orange-200 px-4 py-1.5 rounded-sm text-sm font-medium text-orange-800 flex items-center gap-1.5 transition-all duration-200 button-animation">
+            Request for Approval
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Add Rejection Remarks Section -->
+    <div v-if="svaUserData?.workflow_state === 'Rejected' && svaUserData?.custom_remarks" class="w-full bg-red-50/50"
+      :class="{ 'mt-16': !isUserApproved }">
+      <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 min-w-8 min-h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm font-medium text-red-800">Rejection Reason</h3>
+              <span class="text-xs text-red-600 bg-red-100 px-2 py-0.5 rounded-full">Account Rejected</span>
+            </div>
+            <p class="text-sm text-red-700 mt-1 line-clamp-2">{{ svaUserData.custom_remarks }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Request for Approval Popup -->
+    <ReqForApproval v-model="showReqForApproval" />
+
     <!-- banner section image -->
-    <section>
-      <div v-if="activities" class="w-full relative h-[456px] md:h-[456px] back-img flex items-center mt-10">
-        <img :src="activities.activity_image" class="w-full h-full" alt="">
+    <section :class="{ 'mt-[8px]': !isUserApproved }">
+      <div v-if="activities" class="w-full relative h-[456px] md:h-[456px] back-img flex items-center"
+        :class="{ 'mt-[8px]': !isUserApproved, 'mt-[60px]': isUserApproved }">
+        <img v-if="activities?.activity_image"
+          :src="activities?.activity_image || 'https://via.placeholder.com/456x456'" class="w-full h-full" alt="">
         <div
           class="absolute top-20 left-5 sm:left-10 max-w-sm w-[448px] h-[312px] bg-white shadow-lg rounded-lg p-4 border border-gray-200 flex flex-col gap-4 justify-center">
           <div class="border-b pb-2">
 
             <h2 class="text-heading3 font-normal font-poppins mt-1">
-              {{ activities.title }}
+              {{ activities?.title }}
             </h2>
-            <span class="text-secondary font-medium text-caption">{{ activities.activity_type }}</span>
+            <span class="text-secondary font-medium text-caption">{{ activities?.activity_type }}</span>
           </div>
 
           <div class="flex gap-1 items-center" style="color: #666666">
@@ -27,15 +82,15 @@
             </svg>
 
             <span class="flex items-center text-bodyh2 font-normal mr-4" style="color: #0b0b0b">
-              {{ formatDate(activities.start_date) }} - {{ formatDate(activities.end_date) }}
+              {{ formatDate(activities?.start_date) }} - {{ formatDate(activities?.end_date) }}
             </span>
           </div>
           <div class="flex items-center text-gray-600 text-bodyh2 font-normal justify-between border-b pb-2">
             <span class="flex justify-center items-center gap-1" style="color: #0b0b0b">
               <FeatherIcon name="clock" class="size-4 text-[#666666]" />
-              {{ activities.hours ?? '0' }} hr
+              {{ activities?.hours ?? '0' }} hr
             </span>
-            <span class="flex items-center gap-2 justify-center" style="color: #0b0b0b">
+            <span v-if="activities?.karma_points" class="flex items-center gap-2 justify-center" style="color: #0b0b0b">
               <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M15.5002 3.66602C15.5002 2.28518 12.8885 1.16602 9.66683 1.16602C6.44516 1.16602 3.8335 2.28518 3.8335 3.66602M15.5002 3.66602V6.99935C15.5002 7.84935 14.5118 8.59935 13.0002 9.05102C12.0552 9.33435 10.906 9.49935 9.66683 9.49935C8.42766 9.49935 7.2785 9.33352 6.3335 9.05102C4.82266 8.59935 3.8335 7.84935 3.8335 6.99935V3.66602M15.5002 3.66602C15.5002 4.51602 14.5118 5.26602 13.0002 5.71768C12.0552 6.00102 10.906 6.16602 9.66683 6.16602C8.42766 6.16602 7.2785 6.00018 6.3335 5.71768C4.82266 5.26602 3.8335 4.51602 3.8335 3.66602"
@@ -44,28 +99,28 @@
                   d="M0.5 6.9994V10.3327C0.5 11.1827 1.48917 11.9327 3 12.3844C3.945 12.6677 5.09417 12.8327 6.33333 12.8327C7.5725 12.8327 8.72167 12.6669 9.66667 12.3844C11.1775 11.9327 12.1667 11.1827 12.1667 10.3327V9.4994M0.5 6.9994C0.5 6.0019 1.8625 5.14107 3.83333 4.74023M0.5 6.9994C0.5 7.8494 1.48917 8.5994 3 9.05107C3.945 9.3344 5.09417 9.4994 6.33333 9.4994C6.9125 9.4994 7.47167 9.46357 8 9.39607"
                   stroke="#FF5722" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              <span class="text-bodyh2 font-normal"> {{ activities.karma_points?.toLocaleString() }} Points</span>
+              <span class="text-bodyh2 font-normal"> {{ activities?.karma_points?.toLocaleString() }} Points</span>
             </span>
           </div>
           <div class="flex space-x-2 border-b pb-2">
-            <div v-if="activities.sdgs" v-for="item in JSON.parse(activities.sdgs)">
-              <img v-if="item.image" :src="item.image" class="w-8 h-8" />
-              <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item.sdgs_name?.charAt(0)
-              }}</span>
+            <div v-if="activities?.sdgs" v-for="item in JSON.parse(activities?.sdgs)">
+              <img v-if="item?.image" :src="item.image" class="w-8 h-8" />
+              <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item?.sdgs_name?.charAt(0)
+                }}</span>
             </div>
           </div>
 
           <div class="">
             <div class="w-full bg-gray-200 rounded-full h-[5px]">
-              <div class="bg-green-500 h-[5px] rounded-full" :style="`width:${activities.com_percent ?? 0}%`"></div>
+              <div class="bg-green-500 h-[5px] rounded-full" :style="`width:${activities?.com_percent ?? 0}%`"></div>
             </div>
             <div class="flex items-center justify-between gap-2">
               <p class="text-caption font-normal mt-1" style="color: #0b0b0b">
-                {{ activities.com_percent ?? 0 }} % completed
+                {{ activities?.com_percent ?? 0 }} % completed
               </p>
               <div class="flex items-center gap-2 text-xs font-normal">
                 <FeatherIcon name="clock" class="size-4 text-[#666666]" />
-                {{ activities.donet_hours ? ((activities.donet_hours / 60) / 60).toFixed(2) : '0' }} hr
+                {{ activities?.donet_hours ? ((activities?.donet_hours / 60) / 60).toFixed(2) : '0' }} hr
               </div>
             </div>
           </div>
@@ -80,7 +135,7 @@
         <div class="grid gap-6 lg:grid-cols-3">
           <!-- Left Section -->
           <div class="lg:col-span-2 flex flex-col justify-between items-start">
-            <div class="text-[14px] text-[#666666] text-justify font-normal" v-html="activities.activity_description">
+            <div class="text-[14px] text-[#666666] text-justify font-normal" v-html="activities?.activity_description">
             </div>
             <div class="flex items-center gap-[12px] flex-col justify-self-start mt-[220px]">
               <span class="text-gray-700 font-medium flex items-center space-x-2">
@@ -98,7 +153,10 @@
           </div>
           <!-- Right Section - Timeline -->
           <div>
-            <Stepper :activity="activities" :key="activities.activity" />
+            <SubmitFeedback v-if="route.params.name && route.params.activity" :activity="activities"
+              :opportunity_activity="route.params.activity" :isOpportunityApproved="isUserApproved"
+              :key="'feedback-' + activities?.activity" />
+            <Stepper v-else :activity="activities" :key="'stepper-' + activities?.activity" />
           </div>
         </div>
 
@@ -108,20 +166,19 @@
             <h2 class="text-heading4 font-medium font-poppins" style="color: #0b0b0b">
               Related Opportunities
             </h2>
-
             <div class="flex items-center">
-              <FeatherIcon @click="scrollLeft"
-                :class="['size-5 cursor-pointer', isLeftDisabled ? 'text-gray-500 disabled' : 'text-gray-700']"
+              <FeatherIcon @click="!isLeftDisabled && scrollLeft"
+                :class="['size-5', isLeftDisabled ? 'text-gray-500 cursor-not-allowed opacity-50' : 'text-gray-700 cursor-pointer']"
                 name="chevron-left" :disabled="isLeftDisabled" />
-              <FeatherIcon @click="scrollRight"
-                :class="['size-5 cursor-pointer', isRightDisabled ? 'text-gray-500 disabled' : 'text-gray-700']"
+              <FeatherIcon @click="!isRightDisabled && scrollRight"
+                :class="['size-5', isRightDisabled ? 'text-gray-500 cursor-not-allowed opacity-50' : 'text-gray-700 cursor-pointer']"
                 name="chevron-right" :disabled="isRightDisabled" />
 
             </div>
           </div>
           <div ref="scrollContainer" class="py-4 w-full overflow-x-scroll">
             <div v-if="relatedactivity?.length > 0" class="flex items-center gap-4">
-              <Card v-for="(item, key) in relatedactivity" :key="key" :item="item"
+              <Card v-for="(item) in relatedactivity" :key="item.name" :item="item" :mode="'opportunity'"
                 class="w-[320px] min-w-[320px] max-w-[320px]" />
             </div>
             <div class="w-full h-[330px]" v-else>
@@ -131,16 +188,17 @@
         </div>
       </div>
     </section>
-    <!-- main section end  -->
   </div>
 </template>
 
 <script setup>
-import { inject, ref, onMounted, watch, watchEffect, computed } from 'vue'
+import { inject, ref, onMounted, watch, watchEffect, computed, onUnmounted } from 'vue'
 import { FeatherIcon } from 'frappe-ui'
 import Stepper from '../../components/Stepper.vue'
+import SubmitFeedback from '../../components/SubmitFeedback.vue'
 import Card from '../../components/Card.vue'
 import NotFound from '../../components/NotFound.vue'
+import ReqForApproval from '../../components/ReqForApproval.vue'
 // import CardLoader from "../../components/CardLoader.vue";
 import {
   Facebook,
@@ -194,12 +252,25 @@ const formatDate = inject('formatDate');
 const scrollContainer = ref(null);
 const isLeftDisabled = ref(true);
 const isRightDisabled = ref(false);
+const isUserApproved = ref(false)
+const showReqForApproval = ref(false)
+const svaUserData = ref(null)
 
 const activity = async () => {
+
   try {
-    const response = await call('mykartavya.controllers.api.activity_details', { 'name': route.params.name });
-    if (response) {
-      activities.value = response
+    if (route.params.activity) {
+      const response = await call('mykartavya.controllers.api.opportunity_activity_details', { name: route?.params?.activity });
+      if (response) {
+        activities.value = response
+      }
+    } else if (route.params.name) {
+      const response = await call('mykartavya.controllers.api.activity_details', { name: route?.params?.name });
+      if (response) {
+        activities.value = response
+      }
+    } else {
+      console.log('No name or activity');
     }
   } catch (err) {
     console.error('Error fetching activity data:', err);
@@ -209,7 +280,12 @@ const activity = async () => {
 const relatedactivity = ref([]);
 const relatedOpportunities = async () => {
   try {
-    const response = await call('mykartavya.controllers.api.related_opportunities', { 'name': route.params.name, sdgs: activities.value.sdgs });
+    let sdgs = activities?.value?.sdgs
+    if (typeof sdgs === 'string') {
+      sdgs = JSON.parse(sdgs)
+    }
+    let filter = { sdgs: sdgs?.map(item => item.sdgs_name) }
+    const response = await call('mykartavya.controllers.api.related_opportunities', { filter: filter });
     if (response) {
       relatedactivity.value = response
     }
@@ -217,7 +293,21 @@ const relatedOpportunities = async () => {
     console.error('Error fetching activity data:', err);
   }
 }
+
+const checkUserApproval = async () => {
+  try {
+    const response = await call('mykartavya.controllers.api.sva_user_data');
+    if (response && response.length > 0) {
+      svaUserData.value = response[0];
+      isUserApproved.value = response[0]?.workflow_state === 'Approved';
+    }
+  } catch (err) {
+    console.error('Error checking user approval status:', err);
+  }
+}
+
 onMounted(async () => {
+  await checkUserApproval()
   await activity()
   await relatedOpportunities()
 })
@@ -228,13 +318,19 @@ watch(() => store.refresh_step, (val) => {
   }
 }, { immediate: true, deep: true })
 
-watch(() => route.params.name, async (val, old) => {
+watch(() => route?.params?.name, async (val, old) => {
   if (val != old) {
     await activity()
     await relatedOpportunities()
   }
 }, { immediate: true, deep: true })
-// scroll buttons
+
+watch(() => route?.params?.activity, async (val, old) => {
+  if (val != old) {
+    await activity()
+    await relatedOpportunities()
+  }
+}, { immediate: true, deep: true })
 
 // Scroll settings
 const cardWidth = 320;
@@ -267,15 +363,36 @@ const checkScrollButtons = () => {
   if (!scrollContainer.value) return;
   const { scrollLeft, scrollWidth, clientWidth } = scrollContainer.value;
   isLeftDisabled.value = scrollLeft <= 0;
-  isRightDisabled.value = scrollLeft + clientWidth >= scrollWidth;
+  // Check if content is actually overflowing
+  const isOverflowing = scrollWidth > clientWidth;
+  isRightDisabled.value = !isOverflowing || (scrollLeft + clientWidth >= scrollWidth);
 };
 
 // Watch for scroll changes and update button states
 watchEffect(() => {
   if (scrollContainer.value) {
     scrollContainer.value.addEventListener('scroll', checkScrollButtons);
+    // Initial check for overflow
+    checkScrollButtons();
   }
 });
+
+// Add resize observer to handle dynamic content changes
+onMounted(() => {
+  const resizeObserver = new ResizeObserver(() => {
+    checkScrollButtons();
+  });
+
+  if (scrollContainer.value) {
+    resizeObserver.observe(scrollContainer.value);
+  }
+
+  // Cleanup
+  onUnmounted(() => {
+    resizeObserver.disconnect();
+  });
+});
+
 window.addEventListener('resize', () => {
   getScrollStep(); // Ensure it updates when the window resizes
 });
@@ -292,6 +409,14 @@ const shareToSocial = (platform) => {
     `width=${width},height=${height},left=${left},top=${top}`
   );
 }
+
+// Add watcher for ReqForApproval popup
+watch(() => showReqForApproval, (newVal) => {
+  if (newVal) {
+    // When popup opens, you can add any additional logic here
+    // For example, you might want to fetch some data
+  }
+}, { deep: true });
 </script>
 
 <style>
@@ -312,6 +437,18 @@ const shareToSocial = (platform) => {
 
 /* Ensures icons have smooth hover transition */
 button {
-  transition: background 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.button-animation {
+  transition: all 0.2s ease;
+}
+
+.button-animation:hover {
+  transform: translateY(-1px);
+}
+
+.button-animation:active {
+  transform: translateY(0);
 }
 </style>

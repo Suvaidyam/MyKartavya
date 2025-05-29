@@ -14,7 +14,6 @@ class Company(Document):
     def validate(self):
         self.validate_company_name()
         self.validate_registration_dates()
-        self.validate_contact_details()
         # self.validate_address()
         self.validate_organization_details()
         self.validate_company_logo()
@@ -47,12 +46,6 @@ class Company(Document):
                         frappe.throw("Company Registration Year must be between 1800 and the current year")
                 except ValueError:
                     frappe.throw("Invalid Company Registration Year format")
-
-
-    def validate_contact_details(self):
-        if self.registration_type == "Admin Registration":
-            if self.volunteering_incharge_phone and not re.match(r'^\d{10,15}$', self.volunteering_incharge_phone):
-                frappe.throw("Volunteering InCharge Phone must be between 10 and 15 digits")
 
     def validate_address(self):
         if self.pincode:
@@ -157,7 +150,7 @@ def insert_sva_user(doc):
             "first_name": first_name,
             "last_name": last_name,
             "password": password,
-            "custom_phone_number_":phone,
+            "custom_phone_number":phone,
             "mobile_number": mobile_number, 
             "confirm_password": password,
             "custom_company": doc.name,
@@ -197,7 +190,7 @@ def insert_sva_user(doc):
                 "first_name": doc.volunteering_incharge_name,
                 "last_name": "",
                 "password": incharge_password,
-                "custom_phone_number": doc.volunteering_incharge_phone,
+                # "custom_phone_number": doc.volunteering_incharge_phone,
                 "confirm_password": incharge_password,
                 "custom_company": doc.name,
                 "custom_country": country,

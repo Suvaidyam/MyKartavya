@@ -57,6 +57,19 @@ const routes = [
     component: () => import('@/pages/Mykarma/Empower.vue'),
     meta: { requiresAuth: true }
   },
+
+  {
+    path: '/opportunity/:name',
+    name: 'Opportunity',
+    component: () => import('@/pages/VolunteeringOpportunities/Opportunities.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/opportunity/:name/activity/:activity',
+    name: 'OpportunityActivity',
+    component: () => import('@/pages/Mykarma/Empower.vue'),
+    meta: { requiresAuth: true }
+  },
   {
     name: 'Contact',
     path: '/contact',
@@ -88,24 +101,6 @@ const routes = [
     meta: { requiresAuth: false }
   },
   {
-    name: 'FAQs',
-    path: '/faqs',
-    component: () => import('@/pages/Public/FAQs.vue'),
-    meta: { requiresAuth: false }
-  },
-  {
-    name: 'Features',
-    path: '/features',
-    component: () => import('@/pages/Public/Features.vue'),
-    meta: { requiresAuth: false }
-  },
-  {
-    name: 'AboutUs',
-    path: '/about-us',
-    component: () => import('@/pages/Public/About Us.vue'),
-    meta: { requiresAuth: false }
-  },
-  {
     name: 'AllActivity',
     path: '/all-activity/:name',
     component: () => import('@/pages/View/AllActivity.vue'),
@@ -113,13 +108,13 @@ const routes = [
   {
     name: 'Ngos',
     path: '/ngo-registration',
-    component: () => import('@/pages/Company  & Ngo Registration/Ngoregistration.vue'),
+    component: () => import('@/pages/Company  & Ngo Registration/NgoRestation.vue'),
     meta: { requiresAuth: false }
   },
   {
     name: 'Company',
     path: '/company-registration',
-    component: () => import('@/pages/Company  & Ngo Registration/Company.vue'),
+    component: () => import('@/pages/Company  & Ngo Registration/CompanyRestation.vue'),
     meta: { requiresAuth: false }
   },
 ]

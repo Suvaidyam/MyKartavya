@@ -102,7 +102,15 @@ const isEmailValid = computed(() => {
 
 const get_otp = async () => {
   if (email.value === '') {
-    toast.error('Email is required')
+    toast.error('Email is required',
+      {
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      }
+    )
     return
   }
   let url = ''
@@ -119,11 +127,11 @@ const get_otp = async () => {
     if (response.status === 'success') {
       loading.value = false
       toast.success('OTP sent successfully', {
-        position: 'top-right',
-        autoClose: 1000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
+        draggable: true,
       })
       setTimeout(() => {
         router.push({
@@ -137,20 +145,20 @@ const get_otp = async () => {
     } else {
       loading.value = false
       toast.error(response.message, {
-        position: 'top-right',
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
+        draggable: true,
       })
     }
   } catch (error) {
     toast.error('Something went wrong', {
-      position: 'top-right',
       autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
+      draggable: true,
     })
   }
 }

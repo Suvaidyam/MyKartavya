@@ -14,7 +14,8 @@
                 <div v-else v-for="item in filter_by" class="flex flex-col border-t">
                     <h4 class="text-[14px] font-medium mb-2 pt-2">{{ item.name }}</h4>
                     <div class="flex flex-col gap-3 pb-2">
-                        <div v-if="item.key === 'sdgs' && item.options.length > 1" class="flex px-2 items-center gap-2 text-sm">
+                        <div v-if="item.key === 'sdgs' && item.options.length > 1"
+                            class="flex px-2 items-center gap-2 text-sm">
                             <input v-model="allChecked" type="checkbox"
                                 class="rounded-sm h-4 w-4 min-w-4 max-w-4 min-h-4 max-h-4 focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="all-sdgs">
@@ -41,7 +42,8 @@
                                 {{ el.name }}
                             </label>
                         </div>
-                        <div v-if="item.key === 'activity_type' && item.options.length > 1" class="flex px-2 items-center gap-2 text-sm">
+                        <div v-if="item.key === 'types' && item.options.length > 1"
+                            class="flex px-2 items-center gap-2 text-sm">
                             <input v-model="allType" type="checkbox"
                                 class="rounded-sm focus:ring-[#E86C13] h-4 w-4 min-w-4 max-h-4 focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="both-activity_type">
@@ -86,11 +88,11 @@
                                 :id="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">
                             <label :for="`${item.key}-${el.name.toLowerCase().replace(' ', '-')}`">{{ el.name }}</label>
                         </div>
-                        <div v-if="item.key === 'activity_type'" class="flex px-2 items-center py-1 gap-2 text-sm">
+                        <div v-if="item.key === 'types'" class="flex px-2 items-center py-1 gap-2 text-sm">
                             <input v-model="allChecked" type="checkbox"
                                 class="rounded-sm focus:ring-[#E86C13] focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
-                                id="both-activity_type">
-                            <label class="text-[12px] font-normal" for="both-activity_type">Both</label>
+                                id="both_activity_type">
+                            <label class="text-[12px] font-normal" for="both_activity_type">Both</label>
                         </div>
                     </MenuItems>
                 </transition>
@@ -109,7 +111,7 @@ import { FeatherIcon } from 'frappe-ui';
 import FilterLoader from './FilterLoader.vue';
 import { useRoute } from 'vue-router';
 
-const call = inject('call')
+const call = inject('call');
 const loader = ref(false);
 const clear_all_disabled = ref(true);
 const store = inject('store');
@@ -124,9 +126,9 @@ const filter_by = ref([
         options: [],
     },
     {
-        name: 'Activity Type',
+        name: 'Type',
         type: 'checkbox',
-        key: 'activity_type',
+        key: 'types',
         options: []
     },
 ]);
@@ -135,31 +137,28 @@ const fetchSDGs = async () => {
     loader.value = true;
     try {
         const response = await call('mykartavya.controllers.api.sdg_data');
-        sdgData.value = response.sdg;
-        const sdgsFilter = filter_by.value.find(f => f.key === 'sdgs');
-        const activityTypeFilter = filter_by.value.find(f => f.key === 'activity_type');
+        sdgData.value = response;
 
-        if (activityTypeFilter) {
-            activityTypeFilter.options = response?.act_type?.map(type => ({
-                name: type.name
-            }));
-        }
-        if (sdgsFilter) {
-            sdgsFilter.options = response?.sdg?.map(sdg => ({
-                name: sdg.name,
-                sdg_image: sdg.sdg_image
-            }));
-        }
+        const updateOptions = (key, data) => {
+            const filter = filter_by.value.find(f => f.key === key);
+            if (filter) {
+                filter.options = data?.map(item => ({
+                    name: item.name,
+                    sdg_image: item?.sdg_image || undefined
+                })) || [];
+            }
+        };
+
+        updateOptions('sdgs', response.sdgs);
+        updateOptions('types', response.types);
+
     } catch (err) {
-        loader.value = false;
         console.error('Error fetching SDG data:', err);
     } finally {
         setTimeout(() => { loader.value = false; }, 500);
     }
 };
 
-
-// Computed property for "All" checkbox state
 const allChecked = computed({
     get: () => {
         const sdgFilter = filter_by.value.find(f => f.key === 'sdgs');
@@ -167,31 +166,30 @@ const allChecked = computed({
     },
     set: (value) => {
         const sdgFilter = filter_by.value.find(f => f.key === 'sdgs');
-        store.filters.sdgs = value && sdgFilter ? [...sdgFilter.options.map(e => { return e.name })] : [];
-    }
-});
-const allType = computed({
-    get: () => {
-        const activityType = filter_by.value.find(f => f.key === 'activity_type');
-        return activityType && store.filters.activity_type.length === activityType.options.length;
-    },
-    set: (value) => {
-        const activityType = filter_by.value.find(f => f.key === 'activity_type');
-        store.filters.activity_type = value && activityType ? [...activityType.options.map(e => { return e.name })] : [];
+        store.filters.sdgs = value && sdgFilter ? [...sdgFilter.options.map(e => e.name)] : [];
     }
 });
 
-// Clear all filters
+const allType = computed({
+    get: () => {
+        const activityType = filter_by.value.find(f => f.key === 'types');
+        return activityType && store.filters.types.length === activityType.options.length;
+    },
+    set: (value) => {
+        const activityType = filter_by.value.find(f => f.key === 'types');
+        store.filters.types = value && activityType ? [...activityType.options.map(e => e.name)] : [];
+    }
+});
+
 const clear_all = () => {
     store.filters = {
         sdgs: [],
+        types: [],
         volunteering_hours: '',
-        activity_type: [],
         karma_points: ''
     };
 };
 
-// Watch store.filters changes for Clear All button state
 watch(store.filters, (val) => {
     clear_all_disabled.value = Object.values(val).every(v =>
         Array.isArray(v) ? v.length === 0 : v === ''
@@ -200,6 +198,7 @@ watch(store.filters, (val) => {
 
 onMounted(fetchSDGs);
 </script>
+
 
 <style scoped>
 ::-webkit-scrollbar {

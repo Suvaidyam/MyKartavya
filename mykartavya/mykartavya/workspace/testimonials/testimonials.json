@@ -1,0 +1,37 @@
+{
+ "app": "mykartavya",
+ "charts": [],
+ "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Testimonials\"}}]",
+ "creation": "2025-05-28 15:14:03.479843",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "sort-descending",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Testimonials",
+ "link_to": "Testimonial",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-05-28 15:14:19.380217",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Testimonials",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "MyKartvya Admin"
+  }
+ ],
+ "sequence_id": 30.0,
+ "shortcuts": [],
+ "title": "Testimonials",
+ "type": "Link"
+}

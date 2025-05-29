@@ -7,9 +7,10 @@
         </h1>
         <div class="flex flex-wrap items-center gap-4">
           <button @click="generateRandom"
-            class="h-8 rounded-sm border border-[#D9D9D9] bg-white py-2 px-4 gap-1.5 flex flex-row items-center text-sm font-[400] text-[#E23D90] whitespace-nowrap">
+            class="h-8 rounded-sm border border-[#D9D9D9] bg-white py-2 px-4 gap-1.5 flex flex-row items-center text-sm font-[400] text-[#E23D90] whitespace-nowrap transition-all duration-200 active:scale-95">
             Generate Random
-            <FeatherIcon class="size-[13px]" name="refresh-ccw" />
+            <FeatherIcon class="size-[13px] transition-transform duration-200" :class="{ 'rotate-180': isRefreshing }"
+              name="refresh-ccw" />
           </button>
           <Sorting />
         </div>
@@ -54,31 +55,46 @@
       </div>
       <div v-else class="h-full">
         <div v-if="activity.length > 0" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
-          <Card v-for="item in activity" :key="item.name" :item="item" />
+          <Card v-for="item in activity" :key="item.name" :item="item"  :mode="'activity'" />
         </div>
         <NotFound v-else />
       </div>
     </div>
-    <div v-else class="w-full h-4/5 flex items-center justify-center">
-      <p>Coming Soon...</p>
+    <div v-else class="w-full h-4/5  mt-5">
+      <div v-if="loader" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
+        <CardLoader />
+        <CardLoader />
+        <CardLoader />
+      </div>
+      <div v-else class="h-full">
+        <div v-if="opportunities.length > 0" class="grid grid-cols-3 gap-5 max-md:grid-cols-1">
+          <Card v-for="item in opportunities" :key="item.name" :item="item" :mode="'opportunity'" />
+        </div>
+        <NotFound v-else />
+      </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, inject, watch } from 'vue'
+import { ref, onMounted, inject, watch } from 'vue'
 import Card from '../../components/Card.vue'
 import CardLoader from '../../components/CardLoader.vue'
 import NotFound from '../../components/NotFound.vue'
 import Sorting from '../../components/Sorting.vue'
 import { FeatherIcon } from 'frappe-ui'
+import { useRoute } from 'vue-router'
 
 const call = inject('call')
 const store = inject('store')
 const activity = ref([])
 const loader = ref(false)
+const opportunities = ref([])
+const isRefreshing = ref(false)
+const route = useRoute()
 
 const activeTab = ref('kindness')
+
 const kindnes = async (filter) => {
   loader.value = true
   try {
@@ -99,6 +115,7 @@ const kindnes = async (filter) => {
 }
 
 const generateRandom = async () => {
+  isRefreshing.value = true
   loader.value = true
   try {
     const response = await call(
@@ -115,15 +132,35 @@ const generateRandom = async () => {
     }
     setTimeout(() => {
       loader.value = false
+      isRefreshing.value = false
     }, 1000)
   } catch (err) {
     loader.value = false
+    isRefreshing.value = false
     console.error('Error generating random activity:', err)
+  }
+}
+
+const relatedOpportunities = async (filter) => {
+  try {
+    const response = await call(
+      'mykartavya.controllers.api.related_opportunities',
+      {
+        filter: filter ?? {},
+      } 
+    )
+    console.log('Received related opportunities response:', response)
+    if (response) {
+      opportunities.value = response
+    }
+  } catch (err) {
+    console.error('Error fetching activity data:', err)
   }
 }
 
 onMounted(() => {
   kindnes(store.filters)
+  relatedOpportunities(store.filters)
 })
 
 watch(
@@ -135,11 +172,13 @@ watch(
   },
   { immediate: true }
 )
+
 watch(
   () => store.filters,
   (newVal) => {
     if (newVal) {
       kindnes(newVal)
+      relatedOpportunities(newVal)
     }
   },
   { immediate: true, deep: true }

@@ -5,7 +5,7 @@
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-heading4 font-medium">Timeline</h2>
           <button @click="store.refresh_step = true"
-            class="text-pink-500 flex items-center text-base font-normal w-[107px] justify-center h-8 rounded-sm border">
+            class="text-pink-500 flex items-center text-base font-normal w-[107px] justify-center h-8 rounded-sm border refresh-button">
             Refresh
             <RefreshCwIcon class="w-4 h-4 ml-1" />
           </button>
@@ -76,20 +76,20 @@
               <button
                 v-if="!step.completed && !(['Get Started', 'Activity Report'].includes(step.title) && (activity.workflow_state == 'Applied' || activity.completion_wf_state == 'Submitted'))"
                 @click="nextStep(index)"
-                class="mt-3 h-[28px] px-3 uppercase rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722]">
+                class="mt-3 h-[28px] px-3 uppercase rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
                 {{ step.button }}
               </button>
               <button disabled
                 v-if="!step.completed && ['Get Started'].includes(step.title) && ['Applied'].includes(activity.workflow_state)"
                 @click="nextStep(index)"
-                class="mt-3 h-[28px] uppercase cursor-not-allowed px-3 rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722]">
-                {{ step.title == 'Get Started' ? 'Pending by Admin' : 'Review under Admin' }}
+                class="mt-3 h-[28px] uppercase cursor-not-allowed px-3 rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
+                {{ step.title == 'Get Started' ? 'Approval in Progress' : 'Review under Admin' }}
               </button>
               <button disabled
                 v-if="!step.completed && ['Activity Report'].includes(step.title) && (['Approved'].includes(activity.workflow_state) && activity.completion_wf_state == 'Submitted')"
                 @click="nextStep(index)"
-                class="mt-2 h-[28px] uppercase cursor-not-allowed px-3 rounded-sm text-caption font-medium text-white ml-2 bg-[#FF5722]">
-                {{ step.title == 'Get Started' ? 'Pending by Admin' : 'Review under Admin' }}
+                class="mt-2 h-[28px] uppercase cursor-not-allowed px-3 rounded-sm text-caption font-medium text-white ml-2 bg-[#FF5722] button-animation">
+                {{ step.title == 'Get Started' ? 'Approval in Progress' : 'Review under Admin' }}
               </button>
             </div>
           </div>
@@ -109,7 +109,7 @@
           <div class="bg-white rounded-lg shadow-lg w-full max-w-md">
             <div class="flex justify-between items-center border-b p-4">
               <h2 class="text-lg font-semibold">Share Feedback</h2>
-              <button @click="show_Feedback = false" class="text-gray-500 hover:text-gray-700 text-xl">
+              <button @click="show_Feedback = false" class="text-gray-500 hover:text-gray-700 text-xl button-animation">
                 &times;
               </button>
             </div>
@@ -128,7 +128,7 @@
             </div>
             <div class="p-4">
               <button @click="submit_your_feedback"
-                class="w-full bg-[#FF5722] text-white py-2 rounded font-semibold hover:bg-orange-600">
+                class="w-full bg-[#FF5722] text-white py-2 rounded font-semibold hover:bg-orange-600 button-animation">
                 SUBMIT FEEDBACK
               </button>
             </div>
@@ -147,7 +147,7 @@
             </div>
             <div class="flex justify-center">
               <button v-if="props.activity.need_certificate === 'Yes'" @click="viewCertificate"
-                class="bg-[#FF5722] text-white py-2 px-6 rounded font-semibold hover:bg-orange-600 flex items-center gap-2"
+                class="bg-[#FF5722] text-white py-2 px-6 rounded font-semibold hover:bg-orange-600 flex items-center gap-2 button-animation"
                 :disabled="isLoadingCertificate">
                 <span v-if="isLoadingCertificate"
                   class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
@@ -162,7 +162,7 @@
           <div class="bg-white rounded-lg shadow-lg p-6 w-[500px]">
             <div class="flex justify-between items-center border-b pb-2 mb-4">
               <h2 class="text-lg font-semibold">Activity Completion</h2>
-              <button @click="activityReportPopup = false" class="text-gray-500 hover:text-gray-700">
+              <button @click="activityReportPopup = false" class="text-gray-500 hover:text-gray-700 button-animation">
                 &times;
               </button>
             </div>
@@ -229,7 +229,7 @@
             </div>
             <div class="flex justify-end">
               <button @click="submitReport"
-                class="bg-[#FF5722] flex items-center justify-center text-white h-[38px] text-base w-48 rounded-sm text-center font-medium hover:bg-orange-600">
+                class="bg-[#FF5722] flex items-center justify-center text-white h-[38px] text-base w-48 rounded-sm text-center font-medium hover:bg-orange-600 button-animation">
                 <p>MARK AS COMPLETE</p>
                 <div class="h-5 w-5" v-if="loading">
                   <div
@@ -242,14 +242,14 @@
           </div>
         </div>
 
-        <ReqForApproval />
+        <ReqForApproval v-model="showReqForApproval" />
       </div>
     </div>
   </div>
 </template>
 <script setup>
 import { ref, inject, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { FeatherIcon } from 'frappe-ui'
 import {
   RefreshCw as RefreshCwIcon,
@@ -267,11 +267,13 @@ const showKarmaPopup = ref(false)
 const activityReportPopup = ref(false)
 
 const showLockedStepPopup = ref(false)
+const showReqForApproval = ref(false)
 const call = inject('call')
 const auth = inject('auth')
 const store = inject('store')
 const socket = inject('socket')
 const route = useRoute()
+const router = useRouter()
 const feedback = ref({
   rating: null,
   comments: '',
@@ -283,6 +285,8 @@ let props = defineProps({
     default: () => ({}),
   },
 })
+// console.log(props.activity);
+
 const activity_log = ref({
   hours: 0,
   minutes: 0,
@@ -333,21 +337,45 @@ const nextStep = async (index) => {
 
   try {
     if (index === 0) {
-      let res = await call('mykartavya.controllers.api.act_now', {
-        activity: route.params.name,
+      const activityId = route?.params?.activity || route?.params?.name
+      if (!activityId) {
+        toast.error("Activity ID not found", {
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        })
+        return
+      }
+      const res = await call('mykartavya.controllers.api.act_now', {
+
+        activity: activityId,
         volunteer: auth.cookie.user_id
       })
 
-      if (res.status == 200) {
+      if (res?.status === 200) {
         props.activity.workflow_state = 'Applied'
         steps.value[index].completed = true
         currentStep.value++
-      } else if (res.status == 201) {
-        store.req_for_approval = true
-        toast.error("User not approved ")
-      } else if (res.status == 400) {
-        toast.error(res.msg);
+        toast.success("Activity approval request submitted successfully", {
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        })
+      } else if (res?.status === 201) {
+        showReqForApproval.value = true
+        return
       } else {
+        toast.error(res?.msg || "Something went wrong", {
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        })
         return
       }
     }
@@ -360,7 +388,14 @@ const nextStep = async (index) => {
       activityReportPopup.value = true
     }
   } catch (error) {
-    toast.error(error)
+    console.error(error)
+    toast.error("Something went wrong", {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    })
   }
 }
 
@@ -408,7 +443,13 @@ const submitReport = async () => {
 
     if (res) {
       activity_log.value.progress = res.com_percent;
-      toast.success("Activity report submitted successfully");
+      toast.success("Activity report submitted successfully", {
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       loading.value = false;
       activity_log.value = {
         hours: 0,
@@ -419,10 +460,15 @@ const submitReport = async () => {
     }
   } catch (error) {
     loading.value = false;
-    toast.error("Something went wrong");
+    toast.error("Something went wrong", {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   }
 };
-
 
 const submit_your_feedback = async () => {
   let res = await call('mykartavya.controllers.api.submit_feedback', {
@@ -444,9 +490,7 @@ const submit_your_feedback = async () => {
     }
   }
 }
-
 const isLoadingCertificate = ref(false);
-
 const viewCertificate = async () => {
   isLoadingCertificate.value = true;
   let res = await call('mykartavya.controllers.api.view_certificate', {
@@ -454,10 +498,17 @@ const viewCertificate = async () => {
   })
   if (res) {
     isLoadingCertificate.value = false;
-    toast.success('Certificate visible in your profile after few minutes')
+    toast.success('Certificate visible in your profile after few minutes', {
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    })
     showKarmaPopup.value = false
     setTimeout(() => {
       showKarmaPopup.value = false
+      router.push('/profile')
     }, 3000)
   }
 }
@@ -530,6 +581,11 @@ watch(() => showKarmaPopup, (newValue) => {
     }, 3000); // 3000 milliseconds = 3 seconds
   }
 });
+watch(uploadedImages, (newImages) => {
+    if (newImages.length > 0) {
+        activity_err.value.image = false
+    }
+}, { deep: true })
 </script>
 <style scoped>
 .border-l {
@@ -551,5 +607,38 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.button-animation {
+  transition: all 0.2s ease;
+}
+
+.button-animation:active {
+  transform: scale(0.95);
+}
+
+.button-animation:active .w-4 {
+  transform: rotate(180deg);
+}
+
+.button-animation:disabled {
+  transform: none;
+  cursor: not-allowed;
+}
+
+.refresh-button {
+  transition: transform 0.2s ease;
+}
+
+.refresh-button:active {
+  transform: scale(0.95);
+}
+
+.refresh-button .w-4 {
+  transition: transform 0.3s ease;
+}
+
+.refresh-button:active .w-4 {
+  transform: rotate(180deg);
 }
 </style>

@@ -40,18 +40,22 @@
                 </div>
                 <!-- Add Rejection Remarks Section -->
                 <div v-if="svaUserData?.workflow_state === 'Rejected' && svaUserData?.custom_remarks"
-                    class="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-                    <div class="flex items-start gap-3">
+                    class="mt-4 p-3 bg-red-50/50 border border-red-100 rounded-lg">
+                    <div class="flex items-center gap-3">
                         <div
-                            class="w-10 h-10 min-w-10 min-h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="w-8 h-8 min-w-8 min-h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <h3 class="text-sm font-medium text-red-800 mb-1">Rejection Reason</h3>
-                            <p class="text-sm text-red-700 whitespace-pre-wrap">{{ svaUserData.custom_remarks }}</p>
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-sm font-medium text-red-800">Rejection Reason</h3>
+                                <span class="text-xs text-red-600 bg-red-100 px-2 py-0.5 rounded-full">Account
+                                    Rejected</span>
+                            </div>
+                            <p class="text-sm text-red-700 mt-1 line-clamp-2">{{ svaUserData.custom_remarks }}</p>
                         </div>
                     </div>
                 </div>
@@ -175,8 +179,13 @@
                                 </svg>
                             </div>
                             <div>
-                                <div class="text-bodyh2 text-gray-900 break-all">{{ svaUserData?.custom_linkedin ||
-                                    '---' }}
+                                <div class="text-bodyh2 text-gray-900 break-all">
+                                    <a v-if="svaUserData?.custom_linkedin" :href="svaUserData.custom_linkedin"
+                                        target="_blank" rel="noopener noreferrer"
+                                        class="text-gray-900 hover:text-orange-500 transition-colors">
+                                        {{ svaUserData.custom_linkedin }}
+                                    </a>
+                                    <span v-else>---</span>
                                 </div>
                                 <div class="text-caption text-gray-500">Linkedin</div>
                             </div>
@@ -264,7 +273,8 @@
                 </div>
                 <div class="bg-white rounded-lg p-6 shadow-sm">
                     <h2 class="text-xl font-semibold mb-6">My Certificates</h2>
-                    <div v-if="certificates.length === 0" class="text-gray-500 text-center py-8">
+                    <div v-if="certificates.length === 0 && opportunityctf.length === 0"
+                        class="text-gray-500 text-center py-8">
                         No certificates earned yet
                     </div>
                     <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
@@ -300,7 +310,6 @@
                                         </a>
                                     </div>
                                 </div>
-
                                 <!-- Certificate Info -->
                                 <div class="p-3 border-t border-gray-200">
                                     <h3 class="font-medium text-gray-900 text-sm line-clamp-1">
@@ -310,25 +319,66 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Certificate opportunity-->
+                        <div v-for="certificate in opportunityctf" :key="certificate.name"
+                            class="relative group w-full max-w-[250px] mx-auto">
+                            <!-- Certificate Card -->
+                            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                                <!-- Certificate Preview -->
+                                <div class="aspect-[1.4/1] relative">
+                                    <!-- Default Certificate Background -->
+                                    <iframe :src="certificate.certificate" frameborder="0" class="w-full h-full"
+                                        style="aspect-ratio: 1.4 / 1; object-fit: cover; overflow: hidden; scrollbar-width: none;"></iframe>
+                                    <!-- Hover Overlay -->
+                                    <div
+                                        class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
+                                        <a :href="certificate.certificate" target="_blank"
+                                            class="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors duration-200">
+                                            <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                        </a>
+                                        <a :href="certificate.certificate" download
+                                            class="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors duration-200">
+                                            <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="p-3 border-t border-gray-200">
+                                    <h3 class="font-medium text-gray-900 text-sm line-clamp-1">
+                                        {{ certificate.opportunity_name }}
+                                    </h3>
+                                    <p class="text-xs text-gray-500 mt-1">{{ certificate.date }}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- Add Mapped Companies Section -->
-                <div v-if="!svaUserData?.custom_company" class="bg-white rounded-lg p-6 shadow-sm mt-6">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-xl font-semibold">My Companies</h2>
-                        <Company />
+            </div>
+            <!-- Add Mapped Companies Section -->
+            <div v-if="!svaUserData?.custom_company" class="bg-white rounded-lg p-6 shadow-sm mt-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold">My Companies</h2>
+                    <Company />
+                </div>
+                <div class="space-y-4">
+                    <div v-if="mappedCompanies.length === 0" class="text-gray-500 text-center py-8">
+                        No companies mapped yet
                     </div>
-                    <div class="space-y-4">
-                        <div v-if="mappedCompanies.length === 0" class="text-gray-500 text-center py-8">
-                            No companies mapped yet
-                        </div>
-                        <div v-for="company in mappedCompanies" :key="company.name"
-                            class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                            <div>
-                                <p class="font-medium">{{ company.company_name }}</p>
-                                <p class="text-sm text-gray-600">{{ company.volunteer_email }}</p>
-                                <p class="text-xs text-gray-500">Role: {{ company.role_profile }}</p>
-                            </div>
+                    <div v-for="company in mappedCompanies" :key="company.name"
+                        class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                        <div>
+                            <p class="font-medium">{{ company.company_name }}</p>
+                            <p class="text-sm text-gray-600">{{ company.volunteer_email }}</p>
+                            <p class="text-xs text-gray-500">Role: {{ company.role_profile }}</p>
                         </div>
                     </div>
                 </div>
@@ -347,6 +397,7 @@ const svaUserData = ref(null)
 const mappedCompanies = ref([]);
 const certificates = ref([]);
 const allSkills = ref([]);
+const opportunityctf = ref([]);
 
 const fetchAllSkills = async () => {
     try {
@@ -426,6 +477,19 @@ const fetchCertificates = async () => {
     }
 };
 
+const Certificates_opp = async () => {
+    try {
+        const response = await call('mykartavya.controllers.api.get_user_certificates_opp');
+        if (response.success) {
+            opportunityctf.value = response.certificates;
+        } else {
+            console.error('Error fetching certificates:', response.message);
+        }
+    } catch (error) {
+        console.error('Error fetching certificates:', error);
+    }
+};
+
 const closePreview = () => {
     // Close the preview modal
     const modal = document.querySelector('.group-hover\\:flex');
@@ -447,6 +511,7 @@ onMounted(() => {
     get();
     fetchCertificates();
     fetchMappedCompanies()
+    Certificates_opp();
     // Close modal on escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closePreview();
@@ -455,11 +520,11 @@ onMounted(() => {
 </script>
 <style scoped>
 iframe {
-  overflow: hidden;
-  scrollbar-width: none;  
+    overflow: hidden;
+    scrollbar-width: none;
 }
 
 iframe::-webkit-scrollbar {
-  display: none;  
+    display: none;
 }
 </style>

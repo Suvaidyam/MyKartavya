@@ -15,8 +15,10 @@
     "link_doctype": "SVA User",
     "link_fieldname": "custom_company",
     "listview_settings": "[{\"fieldname\":\"role_profile\",\"label\":\"Role Profile\",\"width\":\"2\"},{\"fieldname\":\"custom_company\",\"label\":\"Company\",\"width\":\"2\"},{\"fieldname\":\"email\",\"label\":\"Email\",\"width\":\"2\"},{\"fieldname\":\"status\",\"label\":\"Status\",\"width\":\"2\"},{\"fieldname\":\"full_name\",\"label\":\"Full Name\",\"width\":\"2\"}]",
+    "redirect_to_main_form": 0,
     "referenced_link_doctype": null,
-    "template": "Tasks"
+    "template": "Tasks",
+    "title": null
    }
   ],
   "docstatus": 0,
@@ -24,7 +26,8 @@
   "modified": "2025-02-18 11:21:38.680562",
   "name": "Company",
   "number_cards": [],
-  "parent_doctype": "Company"
+  "parent_doctype": "Company",
+  "triggers": []
  },
  {
   "charts": [],
@@ -42,8 +45,10 @@
     "link_doctype": "Volunteer Company Mapper",
     "link_fieldname": "volunteer",
     "listview_settings": "[{\"fieldname\":\"volunteer\",\"label\":\"Volunteer\",\"width\":\"2\"},{\"fieldname\":\"volunteer_email\",\"label\":\"Volunteer Email\",\"width\":\"2\"},{\"fieldname\":\"volunteer_name\",\"label\":\"Volunteer Name\",\"width\":\"2\"},{\"fieldname\":\"company_name\",\"label\":\"Company Name\",\"width\":\"2\"}]",
+    "redirect_to_main_form": 0,
     "referenced_link_doctype": null,
-    "template": "Tasks"
+    "template": "Tasks",
+    "title": null
    }
   ],
   "docstatus": 0,
@@ -51,7 +56,8 @@
   "modified": "2025-02-17 11:33:23.552189",
   "name": "SVA User",
   "number_cards": [],
-  "parent_doctype": "SVA User"
+  "parent_doctype": "SVA User",
+  "triggers": []
  },
  {
   "charts": [],
@@ -69,8 +75,10 @@
     "link_doctype": "SVA User",
     "link_fieldname": "custom_ngo",
     "listview_settings": "[{\"fieldname\":\"role_profile\",\"label\":\"Role Profile\",\"width\":\"2\"},{\"fieldname\":\"email\",\"label\":\"Email\",\"width\":\"2\"},{\"fieldname\":\"status\",\"label\":\"Status\",\"width\":\"2\"},{\"fieldname\":\"full_name\",\"label\":\"Full Name\",\"width\":\"2\"},{\"fieldname\":\"custom_country\",\"label\":\"Country\",\"width\":\"2\"},{\"fieldname\":\"custom_state\",\"label\":\"State\",\"width\":\"2\"},{\"fieldname\":\"custom_city\",\"label\":\"City\",\"width\":\"2\"}]",
+    "redirect_to_main_form": 0,
     "referenced_link_doctype": null,
-    "template": "Tasks"
+    "template": "Tasks",
+    "title": null
    }
   ],
   "docstatus": 0,
@@ -78,6 +86,37 @@
   "modified": "2025-02-20 11:51:12.202495",
   "name": "NGOs",
   "number_cards": [],
-  "parent_doctype": "NGOs"
+  "parent_doctype": "NGOs",
+  "triggers": []
+ },
+ {
+  "charts": [],
+  "child_confs": [],
+  "child_doctypes": [
+   {
+    "action_label": "Approval",
+    "connection_type": "Direct",
+    "crud_permissions": "[\"read\",\"write\",\"create\",\"delete\"]",
+    "dn_reference_field": null,
+    "dt_reference_field": null,
+    "extend_condition": 0,
+    "extended_condition": "{}",
+    "html_field": "planned_activities",
+    "link_doctype": "Opportunity Activity",
+    "link_fieldname": "opportunity",
+    "listview_settings": "[{\"fieldname\":\"activity_name\",\"label\":\"Activity Name\",\"width\":\"2\"},{\"fieldname\":\"opportunity\",\"label\":\"Opportunity\",\"width\":\"2\"},{\"fieldname\":\"start_date\",\"label\":\"Start Date\",\"width\":\"2\"}]",
+    "redirect_to_main_form": 0,
+    "referenced_link_doctype": null,
+    "template": "Tasks",
+    "title": null
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "SVADatatable Configuration",
+  "modified": "2025-04-23 11:37:20.322320",
+  "name": "Opportunity",
+  "number_cards": [],
+  "parent_doctype": "Opportunity",
+  "triggers": []
  }
 ]

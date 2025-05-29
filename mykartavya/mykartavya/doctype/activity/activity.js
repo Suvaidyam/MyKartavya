@@ -4,11 +4,6 @@ frappe.ui.form.on("Activity", {
             frappe.validated = false;
             frm.image_uploaded = false;  
         }
-
-        if (frm.doc.is_global && frm.doc.is_private) {
-            frappe.msgprint(__('An activity cannot be both Global and Private. Please uncheck one.'));
-            frappe.validated = false;
-        }
     },
 
     activity_image: function (frm) {
@@ -29,6 +24,9 @@ frappe.ui.form.on("Activity", {
                     if (response.message && response.message.role_profile === "Company Admin") {
                         frm.set_value('is_private', 1);
                     }
+                    // if (response.message && response.message.role_profile === "NGO Admin") {
+                    //     frm.set_df_property('is_private', 'read_only', 1);
+                    // }
                     if (response.message.custom_company) {
                         frm.set_value('company', response.message.custom_company);
                         frm.set_df_property('company', 'read_only', 1);
@@ -37,21 +35,19 @@ frappe.ui.form.on("Activity", {
             });
         }
     },
-    is_private: function (frm) {
-        if (frm.doc.is_private) {
+    
+    is_private: function(frm) {
+        if (!frm.doc.is_private) {
+            frm.set_value('company', null);
+        }
+        else {
             frm.set_value('is_global', 0);
         }
     },
-    is_global: function (frm) {
-        if (frm.doc.is_global) {
+    
+    is_global: function(frm) {
+        if (frm.doc.is_private) {
             frm.set_value('is_private', 0);
-        }
-    },
-
-
-    is_private: function (frm) {
-        if (!frm.doc.is_private) {
-            frm.set_value('company', '');
         }
     },
 

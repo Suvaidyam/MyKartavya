@@ -1,8 +1,8 @@
 {
  "app": "mykartavya",
  "charts": [],
- "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Ngo\"}}]",
- "creation": "2025-02-19 13:42:01.745805",
+ "content": "[{\"type\":\"header\",\"data\":{\"text\":\"NGO\"}}]",
+ "creation": "2025-05-28 19:09:15.844090",
  "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
@@ -12,17 +12,17 @@
  "idx": 0,
  "indicator_color": "green",
  "is_hidden": 0,
- "label": "Ngo",
+ "label": "NGO",
  "link_to": "NGOs",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-03-25 17:52:51.594588",
+ "modified": "2025-05-28 19:40:58.684241",
  "modified_by": "Administrator",
  "module": "Mykartavya",
- "name": "Ngo",
+ "name": "NGO",
  "number_cards": [],
  "owner": "Administrator",
- "parent_page": "",
+ "parent_page": "Master",
  "public": 1,
  "quick_lists": [],
  "roles": [
@@ -33,8 +33,8 @@
    "role": "NGO Admin"
   }
  ],
- "sequence_id": 24.0,
+ "sequence_id": 3.0,
  "shortcuts": [],
- "title": "Ngo",
+ "title": "NGO",
  "type": "Link"
 }

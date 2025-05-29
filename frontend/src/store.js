@@ -1,15 +1,14 @@
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 
-const filters = ref({
-    sdgs: [],
-    volunteering_hours: '',
-    activity_type: [],
-    karma_points: ''
-});
-const req_for_approavl = ref(false)
-const refresh_step = ref(false);
 export const store = reactive({
-    filters: filters.value,
-    refresh_step: refresh_step.value,
-    req_for_approavl: req_for_approavl.value
+  filters: {
+    sdgs: [],
+    types: [],
+    volunteering_hours: '',
+    karma_points: '',
+    // activity_type: [],
+    // opportunity_type: []
+  },
+  req_for_approavl: false,
+  refresh_step: false,
 });

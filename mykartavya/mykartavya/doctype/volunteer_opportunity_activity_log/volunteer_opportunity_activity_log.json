@@ -1,0 +1,177 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:VOAL-{#####}",
+ "creation": "2025-04-24 15:28:34.935624",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "volunteer",
+  "opportunity_activity",
+  "opportunity",
+  "column_break_uoat",
+  "duration",
+  "com_percent",
+  "completion_wf_state",
+  "section_break_eeob",
+  "column_break_zxdk",
+  "images",
+  "section_break_totr",
+  "column_break_mhyw",
+  "volunteer_activity_log"
+ ],
+ "fields": [
+  {
+   "fieldname": "volunteer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Volunteer",
+   "options": "SVA User",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "opportunity_activity",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Opportunity Activity",
+   "options": "Opportunity Activity",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_uoat",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": " ",
+   "fieldname": "duration",
+   "fieldtype": "Duration",
+   "in_list_view": 1,
+   "label": "Duration",
+   "read_only": 1
+  },
+  {
+   "fieldname": "com_percent",
+   "fieldtype": "Float",
+   "label": "Completion Percent",
+   "precision": "1",
+   "read_only": 1
+  },
+  {
+   "fieldname": "completion_wf_state",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Completion Status",
+   "options": "Pending\nSubmitted\nApproved\nRejected",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_eeob",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_zxdk",
+   "fieldtype": "Column Break",
+   "read_only": 1
+  },
+  {
+   "fieldname": "images",
+   "fieldtype": "Table",
+   "label": "Images",
+   "options": "Activity Images"
+  },
+  {
+   "fieldname": "section_break_totr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_mhyw",
+   "fieldtype": "Column Break",
+   "read_only": 1
+  },
+  {
+   "fieldname": "volunteer_activity_log",
+   "fieldtype": "Table",
+   "label": "Volunteer Activity Log",
+   "options": "Volunteer Activity Log",
+   "read_only": 1
+  },
+  {
+   "fieldname": "opportunity",
+   "fieldtype": "Link",
+   "label": "Opportunity",
+   "options": "Opportunity"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "make_attachments_public": 1,
+ "modified": "2025-04-30 10:28:04.501202",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Volunteer Opportunity Activity Log",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "MyKartvya Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Company Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Volunteer",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "NGO Admin",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
