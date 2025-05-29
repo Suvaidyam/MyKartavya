@@ -2,43 +2,15 @@
  "app": "mykartavya",
  "charts": [
   {
-   "chart_name": "Overall Opportunities",
-   "label": "Overall Opportunities"
-  },
-  {
-   "chart_name": "Private Oppurtunities",
-   "label": "Private Oppurtunities"
-  },
-  {
    "chart_name": "Charts for hours Donated",
    "label": "Charts for hours Donated"
-  },
-  {
-   "chart_name": "Public Opportunities",
-   "label": "Public Opportunities"
-  },
-  {
-   "chart_name": "Activity status chart",
-   "label": "ACTIVITY STATUS CHART"
-  },
-  {
-   "chart_name": "Volunteer Registered Status chart",
-   "label": "VOLUNTEER REGISTED STATUS CHART"
-  },
-  {
-   "chart_name": "Private Activity status chart",
-   "label": "PRIVATE ACTIVITY STATUS CHART"
-  },
-  {
-   "chart_name": "Public Activiy Status Chart",
-   "label": "PUBLIC ACTIVITY STATUS CHART"
   },
   {
    "chart_name": "Chart for Amount Saved",
    "label": "Chart for Amount Saved"
   }
  ],
- "content": "[{\"id\":\"uNZvG-yuGY\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Dashboard</span>\",\"col\":12}},{\"id\":\"H6PFhd_-cu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"COMPANIES REGISTERED\",\"col\":6}},{\"id\":\"Zx_48P2ZOJ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"AMOUNT SAVED\",\"col\":6}},{\"id\":\"C6smjb0Pjt\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overall Opportunities\",\"col\":6}},{\"id\":\"xcZXaW3T9C\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Public Opportunities\",\"col\":6}},{\"id\":\"6LuHLWK5zb\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Overall Opportunities\",\"col\":6}},{\"id\":\"oBy7EZW02s\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Public Opportunities\",\"col\":6}},{\"id\":\"2-a5L0TF1w\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Private Opportunities\",\"col\":12}},{\"id\":\"g9xkaNAj0D\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Private Oppurtunities\",\"col\":12}},{\"id\":\"T-dg5rjgLb\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"OVER ALL ACTIVIES\",\"col\":6}},{\"id\":\"LyUBj8ZFKo\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"PRIVATE ACTIVITIES\",\"col\":6}},{\"id\":\"BXIR-epZXe\",\"type\":\"chart\",\"data\":{\"chart_name\":\"ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"W99NVoH3NB\",\"type\":\"chart\",\"data\":{\"chart_name\":\"PRIVATE ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"NPbvmjdzrR\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"PUBLIC ACTIVITIES\",\"col\":6}},{\"id\":\"2Ua9h9ajQX\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"VOLUNTEER REGISTERED\",\"col\":6}},{\"id\":\"rd9BZ0C6YN\",\"type\":\"chart\",\"data\":{\"chart_name\":\"PUBLIC ACTIVITY STATUS CHART\",\"col\":6}},{\"id\":\"jTuzwSgY2z\",\"type\":\"chart\",\"data\":{\"chart_name\":\"VOLUNTEER REGISTED STATUS CHART\",\"col\":6}},{\"id\":\"3O02SOOTrR\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Leadboard\",\"col\":6}},{\"id\":\"d0KmHKIR0v\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"SDG Details\",\"col\":6}},{\"id\":\"vgBw7kBkOR\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Charts for hours Donated\",\"col\":12}},{\"id\":\"0kyaj2SLp-\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Chart for Amount Saved\",\"col\":12}}]",
+ "content": "[{\"id\":\"uNZvG-yuGY\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Dashboard</span>\",\"col\":12}},{\"id\":\"H6PFhd_-cu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"COMPANIES REGISTERED\",\"col\":6}},{\"id\":\"Zx_48P2ZOJ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"AMOUNT SAVED\",\"col\":6}},{\"id\":\"1PapyRntOZ\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"brz6FoxTjv\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"SpK1UyM0-F\",\"type\":\"paragraph\",\"data\":{\"text\":\"Overall Opportunities\",\"col\":12}},{\"id\":\"cFlUMT8bt1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overall Total Opportunities\",\"col\":4}},{\"id\":\"-fJzR4-qQF\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overall Ongoing Opportunities\",\"col\":4}},{\"id\":\"Ckk0bLOzx7\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overall Closed Opportunities\",\"col\":4}},{\"id\":\"7Jo_JNe1hb\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overall Draft Opportunities\",\"col\":6}},{\"id\":\"r1bdTogBK-\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overall Publish Opportunities\",\"col\":6}},{\"id\":\"CW1yc6De2E\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"TdnuIJyXhV\",\"type\":\"paragraph\",\"data\":{\"text\":\"Public&nbsp;Opportunities\",\"col\":12}},{\"id\":\"EM0QodEiGR\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Public Opportunities\",\"col\":4}},{\"id\":\"G2Zxivhdo1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Ongoing Public Opportunities\",\"col\":4}},{\"id\":\"38W599yS0d\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Closed Public Opportunities\",\"col\":4}},{\"id\":\"2kppQMHelI\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Draft Public Opportunities\",\"col\":6}},{\"id\":\"WtgFFaYQnC\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Publish Private Opportunities\",\"col\":6}},{\"id\":\"ch4qK7AxnL\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"kzlwQ_ncUx\",\"type\":\"paragraph\",\"data\":{\"text\":\"Private&nbsp;Opportunities\",\"col\":12}},{\"id\":\"Hx9l1oryXj\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Private Opportunities\",\"col\":4}},{\"id\":\"YmMFi6uVZu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Ongoing Private Opportunities\",\"col\":4}},{\"id\":\"Q8wwtdITbO\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Closed Private Opportunities\",\"col\":4}},{\"id\":\"mvb6vHiNnv\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Draft Private Opportunities\",\"col\":6}},{\"id\":\"BthU8uIeIg\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Publish Private Opportunities\",\"col\":6}},{\"id\":\"HZVVwLO4IT\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"H2Hzqov_dN\",\"type\":\"paragraph\",\"data\":{\"text\":\"Overall Activities\",\"col\":12}},{\"id\":\"0OigjMPzg4\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Overall Activities\",\"col\":4}},{\"id\":\"PzM4XnUr6M\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Ongoing Overall Activities\",\"col\":4}},{\"id\":\"wG9TC3UYbC\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Closed Overall Activities\",\"col\":4}},{\"id\":\"7f0H_PLOmZ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Draft Overall Activities\",\"col\":6}},{\"id\":\"8lOKAl0JGk\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Publish Overall Activities\",\"col\":6}},{\"id\":\"44_ffcqZhP\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"dByFkXnQUG\",\"type\":\"paragraph\",\"data\":{\"text\":\"Public Activities\",\"col\":12}},{\"id\":\"vWgzxZq4Hd\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Public Activities\",\"col\":4}},{\"id\":\"kbc5mDnjjD\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Ongoing Public Activities\",\"col\":4}},{\"id\":\"7VtPATyV60\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Closed Public Activities\",\"col\":4}},{\"id\":\"Z28ngkz1BK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Draft Public Activities\",\"col\":6}},{\"id\":\"fzSVY_A54b\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Publish Public Activities\",\"col\":6}},{\"id\":\"Uh8D1_xM3l\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"Hmei0WdlGX\",\"type\":\"paragraph\",\"data\":{\"text\":\"Private Activities\",\"col\":12}},{\"id\":\"aT-ZFEsBIU\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Private Activities\",\"col\":4}},{\"id\":\"N5lXf3O_u0\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Ongoing Private Activities\",\"col\":4}},{\"id\":\"gOvF3YhNvt\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Closed Private Activities\",\"col\":4}},{\"id\":\"_jmBWNxZV9\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Draft Private Activities\",\"col\":6}},{\"id\":\"y0y7RNqGGy\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Publish Private Activities\",\"col\":6}},{\"id\":\"8AK9h_nETk\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"21IERQXUwi\",\"type\":\"paragraph\",\"data\":{\"text\":\"Volunteers Registered\",\"col\":12}},{\"id\":\"k0-3qc3eVs\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Volunteers Registered\",\"col\":3}},{\"id\":\"Ph0xalgCga\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Approved Volunteers \",\"col\":3}},{\"id\":\"JHFotpV-0a\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending Volunteers \",\"col\":3}},{\"id\":\"LD3sYj1VdZ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Rejected Volunteers \",\"col\":3}},{\"id\":\"joY88PnCC8\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"3O02SOOTrR\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Leadboard\",\"col\":6}},{\"id\":\"d0KmHKIR0v\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"SDG Details\",\"col\":6}},{\"id\":\"vgBw7kBkOR\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Charts for hours Donated\",\"col\":12}},{\"id\":\"0kyaj2SLp-\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Chart for Amount Saved\",\"col\":12}}]",
  "creation": "2025-03-11 13:11:04.885163",
  "custom_blocks": [
   {
@@ -61,46 +33,150 @@
  "label": "Dashboard",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-05-29 15:33:35.967091",
+ "modified": "2025-05-29 18:47:44.441250",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Dashboard",
  "number_cards": [
   {
-   "label": "Overall Opportunities",
-   "number_card_name": "Overall Opportunities"
+   "label": "Overall Total Opportunities",
+   "number_card_name": "Overall Total Opportunities"
   },
   {
-   "label": "Private Opportunities",
-   "number_card_name": "Private Opportunity"
+   "label": "Overall Ongoing Opportunities",
+   "number_card_name": "Overall Ongoing Opportunities"
   },
   {
-   "label": "PRIVATE ACTIVITIES",
-   "number_card_name": "Private Activities"
+   "label": "Overall Closed Opportunities",
+   "number_card_name": "Overall Closed Opportunities"
   },
   {
-   "label": "Public Opportunities",
-   "number_card_name": "Public Opportunity"
+   "label": "Overall Draft Opportunities",
+   "number_card_name": "Overall Draft Opportunities"
   },
   {
    "label": "COMPANIES REGISTERED",
    "number_card_name": "copanies registered"
   },
   {
-   "label": "OVER ALL ACTIVIES",
-   "number_card_name": "over-all activity"
+   "label": "Overall Publish Opportunities",
+   "number_card_name": "Overall Publish Opportunities"
   },
   {
-   "label": "VOLUNTEER REGISTERED",
-   "number_card_name": "Volunteers Registered"
+   "label": "Total Public Opportunities",
+   "number_card_name": "Total Public Opportunities"
+  },
+  {
+   "label": "Ongoing Public Opportunities",
+   "number_card_name": "Ongoing Public Opportunities"
+  },
+  {
+   "label": "Closed Public Opportunities",
+   "number_card_name": "Closed Public Opportunities"
   },
   {
    "label": "AMOUNT SAVED",
    "number_card_name": "Amount saved"
   },
   {
-   "label": "PUBLIC ACTIVITIES",
-   "number_card_name": "Public Activities"
+   "label": "Draft Public Opportunities",
+   "number_card_name": "Draft Public Opportunities"
+  },
+  {
+   "label": "Total Private Opportunities",
+   "number_card_name": "Total Private Opportunities"
+  },
+  {
+   "label": "Ongoing Private Opportunities",
+   "number_card_name": "Ongoing Private Opportunities"
+  },
+  {
+   "label": "Closed Private Opportunities",
+   "number_card_name": "Closed Private Opportunities"
+  },
+  {
+   "label": "Draft Private Opportunities",
+   "number_card_name": "Draft Private Opportunities"
+  },
+  {
+   "label": "Publish Private Opportunities",
+   "number_card_name": "Publish Private Opportunities"
+  },
+  {
+   "label": "Total Overall Activities",
+   "number_card_name": "Total Overall Activities"
+  },
+  {
+   "label": "Ongoing Overall Activities",
+   "number_card_name": "Ongoing Overall Activities"
+  },
+  {
+   "label": "Closed Overall Activities",
+   "number_card_name": "Closed Overall Activities"
+  },
+  {
+   "label": "Draft Overall Activities",
+   "number_card_name": "Draft Overall Activities"
+  },
+  {
+   "label": "Publish Overall Activities",
+   "number_card_name": "Publish Overall Activities"
+  },
+  {
+   "label": "Total Public Activities",
+   "number_card_name": "Total Public Activities"
+  },
+  {
+   "label": "Ongoing Public Activities",
+   "number_card_name": "Ongoing Public Activities"
+  },
+  {
+   "label": "Closed Public Activities",
+   "number_card_name": "Closed Public Activities"
+  },
+  {
+   "label": "Draft Public Activities",
+   "number_card_name": "Draft Public Activities"
+  },
+  {
+   "label": "Publish Public Activities",
+   "number_card_name": "Publish Public Activities"
+  },
+  {
+   "label": "Total Private Activities",
+   "number_card_name": "Total Private Activities"
+  },
+  {
+   "label": "Ongoing Private Activities",
+   "number_card_name": "Ongoing Private Activities"
+  },
+  {
+   "label": "Closed Private Activities",
+   "number_card_name": "Closed Private Activities"
+  },
+  {
+   "label": "Draft Private Activities",
+   "number_card_name": "Draft Private Activities"
+  },
+  {
+   "label": "Publish Private Activities",
+   "number_card_name": "Publish Private Activities"
+  },
+  {
+   "label": "Total Volunteers Registered",
+   "number_card_name": "Total Volunteers Registered"
+  },
+  {
+   "label": "Approved Volunteers ",
+   "number_card_name": "Approved Volunteers Registered"
+  },
+  {
+   "label": "Pending Volunteers ",
+   "number_card_name": "Pending Volunteers Registered"
+  },
+  {
+   "label": "Rejected Volunteers ",
+   "number_card_name": "Rejected Volunteers Registered"
   }
  ],
  "owner": "Administrator",
