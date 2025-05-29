@@ -143,44 +143,51 @@ frappe.ui.form.on("Opportunity", {
     refresh(frm) {
         let today = frappe.datetime.get_today();
         frm.set_df_property('publish_date', 'min_date', today);
-        formatted_today = new Date(today);
-        $(frm.fields_dict['publish_date'].$input).datepicker({
-            minDate: formatted_today
-        });
+        const formatted_today = new Date(today);
 
+        if (frm.fields_dict.publish_date?.$input) {
+            $(frm.fields_dict.publish_date.$input).datepicker({
+                minDate: formatted_today
+            });
+        }
 
         if (frm.doc.publish_date) {
             const minDate = frappe.datetime.add_days(frm.doc.publish_date, 1);
-
-            frm.fields_dict.application_deadline.datepicker.update({
-                minDate: frappe.datetime.str_to_obj(minDate)
-            });
+            if (frm.fields_dict.application_deadline?.datepicker) {
+                frm.fields_dict.application_deadline.datepicker.update({
+                    minDate: frappe.datetime.str_to_obj(minDate)
+                });
+            }
         }
 
         if (frm.doc.application_deadline) {
             const minDate = frappe.datetime.add_days(frm.doc.application_deadline, 1);
-
-            frm.fields_dict.start_date.datepicker.update({
-                minDate: frappe.datetime.str_to_obj(minDate)
-            });
+            if (frm.fields_dict.start_date?.datepicker) {
+                frm.fields_dict.start_date.datepicker.update({
+                    minDate: frappe.datetime.str_to_obj(minDate)
+                });
+            }
         }
 
         if (frm.doc.start_date) {
             const minEndDate = frappe.datetime.add_days(frm.doc.start_date, 1);
-
-            frm.fields_dict.end_date.datepicker.update({
-                minDate: frappe.datetime.str_to_obj(minEndDate)
-            });
+            if (frm.fields_dict.end_date?.datepicker) {
+                frm.fields_dict.end_date.datepicker.update({
+                    minDate: frappe.datetime.str_to_obj(minEndDate)
+                });
+            }
         }
 
         if (frm.doc.end_date) {
             const minDeadline = frappe.datetime.add_days(frm.doc.end_date, 1);
-
-            frm.fields_dict.reporting_deadline.datepicker.update({
-                minDate: frappe.datetime.str_to_obj(minDeadline)
-            });
+            if (frm.fields_dict.reporting_deadline?.datepicker) {
+                frm.fields_dict.reporting_deadline.datepicker.update({
+                    minDate: frappe.datetime.str_to_obj(minDeadline)
+                });
+            }
         }
     },
+
     activity_starts_on_published_date: function (frm) {
         if (frm.doc.activity_starts_on_published_date) {
             frm.set_value('application_deadline', null);
@@ -197,7 +204,7 @@ function update_total_vacancies(frm) {
     let vacancies = frm.doc.vacancies || 0;
     let buffer_vacancies = frm.doc.buffer_vacancies || 0;
     let total = vacancies + buffer_vacancies;
-    console.log(total,"===================================");
-    
+    console.log(total, "===================================");
+
     frm.set_value('total_vacancies', total);
 }
