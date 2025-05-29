@@ -106,7 +106,7 @@ class Activity(Document):
 
         if publish_date == today_date:
             self.status = "Published"
-            self.docstatus = 1
+            # self.docstatus = 1
         elif start_date == today_date:
             self.status = "Ongoing"
         elif end_date == today_date:

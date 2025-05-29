@@ -1,9 +1,11 @@
 # Copyright (c) 2025, Aniket Singh and contributors
 # For license information, please see license.txt
 
-# import frappe
+import frappe
 from frappe.model.document import Document
 
 
 class OpportunityActivity(Document):
-	pass
+	def after_insert(self):
+		if self.opportunity:
+			frappe.db.set_value("Opportunity", self.opportunity, "status", "Published")

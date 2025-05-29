@@ -16,13 +16,13 @@
  "link_to": "NGOs",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-05-28 19:40:58.684241",
+ "modified": "2025-05-29 18:47:56.802231",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "NGO",
  "number_cards": [],
  "owner": "Administrator",
- "parent_page": "Master",
+ "parent_page": "",
  "public": 1,
  "quick_lists": [],
  "roles": [
@@ -33,7 +33,7 @@
    "role": "NGO Admin"
   }
  ],
- "sequence_id": 3.0,
+ "sequence_id": 10.0,
  "shortcuts": [],
  "title": "NGO",
  "type": "Link"
