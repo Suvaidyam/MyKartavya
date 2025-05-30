@@ -10,17 +10,17 @@
  "idx": 0,
  "is_standard": "Yes",
  "letterhead": null,
- "modified": "2025-03-24 15:04:50.931113",
+ "modified": "2025-05-30 19:16:35.915205",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "\n\n\n\n\n\n\n",
+ "query": "SELECT \n    va.name,\n    u.full_name,\n    va.duration,\n    va.com_percent,\n    va.enrollment_wf_state,\n    va.completion_wf_state,\n    va.karma_points,\n    va.rating\nFROM `tabVolunteer Activity` AS va\nLEFT JOIN `tabSVA User` AS u ON u.name=va.volunteer",
  "ref_doctype": "Volunteer Activity",
  "reference_report": "",
  "report_name": "Volunteer Activity",
- "report_type": "Script Report",
+ "report_type": "Query Report",
  "roles": [
   {
    "role": "System Manager"

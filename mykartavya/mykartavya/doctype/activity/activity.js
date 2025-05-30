@@ -221,7 +221,13 @@ frappe.ui.form.on("Activity", {
     },
 
     refresh(frm) {
-
+        let report = document.createElement('div');
+        frm.set_df_property('volunteer_report', 'options', report);
+        frappe.require("volunteer_report.bundle.js").then(() => {
+            new frappe.ui.ActVolReport({
+                wrapper: report
+            });
+        })
         if (frm.doc.status === "Published") {
             frm.set_read_only();
             // frm.disable_save();
