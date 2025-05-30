@@ -25,7 +25,8 @@
     "report_ref_dt": null,
     "report_type": null,
     "template": "Tasks",
-    "title": null
+    "title": null,
+    "unfiltered": 0
    }
   ],
   "docstatus": 0,
@@ -62,7 +63,8 @@
     "report_ref_dt": null,
     "report_type": null,
     "template": "Tasks",
-    "title": null
+    "title": null,
+    "unfiltered": 0
    }
   ],
   "docstatus": 0,
@@ -99,7 +101,8 @@
     "report_ref_dt": null,
     "report_type": null,
     "template": "Tasks",
-    "title": null
+    "title": null,
+    "unfiltered": 0
    }
   ],
   "docstatus": 0,
@@ -136,7 +139,8 @@
     "report_ref_dt": null,
     "report_type": null,
     "template": "Tasks",
-    "title": null
+    "title": null,
+    "unfiltered": 0
    },
    {
     "action_label": "Approval",
@@ -153,19 +157,20 @@
     "link_doctype": "Volunteer Opportunity",
     "link_fieldname": "activity",
     "link_report": null,
-    "listview_settings": "[{\"fieldname\":\"volunteer\",\"label\":\"Volunteer\",\"width\":\"2\"},{\"fieldname\":\"activity\",\"label\":\"Opportunity\",\"width\":\"2\"},{\"fieldname\":\"enrollment_wf_state\",\"label\":\"Enrollment Status\",\"width\":\"2\"},{\"fieldname\":\"duration\",\"label\":\"Duration\",\"width\":\"2\"},{\"fieldname\":\"completion_wf_state\",\"label\":\"Completion Status\",\"width\":\"2\"}]",
+    "listview_settings": "[{\"fieldname\":\"volunteer\",\"label\":\"Volunteer\",\"width\":\"4\"},{\"fieldname\":\"enrollment_wf_state\",\"label\":\"Enrollment Status\",\"width\":\"3\"},{\"fieldname\":\"duration\",\"label\":\"Duration\",\"width\":\"2\"},{\"fieldname\":\"completion_wf_state\",\"label\":\"Completion Status\",\"width\":\"2\"},{\"fieldname\":\"action\",\"label\":\"Action\",\"width\":\"3\"},{\"fieldname\":\"com_percent\",\"label\":\"Completion Percent\",\"width\":\"2\"},{\"fieldname\":\"karma_points\",\"label\":\"Karma Points\",\"width\":\"2\"},{\"fieldname\":\"rating\",\"label\":\"Rating\",\"width\":\"2\"},{\"fieldname\":\"remarks\",\"label\":\"Remarks\",\"width\":\"3\"},{\"fieldname\":\"certificate\",\"label\":\"Certificate\",\"width\":\"4\"}]",
     "local_field": null,
     "redirect_to_main_form": 0,
     "referenced_link_doctype": null,
     "report_ref_dt": null,
     "report_type": null,
     "template": "Tasks",
-    "title": null
+    "title": null,
+    "unfiltered": 0
    }
   ],
   "docstatus": 0,
   "doctype": "SVADatatable Configuration",
-  "modified": "2025-05-29 13:26:29.602632",
+  "modified": "2025-05-30 11:09:22.628652",
   "name": "Opportunity",
   "number_cards": [],
   "parent_doctype": "Opportunity",
@@ -190,19 +195,20 @@
     "link_doctype": "Volunteer Activity",
     "link_fieldname": "activity",
     "link_report": null,
-    "listview_settings": "[{\"fieldname\":\"volunteer\",\"label\":\"Volunteer\",\"width\":\"5\"},{\"fieldname\":\"enrollment_wf_state\",\"label\":\"Enrollment Status\",\"width\":\"4\"},{\"fieldname\":\"duration\",\"label\":\"Duration\",\"width\":\"4\"},{\"fieldname\":\"completion_wf_state\",\"label\":\"Completion Status\",\"width\":\"4\"}]",
+    "listview_settings": "[{\"fieldname\":\"volunteer\",\"label\":\"Volunteer\",\"width\":\"5\"},{\"fieldname\":\"enrollment_wf_state\",\"label\":\"Enrollment Status\",\"width\":\"3\"},{\"fieldname\":\"duration\",\"label\":\"Duration\",\"width\":\"4\"},{\"fieldname\":\"completion_wf_state\",\"label\":\"Completion Status\",\"width\":\"3\"},{\"fieldname\":\"action\",\"label\":\"Action\",\"width\":\"2\"},{\"fieldname\":\"karma_points\",\"label\":\"Karma Points\",\"width\":\"2\"},{\"fieldname\":\"rating\",\"label\":\"Rating\",\"width\":\"2\"},{\"fieldname\":\"remarks\",\"label\":\"Remarks\",\"width\":\"2\"},{\"fieldname\":\"com_percent\",\"label\":\"Completion Percent\",\"width\":\"2\"},{\"fieldname\":\"certificate\",\"label\":\"Certificate\",\"width\":\"2\"}]",
     "local_field": null,
     "redirect_to_main_form": 0,
     "referenced_link_doctype": null,
     "report_ref_dt": null,
     "report_type": null,
     "template": "Tasks",
-    "title": null
+    "title": null,
+    "unfiltered": 0
    }
   ],
   "docstatus": 0,
   "doctype": "SVADatatable Configuration",
-  "modified": "2025-05-29 11:58:45.143730",
+  "modified": "2025-05-30 10:33:58.884823",
   "name": "Activity",
   "number_cards": [],
   "parent_doctype": "Activity",
