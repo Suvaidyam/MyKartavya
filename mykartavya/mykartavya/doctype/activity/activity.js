@@ -1,4 +1,78 @@
 frappe.ui.form.on("Activity", {
+    setup(frm) {
+        frm['dt_events'] = {
+            "Volunteer Activity": {
+                formatter:{
+                    action: function (element, column,row) {
+                        if (row.completion_wf_state === "Pending") {
+                            element.setAttribute('style','display:none;');
+                        }else{
+                            // if(row.completion_wf_state === "Submitted"){
+                            //     element.setAttribute('style','background-color:green;')
+                            // }
+                            // if(row.completion_wf_state === "Approved"){
+                            //     element.setAttribute('style','background-color:red;')
+                            // }
+                            // if(row.completion_wf_state === "Rejected"){
+                            //     element.setAttribute('style','background-color:green;')
+                            // }
+                        }
+                        return element
+                    },
+                    completion_wf_state: function (value,column, row) {
+                        if(value === "Pending") {
+                            return `<span class="badge text-muted" style="padding:5px;font-size:12px;">${__('Pending')}</span>`;
+                        }
+                        if(value === "Submitted") {
+                            return `<span class="badge badge-warning" style="padding:5px;font-size:12px;">${__('Submitted')}</span>`;
+                        }
+                        if(value === "Approved") {
+                            return `<span class="badge badge-success" style="padding:5px;font-size:12px;">${__('Approved')}</span>`;
+                        }
+                        if(value === "Rejected") {
+                            return `<span class="badge badge-danger" style="padding:5px;font-size:12px;">${__('Rejected')}</span>`;
+                        }
+                        return value;
+                    }
+                },
+                columnEvents: {
+                    action: {
+                        click: function (e, value, column, row) {
+                            let doc = row;
+                            let d = new frappe.ui.Dialog({
+                                title: __('Activity Action'),
+                                fields: [
+                                    {
+                                        fieldtype: 'Select',
+                                        label: __('Action'),
+                                        fieldname: 'action',
+                                        options: [
+                                            { label: __('Approve'), value: 'approve' },
+                                            { label: __('Reject'), value: 'reject' }
+                                        ],
+                                        reqd: 1
+                                    }
+                                ],
+                                primary_action_label: __('Submit'),
+                                primary_action: function (data) {
+                                    if (data.action === 'approve') {
+                                        frappe.db.set_value('Volunteer Activity', doc.name, 'completion_wf_state', 'Approved')
+                                    } else if (data.action === 'reject') {
+                                        frappe.db.set_value('Volunteer Activity', doc.name, 'completion_wf_state', 'Rejected')
+                                    }
+                                    if (frm?.sva_tables?.['Volunteer Activity']){
+                                        frm?.sva_tables?.['Volunteer Activity'].reloadTable();
+                                    }
+                                    d.hide();
+                                }
+                            });
+                            d.show()
+                        }
+                    }
+                }
+            }
+        }
+    },
     validate: function (frm) {
         if (frm.image_uploaded) {
             frappe.validated = false;

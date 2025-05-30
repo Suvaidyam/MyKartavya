@@ -14,6 +14,7 @@
   "duration",
   "com_percent",
   "completion_wf_state",
+  "action",
   "section_break_eeob",
   "column_break_zxdk",
   "karma_points",
@@ -147,12 +148,17 @@
    "label": "Opportunity Activity",
    "options": "Opportunity Activity",
    "read_only": 1
+  },
+  {
+   "fieldname": "action",
+   "fieldtype": "Button",
+   "label": "Action"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-05-29 13:33:31.238116",
+ "modified": "2025-05-29 19:20:40.192224",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",
