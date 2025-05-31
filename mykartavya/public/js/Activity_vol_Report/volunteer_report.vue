@@ -40,7 +40,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(volunteer, index) in volunteers" :key="volunteer.name || index">
-                        <td>{{ index + 1 }}</td>
+                        <td class="vol-index-cell" @click="RenderVolAct()" >{{ index + 1 }}</td>
                         <td class="bold">{{ volunteer.full_name }}</td>
                         <td>{{ formatDuration(volunteer.duration) }}</td>
                         <td>
@@ -59,8 +59,18 @@
                         </td>
                     </tr>
                     <tr v-if="volunteers.length === 0">
-                        <td colspan="8" class="empty-msg">No volunteer activities recorded.</td>
+                        <td colspan="8" class="empty-msg-cell">
+                            <div class="empty-msg-wrapper">
+                                <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M12 9v2m0 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
+                                </svg>
+                                <span class="empty-text">No records found.</span>
+                            </div>
+                        </td>
                     </tr>
+
                 </tbody>
             </table>
         </div>
@@ -72,23 +82,21 @@ import { ref, onMounted } from 'vue'
 
 const rotated = ref(false)
 const volunteers = ref([])
+const activity = ref([])
 
-const fetchData = async() => {
+const fetchData = async () => {
     rotated.value = !rotated.value
     await frappe.call({
         method: 'mykartavya.controllers.vol_act_report.get_volunteer_activity_report',
         args: {
-            activity:frappe.router.current_route[2]
+            activity: frappe.router.current_route[2]
         },
         callback: (r) => {
             volunteers.value = r.message || []
-            }
+            activity.value = r.message[0].name
+        }
     })
-
 }
-
-
-
 // Format seconds to HH:mm:ss
 const formatDuration = (seconds) => {
     if (!seconds || isNaN(seconds)) return '00:00:00'
@@ -139,7 +147,7 @@ function rejectActivity(doc) {
     )
 }
 
-const handleExport = async() => {
+const handleExport = async () => {
     if (volunteers.value.length === 0) {
         frappe.msgprint('No data to export.')
         return
@@ -192,6 +200,15 @@ const downloadCSV = (csvContent, filename) => {
     document.body.removeChild(link)
     URL.revokeObjectURL(url)
 }
+
+
+function RenderVolAct() {
+    if (activity.value) {
+        frappe.set_route('volunteer-activity',activity.value) 
+    } else {
+        frappe.msgprint('No activity selected.')
+    }
+}
 onMounted(() => {
     fetchData()
 })
@@ -217,15 +234,20 @@ onMounted(() => {
     font-weight: 600;
 }
 
-.flex { display: flex; }
-.gap-2 { gap: 0.5rem; }
+.flex {
+    display: flex;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
 
 .export-btn {
     background-color: #f4f4f4;
     color: #495057;
     font-size: 0.875rem;
     border-radius: 10px;
-    border:none;
+    border: none;
     cursor: pointer;
     transition: all 0.2s;
     padding: 0.3rem 0.75rem;
@@ -334,9 +356,9 @@ onMounted(() => {
     opacity: 0.5;
     cursor: not-allowed;
     font-size: 0.75rem;
-    color:white ;
+    color: white;
     padding: 4px 10px;
-    background-color:#6c757d ;
+    background-color: #6c757d;
 }
 
 .empty-msg {
@@ -346,5 +368,38 @@ onMounted(() => {
     font-style: italic;
 }
 
- 
+.empty-msg-cell {
+  padding: 40px 0;
+  text-align: center;
+  color: #6b7280; /* Tailwind's gray-500 */
+}
+
+.empty-msg-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-icon {
+  width: 32px;
+  height: 32px;
+  color: #9ca3af; /* Tailwind's gray-400 */
+  margin-bottom: 8px;
+}
+
+.empty-text {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.vol-index-cell {
+  cursor: pointer;
+  font-weight: 500;
+  text-align: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+
+
 </style>
