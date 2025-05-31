@@ -1,4 +1,4 @@
-frappe.dom.set_style("/* sfc-style:/workspace/development/frappe_docker/frappe-bench/apps/mykartavya/mykartavya/public/js/Activity_vol_Report/volunteer_report.vue?type=style&index=0 */\n.report-container[data-v-faa77af5] {\n  font-family: \"Inter\", sans-serif;\n  background: #fff;\n}\n.btnexport[data-v-faa77af5] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding-bottom: 1rem;\n  color: #333;\n}\n.btnexport p[data-v-faa77af5] {\n  margin: 0;\n  font-size: 1.25rem;\n  font-weight: 600;\n}\n.flex[data-v-faa77af5] {\n  display: flex;\n}\n.gap-2[data-v-faa77af5] {\n  gap: 0.5rem;\n}\n.export-btn[data-v-faa77af5] {\n  background-color: #f8f9fa;\n  color: #495057;\n  font-size: 0.875rem;\n  border: 1px solid #dee2e6;\n  border-radius: 6px;\n  cursor: pointer;\n  transition: all 0.2s;\n  padding: 0.3rem 1rem;\n  display: flex;\n  align-items: center;\n  gap: 0.5rem;\n}\n.export-btn[data-v-faa77af5]:hover {\n  background-color: #e9ecef;\n  border-color: #adb5bd;\n}\n.btn-icon[data-v-faa77af5] {\n  width: 16px;\n  height: 16px;\n}\n.table-wrapper[data-v-faa77af5] {\n  overflow-x: auto;\n  border-radius: 0.5rem;\n}\n.report-table[data-v-faa77af5] {\n  width: 100%;\n  border-collapse: collapse;\n  min-width: 900px;\n}\n.report-table th[data-v-faa77af5],\n.report-table td[data-v-faa77af5] {\n  padding: 0.5rem 1rem;\n  text-align: left;\n  font-size: 0.875rem;\n  border: 0.5px solid #dcdcdc;\n}\n.report-table thead[data-v-faa77af5] {\n  background-color: #f8f9fa;\n}\n.report-table th[data-v-faa77af5] {\n  font-weight: 500;\n  color: rgba(0, 0, 0, 0.8);\n  font-size: small;\n}\n.report-table td.bold[data-v-faa77af5] {\n  font-weight: 500;\n  font-size: small;\n}\n.status-badge[data-v-faa77af5] {\n  font-size: 0.75rem;\n  padding: 0.25rem 0.75rem;\n  border-radius: 999px;\n  display: inline-block;\n  font-weight: 500;\n  background-color: #66c37d;\n  color: white;\n}\n.status-completed[data-v-faa77af5] {\n  background-color: #d4edda;\n  color: #155724;\n}\n.status-rejected[data-v-faa77af5] {\n  background-color: #f8d7da;\n  color: #721c24;\n}\n.status-progress[data-v-faa77af5] {\n  background-color: #d1ecf1;\n  color: #0c5460;\n}\n.ellipsis[data-v-faa77af5] {\n  color: #6c757d;\n  font-size: 0.875rem;\n  font-style: normal;\n}\n.reject-btn[data-v-faa77af5] {\n  background-color: #e41328;\n  color: white;\n  font-size: 0.75rem;\n  padding: 2px 10px;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: all 0.2s;\n}\n.reject-btn[data-v-faa77af5]:hover:not(:disabled) {\n  background-color: #dc3545;\n  color: white;\n}\n.reject-btn[data-v-faa77af5]:disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n  color: white;\n  padding: 2px 10px;\n  background-color: #6c757d;\n}\n.empty-msg[data-v-faa77af5] {\n  text-align: center;\n  padding: 2rem;\n  color: #6c757d;\n  font-style: italic;\n}\n/*# sourceMappingURL=volunteer_report.bundle.YJSIH7BL.css.map */\n");
+frappe.dom.set_style("/* sfc-style:/workspace/development/frappe_docker/frappe-bench/apps/mykartavya/mykartavya/public/js/Activity_vol_Report/volunteer_report.vue?type=style&index=0 */\n.report-container[data-v-faa77af5] {\n  font-family: \"Inter\", sans-serif;\n  background: #fff;\n}\n.btnexport[data-v-faa77af5] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding-bottom: 1rem;\n  color: #333;\n}\n.btnexport p[data-v-faa77af5] {\n  margin: 0;\n  font-size: 1.25rem;\n  font-weight: 600;\n}\n.flex[data-v-faa77af5] {\n  display: flex;\n}\n.gap-2[data-v-faa77af5] {\n  gap: 0.5rem;\n}\n.export-btn[data-v-faa77af5] {\n  background-color: #f4f4f4;\n  color: #495057;\n  font-size: 0.875rem;\n  border-radius: 10px;\n  border: none;\n  cursor: pointer;\n  transition: all 0.2s;\n  padding: 0.3rem 0.75rem;\n  display: flex;\n  align-items: center;\n  gap: 0.5rem;\n}\n.btnexport p[data-v-faa77af5][data-v-faa77af5] {\n  margin: 0;\n  font-size: 1rem;\n  font-weight: 500;\n}\n.export-btn[data-v-faa77af5]:hover {\n  background-color: #e9ecef;\n  border-color: #adb5bd;\n}\n.btn-icon[data-v-faa77af5] {\n  width: 16px;\n  height: 16px;\n}\n.table-wrapper[data-v-faa77af5] {\n  overflow-x: auto;\n  border-radius: 0.5rem;\n}\n.report-table[data-v-faa77af5] {\n  width: 100%;\n  border-collapse: collapse;\n  min-width: 900px;\n}\n.report-table th[data-v-faa77af5],\n.report-table td[data-v-faa77af5] {\n  padding: 0.5rem 1rem;\n  text-align: left;\n  font-size: 0.875rem;\n  border: 0.5px solid #dcdcdc;\n}\n.report-table thead[data-v-faa77af5] {\n  background-color: #f8f9fa;\n}\n.report-table th[data-v-faa77af5] {\n  font-weight: 500;\n  color: rgba(0, 0, 0, 0.8);\n  font-size: small;\n}\n.report-table td.bold[data-v-faa77af5] {\n  font-weight: 500;\n  font-size: small;\n}\n.status-badge[data-v-faa77af5] {\n  font-size: 0.75rem;\n  padding: 0.25rem 0.75rem;\n  border-radius: 999px;\n  display: inline-block;\n  font-weight: 500;\n  background-color: #66c37d;\n  color: white;\n}\n.status-completed[data-v-faa77af5] {\n  background-color: #d4edda;\n  color: #155724;\n}\n.status-rejected[data-v-faa77af5] {\n  background-color: #f8d7da;\n  color: #721c24;\n}\n.status-progress[data-v-faa77af5] {\n  background-color: #d1ecf1;\n  color: #0c5460;\n}\n.ellipsis[data-v-faa77af5] {\n  color: #6c757d;\n  font-size: 0.875rem;\n  font-style: normal;\n}\n.reject-btn[data-v-faa77af5] {\n  background-color: #e41328;\n  color: white;\n  font-size: 0.75rem;\n  padding: 2px 10px;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: all 0.2s;\n}\n.reject-btn[data-v-faa77af5]:hover:not(:disabled) {\n  background-color: #dc3545;\n  color: white;\n}\n.reject-btn[data-v-faa77af5]:disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n  font-size: 0.75rem;\n  color: white;\n  padding: 4px 10px;\n  background-color: #6c757d;\n}\n.empty-msg[data-v-faa77af5] {\n  text-align: center;\n  padding: 2rem;\n  color: #6c757d;\n  font-style: italic;\n}\n/*# sourceMappingURL=volunteer_report.bundle.CPTUA7DX.css.map */\n");
 (() => {
   var __defProp = Object.defineProperty;
   var __defProps = Object.defineProperties;
@@ -12739,17 +12739,15 @@ Only state can be modified.`);
       __expose();
       const rotated = ref(false);
       const volunteers = ref([]);
-      const fetchData = () => {
+      const fetchData = async () => {
         rotated.value = !rotated.value;
-        frappe.call({
-          method: "frappe.desk.query_report.run",
+        await frappe.call({
+          method: "mykartavya.controllers.vol_act_report.get_volunteer_activity_report",
           args: {
-            report_name: "Volunteer Activity"
+            activity: frappe.router.current_route[2]
           },
           callback: (r) => {
-            var _a25, _b25;
-            console.log("r", (_a25 = r.message) == null ? void 0 : _a25.result);
-            volunteers.value = ((_b25 = r.message) == null ? void 0 : _b25.result) || [];
+            volunteers.value = r.message || [];
           }
         });
       };
@@ -12795,12 +12793,12 @@ Only state can be modified.`);
           }
         );
       }
-      const handleExport = () => {
+      const handleExport = async () => {
         if (volunteers.value.length === 0) {
           frappe.msgprint("No data to export.");
           return;
         }
-        frappe.call({
+        await frappe.call({
           method: "frappe.desk.query_report.run",
           args: {
             report_name: "Volunteer Activity",
@@ -13050,4 +13048,4 @@ Only state can be modified.`);
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/
-//# sourceMappingURL=volunteer_report.bundle.WJY6VHIE.js.map
+//# sourceMappingURL=volunteer_report.bundle.BYYQ4GLB.js.map

@@ -69,22 +69,25 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+
 const rotated = ref(false)
 const volunteers = ref([])
 
-const fetchData = () => {
+const fetchData = async() => {
     rotated.value = !rotated.value
-    frappe.call({
-        method: 'frappe.desk.query_report.run',
+    await frappe.call({
+        method: 'mykartavya.controllers.vol_act_report.get_volunteer_activity_report',
         args: {
-            report_name: 'Volunteer Activity',
+            activity:frappe.router.current_route[2]
         },
         callback: (r) => {
-            console.log('r', r.message?.result)
-            volunteers.value = r.message?.result || []
-        },
+            volunteers.value = r.message || []
+            }
     })
+
 }
+
+
 
 // Format seconds to HH:mm:ss
 const formatDuration = (seconds) => {
@@ -132,17 +135,17 @@ function rejectActivity(doc) {
                     console.error('Error rejecting activity:', err)
                     frappe.msgprint('Failed to update activity.')
                 })
-        }
+        },
     )
 }
 
-const handleExport = () => {
+const handleExport = async() => {
     if (volunteers.value.length === 0) {
         frappe.msgprint('No data to export.')
         return
     }
 
-    frappe.call({
+    await frappe.call({
         method: 'frappe.desk.query_report.run',
         args: {
             report_name: 'Volunteer Activity',
@@ -163,8 +166,6 @@ const handleExport = () => {
         }
     })
 }
-
-// Helper function to convert data to CSV
 const convertToCSV = (data, columns) => {
     const headers = columns.map(col => col.label || col.fieldname).join(',')
     const rows = data.map(row =>
@@ -220,17 +221,23 @@ onMounted(() => {
 .gap-2 { gap: 0.5rem; }
 
 .export-btn {
-    background-color: #f8f9fa;
+    background-color: #f4f4f4;
     color: #495057;
     font-size: 0.875rem;
-    border: 1px solid #dee2e6;
-    border-radius: 6px;
+    border-radius: 10px;
+    border:none;
     cursor: pointer;
     transition: all 0.2s;
-    padding: 0.3rem 1rem;
+    padding: 0.3rem 0.75rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+.btnexport p[data-v-faa77af5] {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 .export-btn:hover {
@@ -326,8 +333,9 @@ onMounted(() => {
 .reject-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    font-size: 0.75rem;
     color:white ;
-    padding: 2px 10px;
+    padding: 4px 10px;
     background-color:#6c757d ;
 }
 
