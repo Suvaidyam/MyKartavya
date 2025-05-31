@@ -1,0 +1,41 @@
+{
+ "app": "mykartavya",
+ "charts": [],
+ "content": "[{\"id\":\"dFQHMEih2E\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Activity Report\",\"col\":3}}]",
+ "creation": "2025-05-31 16:09:22.403386",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "file",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Activity Report",
+ "link_to": "Activity Report",
+ "link_type": "Report",
+ "links": [],
+ "modified": "2025-05-31 16:12:18.883653",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Activity Report",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "Report Master",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 23.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Activity Report",
+   "link_to": "Activity Report",
+   "type": "Report"
+  }
+ ],
+ "title": "Activity Report",
+ "type": "Workspace"
+}
