@@ -1,4 +1,4 @@
-frappe.dom.set_style("/* sfc-style:/workspace/development/frappe_docker/frappe-bench/apps/mykartavya/mykartavya/public/js/Activity_vol_Report/volunteer_report.vue?type=style&index=0 */\n.btnexport p[data-v-faa77af5][data-v-faa77af5] {\n  margin: 0;\n  font-size: 1rem;\n  font-weight: 500;\n}\n.dashboard-section .section-body[data-v-faa77af5] {\n  padding-top: 0 !important;\n}\n.report-container[data-v-faa77af5] {\n  font-family: \"Inter\", sans-serif;\n  background: #fff;\n}\n.btnexport[data-v-faa77af5] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding-bottom: 1rem;\n  color: #333;\n}\n.btnexport p[data-v-faa77af5] {\n  margin: 0;\n  font-size: 1.25rem;\n  font-weight: 600;\n}\n.flex[data-v-faa77af5] {\n  display: flex;\n}\n.gap-2[data-v-faa77af5] {\n  gap: 0.5rem;\n}\n.export-btn[data-v-faa77af5] {\n  background-color: #f8f9fa;\n  color: #495057;\n  font-size: 0.875rem;\n  border: 1px solid #dee2e6;\n  border-radius: 6px;\n  cursor: pointer;\n  transition: all 0.2s;\n  padding: 0.3rem 1rem;\n  display: flex;\n  align-items: center;\n  gap: 0.5rem;\n}\n.export-btn[data-v-faa77af5]:hover {\n  background-color: #e9ecef;\n  border-color: #adb5bd;\n}\n.btn-icon[data-v-faa77af5] {\n  width: 16px;\n  height: 16px;\n}\n.table-wrapper[data-v-faa77af5] {\n  overflow-x: auto;\n  border-radius: 0.5rem;\n}\ntable[data-v-faa77af5],\nth[data-v-faa77af5],\ntd[data-v-faa77af5] {\n  border: 0.5px solid #dcdcdc;\n  border-radius: 10px;\n}\n.report-table[data-v-faa77af5] {\n  width: 100%;\n  border-collapse: collapse;\n  min-width: 900px;\n}\n.report-table thead[data-v-faa77af5] {\n  background-color: #f8f9fa;\n  border-radius: 0.5rem;\n}\n.report-table th[data-v-faa77af5],\n.report-table td[data-v-faa77af5] {\n  padding: 0.50rem 1rem;\n  text-align: left;\n  font-size: 0.875rem;\n}\n.report-table th[data-v-faa77af5] {\n  font-weight: 500;\n  color: rgba(0, 0, 0, 0.801);\n  text-align: left;\n  font-size: small;\n}\n.report-table td[data-v-faa77af5] {\n  text-align: left;\n}\n.report-table td.bold[data-v-faa77af5] {\n  font-weight: 500;\n  text-align: left;\n  font-size: small;\n}\n.status-badge[data-v-faa77af5] {\n  font-size: 0.75rem;\n  padding: 0.25rem 0.75rem;\n  border-radius: 999px;\n  display: inline-block;\n  font-weight: 500;\n}\n.status-completed[data-v-faa77af5] {\n  background-color: #d4edda;\n  color: #155724;\n}\n.status-rejected[data-v-faa77af5] {\n  background-color: #f8d7da;\n  color: #721c24;\n}\n.status-progress[data-v-faa77af5] {\n  background-color: #d1ecf1;\n  color: #0c5460;\n}\n.status-badge[data-v-faa77af5]:not(.status-completed):not(.status-rejected):not(.status-progress) {\n  background-color: #66c37d;\n  color: white;\n}\n.ellipsis[data-v-faa77af5] {\n  color: #6c757d;\n  font-size: 0.875rem;\n  font-style: normal;\n}\n.action-btn[data-v-faa77af5] {\n  border: 1px solid #dc3545;\n  background-color: transparent;\n  color: #dc3545;\n  font-size: 0.75rem;\n  padding: 0.375rem 0.75rem;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: all 0.2s;\n}\n.action-btn[data-v-faa77af5],\n.frappe-control button.link-btn[data-v-faa77af5] {\n  padding: 3px 5px;\n  background-color: var(--fg-color);\n  margin: 95px 44px;\n}\n.action-btn[data-v-faa77af5]:hover:not(:disabled) {\n  background-color: #dc3545;\n  color: white;\n}\n.action-btn[data-v-faa77af5]:disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n  border-color: #6c757d;\n  color: #6c757d;\n}\n.empty-msg[data-v-faa77af5] {\n  text-align: center;\n  padding: 2rem;\n  color: #6c757d;\n  font-style: italic;\n}\n/*# sourceMappingURL=volunteer_report.bundle.PB3CZH5K.css.map */\n");
+frappe.dom.set_style("/* sfc-style:/workspace/development/frappe_docker/frappe-bench/apps/mykartavya/mykartavya/public/js/Activity_vol_Report/volunteer_report.vue?type=style&index=0 */\n.report-container[data-v-faa77af5] {\n  font-family: \"Inter\", sans-serif;\n  background: #fff;\n}\n.btnexport[data-v-faa77af5] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding-bottom: 1rem;\n  color: #333;\n}\n.btnexport p[data-v-faa77af5] {\n  margin: 0;\n  font-size: 1.25rem;\n  font-weight: 600;\n}\n.flex[data-v-faa77af5] {\n  display: flex;\n}\n.gap-2[data-v-faa77af5] {\n  gap: 0.5rem;\n}\n.export-btn[data-v-faa77af5] {\n  background-color: #f8f9fa;\n  color: #495057;\n  font-size: 0.875rem;\n  border: 1px solid #dee2e6;\n  border-radius: 6px;\n  cursor: pointer;\n  transition: all 0.2s;\n  padding: 0.3rem 1rem;\n  display: flex;\n  align-items: center;\n  gap: 0.5rem;\n}\n.export-btn[data-v-faa77af5]:hover {\n  background-color: #e9ecef;\n  border-color: #adb5bd;\n}\n.btn-icon[data-v-faa77af5] {\n  width: 16px;\n  height: 16px;\n}\n.table-wrapper[data-v-faa77af5] {\n  overflow-x: auto;\n  border-radius: 0.5rem;\n}\n.report-table[data-v-faa77af5] {\n  width: 100%;\n  border-collapse: collapse;\n  min-width: 900px;\n}\n.report-table th[data-v-faa77af5],\n.report-table td[data-v-faa77af5] {\n  padding: 0.5rem 1rem;\n  text-align: left;\n  font-size: 0.875rem;\n  border: 0.5px solid #dcdcdc;\n}\n.report-table thead[data-v-faa77af5] {\n  background-color: #f8f9fa;\n}\n.report-table th[data-v-faa77af5] {\n  font-weight: 500;\n  color: rgba(0, 0, 0, 0.8);\n  font-size: small;\n}\n.report-table td.bold[data-v-faa77af5] {\n  font-weight: 500;\n  font-size: small;\n}\n.status-badge[data-v-faa77af5] {\n  font-size: 0.75rem;\n  padding: 0.25rem 0.75rem;\n  border-radius: 999px;\n  display: inline-block;\n  font-weight: 500;\n  background-color: #66c37d;\n  color: white;\n}\n.status-completed[data-v-faa77af5] {\n  background-color: #d4edda;\n  color: #155724;\n}\n.status-rejected[data-v-faa77af5] {\n  background-color: #f8d7da;\n  color: #721c24;\n}\n.status-progress[data-v-faa77af5] {\n  background-color: #d1ecf1;\n  color: #0c5460;\n}\n.ellipsis[data-v-faa77af5] {\n  color: #6c757d;\n  font-size: 0.875rem;\n  font-style: normal;\n}\n.reject-btn[data-v-faa77af5] {\n  background-color: #e41328;\n  color: white;\n  font-size: 0.75rem;\n  padding: 2px 10px;\n  border-radius: 4px;\n  cursor: pointer;\n  transition: all 0.2s;\n}\n.reject-btn[data-v-faa77af5]:hover:not(:disabled) {\n  background-color: #dc3545;\n  color: white;\n}\n.reject-btn[data-v-faa77af5]:disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n  color: white;\n  padding: 2px 10px;\n  background-color: #6c757d;\n}\n.empty-msg[data-v-faa77af5] {\n  text-align: center;\n  padding: 2rem;\n  color: #6c757d;\n  font-style: italic;\n}\n/*# sourceMappingURL=volunteer_report.bundle.YJSIH7BL.css.map */\n");
 (() => {
   var __defProp = Object.defineProperty;
   var __defProps = Object.defineProperties;
@@ -12854,7 +12854,7 @@ Only state can be modified.`);
   var _withScopeId = (n) => (pushScopeId("data-v-faa77af5"), n = n(), popScopeId(), n);
   var _hoisted_1 = { class: "report-container" };
   var _hoisted_2 = { class: "btnexport" };
-  var _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("p", { class: "text-sm" }, "Volunteer Report", -1));
+  var _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("p", null, "Volunteer Report", -1));
   var _hoisted_4 = { class: "flex gap-2" };
   var _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("path", { d: "M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" }, null, -1));
   var _hoisted_6 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("path", { d: "M21 3v5h-5" }, null, -1));
@@ -12893,12 +12893,12 @@ Only state can be modified.`);
       /* @__PURE__ */ createBaseVNode("th", null, "Karma Points"),
       /* @__PURE__ */ createBaseVNode("th", null, "Rating"),
       /* @__PURE__ */ createBaseVNode("th", null, "Completion %"),
-      /* @__PURE__ */ createBaseVNode("th", null, "Action")
+      /* @__PURE__ */ createBaseVNode("th", { class: "flex justify-center" }, "Action")
     ])
   ], -1));
-  var _hoisted_14 = { class: "border" };
-  var _hoisted_15 = { class: "bold" };
-  var _hoisted_16 = { class: "ellipsis" };
+  var _hoisted_14 = { class: "bold" };
+  var _hoisted_15 = { class: "ellipsis" };
+  var _hoisted_16 = { class: "flex justify-center" };
   var _hoisted_17 = ["onClick", "disabled"];
   var _hoisted_18 = { key: 0 };
   var _hoisted_19 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("td", {
@@ -12944,8 +12944,8 @@ Only state can be modified.`);
               return openBlock(), createElementBlock("tr", {
                 key: volunteer.name || index
               }, [
-                createBaseVNode("td", _hoisted_14, toDisplayString(index + 1), 1),
-                createBaseVNode("td", _hoisted_15, toDisplayString(volunteer.full_name), 1),
+                createBaseVNode("td", null, toDisplayString(index + 1), 1),
+                createBaseVNode("td", _hoisted_14, toDisplayString(volunteer.full_name), 1),
                 createBaseVNode("td", null, toDisplayString($setup.formatDuration(volunteer.duration)), 1),
                 createBaseVNode("td", null, [
                   createBaseVNode("span", {
@@ -12955,11 +12955,11 @@ Only state can be modified.`);
                 createBaseVNode("td", null, toDisplayString(volunteer.karma_points), 1),
                 createBaseVNode("td", null, toDisplayString(volunteer.rating), 1),
                 createBaseVNode("td", null, [
-                  createBaseVNode("i", _hoisted_16, toDisplayString(volunteer.com_percent) + "%", 1)
+                  createBaseVNode("i", _hoisted_15, toDisplayString(volunteer.com_percent) + "%", 1)
                 ]),
-                createBaseVNode("td", null, [
+                createBaseVNode("td", _hoisted_16, [
                   createBaseVNode("button", {
-                    class: "action-btn",
+                    class: "reject-btn btn btn-danger",
                     onClick: ($event) => $setup.rejectActivity({ name: volunteer.name }),
                     disabled: volunteer.completion_wf_state === "Rejected"
                   }, " Reject ", 8, _hoisted_17)
@@ -13050,4 +13050,4 @@ Only state can be modified.`);
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/
-//# sourceMappingURL=volunteer_report.bundle.MTDN25OP.js.map
+//# sourceMappingURL=volunteer_report.bundle.WJY6VHIE.js.map

@@ -1,9 +1,8 @@
 <template>
     <div class="report-container">
-
         <!-- Export Button -->
         <div class="btnexport">
-            <p class="text-sm">Volunteer Report</p>
+            <p>Volunteer Report</p>
             <div class="flex gap-2">
                 <button class="export-btn" @click="fetchData">
                     <svg class="btn-icon transition-transform duration-500" :class="{ 'rotate-180': rotated }"
@@ -36,12 +35,12 @@
                         <th>Karma Points</th>
                         <th>Rating</th>
                         <th>Completion %</th>
-                        <th>Action</th>
+                        <th class="flex justify-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(volunteer, index) in volunteers" :key="volunteer.name || index">
-                        <td class="border">{{ index + 1 }}</td>
+                        <td>{{ index + 1 }}</td>
                         <td class="bold">{{ volunteer.full_name }}</td>
                         <td>{{ formatDuration(volunteer.duration) }}</td>
                         <td>
@@ -52,8 +51,8 @@
                         <td>{{ volunteer.karma_points }}</td>
                         <td>{{ volunteer.rating }}</td>
                         <td><i class="ellipsis">{{ volunteer.com_percent }}%</i></td>
-                        <td>
-                            <button class="action-btn" @click="rejectActivity({ name: volunteer.name })"
+                        <td class="flex justify-center">
+                            <button class="reject-btn btn btn-danger " @click="rejectActivity({ name: volunteer.name })"
                                 :disabled="volunteer.completion_wf_state === 'Rejected'">
                                 Reject
                             </button>
@@ -198,18 +197,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.btnexport p[data-v-faa77af5] {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 500;
-}
-
-.dashboard-section .section-body {
-    padding-top: 0 !important;
-}
-
- 
-
 .report-container {
     font-family: "Inter", sans-serif;
     background: #fff;
@@ -229,13 +216,8 @@ onMounted(() => {
     font-weight: 600;
 }
 
-.flex {
-    display: flex;
-}
-
-.gap-2 {
-    gap: 0.5rem;
-}
+.flex { display: flex; }
+.gap-2 { gap: 0.5rem; }
 
 .export-btn {
     background-color: #f8f9fa;
@@ -264,45 +246,34 @@ onMounted(() => {
 .table-wrapper {
     overflow-x: auto;
     border-radius: 0.5rem;
-    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); */
 }
 
-table, th, td {
-  border: 0.5px solid #dcdcdc ;
-  border-radius:10px ;
-}
 .report-table {
     width: 100%;
     border-collapse: collapse;
     min-width: 900px;
 }
 
-.report-table thead {
-    background-color: #f8f9fa;
-    border-radius:  0.5rem;
-}
-
 .report-table th,
 .report-table td {
-    padding: 0.50rem 1rem;
+    padding: 0.5rem 1rem;
     text-align: left;
     font-size: 0.875rem;
+    border: 0.5px solid #dcdcdc;
+}
+
+.report-table thead {
+    background-color: #f8f9fa;
 }
 
 .report-table th {
     font-weight: 500;
-    color: rgba(0, 0, 0, 0.801);
-    text-align: left;
+    color: rgba(0, 0, 0, 0.8);
     font-size: small;
-}
-
-.report-table td {
-    text-align: left;
 }
 
 .report-table td.bold {
     font-weight: 500;
-    text-align: left;
     font-size: small;
 }
 
@@ -312,6 +283,8 @@ table, th, td {
     border-radius: 999px;
     display: inline-block;
     font-weight: 500;
+    background-color: #66c37d;
+    color: white;
 }
 
 .status-completed {
@@ -329,45 +302,33 @@ table, th, td {
     color: #0c5460;
 }
 
-.status-badge:not(.status-completed):not(.status-rejected):not(.status-progress) {
-    background-color: #66c37d;
-    color: white;
-}
-
 .ellipsis {
     color: #6c757d;
     font-size: 0.875rem;
     font-style: normal;
 }
 
-.action-btn {
-    border: 1px solid #dc3545;
-    background-color: transparent;
-    color: #dc3545;
+.reject-btn {
+    background-color: #e41328;
+    color: white;
     font-size: 0.75rem;
-    padding: 0.375rem 0.75rem;
+    padding: 2px 10px;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s;
 }
 
-.action-btn,
-.frappe-control button.link-btn {
-    padding: 3px 5px;
-    background-color: var(--fg-color);
-    margin: 95px 44px;
-}
-
-.action-btn:hover:not(:disabled) {
+.reject-btn:hover:not(:disabled) {
     background-color: #dc3545;
     color: white;
 }
 
-.action-btn:disabled {
+.reject-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    border-color: #6c757d;
-    color: #6c757d;
+    color:white ;
+    padding: 2px 10px;
+    background-color:#6c757d ;
 }
 
 .empty-msg {
@@ -376,4 +337,6 @@ table, th, td {
     color: #6c757d;
     font-style: italic;
 }
+
+ 
 </style>
