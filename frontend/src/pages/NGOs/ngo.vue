@@ -16,8 +16,8 @@
         </div>
 
         <!-- Search & Filters -->
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="p-6 space-y-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="pt-20 pb-4 space-y-4">
                 <div class="flex flex-wrap gap-4 items-center">
                     <label class="font-semibold text-gray-700">Search by:</label>
 
@@ -102,7 +102,7 @@
                                     class="w-full px-3 py-1 border border-gray-300 rounded text-sm outline-none focus:border-blue-500" />
                             </div>
                             <ul class="max-h-48 overflow-auto">
-                                <li v-for="city in filteredCities" :key="city.id || city.district_name"
+                                <li v-for="city in filteredCities" :key="city.name || city.district_name"
                                     @click="selectCity(city)"
                                     class="px-4 py-2 hover:bg-red-500 hover:text-white cursor-pointer text-sm transition-colors">
                                     {{ city.district_name }}
@@ -146,14 +146,12 @@
                     </span>
                 </div>
             </div>
-
             <!-- Results Count -->
-            <div class="px-6 pb-4">
+            <div class=" pb-4">
                 <p class="text-sm text-gray-600">
                     Showing {{ filteredNGOs.length }} of {{ ngos.length }} NGOs
                 </p>
             </div>
-
             <!-- NGO Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-4">
                 <div v-for="ngo in filteredNGOs" :key="ngo.name"
@@ -163,7 +161,7 @@
 
                     <!-- Title -->
                     <h5 class="mb-3 text-lg font-semibold tracking-tight text-gray-900">
-                        Inclusive Divyangjan Entrepreneur Association (IDEA)
+                        {{ ngo.ngo_name }}
                     </h5>
 
                     <!-- Address -->
@@ -188,11 +186,14 @@
             </div>
         </div>
     </div>
+        <!-- Footer -->
+        <Footer />
 </template>
 
 <script setup>
 import { ref, computed, inject, watch, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import Footer from '@/components/Footer.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -395,7 +396,7 @@ const fetchStates = async () => {
 const fetchCities = async () => {
     if (!filters.value.state) return
     try {
-        const res = await call("mykartavya.controllers.api.city_data", {
+        const res = await call("mykartavya.controllers.api.cities_data", {
             state: filters.value.state
         })
         cities.value = res || []
