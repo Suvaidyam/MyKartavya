@@ -176,13 +176,12 @@ def subscribe_to_newsletter(email, email_group="Mykartavya"):
 
 @frappe.whitelist(allow_guest=True)
 def get_ngos_by_state():
-    # return 'Hello World'
     try:
         query = """
-            SELECT s.state_name, COUNT(n.name) AS total_ngos
+            SELECT s.state_name, s.state_code, COUNT(n.name) AS total_ngos
             FROM `tabNGOs` n
             JOIN `tabState` s ON n.state = s.state_code
-            GROUP BY s.state_name
+            GROUP BY s.state_name, s.state_code
             ORDER BY total_ngos DESC;
         """
         data = frappe.db.sql(query, as_dict=True)

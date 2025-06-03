@@ -3,7 +3,7 @@ from frappe import _
 
 
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def get_state():
     states = frappe.get_all("State", fields=["name", "state_name"], limit_page_length=200)
     state_name_map = {state["name"]: state["state_name"] for state in states}
@@ -39,7 +39,7 @@ def get_state():
 
 
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def get_ngos_by_state(state_name):
     if not state_name:
         return {"error": "State name is required"}
@@ -50,7 +50,7 @@ def get_ngos_by_state(state_name):
     )
     return ngos
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def ngo(name=None):
     filters = {}
     if name:
