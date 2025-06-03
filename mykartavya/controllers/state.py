@@ -1,8 +1,6 @@
 import frappe
 from frappe import _
 
-
-
 @frappe.whitelist(allow_guest=True)
 def get_state():
     states = frappe.get_all("State", fields=["name", "state_name"], limit_page_length=200)
@@ -59,9 +57,37 @@ def ngo(name=None):
     ngos = frappe.get_all(
         "NGOs", 
         filters=filters,
-        fields=["name", "ngo_name", "state", "email", "pincode", "location", "ngo_logo","description","address","website"]
+        fields=[
+            "name", "ngo_name", "state", "email", "pincode", "location", "ngo_logo",
+            "description", "address", "website",
+            "first_priority_goal", "second_priority_goal", "third_priority_goal"
+        ]
     )
+
+    for ngo in ngos:
+        # Get SDG images for all 3 priority goals
+        if ngo.get("first_priority_goal"):
+            ngo["first_priority_goal_image"] = frappe.get_value("SDG", ngo["first_priority_goal"], "sdg_image")
+        if ngo.get("second_priority_goal"):
+            ngo["second_priority_goal_image"] = frappe.get_value("SDG", ngo["second_priority_goal"], "sdg_image")
+        if ngo.get("third_priority_goal"):
+            ngo["third_priority_goal_image"] = frappe.get_value("SDG", ngo["third_priority_goal"], "sdg_image")
+
+        # ✅ Get activities where Activity.ngo == ngo.name
+        ngo["activities"] = frappe.get_all(
+            "Activity",
+            filters={"ngo": ngo["name"]},  
+            fields=["name","title","activity_type","start_date","end_date","karma_points","activity_image"],
+        )
+        ngo["opportunity"] = frappe.get_all(
+            "Opportunity",
+            filters={"ngo": ngo["name"]},  
+            fields=["name","opportunity_name","opportunity_type","start_date","end_date","karma_points","opportunity_image"],
+        )
     return ngos
+
+
+
 
 
 

@@ -1,7 +1,7 @@
 {
  "app": "mykartavya",
  "charts": [],
- "content": "[{\"id\":\"tEUvpBPS4l\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Volunteer\",\"col\":4}},{\"id\":\"mRWCSgezPQ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Volunteer Ngo\",\"col\":4}},{\"id\":\"EnWVsomjIp\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Volunteer Company\",\"col\":4}}]",
+ "content": "[{\"id\":\"tEUvpBPS4l\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Volunteer\",\"col\":4}},{\"id\":\"mRWCSgezPQ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Volunteer Ngo\",\"col\":4}},{\"id\":\"EnWVsomjIp\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Volunteer Company\",\"col\":4}},{\"id\":\"a8VZuZ-CAe\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Company Admin\",\"col\":4}}]",
  "creation": "2025-04-04 15:33:44.976476",
  "custom_blocks": [],
  "docstatus": 0,
@@ -15,11 +15,15 @@
  "label": "MyKartavya User",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-05-28 19:12:07.077078",
+ "modified": "2025-06-03 11:53:40.599415",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "MyKartavya User",
  "number_cards": [
+  {
+   "label": "Company Admin",
+   "number_card_name": "Company Admin"
+  },
   {
    "label": "Volunteer",
    "number_card_name": "Volunteer-1"
