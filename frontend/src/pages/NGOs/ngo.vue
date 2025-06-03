@@ -1,39 +1,36 @@
 <template>
-    <div class="min-h-screen bg-white">
+    <div class="min-h-screen bg-gray-50">
         <!-- Banner -->
-        <div class="relative text-white px-4 md:px-72 py-20 flex justify-between items-center mt-14"
-            style="background-image:url('https://prod-mkcmsapi.s3.ap-south-1.amazonaws.com/cms/images/Media-20200813160839/1366-300.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-            <div class="container">
-                <h1 class="text-4xl font-bold">NGOs</h1>
-                <div class="mt-2 flex items-center space-x-2 text-sm">
-                    <span class="flex items-center"><i class="fas fa-home mr-1"></i> Home</span>
-                    <span>/</span>
-                    <span>NGOs</span>
+        <div class="relative text-white px-4 md:px-8 lg:px-72 py-24 md:py-32 flex flex-col md:flex-row justify-between items-center mt-[50px] bg-cover bg-center bg-no-repeat"
+            style="background-image: url('https://prod-mkcmsapi.s3.ap-south-1.amazonaws.com/cms/images/Media-20200813160839/1366-300.png');">
+            <div class="container text-center md:text-left mb-6 md:mb-0">
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">NGOs</h1>
+                <div class="flex items-center justify-center md:justify-start space-x-2 text-sm">
                 </div>
             </div>
-            <img src="https://via.placeholder.com/300x200" alt="Banner Image"
-                class="rounded-lg hidden md:block h-40 object-cover" />
+
         </div>
 
         <!-- Search & Filters -->
-        <div class="max-w-6xl mx-auto">
-            <div class="pt-20 pb-4 space-y-4">
-                <div class="flex flex-wrap gap-4 items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="pt-12 md:pt-20 pb-4 space-y-6">
+                <div class="flex flex-wrap gap-4 items-center justify-center md:justify-start">
                     <label class="font-semibold text-gray-700">Search by:</label>
 
                     <!-- NGO Name Search -->
-                    <div class="flex items-center border rounded-lg px-3  bg-white shadow-sm">
+                    <div
+                        class="flex items-center border rounded-lg px-3 bg-white shadow-sm hover:shadow-md transition-shadow w-full md:w-auto">
                         <input v-model="filters.name" type="text" placeholder="NGO Name"
-                            class="border-none inputs border-white outline-none bg-transparent text-sm flex-1 min-w-[150px]" />
+                            class="border-none inputs border-white outline-none bg-transparent text-sm flex-1 min-w-[150px] py-2" />
                         <i class="fas fa-search text-gray-500 ml-2"></i>
                     </div>
 
                     <!-- Country Dropdown -->
-                    <div class="relative">
+                    <div class="relative w-full md:w-auto">
                         <div @click="toggleDropdown('country')"
-                            class="border border-gray-300 py-2 px-4 rounded-lg cursor-pointer bg-white shadow-sm min-w-[180px] flex justify-between items-center">
+                            class="border border-gray-300 py-2 px-4 rounded-lg cursor-pointer bg-white shadow-sm hover:shadow-md transition-shadow min-w-[180px] flex justify-between items-center">
                             <span class="text-sm">{{ selectedCountry || 'Select a country' }}</span>
-                            <i class="fas fa-chevron-down text-gray-500 text-xs"
+                            <i class="fas fa-chevron-down text-gray-500 text-xs transition-transform"
                                 :class="{ 'transform rotate-180': showDropdowns.country }"></i>
                         </div>
                         <div v-if="showDropdowns.country"
@@ -57,12 +54,12 @@
                     </div>
 
                     <!-- State Dropdown -->
-                    <div class="relative">
+                    <div class="relative w-full md:w-auto">
                         <div @click="toggleDropdown('state')"
-                            class="border border-gray-300 py-2 px-4 rounded-lg cursor-pointer bg-white shadow-sm min-w-[160px] flex justify-between items-center"
+                            class="border border-gray-300 py-2 px-4 rounded-lg cursor-pointer bg-white shadow-sm hover:shadow-md transition-shadow min-w-[160px] flex justify-between items-center"
                             :class="{ 'opacity-50 cursor-not-allowed': !selectedCountry }">
                             <span class="text-sm">{{ selectedState || 'Select a state' }}</span>
-                            <i class="fas fa-chevron-down text-gray-500 text-xs"
+                            <i class="fas fa-chevron-down text-gray-500 text-xs transition-transform"
                                 :class="{ 'transform rotate-180': showDropdowns.state }"></i>
                         </div>
                         <div v-if="showDropdowns.state && selectedCountry"
@@ -86,12 +83,12 @@
                     </div>
 
                     <!-- City Dropdown -->
-                    <div class="relative">
+                    <div class="relative w-full md:w-auto">
                         <div @click="toggleDropdown('city')"
-                            class="border border-gray-300 py-2 px-4 rounded-lg cursor-pointer bg-white shadow-sm min-w-[160px] flex justify-between items-center"
+                            class="border border-gray-300 py-2 px-4 rounded-lg cursor-pointer bg-white shadow-sm hover:shadow-md transition-shadow min-w-[160px] flex justify-between items-center"
                             :class="{ 'opacity-50 cursor-not-allowed': !selectedState }">
                             <span class="text-sm">{{ selectedCity || 'Select a city' }}</span>
-                            <i class="fas fa-chevron-down text-gray-500 text-xs"
+                            <i class="fas fa-chevron-down text-gray-500 text-xs transition-transform"
                                 :class="{ 'transform rotate-180': showDropdowns.city }"></i>
                         </div>
                         <div v-if="showDropdowns.city && selectedState"
@@ -113,16 +110,16 @@
                             </ul>
                         </div>
                     </div>
+
                     <!-- Clear Button -->
                     <button @click="clearFilters"
-                        class="px-4 py-2 border border-gray-300 rounded-lg text-sm bg-white hover:bg-gray-50 transition-colors shadow-sm">
+                        class="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg text-sm bg-white hover:bg-gray-50 transition-colors shadow-sm hover:shadow-md">
                         <i class="fas fa-times mr-1"></i> Clear
                     </button>
-
                 </div>
 
                 <!-- Active Filters Display -->
-                <div v-if="hasActiveFilters" class="flex flex-wrap gap-2 mt-4">
+                <div v-if="hasActiveFilters" class="flex flex-wrap gap-2 mt-4 justify-center md:justify-start">
                     <span class="text-sm text-gray-600">Active filters:</span>
                     <span v-if="filters.name"
                         class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs flex items-center">
@@ -146,38 +143,46 @@
                     </span>
                 </div>
             </div>
+
             <!-- Results Count -->
-            <div class=" pb-4">
+            <div class="pb-4 text-center md:text-left">
                 <p class="text-sm text-gray-600">
                     Showing {{ filteredNGOs.length }} of {{ ngos.length }} NGOs
                 </p>
             </div>
+
             <!-- NGO Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-4">
                 <div v-for="ngo in filteredNGOs" :key="ngo.name"
-                    class="max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow">
+                    class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                     <!-- Logo -->
-                    <img :src="ngo.ngo_logo" alt="DIVYANG INDIA Logo" class="h-16 mx-auto mb-3">
+                    <div class="p-4 bg-gray-50 flex justify-center">
+                        <img v-if="ngo.ngo_logo" :src="ngo.ngo_logo" alt="NGO Logo"
+                            class="h-16 w-16 object-contain rounded-full border-2 border-white shadow-sm">
+                    </div>
 
-                    <!-- Title -->
-                    <h5 class="mb-3 text-lg font-semibold tracking-tight text-gray-900">
-                        {{ ngo.ngo_name }}
-                    </h5>
+                    <!-- Content -->
+                    <div class="p-4">
+                        <!-- Title -->
+                        <h5 class="mb-3 text-lg font-semibold tracking-tight text-gray-900 line-clamp-2">
+                            {{ ngo.ngo_name }}
+                        </h5>
 
-                    <!-- Address -->
-                    <p class="mb-6 text-[14px] text-[#351e20]">
-                        <span class="inline-block mr-1">📍</span>
-                        SAKSHAM-IDEA office, Plot no4, Sector-19,<br>
-                        Opp Vardhaman Mall, Sector 10, Dwarka, New Delhi
-                    </p>
+                        <!-- Address -->
+                        <p class="mb-6 text-[14px] text-gray-600 line-clamp-2">
+                            <span class="inline-block mr-1">📍</span>
+                            {{ ngo.location }}
+                        </p>
 
-                    <!-- Button -->
-                    <button @click="navigateToNgoProfile(ngo)"
-                        class="px-4 py-2 text-white  bg-[#fe5726] rounded-sm hover:bg-red-600">
-                        Read more
-                    </button>
+                        <!-- Button -->
+                        <button @click="navigateToNgoProfile(ngo)"
+                            class="w-full px-4 py-2 text-white bg-[#fe5726] rounded-lg hover:bg-red-600 transition-colors shadow-sm hover:shadow-md">
+                            Read more
+                        </button>
+                    </div>
                 </div>
             </div>
+
             <!-- No Results Message -->
             <div v-if="filteredNGOs.length === 0" class="text-center py-12">
                 <i class="fas fa-search text-4xl text-gray-300 mb-4"></i>
@@ -186,8 +191,8 @@
             </div>
         </div>
     </div>
-        <!-- Footer -->
-        <Footer />
+    <!-- Footer -->
+    <Footer />
 </template>
 
 <script setup>
@@ -495,5 +500,31 @@ input:focus {
 /* Smooth transitions */
 * {
     transition: all 0.2s ease-in-out;
+}
+
+/* Line clamp for text overflow */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Responsive container padding */
+@media (max-width: 640px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* Card hover effects */
+.hover\:shadow-md:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Button hover effects */
+.hover\:bg-red-600:hover {
+    background-color: #dc2626;
 }
 </style>

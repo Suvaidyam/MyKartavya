@@ -1,6 +1,5 @@
 <template>
   <div v-if="!auth.isLoggedIn" class="flex space-x-4 justify-end px-6 sm:px-10 bg-[#FFBD9C] h-8 items-center w-full">
-    <FeatherIcon name="search" class="size-4 cursor-pointer text-gray-700" />
     <router-link v-if="route.fullPath.split('?')[0] != '/company-registration'" to="/company-registration"
       class="text-black font-normal text-xs">
       Register as Company
