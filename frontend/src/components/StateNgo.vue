@@ -17,18 +17,18 @@
                 </div>
 
                 <div class="state-list">
-                     <div class="flex justify-between items-center px-4 pt-2 border-b">
+                    <div class="flex justify-between items-center px-4 pt-2 border-b">
                         <p>State(s)</p>
                         <p>NGOs</p>
-                     </div>
+                    </div>
 
                     <div class="state-item" :class="{ active: selectedState === state.name }"
-                        v-for="state in filteredStates" :key="state.name" @click="selectState(state)">
-                        <div class="">
-                           
-                            <span class="state-name">{{ state.name }}</span>
+                        v-for="state in states" :key="state.name" @click="selectState(state)">
+                        <div>
+                            <span class="state-name">{{ state.state_name }}</span>
                         </div>
-                        <span class="ngo-count">{{ state.ngos }}</span>
+                        <span class="ngo-count" @click="navigateToVolunteerActivity(state)">{{ state.ngos }}</span>
+
                     </div>
                 </div>
             </div>
@@ -48,65 +48,34 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="state-details" :class="{ show: showDetails }">
-                    <h3>{{ selectedStateDetails.name || 'India' }}</h3>
-                    <p><strong>NGOs:</strong> {{ selectedStateDetails.ngos || totalNGOs }}</p>
-                    <p><strong>Focus Areas:</strong> {{ selectedStateDetails.focus || 'Education, Healthcare, Environment' }}</p>
-                </div>
-
-                <div class="development-note">
-                    For development purposes only
-                </div>
-
-                <div class="google-attribution">
-                    Map data ©2024 Google, INEGI | Terms
-                </div> -->
             </div>
         </div>
     </div>
-
-
 </template>
+
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, inject } from 'vue';
+const apiCall = inject('call');
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
 
 const searchQuery = ref('');
 const selectedState = ref('');
 const showDetails = ref(false);
 const selectedStateDetails = ref({});
 
-const states = [
-    { name: 'Uttar Pradesh', ngos: 66, focus: 'Education, Rural Development' },
-    { name: 'Gujarat', ngos: 38, focus: 'Environment, Women Empowerment' },
-    { name: 'Andhra Pradesh', ngos: 32, focus: 'Healthcare, Education' },
-    { name: 'Haryana', ngos: 28, focus: 'Agriculture, Youth Development' },
-    { name: 'Uttarakhand', ngos: 18, focus: 'Environment, Disaster Relief' },
-    { name: 'Himachal Pradesh', ngos: 10, focus: 'Tourism, Environment' },
-    { name: 'Jammu and Kashmir', ngos: 4, focus: 'Peace Building, Education' },
-    { name: 'Maharashtra', ngos: 45, focus: 'Urban Development, Healthcare' },
-    { name: 'Karnataka', ngos: 35, focus: 'Technology, Education' },
-    { name: 'Tamil Nadu', ngos: 42, focus: 'Healthcare, Women Rights' },
-    { name: 'West Bengal', ngos: 38, focus: 'Arts, Education' },
-    { name: 'Rajasthan', ngos: 29, focus: 'Water Conservation, Education' },
-    { name: 'Madhya Pradesh', ngos: 25, focus: 'Tribal Welfare, Environment' },
-    { name: 'Bihar', ngos: 22, focus: 'Education, Rural Development' },
-    { name: 'Odisha', ngos: 20, focus: 'Disaster Management, Tribal Welfare' }
-];
+const states = ref([]);
+const ngosByState = ref({});
 
-const totalNGOs = computed(() =>
-    states.reduce((sum, state) => sum + state.ngos, 0)
-);
-
-const filteredStates = computed(() => {
-    if (!searchQuery.value) return states;
-    return states.filter(state =>
-        state.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-    );
-});
+ 
 
 function selectState(state) {
     selectedState.value = state.name;
-    selectedStateDetails.value = state;
+    selectedStateDetails.value = {
+        ...state,
+        ngos: ngosByState.value[state.name] || []
+    };
     showDetails.value = true;
 }
 
@@ -119,14 +88,30 @@ function showMapInfo() {
     }, 3000);
 }
 
+function navigateToVolunteerActivity(state) {
+  router.push({
+    name: 'NgoProfile', // route name as defined in router/index.js
+    params: { name: state.name } // `:name` should match your route path
+  });
+}
+
+async function loadNGOData() {
+    try {
+        if (!apiCall) throw new Error('API call method not injected');
+        const response = await apiCall('mykartavya.controllers.state.get_state', {});
+        console.log('API Response:', response.states[0].name); // Add this for debugging
+        states.value = response.states;
+        console.log('States:', states.value); // Add this for debugging
+    } catch (error) {
+        console.error('Error loading NGO data:', error);
+        states.value = [];
+        ngosByState.value = {};
+    }
+}
 onMounted(() => {
-    // Auto-select first state for demo
-    setTimeout(() => {
-        selectState(states[0]);
-    }, 1000);
+    loadNGOData();
 });
 </script>
-
 <style>
 * {
     margin: 0;
@@ -215,6 +200,13 @@ body {
     font-weight: 600;
     min-width: 24px;
     text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ngo-count:hover {
+    background: #e55a2b;
+    transform: scale(1.05);
 }
 
 .map-container {
@@ -347,11 +339,12 @@ body {
     outline: none;
     border-color: #ff6b35;
 }
+
 .main {
     font-size: 24px;
     font-weight: 600;
     color: #333;
-    padding-left:95px;
+    padding-left: 320px;
 }
 
 @media (max-width: 768px) {
