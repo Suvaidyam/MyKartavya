@@ -317,6 +317,18 @@ def city_data(state):
     city = frappe.get_all("District", filters={"state": state}, fields=["*"])
     return city
 
+@frappe.whitelist(allow_guest=True)
+def cities_data(state):
+    if state:
+        # State table से ID निकालें
+        state_doc = frappe.get_value("State", {"state_name": state}, "name")
+        if state_doc:
+            city = frappe.get_all("District", filters={"state": state_doc}, fields=["*"])
+        else:
+            city = []
+    else:
+        city = []
+    return city
 
 @frappe.whitelist(allow_guest=True)
 def company_data():
