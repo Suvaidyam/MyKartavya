@@ -26,11 +26,9 @@
               </div>
 
               <div>
-                <label for="volunteer_type" class="block text-bodyh2 font-medium text-gray-700">Select Volunteer
-                  Type</label>
+                <label for="volunteer_type" class="block text-bodyh2 font-medium text-gray-700"> Filling the form as</label>
                 <select id="volunteer_type" v-model="formData.volunteer_type" :disabled="isSubmitting"
                   class="mt-1 block w-full px-3 py-2 border border-gray-300 text-bodyh2 rounded-sm shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 disabled:bg-gray-100">
-                  <option value="" disabled>Select your query type</option>
                   <option value="NGO">NGO</option>
                   <option value="Volunteer">Volunteer</option>
                   <option value="Corporate">Corporate</option>
