@@ -35,8 +35,6 @@ def get_state():
         "states": state_list
     }
 
-
-
 @frappe.whitelist(allow_guest=True)
 def get_ngos_by_state(state_name):
     if not state_name:
@@ -44,7 +42,7 @@ def get_ngos_by_state(state_name):
 
     ngos = frappe.get_all("NGOs", 
         filters={"state": state_name},
-        fields=["name", "ngo_name", "state", "email", "pincode", "location","ngo_logo"],
+        fields=["name", "ngo_name", "state","city", "email", "pincode", "location","ngo_logo"],
     )
     return ngos
 
