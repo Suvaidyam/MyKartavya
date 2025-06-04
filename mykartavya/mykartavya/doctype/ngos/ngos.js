@@ -25,7 +25,9 @@ frappe.ui.form.on("NGOs", {
         }
     },
     refresh(frm) {
-        frm.timeline.wrapper.hide();
+        if (frm.timeline && frm.timeline.wrapper) {
+            frm.timeline.wrapper.hide();
+        }
         $('.layout-side-section').hide();
         set_filters(frm);
     },

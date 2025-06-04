@@ -297,7 +297,7 @@ scheduler_events = {
 add_to_apps_screen = [
 	{
 		"name": "mykartavya",
-		"logo": "/assets/mykartavya/images/logo.png",
+		"logo": "/assets/mykartavya/frontend/images/logo.png",
 		"title": "Mykartavya",
 		"route": "/app/sva-user",
 	}

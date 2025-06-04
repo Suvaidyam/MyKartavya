@@ -1,0 +1,32 @@
+{
+ "chart_name": "Overall Opportunities",
+ "chart_type": "Report",
+ "creation": "2025-05-29 14:30:49.386645",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "modified": "2025-05-29 14:30:49.386645",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Overall Opportunities",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "report_name": "Overall Opportunities",
+ "roles": [],
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "status",
+ "y_axis": [
+  {
+   "y_field": "opportunity_count"
+  }
+ ]
+}

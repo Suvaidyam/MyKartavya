@@ -1,0 +1,37 @@
+{
+ "app": "mykartavya",
+ "charts": [],
+ "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Contact Us\"}}]",
+ "creation": "2025-06-03 17:05:59.566975",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "number-card",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Contact Us",
+ "link_to": "Contacts",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-06-03 17:06:54.057087",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Contact Us",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "Web User",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "MyKartvya Admin"
+  }
+ ],
+ "sequence_id": 26.0,
+ "shortcuts": [],
+ "title": "Contact Us",
+ "type": "Link"
+}
