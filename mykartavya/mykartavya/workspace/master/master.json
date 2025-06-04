@@ -9,13 +9,13 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "folder-normal",
- "idx": 5,
+ "idx": 11,
  "indicator_color": "green",
  "is_hidden": 0,
  "label": "Master",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-05-29 18:48:41.654478",
+ "modified": "2025-06-04 13:56:26.668668",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Master",
@@ -29,7 +29,7 @@
    "role": "MyKartvya Admin"
   }
  ],
- "sequence_id": 10.0,
+ "sequence_id": 8.0,
  "shortcuts": [],
  "title": "Master",
  "type": "Workspace"

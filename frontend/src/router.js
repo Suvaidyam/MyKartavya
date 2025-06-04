@@ -118,12 +118,6 @@ const routes = [
     meta: { requiresAuth: false }
   },
   {
-    name: 'NgoPage',
-    path: '/ngo-page',
-    component: () => import('./components/StateNgo.vue'),
-    meta: { requiresAuth: false }
-  },
-  {
     name: 'NgoProfile',
     path: '/ngo-profile/:name',
     component: () => import('@/pages/NGOs/ngo.vue'),
