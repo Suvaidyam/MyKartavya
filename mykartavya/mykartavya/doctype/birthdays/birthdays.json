@@ -1,0 +1,95 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "autoincrement",
+ "creation": "2025-06-04 12:03:59.758747",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "name1",
+  "mobile_number",
+  "column_break_cvrd",
+  "email_id",
+  "birth_date",
+  "section_break_ogix",
+  "choose_sdgs"
+ ],
+ "fields": [
+  {
+   "description": "Enter full name of the person",
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Name",
+   "reqd": 1
+  },
+  {
+   "description": "Enter valid email address",
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email ID",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "description": "Enter 10-digit mobile number",
+   "fieldname": "mobile_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Mobile Number",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "description": "Select birth date",
+   "fieldname": "birth_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Birth Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_cvrd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_ogix",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "Select relevant SDGs",
+   "fieldname": "choose_sdgs",
+   "fieldtype": "Table MultiSelect",
+   "label": "Choose SDG's",
+   "options": "SDGs Child"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-06-04 13:03:02.014900",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Birthdays",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
