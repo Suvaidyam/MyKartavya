@@ -604,3 +604,60 @@ def notify_admin_approval(volunteer):
     except Exception as e:
         frappe.log_error(frappe.get_traceback(), "notify_admin_approval Error")
         return {"status": "error", "message": str(e)}
+
+
+@frappe.whitelist(allow_guest=True)
+def get_sdg_list():
+    """Fetch list of SDGs for frontend display"""
+    try:
+        sdgs = frappe.get_all(
+            "SDG",
+            fields=['name', 'sdg'],
+            order_by='sdg ASC'
+        )
+        return {"success": True, "data": sdgs}
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), "Get SDG List API Error")
+        return {"success": False, "message": str(e)}
+
+@frappe.whitelist(allow_guest=True)
+def submit_birthday_details(data):
+    """Create a new Birthdays document from submitted form data"""
+    try:
+        # Ensure data is a dictionary
+        if not isinstance(data, dict):
+            frappe.throw("Invalid data format")
+
+        # Prepare child table data for SDGs
+        sdg_child_data = []
+        selected_sdgs = data.get('choose_sdgs', [])
+        if isinstance(selected_sdgs, list):
+            for sdg_name in selected_sdgs:
+                if sdg_name:
+                    sdg_child_data.append({
+                        "doctype": "SDGs Child",
+                        "sdgs": sdg_name # Link to the SDG DocType
+                    })
+        else:
+             frappe.log_warning(f"Expected list for choose_sdgs, but received {type(selected_sdgs)}", "SDG Data Format Warning")
+             # Optionally throw an error or handle appropriately if the format is strictly enforced
+
+        # Create a new Birthdays document
+        doc = frappe.get_doc({
+            "doctype": "Birthdays",
+            "name1": data.get('name1'), # Name
+            "email_id": data.get('email_id'), # Email ID
+            "mobile_number": data.get('mobile_number'), # Mobile Number
+            "birth_date": data.get('birth_date'), # Birth Date
+            "choose_sdgs": sdg_child_data # Assign the list of child documents
+        })
+
+        # Insert the document, ignoring permissions as requested
+        doc.insert(ignore_permissions=True)
+        frappe.db.commit()
+
+        return {"success": True, "message": "Birthday details submitted successfully!"}
+
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), "Submit Birthday Details API Error")
+        return {"success": False, "message": str(e)}
