@@ -16,6 +16,8 @@
   "section_break_eeob",
   "column_break_zxdk",
   "karma_points",
+  "column_break_ufvv",
+  "action",
   "section_break_totr",
   "column_break_mhyw",
   "certificate",
@@ -130,11 +132,21 @@
    "label": "Volunteer Opportunity Activity",
    "options": "Volunteer Opportunity Activity",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_ufvv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "action",
+   "fieldtype": "Button",
+   "label": "Action"
   }
  ],
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-05-01 17:19:28.215851",
+ "modified": "2025-05-30 10:14:57.986312",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Opportunity",

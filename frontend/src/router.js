@@ -117,6 +117,25 @@ const routes = [
     component: () => import('@/pages/Company  & Ngo Registration/CompanyRestation.vue'),
     meta: { requiresAuth: false }
   },
+  {
+    name: 'NgoPage',
+    path: '/ngo-page',
+    component: () => import('./components/StateNgo.vue'),
+    meta: { requiresAuth: false }
+  },
+  {
+    name: 'NgoProfile',
+    path: '/ngo-profile/:name',
+    component: () => import('@/pages/NGOs/ngo.vue'),
+    meta: { requiresAuth: false }
+  },
+  
+ {
+    name: 'Ngodetails',
+    path: '/ngo-details/:name',
+    component: () => import('@/pages/NGOs/ngodetails.vue'),
+    meta: { requiresAuth: false }
+  },
 ]
 
 const router = createRouter({

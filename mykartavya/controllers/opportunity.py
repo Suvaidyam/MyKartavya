@@ -131,7 +131,6 @@ class Opportunity:
             main_where_conditions = [
                 "opp.end_date >= CURRENT_DATE()",
                 "opp.status IN ('Published', 'Ongoing')",
-                "opp.docstatus = 1"
             ]
             
             # Combine all conditions

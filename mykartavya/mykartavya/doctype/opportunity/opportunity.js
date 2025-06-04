@@ -2,6 +2,80 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Opportunity", {
+        setup(frm) {
+        frm['dt_events'] = {
+            "Volunteer Opportunity": {
+                formatter:{
+                    action: function (element, column,row) {
+                        if (row.completion_wf_state === "Pending") {
+                            element.setAttribute('style','display:none;');
+                        }else{
+                            // if(row.completion_wf_state === "Submitted"){
+                            //     element.setAttribute('style','background-color:green;')
+                            // }
+                            // if(row.completion_wf_state === "Approved"){
+                            //     element.setAttribute('style','background-color:red;')
+                            // }
+                            // if(row.completion_wf_state === "Rejected"){
+                            //     element.setAttribute('style','background-color:green;')
+                            // }
+                        }
+                        return element
+                    },
+                    completion_wf_state: function (value,column, row) {
+                        if(value === "Pending") {
+                            return `<span class="badge text-muted" style="padding:5px;font-size:12px;">${__('Pending')}</span>`;
+                        }
+                        if(value === "Submitted") {
+                            return `<span class="badge badge-warning" style="padding:5px;font-size:12px;">${__('Submitted')}</span>`;
+                        }
+                        if(value === "Approved") {
+                            return `<span class="badge badge-success" style="padding:5px;font-size:12px;">${__('Approved')}</span>`;
+                        }
+                        if(value === "Rejected") {
+                            return `<span class="badge badge-danger" style="padding:5px;font-size:12px;">${__('Rejected')}</span>`;
+                        }
+                        return value;
+                    }
+                },
+                columnEvents: {
+                    action: {
+                        click: function (e, value, column, row) {
+                            let doc = row;
+                            let d = new frappe.ui.Dialog({
+                                title: __('Activity Action'),
+                                fields: [
+                                    {
+                                        fieldtype: 'Select',
+                                        label: __('Action'),
+                                        fieldname: 'action',
+                                        options: [
+                                            { label: __('Approve'), value: 'approve' },
+                                            { label: __('Reject'), value: 'reject' }
+                                        ],
+                                        reqd: 1
+                                    }
+                                ],
+                                primary_action_label: __('Submit'),
+                                primary_action: function (data) {
+                                    if (data.action === 'approve') {
+                                        frappe.db.set_value('Volunteer Opportunity', doc.name, 'completion_wf_state', 'Approved')
+                                    } else if (data.action === 'reject') {
+                                        frappe.db.set_value('Volunteer Opportunity', doc.name, 'completion_wf_state', 'Rejected')
+                                    }
+                                    if (frm?.sva_tables?.['Volunteer Opportunity']){
+                                        frm?.sva_tables?.['Volunteer Opportunity'].reloadTable();
+                                    }
+                                    d.hide();
+                                }
+                            });
+                            d.show()
+                        }
+                    }
+                }
+            }
+        }
+    },
 
     validate: function (frm) {
         if (frm.image_uploaded) {
@@ -16,23 +90,23 @@ frappe.ui.form.on("Opportunity", {
         }
     },
 
-    setup(frm) {
-        frm['dt_events'] = {
-            "Opportunity Activity": {
-                after_render: function (dt, mode) {
-                    let form = dt.form_dialog;
-                    let opportunity = form.get_value('opportunity');
-                    form.set_query('parent1', () => {
-                        return {
-                            filters: {
-                                'opportunity': opportunity || `Select opportunity`
-                            }
-                        }
-                    })
-                }
-            }
-        }
-    },
+    // setup(frm) {
+    //     frm['dt_events'] = {
+    //         "Opportunity Opportunity": {
+    //             after_render: function (dt, mode) {
+    //                 let form = dt.form_dialog;
+    //                 let opportunity = form.get_value('opportunity');
+    //                 form.set_query('parent1', () => {
+    //                     return {
+    //                         filters: {
+    //                             'opportunity': opportunity || `Select opportunity`
+    //                         }
+    //                     }
+    //                 })
+    //             }
+    //         }
+    //     }
+    // },
     is_private: function (frm) {
         if (!frm.doc.is_private) {
             frm.set_value('company', null);
@@ -141,46 +215,57 @@ frappe.ui.form.on("Opportunity", {
         }
     },
     refresh(frm) {
+        if (frm.doc.status === "Published") {
+            frm.set_read_only();
+            // frm.disable_save();
+        }
         let today = frappe.datetime.get_today();
         frm.set_df_property('publish_date', 'min_date', today);
-        formatted_today = new Date(today);
-        $(frm.fields_dict['publish_date'].$input).datepicker({
-            minDate: formatted_today
-        });
+        const formatted_today = new Date(today);
 
+        if (frm.fields_dict.publish_date?.$input) {
+            $(frm.fields_dict.publish_date.$input).datepicker({
+                minDate: formatted_today
+            });
+        }
 
         if (frm.doc.publish_date) {
             const minDate = frappe.datetime.add_days(frm.doc.publish_date, 1);
-
-            frm.fields_dict.application_deadline.datepicker.update({
-                minDate: frappe.datetime.str_to_obj(minDate)
-            });
+            if (frm.fields_dict.application_deadline?.datepicker) {
+                frm.fields_dict.application_deadline.datepicker.update({
+                    minDate: frappe.datetime.str_to_obj(minDate)
+                });
+            }
         }
 
         if (frm.doc.application_deadline) {
             const minDate = frappe.datetime.add_days(frm.doc.application_deadline, 1);
-
-            frm.fields_dict.start_date.datepicker.update({
-                minDate: frappe.datetime.str_to_obj(minDate)
-            });
+            if (frm.fields_dict.start_date?.datepicker) {
+                frm.fields_dict.start_date.datepicker.update({
+                    minDate: frappe.datetime.str_to_obj(minDate)
+                });
+            }
         }
 
         if (frm.doc.start_date) {
             const minEndDate = frappe.datetime.add_days(frm.doc.start_date, 1);
-
-            frm.fields_dict.end_date.datepicker.update({
-                minDate: frappe.datetime.str_to_obj(minEndDate)
-            });
+            if (frm.fields_dict.end_date?.datepicker) {
+                frm.fields_dict.end_date.datepicker.update({
+                    minDate: frappe.datetime.str_to_obj(minEndDate)
+                });
+            }
         }
 
         if (frm.doc.end_date) {
             const minDeadline = frappe.datetime.add_days(frm.doc.end_date, 1);
-
-            frm.fields_dict.reporting_deadline.datepicker.update({
-                minDate: frappe.datetime.str_to_obj(minDeadline)
-            });
+            if (frm.fields_dict.reporting_deadline?.datepicker) {
+                frm.fields_dict.reporting_deadline.datepicker.update({
+                    minDate: frappe.datetime.str_to_obj(minDeadline)
+                });
+            }
         }
     },
+
     activity_starts_on_published_date: function (frm) {
         if (frm.doc.activity_starts_on_published_date) {
             frm.set_value('application_deadline', null);
@@ -197,7 +282,7 @@ function update_total_vacancies(frm) {
     let vacancies = frm.doc.vacancies || 0;
     let buffer_vacancies = frm.doc.buffer_vacancies || 0;
     let total = vacancies + buffer_vacancies;
-    console.log(total,"===================================");
-    
+    console.log(total, "===================================");
+
     frm.set_value('total_vacancies', total);
 }

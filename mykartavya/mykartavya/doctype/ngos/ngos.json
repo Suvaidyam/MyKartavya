@@ -298,10 +298,11 @@
    "options": "<div style=\"min-height:20px;\"></div>"
   }
  ],
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-04-30 10:30:15.840998",
+ "modified": "2025-05-29 13:32:37.026738",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "NGOs",

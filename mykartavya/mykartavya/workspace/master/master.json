@@ -1,0 +1,36 @@
+{
+ "app": "mykartavya",
+ "charts": [],
+ "content": "[{\"id\":\"u2E9M9eQvj\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Master</span>\",\"col\":12}}]",
+ "creation": "2025-05-28 19:39:57.908134",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "folder-normal",
+ "idx": 5,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Master",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-05-29 18:48:41.654478",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Master",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "MyKartvya Admin"
+  }
+ ],
+ "sequence_id": 10.0,
+ "shortcuts": [],
+ "title": "Master",
+ "type": "Workspace"
+}
