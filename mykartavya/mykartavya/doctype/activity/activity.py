@@ -2,7 +2,8 @@ import frappe
 from frappe import _
 from frappe.model.document import Document
 from frappe.utils import getdate, today,get_datetime
-from datetime import time
+from frappe.utils import today
+from datetime import datetime
 
 class Activity(Document):
     def validate(self):
@@ -100,9 +101,27 @@ class Activity(Document):
             self.address = None
 
         today_date = today()
-        publish_date = self.publish_date.split(" ")[0] if self.publish_date else None
-        start_date = self.start_date.split(" ")[0] if self.start_date else None
-        end_date = self.end_date.split(" ")[0] if self.end_date else None
+        publish_date = (
+            self.publish_date.strftime("%Y-%m-%d")
+            if isinstance(self.publish_date, datetime)
+            else str(self.publish_date).split(" ")[0]
+            if self.publish_date else None
+        )
+
+        start_date = (
+            self.start_date.strftime("%Y-%m-%d")
+            if isinstance(self.start_date, datetime)
+            else str(self.start_date).split(" ")[0]
+            if self.start_date else None
+        )
+
+        end_date = (
+            self.end_date.strftime("%Y-%m-%d")
+            if isinstance(self.end_date, datetime)
+            else str(self.end_date).split(" ")[0]
+         if self.end_date else None
+         )
+
 
         if publish_date == today_date:
             self.status = "Published"

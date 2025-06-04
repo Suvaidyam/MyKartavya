@@ -15,7 +15,7 @@
  "label": "MyKartavya User",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-06-03 18:49:58.959919",
+ "modified": "2025-06-04 17:51:43.536092",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "MyKartavya User",
@@ -52,12 +52,6 @@
  "roles": [
   {
    "role": "MyKartvya Admin"
-  },
-  {
-   "role": "Company Admin"
-  },
-  {
-   "role": "NGO Admin"
   }
  ],
  "sequence_id": 2.0,

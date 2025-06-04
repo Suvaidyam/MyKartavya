@@ -8,7 +8,6 @@
                 <div class="flex items-center justify-center md:justify-start space-x-2 text-sm">
                 </div>
             </div>
-
         </div>
 
         <!-- Search & Filters -->
@@ -18,53 +17,22 @@
                     <label class="font-semibold text-gray-700">Search by:</label>
 
                     <!-- NGO Name Search -->
-                    <div
-                        class="flex items-center border rounded-lg px-3 bg-white shadow-sm hover:shadow-md transition-shadow w-full md:w-auto">
+                    <div class="flex items-center border rounded-lg px-3 bg-white shadow-sm hover:shadow-md transition-shadow w-full md:w-auto">
                         <input v-model="filters.name" type="text" placeholder="NGO Name"
                             class="border-none inputs border-white outline-none bg-transparent text-sm flex-1 min-w-[150px] py-2" />
                         <i class="fas fa-search text-gray-500 ml-2"></i>
                     </div>
-
-                    <!-- Country Dropdown -->
-                    <div class="relative w-full md:w-auto">
-                        <div @click="toggleDropdown('country')"
-                            class="border border-gray-300 py-2 px-4 rounded-lg cursor-pointer bg-white shadow-sm hover:shadow-md transition-shadow min-w-[180px] flex justify-between items-center">
-                            <span class="text-sm">{{ selectedCountry || 'Select a country' }}</span>
-                            <i class="fas fa-chevron-down text-gray-500 text-xs transition-transform"
-                                :class="{ 'transform rotate-180': showDropdowns.country }"></i>
-                        </div>
-                        <div v-if="showDropdowns.country"
-                            class="absolute top-full left-0 right-0 mt-1 border border-gray-300 bg-white rounded-lg shadow-lg z-20 max-h-60 overflow-hidden">
-                            <!-- Search input for countries -->
-                            <div class="p-2 border-b border-gray-200">
-                                <input v-model="searchTerms.country" type="text" placeholder="Search countries..."
-                                    class="w-full px-3 py-1 border border-gray-300 rounded text-sm outline-none focus:border-blue-500" />
-                            </div>
-                            <ul class="max-h-48 overflow-auto">
-                                <li v-for="country in filteredCountries" :key="country.id || country.name"
-                                    @click="selectCountry(country)"
-                                    class="px-4 py-2 hover:bg-red-500 hover:text-white cursor-pointer text-sm transition-colors">
-                                    {{ country.name }}
-                                </li>
-                                <li v-if="filteredCountries.length === 0" class="px-4 py-2 text-gray-500 text-sm">
-                                    No countries found
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
+                   
                     <!-- State Dropdown -->
-                    <div class="relative w-full md:w-auto">
+                    <!-- <div class="relative w-full md:w-auto">
                         <div @click="toggleDropdown('state')"
-                            class="border border-gray-300 py-2 px-4 rounded-lg cursor-pointer bg-white shadow-sm hover:shadow-md transition-shadow min-w-[160px] flex justify-between items-center"
-                            :class="{ 'opacity-50 cursor-not-allowed': !selectedCountry }">
+                            class="border border-gray-300 py-2 px-4 rounded-lg cursor-pointer bg-white shadow-sm hover:shadow-md transition-shadow min-w-[160px] flex justify-between items-center">
                             <span class="text-sm">{{ selectedState || 'Select a state' }}</span>
                             <i class="fas fa-chevron-down text-gray-500 text-xs transition-transform"
                                 :class="{ 'transform rotate-180': showDropdowns.state }"></i>
                         </div>
-                        <div v-if="showDropdowns.state && selectedCountry"
+                        <div v-if="showDropdowns.state"
                             class="absolute top-full left-0 right-0 mt-1 border border-gray-300 bg-white rounded-lg shadow-lg z-20 max-h-60 overflow-hidden">
-                            <!-- Search input for states -->
                             <div class="p-2 border-b border-gray-200">
                                 <input v-model="searchTerms.state" type="text" placeholder="Search states..."
                                     class="w-full px-3 py-1 border border-gray-300 rounded text-sm outline-none focus:border-blue-500" />
@@ -80,10 +48,10 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- City Dropdown -->
-                    <div class="relative w-full md:w-auto">
+                    <!-- <div class="relative w-full md:w-auto">
                         <div @click="toggleDropdown('city')"
                             class="border border-gray-300 py-2 px-4 rounded-lg cursor-pointer bg-white shadow-sm hover:shadow-md transition-shadow min-w-[160px] flex justify-between items-center"
                             :class="{ 'opacity-50 cursor-not-allowed': !selectedState }">
@@ -93,7 +61,6 @@
                         </div>
                         <div v-if="showDropdowns.city && selectedState"
                             class="absolute top-full left-0 right-0 mt-1 border border-gray-300 bg-white rounded-lg shadow-lg z-20 max-h-60 overflow-hidden">
-                            <!-- Search input for cities -->
                             <div class="p-2 border-b border-gray-200">
                                 <input v-model="searchTerms.city" type="text" placeholder="Search cities..."
                                     class="w-full px-3 py-1 border border-gray-300 rounded text-sm outline-none focus:border-blue-500" />
@@ -109,7 +76,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Clear Button -->
                     <button @click="clearFilters"
@@ -125,11 +92,6 @@
                         class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs flex items-center">
                         Name: {{ filters.name }}
                         <i @click="filters.name = ''" class="fas fa-times ml-1 cursor-pointer hover:text-blue-600"></i>
-                    </span>
-                    <span v-if="selectedCountry"
-                        class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs flex items-center">
-                        Country: {{ selectedCountry }}
-                        <i @click="clearCountry()" class="fas fa-times ml-1 cursor-pointer hover:text-green-600"></i>
                     </span>
                     <span v-if="selectedState"
                         class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs flex items-center">
@@ -150,28 +112,30 @@
                     Showing {{ filteredNGOs.length }} of {{ ngos.length }} NGOs
                 </p>
             </div>
-
             <!-- NGO Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-4">
-                <div v-for="ngo in filteredNGOs" :key="ngo.name"
+                <div v-for="ngo in filteredNGOs" :key="ngo.ngo_name || ngo.name"
                     class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                     <!-- Logo -->
                     <div class="p-4 bg-gray-50 flex justify-center">
                         <img v-if="ngo.ngo_logo" :src="ngo.ngo_logo" alt="NGO Logo"
                             class="h-16 w-16 object-contain rounded-full border-2 border-white shadow-sm">
+                        <div v-else class="h-16 w-16 bg-gray-200 rounded-full flex items-center justify-center">
+                            <i class="fas fa-building text-gray-400 text-xl"></i>
+                        </div>
                     </div>
 
                     <!-- Content -->
                     <div class="p-4">
                         <!-- Title -->
                         <h5 class="mb-3 text-lg font-semibold tracking-tight text-gray-900 line-clamp-2">
-                            {{ ngo.ngo_name }}
+                            {{ ngo.ngo_name || ngo.name }}
                         </h5>
 
                         <!-- Address -->
                         <p class="mb-6 text-[14px] text-gray-600 line-clamp-2">
                             <span class="inline-block mr-1">📍</span>
-                            {{ ngo.location }}
+                            {{ ngo.location || ngo.address || 'Address not available' }}
                         </p>
 
                         <!-- Button -->
@@ -182,7 +146,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <!-- No Results Message -->
             <div v-if="filteredNGOs.length === 0" class="text-center py-12">
                 <i class="fas fa-search text-4xl text-gray-300 mb-4"></i>
@@ -204,46 +168,36 @@ const route = useRoute()
 const router = useRouter()
 const call = inject('call')
 
+// Debug mode
+const debugMode = ref(false)
+
 // Filter states
 const filters = ref({
     name: '',
-    country: '',
     state: '',
     city: ''
 })
 
 // Selected values for display
-const selectedCountry = ref('')
 const selectedState = ref('')
 const selectedCity = ref('')
 
 // Dropdown states
 const showDropdowns = ref({
-    country: false,
     state: false,
     city: false
 })
 
 // Search terms for filtering options
 const searchTerms = ref({
-    country: '',
     state: '',
     city: ''
 })
 
 // Data arrays
-const countries = ref([])
 const states = ref([])
 const cities = ref([])
 const ngos = ref([])
-
-// Computed filtered arrays for dropdowns
-const filteredCountries = computed(() => {
-    if (!searchTerms.value.country) return countries.value
-    return countries.value.filter(country =>
-        country.name.toLowerCase().includes(searchTerms.value.country.toLowerCase())
-    )
-})
 
 const filteredStates = computed(() => {
     if (!searchTerms.value.state) return states.value
@@ -259,28 +213,34 @@ const filteredCities = computed(() => {
     )
 })
 
-// Computed filtered NGOs
+// Computed filtered NGOs - Fixed filtering logic
 const filteredNGOs = computed(() => {
     return ngos.value.filter((ngo) => {
+        // Name filter
         const matchName = !filters.value.name ||
-            ngo.name.toLowerCase().includes(filters.value.name.toLowerCase())
+            (ngo.ngo_name && ngo.ngo_name.toLowerCase().includes(filters.value.name.toLowerCase())) ||
+            (ngo.name && ngo.name.toLowerCase().includes(filters.value.name.toLowerCase()))
 
-        const matchCountry = !filters.value.country ||
-            (ngo.country && ngo.country.toLowerCase().includes(filters.value.country.toLowerCase()))
-
+        // State filter - check multiple possible fields
         const matchState = !filters.value.state ||
+            (ngo.state && ngo.state.toLowerCase().includes(filters.value.state.toLowerCase())) ||
+            (ngo.location && ngo.location.toLowerCase().includes(filters.value.state.toLowerCase())) ||
             (ngo.address && ngo.address.toLowerCase().includes(filters.value.state.toLowerCase()))
 
+        // City filter - check multiple possible fields
         const matchCity = !filters.value.city ||
+            (ngo.city && ngo.city.toLowerCase().includes(filters.value.city.toLowerCase())) ||
+            (ngo.district && ngo.district.toLowerCase().includes(filters.value.city.toLowerCase())) ||
+            (ngo.location && ngo.location.toLowerCase().includes(filters.value.city.toLowerCase())) ||
             (ngo.address && ngo.address.toLowerCase().includes(filters.value.city.toLowerCase()))
 
-        return matchName && matchCountry && matchState && matchCity
+        return matchName && matchState && matchCity
     })
 })
 
 // Check if there are active filters
 const hasActiveFilters = computed(() => {
-    return filters.value.name || selectedCountry.value || selectedState.value || selectedCity.value
+    return filters.value.name || selectedState.value || selectedCity.value
 })
 
 // Dropdown toggle function
@@ -294,18 +254,11 @@ function toggleDropdown(type) {
 
     // Toggle the clicked dropdown
     showDropdowns.value[type] = !showDropdowns.value[type]
-}
-
-// Selection functions
-function selectCountry(country) {
-    selectedCountry.value = country.name
-    filters.value.country = country.name
-    showDropdowns.value.country = false
-    searchTerms.value.country = ''
-
-    // Reset dependent dropdowns
-    clearState()
-    fetchStates()
+    
+    // Load states when state dropdown is opened
+    if (type === 'state' && showDropdowns.value.state && states.value.length === 0) {
+        fetchStates()
+    }
 }
 
 function selectState(state) {
@@ -327,16 +280,9 @@ function selectCity(city) {
 }
 
 // Clear functions
-function clearCountry() {
-    selectedCountry.value = ''
-    filters.value.country = ''
-    clearState()
-}
-
 function clearState() {
     selectedState.value = ''
     filters.value.state = ''
-    states.value = []
     clearCity()
 }
 
@@ -349,49 +295,33 @@ function clearCity() {
 function clearFilters() {
     filters.value = {
         name: '',
-        country: '',
         state: '',
         city: ''
     }
-    selectedCountry.value = ''
     selectedState.value = ''
     selectedCity.value = ''
-    states.value = []
     cities.value = []
 
     // Clear search terms
     searchTerms.value = {
-        country: '',
         state: '',
         city: ''
     }
 
     // Close all dropdowns
     showDropdowns.value = {
-        country: false,
         state: false,
         city: false
     }
 }
 
-// API calls
-const fetchCountries = async () => {
-    try {
-        const res = await call("mykartavya.controllers.api.country_data")
-        countries.value = res || []
-    } catch (error) {
-        console.error('Error fetching countries:', error)
-        countries.value = []
-    }
-}
-
+// API calls - Fixed to load states properly
 const fetchStates = async () => {
-    if (!filters.value.country) return
     try {
-        const res = await call("mykartavya.controllers.api.state_data", {
-            country: filters.value.country
-        })
+        console.log('Fetching states...')
+        const res = await call("mykartavya.controllers.api.states_data")
         states.value = res || []
+        console.log('States fetched:', states.value.length)
     } catch (error) {
         console.error('Error fetching states:', error)
         states.value = []
@@ -401,10 +331,12 @@ const fetchStates = async () => {
 const fetchCities = async () => {
     if (!filters.value.state) return
     try {
+        console.log('Fetching cities for state:', filters.value.state)
         const res = await call("mykartavya.controllers.api.cities_data", {
             state: filters.value.state
         })
         cities.value = res || []
+        console.log('Cities fetched:', cities.value.length)
     } catch (error) {
         console.error('Error fetching cities:', error)
         cities.value = []
@@ -413,14 +345,20 @@ const fetchCities = async () => {
 
 async function get_ngos() {
     try {
+        console.log('Fetching NGOs for state:', route?.params?.name)
         const response = await call('mykartavya.controllers.state.get_ngos_by_state', {
             state_name: route?.params?.name
         })
 
         if (response) {
-            console.log('Response from get_ngos_by_state:', response)
+            console.log('NGOs fetched successfully:', response.length)
             ngos.value = response
-            console.log('NGOs fetched successfully:', ngos.value)
+            
+            // If we have a route param, set it as the selected state
+            if (route?.params?.name) {
+                selectedState.value = route.params.name
+                filters.value.state = route.params.name
+            }
         }
     } catch (err) {
         console.error('Error fetching NGOs:', err)
@@ -431,7 +369,7 @@ async function get_ngos() {
 const navigateToNgoProfile = (ngo) => {
     router.push({
         name: 'Ngodetails',
-        params: { name: ngo.name }
+        params: { name: ngo.ngo_name || ngo.name }
     })
 }
 
@@ -448,17 +386,25 @@ function handleClickOutside(event) {
 
     if (!clickedInside) {
         showDropdowns.value = {
-            country: false,
             state: false,
             city: false
         }
     }
 }
 
+// Watch for route changes
+watch(() => route.params.name, (newStateName) => {
+    if (newStateName) {
+        selectedState.value = newStateName
+        filters.value.state = newStateName
+        get_ngos()
+    }
+})
+
 // Lifecycle hooks
 onMounted(() => {
     get_ngos()
-    fetchCountries()
+    fetchStates()
     document.addEventListener('click', handleClickOutside)
 })
 
