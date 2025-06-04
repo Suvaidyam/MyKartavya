@@ -297,13 +297,11 @@ scheduler_events = {
 add_to_apps_screen = [
 	{
 		"name": "mykartavya",
-		"logo": "/assets/mykartavya/frontend/images/logo.png",
+		"logo": "/assets/mykartavya/images/logo.png",
 		"title": "Mykartavya",
 		"route": "/app/sva-user",
 	}
 ]
-
-
 
 website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'}, {'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'},]
 
