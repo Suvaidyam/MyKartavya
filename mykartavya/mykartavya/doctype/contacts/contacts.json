@@ -64,9 +64,10 @@
   }
  ],
  "grid_page_length": 50,
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-03 19:03:38.009172",
+ "modified": "2025-06-04 13:45:54.568442",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Contacts",
