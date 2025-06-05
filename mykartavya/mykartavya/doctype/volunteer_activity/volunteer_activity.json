@@ -18,6 +18,7 @@
   "section_break_eeob",
   "column_break_zxdk",
   "karma_points",
+  "work_value_in_rupees",
   "images",
   "section_break_totr",
   "column_break_mhyw",
@@ -59,8 +60,7 @@
    "fieldname": "duration",
    "fieldtype": "Duration",
    "in_list_view": 1,
-   "label": "Duration",
-   "read_only": 1
+   "label": "Duration"
   },
   {
    "fieldname": "completion_wf_state",
@@ -153,12 +153,19 @@
    "fieldname": "action",
    "fieldtype": "Button",
    "label": "Action"
+  },
+  {
+   "fieldname": "work_value_in_rupees",
+   "fieldtype": "Int",
+   "label": "Work Value (In Rupees)",
+   "non_negative": 1,
+   "read_only": 1
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-05-29 19:20:40.192224",
+ "modified": "2025-06-05 17:19:31.453583",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",

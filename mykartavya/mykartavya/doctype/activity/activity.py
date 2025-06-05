@@ -93,6 +93,7 @@ class Activity(Document):
                 frappe.throw(_("Selected Company does not exist"))
             
     def before_save(self):
+        self.check_auto_approval()
         # Handle location fields based on is_global
         if self.is_global:
             self.country = None
@@ -157,3 +158,23 @@ class Activity(Document):
                     if file_extension not in allowed_extensions:
                         allowed_types = ", ".join(allowed_extensions).upper()
                         frappe.throw(f"Invalid file type for {field.replace('_', ' ').title()}. Allowed types: {allowed_types}.")
+
+    def check_auto_approval(self):
+        try:
+            sva_user = frappe.db.get_value(
+                'SVA User',
+                {'email': frappe.session.user},
+                ['role_profile'],
+                as_dict=True
+            )
+            print(f"SVA User: {sva_user}")
+            print(f"Current user: {frappe.session.user}")
+            
+            if sva_user and sva_user.role_profile == 'MyKartvya Admin':
+                print("Auto approving - MyKartvya Admin found")
+                self.db_set("workflow_state", "Approved", update_modified=False, ignore_permissions=True)
+            else:
+                print("Not auto approving - condition not met")
+                
+        except Exception as e:
+            frappe.log_error(f"Auto approval error: {str(e)}")

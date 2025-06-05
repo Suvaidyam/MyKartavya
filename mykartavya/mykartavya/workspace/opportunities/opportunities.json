@@ -16,7 +16,7 @@
  "link_to": "Opportunity",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-05-28 19:54:51.107308",
+ "modified": "2025-06-05 16:00:36.660715",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunities",
@@ -38,5 +38,5 @@
  "sequence_id": 6.0,
  "shortcuts": [],
  "title": "Opportunities",
- "type": "Workspace"
+ "type": "Link"
 }

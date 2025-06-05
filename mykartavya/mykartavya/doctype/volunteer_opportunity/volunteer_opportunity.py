@@ -48,14 +48,19 @@ class VolunteerOpportunity(Document):
 					# Get activity document and set karma points
 					activity = frappe.get_doc("Opportunity", self.activity)
 					self.karma_points = activity.karma_points
+					self.work_value_in_rupees = activity.work_value_points
 					frappe.db.set_value("Volunteer Opportunity", self.name, "karma_points", self.karma_points)
+					frappe.db.set_value("Volunteer Opportunity", self.name, "work_value_in_rupees", self.work_value_in_rupees)
 				except Exception as e:
 					frappe.log_error(f"Error setting karma points: {str(e)}")
 					# Don't throw error, just log it
 			elif self.completion_wf_state == "Rejected" and self.karma_points:
 				# Reset karma points if completion is rejected
 				self.karma_points = 0
+				self.work_value_in_rupees=0
 				frappe.db.set_value("Volunteer Opportunity", self.name, "karma_points", 0)
+				frappe.db.set_value("Volunteer Opportunity", self.name, "work_value_in_rupees", self.work_value_in_rupees)
+
 			
 			# Existing logic for updating workflow state
 			try:
