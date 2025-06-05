@@ -6,47 +6,164 @@ from frappe import _
 
 
 def execute(filters: dict | None = None):
-	"""Return columns and data for the report.
-
-	This is the main entry point for the report. It accepts the filters as a
-	dictionary and should return columns and data. It is called by the framework
-	every time the report is refreshed or a filter is updated.
-	"""
 	columns = get_columns()
-	data = get_data()
-
+	data = get_data(filters)
 	return columns, data
 
 
 def get_columns() -> list[dict]:
-	"""Return columns for the report.
-
-	One field definition per column, just like a DocType field definition.
-	"""
+	"""Return columns for the report."""
 	return [
+		# {
+		# 	"label": _("Activity Name"),
+		# 	"fieldname": "name",
+		# 	"fieldtype": "Link",
+		# 	"options": "Volunteer Activity",
+		# 	"width": 150
+		# },
+		# {
+		# 	"label": _("Volunteer Name"),
+		# 	"fieldname": "full_name",
+		# 	"fieldtype": "Data",
+		# 	"width": 200
+		# },
+		# {
+		# 	"label": _("Activity"),
+		# 	"fieldname": "activity",
+		# 	"fieldtype": "Data",
+		# 	"width": 150
+		# },
 		{
-			"label": _("Activity"),
-			"fieldname": "activity",
-			"fieldtype": "Data",
-		},
-		{
-			"label": _("Work Value (Rupees)"),
-			"fieldname": "work_value",
+			"label": _("Activity Work Value"),
+			"fieldname": "activity_work_value",
 			"fieldtype": "Currency",
+			"width": 200
 		},
+		{
+			"label": _("Opportunity Work Value"),
+			"fieldname": "opportunity_work_value",
+			"fieldtype": "Currency",
+			"width": 200
+		},
+		{
+			"label": _("Combined Value"),
+			"fieldname": "combined_value",
+			"fieldtype": "Currency",
+			"width": 200
+		},
+		# {
+		# 	"label": _("Com %"),
+		# 	"fieldname": "com_percent",
+		# 	"fieldtype": "Percent",
+		# 	"width": 100
+		# },
+		# {
+		# 	"label": _("Enrollment Status"),
+		# 	"fieldname": "enrollment_wf_state",
+		# 	"fieldtype": "Data",
+		# 	"width": 120
+		# },
+		# {
+		# 	"label": _("Completion Status"),
+		# 	"fieldname": "completion_wf_state",
+		# 	"fieldtype": "Data",
+		# 	"width": 120
+		# },
+		# {
+		# 	"label": _("Karma Points"),
+		# 	"fieldname": "karma_points",
+		# 	"fieldtype": "Int",
+		# 	"width": 100
+		# },
+		# {
+		# 	"label": _("Rating"),
+		# 	"fieldname": "rating",
+		# 	"fieldtype": "Rating",
+		# 	"width": 150
+		# }
 	]
 
 
-def get_data() -> list[list]:
-	# u1=frappe.get_doc("SVA User",'USER-25-0009')
-	user = frappe.session.user
-	user_name=frappe.db.get_value("SVA User", {"email": user}, "name")
+def get_data(filters=None) -> list[dict]:
+	"""Fetch data combining Volunteer Activity and Volunteer Opportunity"""
+
+	if not filters:
+		filters = {}
+
+	volunteer = filters.get("volunteer")
+
+	# Apply filter if volunteer is provided
+	conditions = ""
+	values = []
+
+	if volunteer:
+		conditions = "WHERE va.volunteer = %s"
+		values.append(volunteer)
+
 	query = f"""
-	SELECT 
- 		A.name AS activity,
-   		A.work_value_rupees as work_value
-	FROM `tabActivity` A
-	JOIN `tabVolunteer Activity` VA ON A.name = VA.activity
-	WHERE VA.volunteer='{user_name}';
+		SELECT 
+			va.name,
+			u.full_name,
+			va.work_value_in_rupees,
+			va.com_percent,
+			va.enrollment_wf_state,
+			va.completion_wf_state,
+			va.karma_points,
+			va.rating,
+			va.activity,
+			va.volunteer
+		FROM `tabVolunteer Activity` AS va
+		LEFT JOIN `tabSVA User` AS u ON u.name = va.volunteer
+		{conditions}
 	"""
-	return frappe.db.sql(query)
+
+	activities = frappe.db.sql(query, values, as_dict=True)
+
+	# Process and combine with Opportunity
+	processed_data = []
+
+	for activity in activities:
+		opportunity_value = get_opportunity_work_value(activity.volunteer)
+		activity_value = activity.work_value_in_rupees or 0
+		combined_value = activity_value + opportunity_value
+
+		processed_data.append({
+			"name": activity.name,
+			"full_name": activity.full_name,
+			"activity": activity.activity,
+			"activity_work_value": activity_value,
+			"opportunity_work_value": opportunity_value,
+			"combined_value": combined_value,
+			"com_percent": activity.com_percent,
+			"enrollment_wf_state": activity.enrollment_wf_state,
+			"completion_wf_state": activity.completion_wf_state,
+			"karma_points": activity.karma_points,
+			"rating": activity.rating
+		})
+
+	return processed_data
+
+
+def get_opportunity_work_value(volunteer):
+	"""Get work value from Volunteer Opportunity for the given volunteer"""
+
+	opportunity_value = frappe.db.get_value(
+		"Volunteer Opportunity",
+		{
+			"volunteer": volunteer
+		},
+		"work_value_in_rupees",
+		order_by="creation desc"
+	)
+
+	if not opportunity_value:
+		# fallback
+		fallback = frappe.db.sql("""
+			SELECT work_value_in_rupees 
+			FROM `tabVolunteer Opportunity` 
+			ORDER BY creation DESC 
+			LIMIT 1
+		""")
+		opportunity_value = fallback[0][0] if fallback else 0
+
+	return opportunity_value or 0

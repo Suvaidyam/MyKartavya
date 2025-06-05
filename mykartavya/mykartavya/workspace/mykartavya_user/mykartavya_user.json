@@ -1,7 +1,7 @@
 {
  "app": "mykartavya",
  "charts": [],
- "content": "[{\"id\":\"tEUvpBPS4l\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Volunteer\",\"col\":4}},{\"id\":\"mRWCSgezPQ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Ngo Volunteer \",\"col\":4}},{\"id\":\"EnWVsomjIp\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Company Volunteer\",\"col\":4}},{\"id\":\"a8VZuZ-CAe\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Company Admin\",\"col\":4}},{\"id\":\"DU7Ed9EwvZ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Ngo Admin\",\"col\":4}},{\"id\":\"dWOkHdi6UY\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"MyKartvya Admin\",\"col\":4}}]",
+ "content": "[{\"id\":\"tEUvpBPS4l\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Volunteer\",\"col\":3}},{\"id\":\"a8VZuZ-CAe\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Company Admin\",\"col\":3}},{\"id\":\"DU7Ed9EwvZ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Ngo Admin\",\"col\":3}},{\"id\":\"dWOkHdi6UY\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"MyKartvya Admin\",\"col\":3}}]",
  "creation": "2025-04-04 15:33:44.976476",
  "custom_blocks": [],
  "docstatus": 0,
@@ -15,22 +15,14 @@
  "label": "MyKartavya User",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-06-04 17:51:43.536092",
+ "modified": "2025-06-05 16:09:57.067026",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "MyKartavya User",
  "number_cards": [
   {
-   "label": "Company Volunteer",
-   "number_card_name": "Volunteer"
-  },
-  {
    "label": "MyKartvya Admin",
    "number_card_name": "MyKartvya Admin"
-  },
-  {
-   "label": "Ngo Volunteer ",
-   "number_card_name": "Volunteer Ngo"
   },
   {
    "label": "Ngo Admin",
@@ -52,6 +44,9 @@
  "roles": [
   {
    "role": "MyKartvya Admin"
+  },
+  {
+   "role": "Company Admin"
   }
  ],
  "sequence_id": 2.0,

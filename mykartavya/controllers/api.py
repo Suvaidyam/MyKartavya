@@ -561,7 +561,7 @@ def get_user_certificates():
 
 @frappe.whitelist(allow_guest=True)
 def get_all_skills():
-    skills = frappe.get_all("User Skills", fields=["name", "skill_name"])
+    skills = frappe.get_all("Skills", fields=["name", "skill_name"])
     return skills
 
 
