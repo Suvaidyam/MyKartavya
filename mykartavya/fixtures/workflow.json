@@ -500,11 +500,24 @@
   "doctype": "Workflow",
   "document_type": "Activity",
   "is_active": 1,
-  "modified": "2025-06-05 14:25:24.956813",
+  "modified": "2025-06-06 17:28:07.125814",
   "name": "Activities",
   "override_status": 0,
   "send_email_alert": 0,
   "states": [
+   {
+    "allow_edit": "MyKartvya Admin",
+    "avoid_status_override": 0,
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "send_email": 1,
+    "state": "Pending Approval",
+    "update_field": null,
+    "update_value": null,
+    "workflow_builder_id": null
+   },
    {
     "allow_edit": "MyKartvya Admin",
     "avoid_status_override": 0,
@@ -539,7 +552,7 @@
     "message": null,
     "next_action_email_template": null,
     "send_email": 1,
-    "state": "Pending",
+    "state": "Published",
     "update_field": null,
     "update_value": null,
     "workflow_builder_id": null
@@ -552,7 +565,123 @@
     "message": null,
     "next_action_email_template": null,
     "send_email": 1,
-    "state": "Draft",
+    "state": "Ongoing",
+    "update_field": null,
+    "update_value": null,
+    "workflow_builder_id": null
+   }
+  ],
+  "transitions": [
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "MyKartvya Admin",
+    "condition": null,
+    "next_state": "Approved",
+    "send_email_to_creator": 0,
+    "state": "Pending Approval",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Reject",
+    "allow_self_approval": 1,
+    "allowed": "MyKartvya Admin",
+    "condition": null,
+    "next_state": "Rejected",
+    "send_email_to_creator": 0,
+    "state": "Pending Approval",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "MyKartvya Admin",
+    "condition": null,
+    "next_state": "Approved",
+    "send_email_to_creator": 0,
+    "state": "Published",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Reject",
+    "allow_self_approval": 1,
+    "allowed": "MyKartvya Admin",
+    "condition": null,
+    "next_state": "Rejected",
+    "send_email_to_creator": 0,
+    "state": "Published",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "MyKartvya Admin",
+    "condition": null,
+    "next_state": "Approved",
+    "send_email_to_creator": 0,
+    "state": "Ongoing",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Reject",
+    "allow_self_approval": 1,
+    "allowed": "MyKartvya Admin",
+    "condition": null,
+    "next_state": "Rejected",
+    "send_email_to_creator": 0,
+    "state": "Ongoing",
+    "workflow_builder_id": null
+   }
+  ],
+  "workflow_data": null,
+  "workflow_name": "Activities",
+  "workflow_state_field": "workflow_state"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow",
+  "document_type": "Opportunity",
+  "is_active": 1,
+  "modified": "2025-06-06 17:33:06.266009",
+  "name": "Opportunities",
+  "override_status": 0,
+  "send_email_alert": 0,
+  "states": [
+   {
+    "allow_edit": "MyKartvya Admin",
+    "avoid_status_override": 0,
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "send_email": 1,
+    "state": "Pending Approval",
+    "update_field": null,
+    "update_value": null,
+    "workflow_builder_id": null
+   },
+   {
+    "allow_edit": "MyKartvya Admin",
+    "avoid_status_override": 0,
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "send_email": 1,
+    "state": "Approved",
+    "update_field": null,
+    "update_value": null,
+    "workflow_builder_id": null
+   },
+   {
+    "allow_edit": "MyKartvya Admin",
+    "avoid_status_override": 0,
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "send_email": 1,
+    "state": "Rejected",
     "update_field": null,
     "update_value": null,
     "workflow_builder_id": null
@@ -569,6 +698,19 @@
     "update_field": null,
     "update_value": null,
     "workflow_builder_id": null
+   },
+   {
+    "allow_edit": "MyKartvya Admin",
+    "avoid_status_override": 0,
+    "doc_status": "0",
+    "is_optional_state": 0,
+    "message": null,
+    "next_action_email_template": null,
+    "send_email": 1,
+    "state": "Ongoing",
+    "update_field": null,
+    "update_value": null,
+    "workflow_builder_id": null
    }
   ],
   "transitions": [
@@ -579,7 +721,7 @@
     "condition": null,
     "next_state": "Approved",
     "send_email_to_creator": 0,
-    "state": "Pending",
+    "state": "Pending Approval",
     "workflow_builder_id": null
    },
    {
@@ -589,17 +731,7 @@
     "condition": null,
     "next_state": "Rejected",
     "send_email_to_creator": 0,
-    "state": "Pending",
-    "workflow_builder_id": null
-   },
-   {
-    "action": "Review",
-    "allow_self_approval": 1,
-    "allowed": "MyKartvya Admin",
-    "condition": null,
-    "next_state": "Pending",
-    "send_email_to_creator": 0,
-    "state": "Approved",
+    "state": "Pending Approval",
     "workflow_builder_id": null
    },
    {
@@ -609,7 +741,7 @@
     "condition": null,
     "next_state": "Approved",
     "send_email_to_creator": 0,
-    "state": "Draft",
+    "state": "Published",
     "workflow_builder_id": null
    },
    {
@@ -619,12 +751,32 @@
     "condition": null,
     "next_state": "Rejected",
     "send_email_to_creator": 0,
-    "state": "Draft",
+    "state": "Published",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "MyKartvya Admin",
+    "condition": null,
+    "next_state": "Approved",
+    "send_email_to_creator": 0,
+    "state": "Ongoing",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Reject",
+    "allow_self_approval": 1,
+    "allowed": "MyKartvya Admin",
+    "condition": null,
+    "next_state": "Rejected",
+    "send_email_to_creator": 0,
+    "state": "Ongoing",
     "workflow_builder_id": null
    }
   ],
   "workflow_data": null,
-  "workflow_name": "Activities",
+  "workflow_name": "Opportunities",
   "workflow_state_field": "workflow_state"
  }
 ]
