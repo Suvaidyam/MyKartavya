@@ -93,9 +93,8 @@
   },
   {
    "fieldname": "rating",
-   "fieldtype": "Rating",
+   "fieldtype": "Int",
    "label": "Rating",
-   "options": "5",
    "read_only": 1
   },
   {
@@ -165,7 +164,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-05 17:19:31.453583",
+ "modified": "2025-06-06 12:41:51.569702",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",

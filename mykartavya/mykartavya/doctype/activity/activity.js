@@ -148,7 +148,6 @@ frappe.ui.form.on("Activity", {
 
     unlimited_vacancies: function (frm) {
         if (frm.doc.unlimited_vacancies) {
-            is_private
             frm.set_value('vacancy', 0);
             frm.set_value('buffer_vacancy', 0);
         }

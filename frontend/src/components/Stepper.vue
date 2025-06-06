@@ -527,11 +527,11 @@ const uploadFiles = (event) => {
   }
 }
 const emojis = ref([
-  { icon: '😞', label: 0.2 },
-  { icon: '😐', label: 0.4 },
-  { icon: '😊', label: 0.6 },
-  { icon: '🙂', label: 0.8 },
-  { icon: '🙂', label: 1 },
+  { icon: '😞', label: 1 },
+  { icon: '😐', label: 2 },
+  { icon: '😊', label: 3 },
+  { icon: '🙂', label: 4 },
+  { icon: '🙂', label: 5 },
 ])
 
 watch(() => props.activity, (newVal, oldVal) => {

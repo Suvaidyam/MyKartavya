@@ -32,6 +32,47 @@ frappe.ui.form.on("NGOs", {
         set_filters(frm);
     },
 
+    official_contact_number(frm) {
+        const raw = frm.doc.official_contact_number;
+        if (raw) {
+            // Sirf digits nikaalein
+            const digits = raw.replace(/\D/g, '');
+            if (digits.length > 12) {
+                frappe.show_alert({
+                    message: `Official Contact Number "${raw}" should not exceed 10 digits.`,
+                    indicator: 'red'
+                });
+            }
+        }
+    },
+    ngo_head_office_number(frm) {
+        const raw = frm.doc.ngo_head_office_number;
+        if (raw) {
+            // Sirf digits nikaalein
+            const digits = raw.replace(/\D/g, '');
+            if (digits.length > 12) {
+                frappe.show_alert({
+                    message: `NGO Head Office Number "${raw}" should not exceed 10 digits.`,
+                    indicator: 'red'
+                });
+            }
+        }
+
+    },
+    ngo_head_mobile(frm) {
+        const raw = frm.doc.ngo_head_mobile;
+        if (raw) {
+            const digits = raw.replace(/\D/g, '');
+            if (digits.length > 10) {
+                frappe.show_alert({
+                    message: `Mobile number "${raw}" should not exceed 10 digits.`,
+                    indicator: 'red'
+                });
+            }
+        }
+
+    },
+
     first_priority_goal(frm) {
         frm.set_value("second_priority_goal", null);
         frm.set_value("third_priority_goal", null);
