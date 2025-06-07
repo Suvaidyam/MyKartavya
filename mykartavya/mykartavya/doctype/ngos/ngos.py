@@ -92,10 +92,10 @@ def get_role_profile(role_type):
 def create_ngo_users(doc):
     """Create both NGO Admin and Volunteer users"""
     try:
-        def clean_mobile_number(number):
-            """Remove country code and keep only last 10 digits"""
-            digits = ''.join(filter(str.isdigit, number))
-            return digits[-10:]  
+        # def clean_mobile_number(number):
+        #     """Remove country code and keep only last 10 digits"""
+        #     digits = ''.join(filter(str.isdigit, number))
+        #     return digits[-10:]  
         
         # Create NGO Admin user
         if doc.ngo_name and doc.email and doc.official_contact_number:
@@ -110,17 +110,17 @@ def create_ngo_users(doc):
             )
 
         # Create Volunteer user
-        if doc.ngo_head_name and doc.ngo_head_email and doc.ngo_head_mobile:
-            create_sva_user(
-                first_name=doc.ngo_head_name,
-                email=doc.ngo_head_email,
-                mobile_number=clean_mobile_number(doc.ngo_head_mobile),
-                official_contact_number=doc.official_contact_number,
-                custom_designation=doc.designation,
-                role_profile="Volunteer",
-                custom_volunteer_type="NGO Member",
-                doc=doc
-            )
+        # if doc.ngo_head_name and doc.ngo_head_email and doc.ngo_head_mobile:
+        #     create_sva_user(
+        #         first_name=doc.ngo_head_name,
+        #         email=doc.ngo_head_email,
+        #         mobile_number=clean_mobile_number(doc.ngo_head_mobile),
+        #         official_contact_number=doc.official_contact_number,
+        #         custom_designation=doc.designation,
+        #         role_profile="Volunteer",
+        #         custom_volunteer_type="NGO Member",
+        #         doc=doc
+        #     )
             
     except Exception as e:
         frappe.log_error(f"Failed to create SVA Users: {str(e)}")

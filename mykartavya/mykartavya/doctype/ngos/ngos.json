@@ -28,6 +28,8 @@
   "second_priority_goal",
   "column_break_hodg",
   "third_priority_goal",
+  "section_break_nnmb",
+  "copy_contact_details",
   "contacts_section",
   "ngo_head_name",
   "ngo_head_email",
@@ -92,6 +94,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Email",
+   "options": "Email",
    "reqd": 1,
    "unique": 1
   },
@@ -296,13 +299,23 @@
    "fieldname": "html_mzll",
    "fieldtype": "HTML",
    "options": "<div style=\"min-height:20px;\"></div>"
+  },
+  {
+   "fieldname": "section_break_nnmb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "copy_contact_details",
+   "fieldtype": "Check",
+   "label": "Copy Contact Details"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-06-05 16:15:59.043973",
+ "modified": "2025-06-07 13:06:56.694191",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "NGOs",
