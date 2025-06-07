@@ -30,12 +30,34 @@ frappe.ui.form.on("NGOs", {
         }
         $('.layout-side-section').hide();
         set_filters(frm);
+        if (frm.doc.copy_contact_details) {
+            frm.set_value('ngo_head_name', frm.doc.contact_person_name);
+            frm.set_value('ngo_head_email', frm.doc.email);
+            frm.set_value('ngo_head_office_number', frm.doc.official_contact_number);
+        }
+    },
+
+    copy_contact_details: function(frm) {
+        if (frm.doc.copy_contact_details) {
+            frm.set_value('ngo_head_name', frm.doc.contact_person_name);
+            frm.set_value('ngo_head_email', frm.doc.email);
+            frm.set_value('ngo_head_office_number', frm.doc.official_contact_number);
+            // Optional: Show a message to user
+            frappe.show_alert({
+                message: 'Fields copied successfully!',
+                indicator: 'green'
+            });
+        } else {
+            // Clear the target fields
+            frm.set_value('ngo_head_name', '');
+            frm.set_value('ngo_head_email', '');
+            frm.set_value('ngo_head_office_number', '');
+        }
     },
 
     official_contact_number(frm) {
         const raw = frm.doc.official_contact_number;
         if (raw) {
-            // Sirf digits nikaalein
             const digits = raw.replace(/\D/g, '');
             if (digits.length > 12) {
                 frappe.show_alert({
