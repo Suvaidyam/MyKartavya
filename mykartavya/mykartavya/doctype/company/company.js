@@ -14,7 +14,7 @@ frappe.ui.form.on("Company", {
             frm.set_value("volunteering_incharge_email",frm.doc.email)
             frm.set_value("volunteering_incharge_phone",frm.doc.phone)
             frappe.show_alert({
-                message: 'Fields copied successfully!',
+                message: 'Contact Information copied successfully!',
                 indicator: 'green'
             });
         }else{

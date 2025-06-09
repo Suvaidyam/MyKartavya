@@ -359,9 +359,8 @@ class Opportunity:
             where_clauses = [
                 """EXISTS (
                     SELECT 1 FROM `tabOpportunity Activity` AS oact
-                    WHERE oact.opportunity = opp.name,
-                    AND "opp.workflow_state = 'Approved' ",
-                )"""
+                    WHERE oact.opportunity = opp.name
+                )AND opp.workflow_state = 'Approved'"""
             ]
             where_clause = "WHERE " + " AND ".join(where_clauses)
             sql_query = f"""

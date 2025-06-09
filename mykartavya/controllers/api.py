@@ -48,7 +48,7 @@ def user_testimonial():
     try:
         # Fetch testimonials with `sva_user`
         testimonials = frappe.get_all(
-            "Testimonial", fields=["name", "comment", "user", "is_publish"]
+            "Testimonial", fields=["name", "comment", "user", "is_publish","company_name"]
         )
         # Fetch user details for each testimonial from "SVA User"
         for testimonial in testimonials:
@@ -78,7 +78,7 @@ def user_testimonial():
 def corporate_partners_logo():
     try:
         logo = frappe.get_all(
-            "Company", fields=["company_logo", "name"], order_by="creation DESC"
+            "Company Logos", fields=["company_logo", "company_name","name"], order_by="creation DESC"
         )
         return logo
     except Exception as e:

@@ -38,14 +38,11 @@ fixtures=[
 ]
 
 
-doc_events = {
-    "Company": {
-        "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert",
-    },
-    "NGOs": {
-        "after_insert": "mykartavya.mykartavya.doctype.ngos.ngos.after_insert"
-    }
-}
+# doc_events = {
+#     "Company": {
+#         "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert"
+#     }
+# }
 
 override_doctype_class = {
     "User": "mykartavya.override.CustomUser"

@@ -67,7 +67,7 @@
       </div>
 
       <!-- Subscribe Section -->
-      <div class="bg-gray-800 p-6  w-full lg:w-[338px]">
+      <!-- <div class="bg-gray-800 p-6  w-full lg:w-[338px]">
         <h3 class="text-bodyh1 font-medium">Newsletter</h3>
         <form name="subscription-form" @submit.prevent="handleSubscribe" class="mt-4">
           <div class="flex">
@@ -81,7 +81,7 @@
         </form>
         <p class="mt-2 text-caption font-normal text-gray-400">NASSCOM Foundation works with the industry to drive
           social transformation and impact through technology.</p>
-      </div>
+      </div> -->
     </div>
 
     <!-- Footer Bottom -->
@@ -108,7 +108,7 @@
 
 <script setup>
 import { ref, inject } from 'vue';
-import { FeatherIcon } from 'frappe-ui';
+// import { FeatherIcon } from 'frappe-ui';
 const call = inject('call')
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
