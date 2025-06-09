@@ -69,13 +69,13 @@ class NGOs(Document):
             if len(set(goals)) != len(goals):
                 frappe.throw(_("Priority Goals must be unique. Please select different goals for each priority level."))
 
-def after_insert(doc, method):
-    if doc.registration_type == "Admin Registration":
-        # Approve the NGO
-        frappe.db.set_value("NGOs", doc.name, "workflow_state", "Approved")
-        frappe.db.commit()
-    # Create both NGO Admin and Volunteer users
-    create_ngo_users(doc)
+    def after_insert(doc):
+        if doc.registration_type == "Admin Registration":
+            # Approve the NGO
+            frappe.db.set_value("NGOs", doc.name, "workflow_state", "Approved")
+            frappe.db.commit()
+        # Create both NGO Admin and Volunteer users
+        create_ngo_users(doc)
 
 
 

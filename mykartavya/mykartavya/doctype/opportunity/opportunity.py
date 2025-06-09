@@ -101,9 +101,11 @@ class Opportunity(Document):
         )
         
         if publish_date == today_date:
-            self.status = "Published"
+            if self.workflow_state == "Approved":
+                self.status = "Published"
         elif start_date == today_date:
-            self.status = "Ongoing"
+            if self.workflow_state == "Approved":
+                self.status = "Ongoing"
         elif end_date == today_date:
             self.status = "Ended"
         else:

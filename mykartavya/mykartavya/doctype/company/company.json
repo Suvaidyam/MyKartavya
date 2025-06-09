@@ -30,7 +30,7 @@
   "number_of_employees",
   "column_break_rjla",
   "clear_vision",
-  "section_break_aehw",
+  "section_break_iamb",
   "copy_contact_details",
   "vol_section",
   "volunteering_incharge_name",
@@ -301,21 +301,21 @@
    "label": "Remarks"
   },
   {
-   "fieldname": "section_break_aehw",
+   "fieldname": "section_break_iamb",
    "fieldtype": "Section Break"
   },
   {
    "default": "0",
    "fieldname": "copy_contact_details",
    "fieldtype": "Check",
-   "label": " Copy Contact Details"
+   "label": "Copy Contact Details"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-06-07 13:09:48.908727",
+ "modified": "2025-06-09 14:37:57.279157",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Company",

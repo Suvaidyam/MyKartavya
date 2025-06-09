@@ -156,7 +156,36 @@
               </div>
 
               <!-- Volunteer Role -->
-
+              <div class="bg-white rounded-md mt-6 p-6 h-[600px] flex flex-col sticky top-20">
+                <h2 class="text-lg font-medium mb-4">Volunteer Role</h2>
+                <div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                  <div class="prose prose-sm max-w-none">
+                    <p class="text-gray-600 whitespace-pre-wrap" v-html="selectedOpportunity?.activity_description"></p>
+                  </div>
+                </div>
+                <!-- Social Share Buttons -->
+                <div class="mt-4 pt-4 border-t border-gray-200">
+                  <h3 class="text-sm font-medium text-gray-700 mb-3">Share this opportunity</h3>
+                  <div class="flex items-center gap-3">
+                    <button @click="shareToSocial('facebook')"
+                      class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
+                      <Facebook class="w-5 h-5" />
+                    </button>
+                    <button @click="shareToSocial('twitter')"
+                      class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
+                      <Twitter class="w-5 h-5" />
+                    </button>
+                    <button @click="shareToSocial('linkedin')"
+                      class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
+                      <Linkedin class="w-5 h-5" />
+                    </button>
+                    <button @click="shareToSocial('whatsapp')"
+                      class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
+                      <MessageCircle class="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Right Column - Activities -->
@@ -181,72 +210,36 @@
               </div>
 
               <!-- Related Opportunities -->
-              <div class="bg-white rounded-md mt-6 p-6 h-[600px] flex flex-col">
-                <h2 class="text-lg font-medium mb-4">Volunteer Role</h2>
-                <div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-                  <div class="prose prose-sm max-w-none">
-                    <p class="text-gray-600 whitespace-pre-wrap" v-html="selectedOpportunity?.activity_description"></p>
-                  </div>
-                </div>
-                <!-- Social Share Buttons -->
-                <div class="">
-                  <div class="mt-4 pt-4 border-t border-gray-200 ">
-                    <h3 class="text-sm font-medium text-gray-700 mb-3">Share this opportunity</h3>
-                    <div class="flex items-center gap-3">
-                      <button @click="shareToSocial('facebook')"
-                        class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
-                        <Facebook class="w-5 h-5" />
-                      </button>
-                      <button @click="shareToSocial('twitter')"
-                        class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
-                        <Twitter class="w-5 h-5" />
-                      </button>
-                      <button @click="shareToSocial('linkedin')"
-                        class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
-                        <Linkedin class="w-5 h-5" />
-                      </button>
-                      <button @click="shareToSocial('whatsapp')"
-                        class="p-2 rounded-full border border-gray-300 text-gray-500 hover:bg-gray-50 transition-all duration-300">
-                        <MessageCircle class="w-5 h-5" />
-                      </button>
-                    </div>
+              <div class="mt-12">
+                <div class="flex items-center justify-between mb-6">
+                  <h2 class="text-lg font-medium">Related Opportunities</h2>
+                  <div class="flex items-center gap-2">
+                    <button @click="!isLeftDisabled && scrollLeft" :disabled="isLeftDisabled"
+                      class="p-3 rounded-xl hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
+                      <FeatherIcon name="chevron-left" class="w-6 h-6" />
+                    </button>
+                    <button @click="!isRightDisabled && scrollRight" :disabled="isRightDisabled"
+                      class="p-3 rounded-xl hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
+                      <FeatherIcon name="chevron-right" class="w-6 h-6" />
+                    </button>
                   </div>
                 </div>
 
-              </div>
-            </div>
-          </div>
-          <div class="mt-6 bg-white rounded-md p-6">
-            <div class="flex items-center justify-between mb-6">
-              <h2 class="text-lg font-medium px-10">Related Opportunities</h2>
-              <div class="flex items-center gap-2">
-                <button @click="!isLeftDisabled && scrollLeft" :disabled="isLeftDisabled"
-                  class="p-3 rounded-xl hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
-                  <FeatherIcon name="chevron-left" class="w-6 h-6" />
-                </button>
-                <button @click="!isRightDisabled && scrollRight" :disabled="isRightDisabled"
-                  class="p-3 rounded-xl hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
-                  <FeatherIcon name="chevron-right" class="w-6 h-6" />
-                </button>
-              </div>
-            </div>
-
-            <div ref="scrollContainer" class="relative">
-              <div v-if="opportunities?.length > 0" class="flex gap-4 pb-4 overflow-x-auto scrollbar-hide">
-                <Card v-for="(item) in opportunities" :key="item.name" :item="item" :mode="'opportunity'"
-                  @click="handleCardClick(item)"
-                  class="w-[280px] min-w-[280px] max-w-[280px] lg:w-[450px] lg:min-w-[450px] lg:max-w-[450px] transform hover:scale-105 transition-all duration-300 cursor-pointer" />
-              </div>
-              <div v-else class="w-full h-[300px]">
-                <NotFound />
+                <div ref="scrollContainer" class="relative">
+                  <div v-if="opportunities?.length > 0" class="flex gap-4 pb-4 overflow-x-auto scrollbar-hide">
+                    <Card v-for="(item) in opportunities" :key="item.name" :item="item" :mode="'opportunity'"
+                      @click="handleCardClick(item)"
+                      class="w-[280px] min-w-[280px] max-w-[280px] lg:w-[450px] lg:min-w-[450px] lg:max-w-[450px] transform hover:scale-105 transition-all duration-300 cursor-pointer" />
+                  </div>
+                  <div v-else class="w-full h-[300px]">
+                    <NotFound />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </main>
       </div>
-    </div>
-    <div class="px-20">
-
     </div>
   </div>
 </template>

@@ -124,10 +124,11 @@ class Activity(Document):
 
 
         if publish_date == today_date:
-            self.status = "Published"
-            # self.docstatus = 1
+            if self.workflow_state == "Approved":
+                self.status = "Published"
         elif start_date == today_date:
-            self.status = "Ongoing"
+            if self.workflow_state == "Approved":
+                self.status = "Ongoing"
         elif end_date == today_date:
             self.status = "Ended"
         else:
