@@ -11,5 +11,31 @@
   "name": "83adqjivn1",
   "source_text": "SVA User",
   "translated_text": "MyKartavya User"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "en",
+  "modified": "2025-06-09 20:02:20.402904",
+  "name": "hn0v46ctiq",
+  "source_text": "MyKartvya Admin",
+  "translated_text": "MyKartavya Admin\n"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "en",
+  "modified": "2025-06-09 18:56:24.695080",
+  "name": "ig6rtbbn3m",
+  "source_text": "Company",
+  "translated_text": "Corporate"
  }
 ]

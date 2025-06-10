@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3 style="font-size: 16px;font-weight: 400; color:#7c7c7c;">
-            Charts for Amount Saved
+           Chart for Amount Saved
         </h3>
         <canvas ref="chartCanvas" width="400" height="150"></canvas>
     </div>
@@ -62,7 +62,7 @@ onMounted(() => {
                     data: {
                         labels,
                         datasets: [{
-                            label: result.columns[1].label,
+                            label: "Amount Saved",
                             data: values,
                             backgroundColor: backgroundColors,
                             hoverBackgroundColor: backgroundColors,
