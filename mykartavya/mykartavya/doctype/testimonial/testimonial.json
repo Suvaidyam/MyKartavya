@@ -50,6 +50,7 @@
   {
    "fieldname": "testimonial_type",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Testimonial Type",
    "options": "Internal\nExternal"
   },
@@ -57,6 +58,7 @@
    "depends_on": "eval:doc.testimonial_type==\"External\";",
    "fieldname": "user_type",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "User Type",
    "mandatory_depends_on": "eval:doc.testimonial_type==\"External\";",
    "options": "\nNGO\nCorporate"
@@ -95,7 +97,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-10 18:37:13.408018",
+ "modified": "2025-06-10 19:14:20.268789",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Testimonial",
