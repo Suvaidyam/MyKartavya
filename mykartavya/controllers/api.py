@@ -48,7 +48,7 @@ def user_testimonial():
     try:
         # Fetch testimonials with `sva_user`
         testimonials = frappe.get_all(
-            "Testimonial", fields=["name", "comment", "user", "is_publish","company_name"]
+            "Testimonial", fields=["name", "comment", "user", "is_publish"]
         )
         # Fetch user details for each testimonial from "SVA User"
         for testimonial in testimonials:
