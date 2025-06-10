@@ -59,11 +59,10 @@ frappe.ui.form.on("Company", {
     phone(frm){
         const raw=frm.doc.phone
         if (raw) {
-            // Sirf digits nikaalein
             const digits = raw.replace(/\D/g, '');
             if (digits.length > 12) {
                 frappe.show_alert({
-                    message: `NGO Head Office Number "${raw}" should not exceed 10 digits.`,
+                    message: `Phone" ${raw}" should not exceed 10 digits.`,
                     indicator: 'red'
                 });
             }
@@ -73,11 +72,10 @@ frappe.ui.form.on("Company", {
     volunteering_incharge_phone(frm){
         const raw=frm.doc.volunteering_incharge_phone
         if (raw) {
-            // Sirf digits nikaalein
             const digits = raw.replace(/\D/g, '');
             if (digits.length > 12) {
                 frappe.show_alert({
-                    message: `NGO Head Office Number "${raw}" should not exceed 10 digits.`,
+                    message: `Volunteering Incharge phone"${raw}" should not exceed 10 digits.`,
                     indicator: 'red'
                 });
             }

@@ -9,7 +9,7 @@
   "testimonial_type",
   "user",
   "user_type",
-  "users",
+  "user_name",
   "column_break_vqpb",
   "is_publish",
   "company_name",
@@ -19,15 +19,6 @@
   "description"
  ],
  "fields": [
-  {
-   "depends_on": "eval:doc.testimonial_type==\"Internal\";",
-   "fieldname": "user",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "User",
-   "mandatory_depends_on": "eval:doc.testimonial_type==\"Internal\";",
-   "options": "SVA User"
-  },
   {
    "depends_on": "eval:doc.testimonial_type==\"Internal\";",
    "fieldname": "comment",
@@ -67,6 +58,7 @@
    "fieldname": "user_type",
    "fieldtype": "Select",
    "label": "User Type",
+   "mandatory_depends_on": "eval:doc.testimonial_type==\"External\";",
    "options": "\nNGO\nCorporate"
   },
   {
@@ -84,17 +76,26 @@
    "mandatory_depends_on": "eval:doc.user_type==\"NGO\"&& doc.testimonial_type==\"External\";"
   },
   {
-   "depends_on": "eval:doc.user_type==\"NGO\" || doc.user_type==\"Corporate\"\n",
-   "fieldname": "users",
+   "depends_on": "eval:doc.user_type==\"NGO\" || doc.user_type==\"Corporate\" && doc.testimonial_type==\"External\";\n",
+   "fieldname": "user_name",
    "fieldtype": "Data",
-   "label": "User",
+   "label": "User Name",
    "mandatory_depends_on": "eval:doc.user_type==\"NGO\" || doc.user_type==\"Corporate\"\n"
+  },
+  {
+   "depends_on": "eval:doc.testimonial_type==\"Internal\";",
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "mandatory_depends_on": "eval:doc.testimonial_type==\"Internal\";",
+   "options": "SVA User"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-10 15:12:32.275579",
+ "modified": "2025-06-10 18:00:17.883808",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Testimonial",
