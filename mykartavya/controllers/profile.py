@@ -320,28 +320,55 @@ class Profile:
             frappe.log_error(frappe.get_traceback(), "SVA User Update Error")
             return {"status": 500, "message": f"Failed to update user: {str(e)}"}
 
+    
     def get_top_users(page=1, page_size=10):
         try:
             page = int(page)
             page_size = int(page_size)
             start = (page - 1) * page_size
 
-            activities = frappe.get_list(
-                "Volunteer Activity",
-                fields=[
-                    "volunteer.full_name",
-                    "karma_points",
-                    "duration",
-                    "volunteer.user_image",
-                ],
-                order_by="karma_points DESC",
-                group_by="volunteer",
-                start=start,
-                page_length=page_size,
-                ignore_permissions=True,
-            )
+            query = """
+                SELECT
+                    combined.volunteer_id,
+                    v.full_name,
+                    v.user_image,
+                    SUM(combined.karma_points) AS karma_points,
+                    SUM(combined.duration) AS duration
+                FROM (
+                    -- From Volunteer Activity
+                    SELECT
+                        va.volunteer AS volunteer_id,
+                        va.karma_points,
+                        va.duration
+                    FROM `tabVolunteer Activity` va
+                    WHERE va.completion_wf_state = 'Approved'
 
-            total_users = frappe.db.count("Volunteer Activity")
+                    UNION ALL
+
+                    -- From Volunteer Opportunities joined with Opportunity
+                    SELECT
+                        vo.volunteer AS volunteer_id,
+                        o.karma_points,
+                        vo.duration AS duration
+                    FROM `tabVolunteer Opportunity` vo
+                    JOIN `tabOpportunity` o ON vo.activity = o.name
+                    WHERE vo.completion_wf_state = 'Approved'
+                ) AS combined
+                JOIN `tabSVA User` v ON combined.volunteer_id = v.name
+                GROUP BY combined.volunteer_id
+                ORDER BY karma_points DESC
+                LIMIT %s OFFSET %s
+            """
+
+            activities = frappe.db.sql(query, (page_size, start), as_dict=True)
+
+            total_users = frappe.db.sql("""
+                SELECT COUNT(DISTINCT volunteer_id) FROM (
+                    SELECT volunteer AS volunteer_id FROM `tabVolunteer Activity`
+                    UNION
+                    SELECT volunteer AS volunteer_id FROM `tabVolunteer Opportunity`
+                ) AS all_volunteers
+            """)[0][0]
 
             return {
                 "users": activities,
@@ -349,6 +376,8 @@ class Profile:
                 "total_pages": (total_users + page_size - 1) // page_size,
                 "current_page": page,
             }
+
         except Exception as e:
             frappe.log_error(frappe.get_traceback(), "get_top_users Error")
             return {"error": str(e)}
+
