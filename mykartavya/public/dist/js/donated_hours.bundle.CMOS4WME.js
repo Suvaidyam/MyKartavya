@@ -26958,11 +26958,10 @@ Only state can be modified.`);
         frappe.call({
           method: "frappe.desk.query_report.run",
           args: {
-            report_name: "Chart For Hours Donated"
+            report_name: "Chart for hours Donated"
           },
           callback: (r) => {
             const result = r.message;
-            console.log(result, "============");
             if (!result || !result.result || result.result.length <= 1) {
               console.error("No data found in report");
               return;
@@ -27109,4 +27108,4 @@ Only state can be modified.`);
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/
-//# sourceMappingURL=donated_hours.bundle.IHSXAGZM.js.map
+//# sourceMappingURL=donated_hours.bundle.CMOS4WME.js.map

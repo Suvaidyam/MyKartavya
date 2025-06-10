@@ -373,30 +373,43 @@ def add_activity_images(docname, images):
 
 @frappe.whitelist()
 def get_sdg_contribution_details():
-    result = frappe.db.sql(
-        """
+    result = frappe.db.sql("""
         SELECT 
             COALESCE(sdg.name, 'Unknown SDG') AS sdg_name,
             COALESCE(sdg.sdg_image, '') AS sdg_image,
-            COALESCE(SUM(act.work_value_rupees), 0) AS total_work_values,
-            COALESCE(SUM(act.hours), 0) AS total_hours,
-            COUNT(DISTINCT va.volunteer) AS volunteer_count
-        FROM 
-            `tabActivity` AS act
-        LEFT JOIN `tabSDGs Child` AS sdc 
-            ON act.name = sdc.parent AND sdc.parentfield = 'sdgs'
-        LEFT JOIN `tabSDG` AS sdg 
-            ON sdc.sdgs = sdg.name
-        LEFT JOIN `tabVolunteer Activity` AS va 
-            ON act.name = va.activity
-        GROUP BY
-            sdg_name
-        ORDER BY 
-            total_work_values DESC
-    """,
-        as_dict=True,
-    )
+            SUM(data.total_work_value) AS total_work_values,
+            SUM(data.total_hours) AS total_hours,
+            COUNT(DISTINCT data.volunteer) AS volunteer_count
+        FROM (
+            -- Volunteer Activity
+            SELECT 
+                va.volunteer,
+                act.work_value_rupees AS total_work_value,
+                act.hours AS total_hours,
+                sdc.sdgs
+            FROM `tabVolunteer Activity` AS va
+            LEFT JOIN `tabActivity` AS act ON act.name = va.activity
+            LEFT JOIN `tabSDGs Child` AS sdc ON act.name = sdc.parent AND sdc.parentfield = 'sdgs'
+
+            UNION ALL
+
+            -- Volunteer Opportunity
+            SELECT 
+                vo.volunteer,
+                vo.work_value_in_rupees AS total_work_value,
+                act.hours AS total_hours,
+                sdc.sdgs
+            FROM `tabVolunteer Opportunity` AS vo
+            LEFT JOIN `tabOpportunity` AS act ON act.name = vo.activity
+            LEFT JOIN `tabSDGs Child` AS sdc ON act.name = sdc.parent AND sdc.parentfield = 'sdgs'
+        ) AS data
+        LEFT JOIN `tabSDG` AS sdg ON data.sdgs = sdg.name
+        GROUP BY sdg.name, sdg.sdg_image
+        ORDER BY total_work_values DESC
+    """, as_dict=True)
+
     return result
+
 
 
 @frappe.whitelist(allow_guest=True)
