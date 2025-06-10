@@ -46,78 +46,75 @@ def current_commitments_in_opportunity(filter={}):
 @frappe.whitelist(allow_guest=True)
 def user_testimonial():
     try:
+        # Fetch testimonials with all required fields
         testimonials = frappe.get_all(
             "Testimonial", 
             fields=[
-                "name", "comment", "user", "is_publish", "user_name", 
+                "name", "comment", "users", "is_publish", "user_name", 
                 "user_type", "ngo_name", "company_name", "description", 
                 "testimonial_type"
             ]
         )
         
+        # Process each testimonial based on testimonial_type
         for testimonial in testimonials:
-            testimonial["user_details"] = get_user_details(testimonial)
+            if testimonial.get("testimonial_type") == "Internal":
+                # For Internal testimonials, fetch user details from SVA User
+                if testimonial.get("users"):
+                    try:
+                        # Check if the user exists in SVA User doctype
+                        if frappe.db.exists("SVA User", testimonial["users"]):
+                            user_doc = frappe.get_doc("SVA User", testimonial["users"])
+                            testimonial["user_details"] = {
+                                "name": user_doc.name,
+                                "email": user_doc.email,
+                                "full_name": user_doc.full_name,
+                                "user_image": user_doc.user_image,
+                                "user_type": user_doc.custom_volunteer_type,
+                                "designation": (
+                                    user_doc.custom_designation
+                                    if hasattr(user_doc, "custom_designation")
+                                    else None
+                                ),
+                            }
+                        else:
+                            # User doesn't exist in SVA User
+                            testimonial["user_details"] = {
+                                "name": testimonial.get("user"),
+                                "email": None,
+                                "full_name": f"User not found: {testimonial.get('users')}",
+                                "user_image": None,
+                                "user_type": None,
+                                "designation": None,
+                            }
+                    except Exception as e:
+                        # Handle any other errors during user lookup
+                        frappe.log_error(f"Error fetching user {testimonial.get('users')}: {str(e)}")
+                        testimonial["user_details"] = {
+                            "name": testimonial.get("users"),
+                            "email": None,
+                            "full_name": f"Error loading user: {testimonial.get('users')}",
+                            "user_image": None,
+                            "user_type": None,
+                            "designation": None,
+                        }
             
+            elif testimonial.get("testimonial_type") == "External":
+                testimonial["user_details"] = {
+                    "full_name": testimonial.get("user_name"),
+                    "user_type": testimonial.get("user_type"),
+                    "description": testimonial.get("description"),
+                    "ngo_name": testimonial.get("ngo_name"),
+                    "company_name": testimonial.get("company_name")
+                }
+
         return {"message": testimonials}
 
     except Exception as e:
         frappe.log_error(f"Error in user_testimonial: {e}")
-        return {"error": _("Failed to fetch testimonials")}
+        return {"error": _("Failed to fetch testimonials with user details")}
+    
 
-
-def get_user_details(testimonial):
-    """Get user details based on testimonial type"""
-    
-    if testimonial.get("testimonial_type") == "Internal":
-        return get_internal_user_details(testimonial.get("user"))
-    
-    elif testimonial.get("testimonial_type") == "External":
-        return {
-            "full_name": testimonial.get("user_name"),
-            "user_type": testimonial.get("user_type"),
-            "description": testimonial.get("description"),
-            "ngo_name": testimonial.get("ngo_name"),
-            "company_name": testimonial.get("company_name")
-        }
-    
-    return {}
-
-
-def get_internal_user_details(user_id):
-    """Get internal user details from SVA User"""
-    
-    if not user_id or not frappe.db.exists("SVA User", user_id):
-        return {
-            "name": user_id,
-            "full_name": f"User not found: {user_id}" if user_id else "No user specified",
-            "email": None,
-            "user_image": None,
-            "user_type": None,
-            "designation": None,
-        }
-    
-    try:
-        user_doc = frappe.get_doc("SVA User", user_id)
-        return {
-            "name": user_doc.name,
-            "email": user_doc.email,
-            "full_name": user_doc.full_name,
-            "user_image": user_doc.user_image,
-            "user_type": user_doc.custom_volunteer_type,
-            "designation": getattr(user_doc, "custom_designation", None),
-        }
-    except Exception as e:
-        frappe.log_error(f"Error fetching user {user_id}: {str(e)}")
-        return {
-            "name": user_id,
-            "full_name": f"Error loading user: {user_id}",
-            "email": None,
-            "user_image": None,
-            "user_type": None,
-            "designation": None,
-        }
-    
-    
 @frappe.whitelist(allow_guest=True)
 def corporate_partners_logo():
     try:
