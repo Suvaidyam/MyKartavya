@@ -6,29 +6,34 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "type",
+  "testimonial_type",
   "user",
+  "user_type",
+  "users",
   "column_break_vqpb",
   "is_publish",
-  "section_break_vcwo",
   "company_name",
-  "comment"
+  "ngo_name",
+  "section_break_vcwo",
+  "comment",
+  "description"
  ],
  "fields": [
   {
-   "depends_on": "eval:doc.type==\"Internal\";",
+   "depends_on": "eval:doc.testimonial_type==\"Internal\";",
    "fieldname": "user",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "User",
-   "options": "SVA User",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.testimonial_type==\"Internal\";",
+   "options": "SVA User"
   },
   {
+   "depends_on": "eval:doc.testimonial_type==\"Internal\";",
    "fieldname": "comment",
    "fieldtype": "Small Text",
    "label": "Comment",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.testimonial_type==\"Internal\";"
   },
   {
    "fieldname": "column_break_vqpb",
@@ -45,22 +50,51 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "type",
+   "depends_on": "eval:doc.user_type==\"Corporate\" && doc.testimonial_type==\"External\";\n",
+   "fieldname": "company_name",
+   "fieldtype": "Data",
+   "label": "Company Name",
+   "mandatory_depends_on": "eval:doc.user_type==\"Corporate\";"
+  },
+  {
+   "fieldname": "testimonial_type",
    "fieldtype": "Select",
-   "label": "User Type",
+   "label": "Testimonial Type",
    "options": "Internal\nExternal"
   },
   {
-   "depends_on": "eval:doc.type==\"External\";",
-   "fieldname": "company_name",
+   "depends_on": "eval:doc.testimonial_type==\"External\";",
+   "fieldname": "user_type",
+   "fieldtype": "Select",
+   "label": "User Type",
+   "options": "\nNGO\nCorporate"
+  },
+  {
+   "depends_on": "eval:doc.testimonial_type==\"External\";",
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description",
+   "mandatory_depends_on": "eval:doc.testimonial_type==\"External\";"
+  },
+  {
+   "depends_on": "eval:doc.user_type==\"NGO\"&& doc.testimonial_type==\"External\";",
+   "fieldname": "ngo_name",
    "fieldtype": "Data",
-   "label": "Company Name"
+   "label": "NGO Name",
+   "mandatory_depends_on": "eval:doc.user_type==\"NGO\"&& doc.testimonial_type==\"External\";"
+  },
+  {
+   "depends_on": "eval:doc.user_type==\"NGO\" || doc.user_type==\"Corporate\"\n",
+   "fieldname": "users",
+   "fieldtype": "Data",
+   "label": "User",
+   "mandatory_depends_on": "eval:doc.user_type==\"NGO\" || doc.user_type==\"Corporate\"\n"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-09 17:14:30.168250",
+ "modified": "2025-06-10 15:12:32.275579",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Testimonial",
@@ -98,7 +132,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "MyKartvya Admin",
+   "role": "MyKartavya Admin",
    "share": 1,
    "write": 1
   }

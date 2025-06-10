@@ -2,17 +2,6 @@
  {
   "docstatus": 0,
   "doctype": "Custom HTML Block",
-  "html": "<div class=\"charts_for_hours_donated\">\n    \n</div>\n   ",
-  "modified": "2025-05-30 17:39:34.081370",
-  "name": "Charts for Amount Saved",
-  "private": 0,
-  "roles": [],
-  "script": " let layout_element = root_element.querySelector('.charts_for_hours_donated');\n        frappe.require(\"amount_saved.bundle.js\").then(() => {\n            new frappe.ui.AmountSaved({\n                wrapper: layout_element,\n                \n            });\n        })",
-  "style": null
- },
- {
-  "docstatus": 0,
-  "doctype": "Custom HTML Block",
   "html": "<div class=\"container\">\n        <h2 style=\"font-size: 16px;font-weight: 400; color:#7c7c7c;\">Hours & Value contributed per SDG</h2>\n        <table class=\"sdg-table\">\n            <thead>\n                <tr>\n                    <th>#</th>\n                    <th>SDG</th>\n                    <th>Hours</th>\n                    <th>Value</th>\n                    <th>Participation</th>\n                </tr>\n            </thead>\n            <tbody>\n                \n              \n        \n                \n            </tbody>\n        </table>\n    </div>\n",
   "modified": "2025-06-02 11:45:17.397486",
   "name": "SDG Details",
@@ -35,12 +24,23 @@
  {
   "docstatus": 0,
   "doctype": "Custom HTML Block",
-  "html": "<div class=\"charts_for_hours_donated\">\n    \n</div>",
-  "modified": "2025-05-30 13:33:29.851321",
-  "name": "Charts For Hours Donated",
+  "html": "<div class=\"charts_for_hours_donated\">\n    \n</div>\n   ",
+  "modified": "2025-06-10 13:01:01.409501",
+  "name": "Chart For Amount Saved",
   "private": 0,
   "roles": [],
-  "script": "\n    let layout_element = root_element.querySelector('.charts_for_hours_donated');\n        frappe.require(\"donated_hours.bundle.js\").then(() => {\n            new frappe.ui.DonatedHours({\n                wrapper: layout_element,\n                \n            });\n        })\n",
+  "script": " let layout_element = root_element.querySelector('.charts_for_hours_donated');\n        frappe.require(\"amount_saved.bundle.js\").then(() => {\n            new frappe.ui.AmountSaved({\n                wrapper: layout_element,\n                \n            });\n        })",
+  "style": null
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Custom HTML Block",
+  "html": "<div class=\"charts_for_hours_donated\">\n    \n</div>\n   ",
+  "modified": "2025-06-10 13:04:28.088087",
+  "name": "Charts for hours Donated",
+  "private": 0,
+  "roles": [],
+  "script": " let layout_element = root_element.querySelector('.charts_for_hours_donated');\n        frappe.require(\"donated_hours.bundle.js\").then(() => {\n            new frappe.ui.DonatedHours({\n                wrapper: layout_element,\n                \n            });\n        })",
   "style": null
  }
 ]

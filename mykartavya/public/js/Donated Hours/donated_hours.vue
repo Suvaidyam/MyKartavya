@@ -37,13 +37,10 @@ onMounted(() => {
     frappe.call({
         method: 'frappe.desk.query_report.run',
         args: {
-            report_name: 'Chart For Hours Donated'
+            report_name: 'Chart for hours Donated'
         },
         callback: (r) => {
             const result = r.message
-            console.log(result,"============");
-            
-
             if (!result || !result.result || result.result.length <= 1) {
                 console.error("No data found in report")
                 return
