@@ -39,21 +39,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(volunteer, index) in volunteers" :key="volunteer.name || index">
+                    <tr v-for="(volunteer, index) in volunteers" :key="volunteer?.name || index">
                         <td class="vol-index-cell" @click="RenderVolAct()">{{ index + 1 }}</td>
-                        <td class="bold">{{ volunteer.full_name }}</td>
-                        <td>{{ formatDuration(volunteer.duration) }}</td>
+                        <td class="bold">{{ volunteer?.full_name }}</td>
+                        <td>{{ formatDuration(volunteer?.duration) }}</td>
                         <td>
-                            <span :class="getStatusClass(volunteer.completion_wf_state)">
-                                {{ volunteer.completion_wf_state }}
+                            <span :class="getStatusClass(volunteer?.completion_wf_state)">
+                                {{ volunteer?.completion_wf_state }}
                             </span>
                         </td>
-                        <td>{{ volunteer.karma_points }}</td>
-                        <td>{{ volunteer.rating }}</td>
-                        <td><i class="ellipsis">{{ volunteer.com_percent }}%</i></td>
+                        <td>{{ volunteer?.karma_points }} Pts</td>
+                        <td>{{ volunteer?.rating }}</td>
+                        <td><i class="ellipsis">{{ volunteer?.com_percent }}%</i></td>
                         <td class="flex justify-center">
-                            <button class="reject-btn btn btn-danger " @click="rejectActivity({ name: volunteer.name })"
-                                :disabled="volunteer.completion_wf_state === 'Rejected'">
+                            <button class="reject-btn btn btn-danger " @click="rejectActivity({ name: volunteer?.name })"
+                                :disabled="volunteer?.completion_wf_state === 'Rejected'">
                                 Reject
                             </button>
                         </td>
@@ -99,12 +99,18 @@ const fetchData = async () => {
 }
 // Format seconds to HH:mm:ss
 const formatDuration = (seconds) => {
-    if (!seconds || isNaN(seconds)) return '00:00:00'
-
-    const h = Math.floor(seconds / 3600).toString().padStart(2, '0')
-    const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0')
-    const s = Math.floor(seconds % 60).toString().padStart(2, '0')
-    return `${h}:${m}:${s}`
+    if (!seconds || isNaN(seconds)) return '0m'
+    
+    const h = Math.floor(seconds / 3600)
+    const m = Math.floor((seconds % 3600) / 60)
+    
+    if (h > 0 && m > 0) {
+        return `${h}h ${m}m`
+    } else if (h > 0) {
+        return `${h}h`
+    } else {
+        return `${m}m`
+    }
 }
 
 // Get status badge class based on status

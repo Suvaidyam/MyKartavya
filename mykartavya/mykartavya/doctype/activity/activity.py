@@ -2,7 +2,8 @@ import frappe
 from frappe import _
 from frappe.model.document import Document
 from frappe.utils import getdate, today,get_datetime
-from datetime import time
+from frappe.utils import today
+from datetime import datetime
 
 class Activity(Document):
     def validate(self):
@@ -100,15 +101,34 @@ class Activity(Document):
             self.address = None
 
         today_date = today()
-        publish_date = self.publish_date.split(" ")[0] if self.publish_date else None
-        start_date = self.start_date.split(" ")[0] if self.start_date else None
-        end_date = self.end_date.split(" ")[0] if self.end_date else None
+        publish_date = (
+            self.publish_date.strftime("%Y-%m-%d")
+            if isinstance(self.publish_date, datetime)
+            else str(self.publish_date).split(" ")[0]
+            if self.publish_date else None
+        )
+
+        start_date = (
+            self.start_date.strftime("%Y-%m-%d")
+            if isinstance(self.start_date, datetime)
+            else str(self.start_date).split(" ")[0]
+            if self.start_date else None
+        )
+
+        end_date = (
+            self.end_date.strftime("%Y-%m-%d")
+            if isinstance(self.end_date, datetime)
+            else str(self.end_date).split(" ")[0]
+         if self.end_date else None
+         )
+
 
         if publish_date == today_date:
-            self.status = "Published"
-            # self.docstatus = 1
+            if self.workflow_state == "Approved":
+                self.status = "Published"
         elif start_date == today_date:
-            self.status = "Ongoing"
+            if self.workflow_state == "Approved":
+                self.status = "Ongoing"
         elif end_date == today_date:
             self.status = "Ended"
         else:
@@ -138,3 +158,19 @@ class Activity(Document):
                     if file_extension not in allowed_extensions:
                         allowed_types = ", ".join(allowed_extensions).upper()
                         frappe.throw(f"Invalid file type for {field.replace('_', ' ').title()}. Allowed types: {allowed_types}.")
+
+    def after_insert(doc):
+        try:
+            sva_user = frappe.db.get_value(
+                'SVA User',
+                {'email': frappe.session.user},
+                ['role_profile'],
+                as_dict=True
+            )
+            if sva_user and sva_user.role_profile == 'MyKartvya Admin':
+                frappe.db.set_value("Activity", doc.name, "workflow_state", "Approved")
+            else:
+                print(f"User {frappe.session.user} with role {sva_user.role_profile if sva_user else 'No role'} - keeping default workflow state")
+                
+        except Exception as e:
+            frappe.log_error(f"Auto approval error: {str(e)}")

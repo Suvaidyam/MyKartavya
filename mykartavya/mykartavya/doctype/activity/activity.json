@@ -40,7 +40,6 @@
   "skill",
   "work_value_rupees",
   "column_break_participation1",
-  "contribution_type",
   "karma_points",
   "hours_section",
   "minimum_hours",
@@ -287,13 +286,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "contribution_type",
-   "fieldtype": "Link",
-   "label": "Contribution Type",
-   "options": "Contribution Type",
-   "reqd": 1
-  },
-  {
    "fieldname": "karma_points",
    "fieldtype": "Int",
    "label": "Karma Points",
@@ -535,7 +527,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-06-03 17:32:10.360263",
+ "modified": "2025-06-05 17:55:14.667430",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",

@@ -27,7 +27,6 @@
                     </p>
                 </div>
                 <div class="mt-6">
-                    {{ ngo.second_priority_goal_image }}
                     <p class="font-semibold text-sm mb-2">SDGs Covered</p>
                     <div class="flex gap-2">
                         <img v-for="(img, i) in [ngo.first_priority_goal_image, ngo.second_priority_goal_image, ngo.third_priority_goal_image]"
@@ -44,15 +43,15 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Show activities if they exist -->
-            <div v-for="act in activities" :key="act.id" class="h-auto pt-4">
+            <div v-for="act in activities" :key="act.id" class=" pt-4">
                 <div class="flex justify-center items-center">
-                    <div class="h-auto w-full">
+                    <div class="w-full">
                         <div
                             class="max-w-sm bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                             <div class="relative h-48 bg-gray-200">
                                 <img :src="act.activity_image || 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'"
                                     alt="Volunteers helping in emergency response" class="w-full h-full object-cover" />
-                                <div class="absolute top-4 left-4">
+                                <div class="absolute top-4 px-1">
                                     <span class="bg-orange-500 text-white px-3 py-1 rounded-md text-sm font-medium">
                                         {{ act.activity_type }}
                                     </span>
@@ -75,7 +74,7 @@
                             </div>
 
                             <div class="p-5">
-                                <h3 class="text-xl font-bold text-gray-900 mb-4">
+                                <h3 class="text-md font-semibold text-gray-800 mb-4">
                                     {{ act.title }}
                                 </h3>
                                 <div class="flex gap-1.5 items-center text-xs tracking-normal text-gray-600">
@@ -124,9 +123,9 @@
                             <div class="relative h-48 bg-gray-200">
                                 <img :src="opp.opportunity_image || 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'"
                                     alt="Volunteers helping in emergency response" class="w-full h-full object-cover" />
-                                <div class="absolute top-4 left-4">
+                                <div class="absolute top-4 px-1">
                                     <span class="bg-orange-500 text-white px-3 py-1 rounded-md text-sm font-medium">
-                                        {{ opp.opportunity_name }}
+                                        {{ opp.opportunity_type }}
                                     </span>
                                 </div>
 
@@ -147,7 +146,7 @@
                             </div>
 
                             <div class="p-5">
-                                <h3 class="text-xl font-bold text-gray-900 mb-4">
+                                <h3 class="text-md font-semibold text-gray-800 mb-4">
                                     {{ opp.opportunity_name }}
                                 </h3>
                                 <div class="flex gap-1.5 items-center text-xs tracking-normal text-gray-600">
@@ -174,7 +173,7 @@
             </div>
         </div>
         <!-- Show "no data" message when activities array is empty or doesn't exist -->
-        <div v-if="!activities || activities.length === 0" class="flex flex-col items-center justify-center py-20">
+        <div v-if="!activities || activities.length == 0" class="flex flex-col items-center justify-center py-20">
             <div class="w-40 h-40 mb-4">
                 <img src="../../assets/no-data (1).png" alt="No data available" class="w-full h-full object-contain">
             </div>

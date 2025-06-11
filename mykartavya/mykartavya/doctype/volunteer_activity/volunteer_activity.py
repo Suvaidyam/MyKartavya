@@ -31,7 +31,6 @@ class VolunteerActivity(Document):
 		except Exception as e:
 			frappe.log_error(f"Error syncing workflow and enrollment state: {str(e)}")
 
-
 	def on_update(self):
 		"""Handle workflow state changes and related actions."""
 		try:
@@ -44,13 +43,21 @@ class VolunteerActivity(Document):
 			# Handle completion workflow state changes
 			if self.completion_wf_state == "Approved" and not self.karma_points:
 				# Get activity document and set karma points
-				activity = frappe.get_doc("Activity", self.activity)
+				activity = frappe.get_doc("Activity", self.activity) 
+				self.work_value_in_rupees = activity.work_value_rupees
 				self.karma_points = activity.karma_points
-				frappe.db.set_value("Volunteer Activity", self.name, "karma_points", self.karma_points)
+				frappe.db.set_value("Volunteer Activity", self.name, {
+					"karma_points": self.karma_points,
+					"work_value_in_rupees": self.work_value_in_rupees
+				})
 			elif self.completion_wf_state == "Rejected" and self.karma_points:
 				# Reset karma points if completion is rejected
 				self.karma_points = 0
-				frappe.db.set_value("Volunteer Activity", self.name, "karma_points", 0)
+				self.work_value_in_rupees=0
+				frappe.db.set_value("Volunteer Activity", self.name,{ 
+					"karma_points":0,
+					"work_value_in_rupees":0
+				})
 			
 			# Existing logic for updating workflow state
 			if self.enrollment_wf_state == "Approved":

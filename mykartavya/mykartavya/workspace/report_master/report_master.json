@@ -15,7 +15,7 @@
  "label": "Report Master",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-06-02 12:55:57.610382",
+ "modified": "2025-06-04 18:04:50.150942",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Report Master",
@@ -24,14 +24,19 @@
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
- "roles": [],
- "sequence_id": 12.0,
+ "roles": [
+  {
+   "role": "MyKartvya Admin"
+  }
+ ],
+ "sequence_id": 9.0,
  "shortcuts": [
   {
    "color": "Grey",
    "doc_view": "List",
    "label": "Activities Report",
    "link_to": "Activities Report",
+   "report_ref_doctype": "Activity",
    "type": "Report"
   },
   {
@@ -39,6 +44,7 @@
    "doc_view": "List",
    "label": "Volunteer Activity Report",
    "link_to": "Volunteer Activity Report",
+   "report_ref_doctype": "Volunteer Activity",
    "type": "Report"
   }
  ],
