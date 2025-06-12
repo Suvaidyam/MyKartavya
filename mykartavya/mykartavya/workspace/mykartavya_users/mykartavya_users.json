@@ -1,0 +1,53 @@
+{
+ "app": "mykartavya",
+ "charts": [],
+ "content": "[{\"id\":\"NuLhjo68td\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Volunteer\",\"col\":3}},{\"id\":\"UEjX32gRyN\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Company Admin\",\"col\":3}},{\"id\":\"ngnR8jCcBz\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Ngo Admin\",\"col\":3}},{\"id\":\"88n0tQdtrw\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"MyKartvya Admin\",\"col\":3}}]",
+ "creation": "2025-06-12 18:56:57.274889",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "users",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "MyKartavya Users",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-06-12 19:42:54.824759",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "MyKartavya Users",
+ "number_cards": [
+  {
+   "label": "Volunteer",
+   "number_card_name": "Volunteer-1"
+  },
+  {
+   "label": "Company Admin",
+   "number_card_name": "Company Admin"
+  },
+  {
+   "label": "Ngo Admin",
+   "number_card_name": "Ngo Admin"
+  },
+  {
+   "label": "MyKartvya Admin",
+   "number_card_name": "MyKartvya Admin"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "MyKartavya Admin"
+  }
+ ],
+ "sequence_id": 2.0,
+ "shortcuts": [],
+ "title": "MyKartavya Users",
+ "type": "Workspace"
+}

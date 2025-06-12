@@ -35,6 +35,7 @@ fixtures=[
     # "Translation",
     # 'Custom DocPerm',
     # 'My Theme',
+    # 'Opportunity Kind'
 ]
 
 
