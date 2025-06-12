@@ -209,6 +209,31 @@ frappe.ui.form.on("Opportunity", {
             });
         }
     },
+
+
+    onload: function (frm) {
+        if (frm.is_new()) {
+            frappe.call({
+                method: 'frappe.client.get_value',
+                args: {
+                    doctype: 'SVA User',
+                    filters: { email: frappe.session.user },
+                    fieldname: ['role_profile', 'custom_company','custom_ngo']
+                },
+                callback: function (response) {
+                    if (response.message.custom_ngo && response.message.role_profile === "NGO Admin") {
+                        frm.set_value('ngo', response.message.custom_ngo);
+                    }
+                    if (response.message.custom_company) {
+                        frm.set_value('company', response.message.custom_company);
+                        frm.set_df_property('company', 'read_only', 1);
+                    }
+                }
+            });
+        }
+    },
+
+
     refresh(frm) {
         if (frm.doc.status === "Published") {
             frm.set_read_only();

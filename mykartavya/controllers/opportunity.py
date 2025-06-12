@@ -146,7 +146,7 @@ class Opportunity:
                     opp.opportunity_type as types,
                     opp.start_date as start_date,
                     opp.end_date as end_date,
-                    opp.hours as hours,
+                    opp.min_volunteering_time as hours,
                     opp.opportunity_description as activity_description,
                     opp.opportunity_image as activity_image,
                     opp.need_certificate as need_certificate,
@@ -255,7 +255,7 @@ class Opportunity:
                     opp.opportunity_type as types,
                     opp.start_date as start_date,
                     opp.end_date as end_date,
-                    opp.hours as hours,
+                    opp.min_volunteering_time as hours,
                     opp.opportunity_description as activity_description,
                     opp.opportunity_image as activity_image,
                     opp.need_certificate as need_certificate,
@@ -370,7 +370,7 @@ class Opportunity:
                     opp.opportunity_type AS types,
                     opp.start_date AS start_date,
                     opp.end_date AS end_date,
-                    opp.hours AS hours,
+                    opp.min_volunteering_time AS hours,
                     opp.opportunity_description AS activity_description,
                     opp.opportunity_image AS activity_image,
                 
@@ -449,7 +449,7 @@ class Opportunity:
                     order_by_clauses.append(
                         "opp.hours ASC"
                         if filter["volunteering_hours"] == "Low to High"
-                        else "opp.hours DESC"
+                        else "opp.min_volunteering_time DESC"
                     )
 
             where_clause = " AND ".join(where_clauses)
@@ -467,7 +467,7 @@ class Opportunity:
                 opp.karma_points as karma_points,
                 opp.start_date as start_date,
                 opp.end_date as end_date,
-                opp.minimum_hours as hours,
+                opp.min_volunteering_time as hours,
                 vo.duration as donet_hours,
                 vo.completion_wf_state as completion_wf_state,
                 opp.opportunity_description as activity_description,

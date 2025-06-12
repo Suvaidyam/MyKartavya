@@ -170,6 +170,7 @@ def insert_sva_user(doc):
         if sva_user.custom_volunteer_type == "Employee":
             frappe.db.set_value("SVA User", sva_user.name, "workflow_state", "Approved",update_modified=False)
         frappe.db.commit()
+ 
     except Exception as e:
         frappe.log_error(f"Failed to create SVA User: {str(e)}")
         frappe.throw(f"Failed to create SVA User: {str(e)}")

@@ -2,26 +2,18 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "autoincrement",
- "creation": "2025-06-07 14:48:16.448678",
+ "creation": "2025-06-12 18:27:23.518452",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "company_name",
-  "company_logo"
+  "name1"
  ],
  "fields": [
   {
-   "fieldname": "company_name",
+   "fieldname": "name1",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Company Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "company_logo",
-   "fieldtype": "Attach",
-   "in_list_view": 1,
-   "label": "Company Logo",
+   "label": "Name",
    "reqd": 1
   }
  ],
@@ -29,10 +21,10 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-12 19:57:59.371444",
+ "modified": "2025-06-12 20:19:43.193567",
  "modified_by": "Administrator",
  "module": "Mykartavya",
- "name": "Company Logos",
+ "name": "Opportunity Kind",
  "naming_rule": "Autoincrement",
  "owner": "Administrator",
  "permissions": [
@@ -56,38 +48,35 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Guest",
+   "role": "MyKartavya Admin",
    "share": 1,
    "write": 1
   },
   {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "MyKartvya Admin",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Company Admin",
-   "share": 1,
-   "write": 1
+   "select": 1,
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "NGO Admin",
+   "select": 1,
+   "share": 1
   }
  ],
  "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": [],
- "title_field": "company_name"
+ "title_field": "name1"
 }
