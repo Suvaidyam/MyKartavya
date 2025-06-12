@@ -12748,8 +12748,9 @@ Only state can be modified.`);
             activity: frappe.router.current_route[2]
           },
           callback: (r) => {
+            var _a25;
             volunteers.value = r.message || [];
-            activity.value = r.message[0].name;
+            activity.value = (_a25 = r.message[0]) == null ? void 0 : _a25.name;
           }
         });
       };
@@ -12805,35 +12806,49 @@ Only state can be modified.`);
           frappe.msgprint("No data to export.");
           return;
         }
-        await frappe.call({
-          method: "frappe.desk.query_report.run",
-          args: {
-            report_name: "Volunteer Activity",
-            filters: {}
-          },
-          callback: (r) => {
-            if (r.message && r.message.result) {
-              const csvContent = convertToCSV(r.message.result, r.message.columns);
-              downloadCSV(csvContent, "volunteer_activity_report.csv");
-            } else {
-              frappe.msgprint("No data to export.");
+        try {
+          await frappe.call({
+            method: "mykartavya.controllers.vol_act_report.get_volunteer_activity_report",
+            args: {
+              activity: frappe.router.current_route[2]
+            },
+            callback: (r) => {
+              frappe.hide_progress();
+              console.log(r, "Response data");
+              if (r.message && Array.isArray(r.message) && r.message.length > 0) {
+                const csvContent = convertToCSV(r.message);
+                downloadCSV(csvContent, "volunteer_activity_report.csv");
+                frappe.show_alert("Report exported successfully!", 5);
+              } else {
+                frappe.msgprint("No data to export.");
+              }
+            },
+            error: (r) => {
+              frappe.hide_progress();
+              console.error("Error fetching data:", r);
+              frappe.msgprint("Error occurred while fetching data.");
             }
-          },
-          error: (err) => {
-            console.error("Export error:", err);
-            frappe.msgprint("Failed to export data.");
-          }
-        });
+          });
+        } catch (err) {
+          console.error("Export error:", err);
+          frappe.msgprint("Failed to export data.");
+        }
       };
-      const convertToCSV = (data, columns) => {
-        const headers = columns.map((col) => col.label || col.fieldname).join(",");
-        const rows = data.map(
-          (row) => columns.map((col) => {
-            const value = row[col.fieldname] || "";
-            return typeof value === "string" && (value.includes(",") || value.includes('"')) ? `"${value.replace(/"/g, '""')}"` : value;
-          }).join(",")
-        );
-        return [headers, ...rows].join("\n");
+      const convertToCSV = (data) => {
+        if (!data || data.length === 0)
+          return "";
+        const headers = Object.keys(data[0]);
+        const headerRow = headers.join(",");
+        const dataRows = data.map((row) => {
+          return headers.map((header) => {
+            const value = row[header] || "";
+            if (typeof value === "string" && (value.includes(",") || value.includes('"') || value.includes("\n"))) {
+              return `"${value.replace(/"/g, '""')}"`;
+            }
+            return value;
+          }).join(",");
+        });
+        return [headerRow, ...dataRows].join("\n");
       };
       const downloadCSV = (csvContent, filename) => {
         const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -13083,4 +13098,4 @@ Only state can be modified.`);
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/
-//# sourceMappingURL=volunteer_report.bundle.6DVDIVAU.js.map
+//# sourceMappingURL=volunteer_report.bundle.I4ZQN5XC.js.map
