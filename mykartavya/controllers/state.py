@@ -75,7 +75,7 @@ def ngo(name=None):
         ngo["activities"] = frappe.get_all(
             "Activity",
             filters={"ngo": ngo["name"]},  
-            fields=["name","title","activity_type","start_date","end_date","karma_points","activity_image"],
+            fields=["name","title","activity_type","start_date","end_date","karma_points","activity_image","workflow_state","activity_status"],
         )
         ngo["opportunity"] = frappe.get_all(
             "Opportunity",

@@ -130,7 +130,7 @@ class Opportunity:
             # Build the main WHERE clause
             main_where_conditions = [
                 "opp.end_date >= CURRENT_DATE()",
-                "opp.status IN ('Published', 'Ongoing')",
+                "opp.opportunity_status IN ('Published', 'Ongoing')",
                 "opp.workflow_state = 'Approved' ",
             ]
             
@@ -200,18 +200,14 @@ class Opportunity:
 
             if isinstance(filter, str):
                 filter = frappe.parse_json(filter)
-
             # Initialize clauses
             where_clauses = [
                 """EXISTS (
                     SELECT 1 FROM `tabOpportunity Activity` as oact
                     WHERE oact.opportunity = opp.name
                 )""",
-                """NOT EXISTS (
-                    SELECT 1 FROM `tabVolunteer Opportunity` AS vo
-                    WHERE vo.activity = opp.name
-                    AND vo.volunteer IS NOT NULL
-                )"""
+                "opp.workflow_state = 'Approved'",
+                "opp.opportunity_status IN ('Published', 'Ongoing')"
             ]
 
             # Exclude opportunities already taken by the user
@@ -325,23 +321,23 @@ class Opportunity:
             return {"msg": "Activity already assigned to the volunteer", "status": 400}
         
 
-        unlimited_vacancies = frappe.db.get_value(
-            "Opportunity", activity, "unlimited_vacancies"
-        )
+        # unlimited_vacancies = frappe.db.get_value(
+        #     "Opportunity", activity, "unlimited_vacancies"
+        # )
 
-        if not unlimited_vacancies:
-            total_vacancies = (
-                frappe.db.get_value("Opportunity", activity, "total_vacancies") or 0
-            )
-            current_count = frappe.db.count(
-                "Volunteer Opportunity", filters={"activity": activity}
-            )
+        # if not unlimited_vacancies:
+        #     total_vacancies = (
+        #         frappe.db.get_value("Opportunity", activity, "total_vacancies") or 0
+        #     )
+        #     current_count = frappe.db.count(
+        #         "Volunteer Opportunity", filters={"activity": activity}
+        #     )
 
-            if current_count >= total_vacancies:
-                return {
-                    "msg": f"Vacancies for this activity are already filled. No more users can be added.",
-                    "status": 400,
-                }
+        #     if current_count >= total_vacancies:
+        #         return {
+        #             "msg": f"Vacancies for this activity are already filled. No more users can be added.",
+        #             "status": 400,
+        #         }
 
         # Assign activity to the volunteer
         doc = frappe.new_doc("Volunteer Opportunity")
@@ -357,11 +353,14 @@ class Opportunity:
     def public_opportunities(name=None):
         try:
             where_clauses = [
-                """EXISTS (
-                    SELECT 1 FROM `tabOpportunity Activity` AS oact
-                    WHERE oact.opportunity = opp.name
-                )AND opp.workflow_state = 'Approved'"""
-            ]
+                    """EXISTS (
+                        SELECT 1 FROM `tabOpportunity Activity` AS oact
+                        WHERE oact.opportunity = opp.name
+                    )""",
+                    "opp.workflow_state = 'Approved'",
+                    "opp.opportunity_status IN ('Published', 'Ongoing')"
+                ]
+
             where_clause = "WHERE " + " AND ".join(where_clauses)
             sql_query = f"""
                 SELECT 

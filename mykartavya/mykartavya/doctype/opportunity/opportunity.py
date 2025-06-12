@@ -12,7 +12,7 @@ class Opportunity(Document):
     def validate(self):
         self.validate_dates()
         self.validate_points()
-        self.validate_hours()
+        # self.validate_hours()
         self.validate_name_length()
         
     def validate_dates(self):
@@ -72,19 +72,19 @@ class Opportunity(Document):
         if self.opportunity_description:
             self.opportunity_description = frappe.utils.strip_html(self.opportunity_description)
 
-        if self.is_global:
-            self.country = None
-            self.state = None
-            self.city = None
-            self.address = None
+        # if self.is_global:
+        #     self.country = None
+        #     self.state = None
+        #     self.city = None
+        #     self.address = None
 
         today_date = today()
-        publish_date = (
-            self.publish_date.strftime("%Y-%m-%d")
-            if isinstance(self.publish_date, datetime)
-            else str(self.publish_date).split(" ")[0]
-            if self.publish_date else None
-        )
+        # publish_date = (
+        #     self.publish_date.strftime("%Y-%m-%d")
+        #     if isinstance(self.publish_date, datetime)
+        #     else str(self.publish_date).split(" ")[0]
+        #     if self.publish_date else None
+        # )
 
         start_date = (
             self.start_date.strftime("%Y-%m-%d")
@@ -100,7 +100,7 @@ class Opportunity(Document):
             if self.end_date else None
         )
         
-        if publish_date == today_date:
+        if start_date == today_date:
             if self.workflow_state == "Approved":
                 self.status = "Published"
         elif start_date == today_date:
