@@ -57,9 +57,8 @@
   "organization_section",
   "column_break_jcsg",
   "auto_approve_volunteers",
-  "team_opportunity",
-  "column_break_org",
   "is_global",
+  "column_break_org",
   "required_feedback_images",
   "location_details_section",
   "country",
@@ -413,12 +412,6 @@
    "label": "Auto Approve Volunteers"
   },
   {
-   "default": "0",
-   "fieldname": "team_opportunity",
-   "fieldtype": "Check",
-   "label": "Team Opportunity"
-  },
-  {
    "fieldname": "section_break_pdxp",
    "fieldtype": "Section Break"
   },
@@ -491,7 +484,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-06-06 19:31:27.546929",
+ "modified": "2025-06-11 17:09:01.792893",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity",
