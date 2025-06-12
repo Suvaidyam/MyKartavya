@@ -16,7 +16,6 @@
  ],
  "fields": [
   {
-   "description": "Enter full name of the person",
    "fieldname": "name1",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -24,7 +23,6 @@
    "reqd": 1
   },
   {
-   "description": "Enter valid email address",
    "fieldname": "email_id",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -33,7 +31,6 @@
    "unique": 1
   },
   {
-   "description": "Enter 10-digit mobile number",
    "fieldname": "mobile_number",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -42,7 +39,6 @@
    "unique": 1
   },
   {
-   "description": "Select birth date",
    "fieldname": "birth_date",
    "fieldtype": "Date",
    "in_list_view": 1,
@@ -58,7 +54,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "description": "Select relevant SDGs",
    "fieldname": "choose_sdgs",
    "fieldtype": "Table MultiSelect",
    "label": "Choose SDG's",
@@ -69,7 +64,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-04 13:45:43.378400",
+ "modified": "2025-06-09 18:52:28.494791",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Birthdays",
@@ -85,6 +80,18 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "MyKartavya Admin",
    "share": 1,
    "write": 1
   }

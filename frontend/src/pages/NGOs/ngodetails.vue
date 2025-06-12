@@ -173,7 +173,7 @@
             </div>
         </div>
         <!-- Show "no data" message when activities array is empty or doesn't exist -->
-        <div v-if="!activities || activities.length === 0" class="flex flex-col items-center justify-center py-20">
+        <div v-if="!activities || activities.length == 0" class="flex flex-col items-center justify-center py-20">
             <div class="w-40 h-40 mb-4">
                 <img src="../../assets/no-data (1).png" alt="No data available" class="w-full h-full object-contain">
             </div>

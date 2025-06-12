@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3 style="font-size: 16px;font-weight: 400; color:#7c7c7c;">
-            Charts for hours Donated
+            Chart for Hours Donated
         </h3>
         <canvas ref="chartCanvas" width="400" height="150"></canvas>
     </div>
@@ -37,11 +37,10 @@ onMounted(() => {
     frappe.call({
         method: 'frappe.desk.query_report.run',
         args: {
-            report_name: 'Charts for hours Donated'
+            report_name: 'Chart for hours Donated'
         },
         callback: (r) => {
             const result = r.message
-
             if (!result || !result.result || result.result.length <= 1) {
                 console.error("No data found in report")
                 return
@@ -58,7 +57,7 @@ onMounted(() => {
                     data: {
                         labels,
                         datasets: [{
-                            label: result.columns[1].label,
+                            label: "Total Hours",
                             data: values,
                             backgroundColor: backgroundColors,
                             hoverBackgroundColor: backgroundColors,

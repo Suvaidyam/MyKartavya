@@ -2,11 +2,47 @@
  {
   "docstatus": 0,
   "doctype": "Workflow State",
-  "icon": "question-sign",
-  "modified": "2025-02-07 22:34:01.193315",
-  "name": "Pending",
+  "icon": "",
+  "modified": "2025-02-21 13:52:00.391587",
+  "name": "Withdrawn",
   "style": "",
-  "workflow_state_name": "Pending"
+  "workflow_state_name": "Withdrawn"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2025-02-21 13:51:01.509109",
+  "name": "Applied",
+  "style": "",
+  "workflow_state_name": "Applied"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2025-06-05 12:28:18.031693",
+  "name": "Submit",
+  "style": "",
+  "workflow_state_name": "Submit"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2025-06-06 17:27:05.765768",
+  "name": "Ongoing",
+  "style": "",
+  "workflow_state_name": "Ongoing"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2025-06-05 14:14:50.135978",
+  "name": "Published",
+  "style": "",
+  "workflow_state_name": "Published"
  },
  {
   "docstatus": 0,
@@ -29,11 +65,11 @@
  {
   "docstatus": 0,
   "doctype": "Workflow State",
-  "icon": "",
-  "modified": "2025-02-21 13:52:00.391587",
-  "name": "Withdrawn",
+  "icon": "question-sign",
+  "modified": "2025-02-07 22:34:01.193315",
+  "name": "Pending",
   "style": "",
-  "workflow_state_name": "Withdrawn"
+  "workflow_state_name": "Pending"
  },
  {
   "docstatus": 0,
@@ -43,15 +79,6 @@
   "name": "Rejected",
   "style": "Danger",
   "workflow_state_name": "Rejected"
- },
- {
-  "docstatus": 0,
-  "doctype": "Workflow State",
-  "icon": "",
-  "modified": "2025-02-21 13:51:01.509109",
-  "name": "Applied",
-  "style": "",
-  "workflow_state_name": "Applied"
  },
  {
   "docstatus": 0,

@@ -13,9 +13,10 @@
  "indicator_color": "green",
  "is_hidden": 0,
  "label": "Master",
+ "link_to": "State",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-06-04 13:56:26.668668",
+ "modified": "2025-06-09 18:39:30.577919",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Master",
@@ -26,11 +27,11 @@
  "quick_lists": [],
  "roles": [
   {
-   "role": "MyKartvya Admin"
+   "role": "MyKartavya Admin"
   }
  ],
  "sequence_id": 8.0,
  "shortcuts": [],
  "title": "Master",
- "type": "Workspace"
+ "type": "Link"
 }

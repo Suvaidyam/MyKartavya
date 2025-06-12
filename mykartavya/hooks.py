@@ -30,6 +30,7 @@ fixtures=[
     # "Website Settings",
     # "User Settings",
     # "Server Script",
+    # "Client Script",
     # "FAQs"
     # "Translation",
     # 'Custom DocPerm',
@@ -37,14 +38,11 @@ fixtures=[
 ]
 
 
-doc_events = {
-    "Company": {
-        "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert",
-    },
-    "NGOs": {
-        "after_insert": "mykartavya.mykartavya.doctype.ngos.ngos.after_insert"
-    }
-}
+# doc_events = {
+#     "Company": {
+#         "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert"
+#     }
+# }
 
 override_doctype_class = {
     "User": "mykartavya.override.CustomUser"
@@ -66,7 +64,7 @@ override_doctype_class = {
 # ------------------
 
 # include js, css files in header of desk.html
-app_include_css = "/assets/mykartavya/css/styleoverrite.css"
+app_include_css = "/assets/mykartavya/css/style.css"
 # app_include_js = "/assets/mykartavya/js/mykartavya.js"
 
 # include js, css files in header of web template

@@ -131,6 +131,7 @@ class Opportunity:
             main_where_conditions = [
                 "opp.end_date >= CURRENT_DATE()",
                 "opp.status IN ('Published', 'Ongoing')",
+                "opp.workflow_state = 'Approved' ",
             ]
             
             # Combine all conditions
@@ -359,7 +360,7 @@ class Opportunity:
                 """EXISTS (
                     SELECT 1 FROM `tabOpportunity Activity` AS oact
                     WHERE oact.opportunity = opp.name
-                )"""
+                )AND opp.workflow_state = 'Approved'"""
             ]
             where_clause = "WHERE " + " AND ".join(where_clauses)
             sql_query = f"""
