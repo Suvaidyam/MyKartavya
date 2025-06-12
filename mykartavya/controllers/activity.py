@@ -182,7 +182,7 @@ class Activity:
                     LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
                     LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
                     WHERE act.end_date >= CURRENT_DATE()
-                    AND act.status IN ('Published', 'Ongoing') 
+                    AND act.activity_status IN ('Published', 'Ongoing') 
                     AND act.workflow_state = "Approved" 
                        {where_clause}
                     GROUP BY act.name
@@ -283,7 +283,7 @@ class Activity:
                     LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
                     LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
                     WHERE act.end_date >= CURRENT_DATE() 
-                    AND act.status IN ('Published', 'Ongoing')
+                    AND act.activity_status IN ('Published', 'Ongoing')
                     AND act.workflow_state = "Approved" 
                     AND act.is_featured = 'Yes'  
                     GROUP BY act.name
