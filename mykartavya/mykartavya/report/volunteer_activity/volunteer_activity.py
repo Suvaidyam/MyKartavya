@@ -1,5 +1,4 @@
 # Copyright (c) 2025, Aniket Singh and contributors
-# For license information, please see license.txt
 
 import frappe
 from frappe import _
@@ -12,27 +11,7 @@ def execute(filters: dict | None = None):
 
 
 def get_columns() -> list[dict]:
-	"""Return columns for the report."""
 	return [
-		# {
-		# 	"label": _("Activity Name"),
-		# 	"fieldname": "name",
-		# 	"fieldtype": "Link",
-		# 	"options": "Volunteer Activity",
-		# 	"width": 150
-		# },
-		# {
-		# 	"label": _("Volunteer Name"),
-		# 	"fieldname": "full_name",
-		# 	"fieldtype": "Data",
-		# 	"width": 200
-		# },
-		# {
-		# 	"label": _("Activity"),
-		# 	"fieldname": "activity",
-		# 	"fieldtype": "Data",
-		# 	"width": 150
-		# },
 		{
 			"label": _("Activity Work Value"),
 			"fieldname": "activity_work_value",
@@ -51,48 +30,15 @@ def get_columns() -> list[dict]:
 			"fieldtype": "Currency",
 			"width": 200
 		},
-		# {
-		# 	"label": _("Com %"),
-		# 	"fieldname": "com_percent",
-		# 	"fieldtype": "Percent",
-		# 	"width": 100
-		# },
-		# {
-		# 	"label": _("Enrollment Status"),
-		# 	"fieldname": "enrollment_wf_state",
-		# 	"fieldtype": "Data",
-		# 	"width": 120
-		# },
-		# {
-		# 	"label": _("Completion Status"),
-		# 	"fieldname": "completion_wf_state",
-		# 	"fieldtype": "Data",
-		# 	"width": 120
-		# },
-		# {
-		# 	"label": _("Karma Points"),
-		# 	"fieldname": "karma_points",
-		# 	"fieldtype": "Int",
-		# 	"width": 100
-		# },
-		# {
-		# 	"label": _("Rating"),
-		# 	"fieldname": "rating",
-		# 	"fieldtype": "Rating",
-		# 	"width": 150
-		# }
 	]
 
 
 def get_data(filters=None) -> list[dict]:
-	"""Fetch data combining Volunteer Activity and Volunteer Opportunity"""
-
 	if not filters:
 		filters = {}
 
 	volunteer = filters.get("volunteer")
 
-	# Apply filter if volunteer is provided
 	conditions = ""
 	values = []
 
@@ -119,7 +65,6 @@ def get_data(filters=None) -> list[dict]:
 
 	activities = frappe.db.sql(query, values, as_dict=True)
 
-	# Process and combine with Opportunity
 	processed_data = []
 
 	for activity in activities:
@@ -145,8 +90,6 @@ def get_data(filters=None) -> list[dict]:
 
 
 def get_opportunity_work_value(volunteer):
-	"""Get work value from Volunteer Opportunity for the given volunteer"""
-
 	opportunity_value = frappe.db.get_value(
 		"Volunteer Opportunity",
 		{
@@ -157,7 +100,6 @@ def get_opportunity_work_value(volunteer):
 	)
 
 	if not opportunity_value:
-		# fallback
 		fallback = frappe.db.sql("""
 			SELECT work_value_in_rupees 
 			FROM `tabVolunteer Opportunity` 
