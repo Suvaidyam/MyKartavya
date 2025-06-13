@@ -412,9 +412,32 @@ def sdg_impacted():
 def add_activity_images(docname, images):
     return Activity.add_activity_images(docname, images)
 
+def list_to_tuple_string(user_permissions):
+    return "(" + ",".join(f"'{item}'" for item in user_permissions) + ")"
+
 @frappe.whitelist()
 def get_sdg_contribution_details():
-    result = frappe.db.sql("""
+    va_conditions = []
+    vo_conditions = []
+    user = frappe.session.user
+    
+    if user != "Administrator":
+        user_role = frappe.db.get_value("SVA User", {"email": user},'role_profile')
+        if user_role == "Company Admin":
+            user_permissions = frappe.db.get_all("User Permission",filters={"user": user,'allow':"Company"},pluck="for_value")
+            if len(user_permissions):
+                va_conditions.append(f"va_user.custom_company IN {list_to_tuple_string(user_permissions)}")
+                vo_conditions.append(f"vo_user.custom_company IN {list_to_tuple_string(user_permissions)}")
+        elif user_role == "NGO Admin":
+            user_permissions = frappe.db.get_all("User Permission",filters={"user": user,'allow':"NGOs"},pluck="for_value")
+            if len(user_permissions):
+                va_conditions.append(f"va_user.custom_ngo IN {list_to_tuple_string(user_permissions)}")
+                vo_conditions.append(f"vo_user.custom_ngo IN {list_to_tuple_string(user_permissions)}")
+
+    va_where_clause = " AND " + " AND ".join(va_conditions) if va_conditions else ""
+    vo_where_clause = " AND " + " AND ".join(vo_conditions) if vo_conditions else ""
+
+    result = frappe.db.sql(f"""
         SELECT 
             COALESCE(sdg.name, 'Unknown SDG') AS sdg_name,
             COALESCE(sdg.sdg_image, '') AS sdg_image,
@@ -431,6 +454,8 @@ def get_sdg_contribution_details():
             FROM `tabVolunteer Activity` AS va
             LEFT JOIN `tabActivity` AS act ON act.name = va.activity
             LEFT JOIN `tabSDGs Child` AS sdc ON act.name = sdc.parent AND sdc.parentfield = 'sdgs'
+            LEFT JOIN `tabSVA User` AS va_user ON va_user.name = va.volunteer
+            WHERE va.completion_wf_state = 'Approved' {va_where_clause}
 
             UNION ALL
 
@@ -443,6 +468,8 @@ def get_sdg_contribution_details():
             FROM `tabVolunteer Opportunity` AS vo
             LEFT JOIN `tabOpportunity` AS act ON act.name = vo.activity
             LEFT JOIN `tabSDGs Child` AS sdc ON act.name = sdc.parent AND sdc.parentfield = 'sdgs'
+            LEFT JOIN `tabSVA User` AS vo_user ON vo_user.name = vo.volunteer
+            WHERE vo.completion_wf_state = 'Approved' {vo_where_clause}
         ) AS data
         LEFT JOIN `tabSDG` AS sdg ON data.sdgs = sdg.name
         GROUP BY sdg.name, sdg.sdg_image
