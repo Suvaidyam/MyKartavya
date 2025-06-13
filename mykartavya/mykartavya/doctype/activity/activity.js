@@ -19,6 +19,17 @@ frappe.ui.form.on("Activity", {
                         }
                         return element
                     },
+                    // duration: function (value,column,rows){
+                    //     console.log(value,'value');
+                    //     let result = frappe.utils.seconds_to_duration(value,{hide_days:true});
+                    //     value = '0 min'
+                    //     if (result?.hours && result?.minutes){
+                    //         value = `${result.hours} ${result.hours > 1 ? 'hrs' : 'hr'} ${result.minutes} ${result.minutes > 1 ? 'mins' : 'min'}`
+                    //     }else if (result.minutes){
+                    //         value = `${result.minutes} ${result.minutes > 1 ? 'mins' : 'min'}`
+                    //     }
+                    //     return value
+                    // },
                     completion_wf_state: function (value,column, row) {
                         if(value === "Pending") {
                             return `<span class="badge text-muted" style="padding:5px;font-size:12px;">${__('Pending')}</span>`;

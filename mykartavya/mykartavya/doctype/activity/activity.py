@@ -8,7 +8,6 @@ from datetime import datetime
 class Activity(Document):
     def validate(self):
         self.validate_dates() 
-        self.validate_time()
         self.handle_activity_published_date_starts()
         self.validate_reward()
         self.validate_location()
@@ -37,13 +36,6 @@ class Activity(Document):
         if self.reporting_deadline and self.end_date:
             if get_datetime(self.reporting_deadline) <= get_datetime(self.end_date):
                 frappe.throw(_("Reporting Deadline must be after End Date"))
-
-    def validate_time(self):
-        try:
-            if self.start_time_hr >= self.end_time_hr:
-                frappe.throw(_("End Time must be after Start Time"))
-        except ValueError as e:
-            frappe.throw(str(e))
 
     
     def create_time_obj(self, hour, minute, meridiem):
