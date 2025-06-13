@@ -35,6 +35,7 @@ fixtures=[
     # "Translation",
     # 'Custom DocPerm',
     # 'My Theme',
+    # 'Opportunity Kind'
 ]
 
 
@@ -211,7 +212,8 @@ app_include_css = "/assets/mykartavya/css/style.css"
 scheduler_events = {
     "cron":{
        '1 0 * * *': [
-            "mykartavya.controllers.cron.process_activities"
+            "mykartavya.controllers.cron.process_activities",
+            "mykartavya.controllers.cron.opportunity_publish"
         ]
     }
 }

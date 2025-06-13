@@ -125,14 +125,14 @@ class Activity(Document):
 
         if publish_date == today_date:
             if self.workflow_state == "Approved":
-                self.status = "Published"
+                self.activity_status = "Published"
         elif start_date == today_date:
             if self.workflow_state == "Approved":
-                self.status = "Ongoing"
+                self.activity_status = "Ongoing"
         elif end_date == today_date:
-            self.status = "Ended"
+            self.activity_status = "Ended"
         else:
-            self.status = "Draft"
+            self.activity_status = "Draft"
 
     def validate_image(self):
         for field in ["activity_image", "reward_image"]:

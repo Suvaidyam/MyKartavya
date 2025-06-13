@@ -13,9 +13,10 @@
  "indicator_color": "green",
  "is_hidden": 0,
  "label": "Web User",
+ "link_to": "Contacts",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-06-03 17:06:12.195817",
+ "modified": "2025-06-12 11:37:50.152202",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Web User",
@@ -32,5 +33,5 @@
  "sequence_id": 25.0,
  "shortcuts": [],
  "title": "Web User",
- "type": "Workspace"
+ "type": "Link"
 }
