@@ -32,19 +32,35 @@ def get_columns() -> list[dict]:
 		},
 	]
 
-
+def list_to_tuple_string(user_permissions):
+    return "(" + ",".join(f"'{item}'" for item in user_permissions) + ")"
 def get_data(filters=None) -> list[dict]:
 	if not filters:
 		filters = {}
 
 	volunteer = filters.get("volunteer")
 
-	conditions = ""
+	conditions = []
 	values = []
+	user = frappe.session.user
+	if user != "Administrator":
+		user_role = frappe.db.get_value("SVA User", {"email": user},'role_profile')
+		if user_role == "Company Admin":
+			user_permissions = frappe.db.get_all("User Permission",filters={"user": user,'allow':"Company"},pluck="for_value")
+			if len(user_permissions):
+				conditions.append(f"u.custom_company IN {list_to_tuple_string(user_permissions)}")
+		elif user_role == "NGO Admin":
+			user_permissions = frappe.db.get_all("User Permission",filters={"user": user,'allow':"NGOs"},pluck="for_value")
+			if len(user_permissions):
+				conditions.append(f"u.custom_ngo IN {list_to_tuple_string(user_permissions)}")
 
 	if volunteer:
-		conditions = "WHERE va.volunteer = %s"
+		conditions.append("va.volunteer = %s")
 		values.append(volunteer)
+
+	where_clause = ""
+	if conditions:
+		where_clause = "WHERE " + " AND ".join(conditions)
 
 	query = f"""
 		SELECT 
@@ -60,7 +76,7 @@ def get_data(filters=None) -> list[dict]:
 			va.volunteer
 		FROM `tabVolunteer Activity` AS va
 		LEFT JOIN `tabSVA User` AS u ON u.name = va.volunteer
-		{conditions}
+		{where_clause}
 	"""
 
 	activities = frappe.db.sql(query, values, as_dict=True)
