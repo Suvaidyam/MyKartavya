@@ -116,7 +116,7 @@ def get_data(filters):
             act.title,
             act.start_date,
             act.end_date,
-            act.status,
+            act.activity_status,
             v.custom_volunteer_type,
             CONCAT(
                 FLOOR(IFNULL(va.duration, 0) / 3600), 'h ',

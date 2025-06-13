@@ -122,7 +122,7 @@ def get_data(filters):
 			act.title,
 			act.docstatus,
 			act.activity_type,
-			act.status,
+			act.activity_status,
 			act.ngo,
 			act.company,
 			act.publish_date,

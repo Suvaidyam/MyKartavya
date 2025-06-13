@@ -438,7 +438,7 @@ def get_sdg_contribution_details():
             SELECT 
                 vo.volunteer,
                 vo.work_value_in_rupees AS total_work_value,
-                act.hours AS total_hours,
+                act.min_volunteering_time AS total_hours,
                 sdc.sdgs
             FROM `tabVolunteer Opportunity` AS vo
             LEFT JOIN `tabOpportunity` AS act ON act.name = vo.activity
