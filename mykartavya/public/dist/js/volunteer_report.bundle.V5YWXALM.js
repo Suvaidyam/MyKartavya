@@ -12800,21 +12800,39 @@ Only state can be modified.`);
           }
         );
       }
+      const handleExport = () => {
+        if (volunteers.value.length === 0) {
+          frappe.msgprint("No data to export.");
+          return;
+        }
+        const columns = Object.keys(volunteers.value[0]).map((key) => ({
+          fieldname: key,
+          label: key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " ")
+        }));
+        const csvContent = convertToCSV(volunteers.value, columns);
+        downloadCSV(csvContent, "volunteer_activity_report.csv");
+      };
       const convertToCSV = (data, columns) => {
-        const headers = columns.map((col) => col.label || col.fieldname).join(",");
+        const headers = columns.map((col) => col.label).join(",");
         const rows = data.map(
           (row) => columns.map((col) => {
-            const value = row[col.fieldname] || "";
-            return typeof value === "string" && (value.includes(",") || value.includes('"')) ? `"${value.replace(/"/g, '""')}"` : value;
+            let value = row[col.fieldname] != null ? row[col.fieldname] : "";
+            if (typeof value === "string") {
+              value = value.replace(/"/g, '""');
+              if (value.includes(",") || value.includes('"') || value.includes("\n")) {
+                value = `"${value}"`;
+              }
+            }
+            return value;
           }).join(",")
         );
         return [headers, ...rows].join("\n");
       };
       const downloadCSV = (csvContent, filename) => {
         const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-        const link = document.createElement("a");
         const url = URL.createObjectURL(blob);
-        link.href = url;
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
         link.setAttribute("download", filename);
         document.body.appendChild(link);
         link.click();
@@ -12831,7 +12849,7 @@ Only state can be modified.`);
       onMounted(() => {
         fetchData();
       });
-      const __returned__ = { rotated, volunteers, activity, fetchData, formatDuration, getStatusClass, rejectActivity, convertToCSV, downloadCSV, RenderVolAct, ref, onMounted };
+      const __returned__ = { rotated, volunteers, activity, fetchData, formatDuration, getStatusClass, rejectActivity, handleExport, convertToCSV, downloadCSV, RenderVolAct, ref, onMounted };
       Object.defineProperty(__returned__, "__isScriptSetup", { enumerable: false, value: true });
       return __returned__;
     }
@@ -12933,7 +12951,7 @@ Only state can be modified.`);
           ]),
           createBaseVNode("button", {
             class: "export-btn",
-            onClick: _cache[0] || (_cache[0] = (...args) => _ctx.handleExport && _ctx.handleExport(...args))
+            onClick: $setup.handleExport
           }, [
             _hoisted_10,
             createTextVNode(" Export Report ")
@@ -12951,7 +12969,7 @@ Only state can be modified.`);
               }, [
                 createBaseVNode("td", {
                   class: "vol-index-cell",
-                  onClick: _cache[1] || (_cache[1] = ($event) => $setup.RenderVolAct())
+                  onClick: _cache[0] || (_cache[0] = ($event) => $setup.RenderVolAct())
                 }, toDisplayString(index + 1), 1),
                 createBaseVNode("td", _hoisted_14, toDisplayString(volunteer == null ? void 0 : volunteer.full_name), 1),
                 createBaseVNode("td", null, toDisplayString($setup.formatDuration(volunteer == null ? void 0 : volunteer.duration)), 1),
@@ -13058,4 +13076,4 @@ Only state can be modified.`);
 * (c) 2018-present Yuxi (Evan) You and Vue contributors
 * @license MIT
 **/
-//# sourceMappingURL=volunteer_report.bundle.HCPQHQ2C.js.map
+//# sourceMappingURL=volunteer_report.bundle.V5YWXALM.js.map
