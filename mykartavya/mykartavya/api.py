@@ -109,17 +109,21 @@ def register_company(**kwargs):
             "volunteering_csr_activities": kwargs.get("volunteering_csr_activities"),
             "employee_engagement": kwargs.get("employee_engagement"),
         })
-        
-        company.insert(ignore_permissions=True)
-        
+
+        company.insert(ignore_permissions=True,ignore_mandatory=True)
+        filename = f"company_logo_{frappe.generate_hash()}.png"
+        base64_string = kwargs.get("company_logo")
+        company.company_logo = save_base64_image("Company",company.name,base64_string,filename)
+        company.save()
+        create_company_logo(company)
+
         return {
             "status": "success",
             "message": "Company registered successfully",
             "data": company.as_dict()
         }
-        
+
     except ValueError as e:
-        # Handle type conversion errors
         frappe.log_error(f"Company Registration Error - Invalid numeric value: {str(e)}")
         return {
             "status": "error",
@@ -130,4 +134,36 @@ def register_company(**kwargs):
         return {
             "status": "error",
             "message": str(e)
-        } 
+        }
+
+
+def create_company_logo(doc):
+    if not doc.company_logo:
+        frappe.log_error("Company logo is missing; skipping logo creation.")
+        return
+
+    logo = frappe.new_doc("Company Logos")
+    logo.update({
+        "company_name": doc.company_name,
+        "company_logo": doc.company_logo,
+        "enabled": 1
+    })
+    logo.insert(ignore_permissions=True)
+  
+
+def save_base64_image(dt,docname, base64_string, filename):
+    # Remove the data:image/png;base64, or similar prefix if present
+    if ',' in base64_string:
+        base64_string = base64_string.split(',')[1]
+ 
+    # Decode base64 string
+    file_content = base64.b64decode(base64_string)
+    # Save file using Frappe's file manager
+    saved_file = save_file(
+        fname=filename,
+        content=file_content,
+        dt=dt,       # e.g. "Employee", "Item", etc.
+        dn=docname,
+        decode=False             # Already decoded
+    )
+    return saved_file.file_url

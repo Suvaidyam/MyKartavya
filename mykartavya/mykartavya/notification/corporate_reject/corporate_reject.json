@@ -1,0 +1,31 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "condition": "doc.workflow_state =='Rejected'",
+ "creation": "2025-06-13 15:09:30.342895",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Company",
+ "enabled": 1,
+ "event": "Value Change",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n   <title>Corporate Registration Request Not Approved/title>\n  <style>\n    * {\n      box-sizing: border-box;\n    }\n\n  \n    body { \n \n        font-family: 'Arial', sans-serif; \n \n        background-color: #f4f4f4; \n \n        margin: 0; \n \n        padding: 0; \n \n    } \n \n    .email-container { \n \n        max-width: 600px; \n \n        margin: 30px auto; \n \n        background-color: #ffffff; \n \n        padding: 20px; \n \n        border-radius: 8px; \n \n        box-shadow: 0 2px 5px rgba(0,0,0,0.1); \n \n    } \n \n    .header { \n \n        text-align: center; \n \n    } \n \n    .header img { \n \n        max-width: 150px; \n \n    } \n \n    .content { \n \n        text-align: center; \n \n        color: #333333; \n \n    } \n \n    .info-block { \n \n        font-size: 18px; \n \n        font-weight: bold; \n \n        margin: 15px 0; \n \n        color: #555555; \n \n    } \n \n    .footer { \n \n        text-align: center; \n \n        margin-top: 30px; \n \n        font-size: 14px; \n \n        color: #777777; \n \n    } \n \n    .button { \n \n        display: inline-block; \n \n        padding: 10px 20px; \n \n        background-color: #555555; \n \n        color: #ffffff; \n \n        text-decoration: none; \n \n        border-radius: 5px; \n \n        margin-top: 20px; \n \n        font-weight: bold; \n \n    } \n \n    .button:hover { \n \n        background-color: #333333; \n \n    } \n \n    @media (max-width: 600px) { \n \n        .email-container { \n \n            padding: 15px; \n \n        } \n \n    }\n     .logo img {\n            max-width: 300px;\n            height: auto;\n        }\n  </style>\n</head>\n\n<body>\n \n <div class=\"email-container\"> \n \n    <div class=\"header\"> \n \n        <div class=\"logo\">\n      <img src=\"https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png\"\n        alt=\"MyKartavya Logo\" />\n    </div> \n \n    </div> \n \n    <div class=\"content\"> \n \n        <h2 style=\"color: #555555;\">Volunteer Registration Successful</h2> \n \n        <p>Hello, <strong>{{doc.first_name}}</strong></p> \n \n        <p>You have been successfully registered as a volunteer.</p> \n \n        <div class=\"info-block\"> \n \n            <p>Email: <a href=\"mailto:{{doc.email}}\" style=\"color: #555555; text-decoration: none;\">{{doc.email}}</a></p> \n \n            <p>Mobile Number: {{ doc.custom_phone_number.replace('+91-', '') }}</p> \n \n        </div> \n \n        <p>You can now log in using your credentials.</p> \n \n    </div> \n \n    <div class=\"footer\"> \n \n        <p>Thank you!<br>Team MyKartavya</p> \n \n        <p>If you did not initiate this registration, please contact us immediately.</p> \n \n    </div> \n \n</div>\n</body>\n\n</html>\n",
+ "message_type": "HTML",
+ "minutes_offset": 0,
+ "modified": "2025-06-13 15:37:31.312978",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Corporate Reject",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_document_field": "email"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "subject": "Corporate Registration Request Not Approved",
+ "value_changed": "workflow_state"
+}

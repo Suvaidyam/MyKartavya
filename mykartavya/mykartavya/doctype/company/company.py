@@ -89,6 +89,7 @@ class Company(Document):
                  frappe.throw("Company Logo file size must be between 1MB and 5MB")
 
     def before_save(self):
+
         # Strip whitespace from text fields
         self.company_name = self.company_name.strip()
         self.first_name = self.first_name.strip()
@@ -104,6 +105,7 @@ class Company(Document):
 
         if self.india_headquarters_address:
             self.india_headquarters_address = self.india_headquarters_address.strip()
+    
 
     def after_insert(doc):
         if doc.registration_type == "Admin Registration":
@@ -111,9 +113,9 @@ class Company(Document):
             status = frappe.db.get_value("Company", doc.name, "workflow_state")
             frappe.db.set_value("Company", doc.name, "registration_status", status)
 
+            create_company_logo(doc)
         # Create SVA User for both registration types
         insert_sva_user(doc)
-        test(doc)
 
 def get_role_profile(registration_type):
     """Get appropriate role profile based on registration type"""
@@ -191,7 +193,7 @@ def generate_random_password(length=10):
     random.shuffle(password)
     return ''.join(password)
 
-def test(doc):
+def create_company_logo(doc):
     logo = frappe.new_doc("Company Logos")
     logo.update({
         "company_name": doc.company_name,
