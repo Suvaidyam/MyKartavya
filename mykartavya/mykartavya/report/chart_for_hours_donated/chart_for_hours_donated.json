@@ -1,5 +1,6 @@
 {
  "add_total_row": 0,
+ "add_translate_data": 0,
  "columns": [],
  "creation": "2025-06-10 13:15:08.359356",
  "disabled": 0,
@@ -9,16 +10,23 @@
  "idx": 0,
  "is_standard": "Yes",
  "letterhead": null,
- "modified": "2025-06-10 17:20:44.134896",
+ "modified": "2025-06-13 17:45:09.652012",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Chart for hours Donated",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "SELECT \n   sdg.sdg AS sdg_name,\n   COALESCE(SUM(va.duration)/60/60, 0) + COALESCE(SUM(vo.duration)/60/60, 0) AS total_hours\nFROM \n   `tabSDG` AS sdg\nLEFT JOIN `tabSDGs Child` AS sdc \n   ON sdg.name = sdc.sdgs\nLEFT JOIN `tabActivity` AS act \n   ON act.name = sdc.parent AND sdc.parentfield = 'sdgs'\nLEFT JOIN `tabVolunteer Activity` AS va \n   ON va.activity = act.name AND  va.completion_wf_state = 'Approved'\nLEFT JOIN `tabOpportunity` AS opp\n   ON opp.name = sdc.parent AND sdc.parentfield = 'sdgs'  \nLEFT JOIN `tabVolunteer Opportunity` AS vo \n   ON vo.activity = opp.name AND vo.completion_wf_state = 'Approved'\nGROUP BY \n   sdg.sdg\nORDER BY \n   sdg_name ASC;",
+ "query": "",
  "ref_doctype": "Activity",
  "report_name": "Chart for hours Donated",
- "report_type": "Query Report",
- "roles": [],
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "Company Admin"
+  },
+  {
+   "role": "MyKartavya Admin"
+  }
+ ],
  "timeout": 0
 }
