@@ -52,7 +52,8 @@
                         <td>{{ volunteer?.rating }}</td>
                         <td><i class="ellipsis">{{ volunteer?.com_percent }}%</i></td>
                         <td class="flex justify-center">
-                            <button class="reject-btn btn btn-danger " @click="rejectActivity({ name: volunteer?.name })"
+                            <button class="reject-btn btn btn-danger "
+                                @click="rejectActivity({ name: volunteer?.name })"
                                 :disabled="volunteer?.completion_wf_state === 'Rejected'">
                                 Reject
                             </button>
@@ -100,10 +101,10 @@ const fetchData = async () => {
 // Format seconds to HH:mm:ss
 const formatDuration = (seconds) => {
     if (!seconds || isNaN(seconds)) return '0m'
-    
+
     const h = Math.floor(seconds / 3600)
     const m = Math.floor((seconds % 3600) / 60)
-    
+
     if (h > 0 && m > 0) {
         return `${h}h ${m}m`
     } else if (h > 0) {
@@ -153,60 +154,51 @@ function rejectActivity(doc) {
     )
 }
 
-// const handleExport = async () => {
-//     if (volunteers.value.length === 0) {
-//         frappe.msgprint('No data to export.')
-//         return
-//     }
+const handleExport = () => {
+    if (volunteers.value.length === 0) {
+        frappe.msgprint('No data to export.')
+        return
+    }
 
-//     await frappe.call({
-//         method: 'frappe.desk.query_report.run',
-//         args: {
-//             report_name: 'Volunteer Activity',
-//             filters: {}, // Add any filters if needed
-//         },
-//         callback: (r) => {
-//             if (r.message && r.message.result) {
-//                 // Convert data to CSV
-//                 const csvContent = convertToCSV(r.message.result, r.message.columns)
-//                 downloadCSV(csvContent, 'volunteer_activity_report.csv')
-//             } else {
-//                 frappe.msgprint('No data to export.')
-//             }
-//         },
-//         error: (err) => {
-//             console.error('Export error:', err)
-//             frappe.msgprint('Failed to export data.')
-//         }
-//     })
-// }
+    // Extract column names dynamically from first object
+    const columns = Object.keys(volunteers.value[0]).map(key => ({
+        fieldname: key,
+        label: key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' ')
+    }))
+
+    const csvContent = convertToCSV(volunteers.value, columns)
+    downloadCSV(csvContent, 'volunteer_activity_report.csv')
+}
+
 const convertToCSV = (data, columns) => {
-    const headers = columns.map(col => col.label || col.fieldname).join(',')
+    const headers = columns.map(col => col.label).join(',')
     const rows = data.map(row =>
         columns.map(col => {
-            const value = row[col.fieldname] || ''
+            let value = row[col.fieldname] != null ? row[col.fieldname] : ''
             // Escape commas and quotes in CSV
-            return typeof value === 'string' && (value.includes(',') || value.includes('"'))
-                ? `"${value.replace(/"/g, '""')}"`
-                : value
+            if (typeof value === 'string') {
+                value = value.replace(/"/g, '""') // escape quotes
+                if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+                    value = `"${value}"`
+                }
+            }
+            return value
         }).join(',')
     )
     return [headers, ...rows].join('\n')
 }
 
-// Helper function to download CSV
 const downloadCSV = (csvContent, filename) => {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-    const link = document.createElement('a')
     const url = URL.createObjectURL(blob)
-    link.href = url
+    const link = document.createElement('a')
+    link.setAttribute('href', url)
     link.setAttribute('download', filename)
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
     URL.revokeObjectURL(url)
 }
-
 
 function RenderVolAct() {
     if (activity.value) {

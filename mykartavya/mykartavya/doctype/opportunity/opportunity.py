@@ -102,14 +102,11 @@ class Opportunity(Document):
         
         if start_date == today_date:
             if self.workflow_state == "Approved":
-                self.status = "Published"
-        elif start_date == today_date:
-            if self.workflow_state == "Approved":
-                self.status = "Ongoing"
+                self.opportunity_status = "Published"
         elif end_date == today_date:
-            self.status = "Ended"
+            self.opportunity_status = "Ended"
         else:
-            self.status = "Draft"
+            self.opportunity_status = "Draft"
 
     def after_insert(doc):
         try:
