@@ -3,12 +3,13 @@
 
 frappe.ui.form.on("Opportunity", {
     setup(frm) {
+        const isMyKartvyaAdmin = frappe.user_roles.includes("MyKartvya Admin");
         frm['dt_events'] = {
             "Volunteer Opportunity": {
                 formatter: {
                     action: function (element, column, row) {
-                        if (row.completion_wf_state === "Pending") {
-                            element.setAttribute('style', 'display:none;');
+                        if (!isMyKartvyaAdmin||row.completion_wf_state === "Pending") {
+                            element.setAttribute('disabled', true);
                         } else {
                             // if(row.completion_wf_state === "Submitted"){
                             //     element.setAttribute('style','background-color:green;')

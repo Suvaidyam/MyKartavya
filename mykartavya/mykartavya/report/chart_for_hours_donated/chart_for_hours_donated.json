@@ -10,7 +10,7 @@
  "idx": 0,
  "is_standard": "Yes",
  "letterhead": null,
- "modified": "2025-06-13 17:45:09.652012",
+ "modified": "2025-06-14 09:03:29.657338",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Chart for hours Donated",
@@ -25,7 +25,7 @@
    "role": "Company Admin"
   },
   {
-   "role": "MyKartavya Admin"
+   "role": "MyKartvya Admin"
   }
  ],
  "timeout": 0

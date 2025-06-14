@@ -15,7 +15,7 @@
  "label": "MyKartavya Users",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-06-13 20:01:49.347606",
+ "modified": "2025-06-14 09:06:25.437602",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "MyKartavya Users",
@@ -43,7 +43,7 @@
  "quick_lists": [],
  "roles": [
   {
-   "role": "MyKartavya Admin"
+   "role": "MyKartvya Admin"
   }
  ],
  "sequence_id": 2.0,

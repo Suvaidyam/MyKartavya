@@ -64,7 +64,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-12 20:55:09.411402",
+ "modified": "2025-06-14 09:00:30.072753",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Birthdays",
@@ -80,6 +80,18 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "MyKartvya Admin",
    "share": 1,
    "write": 1
   }
