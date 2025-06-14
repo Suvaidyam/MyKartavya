@@ -1,4 +1,4 @@
-frappe.dom.set_style("/* sfc-style:/workspace/development/frappe_docker/frappe-bench/apps/mykartavya/mykartavya/public/js/Donated Hours/donated_hours.vue?type=style&index=0 */\ncanvas[data-v-ea48f288] {\n  max-width: 100%;\n}\nh3[data-v-ea48f288] {\n  color: white;\n  background-color: #b31717;\n  padding: 10px;\n  text-align: center;\n}\n/*# sourceMappingURL=donated_hours.bundle.JVMUS2VM.css.map */\n");
+frappe.dom.set_style("/* sfc-style:/workspace/development/frappe-bench/apps/mykartavya/mykartavya/public/js/Amount_saved/amount_saved.vue?type=style&index=0 */\ncanvas[data-v-aa1cc0ba] {\n  max-width: 100%;\n}\nh3[data-v-aa1cc0ba] {\n  color: white;\n  background-color: #b31717;\n  padding: 10px;\n  text-align: center;\n}\n/*# sourceMappingURL=amount_saved.bundle.DUB7FNGC.css.map */\n");
 (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
@@ -36151,7 +36151,7 @@ ${codeFrame}` : message);
     }
   });
 
-  // ../mykartavya/mykartavya/public/js/Donated Hours/donated_hours.bundle.js
+  // ../mykartavya/mykartavya/public/js/Amount_saved/amount_saved.bundle.js
   var import_vue3 = __toESM(require_vue());
 
   // node_modules/vue-demi/lib/index.mjs
@@ -37148,7 +37148,7 @@ Only state can be modified.`);
   var skipHydrateSymbol = true ? Symbol("pinia:skipHydration") : Symbol();
   var { assign } = Object;
 
-  // sfc-script:/workspace/development/frappe_docker/frappe-bench/apps/mykartavya/mykartavya/public/js/Donated Hours/donated_hours.vue?type=script
+  // sfc-script:/workspace/development/frappe-bench/apps/mykartavya/mykartavya/public/js/Amount_saved/amount_saved.vue?type=script
   var import_vue = __toESM(require_vue());
 
   // ../mykartavya/node_modules/@kurkle/color/dist/color.esm.js
@@ -51445,9 +51445,9 @@ Only state can be modified.`);
   // ../mykartavya/node_modules/chart.js/auto/auto.js
   Chart.register(...registerables);
 
-  // sfc-script:/workspace/development/frappe_docker/frappe-bench/apps/mykartavya/mykartavya/public/js/Donated Hours/donated_hours.vue?type=script
-  var donated_hours_default = {
-    __name: "donated_hours",
+  // sfc-script:/workspace/development/frappe-bench/apps/mykartavya/mykartavya/public/js/Amount_saved/amount_saved.vue?type=script
+  var amount_saved_default = {
+    __name: "amount_saved",
     setup(__props, { expose: __expose }) {
       __expose();
       const chartCanvas = (0, import_vue.ref)(null);
@@ -51474,7 +51474,7 @@ Only state can be modified.`);
         frappe.call({
           method: "frappe.desk.query_report.run",
           args: {
-            report_name: "Chart for hours Donated"
+            report_name: "Chart for Amount Saved"
           },
           callback: (r) => {
             const result = r.message;
@@ -51482,8 +51482,9 @@ Only state can be modified.`);
               console.error("No data found in report");
               return;
             }
+            console.log("result", result.result);
             const labels = result.result.map((item) => item.sdg_name);
-            const values = result.result.map((item) => item.total_hours);
+            const values = result.result.map((item) => item.work_value_rupees);
             const backgroundColors = labels.map((label) => sdgColors[label] || "#ccc");
             if (chartCanvas.value) {
               new Chart(chartCanvas.value, {
@@ -51491,7 +51492,7 @@ Only state can be modified.`);
                 data: {
                   labels,
                   datasets: [{
-                    label: "Total Hours",
+                    label: "Amount Saved",
                     data: values,
                     backgroundColor: backgroundColors,
                     hoverBackgroundColor: backgroundColors,
@@ -51520,10 +51521,10 @@ Only state can be modified.`);
     }
   };
 
-  // sfc-template:/workspace/development/frappe_docker/frappe-bench/apps/mykartavya/mykartavya/public/js/Donated Hours/donated_hours.vue?type=template
+  // sfc-template:/workspace/development/frappe-bench/apps/mykartavya/mykartavya/public/js/Amount_saved/amount_saved.vue?type=template
   var import_vue2 = __toESM(require_vue());
-  var _withScopeId = (n) => ((0, import_vue2.pushScopeId)("data-v-ea48f288"), n = n(), (0, import_vue2.popScopeId)(), n);
-  var _hoisted_1 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ (0, import_vue2.createElementVNode)("h3", { style: { "font-size": "16px", "font-weight": "400", "color": "#7c7c7c" } }, " Chart for Hours Donated ", -1));
+  var _withScopeId = (n) => ((0, import_vue2.pushScopeId)("data-v-aa1cc0ba"), n = n(), (0, import_vue2.popScopeId)(), n);
+  var _hoisted_1 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ (0, import_vue2.createElementVNode)("h3", { style: { "font-size": "16px", "font-weight": "400", "color": "#7c7c7c" } }, " Chart for Amount Saved ", -1));
   var _hoisted_2 = {
     ref: "chartCanvas",
     width: "400",
@@ -51536,14 +51537,14 @@ Only state can be modified.`);
     ]);
   }
 
-  // ../mykartavya/mykartavya/public/js/Donated Hours/donated_hours.vue
-  donated_hours_default.render = render;
-  donated_hours_default.__file = "../mykartavya/mykartavya/public/js/Donated Hours/donated_hours.vue";
-  donated_hours_default.__scopeId = "data-v-ea48f288";
-  var donated_hours_default2 = donated_hours_default;
+  // ../mykartavya/mykartavya/public/js/Amount_saved/amount_saved.vue
+  amount_saved_default.render = render;
+  amount_saved_default.__file = "../mykartavya/mykartavya/public/js/Amount_saved/amount_saved.vue";
+  amount_saved_default.__scopeId = "data-v-aa1cc0ba";
+  var amount_saved_default2 = amount_saved_default;
 
-  // ../mykartavya/mykartavya/public/js/Donated Hours/donated_hours.bundle.js
-  var DonatedHours = class {
+  // ../mykartavya/mykartavya/public/js/Amount_saved/amount_saved.bundle.js
+  var AmountSaved = class {
     constructor({ wrapper }) {
       this.$wrapper = $(wrapper);
       this.app = null;
@@ -51568,7 +51569,7 @@ Only state can be modified.`);
     }
     setup_app() {
       let pinia = createPinia();
-      this.app = (0, import_vue3.createApp)(donated_hours_default2);
+      this.app = (0, import_vue3.createApp)(amount_saved_default2);
       SetVueGlobals(this.app);
       this.app.use(pinia);
       if (this.$wrapper && this.$wrapper.get(0)) {
@@ -51579,8 +51580,8 @@ Only state can be modified.`);
     }
   };
   frappe.provide("frappe.ui");
-  frappe.ui.DonatedHours = DonatedHours;
-  var donated_hours_bundle_default = DonatedHours;
+  frappe.ui.AmountSaved = AmountSaved;
+  var amount_saved_bundle_default = AmountSaved;
 })();
 /*!
  * @kurkle/color v0.3.4
@@ -51600,4 +51601,4 @@ Only state can be modified.`);
  * @license MIT
  */
 /*! #__NO_SIDE_EFFECTS__ */
-//# sourceMappingURL=donated_hours.bundle.MB7J7ZCO.js.map
+//# sourceMappingURL=amount_saved.bundle.ZXZ2KL4B.js.map
