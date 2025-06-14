@@ -8,4 +8,4 @@ from frappe.model.document import Document
 class OpportunityActivity(Document):
 	def after_insert(self):
 		if self.opportunity:
-			frappe.db.set_value("Opportunity", self.opportunity, "status", "Published")
+			frappe.db.set_value("Opportunity", self.opportunity, "opportunity_status", "Published")

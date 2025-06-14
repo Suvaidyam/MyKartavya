@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Successfully Completed - MyKartavya</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #ffffff;
+            padding: 20px 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo img {
+            max-width: 250px;
+            height: auto;
+        }
+       
+        h1 {
+            color: #666;
+            font-size: 26px;
+            margin: 0px 0 5px 0;
+            font-weight: normal;
+            line-height: 1.3;
+        }
+        
+        .greeting {
+            color: #666;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        
+        .congratulations {
+            color: #666;
+            font-size: 16px;
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+        
+        .campaign-name {
+            font-size: 20px;
+            color: #333;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .thank-you-message {
+            color: #666;
+            font-size: 16px;
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+        
+        .contact-message {
+            color: #666;
+            font-size: 16px;
+            
+            line-height: 1.4;
+        }
+        
+        .closing {
+            margin-top: 10px;
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .team-signature {
+            margin-top: 2px;
+            color: #888;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo">
+        </div>
+        
+        <h1>Activity Successfully Completed</h1>
+        
+        <div class="greeting">
+            Hello, <strong>{{doc.volunteer_name}}</strong>
+        </div>
+        
+        <div class="congratulations">
+            Congratulations! You have successfully completed the following:
+        </div>
+        
+        <div class="campaign-name">
+            {{doc.activity_name}}
+        </div>
+        
+        <div class="thank-you-message">
+            Thank you for your valuable contribution to this initiative.
+        </div>
+        
+        <div class="contact-message">
+            If you have any questions or need further assistance, feel free to contact us.
+        </div>
+        
+        <div class="closing">
+            Thank you!
+        </div>
+        <div class="team-signature">
+            Team MyKartavya
+        </div>
+    </div>
+</body>
+</html>
