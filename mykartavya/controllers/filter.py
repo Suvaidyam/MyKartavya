@@ -71,7 +71,7 @@ class Filters:
             FROM `tabActivity` AS act 
             LEFT JOIN `tabSDGs Child` AS sd ON act.name = sd.parent
             LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
-            WHERE act.status = 'Published' {where_clause}
+            WHERE act.activity_status IN ('Published', 'Ongoing') {where_clause}
         """,
             as_dict=1,
         )
@@ -83,7 +83,7 @@ class Filters:
             FROM `tabOpportunity` AS opp 
             LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
             LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
-            WHERE opp.status = 'Published'
+            WHERE opp.opportunity_status IN ('Published', 'Ongoing')
         """,
             as_dict=1,
         )
@@ -97,7 +97,7 @@ class Filters:
             f"""
             SELECT DISTINCT act.activity_type AS name
             FROM `tabActivity` AS act 
-            WHERE act.status = 'Published' {where_clause}
+            WHERE act.activity_status IN ('Published', 'Ongoing') {where_clause}
         """,
             as_dict=1,
         )
@@ -107,7 +107,7 @@ class Filters:
             """
             SELECT DISTINCT opp.opportunity_type AS name
             FROM `tabOpportunity` AS opp 
-            WHERE opp.status = 'Published'
+            WHERE opp.opportunity_status IN ('Published', 'Ongoing')
         """,
             as_dict=1,
         )

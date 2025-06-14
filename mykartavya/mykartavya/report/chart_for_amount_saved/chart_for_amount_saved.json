@@ -1,5 +1,6 @@
 {
  "add_total_row": 0,
+ "add_translate_data": 0,
  "columns": [],
  "creation": "2025-03-12 16:19:04.892985",
  "disabled": 0,
@@ -9,16 +10,26 @@
  "idx": 0,
  "is_standard": "Yes",
  "letterhead": null,
- "modified": "2025-06-10 17:44:39.183341",
+ "modified": "2025-06-14 09:04:03.890907",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Chart for Amount Saved",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "SELECT\n    sdg.sdg AS sdg_name,\n    -- COALESCE(SUM(act.work_value_rupees), 0) AS activity_value,\n    -- COALESCE(SUM(opp.work_value_points), 0) AS opportunity_value,\n    COALESCE(SUM(act.work_value_rupees), 0) + COALESCE(SUM(opp.work_value_points), 0) AS work_value_rupees\nFROM \n    `tabSDG` AS sdg\nLEFT JOIN `tabSDGs Child` AS sdc \n    ON sdg.name = sdc.sdgs\nLEFT JOIN (\n    SELECT act.name, act.work_value_rupees\n    FROM `tabActivity` AS act\n    INNER JOIN `tabVolunteer Activity` AS va \n        ON va.activity = act.name AND va.completion_wf_state = 'Approved'\n) AS act ON act.name = sdc.parent AND sdc.parentfield = 'sdgs'\nLEFT JOIN (\n    SELECT opp.name, opp.work_value_points\n    FROM `tabOpportunity` AS opp\n    INNER JOIN `tabVolunteer Opportunity` AS vo \n        ON vo.activity = opp.name AND vo.completion_wf_state = 'Approved'\n) AS opp ON opp.name = sdc.parent AND sdc.parentfield = 'sdgs'\nGROUP BY \n    sdg.sdg\nORDER BY \n    sdg_name ASC;",
+ "query": "",
  "ref_doctype": "Activity",
  "report_name": "Chart for Amount Saved",
- "report_type": "Query Report",
- "roles": [],
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "MyKartvya Admin"
+  },
+  {
+   "role": "Administrator"
+  },
+  {
+   "role": "Company Admin"
+  }
+ ],
  "timeout": 0
 }

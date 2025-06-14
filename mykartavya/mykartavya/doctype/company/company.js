@@ -1,6 +1,16 @@
 // Copyright (c) 2025, Aniket Singh and contributors
 // For license information, please see license.txt
 frappe.ui.form.on("Company", {
+     setup: function (frm) {
+        frm['dt_events'] = {
+            "SVA User": {
+                "after_render": (dt, mode) => {
+                    let form_dialog = dt.form_dialog;
+                    form_dialog.set_value("custom_volunteer_type", "Employee");
+                }
+            }
+        }
+    },
     refresh(frm){
         if(frm.doc.copy_contact_details){
             frm.set_value("volunteering_incharge_name",frm.doc.first_name)
@@ -24,16 +34,7 @@ frappe.ui.form.on("Company", {
         }
     },
 
-    setup: function (frm) {
-        frm['dt_events'] = {
-            "SVA User": {
-                "after_render": (dt, mode) => {
-                    let form_dialog = dt.form_dialog;
-                    form_dialog.set_value("custom_volunteer_type", "Employee");
-                }
-            }
-        }
-    },
+   
     company_registration_date: function (frm) {
         let registration_date = frm.doc.company_registration_date;
         let today = frappe.datetime.get_today();
@@ -59,11 +60,10 @@ frappe.ui.form.on("Company", {
     phone(frm){
         const raw=frm.doc.phone
         if (raw) {
-            // Sirf digits nikaalein
             const digits = raw.replace(/\D/g, '');
             if (digits.length > 12) {
                 frappe.show_alert({
-                    message: `NGO Head Office Number "${raw}" should not exceed 10 digits.`,
+                    message: `Phone" ${raw}" should not exceed 10 digits.`,
                     indicator: 'red'
                 });
             }
@@ -73,11 +73,10 @@ frappe.ui.form.on("Company", {
     volunteering_incharge_phone(frm){
         const raw=frm.doc.volunteering_incharge_phone
         if (raw) {
-            // Sirf digits nikaalein
             const digits = raw.replace(/\D/g, '');
             if (digits.length > 12) {
                 frappe.show_alert({
-                    message: `NGO Head Office Number "${raw}" should not exceed 10 digits.`,
+                    message: `Volunteering Incharge phone"${raw}" should not exceed 10 digits.`,
                     indicator: 'red'
                 });
             }

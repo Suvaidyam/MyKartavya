@@ -46,25 +46,66 @@ def current_commitments_in_opportunity(filter={}):
 @frappe.whitelist(allow_guest=True)
 def user_testimonial():
     try:
-        # Fetch testimonials with `sva_user`
+        # Fetch testimonials with all required fields
         testimonials = frappe.get_all(
-            "Testimonial", fields=["name", "comment", "user", "is_publish"]
+            "Testimonial", 
+            fields=[
+                "name", "comment", "users", "is_publish", "user_name", 
+                "user_type", "ngo_name", "company_name", "description", 
+                "testimonial_type"
+            ]
         )
-        # Fetch user details for each testimonial from "SVA User"
+        
+        # Process each testimonial based on testimonial_type
         for testimonial in testimonials:
-            if testimonial.get("user"):
-                user_doc = frappe.get_doc("SVA User", testimonial["user"])
+            if testimonial.get("testimonial_type") == "Internal":
+                # For Internal testimonials, fetch user details from SVA User
+                if testimonial.get("users"):
+                    try:
+                        # Check if the user exists in SVA User doctype
+                        if frappe.db.exists("SVA User", testimonial["users"]):
+                            user_doc = frappe.get_doc("SVA User", testimonial["users"])
+                            testimonial["user_details"] = {
+                                "name": user_doc.name,
+                                "email": user_doc.email,
+                                "full_name": user_doc.full_name,
+                                "user_image": user_doc.user_image,
+                                "user_type": user_doc.custom_volunteer_type,
+                                "designation": (
+                                    user_doc.custom_designation
+                                    if hasattr(user_doc, "custom_designation")
+                                    else None
+                                ),
+                            }
+                        else:
+                            # User doesn't exist in SVA User
+                            testimonial["user_details"] = {
+                                "name": testimonial.get("user"),
+                                "email": None,
+                                "full_name": f"User not found: {testimonial.get('users')}",
+                                "user_image": None,
+                                "user_type": None,
+                                "designation": None,
+                            }
+                    except Exception as e:
+                        # Handle any other errors during user lookup
+                        frappe.log_error(f"Error fetching user {testimonial.get('users')}: {str(e)}")
+                        testimonial["user_details"] = {
+                            "name": testimonial.get("users"),
+                            "email": None,
+                            "full_name": f"Error loading user: {testimonial.get('users')}",
+                            "user_image": None,
+                            "user_type": None,
+                            "designation": None,
+                        }
+            
+            elif testimonial.get("testimonial_type") == "External":
                 testimonial["user_details"] = {
-                    "name": user_doc.name,
-                    "email": user_doc.email,
-                    "full_name": user_doc.full_name,
-                    "user_image": user_doc.user_image,
-                    "user_type": user_doc.custom_volunteer_type,
-                    "designation": (
-                        user_doc.custom_designation
-                        if hasattr(user_doc, "custom_designation")
-                        else None
-                    ),
+                    "full_name": testimonial.get("user_name"),
+                    "user_type": testimonial.get("user_type"),
+                    "description": testimonial.get("description"),
+                    "ngo_name": testimonial.get("ngo_name"),
+                    "company_name": testimonial.get("company_name")
                 }
 
         return {"message": testimonials}
@@ -72,7 +113,7 @@ def user_testimonial():
     except Exception as e:
         frappe.log_error(f"Error in user_testimonial: {e}")
         return {"error": _("Failed to fetch testimonials with user details")}
-
+    
 
 @frappe.whitelist(allow_guest=True)
 def corporate_partners_logo():
@@ -371,9 +412,32 @@ def sdg_impacted():
 def add_activity_images(docname, images):
     return Activity.add_activity_images(docname, images)
 
+def list_to_tuple_string(user_permissions):
+    return "(" + ",".join(f"'{item}'" for item in user_permissions) + ")"
+
 @frappe.whitelist()
 def get_sdg_contribution_details():
-    result = frappe.db.sql("""
+    va_conditions = []
+    vo_conditions = []
+    user = frappe.session.user
+    
+    if user != "Administrator":
+        user_role = frappe.db.get_value("SVA User", {"email": user},'role_profile')
+        if user_role == "Company Admin":
+            user_permissions = frappe.db.get_all("User Permission",filters={"user": user,'allow':"Company"},pluck="for_value")
+            if len(user_permissions):
+                va_conditions.append(f"va_user.custom_company IN {list_to_tuple_string(user_permissions)}")
+                vo_conditions.append(f"vo_user.custom_company IN {list_to_tuple_string(user_permissions)}")
+        elif user_role == "NGO Admin":
+            user_permissions = frappe.db.get_all("User Permission",filters={"user": user,'allow':"NGOs"},pluck="for_value")
+            if len(user_permissions):
+                va_conditions.append(f"va_user.custom_ngo IN {list_to_tuple_string(user_permissions)}")
+                vo_conditions.append(f"vo_user.custom_ngo IN {list_to_tuple_string(user_permissions)}")
+
+    va_where_clause = " AND " + " AND ".join(va_conditions) if va_conditions else ""
+    vo_where_clause = " AND " + " AND ".join(vo_conditions) if vo_conditions else ""
+
+    result = frappe.db.sql(f"""
         SELECT 
             COALESCE(sdg.name, 'Unknown SDG') AS sdg_name,
             COALESCE(sdg.sdg_image, '') AS sdg_image,
@@ -390,6 +454,8 @@ def get_sdg_contribution_details():
             FROM `tabVolunteer Activity` AS va
             LEFT JOIN `tabActivity` AS act ON act.name = va.activity
             LEFT JOIN `tabSDGs Child` AS sdc ON act.name = sdc.parent AND sdc.parentfield = 'sdgs'
+            LEFT JOIN `tabSVA User` AS va_user ON va_user.name = va.volunteer
+            WHERE va.completion_wf_state = 'Approved' {va_where_clause}
 
             UNION ALL
 
@@ -397,11 +463,13 @@ def get_sdg_contribution_details():
             SELECT 
                 vo.volunteer,
                 vo.work_value_in_rupees AS total_work_value,
-                act.hours AS total_hours,
+                act.min_volunteering_time AS total_hours,
                 sdc.sdgs
             FROM `tabVolunteer Opportunity` AS vo
             LEFT JOIN `tabOpportunity` AS act ON act.name = vo.activity
             LEFT JOIN `tabSDGs Child` AS sdc ON act.name = sdc.parent AND sdc.parentfield = 'sdgs'
+            LEFT JOIN `tabSVA User` AS vo_user ON vo_user.name = vo.volunteer
+            WHERE vo.completion_wf_state = 'Approved' {vo_where_clause}
         ) AS data
         LEFT JOIN `tabSDG` AS sdg ON data.sdgs = sdg.name
         GROUP BY sdg.name, sdg.sdg_image

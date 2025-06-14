@@ -110,10 +110,9 @@ class Company(Document):
             frappe.db.set_value("Company", doc.name, "workflow_state", "Approved")
             status = frappe.db.get_value("Company", doc.name, "workflow_state")
             frappe.db.set_value("Company", doc.name, "registration_status", status)
-
+            create_company_logo(doc)
         # Create SVA User for both registration types
         insert_sva_user(doc)
-        test(doc)
 
 def get_role_profile(registration_type):
     """Get appropriate role profile based on registration type"""
@@ -127,105 +126,54 @@ def get_role_profile(registration_type):
     return role_profile_name
 
 def insert_sva_user(doc):
-    """SVA User को create करें, और अगर error आए तो 3 बार तक कोशिश करें"""
+    """Create SVA User with appropriate role profile and company link"""
+    try:
+        # Create Company Admin user
+        email = doc.email
+        first_name = doc.first_name
+        last_name = doc.last_name
+        mobile_number = doc.mobile_number
+        password = generate_random_password()
+        # role_profile = get_role_profile(doc.registration_type)
+        country = doc.country
+        state = doc.state
+        city = doc.city
+        designation = doc.designation
+        phone = str(doc.phone)
+        # Check if user already exists
+        if frappe.db.exists("SVA User", {"email": email}):
+            frappe.throw(f"SVA User with email {email} already exists")
 
-    max_retries = 3  # अधिकतम 3 बार कोशिश करेंगे
-    for attempt in range(max_retries):
-        try:
-            email = doc.email
-            if frappe.db.exists("SVA User", {"email": email}):
-                frappe.throw(f"SVA User with email {email} already exists")
+        sva_user = frappe.get_doc({
+            "doctype": "SVA User",
+            "email": email,
+            "first_name": first_name,
+            "last_name": last_name,
+            "password": password,
+            "custom_phone_number":phone,
+            "mobile_number": mobile_number, 
+            "confirm_password": password,
+            "custom_company": doc.name,
+            "role_profile": "Company Admin",
+            "custom_country": country,
+            "custom_state": state,
+            "custom_city": city,
+            "custom_designation": designation,
+            "custom_volunteer_type": "Employee",
+            "enabled": 1
+        })
+        sva_user.insert(ignore_permissions=True)
+        sva_user = frappe.get_doc("SVA User", sva_user.name)
+        sva_user.save(ignore_permissions=True)
 
-            # नया SVA User डॉक्यूमेंट बनाएं
-            sva_user = frappe.get_doc({
-                "doctype": "SVA User",
-                "email": email,
-                "first_name": doc.first_name,
-                "last_name": doc.last_name,
-                "password": generate_random_password(),
-                "confirm_password": generate_random_password(),
-                "custom_phone_number": str(doc.phone),
-                "mobile_number": doc.mobile_number,
-                "custom_company": doc.name,
-                "role_profile": "Company Admin",
-                "custom_country": doc.country,
-                "custom_state": doc.state,
-                "custom_city": doc.city,
-                "custom_designation": doc.designation,
-                "custom_volunteer_type": "Employee",
-                "enabled": 1
-            })
+        if sva_user.custom_volunteer_type == "Employee":
+            frappe.db.set_value("SVA User", sva_user.name, "workflow_state", "Approved",update_modified=False)
+        frappe.db.commit()
+ 
+    except Exception as e:
+        frappe.log_error(f"Failed to create SVA User: {str(e)}")
+        frappe.throw(f"Failed to create SVA User: {str(e)}")
 
-            # DB में insert करें
-            sva_user.insert(ignore_permissions=True)
-
-            # Workflow state को "Approved" सेट करें
-            if sva_user.custom_volunteer_type == "Employee":
-                frappe.db.set_value("SVA User", sva_user.name, "workflow_state", "Approved", update_modified=False)
-
-            # बदलावों को commit करें
-            frappe.db.commit()
-            return
-
-        except frappe.QueryTimeoutError as e:
-            # अगर lock की वजह से error आया, तो दुबारा कोशिश करें
-            if attempt < max_retries - 1:
-                time.sleep(2 ** attempt)  # 1s, फिर 2s, फिर 4s रुकें
-                continue
-            # 3 बार कोशिश के बाद भी ना हो, तो error दिखाएं
-            frappe.throw("SVA User बनाने में database timeout हुआ। कृपया दुबारा प्रयास करें।")
-
-        except Exception as e:
-            # कोई और error आए तो log करें और user को दिखाएं
-            frappe.throw(f"SVA User बनाने में असफल: {str(e)}")
-
-
-        # frappe.msgprint(
-        #     f"Company Admin SVA User created successfully!\nEmail: {email}\nRole Profile: {role_profile}",
-        #     alert=True
-        # )
-
-        # # Create Volunteer Incharge user if Admin Registration
-        # if doc.registration_type == "Admin Registration":
-        #     incharge_email = doc.volunteering_incharge_email
-        #     incharge_password = generate_random_password()
-
-        #     # Check if incharge user already exists
-        #     if frappe.db.exists("SVA User", {"email": incharge_email}):
-        #         frappe.throw(f"SVA User with email {incharge_email} already exists")
-
-        #     incharge_user = frappe.get_doc({
-        #         "doctype": "SVA User",
-        #         "email": incharge_email,
-        #         "first_name": doc.volunteering_incharge_name,
-        #         "last_name": "",
-        #         "password": incharge_password,
-        #         # "custom_phone_number": doc.volunteering_incharge_phone,
-        #         "confirm_password": incharge_password,
-        #         "custom_company": doc.name,
-        #         "custom_country": country,
-        #         "custom_state": state,
-        #         "custom_city": city,
-        #         "role_profile": "Company Admin",
-        #         "custom_designation": designation,
-        #         "custom_volunteer_type": "Employee",
-        #         "enabled": 1
-        #     })
-
-        #     incharge_user.insert(ignore_permissions=True)
-        #     incharge_user = frappe.get_doc("SVA User", incharge_user.name)
-        #     incharge_user.save(ignore_permissions=True)
-
-        #     if incharge_user.custom_volunteer_type == "Employee":
-        #         frappe.db.set_value("SVA User", incharge_user.name, "workflow_state", "Approved",update_modified=False)
-        #     frappe.db.commit()
-
-        #     frappe.msgprint(
-        #         f"Volunteer Incharge SVA User created successfully!\nEmail: {incharge_email}\nRole Profile: Volunteer Incharge",
-        #         alert=True
-        #     )
-
-  
 def generate_random_password(length=10):
     """Generate a stronger random password"""
     characters = string.ascii_letters + string.digits + "!@#$%^&*"
@@ -242,7 +190,7 @@ def generate_random_password(length=10):
     random.shuffle(password)
     return ''.join(password)
 
-def test(doc):
+def create_company_logo(doc):
     logo = frappe.new_doc("Company Logos")
     logo.update({
         "company_name": doc.company_name,

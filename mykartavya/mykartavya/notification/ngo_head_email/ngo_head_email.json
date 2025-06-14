@@ -6,21 +6,21 @@
  "docstatus": 0,
  "doctype": "Notification",
  "document_type": "NGOs",
- "enabled": 1,
+ "enabled": 0,
  "event": "New",
  "idx": 0,
  "is_standard": 1,
  "message": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Welcome to MyKartavya - NGO Creation Notification</title>\n    <style>\n        body {\n            font-family: 'Helvetica Neue', Arial, sans-serif;\n            margin: 0;\n            padding: 20px;\n            background-color: #f5f5f5;\n        }\n        .container {\n            max-width: 500px;\n            margin: auto;\n            background: #ffffff;\n            border-radius: 8px;\n            padding: 30px;\n            text-align: center;\n        }\n        .logo {\n            margin-bottom: 20px;\n        }\n        .logo img {\n            max-width: 200px;\n            height: auto;\n        }\n        h2 {\n            color: #333;\n            font-size: 24px;\n            margin: 20px 0;\n            font-weight: 500;\n        }\n        .greeting {\n            color: #666;\n            font-size: 16px;\n            margin-bottom: 20px;\n        }\n        .message {\n            color: #666;\n            font-size: 14px;\n            line-height: 1.6;\n            margin: 20px 0;\n            text-align: center;\n        }\n        .info-box {\n            background-color: #f9f9f9;\n            border-radius: 6px;\n            padding: 20px;\n            margin: 25px 0;\n            text-align: left;\n        }\n        .info-box p {\n            margin: 10px 0;\n            color: #333;\n            font-size: 14px;\n        }\n        .info-box a {\n            color: #03979d;\n            text-decoration: none;\n        }\n        .cta-button {\n            display: inline-block;\n            background-color: #03979d;\n            color: white;\n            padding: 12px 25px;\n            text-decoration: none;\n            font-size: 16px;\n            font-weight: 500;\n            border-radius: 6px;\n            transition: background-color 0.3s;\n            margin: 15px 0;\n        }\n        .cta-button:hover {\n            background-color: #027a73;\n        }\n        .footer {\n            margin-top: 30px;\n            color: #666;\n            font-size: 14px;\n            text-align: center;\n        }\n        .footer p {\n            margin: 5px 0;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <div class=\"logo\">\n            <img src=\"https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png\" alt=\"MyKartavya Logo\">\n        </div>\n        <h2>NGO Created Successfully</h2>\n        <div class=\"greeting\">Hello, {{doc.first_name}}</div>\n        <div class=\"message\">\n            We are thrilled to inform you that your NGO has been successfully created on the MyKartavya platform.\n            As the head of this NGO, you will have full access to manage volunteer operations and help drive your mission forward.\n        </div>\n        <!-- Info Box -->\n        <div class=\"info-box\">\n            <p><strong>NGO Name:</strong> {{doc.ngo_name}}</p>\n            <p><strong>NGO Head:</strong> {{doc.first_name}} {{doc.last_name}}</p>\n            <p><strong>Email:</strong> <a href=\"mailto:{{doc.ngo_head_email}}\">{{doc.ngo_head_email}}</a></p>\n            <p><strong>NGO Status:</strong> {{doc.status}}</p>\n        </div>\n        <!-- Call to Action Button -->\n        <a href=\"{{url}}\" class=\"cta-button\">Access NGO Dashboard</a>\n        \n        <div class=\"footer\">\n            <p>Thank you!</p>\n            <p>Team MyKartavya</p>\n            <p>Feel free to contact us for further information</p>\n            <p>\u00a9 2025 MyKartavya. All rights reserved.</p>\n        </div>\n    </div>\n</body>\n</html>",
  "message_type": "HTML",
  "minutes_offset": 0,
- "modified": "2025-03-21 10:43:35.569777",
+ "modified": "2025-06-13 12:07:04.488135",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "NGO Head Email",
  "owner": "Administrator",
  "recipients": [
   {
-   "receiver_by_document_field": "ngo_head_email"
+   "receiver_by_document_field": "email"
   }
  ],
  "send_system_notification": 0,

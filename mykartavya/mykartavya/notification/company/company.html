@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to MyKartavya - Company Registration</title>
+    <title>Corporate Registration Request Received</title>
     <style>
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f5f5f5;
+            background-color: #f0f0f0;
         }
         .container {
             max-width: 500px;
@@ -19,66 +19,59 @@
             padding: 30px;
             text-align: center;
         }
-        .logo {
-            margin-bottom: 20px;
-        }
+         
         .logo img {
-            max-width: 200px;
+            max-width: 250px;
             height: auto;
         }
         h2 {
-            color: #333;
+            color: #666666;
             font-size: 24px;
-            margin: 20px 0;
-            font-weight: 500;
+            margin: 10px 0;
+            font-weight: normal;
         }
         .greeting {
-            color: #666;
+            color: #333333;
             font-size: 16px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         .message {
-            color: #666;
-            font-size: 14px;
+            color: #666666;
+            font-size: 16px;
             line-height: 1.6;
+            margin: 15px 0;
+        }
+        .info-text {
+            color: #666666;
+            font-size: 16px;
             margin: 20px 0;
-            text-align: center;
-        }
-        .status-box {
-            background-color: #f9f9f9;
-            border-radius: 6px;
-            padding: 20px;
-            margin: 25px 0;
-            text-align: left;
-        }
-        .status-box p {
-            margin: 10px 0;
-            color: #333;
-            font-size: 14px;
         }
         .cta-button {
             display: inline-block;
-            background-color: #136096;
+            background-color: #666666;
             color: white;
-            padding: 12px 25px;
+            padding: 10px 20px;
             text-decoration: none;
             font-size: 16px;
-            font-weight: 500;
-            border-radius: 6px;
-            transition: background-color 0.3s;
-            margin: 15px 0;
+            font-weight: normal;
+            border-radius: 4px;
+            margin: 10px 0;
+            border: none;
+            cursor: pointer;
         }
         .cta-button:hover {
-            background-color: #0e4872;
+            background-color: #555555;
         }
         .footer {
-            margin-top: 30px;
-            color: #666;
+            margin-top: 10px;
+            color: #999999;
             font-size: 14px;
-            text-align: center;
         }
         .footer p {
-            margin: 5px 0;
+            margin: 2px 0;
+        }
+        .team-name {
+            font-weight: normal;
         }
     </style>
 </head>
@@ -87,25 +80,28 @@
         <div class="logo">
             <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo">
         </div>
-        <h2>Welcome to MyKartavya</h2>
+        
+        <h2>Corporate Registration Request Received</h2>
+        
         <div class="greeting">Hello, {{doc.first_name}}</div>
+        
         <div class="message">
-            We are excited to inform you that your company has been successfully created on the MyKartavya platform. Here are your company details:
+            We have successfully received your corporate registration request.
         </div>
-        <!-- Status Box -->
-        <div class="status-box">
-            <p><strong>Status:</strong> {{doc.status}}</p>
-            <p><strong>Registered By:</strong> {{doc.first_name}}</p>
-            <p><strong>Company Name:</strong> {{doc.company_name}}</p>
+        
+        <div class="message">
+            Our team is currently reviewing your application. You will be notified as soon as your request is approved.
         </div>
-        <!-- Call to Action Button -->
-        <a href="{{url}}" class="cta-button">Complete Registration</a>
+        
+        <div class="info-text">
+            In the meantime, you can set your password using the button below:
+        </div>
+        
+        <a href="{{url}}" class="cta-button">Set Password</a>
         
         <div class="footer">
             <p>Thank you!</p>
-            <p>Team MyKartavya</p>
-            <p>Feel free to contact us for further information</p>
-            <p>© 2025 MyKartavya. All rights reserved.</p>
+            <p class="team-name">Team MyKartavya</p>
         </div>
     </div>
 </body>

@@ -15,7 +15,7 @@
  "label": "Report Master",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-06-04 18:04:50.150942",
+ "modified": "2025-06-13 17:36:30.238670",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Report Master",
@@ -27,6 +27,9 @@
  "roles": [
   {
    "role": "MyKartvya Admin"
+  },
+  {
+   "role": "Company Admin"
   }
  ],
  "sequence_id": 9.0,

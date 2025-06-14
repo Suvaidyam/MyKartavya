@@ -84,28 +84,7 @@
                         <i class="fas fa-times mr-1"></i> Clear
                     </button>
                 </div>
-
-                <!-- Active Filters Display -->
-                <div v-if="hasActiveFilters" class="flex flex-wrap gap-2 mt-4 justify-center md:justify-start">
-                    <span class="text-sm text-gray-600">Active filters:</span>
-                    <span v-if="filters.name"
-                        class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs flex items-center">
-                        Name: {{ filters.name }}
-                        <i @click="filters.name = ''" class="fas fa-times ml-1 cursor-pointer hover:text-blue-600"></i>
-                    </span>
-                    <span v-if="selectedState"
-                        class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs flex items-center">
-                        State: {{ selectedState }}
-                        <i @click="clearState()" class="fas fa-times ml-1 cursor-pointer hover:text-yellow-600"></i>
-                    </span>
-                    <span v-if="selectedCity"
-                        class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs flex items-center">
-                        City: {{ selectedCity }}
-                        <i @click="clearCity()" class="fas fa-times ml-1 cursor-pointer hover:text-purple-600"></i>
-                    </span>
-                </div>
             </div>
-
             <!-- Results Count -->
             <div class="pb-4 text-center md:text-left">
                 <p class="text-sm text-gray-600">
@@ -124,7 +103,6 @@
                             <i class="fas fa-building text-gray-400 text-xl"></i>
                         </div>
                     </div>
-
                     <!-- Content -->
                     <div class="p-4">
                         <!-- Title -->

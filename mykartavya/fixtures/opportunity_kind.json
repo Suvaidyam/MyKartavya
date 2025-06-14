@@ -1,0 +1,44 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Opportunity Kind",
+  "modified": "2025-06-12 19:54:30.749775",
+  "name": 2,
+  "name1": "Work for Good"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Opportunity Kind",
+  "modified": "2025-06-12 19:54:52.996975",
+  "name": 3,
+  "name1": "Train for Good"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Opportunity Kind",
+  "modified": "2025-06-12 19:55:22.858193",
+  "name": 4,
+  "name1": "Social Media for Good"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Opportunity Kind",
+  "modified": "2025-06-12 19:55:33.554529",
+  "name": 5,
+  "name1": "Skills for Good"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Opportunity Kind",
+  "modified": "2025-06-12 19:55:42.811360",
+  "name": 6,
+  "name1": "Mentor for Good"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Opportunity Kind",
+  "modified": "2025-06-12 19:55:53.740534",
+  "name": 7,
+  "name1": "Advocacy for Good"
+ }
+]

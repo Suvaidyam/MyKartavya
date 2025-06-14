@@ -1,12 +1,15 @@
 frappe.ui.form.on("Activity", {
     setup(frm) {
+        const isMyKartvyaAdmin = frappe.user_roles.includes("MyKartvya Admin");
         frm['dt_events'] = {
             "Volunteer Activity": {
-                formatter:{
-                    action: function (element, column,row) {
-                        if (row.completion_wf_state === "Pending") {
-                            element.setAttribute('style','display:none;');
-                        }else{
+                formatter: {
+                    action: function (element, column, row) {
+                        if (!isMyKartvyaAdmin || row.completion_wf_state === "Pending") { 
+                            element.setAttribute('disabled', true);
+                            element.style.pointerEvents = 'none';
+                            element.style.cursor = 'not-allowed';
+                        } else {
                             // if(row.completion_wf_state === "Submitted"){
                             //     element.setAttribute('style','background-color:green;')
                             // }
@@ -19,17 +22,28 @@ frappe.ui.form.on("Activity", {
                         }
                         return element
                     },
-                    completion_wf_state: function (value,column, row) {
-                        if(value === "Pending") {
+                    duration: function (value, column, rows) {
+                        console.log(value, 'value');
+                        let result = frappe.utils.seconds_to_duration(value, { hide_days: true });
+                        value = '0 min'
+                        if (result?.hours && result?.minutes) {
+                            value = `${result.hours} ${result.hours > 1 ? 'hrs' : 'hr'} ${result.minutes} ${result.minutes > 1 ? 'mins' : 'min'}`
+                        } else if (result.minutes) {
+                            value = `${result.minutes} ${result.minutes > 1 ? 'mins' : 'min'}`
+                        }
+                        return value
+                    },
+                    completion_wf_state: function (value, column, row) {
+                        if (value === "Pending") {
                             return `<span class="badge text-muted" style="padding:5px;font-size:12px;">${__('Pending')}</span>`;
                         }
-                        if(value === "Submitted") {
+                        if (value === "Submitted") {
                             return `<span class="badge badge-warning" style="padding:5px;font-size:12px;">${__('Submitted')}</span>`;
                         }
-                        if(value === "Approved") {
+                        if (value === "Approved") {
                             return `<span class="badge badge-success" style="padding:5px;font-size:12px;">${__('Approved')}</span>`;
                         }
-                        if(value === "Rejected") {
+                        if (value === "Rejected") {
                             return `<span class="badge badge-danger" style="padding:5px;font-size:12px;">${__('Rejected')}</span>`;
                         }
                         return value;
@@ -60,7 +74,7 @@ frappe.ui.form.on("Activity", {
                                     } else if (data.action === 'reject') {
                                         frappe.db.set_value('Volunteer Activity', doc.name, 'completion_wf_state', 'Rejected')
                                     }
-                                    if (frm?.sva_tables?.['Volunteer Activity']){
+                                    if (frm?.sva_tables?.['Volunteer Activity']) {
                                         frm?.sva_tables?.['Volunteer Activity'].reloadTable();
                                     }
                                     d.hide();
@@ -92,15 +106,17 @@ frappe.ui.form.on("Activity", {
                 args: {
                     doctype: 'SVA User',
                     filters: { email: frappe.session.user },
-                    fieldname: ['role_profile', 'custom_company']
+                    fieldname: ['role_profile', 'custom_company', 'custom_ngo']
                 },
                 callback: function (response) {
-                    if (response.message && response.message.role_profile === "Company Admin") {
+                    if (response.message.custom_company && response.message.role_profile === "Company Admin") {
                         frm.set_value('is_private', 1);
                     }
-                    // if (response.message && response.message.role_profile === "NGO Admin") {
-                    //     frm.set_df_property('is_private', 'read_only', 1);
-                    // }
+                    if (response.message.custom_ngo && response.message.role_profile === "NGO Admin") {
+
+                        frm.set_value('ngo', response.message.custom_ngo);
+                        frm.set_df_property('is_private', 'read_only', 1);
+                    }
                     if (response.message.custom_company) {
                         frm.set_value('company', response.message.custom_company);
                         frm.set_df_property('company', 'read_only', 1);
@@ -231,7 +247,7 @@ frappe.ui.form.on("Activity", {
             frm.set_read_only();
             // frm.disable_save();
         }
-        
+
         let today = frappe.datetime.get_today();
         frm.set_df_property('publish_date', 'min_date', today);
 
