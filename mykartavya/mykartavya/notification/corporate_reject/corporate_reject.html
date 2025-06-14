@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate Registration Request Not Approved</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .logo img {
+            max-width: 250px;
+            height: auto;
+        }
+        h2 {
+            color: #666666;
+            font-size: 24px;
+            margin: 10px 0;
+            font-weight: normal;
+        }
+        .greeting {
+            color: #333333;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .message {
+            color: #666666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .footer {
+            margin-top: 20px;
+            color: #999999;
+            font-size: 14px;
+        }
+        .footer p {
+            margin: 2px 0;
+        }
+        .team-name {
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo">
+        </div>
+        
+        <h2>Corporate Registration Request Not Approved</h2>
+        
+        <div class="greeting">Hello, {{doc.first_name}}</div>
+        
+        <div class="message">
+            We regret to inform you that your request to register as a corporate on MyKartavya has not been approved at this time.
+        </div>
+        
+        <div class="message">
+            For further details or assistance, please feel free to contact us.
+        </div>
+        
+        <div class="footer">
+            <p>Thank you!</p>
+            <p class="team-name">Team MyKartavya</p>
+        </div>
+    </div>
+</body>
+</html>

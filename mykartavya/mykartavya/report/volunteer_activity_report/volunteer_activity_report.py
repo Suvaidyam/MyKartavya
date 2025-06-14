@@ -82,25 +82,36 @@ def get_columns() -> list[dict]:
 
 from datetime import datetime
 
+def list_to_tuple_string(user_permissions):
+    return "(" + ",".join(f"'{item}'" for item in user_permissions) + ")"
 def get_data(filters):
     conditions = []
     values = []
+    user = frappe.session.user
+    if user != "Administrator":
+        user_role = frappe.db.get_value("SVA User", {"email": user},'role_profile')
+        if user_role == "Company Admin":
+            user_permissions = frappe.db.get_all("User Permission",filters={"user": user,'allow':"Company"},pluck="for_value")
+            if len(user_permissions):
+                conditions.append(f"v.custom_company IN {list_to_tuple_string(user_permissions)}")
+        elif user_role == "NGO Admin":
+            user_permissions = frappe.db.get_all("User Permission",filters={"user": user,'allow':"NGOs"},pluck="for_value")
+            if len(user_permissions):
+                conditions.append(f"v.custom_ngo IN {list_to_tuple_string(user_permissions)}")
 
     # Ensure start_date is a string
     if filters.get("start_date"):
         start_date = filters["start_date"]
         if isinstance(start_date, datetime):
             start_date = start_date.strftime("%Y-%m-%d")
-        conditions.append("va.creation >= %s")
-        values.append(start_date)
+        conditions.append(f"va.creation >= '{start_date}'")
 
     # Ensure end_date is a string
     if filters.get("end_date"):
         end_date = filters["end_date"]
         if isinstance(end_date, datetime):
             end_date = end_date.strftime("%Y-%m-%d")
-        conditions.append("va.creation <= %s")
-        values.append(end_date)
+        conditions.append(f"va.creation <= '{end_date}'")
 
     # Build WHERE clause
     where_clause = ""
@@ -116,7 +127,7 @@ def get_data(filters):
             act.title,
             act.start_date,
             act.end_date,
-            act.status,
+            act.activity_status,
             v.custom_volunteer_type,
             CONCAT(
                 FLOOR(IFNULL(va.duration, 0) / 3600), 'h ',
@@ -129,4 +140,4 @@ def get_data(filters):
         ORDER BY act.start_date DESC
     """
 
-    return frappe.db.sql(query, values, as_dict=True) if values else frappe.db.sql(query, as_dict=True)
+    return frappe.db.sql(query, as_dict=True)

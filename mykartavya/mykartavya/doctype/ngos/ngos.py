@@ -98,9 +98,9 @@ def create_ngo_users(doc):
         #     return digits[-10:]  
         
         # Create NGO Admin user
-        if doc.ngo_name and doc.email and doc.official_contact_number:
+        if doc.contact_person_name and doc.email and doc.official_contact_number:
             create_sva_user(
-                first_name=doc.ngo_name,
+                first_name=doc.contact_person_name,
                 email=doc.email,
                 official_contact_number=doc.official_contact_number,
                 role_profile="NGO Admin",

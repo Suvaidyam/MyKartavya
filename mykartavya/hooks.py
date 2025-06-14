@@ -35,6 +35,7 @@ fixtures=[
     # "Translation",
     # 'Custom DocPerm',
     # 'My Theme',
+    # 'Opportunity Kind'
 ]
 
 
@@ -159,9 +160,9 @@ app_include_css = "/assets/mykartavya/css/style.css"
 # -----------
 # Permissions evaluated in scripted ways
 
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
+permission_query_conditions = {
+	"SVA User": "mykartavya.permission_query.user.permission_query_condition",
+}
 #
 # has_permission = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
@@ -211,7 +212,8 @@ app_include_css = "/assets/mykartavya/css/style.css"
 scheduler_events = {
     "cron":{
        '1 0 * * *': [
-            "mykartavya.controllers.cron.process_activities"
+            "mykartavya.controllers.cron.process_activities",
+            "mykartavya.controllers.cron.opportunity_publish"
         ]
     }
 }
