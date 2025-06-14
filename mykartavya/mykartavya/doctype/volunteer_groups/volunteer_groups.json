@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "autoincrement",
+ "autoname": "format:VG-{##}",
  "creation": "2025-06-11 17:10:25.039380",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -15,7 +15,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Group Name",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "volunteers",
@@ -29,11 +30,11 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-12 19:57:35.046284",
+ "modified": "2025-06-14 14:40:53.042637",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Groups",
- "naming_rule": "Autoincrement",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

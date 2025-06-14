@@ -1,0 +1,31 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "condition": "doc.completion_wf_state =='Submitted'",
+ "creation": "2025-06-14 15:54:50.873966",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Volunteer Opportunity",
+ "enabled": 1,
+ "event": "Value Change",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Opportunity Successfully Completed - MyKartavya</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            margin: 0;\n            padding: 20px;\n            background-color: #f0f0f0;\n        }\n        .container {\n            max-width: 500px;\n            margin: auto;\n            background: #ffffff;\n            padding: 20px 20px;\n            text-align: center;\n            border-radius: 8px;\n            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);\n        }\n        \n        .logo img {\n            max-width: 250px;\n            height: auto;\n        }\n       \n        h1 {\n            color: #666;\n            font-size: 26px;\n            margin: 0px 0 5px 0;\n            font-weight: normal;\n            line-height: 1.3;\n        }\n        \n        .greeting {\n            color: #666;\n            font-size: 16px;\n            margin: 10px 0;\n        }\n        \n        .congratulations {\n            color: #666;\n            font-size: 16px;\n            margin: 10px 0;\n            line-height: 1.4;\n        }\n        \n        .campaign-name {\n            font-size: 20px;\n            color: #333;\n            margin: 10px 0;\n            font-weight: bold;\n        }\n        \n        .thank-you-message {\n            color: #666;\n            font-size: 16px;\n            margin: 10px 0;\n            line-height: 1.4;\n        }\n        \n        .contact-message {\n            color: #666;\n            font-size: 16px;\n            \n            line-height: 1.4;\n        }\n        \n        .closing {\n            margin-top: 10px;\n            color: #888;\n            font-size: 14px;\n        }\n        \n        .team-signature {\n            margin-top: 2px;\n            color: #888;\n            font-size: 14px;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <div class=\"logo\">\n            <img src=\"https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png\" alt=\"MyKartavya Logo\">\n        </div>\n        \n        <h1>Opportunity Successfully Completed</h1>\n        \n        <div class=\"greeting\">\n            Hello, <strong>{{doc.volunteer_name}}</strong>\n        </div>\n        \n        <div class=\"congratulations\">\n            Congratulations! You have successfully completed the following:\n        </div>\n        \n        <div class=\"campaign-name\">\n            {{doc.opportunity_name}}\n        </div>\n        \n        <div class=\"thank-you-message\">\n            Thank you for your valuable contribution to this initiative.\n        </div>\n        \n        <div class=\"contact-message\">\n            If you have any questions or need further assistance, feel free to contact us.\n        </div>\n        \n        <div class=\"closing\">\n            Thank you!\n        </div>\n        <div class=\"team-signature\">\n            Team MyKartavya\n        </div>\n    </div>\n</body>\n</html>",
+ "message_type": "HTML",
+ "minutes_offset": 0,
+ "modified": "2025-06-14 16:48:12.683092",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Opportunity Completion",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_document_field": "volunteer_email"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "subject": "Opportunity Successfully Completed",
+ "value_changed": "completion_wf_state"
+}
