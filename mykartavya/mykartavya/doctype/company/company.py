@@ -197,4 +197,5 @@ def create_company_logo(doc):
         "company_logo": doc.company_logo,
         "enabled": 1
     })
-    logo.insert(ignore_permissions=True)
+    logo.insert(ignore_permissions=True, ignore_mandatory=True)
+

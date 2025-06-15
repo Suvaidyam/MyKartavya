@@ -22,7 +22,7 @@ fixtures=[
     # 'Property Setter',
     # 'SVADatatable Configuration',
     # "Workflow",
-    # "Workflow State", 
+    # "Workflow State",
     # "Workflow Action",
     # "State",
     # "District"
@@ -44,6 +44,16 @@ fixtures=[
 #         "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert"
 #     }
 # }
+
+doc_events = {
+    "Activity": {
+        "on_update": "mykartavya.controllers.notification.activity_status_notification"
+    },
+     "Opportunity": {
+        "on_update": "mykartavya.controllers.notification.opportunity_status_notification"
+    }
+}
+
 
 override_doctype_class = {
     "User": "mykartavya.override.CustomUser"
