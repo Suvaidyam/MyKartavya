@@ -168,3 +168,5 @@ def save_base64_image(dt,docname, base64_string, filename):
         decode=False             # Already decoded
     )
     return saved_file.file_url
+
+
