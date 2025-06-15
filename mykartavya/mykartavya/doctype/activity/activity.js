@@ -87,6 +87,7 @@ frappe.ui.form.on("Activity", {
             },
             "Activity Volunteer Group": {
                 after_render: async function (dt, mode) {
+
                     dt.form_dialog.set_df_property('volunteer', 'cannot_add_rows', 1);
                     dt.form_dialog.set_df_property('volunteer', 'cannot_delete_rows', 1);
                     let groups = await frappe.db.get_list("Activity Volunteer Group", { filters: { "activity": frm.doc.name }, fields: ['group'], limit_page_length: 100 })
