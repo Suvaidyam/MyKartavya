@@ -1,40 +1,46 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:VG-{##}",
- "creation": "2025-06-11 17:10:25.039380",
+ "creation": "2025-06-14 18:48:39.061924",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "group_name",
-  "volunteers"
+  "activity",
+  "group",
+  "volunteer"
  ],
  "fields": [
   {
-   "fieldname": "group_name",
-   "fieldtype": "Data",
+   "fieldname": "group",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Group Name",
-   "reqd": 1,
-   "unique": 1
+   "label": "Group",
+   "options": "Volunteer Groups",
+   "reqd": 1
   },
   {
-   "fieldname": "volunteers",
+   "fieldname": "activity",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Activity",
+   "options": "Activity"
+  },
+  {
+   "fieldname": "volunteer",
    "fieldtype": "Table",
    "label": "Volunteers",
    "options": "SVA User Child",
-   "reqd": 1
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
- "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-14 19:28:48.925575",
+ "modified": "2025-06-14 19:30:54.687845",
  "modified_by": "Administrator",
  "module": "Mykartavya",
- "name": "Volunteer Groups",
- "naming_rule": "Expression",
+ "name": "Activity Volunteer Group",
  "owner": "Administrator",
  "permissions": [
   {
@@ -63,9 +69,7 @@
   }
  ],
  "row_format": "Dynamic",
- "show_title_field_in_link": 1,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": [],
- "title_field": "group_name"
+ "states": []
 }

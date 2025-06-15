@@ -5,7 +5,7 @@ frappe.ui.form.on("Activity", {
             "Volunteer Activity": {
                 formatter: {
                     action: function (element, column, row) {
-                        if (!isMyKartvyaAdmin || row.completion_wf_state === "Pending") { 
+                        if (!isMyKartvyaAdmin || row.completion_wf_state === "Pending") {
                             element.setAttribute('disabled', true);
                             element.style.pointerEvents = 'none';
                             element.style.cursor = 'not-allowed';
@@ -81,6 +81,29 @@ frappe.ui.form.on("Activity", {
                                 }
                             });
                             d.show()
+                        }
+                    }
+                }
+            },
+            "Activity Volunteer Group": {
+                after_render: async function (dt, mode) {
+                    dt.form_dialog.set_df_property('volunteer', 'cannot_add_rows', 1);
+                    dt.form_dialog.set_df_property('volunteer', 'cannot_delete_rows', 1);
+                    let groups = await frappe.db.get_list("Activity Volunteer Group", { filters: { "activity": frm.doc.name }, fields: ['group'], limit_page_length: 100 })
+                    if (groups.length) {
+                        dt.form_dialog.set_query('group', () => {
+                            return {
+                                filters: { 'name': ['NOT IN', groups.map((g) => g.group)] }
+                            }
+                        })
+                    }
+                },
+                group: async function (dt, mode) {
+                    let group = dt.form_dialog.get_value('group');
+                    if (group) {
+                        let group_doc = await frappe.db.get_doc('Volunteer Groups', group);
+                        if (group_doc.volunteers.length > 0) {
+                            dt.form_dialog.set_df_property('volunteer', 'data', group_doc.volunteers);
                         }
                     }
                 }
