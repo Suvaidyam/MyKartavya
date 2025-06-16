@@ -512,7 +512,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-06-14 18:53:54.694710",
+ "modified": "2025-06-16 16:01:04.498089",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
@@ -552,6 +552,7 @@
    "read": 1,
    "report": 1,
    "role": "Company Admin",
+   "select": 1,
    "share": 1,
    "write": 1
   },

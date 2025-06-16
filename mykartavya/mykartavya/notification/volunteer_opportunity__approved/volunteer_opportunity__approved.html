@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Application Approved - MyKartavya</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f9fafb;
+    }
+    .container {
+      max-width: 520px;
+      margin: auto;
+      background: #ffffff;
+      padding: 20px 25px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    .logo img {
+      max-width: 220px;
+      height: auto;
+       
+    }
+    h1 {
+      color: #1f2937;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+    .greeting,
+    .message,
+    .activity-name,
+    .closing,
+    .team-signature {
+      color: #374151;
+      font-size: 16px;
+      margin: 6px 0;
+      line-height: 1.6;
+    }
+    .greeting strong {
+      color: #111827;
+    }
+    .activity-name {
+      font-weight: 600;
+      color: #111827;
+      font-size: 18px;
+      margin-top: 5px;
+    }
+    .message strong {
+      color: #059669;
+    }
+    .closing, .team-signature {
+      color: #6b7280;
+      font-size: 14px;
+      margin-top: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo" />
+    </div>
+    
+    <div class="greeting">
+      Dear <strong>{{ doc.volunteer_name }}</strong>,
+    </div>
+
+    <div class="message">
+      We’re excited to let you know that your application has been 
+      <strong>approved</strong> for the following activity:
+    </div>
+
+    <div class="activity-name">
+      {{ doc.opportunity_name }}
+    </div>
+
+    <div class="message">
+      Please stay tuned for further instructions or next steps from your coordinator.
+    </div>
+
+    <div class="message">
+      Thank you for your enthusiasm and willingness to contribute!
+    </div>
+
+    <div class="closing">
+      Warm regards,
+    </div>
+    <div class="team-signature">
+      Team MyKartavya
+    </div>
+  </div>
+</body>
+</html>
