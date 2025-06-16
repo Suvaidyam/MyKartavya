@@ -65,8 +65,8 @@ class Opportunity:
                 oa.total_minutes as total_minutes,
                 oa.description as activity_description,
                 oa.types as types,
-                oa.activity_image as activity_image,
-                opp.required_feedback_images
+                oa.activity_image as activity_image
+                # opp.required_feedback_images
             FROM
                 `tabOpportunity Activity` AS oa
             LEFT JOIN `tabVolunteer Opportunity Activity Log` AS voal ON voal.opportunity_activity = oa.name
@@ -85,31 +85,50 @@ class Opportunity:
         return doc
 
     # Function to get related opportunities
+    @frappe.whitelist()
     def related_opportunities(filter={}):
         try:
             if isinstance(filter, str):
                 filter = frappe.parse_json(filter)
+
+            # Get current logged-in SVA User
             user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
-            
-            # Initialize clauses
+
+            # Initialize WHERE clauses
             where_clauses = [
+                "opp.end_date >= CURRENT_DATE()",
+                "opp.opportunity_status IN ('Published', 'Ongoing')",
+                "opp.workflow_state = 'Approved'",
                 """EXISTS (
-                    SELECT 1 FROM `tabOpportunity Activity` as oact
+                    SELECT 1 FROM `tabOpportunity Activity` AS oact
                     WHERE oact.opportunity = opp.name
                 )"""
             ]
+
+            # Exclude opportunities already assigned to the user
+            if user:
+                where_clauses.append(
+                    f"""opp.name NOT IN (
+                        SELECT activity FROM `tabVolunteer Opportunity`
+                        WHERE volunteer = '{user}'
+                    )"""
+                )
+
+            # Sorting
             order_by_clause = ""
-            
+
+            # Handle filters
             if filter:
                 if "types" in filter and filter["types"]:
-                    types_list = [f"'{at}'" for at in filter["types"]]
-                    where_clauses.append(f"opp.opportunity_type IN ({', '.join(types_list)})")
+                    types_list = ", ".join(f"'{t}'" for t in filter["types"])
+                    where_clauses.append(f"opp.opportunity_type IN ({types_list})")
 
                 if "karma_points" in filter and filter["karma_points"]:
-                    if filter["karma_points"] == "Low to High":
-                        order_by_clause = " ORDER BY opp.karma_points ASC"
-                    elif filter["karma_points"] == "High to Low":
-                        order_by_clause = " ORDER BY opp.karma_points DESC"
+                    sort_order = filter["karma_points"]
+                    if sort_order == "Low to High":
+                        order_by_clause = "ORDER BY opp.karma_points ASC"
+                    elif sort_order == "High to Low":
+                        order_by_clause = "ORDER BY opp.karma_points DESC"
 
                 if "sdgs" in filter and filter["sdgs"]:
                     sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
@@ -122,40 +141,34 @@ class Opportunity:
                     """)
 
                 if "volunteering_hours" in filter and filter["volunteering_hours"]:
-                    if filter["volunteering_hours"] == "Low to High":
-                        order_by_clause = " ORDER BY opp.hours ASC"
-                    elif filter["volunteering_hours"] == "High to Low":
-                        order_by_clause = " ORDER BY opp.hours DESC"
+                    sort_order = filter["volunteering_hours"]
+                    if sort_order == "Low to High":
+                        order_by_clause = "ORDER BY opp.hours ASC"
+                    elif sort_order == "High to Low":
+                        order_by_clause = "ORDER BY opp.hours DESC"
 
-            # Build the main WHERE clause
-            main_where_conditions = [
-                "opp.end_date >= CURRENT_DATE()",
-                "opp.status IN ('Published', 'Ongoing')",
-                "opp.workflow_state = 'Approved' ",
-            ]
-            
-            # Combine all conditions
-            all_conditions = main_where_conditions + where_clauses
-            combined_where_clause = " AND ".join(all_conditions)
-            
+            # Final WHERE clause
+            combined_where_clause = " AND ".join(where_clauses)
+
+            # Final SQL Query
             sql_query = f"""
                 SELECT 
-                    opp.name as name,
-                    opp.opportunity_name as activity_name,
-                    opp.karma_points as karma_points,
-                    opp.opportunity_type as types,
-                    opp.start_date as start_date,
-                    opp.end_date as end_date,
-                    opp.hours as hours,
-                    opp.opportunity_description as activity_description,
-                    opp.opportunity_image as activity_image,
-                    opp.need_certificate as need_certificate,
+                    opp.name AS name,
+                    opp.opportunity_name AS activity_name,
+                    opp.karma_points AS karma_points,
+                    opp.opportunity_type AS types,
+                    opp.start_date AS start_date,
+                    opp.end_date AS end_date,
+                    opp.min_volunteering_time AS hours,
+                    opp.opportunity_description AS activity_description,
+                    opp.opportunity_image AS activity_image,
+                    opp.need_certificate AS need_certificate,
                     vo.com_percent,
-                    vo.duration as donet_hours,
-                    vo.workflow_state as workflow_state,
-                    vo.completion_wf_state as completion_wf_state,
-                    vo.rating as rating,
-                    vo.remarks as remarks,
+                    vo.duration AS donet_hours,
+                    vo.workflow_state,
+                    vo.completion_wf_state,
+                    vo.rating,
+                    vo.remarks,
                     COALESCE(
                         JSON_ARRAYAGG(
                             DISTINCT CASE 
@@ -176,23 +189,25 @@ class Opportunity:
                                 'user_image', sva.user_image
                             )
                         ), JSON_ARRAY()
-                    ) as volunteers
+                    ) AS volunteers
                 FROM `tabOpportunity` AS opp
-                LEFT JOIN `tabVolunteer Opportunity` AS vo ON (vo.activity = opp.name AND vo.volunteer = '{user}')
-                LEFT JOIN `tabSVA User` as sva ON sva.name = vo.volunteer
+                LEFT JOIN `tabVolunteer Opportunity` AS vo 
+                    ON vo.activity = opp.name AND vo.volunteer = '{user}'
+                LEFT JOIN `tabSVA User` AS sva ON sva.name = vo.volunteer
                 LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
                 LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
                 WHERE {combined_where_clause}
                 GROUP BY opp.name
                 {order_by_clause}
             """
+
             data = frappe.db.sql(sql_query, as_dict=True)
             return data
 
         except Exception as e:
-            frappe.log_error("related_opportunities Error", frappe.get_traceback())
-            return None
-        
+            frappe.log_error(frappe.get_traceback(), "related_opportunities Error")
+            return []
+
     # Function to get available opportunities
     def available_opportunities(filter={}):
         try:
@@ -200,18 +215,14 @@ class Opportunity:
 
             if isinstance(filter, str):
                 filter = frappe.parse_json(filter)
-
             # Initialize clauses
             where_clauses = [
                 """EXISTS (
                     SELECT 1 FROM `tabOpportunity Activity` as oact
                     WHERE oact.opportunity = opp.name
                 )""",
-                """NOT EXISTS (
-                    SELECT 1 FROM `tabVolunteer Opportunity` AS vo
-                    WHERE vo.activity = opp.name
-                    AND vo.volunteer IS NOT NULL
-                )"""
+                "opp.workflow_state = 'Approved'",
+                "opp.opportunity_status IN ('Published', 'Ongoing')"
             ]
 
             # Exclude opportunities already taken by the user
@@ -259,7 +270,7 @@ class Opportunity:
                     opp.opportunity_type as types,
                     opp.start_date as start_date,
                     opp.end_date as end_date,
-                    opp.hours as hours,
+                    opp.min_volunteering_time as hours,
                     opp.opportunity_description as activity_description,
                     opp.opportunity_image as activity_image,
                     opp.need_certificate as need_certificate,
@@ -305,7 +316,7 @@ class Opportunity:
         except Exception as e:
             frappe.log_error("related_opportunities Error", frappe.get_traceback())
             return None
-
+ 
         
     # Function to act now opportunity    
     def act_now_opp(activity, volunteer):
@@ -325,23 +336,23 @@ class Opportunity:
             return {"msg": "Activity already assigned to the volunteer", "status": 400}
         
 
-        unlimited_vacancies = frappe.db.get_value(
-            "Opportunity", activity, "unlimited_vacancies"
-        )
+        # unlimited_vacancies = frappe.db.get_value(
+        #     "Opportunity", activity, "unlimited_vacancies"
+        # )
 
-        if not unlimited_vacancies:
-            total_vacancies = (
-                frappe.db.get_value("Opportunity", activity, "total_vacancies") or 0
-            )
-            current_count = frappe.db.count(
-                "Volunteer Opportunity", filters={"activity": activity}
-            )
+        # if not unlimited_vacancies:
+        #     total_vacancies = (
+        #         frappe.db.get_value("Opportunity", activity, "total_vacancies") or 0
+        #     )
+        #     current_count = frappe.db.count(
+        #         "Volunteer Opportunity", filters={"activity": activity}
+        #     )
 
-            if current_count >= total_vacancies:
-                return {
-                    "msg": f"Vacancies for this activity are already filled. No more users can be added.",
-                    "status": 400,
-                }
+        #     if current_count >= total_vacancies:
+        #         return {
+        #             "msg": f"Vacancies for this activity are already filled. No more users can be added.",
+        #             "status": 400,
+        #         }
 
         # Assign activity to the volunteer
         doc = frappe.new_doc("Volunteer Opportunity")
@@ -357,11 +368,14 @@ class Opportunity:
     def public_opportunities(name=None):
         try:
             where_clauses = [
-                """EXISTS (
-                    SELECT 1 FROM `tabOpportunity Activity` AS oact
-                    WHERE oact.opportunity = opp.name
-                )AND opp.workflow_state = 'Approved'"""
-            ]
+                    """EXISTS (
+                        SELECT 1 FROM `tabOpportunity Activity` AS oact
+                        WHERE oact.opportunity = opp.name
+                    )""",
+                    "opp.workflow_state = 'Approved'",
+                    "opp.opportunity_status IN ('Published', 'Ongoing')"
+                ]
+
             where_clause = "WHERE " + " AND ".join(where_clauses)
             sql_query = f"""
                 SELECT 
@@ -371,7 +385,7 @@ class Opportunity:
                     opp.opportunity_type AS types,
                     opp.start_date AS start_date,
                     opp.end_date AS end_date,
-                    opp.hours AS hours,
+                    opp.min_volunteering_time AS hours,
                     opp.opportunity_description AS activity_description,
                     opp.opportunity_image AS activity_image,
                 
@@ -450,7 +464,7 @@ class Opportunity:
                     order_by_clauses.append(
                         "opp.hours ASC"
                         if filter["volunteering_hours"] == "Low to High"
-                        else "opp.hours DESC"
+                        else "opp.min_volunteering_time DESC"
                     )
 
             where_clause = " AND ".join(where_clauses)
@@ -468,7 +482,7 @@ class Opportunity:
                 opp.karma_points as karma_points,
                 opp.start_date as start_date,
                 opp.end_date as end_date,
-                opp.minimum_hours as hours,
+                opp.min_volunteering_time as hours,
                 vo.duration as donet_hours,
                 vo.completion_wf_state as completion_wf_state,
                 opp.opportunity_description as activity_description,

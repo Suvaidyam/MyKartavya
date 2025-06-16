@@ -97,24 +97,36 @@ def get_columns() -> list[dict]:
 		
 	]
 
-
+def list_to_tuple_string(user_permissions):
+    return "(" + ",".join(f"'{item}'" for item in user_permissions) + ")"
 def get_data(filters):
 	conditions = []
 	values = []
+	user = frappe.session.user
+	if user != "Administrator":
+		user_role = frappe.db.get_value("SVA User", {"email": user},'role_profile')
+		if user_role == "Company Admin":
+			user_permissions = frappe.db.get_all("User Permission",filters={"user": user,'allow':"Company"},pluck="for_value")
+			if len(user_permissions):
+				conditions.append(f"act.company IN {list_to_tuple_string(user_permissions)} OR act.company IS NULL OR act.company = ''")
+		elif user_role == "NGO Admin":
+			user_permissions = frappe.db.get_all("User Permission",filters={"user": user,'allow':"NGOs"},pluck="for_value")
+			if len(user_permissions):
+				conditions.append(f"act.ngo IN {list_to_tuple_string(user_permissions)}")
 	
 	if filters.get("start_date"):
-			conditions.append("act.publish_date >= %s")
-			values.append(filters["start_date"])
+		conditions.append(f"act.publish_date >= '{filters['start_date']}'")
 
 	if filters.get("end_date"):
-		conditions.append("act.publish_date <= %s")
-		values.append(filters["end_date"])
+		conditions.append(f"act.publish_date <= '{filters['end_date']}'")
 
-	
 	# Build WHERE clause
 	where_clause = ""
 	if conditions:
 		where_clause = "WHERE " + " AND ".join(conditions)
+
+	print(conditions,'====================================== conditions')
+	print(where_clause,'====================================== where_clause')
 	
 	query = f"""
 		SELECT
@@ -122,7 +134,7 @@ def get_data(filters):
 			act.title,
 			act.docstatus,
 			act.activity_type,
-			act.status,
+			act.activity_status,
 			act.ngo,
 			act.company,
 			act.publish_date,
@@ -134,5 +146,5 @@ def get_data(filters):
 		ORDER BY act.title ASC
 	"""
 	
-	data = frappe.db.sql(query, values, as_list=True)
+	data = frappe.db.sql(query, as_list=True)
 	return data

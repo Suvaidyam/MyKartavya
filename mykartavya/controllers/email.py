@@ -208,6 +208,11 @@ def send_otp_email(email, otp, type="login"):
                         font-size: 14px;
                         text-align: center;
                     }}
+                    .warning {{
+                            font-size: 14px; 
+                            color: #c0392b; 
+                            margin-top: 10px; 
+                    }}
                 </style>
             </head>
             <body>
@@ -217,15 +222,16 @@ def send_otp_email(email, otp, type="login"):
                     </div>
                     <h2>Login OTP</h2>
                     <div class="greeting">Hello, {full_name}</div>
+                    <p>Your One Time Password (OTP) for login is:</p> 
                     <div class="otp">{otp}</div>
                     <div class="otp-message">
-                        is the One Time Password (OTP) for your application and will be valid<br>
-                        for 30 mins only. Do not share your OTP with anyone.
+                       This OTP is valid for 30 minutes.
                     </div>
+                    <div class="warning">Warning: Do not share your OTP with anyone.</div>
                     <div class="footer">
                         <p>Thank you!</p>
                         <p>Team MyKartavya</p>
-                        <p>Feel free to contact us for further information</p>
+                        <p>If you did not request this OTP, please ignore this email.</p> 
                     </div>
                 </div>
             </body>

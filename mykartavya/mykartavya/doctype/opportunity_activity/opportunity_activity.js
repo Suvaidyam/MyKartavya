@@ -8,6 +8,26 @@ frappe.ui.form.on('Opportunity Activity', {
                 }
             };
         });
+
+        let today = frappe.datetime.get_today();
+        frm.set_df_property('start_date', 'min_date', today);
+        if (frm.doc.start_date) {
+            const minEndDate = frappe.datetime.add_days(frm.doc.start_date, 1);
+            if (frm.fields_dict.end_date?.datepicker) {
+                frm.fields_dict.end_date.datepicker.update({
+                    minDate: frappe.datetime.str_to_obj(minEndDate)
+                });
+            }
+        }
+
+        if (frm.doc.end_date) {
+            const minDeadline = frappe.datetime.add_days(frm.doc.end_date, 1);
+            if (frm.fields_dict.reporting_deadline?.datepicker) {
+                frm.fields_dict.reporting_deadline.datepicker.update({
+                    minDate: frappe.datetime.str_to_obj(minDeadline)
+                });
+            }
+        }
     },
 
     opportunity: function (frm) {
@@ -71,22 +91,24 @@ frappe.ui.form.on('Opportunity Activity', {
     },
 
     start_date: function (frm) {
-        // Auto-set end date to start date if empty
-        if (!frm.doc.end_date) {
-            frm.set_value('end_date', frm.doc.start_date);
-        }
-        // Else validate end date is after start date
-        else if (frm.doc.end_date < frm.doc.start_date) {
-            frappe.msgprint(__('End Date cannot be before Start Date'));
-            frm.set_value('end_date', frm.doc.start_date);
+        if (frm.doc.start_date) {
+            frm.set_value('end_date', null);
+
+            const minEndDate = frappe.datetime.add_days(frm.doc.start_date, 1);
+
+            frm.fields_dict.end_date.datepicker.update({
+                minDate: frappe.datetime.str_to_obj(minEndDate)
+            });
         }
     },
-
     end_date: function (frm) {
-        // Validate end date is after start date
-        if (frm.doc.start_date && frm.doc.end_date < frm.doc.start_date) {
-            frappe.msgprint(__('End Date cannot be before Start Date'));
-            frm.set_value('end_date', frm.doc.start_date);
+        if (frm.doc.end_date) {
+
+            const minEndDate = frappe.datetime.add_days(frm.doc.end_date, 1);
+
+            frm.fields_dict.reporting_deadline.datepicker.update({
+                minDate: frappe.datetime.str_to_obj(minEndDate)
+            });
         }
     },
 

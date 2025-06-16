@@ -1,0 +1,31 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "condition": "doc.workflow_state==\"Rejected\"",
+ "creation": "2025-06-14 11:56:24.464184",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Company",
+ "enabled": 1,
+ "event": "Value Change",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Corporate Registration Request Not Approved</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            margin: 0;\n            padding: 20px;\n            background-color: #f0f0f0;\n        }\n        .container {\n            max-width: 500px;\n            margin: auto;\n            background: #ffffff;\n            border-radius: 8px;\n            padding: 30px;\n            text-align: center;\n        }\n        \n        .logo img {\n            max-width: 250px;\n            height: auto;\n        }\n        h2 {\n            color: #666666;\n            font-size: 24px;\n            margin: 10px 0;\n            font-weight: normal;\n        }\n        .greeting {\n            color: #333333;\n            font-size: 16px;\n            margin-bottom: 5px;\n        }\n        .message {\n            color: #666666;\n            font-size: 16px;\n            line-height: 1.6;\n            margin: 10px 0;\n        }\n        .footer {\n            margin-top: 20px;\n            color: #999999;\n            font-size: 14px;\n        }\n        .footer p {\n            margin: 2px 0;\n        }\n        .team-name {\n            font-weight: normal;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <div class=\"logo\">\n            <img src=\"https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png\" alt=\"MyKartavya Logo\">\n        </div>\n        \n        <h2>Corporate Registration Request Not Approved</h2>\n        \n        <div class=\"greeting\">Hello, {{doc.first_name}}</div>\n        \n        <div class=\"message\">\n            We regret to inform you that your request to register as a corporate on MyKartavya has not been approved at this time.\n        </div>\n        \n        <div class=\"message\">\n            For further details or assistance, please feel free to contact us.\n        </div>\n        \n        <div class=\"footer\">\n            <p>Thank you!</p>\n            <p class=\"team-name\">Team MyKartavya</p>\n        </div>\n    </div>\n</body>\n</html>",
+ "message_type": "HTML",
+ "minutes_offset": 0,
+ "modified": "2025-06-14 12:10:50.469979",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Corporate Reject",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_document_field": "email"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "subject": "Corporate Registration Request Not Approved",
+ "value_changed": "workflow_state"
+}

@@ -1,3 +1,6 @@
+# Copyright (c) 2025, Aniket Singh and contributors
+# For license information, please see license.txt
+
 import frappe
 from frappe.utils import validate_email_address
 from frappe.utils.pdf import get_pdf
@@ -5,6 +8,8 @@ from frappe.utils.file_manager import save_file
 import time
 import base64
 
+def list_to_tuple_string(user_permissions):
+    return "(" + ",".join(f"'{item}'" for item in user_permissions) + ")"
 
 class Profile:
     def sva_user_data():
@@ -320,14 +325,33 @@ class Profile:
             frappe.log_error(frappe.get_traceback(), "SVA User Update Error")
             return {"status": 500, "message": f"Failed to update user: {str(e)}"}
 
-    
     def get_top_users(page=1, page_size=10):
         try:
             page = int(page)
             page_size = int(page_size)
             start = (page - 1) * page_size
 
-            query = """
+            conditions = []
+            user = frappe.session.user
+            
+            if user != "Administrator":
+                user_role = frappe.db.get_value("SVA User", {"email": user},'role_profile')
+                if user_role == "Company Admin":
+                    user_permissions = frappe.db.get_all("User Permission",filters={"user": user,'allow':"Company"},pluck="for_value")
+                    if len(user_permissions):
+                        company_condition = f"(v.custom_company IN {list_to_tuple_string(user_permissions)})"
+                        conditions.append(company_condition)
+                elif user_role == "NGO Admin":
+                    user_permissions = frappe.db.get_all("User Permission",filters={"user": user,'allow':"NGOs"},pluck="for_value")
+                    if len(user_permissions):
+                        ngo_condition = f"(v.custom_ngo IN {list_to_tuple_string(user_permissions)})"
+                        conditions.append(ngo_condition)
+
+            where_clause = ""
+            if conditions:
+                where_clause = "WHERE " + " AND ".join(conditions)
+
+            query = f"""
                 SELECT
                     combined.volunteer_id,
                     v.full_name,
@@ -355,23 +379,29 @@ class Profile:
                     WHERE vo.completion_wf_state = 'Approved'
                 ) AS combined
                 JOIN `tabSVA User` v ON combined.volunteer_id = v.name
+                {where_clause}
                 GROUP BY combined.volunteer_id
                 ORDER BY karma_points DESC
                 LIMIT %s OFFSET %s
             """
 
-            activities = frappe.db.sql(query, (page_size, start), as_dict=True)
+            users = frappe.db.sql(query, (page_size, start), as_dict=1)
 
-            total_users = frappe.db.sql("""
-                SELECT COUNT(DISTINCT volunteer_id) FROM (
-                    SELECT volunteer AS volunteer_id FROM `tabVolunteer Activity`
+            # Get total count with permissions
+            count_query = f"""
+                SELECT COUNT(DISTINCT v.name) 
+                FROM (
+                    SELECT volunteer AS volunteer_id FROM `tabVolunteer Activity` WHERE completion_wf_state = 'Approved'
                     UNION
-                    SELECT volunteer AS volunteer_id FROM `tabVolunteer Opportunity`
+                    SELECT volunteer AS volunteer_id FROM `tabVolunteer Opportunity` WHERE completion_wf_state = 'Approved'
                 ) AS all_volunteers
-            """)[0][0]
+                JOIN `tabSVA User` v ON all_volunteers.volunteer_id = v.name
+                {where_clause}
+            """
+            total_users = frappe.db.sql(count_query)[0][0]
 
             return {
-                "users": activities,
+                "users": users,
                 "total_users": total_users,
                 "total_pages": (total_users + page_size - 1) // page_size,
                 "current_page": page,

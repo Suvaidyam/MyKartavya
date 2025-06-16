@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to MyKartavya - SVA User Registration</title>
+    <title>Welcome to MyKartavya - Company Registration</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
-            padding: 40px 40px;
+            padding: 20px;
             background-color: #f5f5f5;
         }
-
         .container {
             max-width: 500px;
             margin: auto;
@@ -20,76 +18,92 @@
             border-radius: 8px;
             padding: 30px;
             text-align: center;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
-
-        .logo img {
-            max-width: 340px;
-            height: auto;
+        .logo {
             margin-bottom: 20px;
         }
-
+        .logo img {
+            max-width: 200px;
+            height: auto;
+        }
         h2 {
-            color: #a4a29d;
-            font-size: 22px;
-            margin: 15px 0;
-            font-weight: bold;
+            color: #333;
+            font-size: 24px;
+            margin: 20px 0;
+            font-weight: 500;
         }
-
         .greeting {
-            color: #444;
+            color: #666;
             font-size: 16px;
-            margin: 22px 10px;
-
+            margin-bottom: 20px;
         }
-
-        .info {
-            font-size: 16px;
-            color: #555;
-            margin: 16px 0;
-            font-weight: semibold;
+        .message {
+            color: black;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 20px 0;
+            text-align: center;
         }
-
+        .status-box {
+            background-color: #f9f9f9;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: left;
+        }
+        .status-box p {
+            margin: 10px 0;
+            color: #333;
+            font-size: 14px;
+        }
         .cta-button {
             display: inline-block;
-            background-color: #cedc38;
-            color: black;
-            padding: 8px 50px;
+            background-color: #136096;
+            color: white;
+            padding: 12px 25px;
             text-decoration: none;
             font-size: 16px;
-            font-weight: 400;
+            font-weight: 500;
+            border-radius: 6px;
             transition: background-color 0.3s;
             margin: 15px 0;
         }
-
         .cta-button:hover {
-            background-color: #d94997;
+            background-color: #0e4872;
         }
-
-        .name {
-            font-size: 16px;
-            color: #555;
-            font-weight: bold;
+        .footer {
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+        }
+        .footer p {
+            margin: 5px 0;
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <div class="logo">
-            <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png"
-                alt="MyKartavya Logo">
+            <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo">
         </div>
-
-        <div class="greeting">Hello,<span class="name">{{doc.first_name}}</span></div>
-        <p class="info">You have been registered as a volunteer.</p>
-        <p class="info">Login using</p>
-        <p class="info">Email: <span>{{doc.email}}</span></p>
-        <p class="info">Mobile: <span>{{doc.custom_phone_number_}}</span></p>
-
-        <a href="{{url}}" class="cta-button">Set Password</a>
-
+        <h2 style="color: #555555;">Volunteer Registration Successful</h2> 
+         <p>Hello, <strong>{{doc.first_name}}</strong></p>
+        
+        <p class="" style="color: #555555;">You have been successfully registered as a volunteer.</p> 
+       
+       <div class="info-block"> 
+ 
+            <p>Email: <a href="mailto:{{doc.email}}" style="color: black; text-decoration: none;">{{doc.email}}</a></p> 
+ 
+            <p>Mobile Number: {{ doc.custom_phone_number.replace('+91-', '') }}</p> 
+ 
+        </div> 
+        <div class="footer">
+            <p>Thank you!</p>
+            <p>Team MyKartavya</p>
+            <p> If you did not initiate this registration, please contact us immediately.</p>
+        </div>
     </div>
 </body>
-
 </html>
