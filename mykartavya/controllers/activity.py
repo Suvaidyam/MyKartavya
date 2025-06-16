@@ -104,6 +104,16 @@ class Activity:
         )
         if user:
             where_clause += f" AND act.name NOT IN (SELECT activity FROM `tabVolunteer Activity` WHERE volunteer = '{user}')"
+            user_group = frappe.db.get_all("SVA User Child",{'parenttype':'Volunteer Groups','user':user},pluck='parent')
+            if len(user_group):
+                group_act = frappe.db.get_all("Activity Volunteer Group",{'group':['IN',user_group]},pluck='activity')
+                if len(group_act):
+                    where_clause += f" AND (act.is_team_activity = 0 OR act.name IN ({', '.join(frappe.db.escape(ga) for ga in group_act)}))"
+                else:
+                    where_clause += f" AND act.is_team_activity = 0"
+            else:
+                    where_clause += f" AND act.is_team_activity = 0"
+
         if company and len(companies) > 0:
             where_clause += f" AND (act.company IS NULL OR act.company IN ('','{company}',{', '.join(frappe.db.escape(c) for c in companies)}))"
         elif len(companies) > 0:
@@ -112,6 +122,7 @@ class Activity:
             where_clause += f" AND (act.company IS NULL OR act.company = '{company}')"
         else:
             where_clause += " AND (act.company IS NULL OR act.company = '')"
+
         if isinstance(filter, str):
             filter = frappe.parse_json(filter)
         if filter:
