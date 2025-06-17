@@ -19,8 +19,7 @@
   },
   {
    "fieldname": "company_logo",
-   "fieldtype": "Attach",
-   "in_list_view": 1,
+   "fieldtype": "Attach Image",
    "label": "Company Logo",
    "reqd": 1
   }
@@ -29,7 +28,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-12 19:57:59.371444",
+ "modified": "2025-06-14 10:38:08.119572",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Company Logos",

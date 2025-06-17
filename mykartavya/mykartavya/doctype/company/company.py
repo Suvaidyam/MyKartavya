@@ -110,10 +110,9 @@ class Company(Document):
             frappe.db.set_value("Company", doc.name, "workflow_state", "Approved")
             status = frappe.db.get_value("Company", doc.name, "workflow_state")
             frappe.db.set_value("Company", doc.name, "registration_status", status)
-
+            create_company_logo(doc)
         # Create SVA User for both registration types
         insert_sva_user(doc)
-        test(doc)
 
 def get_role_profile(registration_type):
     """Get appropriate role profile based on registration type"""
@@ -191,11 +190,12 @@ def generate_random_password(length=10):
     random.shuffle(password)
     return ''.join(password)
 
-def test(doc):
+def create_company_logo(doc):
     logo = frappe.new_doc("Company Logos")
     logo.update({
         "company_name": doc.company_name,
         "company_logo": doc.company_logo,
         "enabled": 1
     })
-    logo.insert(ignore_permissions=True)
+    logo.insert(ignore_permissions=True, ignore_mandatory=True)
+

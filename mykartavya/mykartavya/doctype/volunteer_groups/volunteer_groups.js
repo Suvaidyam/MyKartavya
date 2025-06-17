@@ -1,8 +1,12 @@
-// Copyright (c) 2025, Aniket Singh and contributors
-// For license information, please see license.txt
+frappe.ui.form.on("Volunteer Groups", {
+    refresh(frm) {
+        frm.fields_dict.volunteers.grid.get_field("user").get_query = function (doc, cdt, cdn) {
 
-// frappe.ui.form.on("Volunteer Groups", {
-// 	refresh(frm) {
-
-// 	},
-// });
+            return {
+                filters: {
+                    role_profile: "Volunteer"
+                }
+            };
+        };
+    }
+});

@@ -22,7 +22,7 @@ fixtures=[
     # 'Property Setter',
     # 'SVADatatable Configuration',
     # "Workflow",
-    # "Workflow State", 
+    # "Workflow State",
     # "Workflow Action",
     # "State",
     # "District"
@@ -44,6 +44,16 @@ fixtures=[
 #         "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert"
 #     }
 # }
+
+doc_events = {
+    "Activity": {
+        "on_update": "mykartavya.controllers.notification.activity_status_notification"
+    },
+     "Opportunity": {
+        "on_update": "mykartavya.controllers.notification.opportunity_status_notification"
+    }
+}
+
 
 override_doctype_class = {
     "User": "mykartavya.override.CustomUser"
@@ -160,9 +170,9 @@ app_include_css = "/assets/mykartavya/css/style.css"
 # -----------
 # Permissions evaluated in scripted ways
 
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
+permission_query_conditions = {
+	"SVA User": "mykartavya.permission_query.user.permission_query_condition",
+}
 #
 # has_permission = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",

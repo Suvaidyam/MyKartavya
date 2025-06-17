@@ -3,12 +3,13 @@
 
 frappe.ui.form.on("Opportunity", {
     setup(frm) {
+        const isMyKartvyaAdmin = frappe.user_roles.includes("MyKartvya Admin");
         frm['dt_events'] = {
             "Volunteer Opportunity": {
                 formatter: {
                     action: function (element, column, row) {
-                        if (row.completion_wf_state === "Pending") {
-                            element.setAttribute('style', 'display:none;');
+                        if (!isMyKartvyaAdmin||row.completion_wf_state === "Pending") {
+                            element.setAttribute('disabled', true);
                         } else {
                             // if(row.completion_wf_state === "Submitted"){
                             //     element.setAttribute('style','background-color:green;')
@@ -84,10 +85,22 @@ frappe.ui.form.on("Opportunity", {
                         }
                     }
                 }
+            },
+            "Opportunity Activity": {
+                after_render: function (dt, mode) {
+                    let form = dt.form_dialog;
+                    let opportunity = form.get_value('opportunity');
+                    form.set_query('parent1', () => {
+                        return {
+                            filters: {
+                                'opportunity': opportunity || `Select opportunity`
+                            }
+                        }
+                    })
+                }
             }
         }
     },
-
     validate: function (frm) {
         if (frm.image_uploaded) {
             frappe.validated = false;
@@ -101,23 +114,6 @@ frappe.ui.form.on("Opportunity", {
         }
     },
 
-    // setup(frm) {
-    //     frm['dt_events'] = {
-    //         "Opportunity Opportunity": {
-    //             after_render: function (dt, mode) {
-    //                 let form = dt.form_dialog;
-    //                 let opportunity = form.get_value('opportunity');
-    //                 form.set_query('parent1', () => {
-    //                     return {
-    //                         filters: {
-    //                             'opportunity': opportunity || `Select opportunity`
-    //                         }
-    //                     }
-    //                 })
-    //             }
-    //         }
-    //     }
-    // },
     // is_private: function (frm) {
     //     if (!frm.doc.is_private) {
     //         frm.set_value('company', null);

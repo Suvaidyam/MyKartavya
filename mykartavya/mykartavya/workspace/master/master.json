@@ -16,7 +16,7 @@
  "link_to": "State",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-06-09 18:39:30.577919",
+ "modified": "2025-06-14 09:01:19.329590",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Master",
@@ -27,7 +27,7 @@
  "quick_lists": [],
  "roles": [
   {
-   "role": "MyKartavya Admin"
+   "role": "MyKartvya Admin"
   }
  ],
  "sequence_id": 8.0,

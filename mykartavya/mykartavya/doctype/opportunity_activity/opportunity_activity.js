@@ -8,6 +8,9 @@ frappe.ui.form.on('Opportunity Activity', {
                 }
             };
         });
+
+        let today = frappe.datetime.get_today();
+        frm.set_df_property('start_date', 'min_date', today);
         if (frm.doc.start_date) {
             const minEndDate = frappe.datetime.add_days(frm.doc.start_date, 1);
             if (frm.fields_dict.end_date?.datepicker) {

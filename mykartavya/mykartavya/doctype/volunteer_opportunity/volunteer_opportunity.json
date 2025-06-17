@@ -24,7 +24,12 @@
   "certificate",
   "volunteer_opportunity_activity",
   "rating",
-  "remarks"
+  "remarks",
+  "fetch_data_section",
+  "column_break_eyva",
+  "volunteer_name",
+  "volunteer_email",
+  "opportunity_name"
  ],
  "fields": [
   {
@@ -61,6 +66,7 @@
   {
    "fieldname": "duration",
    "fieldtype": "Duration",
+   "hide_days": 1,
    "in_list_view": 1,
    "label": "Duration",
    "read_only": 1
@@ -148,12 +154,43 @@
    "fieldtype": "Int",
    "label": "Work Value Rupees",
    "read_only": 1
+  },
+  {
+   "fetch_from": "volunteer.email",
+   "fieldname": "volunteer_email",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Volunteer Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "fetch_data_section",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Fetch Data"
+  },
+  {
+   "fetch_from": "volunteer.full_name",
+   "fieldname": "volunteer_name",
+   "fieldtype": "Data",
+   "label": "Volunteer Name"
+  },
+  {
+   "fetch_from": "activity.opportunity_name",
+   "fieldname": "opportunity_name",
+   "fieldtype": "Data",
+   "label": "Opportunity Name"
+  },
+  {
+   "fieldname": "column_break_eyva",
+   "fieldtype": "Column Break",
+   "hidden": 1
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-05 19:22:38.228397",
+ "modified": "2025-06-14 17:47:55.540114",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Opportunity",
