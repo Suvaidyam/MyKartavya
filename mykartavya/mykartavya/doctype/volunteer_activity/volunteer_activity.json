@@ -195,7 +195,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-14 16:27:53.969626",
+ "modified": "2025-06-16 18:26:04.319590",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",
@@ -226,6 +226,7 @@
    "write": 1
   },
   {
+   "create": 1,
    "delete": 1,
    "email": 1,
    "export": 1,
@@ -233,6 +234,7 @@
    "read": 1,
    "report": 1,
    "role": "Company Admin",
+   "select": 1,
    "share": 1,
    "write": 1
   },
