@@ -267,8 +267,8 @@ frappe.ui.form.on("Activity", {
                 wrapper: report
             });
         })
-        if (frm.doc.status === "Published") {
-            // frm.set_read_only();
+        if (frm.doc.activity_status == "Published") {
+            frm.set_read_only();
             // frm.disable_save();
         }
 
