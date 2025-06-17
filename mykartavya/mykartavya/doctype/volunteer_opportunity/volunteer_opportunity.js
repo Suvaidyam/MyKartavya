@@ -4,7 +4,7 @@
 frappe.ui.form.on("Volunteer Opportunity", {
     refresh: function (frm) {
         if (frm.doc.completion_wf_state === 'Submitted') {
-            frm.add_custom_button("Activity Approve", function () {
+            frm.add_custom_button("Opportunity Approve", function () {
                 frappe.confirm(
                     'Are you sure you want to approve this activity?',
                     function () {
@@ -49,49 +49,35 @@ frappe.ui.form.on("Volunteer Opportunity", {
                 );
             });
 
-            frm.add_custom_button("Activity Reject", function () {
-                frappe.confirm(
-                    'Are you sure you want to reject this activity?',
-                    function () {
-                        frappe.call({
-                            method: 'frappe.client.get',
-                            args: {
-                                doctype: 'Volunteer Opportunity',
-                                name: frm.doc.name
-                            },
-                            callback: function (r) {
-                                if (r.message) {
-                                    frm.set_value('completion_wf_state', 'Rejected');
-                                    frm.save().then(() => {
-                                        frappe.show_alert({
-                                            message: __('Activity rejected successfully'),
-                                            indicator: 'green'
-                                        });
-                                    }).catch((err) => {
-                                        frappe.msgprint({
-                                            title: __('Error'),
-                                            indicator: 'red',
-                                            message: __('Failed to reject activity. Please try again.')
-                                        });
+            frm.add_custom_button("Opportunity Reject", function () {
+                const d = new frappe.ui.Dialog({
+                    title: 'Reason for Rejection',
+                    fields: [
+                        {
+                            label: 'Reason',
+                            fieldname: 'reason',
+                            fieldtype: 'Small Text',
+                            reqd: 1
+                        }
+                    ],
+                    primary_action_label: 'Submit',
+                    primary_action(values) {
+                        frm.set_value('remarks', values.reason).then(() => {
+                            frm.set_value('completion_wf_state', 'Rejected').then(() => {
+                                d.hide();
+                                frm.save().then(() => {
+                                    frappe.show_alert({
+                                        message: __('Opportunity Rejected successfully'),
+                                        indicator: 'green'
                                     });
-                                } else {
-                                    frappe.msgprint({
-                                        title: __('Error'),
-                                        indicator: 'red',
-                                        message: __('Volunteer Opportunity not found. Please refresh the page.')
-                                    });
-                                }
-                            },
-                            error: function (err) {
-                                frappe.msgprint({
-                                    title: __('Error'),
-                                    indicator: 'red',
-                                    message: __('An error occurred while rejecting the activity. Please try again.')
                                 });
-                            }
+                            });
                         });
+
                     }
-                );
+                });
+                d.show();
+
             }).addClass('btn-danger');
         }
     },

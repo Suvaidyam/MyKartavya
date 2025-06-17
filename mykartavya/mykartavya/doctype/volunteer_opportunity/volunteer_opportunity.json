@@ -127,11 +127,11 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval:doc.enrollment_wf_state==\"Rejected\"",
    "fieldname": "remarks",
    "fieldtype": "Small Text",
    "label": "Remarks",
-   "length": 500
+   "length": 500,
+   "read_only": 1
   },
   {
    "fieldname": "volunteer_opportunity_activity",
@@ -190,7 +190,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-17 15:09:45.102735",
+ "modified": "2025-06-17 18:41:02.508310",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Opportunity",

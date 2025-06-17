@@ -2,16 +2,59 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Volunteer Activity", {
+    validate: function (frm) {
+        if (frm.doc.workflow_state === 'Rejected' && !frm.doc.remarks) {
+            frappe.validated = false;  // Prevent form submission
+            const d = new frappe.ui.Dialog({
+                title: 'Reason for Rejection',
+                fields: [
+                    {
+                        label: 'Reason',
+                        fieldname: 'reason',
+                        fieldtype: 'Small Text',
+                        reqd: 1
+                    }
+                ],
+                primary_action_label: 'Submit',
+                primary_action(values) {
+                    frm.set_value('remarks', values.reason).then(() => {
+                        d.hide();
+                        frm.save();  // This will trigger validate again, but now with remarks set
+                    });
+                }
+            });
+            d.show();
+        }
+    },
+
     refresh: function (frm) {
         if (frm.doc.completion_wf_state === 'Submitted') {
             frm.add_custom_button("Activity Approve", function () {
                 frm.set_value('completion_wf_state', 'Approved');
                 frm.save();
             });
-
             frm.add_custom_button("Activity Reject", function () {
-                frm.set_value('completion_wf_state', 'Rejected');
-                frm.save();
+                const d = new frappe.ui.Dialog({
+                    title: 'Reason for Rejection',
+                    fields: [
+                        {
+                            label: 'Reason',
+                            fieldname: 'reason',
+                            fieldtype: 'Small Text',
+                            reqd: 1
+                        }
+                    ],
+                    primary_action_label: 'Submit',
+                    primary_action(values) {
+                        frm.set_value('remarks', values.reason).then(() => {
+                            frm.set_value('completion_wf_state', 'Rejected').then(() => {
+                                d.hide();
+                                frm.save();
+                            });
+                        });
+                    }
+                });
+                d.show();
             }).addClass('btn-danger');
         }
 
