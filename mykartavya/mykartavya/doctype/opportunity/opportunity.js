@@ -242,7 +242,7 @@ frappe.ui.form.on("Opportunity", {
 
 
     refresh(frm) {
-        if (frm.doc.status === "Published") {
+        if (frm.doc.opportunity_status === "Published") {
             frm.set_read_only();
             // frm.disable_save();
         }
