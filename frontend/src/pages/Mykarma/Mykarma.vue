@@ -319,7 +319,7 @@ const cur_opp = async (filter) => {
 const volunteering_opportunities = async (filter) => {
   loader.value = true;
   try {
-    const response = await call('mykartavya.controllers.api.related_opportunities', {
+    const response = await call('mykartavya.controllers.api.ava_opportunities', {
       filter: filter ?? {},
     });
     opportunitiy.value = response;
