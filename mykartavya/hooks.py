@@ -225,7 +225,11 @@ scheduler_events = {
             "mykartavya.controllers.cron.process_activities",
             "mykartavya.controllers.cron.opportunity_publish"
         ]
-    }
+    },
+    "daily": [
+        "mykartavya.controllers.cron.start_activities",
+        "mykartavya.controllers.cron.send_reporting_reminders"
+    ]
 }
 
 # Testing

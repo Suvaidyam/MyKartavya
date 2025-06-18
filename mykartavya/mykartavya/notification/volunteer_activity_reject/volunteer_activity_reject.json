@@ -1,7 +1,7 @@
 {
  "attach_print": 0,
  "channel": "Email",
- "condition": "doc.workflow_state =='Rejected'",
+ "condition": "doc.completion_wf_state =='Rejected'",
  "creation": "2025-06-16 19:04:46.119388",
  "days_in_advance": 0,
  "docstatus": 0,
@@ -11,10 +11,10 @@
  "event": "Value Change",
  "idx": 0,
  "is_standard": 1,
- "message": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>\n  <title>Application Rejected - MyKartavya</title>\n  <style>\n    body {\n      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n      margin: 0;\n      padding: 20px;\n      background-color: #f9fafb;\n    }\n    .container {\n      max-width: 520px;\n      margin: auto;\n      background: #ffffff;\n      padding: 20px 25px;\n      text-align: center;\n      border-radius: 10px;\n      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);\n    }\n    .logo img {\n      max-width: 250px;\n      height: auto;\n    }\n    .greeting,\n    .message,\n    .activity-name,\n    .reason,\n    .closing,\n    .team-signature {\n      color: #374151;\n      font-size: 16px;\n      margin: 6px 0;\n      line-height: 1.6;\n    }\n    .greeting strong {\n      color: #111827;\n    }\n    .activity-name {\n      font-weight: 600;\n      color: #111827;\n      font-size: 18px;\n      margin-top: 5px;\n    }\n    .rejected {\n      color: #dc2626;\n      font-weight: 600;\n    }\n    .reason {\n      color: #991b1b;\n      font-style: italic;\n    }\n    .closing, .team-signature {\n      color: #6b7280;\n      font-size: 14px;\n      margin-top: 5px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"logo\">\n      <img src=\"https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png\" alt=\"MyKartavya Logo\" />\n    </div>\n\n    <div class=\"greeting\">\n      Dear <strong>{{ doc.volunteer_name }}</strong>,\n    </div>\n\n    <div class=\"message\">\n      We regret to inform you that your application has been\n      <span class=\"rejected\">rejected</span> for the following activity:\n    </div>\n\n    <div class=\"activity-name\">\n      {{ doc.activity_name }}\n    </div>\n\n    <div class=\"reason\">\n      Reason: {{ doc.rejected_reason }}\n    </div>\n\n    <div class=\"message\">\n      We appreciate your interest and encourage you to apply for other upcoming activities on MyKartavya.\n    </div>\n\n    <div class=\"closing\">\n      Warm regards,\n    </div>\n    <div class=\"team-signature\">\n      Team MyKartavya\n    </div>\n  </div>\n</body>\n</html>\n",
+ "message": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>\n  <title>Application Rejected - MyKartavya</title>\n  <style>\n    body {\n      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n      margin: 0;\n      padding: 20px;\n      background-color: #f9fafb;\n    }\n    .container {\n      max-width: 520px;\n      margin: auto;\n      background: #ffffff;\n      padding: 20px 25px;\n      text-align: center;\n      border-radius: 10px;\n      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);\n    }\n    .logo img {\n      max-width: 250px;\n      height: auto;\n    }\n    .greeting,\n    .message,\n    .activity-name,\n    .reason,\n    .closing,\n    .team-signature {\n      color: #374151;\n      font-size: 16px;\n      margin: 6px 0;\n      line-height: 1.6;\n    }\n    .greeting strong {\n      color: #111827;\n    }\n    .activity-name {\n      font-weight: 600;\n      color: #111827;\n      font-size: 18px;\n      margin-top: 5px;\n    }\n    .rejected {\n      color: #dc2626;\n      font-weight: 600;\n    }\n    .reason {\n      color: #991b1b;\n      font-style: italic;\n    }\n    .closing, .team-signature {\n      color: #6b7280;\n      font-size: 14px;\n      margin-top: 5px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"logo\">\n      <img src=\"https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png\" alt=\"MyKartavya Logo\" />\n    </div>\n\n    <div class=\"greeting\">\n      Dear <strong>{{ doc.volunteer_name }}</strong>,\n    </div>\n\n    <div class=\"message\">\n      We regret to inform you that your application has been\n      <span class=\"rejected\">rejected</span> for the following activity:\n    </div>\n\n    <div class=\"activity-name\">\n      {{ doc.activity_name }}\n    </div>\n\n    <div class=\"reason\">\n      Reason: {{ doc.remarks }}\n    </div>\n\n    <div class=\"message\">\n      We appreciate your interest and encourage you to apply for other upcoming activities on MyKartavya.\n    </div>\n\n    <div class=\"closing\">\n      Warm regards,\n    </div>\n    <div class=\"team-signature\">\n      Team MyKartavya\n    </div>\n  </div>\n</body>\n</html>\n",
  "message_type": "HTML",
  "minutes_offset": 0,
- "modified": "2025-06-16 19:15:30.523529",
+ "modified": "2025-06-17 18:43:32.128505",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity Reject",
@@ -27,5 +27,5 @@
  "send_system_notification": 0,
  "send_to_all_assignees": 0,
  "subject": "Volunteer Activity Rejected",
- "value_changed": "workflow_state"
+ "value_changed": "completion_wf_state"
 }

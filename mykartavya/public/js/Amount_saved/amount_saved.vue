@@ -32,7 +32,6 @@ const sdgColors = {
     "Reduced Inequality": "#DD1367"
 }
 
-
 onMounted(() => {
     frappe.call({
         method: 'frappe.desk.query_report.run',
@@ -41,20 +40,13 @@ onMounted(() => {
         },
         callback: (r) => {
             const result = r.message
-
             if (!result || !result.result || result.result.length <= 1) {
                 console.error("No data found in report")
                 return
             }
-            console.log("result", result.result)
-
-
-            // const labels = result.result.map(item => item.sdg_name)
-            // const values = result.result.map(item => item.total_hours)
             const labels = result.result.map(item => item.sdg_name)
             const values = result.result.map(item => item.work_value_rupees)
             const backgroundColors = labels.map(label => sdgColors[label] || '#ccc')
-
 
             if (chartCanvas.value) {
                 new Chart(chartCanvas.value, {

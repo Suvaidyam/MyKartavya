@@ -11,10 +11,18 @@ frappe.ui.form.on('Opportunity Activity', {
 
         let today = frappe.datetime.get_today();
         frm.set_df_property('start_date', 'min_date', today);
+        const formatted_today = new Date(today);
+
+        // Set datepicker minDate for start_date
+        if (frm.fields_dict.start_date && frm.fields_dict.start_date.$input) {
+            $(frm.fields_dict?.start_date?.$input).datepicker({
+                minDate: formatted_today
+            });
+        }
         if (frm.doc.start_date) {
             const minEndDate = frappe.datetime.add_days(frm.doc.start_date, 1);
-            if (frm.fields_dict.end_date?.datepicker) {
-                frm.fields_dict.end_date.datepicker.update({
+            if (frm.fields_dict?.end_date?.datepicker) {
+                frm.fields_dict?.end_date.datepicker.update({
                     minDate: frappe.datetime.str_to_obj(minEndDate)
                 });
             }
@@ -22,8 +30,8 @@ frappe.ui.form.on('Opportunity Activity', {
 
         if (frm.doc.end_date) {
             const minDeadline = frappe.datetime.add_days(frm.doc.end_date, 1);
-            if (frm.fields_dict.reporting_deadline?.datepicker) {
-                frm.fields_dict.reporting_deadline.datepicker.update({
+            if (frm.fields_dict?.reporting_deadline?.datepicker) {
+                frm.fields_dict?.reporting_deadline?.datepicker.update({
                     minDate: frappe.datetime.str_to_obj(minDeadline)
                 });
             }
