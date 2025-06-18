@@ -4,7 +4,7 @@
   "doctype": "Workflow",
   "document_type": "SVA User",
   "is_active": 1,
-  "modified": "2025-02-18 18:18:29.299753",
+  "modified": "2025-06-18 11:05:23.626558",
   "name": "Sva_volunteer",
   "override_status": 0,
   "send_email_alert": 0,
@@ -73,7 +73,7 @@
    {
     "action": "Review",
     "allow_self_approval": 0,
-    "allowed": "Volunteer",
+    "allowed": "MyKartavya Admin",
     "condition": null,
     "next_state": "Pending Approval",
     "send_email_to_creator": 0,
@@ -282,7 +282,7 @@
   "doctype": "Workflow",
   "document_type": "Volunteer Activity",
   "is_active": 1,
-  "modified": "2025-02-21 13:58:04.234853",
+  "modified": "2025-06-18 11:17:09.507177",
   "name": "Volunteer_activity",
   "override_status": 0,
   "send_email_alert": 0,
@@ -380,6 +380,26 @@
     "send_email_to_creator": 0,
     "state": "Withdrawn",
     "workflow_builder_id": null
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "Company Admin",
+    "condition": null,
+    "next_state": "Approved",
+    "send_email_to_creator": 0,
+    "state": "Applied",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Reject",
+    "allow_self_approval": 1,
+    "allowed": "Company Admin",
+    "condition": null,
+    "next_state": "Rejected",
+    "send_email_to_creator": 0,
+    "state": "Applied",
+    "workflow_builder_id": null
    }
   ],
   "workflow_data": null,
@@ -391,7 +411,7 @@
   "doctype": "Workflow",
   "document_type": "Volunteer Opportunity",
   "is_active": 1,
-  "modified": "2025-04-24 12:50:45.795015",
+  "modified": "2025-06-18 11:48:40.178724",
   "name": "Volunteer_Opportunity",
   "override_status": 0,
   "send_email_alert": 0,
@@ -488,6 +508,26 @@
     "next_state": "Approved",
     "send_email_to_creator": 0,
     "state": "Withdrawn",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Approve",
+    "allow_self_approval": 1,
+    "allowed": "Company Admin",
+    "condition": null,
+    "next_state": "Approved",
+    "send_email_to_creator": 0,
+    "state": "Applied",
+    "workflow_builder_id": null
+   },
+   {
+    "action": "Reject",
+    "allow_self_approval": 1,
+    "allowed": "Company Admin",
+    "condition": null,
+    "next_state": "Rejected",
+    "send_email_to_creator": 0,
+    "state": "Applied",
     "workflow_builder_id": null
    }
   ],

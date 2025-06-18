@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,61 +12,57 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 10px;
       background-color: #f5f5f5;
     }
 
     .container {
-      max-width: 500px;
+      max-width: 480px;
       width: 100%;
-      margin: auto;
-      background: #ffffff;
-      border-radius: 8px;
-      padding: 30px 20px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 6px;
+      padding: 20px 15px;
       text-align: center;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     .logo img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 20px;
+      max-width: 200px;
     }
 
     h2 {
       color: #535863;
-      font-size: 22px;
-      margin: 15px 0;
+      font-size: 20px;
+      margin: 10px 0;
       font-weight: bold;
     }
 
     .greeting {
       color: #444;
-      font-size: 16px;
-      margin: 22px 10px;
+      font-size: 15px;
+      margin: 10px 0;
     }
 
-   .info {
-            font-size: 14px;
-            color: #555;
-            margin: 16px 0;
-            font-weight:semibold;
-            letter-spacing: 0.5px;  
-    		line-height: 1.5;
-            text-align: center;
-
-        }
+    .info {
+      font-size: 13px;
+      color: #555;
+      margin: 10px 0;
+      letter-spacing: 0.3px;  
+      line-height: 1.4;
+      text-align: center;
+    }
 
     .cta-button {
       display: inline-block;
       background-color: #cedc38;
       color: black;
-      padding: 10px 20px;
+      padding: 8px 16px;
       text-decoration: none;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 500;
       transition: background-color 0.3s;
-      margin: 15px 0;
+      margin: 10px 0;
     }
 
     .cta-button:hover {
@@ -75,12 +70,23 @@
     }
 
     .name {
-      font-size: 16px;
+      font-size: 15px;
       color: #555;
       font-weight: bold;
       margin-left: 5px;
     }
     
+      .closing {
+            margin-top: 10px;
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .team-signature {
+            margin-top: 2px;
+            color: #888;
+            font-size: 14px;
+        }
   </style>
 </head>
 
@@ -91,12 +97,18 @@
         alt="MyKartavya Logo" />
     </div>
     <h2>Request Successfully Received</h2>
-    <div class="greeting">Hello,<span class="name">{{doc.first_name}}</span></div>
+    <div class="greeting">Hello,<span class="name">{{doc.full_name}}</span></div>
     <p class="info">
       We have successfully received your request to register as a corporate.
-      Our team is currently reviewing the application and we will onboard you as soon as your request is approved.
+      Our team is currently reviewing the application and will onboard you as soon as your request is approved.
     </p>
+       <div class="closing">
+            Thank you!
+        </div>
+        <div class="team-signature">
+            Team MyKartavya
+        </div>
   </div>
+  
 </body>
-
 </html>

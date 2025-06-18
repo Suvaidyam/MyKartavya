@@ -4,11 +4,13 @@
 frappe.ui.form.on("Opportunity", {
     setup(frm) {
         const isMyKartvyaAdmin = frappe.user_roles.includes("MyKartvya Admin");
+        const isCompanyAdmin = frappe.user_roles.includes("Company Admin");
+        const user_roles = isMyKartvyaAdmin || isCompanyAdmin
         frm['dt_events'] = {
             "Volunteer Opportunity": {
                 formatter: {
                     action: function (element, column, row) {
-                        if (!isMyKartvyaAdmin||row.completion_wf_state === "Pending") {
+                        if (!user_roles || row.completion_wf_state === "Pending") {
                             element.setAttribute('disabled', true);
                         } else {
                             // if(row.completion_wf_state === "Submitted"){
@@ -70,10 +72,34 @@ frappe.ui.form.on("Opportunity", {
                                 ],
                                 primary_action_label: __('Submit'),
                                 primary_action: function (data) {
+                                    d.hide();
                                     if (data.action === 'approve') {
                                         frappe.db.set_value('Volunteer Opportunity', doc.name, 'completion_wf_state', 'Approved')
                                     } else if (data.action === 'reject') {
                                         frappe.db.set_value('Volunteer Opportunity', doc.name, 'completion_wf_state', 'Rejected')
+                                        let reasonDialog = new frappe.ui.Dialog({
+                                            title: 'Reason for Rejection',
+                                            fields: [
+                                                {
+                                                    label: 'Reason',
+                                                    fieldname: 'reason',
+                                                    fieldtype: 'Small Text',
+                                                    reqd: 1
+                                                }
+                                            ],
+                                            primary_action_label: 'Submit',
+                                            primary_action(values) {
+                                                frappe.db.set_value('Volunteer Opportunity', doc.name, 'remarks', values.reason).then(() => {
+                                                    frappe.db.set_value('Volunteer Opportunity', doc.name, 'completion_wf_state', 'Rejected').then(() => {
+                                                        reasonDialog.hide();
+                                                        if (frm?.sva_tables?.['Volunteer Opportunity']) {
+                                                            frm.sva_tables['Volunteer Opportunity'].reloadTable();
+                                                        }
+                                                    });
+                                                });
+                                            }
+                                        });
+                                        reasonDialog.show();
                                     }
                                     if (frm?.sva_tables?.['Volunteer Opportunity']) {
                                         frm?.sva_tables?.['Volunteer Opportunity'].reloadTable();
