@@ -123,7 +123,13 @@ frappe.ui.form.on("Opportunity", {
                             }
                         }
                     })
-                }
+                    let today = frappe.datetime.get_today();
+                    dt.form_dialog.set_df_property('start_date', 'min_date', today);
+                    const formatted_today = new Date(today);
+                    $(dt.form_dialog.fields_dict.start_date.$input).datepicker({
+                        minDate: formatted_today
+                    });
+                },
             }
         }
     },
