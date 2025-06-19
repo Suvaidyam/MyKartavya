@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Opportunity Successfully Completed - MyKartavya</title>
+  <title>NGO Registration Request Not Approved</title>
   <style>
     * {
       box-sizing: border-box;
@@ -16,7 +16,7 @@
       background-color: #f5f5f5;
     }
 
-     .container {
+    .container {
       max-width: 520px;
       margin: auto;
       background: #ffffff;
@@ -25,6 +25,7 @@
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
+
     .logo img {
       max-width: 200px;
     }
@@ -42,9 +43,7 @@
       margin: 10px 0;
     }
 
-    .congratulations,
-    .thank-you-message,
-    .contact-message {
+    .message {
       font-size: 13px;
       color: #555;
       margin: 10px 0;
@@ -53,23 +52,20 @@
       text-align: center;
     }
 
-    .campaign-name {
-      font-size: 15px;
-      color: #555;
-      font-weight: bold;
-      margin: 10px 0;
-    }
-
-    .closing {
+    .footer {
       margin-top: 10px;
       color: #888;
       font-size: 14px;
     }
 
-    .team-signature {
+    .footer p {
+      margin: 2px 0;
+    }
+
+    .team-name {
       margin-top: 2px;
-      color: #888;
       font-size: 14px;
+      color: #888;
     }
   </style>
 </head>
@@ -80,34 +76,21 @@
       <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo" />
     </div>
 
-    <h2>Opportunity Successfully Completed</h2>
+    <h2>NGO Registration Request Not Approved</h2>
 
-    <div class="greeting">
-      Hello, <span style="font-weight: bold;">{{doc.volunteer_name}}</span>
+    <div class="greeting">Hello, <strong>{{doc.contact_person_name}}</strong></div>
+
+    <div class="message">
+      We regret to inform you that your request to register your NGO on MyKartavya has not been approved at this time.
     </div>
 
-    <div class="congratulations">
-      Congratulations! You have successfully completed the following:
+    <div class="message">
+      For further details or assistance, please feel free to contact us.
     </div>
 
-    <div class="campaign-name">
-      {{doc.opportunity_name}}
-    </div>
-
-    <div class="thank-you-message">
-      Thank you for your valuable contribution to this initiative.
-    </div>
-
-    <div class="contact-message">
-      If you have any questions or need further assistance, feel free to contact us.
-    </div>
-
-    <div class="closing">
-      Thank you!
-    </div>
-
-    <div class="team-signature">
-      Team MyKartavya
+    <div class="footer">
+      <p>Thank you!</p>
+      <p class="team-name">Team MyKartavya</p>
     </div>
   </div>
 </body>
