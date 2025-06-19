@@ -1,112 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to MyKartavya - NGO Registration</title>
-    <style>
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            max-width: 500px;
-            margin: auto;
-            background: #ffffff;
-            border-radius: 8px;
-            padding: 30px;
-            text-align: center;
-        }
-        .logo {
-            margin-bottom: 20px;
-        }
-        .logo img {
-            max-width: 200px;
-            height: auto;
-        }
-        h2 {
-            color: #333;
-            font-size: 24px;
-            margin: 20px 0;
-            font-weight: 500;
-        }
-        .greeting {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-        .message {
-            color: #666;
-            font-size: 14px;
-            line-height: 1.6;
-            margin: 20px 0;
-            text-align: center;
-        }
-        .info-box {
-            background-color: #f9f9f9;
-            border-radius: 6px;
-            padding: 20px;
-            margin: 25px 0;
-            text-align: left;
-        }
-        .info-box p {
-            margin: 10px 0;
-            color: #333;
-            font-size: 14px;
-        }
-        .cta-button {
-            display: inline-block;
-            background-color: #62b59b;
-            color: white;
-            padding: 12px 25px;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 500;
-            border-radius: 6px;
-            transition: background-color 0.3s;
-            margin: 15px 0;
-        }
-        .cta-button:hover {
-            background-color: #4d9a82;
-        }
-        .footer {
-            margin-top: 30px;
-            color: #666;
-            font-size: 14px;
-            text-align: center;
-        }
-        .footer p {
-            margin: 5px 0;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to MyKartavya - NGO Registration</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 10px;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 480px;
+      width: 100%;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 6px;
+      padding: 20px 15px;
+      text-align: center;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo img {
+      max-width: 200px;
+    }
+
+    h2 {
+      color: #535863;
+      font-size: 20px;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+
+    .greeting {
+      color: #444;
+      font-size: 15px;
+      margin: 10px 0;
+    }
+
+    .message {
+      font-size: 13px;
+      color: #555;
+      margin: 10px 0;
+      letter-spacing: 0.3px;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .info-box {
+      background-color: #f9f9f9;
+      border-radius: 6px;
+      padding: 15px;
+      margin: 15px 0;
+      text-align: left;
+    }
+
+    .info-box p {
+      margin: 8px 0;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: #666666;
+      color: white;
+      padding: 8px 16px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: background-color 0.3s;
+      margin: 10px 0;
+      border-radius: 4px;
+    }
+
+    .cta-button:hover {
+      background-color: #d94997;
+    }
+
+    .footer {
+      margin-top: 10px;
+      color: #888;
+      font-size: 14px;
+    }
+
+    .team-name {
+      margin-top: 2px;
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="logo">
-            <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo">
-        </div>
-        <h2>NGO Registration</h2>
-        <div class="greeting">Hello, {{doc.ngo_name}}</div>
-        <div class="message">
-            Congratulations! Your NGO has been successfully registered on MyKartavya. We are thrilled to have you on board in creating a positive impact on society. Here are your NGO details:
-        </div>
-        <!-- Info Box -->
-        <div class="info-box">
-            <p><strong>NGO Name:</strong> {{doc.ngo_name}}</p>
-            <p><strong>Registration Status:</strong> {{doc.workflow_state}}</p>
-            <p><strong>Registered By:</strong> {{doc.ngo_name}} ({{doc.registration_type}})</p>
-        </div>
-        <!-- Call to Action Button -->
-        <a href="{{url}}" class="cta-button">Complete NGO Registration</a>
-        
-        <div class="footer">
-            <p>Thank you!</p>
-            <p>Team MyKartavya</p>
-            <p>Feel free to contact us for further information</p>
-            <p>© 2025 MyKartavya. All rights reserved.</p>
-        </div>
+  <div class="container">
+    <div class="logo">
+      <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo" />
     </div>
+
+    <h2>NGO Registration Request Received</h2>
+
+    <div class="greeting">Hello, <span style="font-weight: bold;">{{doc.contact_person_name}}</span></div>
+
+    <div class="message">
+      We have successfully received your NGO registration request.
+    </div>
+
+    <div class="message">
+      Our team is currently reviewing your application. You will be notified as soon as your request is approved.
+    </div>
+
+    <div class="message">
+      In the meantime, you can complete your registration using the button below:
+    </div>
+
+    <a href="{{url}}" class="cta-button">Set Password</a>
+
+    <div class="footer">Thank you!</div>
+    <div class="team-name">Team MyKartavya</div>
+  </div>
 </body>
 </html>
