@@ -1,101 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to MyKartavya - SVA User Registration</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            max-width: 500px;
-            margin: auto;
-            background: #ffffff;
-            padding: 10px 30px;
-            text-align: center;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius:8px;
-        }
-        .logo img {
-            max-width: 250px;
-            height: auto;
-        }
-       
-        h2 {
-            color: #a4a29d;
-            font-size: 22px;
-            margin: 15px 0;
-            font-weight: bold;
-        }
-        .greeting {
-            color: #444;
-            font-size: 16px;
-            margin: 10px 0px;
-           
-        }
-        .info {
-            font-size: 24px;
-            color: #555;
-            margin: 16px 0;
-            font-weight: bold;
-        }
-        .info1{
-          	font-size: 14px;
-            color: #555;
-          	font-weight: semibold;
-            text-align: left;
-            line-height: 1.6;
-            margin: 20px 0;
-        }
-        
-        .name{
-        	font-size: 16px;
-            color: #555;
-            font-weight: bold;
-        }
-        
-        .message-content {
-            text-align: left;
-            margin: 10px 0;
-        }
-        
-        .message-content p {
-            font-size: 14px;
-            color: #555;
-            line-height: 1.6;
-            margin: 10px 0;
-        }
-        
-        .closing {
-            font-size: 14px;
-            color: #555;
-            margin-top: 10px;
-            
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Application Rejected - MyKartavya</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 20px auto;
+      background: #ffffff;
+      padding: 30px 40px;
+      text-align: center;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+    }
+
+    .logo img {
+      max-width: 220px;
+      height: auto;
+     }
+
+    h2 {
+      font-size: 20px;
+      color: #d9534f;
+      margin: 5px 0 5px;
+    }
+
+    .greeting {
+      font-size: 16px;
+      color: #333;
+      margin: 10px 0;
+    }
+
+    .message-content {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .message-content p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+      margin: 12px 0;
+    }
+
+    .reason-box {
+      background-color: #fff3f3;
+      border-left: 5px solid #e74c3c;
+      padding: 15px 20px;
+      margin: 10px 0;
+      border-radius: 6px;
+    }
+
+    .reason-box strong {
+      color: #c0392b;
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .closing {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #555;
+      text-align:center;
+    }
+
+    .name {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">
-            <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo">
-        </div>
-        <div class="message-content">
-            <div class="greeting">Dear <span class="name">{{doc.full_name}}</span></div>
-            
-            <p>We appreciate your interest in contributing to MyKartavya.</p>
-            
-            <p>After careful consideration, we regret to inform you that your application to register as a volunteer has not been approved at this time.</p>
-            
-            <p>Should you require any further information or assistance, please do not hesitate to contact us.</p>
-            
-            <div class="closing">
-                <p>Thank you for your understanding.</p>
-            </div>
-        </div>
+  <div class="container">
+    <div class="logo">
+      <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo" />
     </div>
+    
+    <h2>Volunteer Application Rejected</h2>
+    
+    <div class="greeting">
+      Dear <span class="name">{{ doc.full_name }}</span>,
+    </div>
+
+    <div class="message-content">
+      <p>Thank you for showing interest in becoming a part of <strong>MyKartavya</strong>.</p>
+      <p>After a thorough review of your application, we regret to inform you that it has not been approved at this time.</p>
+      
+      <div class="reason-box">
+        <strong>Reason for Rejection:</strong>
+        {{ doc.custom_remark  }}
+      </div>
+
+      <p>If you believe there was a mistake or wish to discuss this further, feel free to reach out to our support team.</p>
+
+      <div class="closing">
+        Thank you for your time and understanding.<br>
+        Team MyKartavya
+      </div>
+    </div>
+  </div>
 </body>
 </html>

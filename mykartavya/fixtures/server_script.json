@@ -55,5 +55,24 @@
   "reference_doctype": "SVA User",
   "script": "if doc.custom_company and doc.custom_volunteer_type == \"Employee\":\n    doc.append(\n        \"table_pdop\",\n        {\n            \"module\": \"Company\",\n            \"value\": doc.custom_company,\n        }\n    )\n    doc.save(ignore_permissions=True)\n",
   "script_type": "DocType Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Validate",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2025-06-24 18:13:25.769072",
+  "module": null,
+  "name": "Update Workflow State",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "SVA User",
+  "script": "if not doc.custom_remark and doc.workflow_state=='Rejected':\n    doc.workflow_state='Pending Approval'",
+  "script_type": "DocType Event"
  }
 ]
