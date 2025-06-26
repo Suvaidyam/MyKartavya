@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Account Blocked - MyKartavya</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #ffffff;
+      padding: 10px 30px;
+      text-align: center;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .logo img {
+      max-width: 220px;
+      height: auto;
+    }
+
+    h2 {
+      color: #c0392b;
+      font-size: 22px;
+      margin: 5px 0;
+      font-weight: semibold;
+    }
+
+    .greeting {
+      color: #444;
+      font-size: 16px;
+      margin: 10px 0 5px;
+    }
+
+    .info-block {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.6;
+      margin: 5px 0 20px;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .closing {
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    .footer {
+      margin-top: 5px;
+      color: #88817;
+      font-size: 14px;
+    }
+
+    .team-name {
+      margin-top: 2px;
+      font-size: 14px;
+      color: #88817;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo" />
+    </div>
+
+    <h2>Account Blocked</h2>
+
+    <div class="greeting">
+      Dear <span class="highlight">{{ doc.full_name }}</span>,
+    </div>
+   
+    <div class="info-block"> 
+       {% if doc.custom_company %}
+        <p>You have been <span class="highlight">blocked</span> by <span class="highlight">{{ doc.custom_company }}</span>.</p>
+      {% endif %}
+      <p>Reason: <span class="highlight">{{ doc.custom_remark }}</span></p>
+    </div>
+    
+    <div class="closing">
+      <p>If you believe this is a mistake or you need further clarification, please contact our support team.</p>
+      <p class="footer">Thank you for your understanding.</p>
+      <p class="team-name"> MyKartavya Team</p>
+    </div>
+  </div>
+</body>
+</html>
