@@ -330,8 +330,8 @@ class Opportunity:
                     )"""
                 )
 
-            # Sorting
-            order_by_clause = ""
+            # Sorting fields
+            order_by_fields = []
 
             # Handle filters
             if filter:
@@ -342,9 +342,16 @@ class Opportunity:
                 if "karma_points" in filter and filter["karma_points"]:
                     sort_order = filter["karma_points"]
                     if sort_order == "Low to High":
-                        order_by_clause = "ORDER BY opp.karma_points ASC"
+                        order_by_fields.append("opp.karma_points ASC")
                     elif sort_order == "High to Low":
-                        order_by_clause = "ORDER BY opp.karma_points DESC"
+                        order_by_fields.append("opp.karma_points DESC")
+
+                if "volunteering_hours" in filter and filter["volunteering_hours"]:
+                    sort_order = filter["volunteering_hours"]
+                    if sort_order == "Low to High":
+                        order_by_fields.append("opp.hours ASC")
+                    elif sort_order == "High to Low":
+                        order_by_fields.append("opp.hours DESC")
 
                 if "sdgs" in filter and filter["sdgs"]:
                     sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
@@ -356,15 +363,11 @@ class Opportunity:
                         )
                     """)
 
-                if "volunteering_hours" in filter and filter["volunteering_hours"]:
-                    sort_order = filter["volunteering_hours"]
-                    if sort_order == "Low to High":
-                        order_by_clause = "ORDER BY opp.hours ASC"
-                    elif sort_order == "High to Low":
-                        order_by_clause = "ORDER BY opp.hours DESC"
-
             # Final WHERE clause
             combined_where_clause = " AND ".join(where_clauses)
+
+            # Final ORDER BY clause
+            order_by_clause = f"ORDER BY {', '.join(order_by_fields)}" if order_by_fields else "ORDER BY opp.start_date ASC"
 
             # Final SQL Query
             sql_query = f"""
@@ -410,8 +413,8 @@ class Opportunity:
                 LEFT JOIN `tabVolunteer Opportunity` AS vo 
                     ON vo.activity = opp.name AND vo.volunteer = '{user}'
                 LEFT JOIN `tabSVA User` AS sva ON sva.name = vo.volunteer
-                LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
-                LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
+                INNER JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
+                INNER JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
                 WHERE {combined_where_clause}
                 GROUP BY opp.name
                 {order_by_clause}
@@ -421,8 +424,9 @@ class Opportunity:
             return data
 
         except Exception as e:
-            frappe.log_error(frappe.get_traceback(), "related_opportunities Error")
+            frappe.log_error(frappe.get_traceback(), "ava_opportunities Error")
             return []
+
     # Function to act now opportunity    
     def act_now_opp(activity, volunteer):
         workflow_state = frappe.db.get_value(
@@ -573,6 +577,7 @@ class Opportunity:
                     )
 
             where_clause = " AND ".join(where_clauses)
+            order_by_clauses.insert(0, "vo.com_percent DESC")
             order_by_clause = (
                 " ORDER BY " + ", ".join(order_by_clauses) if order_by_clauses else ""
             )

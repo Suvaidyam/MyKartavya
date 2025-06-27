@@ -274,10 +274,10 @@ frappe.ui.form.on("Opportunity", {
 
 
     refresh(frm) {
-        if (frm.doc.opportunity_status === "Published") {
-            frm.set_read_only();
-            // frm.disable_save();
-        }
+        // if (frm.doc.opportunity_status === "Published") {
+        //     frm.set_read_only();
+        //     // frm.disable_save();
+        // }
         // let today = frappe.datetime.get_today();
         // frm.set_df_property('publish_date', 'min_date', today);
         // const formatted_today = new Date(today);
