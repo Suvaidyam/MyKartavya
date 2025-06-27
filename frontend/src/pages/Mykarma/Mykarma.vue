@@ -93,16 +93,14 @@
                 <div ref="scrollContainer" class="py-4 w-full overflow-x-auto lg:overflow-x-visible">
                   <div v-if="current_commitments?.length > 0 || current_opportunities.length > 0"
                     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Card v-for="item in current_commitments" :key="item.name" :item="item" mode="activity"
-                      type="card" />
-                      <Card v-for="item in current_opportunities" :key="item.name" :item="item" mode="opportunity"
-                      type="card" />
+                    <Card v-for="item in combinedSortedItems" :key="item.name" :item="item"
+                      :mode="item.doctype === 'Volunteer Activity' ? 'activity' : 'opportunity'" type="card" />
                   </div>
-                  <div class="w-full h-[280px]" v-if="current_commitments.length === 0 && current_opportunities.length === 0">
-                    <NotFound/>
+                  <div class="w-full h-[280px]" v-if="combinedSortedItems.length === 0">
+                    <NotFound />
                   </div>
                 </div>
-                <div v-if="current_commitments.length > 0 && (!isLeftDisabled || !isRightDisabled)"
+                <div v-if="combinedSortedItems.length > 0 && (!isLeftDisabled || !isRightDisabled)"
                   class="flex justify-center mt-2 lg:hidden">
                   <button
                     class="border px-3 h-7 text-xs font-normal border-[#FF5722] rounded-sm text-secondary hover:bg-orange-50 transition-colors">
@@ -182,8 +180,7 @@
 
             <div v-else class="w-full pb-4">
               <div ref="scrollContainerAvailable" class="py-2 w-full overflow-x-auto lg:overflow-x-visible">
-                <div v-if="opportunitiy?.length > 0"
-                  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div v-if="opportunitiy?.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   <Card v-for="item in opportunitiy" :key="item.name" :item="item" :mode="'opportunity'" />
                 </div>
                 <div class="w-full h-[280px]" v-else>
@@ -207,7 +204,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject, watch, watchEffect } from 'vue'
+import { onMounted, ref, inject, watch, watchEffect,computed } from 'vue'
 import Filters from '@/components/Filters.vue'
 import Sorting from '@/components/Sorting.vue'
 import MyDetails from './MyDetails.vue'
@@ -216,6 +213,7 @@ import CardLoader from '@/components/CardLoader.vue'
 import NotFound from '../../components/NotFound.vue'
 import ReqForApproval from '../../components/ReqForApproval.vue'
 import { FeatherIcon } from 'frappe-ui'
+
 
 // Data for Current Commitments
 const current_commitments = ref([])
@@ -329,6 +327,26 @@ const volunteering_opportunities = async (filter) => {
     loader.value = false;
   }
 };
+
+const combinedSortedItems = computed(() => {
+  const commitments = current_commitments.value.map(item => ({
+    ...item,
+    doctype: 'Volunteer Activity'
+  }))
+  const opportunities = current_opportunities.value.map(item => ({
+    ...item,
+    doctype: 'Opportunity'
+  }))
+
+  const combined = [...commitments, ...opportunities]
+
+  // sorting: जिनके पास com_percent नहीं है, उन्हें नीचे भेजना है
+  return combined.sort((a, b) => {
+    const aPercent = a.com_percent ?? -1
+    const bPercent = b.com_percent ?? -1
+    return bPercent - aPercent // descending order
+  })
+})
 // Add new scroll functions for Available Commitments
 const scrollLeftAvailable = () => {
   if (scrollContainerAvailable.value) {

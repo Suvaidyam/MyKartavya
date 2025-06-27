@@ -42,6 +42,7 @@ class Activity:
                 )
 
         where_clause = " AND ".join(where_clauses)
+        order_by_clauses.insert(0, "va.com_percent DESC")
         order_by_clause = (
             " ORDER BY " + ", ".join(order_by_clauses) if order_by_clauses else ""
         )
