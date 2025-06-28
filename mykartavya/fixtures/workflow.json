@@ -176,7 +176,7 @@
   "doctype": "Workflow",
   "document_type": "Company",
   "is_active": 1,
-  "modified": "2025-02-12 17:55:05.344872",
+  "modified": "2025-06-28 18:09:22.831657",
   "name": "Company Registration",
   "override_status": 0,
   "send_email_alert": 0,
@@ -195,7 +195,7 @@
     "workflow_builder_id": null
    },
    {
-    "allow_edit": "Administrator",
+    "allow_edit": "Company Admin",
     "avoid_status_override": 0,
     "doc_status": "0",
     "is_optional_state": 0,
@@ -208,7 +208,7 @@
     "workflow_builder_id": null
    },
    {
-    "allow_edit": "Administrator",
+    "allow_edit": "Company Admin",
     "avoid_status_override": 0,
     "doc_status": "0",
     "is_optional_state": 0,
@@ -225,7 +225,7 @@
    {
     "action": "Approve",
     "allow_self_approval": 0,
-    "allowed": "Accounts User",
+    "allowed": "Company Admin",
     "condition": "doc.registration_type == \"Self Registration\"",
     "next_state": "Approved",
     "send_email_to_creator": 0,
@@ -235,7 +235,7 @@
    {
     "action": "Reject",
     "allow_self_approval": 0,
-    "allowed": "Administrator",
+    "allowed": "Company Admin",
     "condition": "doc.registration_type == \"self Registration\"",
     "next_state": "Rejected",
     "send_email_to_creator": 0,
@@ -245,7 +245,7 @@
    {
     "action": "Approve",
     "allow_self_approval": 0,
-    "allowed": "Administrator",
+    "allowed": "Company Admin",
     "condition": "doc.registration_type == \"Admin Registration\"",
     "next_state": "Approved",
     "send_email_to_creator": 0,
@@ -255,21 +255,11 @@
    {
     "action": "Reject",
     "allow_self_approval": 0,
-    "allowed": "Administrator",
+    "allowed": "Company Admin",
     "condition": null,
     "next_state": "Rejected",
     "send_email_to_creator": 0,
     "state": "Pending Approval",
-    "workflow_builder_id": null
-   },
-   {
-    "action": "Review",
-    "allow_self_approval": 0,
-    "allowed": "All",
-    "condition": null,
-    "next_state": "Pending Approval",
-    "send_email_to_creator": 0,
-    "state": "Rejected",
     "workflow_builder_id": null
    }
   ],
@@ -540,7 +530,7 @@
   "doctype": "Workflow",
   "document_type": "Activity",
   "is_active": 1,
-  "modified": "2025-06-06 17:28:07.125814",
+  "modified": "2025-06-26 19:11:23.875671",
   "name": "Activities",
   "override_status": 0,
   "send_email_alert": 0,
