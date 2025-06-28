@@ -1,0 +1,39 @@
+{
+ "add_total_row": 0,
+ "add_translate_data": 0,
+ "columns": [],
+ "creation": "2025-06-28 13:25:24.618959",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letterhead": null,
+ "modified": "2025-06-28 15:13:31.322865",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Volunteer Report",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "SELECT \n    su.first_name,\n    su.last_name,\n    su.custom_gender,\n    su.email,\n    su.custom_date_of_birth,\n    su.custom_phone_number,\n      -- Skills information\n    GROUP_CONCAT(s.skill_name SEPARATOR ', ') AS Skills,\n    su.workflow_state AS status,\n    su.creation AS registration_date,\n    IFNULL(va.total_karma, 0) + IFNULL(vo.total_karma, 0) AS total_karma_points,\n    CONCAT(\n        FLOOR((IFNULL(va.total_duration, 0) + IFNULL(vo.total_duration, 0)) / 3600), 'h ',\n        FLOOR(MOD((IFNULL(va.total_duration, 0) + IFNULL(vo.total_duration, 0)), 3600) / 60), 'm '\n    ) AS time_donated,\n    \n    COALESCE(su.custom_company, su.custom_ngo) AS organisation\nFROM `tabSVA User` AS su\nLEFT JOIN (\n    SELECT volunteer, SUM(karma_points) AS total_karma, SUM(duration) AS total_duration\n    FROM `tabVolunteer Activity` GROUP BY volunteer\n) AS va ON va.volunteer = su.name\nLEFT JOIN (\n    SELECT volunteer, SUM(karma_points) AS total_karma, SUM(duration) AS total_duration\n    FROM `tabVolunteer Opportunity` GROUP BY volunteer\n) AS vo ON vo.volunteer = su.name\nLEFT JOIN `tabUser Skills Child` AS usc ON usc.parent = su.name\nLEFT JOIN `tabSkills` AS s ON s.name = usc.skill\n\nGROUP BY \n    su.name,\n    su.first_name,\n    su.last_name,\n    su.custom_gender,\n    su.email,\n    su.custom_date_of_birth,\n    su.custom_phone_number,\n    su.workflow_state,\n    su.creation,\n    va.total_karma,\n    va.total_duration,\n    vo.total_karma,\n    vo.total_duration,\n    su.custom_company,\n    su.custom_ngo\n\nORDER BY su.creation DESC;",
+ "ref_doctype": "SVA User",
+ "report_name": "Volunteer Report",
+ "report_script": "",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "Company Admin"
+  },
+  {
+   "role": "MyKartvya Admin"
+  },
+  {
+   "role": "NGO Admin"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "timeout": 0
+}

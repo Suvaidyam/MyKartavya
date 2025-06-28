@@ -44,11 +44,15 @@ def send_otp(email):
         frappe.logger().debug(f"Attempting to send OTP to email: {email}")
 
         # Check if user exists with more detailed logging
-        user_exists = frappe.db.exists("SVA User", {'email': email})
-        frappe.logger().debug(f"SVA User exists check result: {user_exists}")
-        
-        if not user_exists:
+         # Check if user exists and fetch status
+        user_data = frappe.db.get_value("SVA User", {"email": email}, ["name", "status"], as_dict=True)
+        frappe.logger().debug(f"SVA User fetch result: {user_data}")
+
+        if not user_data:
             raise OTPError(_("No user found with this email address"))
+
+        if user_data.status == "Inactive":
+            raise OTPError(_("Your account is inactive. Please contact support."))
 
         # Check previous attempts
         attempts_key = get_attempt_cache_key(email)
@@ -95,7 +99,7 @@ def send_otp(email):
         return {
             "message": _("OTP sent successfully"),
             "status": "success"
-        }
+        } 
 
     except OTPError as e:
         frappe.logger().error(f"OTP Send Error for {email}: {str(e)}")
@@ -470,7 +474,8 @@ def register_verify_otp(email, otp, full_name):
             "email": email,
             "first_name": first_name,
             "last_name": last_name, 
-            "role_profiles":  "Volunteer" 
+            "role_profiles":  "Volunteer" ,
+            "custom_phone_number": "+91-0000000000",  # Placeholder, should be updated later
         })
         # user.append("role_profiles", {"role_profile": "Volunteer"})
         user.insert(ignore_permissions=True, ignore_mandatory=True)
