@@ -77,10 +77,14 @@
 
     <h2>Corporate Registration Request Not Approved</h2>
 
-    <div class="greeting">Hello, <strong>{{doc.first_name}}</strong></div>
+     <div class="greeting">Hello, <strong>{{ doc.first_name }}</strong></div>
 
     <div class="message">
-      We regret to inform you that your request to register as a corporate on MyKartavya has not been approved at this time.
+      Your request to register as a corporate on MyKartavya has been <strong>rejected</strong> by 
+      <strong>{{ doc.company_name }}</strong>.
+    </div>
+    <div class="message">
+      Reason: <strong>{{ doc.remarks}}</strong>
     </div>
 
     <div class="message">

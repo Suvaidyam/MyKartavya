@@ -339,12 +339,10 @@ const combinedSortedItems = computed(() => {
   }))
 
   const combined = [...commitments, ...opportunities]
-
-  // sorting: जिनके पास com_percent नहीं है, उन्हें नीचे भेजना है
   return combined.sort((a, b) => {
     const aPercent = a.com_percent ?? -1
     const bPercent = b.com_percent ?? -1
-    return bPercent - aPercent // descending order
+    return aPercent-bPercent  
   })
 })
 // Add new scroll functions for Available Commitments
