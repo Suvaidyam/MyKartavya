@@ -86,8 +86,10 @@
     <div class="info-block"> 
        {% if doc.custom_company %}
         <p>You have been <span class="highlight">blocked</span> by <span class="highlight">{{ doc.custom_company }}</span>.</p>
+         {% else %}
+          <p>You have been <span class="highlight">blocked</span> by <span class="highlight">Admin</span>.</p>
       {% endif %}
-      <p>Reason: <span class="highlight">{{ doc.custom_remark }}</span></p>
+      <p>Reason: <span class="highlight">{{ doc.custom_block_message }}</span></p>
     </div>
     
     <div class="closing">

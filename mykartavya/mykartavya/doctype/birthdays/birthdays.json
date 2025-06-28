@@ -57,14 +57,15 @@
    "fieldname": "choose_sdgs",
    "fieldtype": "Table MultiSelect",
    "label": "Choose SDG's",
-   "options": "SDGs Child"
+   "options": "SDGs Child",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-14 09:00:30.072753",
+ "modified": "2025-06-26 17:21:09.248717",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Birthdays",
