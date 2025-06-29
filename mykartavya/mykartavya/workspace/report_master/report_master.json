@@ -1,7 +1,7 @@
 {
  "app": "mykartavya",
  "charts": [],
- "content": "[{\"id\":\"ew_xk718Kr\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Activities Report\",\"col\":3}},{\"id\":\"OGomBDcDuE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Volunteer Activity Report\",\"col\":3}}]",
+ "content": "[{\"id\":\"ew_xk718Kr\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Activities Report\",\"col\":3}},{\"id\":\"OGomBDcDuE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Volunteer Activity Report\",\"col\":3}},{\"id\":\"CtuxRh-1fb\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Volunteer Report\",\"col\":3}}]",
  "creation": "2025-05-31 16:03:14.866385",
  "custom_blocks": [],
  "docstatus": 0,
@@ -15,7 +15,7 @@
  "label": "Report Master",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-06-13 17:36:30.238670",
+ "modified": "2025-06-29 13:47:31.148491",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Report Master",
@@ -34,6 +34,14 @@
  ],
  "sequence_id": 9.0,
  "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Volunteer Report",
+   "link_to": "Volunteer Report",
+   "report_ref_doctype": "SVA User",
+   "type": "Report"
+  },
   {
    "color": "Grey",
    "doc_view": "List",

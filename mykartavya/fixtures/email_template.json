@@ -1,0 +1,12 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Email Template",
+  "modified": "2025-06-29 14:20:21.954640",
+  "name": "OTP Registration",
+  "response": "<div class=\"ql-editor read-mode\"><p> <br></p></div>",
+  "response_html": "<style>\n    body {\n        font-family: 'Helvetica Neue', Arial, sans-serif;\n        margin: 0;\n        padding: 20px;\n        background-color: #f5f5f5;\n    }\n    .container {\n        max-width: 500px;\n        margin: auto;\n        background: #ffffff;\n        border-radius: 8px;\n        padding: 30px;\n        text-align: center;\n    }\n    .logo {\n        margin-bottom: 20px;\n    }\n    .logo img {\n        max-width: 200px;\n        height: auto;\n    }\n    h2 {\n        color: #333;\n        font-size: 24px;\n        margin: 20px 0;\n        font-weight: 500;\n    }\n    .greeting {\n        color: #666;\n        font-size: 16px;\n        margin-bottom: 20px;\n    }\n    .otp-message {\n        color: #666;\n        font-size: 14px;\n        line-height: 1.6;\n        margin: 20px 0;\n    }\n    .otp {\n        font-size: 24px;\n        color: #333;\n        margin: 15px 0;\n        font-weight: bold;\n    }\n    .footer {\n        margin-top: 30px;\n        color: #666;\n        font-size: 14px;\n        text-align: center;\n    }\n    .warning {\n        font-size: 14px;\n        color: #c0392b;\n        margin-top: 10px;\n    }\n</style>\n\n<div class=\"container\">\n    <div class=\"logo\">\n        <img src=\"https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png\" alt=\"MyKartavya Logo\">\n    </div>\n    <h2>Login OTP</h2>\n    <div class=\"greeting\">Hello, {{ full_name }}</div>\n    <p>Your One Time Password (OTP) for login is:</p>\n    <div class=\"otp\">{{ otp }}</div>\n    <div class=\"otp-message\">\n        This OTP is valid for {{ valid_minutes }} minutes.\n    </div>\n    <div class=\"warning\">Warning: Do not share your OTP with anyone.</div>\n    <div class=\"footer\">\n        <p>Thank you!</p>\n        <p>Team MyKartavya</p>\n        <p>If you did not request this OTP, please ignore this email.</p>\n    </div>\n</div>\n",
+  "subject": "OTP for MyKartavya",
+  "use_html": 1
+ }
+]
