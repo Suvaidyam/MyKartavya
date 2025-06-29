@@ -34,6 +34,13 @@ frappe.query_reports["Volunteer Report"] = {
 			"fieldtype": "Link",
 			"options": "Skills"
 		},
+		{
+			"fieldname": "active_status",
+			"label": __("Status"),
+			"fieldtype": "Select",
+			"options": ["", "Active", "Inactive"],
+			"default": ""
+		}
 	],
 
 	onload: function(report) {
