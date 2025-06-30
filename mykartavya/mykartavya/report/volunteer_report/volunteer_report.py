@@ -22,7 +22,7 @@ def get_columns() -> list[dict]:
 		{"label": _("Skills"), "fieldname": "skills", "fieldtype": "Data", "width": 250},
 		{"label": _("Status"), "fieldname": "status", "fieldtype": "Data", "width": 100},
 		{"label": _("Registration Date"), "fieldname": "registration_date", "fieldtype": "Datetime", "width": 150},
-		{"label": _("Registration Type"), "fieldname": "custom_volunteer_type", "fieldtype": "Data", "width": 150},
+		{"label": _("Registration Type"), "fieldname": "custom_registration_type", "fieldtype": "Data", "width": 200},
 		{"label": _("Organisation"), "fieldname": "organisation", "fieldtype": "Data", "width": 200},
 		{"label": _("Karma Points"), "fieldname": "total_karma_points", "fieldtype": "Int", "width": 130},
 		{"label": _("Time Donated"), "fieldname": "time_donated", "fieldtype": "Data", "width": 120},
@@ -77,7 +77,7 @@ def get_data(filters: dict | None = None):
 			GROUP_CONCAT(DISTINCT s.skill_name SEPARATOR ', ') AS skills,
 			su.workflow_state AS status,
 			su.creation AS registration_date,
-			su.custom_volunteer_type,
+			su.custom_registration_type,
 			COALESCE(su.custom_company, su.custom_ngo) AS organisation,
 			IFNULL(va.total_karma, 0) + IFNULL(vo.total_karma, 0) AS total_karma_points,
 			CONCAT(
@@ -119,7 +119,7 @@ def get_data(filters: dict | None = None):
 			vo.total_duration,
 			su.custom_company,
 			su.custom_ngo,
-			su.custom_volunteer_type,
+			su.custom_registration_type,
 			u.last_login
 		{having_clause}
 		ORDER BY su.creation DESC

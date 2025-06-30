@@ -468,7 +468,8 @@ def register_verify_otp(email, otp, full_name):
             "first_name": first_name,
             "last_name": last_name,
             "role_profiles": "Volunteer",
-            "custom_phone_number": phone_number  # ✅ hardcoded
+            "custom_phone_number": phone_number,
+            "custom_registration_type":"Self Registered"
         })
         user.insert(ignore_permissions=True, ignore_mandatory=True)
         frappe.set_user(email)

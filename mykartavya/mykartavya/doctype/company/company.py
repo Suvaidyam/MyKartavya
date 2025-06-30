@@ -165,6 +165,7 @@ def insert_sva_user(doc):
             "custom_city": city,
             "custom_designation": designation,
             "custom_volunteer_type": "Employee",
+            "custom_registration_type": "Registered by Corporate Admin",
             "enabled": 1
         })
         sva_user.insert(ignore_permissions=True)
