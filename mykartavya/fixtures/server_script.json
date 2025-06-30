@@ -9,13 +9,13 @@
   "doctype_event": "After Save",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2025-03-24 17:18:22.515783",
+  "modified": "2025-06-30 23:17:47.001300",
   "module": "Mykartavya",
   "name": "Sva User",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "SVA User",
-  "script": "if doc.custom_volunteer_type in [\"Employee\", \"NGO Member\"]:\n    frappe.db.set_value(\"SVA User\", doc.name, \"workflow_state\", \"Approved\")",
+  "script": "if doc.custom_volunteer_type in [\"Employee\", \"NGO Member\"]:\n    frappe.db.set_value(\"SVA User\", doc.name, \"workflow_state\", \"Approved\")\n\nif doc.email:\n        email_domain = doc.email.split('@')[-1].lower()\n        company = frappe.db.get_value(\"Company\", {\"company_domain\": email_domain}, \"name\")\n        print(\"Company found:\", company)\n\n        if company:\n             frappe.db.set_value(\"SVA User\", doc.name, \"custom_company\", company)\n        if doc.custom_company:\n            doc.append(\n                \"table_pdop\",\n                {\n                    \"module\": \"Company\",\n                    \"value\": doc.custom_company,\n                }\n            )\n            doc.save(ignore_permissions=True)\n",
   "script_type": "DocType Event"
  },
  {
@@ -47,7 +47,7 @@
   "doctype_event": "After Insert",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2025-06-12 17:02:40.978240",
+  "modified": "2025-06-30 23:27:52.347063",
   "module": "Mykartavya",
   "name": "Company",
   "rate_limit_count": 5,
@@ -73,6 +73,25 @@
   "rate_limit_seconds": 86400,
   "reference_doctype": "SVA User",
   "script": "if not doc.custom_remark and doc.workflow_state=='Rejected':\n    doc.workflow_state='Pending Approval'",
+  "script_type": "DocType Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Validate",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2025-06-28 17:51:21.632158",
+  "module": "Mykartavya",
+  "name": "Company Update Workflow",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Company",
+  "script": "if not doc.remarks and doc.workflow_state=='Rejected':\n    doc.workflow_state='Pending Approval'",
   "script_type": "DocType Event"
  }
 ]
