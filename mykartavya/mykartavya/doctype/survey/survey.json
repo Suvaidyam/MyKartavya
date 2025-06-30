@@ -1,15 +1,18 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:SUV-{title}-{####}",
+ "autoname": "format:SUR-{title}-{####}",
  "creation": "2025-06-28 20:05:52.487985",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "activity",
   "title",
-  "description",
-  "deadline_date"
+  "status",
+  "column_break_mukx",
+  "deadline_date",
+  "section_break_honv",
+  "description"
  ],
  "fields": [
   {
@@ -34,15 +37,29 @@
    "fieldname": "activity",
    "fieldtype": "Link",
    "hidden": 1,
-   "in_list_view": 1,
    "label": "Activity",
    "options": "Activity"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Draft\nPublish\nCancel"
+  },
+  {
+   "fieldname": "column_break_mukx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_honv",
+   "fieldtype": "Section Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-28 20:29:09.530854",
+ "modified": "2025-06-29 15:38:37.085830",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Survey",

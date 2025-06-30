@@ -141,10 +141,10 @@ def send_otp_email(email, otp, type="login"):
             frappe.logger().debug(f"Successfully retrieved email template: {template_name}")
         except Exception as e:
             frappe.logger().warning(f"Could not fetch email template '{template_name}': {str(e)}")
-
+            
         if template:
             message = frappe.render_template(
-                template.response, 
+                template.response_html, 
                 {"otp": otp, "valid_minutes": 30, "full_name": full_name}
             )
         else:
@@ -409,7 +409,13 @@ def register_send_otp(email):
             "status": "error",
             "debug": str(e) if frappe.conf.developer_mode else None
         }
-    
+
+import re
+
+def is_valid_indian_phone(number):
+    """Validate Indian phone number in +91 format"""
+    return re.match(r"^\+91[6-9]\d{9}$", number) is not None
+
 @frappe.whitelist(allow_guest=True)
 def register_verify_otp(email, otp, full_name):
     """
@@ -419,51 +425,38 @@ def register_verify_otp(email, otp, full_name):
         if not email or not otp:
             raise OTPError(_("Email and OTP are required"))
 
-        # Add detailed debug logging
-        frappe.logger().debug(f"Input - Email: {email}, OTP: {otp}, Full Name: {full_name}")
-        
+        # ✅ Static phone number
+        phone_number = "+919876543210"
+
+        # ✅ Validate the static phone number
+        if not is_valid_indian_phone(phone_number):
+            frappe.throw(_("Phone Number <strong>{}</strong> set in field <strong>custom_phone_number</strong> is not valid.".format(phone_number)), title="Invalid Phone Number")
+
         otp = str(otp)
         otp_key = get_otp_cache_key(email)
         stored_data = frappe.cache().get_value(otp_key)
-        
-        # Log the stored data
-        frappe.logger().debug(f"Stored cache data: {stored_data}")
-        
+
         if not stored_data:
-            frappe.logger().debug("No stored OTP data found")
             raise OTPError(_("OTP expired or invalid"))
 
         stored_otp = str(stored_data.get('otp'))
         generated_at = stored_data.get('generated_at')
-        
-        # Log OTP comparison
-        frappe.logger().debug(f"OTP Comparison - Received: '{otp}', Stored: '{stored_otp}'")
-        frappe.logger().debug(f"OTP Types - Received: {type(otp)}, Stored: {type(stored_otp)}")
-        
-        # Check expiration
-        current_time = now_datetime()
-        expiry_time = get_datetime(generated_at) + timedelta(minutes=10)
-        frappe.logger().debug(f"Time check - Current: {current_time}, Expiry: {expiry_time}")
-        
+
         if get_datetime(generated_at) + timedelta(minutes=10) < now_datetime():
-            frappe.logger().debug("OTP expired")
             frappe.cache().delete_value(otp_key)
             raise OTPError(_("OTP has expired. Please request a new one"))
 
-        # Verify OTP
         if otp != stored_otp:
             raise OTPError(_("Invalid OTP"))
 
-        # Clear OTP and attempts cache after successful verification
+        # Clear OTP cache
         frappe.cache().delete_value(otp_key)
         frappe.cache().delete_value(get_attempt_cache_key(email))
 
-        # Create new user
-        
         name_parts = full_name.split()
         if len(name_parts) > 2:
             first_name = name_parts[0]
-            last_name = ' '.join(name_parts[1:])  # Join remaining words as last_name
+            last_name = ' '.join(name_parts[1:])
         else:
             first_name = name_parts[0]
             last_name = name_parts[1] if len(name_parts) > 1 else ""
@@ -473,16 +466,14 @@ def register_verify_otp(email, otp, full_name):
             "doctype": "SVA User",
             "email": email,
             "first_name": first_name,
-            "last_name": last_name, 
-            "role_profiles":  "Volunteer" ,
-            "custom_phone_number": "+91-0000000000",  # Placeholder, should be updated later
+            "last_name": last_name,
+            "role_profiles": "Volunteer",
+            "custom_phone_number": phone_number,
+            "custom_registration_type":"Self Registered"
         })
-        # user.append("role_profiles", {"role_profile": "Volunteer"})
         user.insert(ignore_permissions=True, ignore_mandatory=True)
         frappe.set_user(email)
-        frappe.logger().info(f"SVA User {email} registered successfully")
 
-        # Log user in
         frappe.local.login_manager.login_as(email)
 
         return {
@@ -491,7 +482,6 @@ def register_verify_otp(email, otp, full_name):
         }
 
     except OTPError as e:
-        frappe.logger().error(f"OTP Verification Error for {email}: {str(e)}")
         return {
             "message": str(e),
             "status": "error"
