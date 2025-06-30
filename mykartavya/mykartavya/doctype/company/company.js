@@ -81,5 +81,28 @@ frappe.ui.form.on("Company", {
                 });
             }
         }
-    }
+    },
+    before_workflow_action: function(frm) {
+        if(frm.selected_workflow_action == 'Reject'){
+            frappe.prompt(
+                {
+                    label: "Rejected Reason",
+                    fieldname: "rejected_reason",
+                    fieldtype: "Small Text",
+                    reqd: 1
+                },
+                function(values) {
+                    frm.set_value("remarks", values.rejected_reason);
+                    frm.set_value("workflow_state", 'Rejected');
+                    frm.save() 
+                },
+                "Please provide a reason for rejection"
+            );
+        }
+        if (frm.doc.workflow_state == 'Pending Approval'){
+            frm.set_value('remarks', '');
+            frm.set_value('remarks', '');
+            frm.save() 
+        }
+    },
 });

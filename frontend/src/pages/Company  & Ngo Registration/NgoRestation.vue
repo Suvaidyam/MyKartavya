@@ -742,7 +742,6 @@ const validateForm = () => {
     'country',
     'state',
     'city',
-
     'contact_person_name',
     'ngo_head_name',
     'ngo_head_email',

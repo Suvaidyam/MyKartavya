@@ -8,10 +8,28 @@ frappe.ui.form.on("Volunteer Activity", {
                 frm.set_value('completion_wf_state', 'Approved');
                 frm.save();
             });
-
             frm.add_custom_button("Activity Reject", function () {
-                frm.set_value('completion_wf_state', 'Rejected');
-                frm.save();
+                const d = new frappe.ui.Dialog({
+                    title: 'Reason for Rejection',
+                    fields: [
+                        {
+                            label: 'Reason',
+                            fieldname: 'reason',
+                            fieldtype: 'Small Text',
+                            reqd: 1
+                        }
+                    ],
+                    primary_action_label: 'Submit',
+                    primary_action(values) {
+                        frm.set_value('remarks', values.reason).then(() => {
+                            frm.set_value('completion_wf_state', 'Rejected').then(() => {
+                                d.hide();
+                                frm.save();
+                            });
+                        });
+                    }
+                });
+                d.show();
             }).addClass('btn-danger');
         }
 

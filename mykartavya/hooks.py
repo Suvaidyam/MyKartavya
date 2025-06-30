@@ -35,7 +35,8 @@ fixtures=[
     # "Translation",
     # 'Custom DocPerm',
     # 'My Theme',
-    # 'Opportunity Kind'
+    # 'Opportunity Kind',
+    # 'Email Template'
 ]
 
 
@@ -58,8 +59,6 @@ doc_events = {
 override_doctype_class = {
     "User": "mykartavya.override.CustomUser"
 }
-
-
 
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [
@@ -225,7 +224,11 @@ scheduler_events = {
             "mykartavya.controllers.cron.process_activities",
             "mykartavya.controllers.cron.opportunity_publish"
         ]
-    }
+    },
+    "daily": [
+        "mykartavya.controllers.cron.start_activities",
+        "mykartavya.controllers.cron.send_reporting_reminders"
+    ]
 }
 
 # Testing

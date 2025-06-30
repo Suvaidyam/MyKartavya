@@ -11,6 +11,7 @@ import os
 
 
 class Company(Document):
+   
     def validate(self):
         self.validate_company_name()
         self.validate_registration_dates()
@@ -113,6 +114,10 @@ class Company(Document):
             create_company_logo(doc)
         # Create SVA User for both registration types
         insert_sva_user(doc)
+    
+    def on_trash(self):
+            frappe.db.delete("Company Logos", {"company_name": self.company_name})
+            frappe.db.commit()
 
 def get_role_profile(registration_type):
     """Get appropriate role profile based on registration type"""
@@ -160,6 +165,7 @@ def insert_sva_user(doc):
             "custom_city": city,
             "custom_designation": designation,
             "custom_volunteer_type": "Employee",
+            "custom_registration_type": "Registered by Corporate Admin",
             "enabled": 1
         })
         sva_user.insert(ignore_permissions=True)
@@ -199,3 +205,4 @@ def create_company_logo(doc):
     })
     logo.insert(ignore_permissions=True, ignore_mandatory=True)
 
+   

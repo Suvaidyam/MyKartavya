@@ -280,6 +280,11 @@ def current_commitments(filter={}):
 def available_commitments(filter={}):
     return Activity.available_commitments(filter)
 
+@frappe.whitelist(allow_guest=True)
+def ava_opportunities(filter={}):
+    return Opportunity.ava_opportunities(filter)
+
+
 
 @frappe.whitelist(allow_guest=True)
 def available_commitments_public(filter={}):

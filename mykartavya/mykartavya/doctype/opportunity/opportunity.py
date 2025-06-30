@@ -67,7 +67,7 @@ class Opportunity(Document):
                 ['role_profile'],
                 as_dict=True
             )
-            if sva_user and sva_user.role_profile == 'MyKartvya Admin':
+            if sva_user and (sva_user.role_profile in ['MyKartvya Admin']) or frappe.session.user == 'Administrator':
                 frappe.db.set_value("Opportunity", doc.name, "workflow_state", "Approved")
             else:
                 print(f"User {frappe.session.user} with role {sva_user.role_profile if sva_user else 'No role'} - keeping default workflow state")

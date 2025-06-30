@@ -63,6 +63,7 @@
    "fieldname": "duration",
    "fieldtype": "Duration",
    "hide_days": 1,
+   "hide_seconds": 1,
    "in_list_view": 1,
    "label": "Duration",
    "read_only": 1
@@ -195,7 +196,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-16 18:26:04.319590",
+ "modified": "2025-06-28 14:00:07.294750",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",
@@ -227,19 +228,6 @@
   },
   {
    "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Company Admin",
-   "select": 1,
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
    "email": 1,
    "export": 1,
    "print": 1,
@@ -257,6 +245,18 @@
    "read": 1,
    "report": 1,
    "role": "NGO Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Company Admin",
    "share": 1,
    "write": 1
   }

@@ -16,12 +16,12 @@ class ActivityVolunteerGroup(Document):
 		# Create Volunteer Activity entries for each volunteer
 		for volunteer in group_doc.volunteers:
 			if not frappe.db.exists("Volunteer Activity", {
-				"volunteer": volunteer.user,
+				"volunteer": volunteer.users,
 				"activity": self.activity
 			}):
 				volunteer_activity = frappe.new_doc("Volunteer Activity")
 				volunteer_activity.update({
-					"volunteer": volunteer.user,
+					"volunteer": volunteer.users,
 					"activity": self.activity,
 					"enrollment_wf_state": "Approved"
 				})
@@ -29,7 +29,7 @@ class ActivityVolunteerGroup(Document):
 				frappe.db.commit()
 			else:
 				# Add to duplicates list
-				duplicate_volunteers.append(volunteer.user)
+				duplicate_volunteers.append(volunteer.users)
 		
 		# Show message if there are duplicates
 		if duplicate_volunteers:
@@ -47,7 +47,7 @@ class ActivityVolunteerGroup(Document):
 		# Delete Volunteer Activity entries for each volunteer
 		for volunteer in group_doc.volunteers:
 			va_name = frappe.db.get_value("Volunteer Activity", {
-				"volunteer": volunteer.user,
+				"volunteer": volunteer.users,
 				"activity": self.activity
 			})
 			if va_name:

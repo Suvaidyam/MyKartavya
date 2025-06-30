@@ -365,6 +365,9 @@ const nextStep = async (index) => {
           pauseOnHover: true,
           draggable: true,
         })
+        setTimeout(() => {
+          store.refresh_step = true
+        }, 2000)
       } else if (res?.status === 201) {
         showReqForApproval.value = true
         return
@@ -582,9 +585,9 @@ watch(() => showKarmaPopup, (newValue) => {
   }
 });
 watch(uploadedImages, (newImages) => {
-    if (newImages.length > 0) {
-        activity_err.value.image = false
-    }
+  if (newImages.length > 0) {
+    activity_err.value.image = false
+  }
 }, { deep: true })
 </script>
 <style scoped>
