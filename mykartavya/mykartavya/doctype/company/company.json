@@ -7,6 +7,7 @@
  "field_order": [
   "registration_type",
   "company_name",
+  "company_domain",
   "column_break_cfmi",
   "company_registration_date",
   "company_registration_year",
@@ -314,13 +315,19 @@
    "fieldtype": "Small Text",
    "label": "Remarks",
    "read_only": 1
+  },
+  {
+   "fieldname": "company_domain",
+   "fieldtype": "Data",
+   "label": "Company Domain",
+   "reqd": 1
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-06-28 18:08:49.697593",
+ "modified": "2025-06-30 16:13:41.550789",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Company",

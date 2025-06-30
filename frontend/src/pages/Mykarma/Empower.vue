@@ -159,7 +159,7 @@
             <Stepper v-else :activity="activities" :key="'stepper-' + activities?.activity" />
           </div>
         </div>
-
+        <Survey :formJson="item.form_json" v-for="item in surveyData"/>
         <!-- Related Opportunities -->
         <div class="mt-10">
           <div class="flex justify-between">
@@ -188,6 +188,7 @@
         </div>
       </div>
     </section>
+
   </div>
 </template>
 
@@ -199,6 +200,7 @@ import SubmitFeedback from '../../components/SubmitFeedback.vue'
 import Card from '../../components/Card.vue'
 import NotFound from '../../components/NotFound.vue'
 import ReqForApproval from '../../components/ReqForApproval.vue'
+import Survey from '../../components/Survey.vue'
 // import CardLoader from "../../components/CardLoader.vue";
 import {
   Facebook,
@@ -255,6 +257,25 @@ const isRightDisabled = ref(false);
 const isUserApproved = ref(false)
 const showReqForApproval = ref(false)
 const svaUserData = ref(null)
+const surveyData = ref([]);
+
+const survey = async() => {
+    console.log('Fetching survey for activity:', route.params.name);
+
+  try {
+    if (route.params.name) {
+      
+      const response = await call('mykartavya.controllers.api.get_survey',  { name: route?.params?.name });
+      console.log('response', response);
+      if(response){
+        surveyData.value = response;
+      }
+      
+    }
+  } catch (err) {
+    console.error('Error fetching survey data:', err);
+  }
+}
 
 const activity = async () => {
 
@@ -391,6 +412,7 @@ onMounted(() => {
   onUnmounted(() => {
     resizeObserver.disconnect();
   });
+  survey();
 });
 
 window.addEventListener('resize', () => {

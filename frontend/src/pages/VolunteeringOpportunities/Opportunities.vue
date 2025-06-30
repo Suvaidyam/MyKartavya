@@ -297,10 +297,12 @@ const relatedOpportunities = async () => {
       sdgs = JSON.parse(sdgs)
     }
     let filter = { sdgs: sdgs?.map(item => item.sdgs_name) }
-    const response = await call('mykartavya.controllers.api.related_opportunities', { filter: filter });
+    const response = await call('mykartavya.controllers.api.public_opportunities', { filter: filter });
     if (response) {
       if (response.length > 0) {
         if (route?.params?.name) {
+          console.log("Filtering opportunities based on route params:", route?.params?.name);
+          
           opportunities.value = response.filter(item => item.name !== route?.params?.name)
           selectedOpportunity.value = response.find(item => item.name === route?.params?.name)
         } else {
