@@ -86,7 +86,7 @@ def register_company(**kwargs):
             kwargs['volunteering_csr_activities'] = float(kwargs['volunteering_csr_activities'])
         if kwargs.get('employee_engagement'):
             kwargs['employee_engagement'] = float(kwargs['employee_engagement'])
-
+        phone_number = "+919876543210"
         # Create company document
         company = frappe.get_doc({
             "doctype": "Company",
@@ -108,6 +108,7 @@ def register_company(**kwargs):
             "clear_vision": kwargs.get("clear_vision"),
             "volunteering_csr_activities": kwargs.get("volunteering_csr_activities"),
             "employee_engagement": kwargs.get("employee_engagement"),
+            "volunteering_incharge_phone":phone_number
         })
         
         company.insert(ignore_permissions=True,ignore_mandatory=True) 

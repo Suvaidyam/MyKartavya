@@ -67,7 +67,6 @@
             <!-- Left Column - Main Opportunity -->
             <div class="lg:col-span-4">
               <div class="bg-white rounded-md  overflow-hidden">
-                {{ selectedOpportunity.activity_name }}
                 <!-- Opportunity Image -->
                 <div class="relative aspect-[16/9] overflow-hidden rounded-t-md">
                   <img :src="selectedOpportunity?.activity_image" class="w-full h-full object-cover object-center"

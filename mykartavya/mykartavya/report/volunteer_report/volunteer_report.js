@@ -36,7 +36,7 @@ frappe.query_reports["Volunteer Report"] = {
 		},
 		{
 			"fieldname": "active_status",
-			"label": __("Status"),
+			"label": __("Portal Activity Status"),
 			"fieldtype": "Select",
 			"options": ["", "Active", "Inactive"],
 			"default": ""

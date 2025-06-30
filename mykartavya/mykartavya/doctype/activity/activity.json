@@ -38,9 +38,7 @@
   "column_break_participation1",
   "karma_points",
   "hours_section",
-  "minimum_hours",
   "hours",
-  "minutes",
   "column_break_hours1",
   "max_hours",
   "vacancies_section",
@@ -267,26 +265,11 @@
    "label": "Time Commitment"
   },
   {
-   "fieldname": "minimum_hours",
-   "fieldtype": "Float",
-   "label": "Minimum Hours",
-   "non_negative": 1,
-   "precision": "2",
-   "reqd": 1
-  },
-  {
    "fieldname": "hours",
    "fieldtype": "Float",
-   "label": "Hours",
+   "label": "Total Hours",
    "non_negative": 1,
    "precision": "2",
-   "reqd": 1
-  },
-  {
-   "fieldname": "minutes",
-   "fieldtype": "Int",
-   "label": "Minutes",
-   "non_negative": 1,
    "reqd": 1
   },
   {
@@ -525,7 +508,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-06-28 20:32:49.694373",
+ "modified": "2025-06-29 15:01:28.347719",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",
