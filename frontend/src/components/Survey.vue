@@ -1,7 +1,4 @@
 <template>
-     <p class="text-lg md:text-2xl font-semibold font-poppins text-gray-800 tracking-tight pb-2">
-            Survey
-          </p>
     <div class="mx-auto py-2">
         <div v-if="jsonError" class="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
             <p class="text-sm text-red-800">{{ jsonError }}</p>
@@ -34,7 +31,7 @@
                                     {{ field.label }}<span v-if="isRequired(field)" class="text-red-500 ml-1">*</span>
                                 </label>
                                 <input v-model="formData[field.name]" type="text" :class="getInputClasses(field)"
-                                    :placeholder="`Enter ${field.label.toLowerCase()}`" :required="isRequired(field)" />
+                                     :required="isRequired(field)" />
                                 <div v-if="fieldErrors[field.name]" class="mt-1 text-sm text-red-600">{{
                                     fieldErrors[field.name] }}</div>
                             </div>
@@ -44,7 +41,7 @@
                                     {{ field.label }}<span v-if="isRequired(field)" class="text-red-500 ml-1">*</span>
                                 </label>
                                 <textarea v-model="formData[field.name]" :class="getInputClasses(field)"
-                                    :placeholder="`Enter ${field.label.toLowerCase()}`" :required="isRequired(field)" />
+                                     :required="isRequired(field)" />
                                 <div v-if="fieldErrors[field.name]" class="mt-1 text-sm text-red-600">{{
                                     fieldErrors[field.name] }}</div>
                             </div>
@@ -96,46 +93,46 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-2">
                                     {{ field.label }}<span v-if="isRequired(field)" class="text-red-500 ml-1">*</span>
                                 </label>
-                                <div class="space-y-2 pl-4">
+                                <div class="space-y-2 pl-4 flex gap-4 cursor-pointer">
                                     <div v-for="option in getCheckboxOptions(field.options)" :key="option"
                                         class="flex items-center">
                                         <input :id="`${field.name}-${option}`" type="checkbox" :value="option"
                                             v-model="formData[field.name]"
-                                            class="h-4 w-4 text-secondary border-gray-300 transition duration-200 focus:outline-none focus:ring-0 focus:border-secondary" />
+                                            class="h-4 w-4 text-secondary cursor-pointer border-gray-300 transition duration-200 focus:outline-none focus:ring-0 focus:border-secondary" />
                                         <label :for="`${field.name}-${option}`"
-                                            class="ml-2 block text-sm text-gray-700">{{
+                                            class="ml-2 block text-sm text-gray-700 cursor-pointer">{{
                                                 option }}</label>
                                     </div>
                                 </div>
                                 <div v-if="fieldErrors[field.name]" class="mt-1 text-sm text-red-600">{{
                                     fieldErrors[field.name] }}</div>
                             </div>
-
                         </div>
                     </div>
-
                     <!-- <div class="mt-6 flex gap-4">
                         <button type="submit" :disabled="isSubmitting"
                             class="w-full md:w-44 bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-md transition duration-200 transform hover:scale-105 disabled:transform-none">
                             {{ isSubmitting ? 'Submitting...' : 'Submit' }}
                         </button>
                     </div> -->
-                    <button type="submit" :disabled="isSubmitting || hasSubmitted"
+                    <button v-if="hasSubmittedLoaded" type="submit" :disabled="isSubmitting || hasSubmitted"
                         class="w-full md:w-44 bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-md transition duration-200 transform hover:scale-105 disabled:transform-none flex items-center justify-center gap-2">
                         <template v-if="isSubmitting">
+
+                            <span>Submitting</span>
                             <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                                    stroke-width="4"></circle>
+                                    stroke-width="4" />
                                 <path class="opacity-75" fill="currentColor"
-                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                             </svg>
-                            <span>Submitting</span>
                         </template>
                         <template v-else>
                             Submit
                         </template>
                     </button>
+                    <div v-else class="text-gray-500 text-sm">Checking submission status...</div>
                 </form>
             </div>
         </div>
@@ -166,6 +163,8 @@ const dropdownRefs = reactive({})
 import { toast } from 'vue3-toastify'
 const activeIndex = ref(null)
 const hasSubmitted = ref(false)
+const hasSubmittedLoaded = ref(false)
+
 
 const toggleAccordion = (index) => {
     activeIndex.value = activeIndex.value === index ? null : index
@@ -296,20 +295,38 @@ const handleSubmit = async () => {
                 toast.error('Submission failed: ' + (result?.message || 'Unknown error'), { autoClose: 2000 });
             }
             isSubmitting.value = false;
-        }, 5000);  
+        }, 5000);
     } catch (err) {
         console.error(err);
         setTimeout(() => {
             toast.error('Error submitting form', { autoClose: 2000 });
             isSubmitting.value = false;
-        }, 5000);  
+        }, 5000);
     }
 };
-onMounted(() => {
-    if (props.formJson && props.autoLoad) loadJsonFromProps()
-    else initializeFormData(formFields.value)
+onMounted(async () => {
+    if (props.formJson && props.autoLoad) {
+        loadJsonFromProps()
+    } else {
+        initializeFormData(formFields.value)
+    }
+
     document.addEventListener('click', closeAllDropdowns)
-})
+
+    try {
+        const res = await call('mykartavya.controllers.survey.has_submitted_survey', {
+            survey_id: props.surveyId,
+            user: props.userId
+        });
+        console.log("Submitted status ?:", res);
+        hasSubmitted.value = res === true;
+    } catch (err) {
+        console.error("Check submit status error", err)
+        hasSubmitted.value = false;
+    } finally {
+        hasSubmittedLoaded.value = true;
+    }
+});
 
 onUnmounted(() => {
     document.removeEventListener('click', closeAllDropdowns)
