@@ -1,356 +1,364 @@
-
 <template>
-  <div class=" mx-auto py-6">
-    <!-- Error Display for Props -->
-    <div v-if="jsonError" class="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
-      <p class="text-sm text-red-800">{{ jsonError }}</p>
-    </div>
-
-    <!-- No Form Message -->
-    <div v-if="formFields.length === 0" class="bg-white rounded-lg shadow-md p-6 text-center">
-      <p class="text-gray-500">No form fields available. Please provide form data through props.</p>
-    </div>
-
-    <!-- Dynamic Form -->
-    <div v-if="formFields.length > 0" class="bg-white rounded-lg shadow-md p-6">
-      
-      <form @submit.prevent="handleSubmit" class="space-y-6">
-        <div v-for="field in formFields" :key="field.name" class="form-field grid grid-cols-2 gap-4">
-          
-          <!-- Text Field -->
-          <div v-if="field.fieldtype === 'Text'" class="mb-3">
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              {{ field.label }}
-              <span v-if="isRequired(field)" class="text-red-500 ml-1">*</span>
-            </label>
-            <input
-              v-model="formData[field.name]"
-              type="text"
-              :class="getInputClasses(field)"
-              :placeholder="`Enter ${field.label.toLowerCase()}`"
-              :required="isRequired(field)"
-            />
-            <div v-if="fieldErrors[field.name]" class="mt-1 text-sm text-red-600">
-              {{ fieldErrors[field.name] }}
-            </div>
-          </div>
-
-          <!-- Select Field -->
-          <div v-else-if="field.fieldtype === 'Select'" class="mb-3">
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              {{ field.label }}
-              <span v-if="isRequired(field)" class="text-red-500 ml-1">*</span>
-            </label>
-            <select
-              v-model="formData[field.name]"
-              :class="getInputClasses(field)"
-              :required="isRequired(field)"
-            >
-              <option value="">Select {{ field.label.toLowerCase() }}</option>
-              <option 
-                v-for="option in getSelectOptions(field.options)" 
-                :key="option" 
-                :value="option"
-              >
-                {{ option }}
-              </option>
-            </select>
-            <div v-if="fieldErrors[field.name]" class="mt-1 text-sm text-red-600">
-              {{ fieldErrors[field.name] }}
-            </div>
-          </div>
-
-          <!-- Checkbox Field -->
-          <div v-else-if="field.fieldtype === 'Check'" class="mb-3">
-            <div class="flex items-center">
-              <input
-                v-model="formData[field.name]"
-                type="checkbox"
-                :id="field.name"
-                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              />
-              <label :for="field.name" class="ml-2 block text-sm text-gray-700">
-                {{ field.label }}
-                <span v-if="isRequired(field)" class="text-red-500 ml-1">*</span>
-              </label>
-            </div>
-            <div v-if="fieldErrors[field.name]" class="mt-1 text-sm text-red-600">
-              {{ fieldErrors[field.name] }}
-            </div>
-          </div>
-
+    <div class="mx-auto py-2">
+        <div v-if="jsonError" class="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
+            <p class="text-sm text-red-800">{{ jsonError }}</p>
         </div>
 
-        <!-- Submit Button -->
-        <div class="mt-6 flex">
-          <button
-            type="submit"
-            :disabled="isSubmitting"
-            class="w-full md:w-60 bg-secondary hover:bg-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-2 px-2 rounded-md transition duration-200"
-          >
-            {{ isSubmitting ? 'Submitting...' : 'Submit' }}
-          </button>
+        <div v-if="formFields.length === 0" class="bg-white rounded-lg shadow-md p-6 text-center">
+            <p class="text-gray-500">No form fields available.</p>
         </div>
-      </form>
+        <div v-if="formFields.length > 0" class="rounded-lg shadow-md overflow-hidden transition-all duration-300">
+            <!-- Header Always Visible -->
+            <div class="flex justify-between items-center cursor-pointer px-6 py-4 transition-colors duration-300"
+                :class="activeIndex === 0 ? 'bg-white' : 'bg-gray-100'" @click="toggleAccordion(0)">
+                <p class="text-lg font-semibold text-gray-800 flex items-center">{{ title }}</p>
+                <button class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <svg :class="[
+                        'w-6 h-6 transition-transform duration-200 transform',
+                        activeIndex === 0 ? 'rotate-180' : ''
+                    ]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+            </div>
+            <div v-show="activeIndex === 0" class="px-6 pb-6 bg-white" style="transition: max-height 0.3s ease;">
+                <form @submit.prevent="handleSubmit" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div v-for="field in formFields" :key="field.name" class="form-field">
+
+                            <div v-if="field.fieldtype === 'Text'" class="mb-3">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    {{ field.label }}<span v-if="isRequired(field)" class="text-red-500 ml-1">*</span>
+                                </label>
+                                <input v-model="formData[field.name]" type="text" :class="getInputClasses(field)"
+                                    :placeholder="`Enter ${field.label.toLowerCase()}`" :required="isRequired(field)" />
+                                <div v-if="fieldErrors[field.name]" class="mt-1 text-sm text-red-600">{{
+                                    fieldErrors[field.name] }}</div>
+                            </div>
+
+                            <div v-if="field.fieldtype === 'Small Text'" class="mb-3">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    {{ field.label }}<span v-if="isRequired(field)" class="text-red-500 ml-1">*</span>
+                                </label>
+                                <textarea v-model="formData[field.name]" :class="getInputClasses(field)"
+                                    :placeholder="`Enter ${field.label.toLowerCase()}`" :required="isRequired(field)" />
+                                <div v-if="fieldErrors[field.name]" class="mt-1 text-sm text-red-600">{{
+                                    fieldErrors[field.name] }}</div>
+                            </div>
+
+                            <div v-else-if="field.fieldtype === 'Select'" class="mb-3">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    {{ field.label }}<span v-if="isRequired(field)" class="text-red-500 ml-1">*</span>
+                                </label>
+                                <div class="relative" :ref="el => dropdownRefs[field.name] = el">
+                                    <button type="button" @click="toggleDropdown(field.name)" :class="[
+                                        getInputClasses(field),
+                                        'bg-white text-left flex items-center justify-between'
+                                    ]">
+                                        <span :class="formData[field.name] ? 'text-gray-900' : 'text-gray-500'">
+                                            {{ formData[field.name] || `Select ${field.label.toLowerCase()}` }}
+                                        </span>
+                                        <svg :class="['w-5 h-5 text-gray-400 transition-transform duration-200', openDropdowns[field.name] ? 'rotate-180' : '']"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </button>
+                                    <div v-show="openDropdowns[field.name]"
+                                        class="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+                                        <div @click="selectOption(field.name, '')"
+                                            class="px-3 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer border-b border-gray-200">
+                                            Select {{ field.label.toLowerCase() }}
+                                        </div>
+                                        <div v-for="option in getSelectOptions(field.options)" :key="option"
+                                            @click="selectOption(field.name, option)" :class="[
+                                                'px-3 py-2 cursor-pointer hover:bg-blue-50 flex items-center justify-between',
+                                                formData[field.name] === option ? 'bg-blue-100 text-blue-900 font-medium' : 'text-gray-900'
+                                            ]">
+                                            <span>{{ option }}</span>
+                                            <svg v-if="formData[field.name] === option" class="w-4 h-4 text-blue-600"
+                                                fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-if="fieldErrors[field.name]" class="mt-1 text-sm text-red-600">{{
+                                    fieldErrors[field.name] }}</div>
+                            </div>
+
+                            <div v-else-if="field.fieldtype === 'Check'" class="mb-3">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    {{ field.label }}<span v-if="isRequired(field)" class="text-red-500 ml-1">*</span>
+                                </label>
+                                <div class="space-y-2 pl-4">
+                                    <div v-for="option in getCheckboxOptions(field.options)" :key="option"
+                                        class="flex items-center">
+                                        <input :id="`${field.name}-${option}`" type="checkbox" :value="option"
+                                            v-model="formData[field.name]"
+                                            class="h-4 w-4 text-secondary border-gray-300 transition duration-200 focus:outline-none focus:ring-0 focus:border-secondary" />
+                                        <label :for="`${field.name}-${option}`"
+                                            class="ml-2 block text-sm text-gray-700">{{
+                                                option }}</label>
+                                    </div>
+                                </div>
+                                <div v-if="fieldErrors[field.name]" class="mt-1 text-sm text-red-600">{{
+                                    fieldErrors[field.name] }}</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- <div class="mt-6 flex gap-4">
+                        <button type="submit" :disabled="isSubmitting"
+                            class="w-full md:w-44 bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-md transition duration-200 transform hover:scale-105 disabled:transform-none">
+                            {{ isSubmitting ? 'Submitting...' : 'Submit' }}
+                        </button>
+                    </div> -->
+                    <button type="submit" :disabled="isSubmitting || hasSubmitted"
+                        class="w-full md:w-44 bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-md transition duration-200 transform hover:scale-105 disabled:transform-none flex items-center justify-center gap-2">
+                        <template v-if="isSubmitting">
+                            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                            </svg>
+                            <span>Submitting</span>
+                        </template>
+                        <template v-else>
+                            Submit
+                        </template>
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch, onMounted } from 'vue'
+import { ref, reactive, watch, onMounted, onUnmounted, inject } from 'vue'
 
-// Props
 const props = defineProps({
-  formJson: {
-    type: [String, Object, Array],
-    default: null
-  },
-  autoLoad: {
-    type: Boolean,
-    default: true
-  }
+    formJson: [String, Object, Array],
+    title: String,
+    autoLoad: { type: Boolean, default: true },
+    surveyId: { type: String, required: true },
+    userId: { type: String, default: null },
+    activityId: { type: String, default: null }
 })
 
-
-
-// Reactive data
 const formFields = ref([])
 const formData = reactive({})
 const fieldErrors = reactive({})
-const jsonInput = ref('')
 const jsonError = ref('')
 const loadSuccess = ref(false)
 const isSubmitting = ref(false)
+const call = inject('call')
+const openDropdowns = reactive({})
+const dropdownRefs = reactive({})
+import { toast } from 'vue3-toastify'
+const activeIndex = ref(null)
+const hasSubmitted = ref(false)
 
-// Computed properties
-const isRequired = (field) => {
-  return field.mandatory === 1 || field.mandatory === true
+const toggleAccordion = (index) => {
+    activeIndex.value = activeIndex.value === index ? null : index
 }
 
-const getSelectOptions = (options) => {
-  if (!options) return []
-  return options.split('\n').filter(opt => opt.trim()).map(opt => opt.trim())
+const isRequired = (field) => field.mandatory === 1 || field.mandatory === true
+const getSelectOptions = (options) => (!options ? [] : options.split('\n').filter(opt => opt.trim()).map(opt => opt.trim()))
+const getCheckboxOptions = (options) => (!options ? [] : Array.isArray(options) ? options : options.split('\n').filter(opt => opt.trim()))
+const getInputClasses = (field) => `w-full px-3 py-2 border rounded-md shadow-sm transition duration-200 focus:outline-none focus:ring-0 focus:border-blue-500 ${fieldErrors[field.name] ? 'border-red-500' : 'border-gray-300'}`
+
+const toggleDropdown = (fieldName) => {
+    Object.keys(openDropdowns).forEach(key => {
+        if (key !== fieldName) openDropdowns[key] = false
+    })
+    openDropdowns[fieldName] = !openDropdowns[fieldName]
 }
 
-const getInputClasses = (field) => {
-  const baseClasses = "w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
-  const hasError = fieldErrors[field.name]
-  const borderClass = hasError ? "border-red-500" : "border-gray-300"
-  return `${baseClasses} ${borderClass}`
+const selectOption = (fieldName, option) => {
+    formData[fieldName] = option
+    openDropdowns[fieldName] = false
+    if (fieldErrors[fieldName]) delete fieldErrors[fieldName]
+}
+
+
+const closeAllDropdowns = (event) => {
+    let inside = false
+    Object.keys(dropdownRefs).forEach(fieldName => {
+        if (dropdownRefs[fieldName]?.contains(event.target)) inside = true
+    })
+    if (!inside) Object.keys(openDropdowns).forEach(key => openDropdowns[key] = false)
 }
 
 const loadJsonFromProps = () => {
-  if (!props.formJson) return
-  
-  jsonError.value = ''
-  loadSuccess.value = false
-  
-  try {
-    let fields = []
-    
-    // Handle different prop types
-    if (typeof props.formJson === 'string') {
-      // If prop is a string, parse it
-      const parsedData = JSON.parse(props.formJson)
-      fields = extractFieldsFromData(parsedData)
-    } else if (Array.isArray(props.formJson)) {
-      // If prop is already an array
-      fields = props.formJson
-    } else if (typeof props.formJson === 'object') {
-      // If prop is an object
-      fields = extractFieldsFromData(props.formJson)
+    if (!props.formJson) return
+    jsonError.value = ''
+    loadSuccess.value = false
+
+    try {
+        let fields = []
+        if (typeof props.formJson === 'string') fields = extractFieldsFromData(JSON.parse(props.formJson))
+        else if (Array.isArray(props.formJson)) fields = props.formJson
+        else if (typeof props.formJson === 'object') fields = extractFieldsFromData(props.formJson)
+
+        const validFields = validateFields(fields)
+        if (validFields.length > 0) {
+            formFields.value = validFields
+            initializeFormData(validFields)
+            loadSuccess.value = true
+        }
+    } catch (error) {
+        jsonError.value = `Error loading form: ${error.message}`
     }
-    
-    // Validate and set fields
-    const validFields = validateFields(fields)
-    if (validFields.length > 0) {
-      formFields.value = validFields
-      initializeFormData(validFields)
-      loadSuccess.value = true
-      console.log('Form loaded from props:', formFields.value)
-    }
-    
-  } catch (error) {
-    jsonError.value = `Error loading form from props: ${error.message}`
-    console.error('Props loading error:', error)
-  }
 }
 
 const extractFieldsFromData = (data) => {
-  let fields = []
-  
-  if (Array.isArray(data)) {
-    fields = data
-  } else if (data.form_json) {
-    // Handle nested structure with form_json property
-    if (typeof data.form_json === 'string') {
-      fields = JSON.parse(data.form_json)
-    } else {
-      fields = data.form_json
-    }
-  } else if (data.name && data.label && data.fieldtype) {
-    // Single field object
-    fields = [data]
-  } else {
-    throw new Error('Invalid data structure. Expected array of fields or object with form_json property.')
-  }
-  
-  return Array.isArray(fields) ? fields : [fields]
+    if (Array.isArray(data)) return data
+    if (data.form_json) return typeof data.form_json === 'string' ? JSON.parse(data.form_json) : data.form_json
+    if (data.name && data.label && data.fieldtype) return [data]
+    throw new Error('Invalid form_json structure')
 }
 
-const validateFields = (fields) => {
-  return fields.filter(field => {
-    if (!field.name || !field.label || !field.fieldtype) {
-      console.warn('Skipping invalid field:', field)
-      return false
-    }
-    return true
-  })
-}
+const validateFields = (fields) => fields.filter(f => f.name && f.label && f.fieldtype)
+
 const initializeFormData = (fields) => {
-  // Clear existing data
-  Object.keys(formData).forEach(key => delete formData[key])
-  Object.keys(fieldErrors).forEach(key => delete fieldErrors[key])
-  
-  // Initialize with default values
-  fields.forEach(field => {
-    if (field.fieldtype === 'Checkbox') {
-      formData[field.name] = false
-    } else {
-      formData[field.name] = ''
-    }
-  })
-}
+    Object.keys(formData).forEach(k => delete formData[k])
+    Object.keys(fieldErrors).forEach(k => delete fieldErrors[k])
+    Object.keys(openDropdowns).forEach(k => delete openDropdowns[k])
 
-const loadJsonForm = () => {
-  jsonError.value = ''
-  loadSuccess.value = false
-  
-  try {
-    const parsedData = JSON.parse(jsonInput.value)
-    const fields = extractFieldsFromData(parsedData)
-    const validFields = validateFields(fields)
-    
-    if (validFields.length === 0) {
-      throw new Error('No valid fields found. Each field must have name, label, and fieldtype properties.')
-    }
-    
-    formFields.value = validFields
-    initializeFormData(validFields)
-    loadSuccess.value = true
-    
-    console.log('Form loaded successfully:', formFields.value)
-  } catch (error) {
-    jsonError.value = `Invalid JSON format: ${error.message}`
-    console.error('JSON Parse Error:', error)
-  }
-}
-
-const loadSampleForm = () => {
-  // Sample with the structure you provided
-  const sampleJson = {
-    "form_json": "[{\"name\":\"vcsef08rul\",\"owner\":\"Administrator\",\"creation\":\"2025-06-30 16:50:22.058318\",\"modified\":\"2025-06-30 16:51:14.209453\",\"modified_by\":\"Administrator\",\"docstatus\":0,\"idx\":1,\"label\":\"Name\",\"fieldtype\":\"Text\",\"mandatory\":0,\"parent\":\"SUR-Test-0210\",\"parentfield\":\"questions\",\"parenttype\":\"Survey\",\"doctype\":\"Survey Form Builder\"},{\"name\":\"email_field\",\"label\":\"Email Address\",\"fieldtype\":\"Text\",\"mandatory\":1},{\"name\":\"country_select\",\"label\":\"Country\",\"fieldtype\":\"Select\",\"options\":\"USA\\nCanada\\nUK\\nAustralia\\nGermany\",\"mandatory\":1},{\"name\":\"newsletter_checkbox\",\"label\":\"Subscribe to Newsletter\",\"fieldtype\":\"Checkbox\",\"mandatory\":0}]"
-  }
-  
-  jsonInput.value = JSON.stringify(sampleJson, null, 2)
-  loadJsonForm()
-}
-
-const clearForm = () => {
-  jsonInput.value = ''
-  formFields.value = []
-  Object.keys(formData).forEach(key => delete formData[key])
-  Object.keys(fieldErrors).forEach(key => delete fieldErrors[key])
-  jsonError.value = ''
-  loadSuccess.value = false
+    fields.forEach(field => {
+        formData[field.name] = field.fieldtype === 'Check' ? [] : ''
+        if (field.fieldtype === 'Select') openDropdowns[field.name] = false
+    })
 }
 
 const validateForm = () => {
-  // Clear previous errors
-  Object.keys(fieldErrors).forEach(key => delete fieldErrors[key])
-  
-  const errors = []
-  
-  formFields.value.forEach(field => {
-    if (isRequired(field)) {
-      const value = formData[field.name]
-      
-      if (field.fieldtype === 'Checkbox') {
-        if (!value) {
-          fieldErrors[field.name] = 'This field is required'
-          errors.push(field.label)
+    Object.keys(fieldErrors).forEach(k => delete fieldErrors[k])
+    const errors = []
+
+    formFields.value.forEach(field => {
+        const value = formData[field.name]
+        if (isRequired(field)) {
+            if (field.fieldtype === 'Check' && (!value || !value.length)) {
+                fieldErrors[field.name] = 'Please select at least one option'
+                errors.push(field.label)
+            } else if (!value || value.toString().trim() === '') {
+                fieldErrors[field.name] = 'This field is required'
+                errors.push(field.label)
+            }
         }
-      } else {
-        if (!value || value.toString().trim() === '') {
-          fieldErrors[field.name] = 'This field is required'
-          errors.push(field.label)
-        }
-      }
-    }
-  })
-  
-  return errors
+    })
+
+    return errors
 }
 
 const handleSubmit = async () => {
-  isSubmitting.value = true
-  
-  try {
-    const errors = validateForm()
-    
-    if (errors.length > 0) {
-      alert(`Please fill in the following required fields: ${errors.join(', ')}`)
-      return
-    }
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    console.log('Form Data:', formData)
-    alert('Form submitted successfully! Check console for data.')
-    
-  } catch (error) {
-    console.error('Submission error:', error)
-    alert('An error occurred while submitting the form.')
-  } finally {
-    isSubmitting.value = false
-  }
-}
+    isSubmitting.value = true;
 
-// Initialize form data on component mount and when props change
+    try {
+        const errors = validateForm();
+        if (errors.length > 0) {
+            alert(`Please fill in the following required fields: ${errors.join(', ')}`);
+            isSubmitting.value = false;
+            return;
+        }
+
+        const answers = formFields.value.map(field => ({
+            question_id: field.name,
+            question_label: field.label,
+            question_type: field.fieldtype,
+            answer: field.fieldtype === 'Check'
+                ? JSON.stringify(formData[field.name] || [])
+                : formData[field.name] || ''
+        }));
+
+        const result = await call('mykartavya.controllers.survey.submit_volunteer_survey', {
+            data: JSON.stringify({
+                survey_id: props.surveyId,
+                activity_id: props.activityId,
+                user: props.userId,
+                answers
+            })
+        });
+        setTimeout(() => {
+            if (result?.status === "success") {
+                toast.success('Survey submitted successfully!', { autoClose: 2000 });
+                hasSubmitted.value = true;
+            } else {
+                toast.error('Submission failed: ' + (result?.message || 'Unknown error'), { autoClose: 2000 });
+            }
+            isSubmitting.value = false;
+        }, 5000);  
+    } catch (err) {
+        console.error(err);
+        setTimeout(() => {
+            toast.error('Error submitting form', { autoClose: 2000 });
+            isSubmitting.value = false;
+        }, 5000);  
+    }
+};
 onMounted(() => {
-  if (props.formJson && props.autoLoad) {
-    loadJsonFromProps()
-  } else {
-    initializeFormData(formFields.value)
-  }
+    if (props.formJson && props.autoLoad) loadJsonFromProps()
+    else initializeFormData(formFields.value)
+    document.addEventListener('click', closeAllDropdowns)
 })
 
-// Watch for prop changes
+onUnmounted(() => {
+    document.removeEventListener('click', closeAllDropdowns)
+})
+
 watch(() => props.formJson, (newJson) => {
-  if (newJson && props.autoLoad) {
-    loadJsonFromProps()
-  }
+    if (newJson && props.autoLoad) loadJsonFromProps()
 }, { deep: true })
 
-// Watch for changes in form data to clear errors
 watch(formData, () => {
-  Object.keys(fieldErrors).forEach(key => {
-    if (formData[key] && fieldErrors[key]) {
-      delete fieldErrors[key]
+    for (const key of Object.keys(fieldErrors)) {
+        if (formData[key] && fieldErrors[key]) delete fieldErrors[key]
     }
-  })
 }, { deep: true })
 </script>
 
 <style scoped>
-/* Custom styles if needed */
 .form-field {
-  transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
-.form-field:hover {
-  transform: translateY(-1px);
+.overflow-auto::-webkit-scrollbar {
+    width: 6px;
+}
+
+.overflow-auto::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.absolute.z-50 {
+    animation: slideDown 0.2s ease-out;
 }
 </style>
-Made with

@@ -77,4 +77,3 @@ def send_notification_to_all_sva_users(opportunity_name, status):
             subject=subject,
             message=message
         )
-

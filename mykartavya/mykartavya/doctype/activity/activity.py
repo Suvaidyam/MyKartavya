@@ -92,39 +92,39 @@ class Activity(Document):
             self.city = None
             self.address = None
 
-        today_date = today()
-        publish_date = (
-            self.publish_date.strftime("%Y-%m-%d")
-            if isinstance(self.publish_date, datetime)
-            else str(self.publish_date).split(" ")[0]
-            if self.publish_date else None
-        )
+        # today_date = today()
+        # publish_date = (
+        #     self.publish_date.strftime("%Y-%m-%d")
+        #     if isinstance(self.publish_date, datetime)
+        #     else str(self.publish_date).split(" ")[0]
+        #     if self.publish_date else None
+        # )
 
-        start_date = (
-            self.start_date.strftime("%Y-%m-%d")
-            if isinstance(self.start_date, datetime)
-            else str(self.start_date).split(" ")[0]
-            if self.start_date else None
-        )
+        # start_date = (
+        #     self.start_date.strftime("%Y-%m-%d")
+        #     if isinstance(self.start_date, datetime)
+        #     else str(self.start_date).split(" ")[0]
+        #     if self.start_date else None
+        # )
 
-        end_date = (
-            self.end_date.strftime("%Y-%m-%d")
-            if isinstance(self.end_date, datetime)
-            else str(self.end_date).split(" ")[0]
-         if self.end_date else None
-         )
+        # end_date = (
+        #     self.end_date.strftime("%Y-%m-%d")
+        #     if isinstance(self.end_date, datetime)
+        #     else str(self.end_date).split(" ")[0]
+        #  if self.end_date else None
+        #  )
 
 
-        if publish_date == today_date:
-            if self.workflow_state == "Approved":
-                self.activity_status = "Published"
-        elif start_date == today_date:
-            if self.workflow_state == "Approved":
-                self.activity_status = "Ongoing"
-        elif end_date == today_date:
-            self.activity_status = "Ended"
-        else:
-            self.activity_status = "Draft"
+        # if publish_date == today_date:
+        #     if self.workflow_state == "Approved":
+        #         self.activity_status = "Published"
+        # elif start_date == today_date:
+        #     if self.workflow_state == "Approved":
+        #         self.activity_status = "Ongoing"
+        # elif end_date == today_date:
+        #     self.activity_status = "Ended"
+        # else:
+        #     self.activity_status = "Draft"
 
     def validate_image(self):
         for field in ["activity_image", "reward_image"]:
