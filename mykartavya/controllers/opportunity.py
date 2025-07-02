@@ -35,7 +35,7 @@ class Opportunity:
                 GROUP BY opac.name
                 ORDER BY opac.creation ASC
             """
-            print(query,'query')
+            # print(query,'query')
             return frappe.db.sql(query, as_dict=True) 
         except Exception as e:
                 frappe.log_error(frappe.get_traceback(), "Error in get_opportunity_activity")
@@ -128,15 +128,14 @@ class Opportunity:
 
             # Build the main WHERE clause
             main_where_conditions = [
-                "opp.end_date >= CURRENT_DATE()",
-                "opp.opportunity_status IN ('Published', 'Ongoing')",
+                # "opp.end_date >= CURRENT_DATE()",
+                "opp.opportunity_status IN ('Published', 'Ongoing','Ended')",
                 "opp.workflow_state = 'Approved' ",
             ]
             
             # Combine all conditions
             all_conditions = main_where_conditions + where_clauses
             combined_where_clause = " AND ".join(all_conditions)
-            
             sql_query = f"""
                 SELECT 
                     opp.name as name,
@@ -303,129 +302,122 @@ class Opportunity:
 
     @frappe.whitelist()
     def ava_opportunities(filter={}):
-        try:
-            if isinstance(filter, str):
-                filter = frappe.parse_json(filter)
+            try:
+                if isinstance(filter, str):
+                    filter = frappe.parse_json(filter)
 
-            # Get current logged-in SVA User
-            user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
+                user = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
 
-            # Initialize WHERE clauses
-            where_clauses = [
-                "opp.end_date >= CURRENT_DATE()",
-                "opp.opportunity_status IN ('Published', 'Ongoing')",
-                "opp.workflow_state = 'Approved'",
-                """EXISTS (
-                    SELECT 1 FROM `tabOpportunity Activity` AS oact
-                    WHERE oact.opportunity = opp.name
-                )"""
-            ]
-
-            # Exclude opportunities already assigned to the user
-            if user:
-                where_clauses.append(
-                    f"""opp.name NOT IN (
-                        SELECT activity FROM `tabVolunteer Opportunity`
-                        WHERE volunteer = '{user}'
+                where_clauses = [
+                    "opp.end_date >= CURRENT_DATE()",
+                    "opp.opportunity_status IN ('Published', 'Ongoing')",
+                    "opp.workflow_state = 'Approved'",
+                    """EXISTS (
+                        SELECT 1 FROM `tabOpportunity Activity` AS oact
+                        WHERE oact.opportunity = opp.name
                     )"""
-                )
+                ]
 
-            # Sorting fields
-            order_by_fields = []
-
-            # Handle filters
-            if filter:
-                if "types" in filter and filter["types"]:
-                    types_list = ", ".join(f"'{t}'" for t in filter["types"])
-                    where_clauses.append(f"opp.opportunity_type IN ({types_list})")
-
-                if "karma_points" in filter and filter["karma_points"]:
-                    sort_order = filter["karma_points"]
-                    if sort_order == "Low to High":
-                        order_by_fields.append("opp.karma_points ASC")
-                    elif sort_order == "High to Low":
-                        order_by_fields.append("opp.karma_points DESC")
-
-                if "volunteering_hours" in filter and filter["volunteering_hours"]:
-                    sort_order = filter["volunteering_hours"]
-                    if sort_order == "Low to High":
-                        order_by_fields.append("opp.hours ASC")
-                    elif sort_order == "High to Low":
-                        order_by_fields.append("opp.hours DESC")
-
-                if "sdgs" in filter and filter["sdgs"]:
-                    sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
+                if user:
                     where_clauses.append(f"""
-                        EXISTS (
-                            SELECT 1 FROM `tabSDGs Child` AS sub_sd
-                            WHERE sub_sd.parent = opp.name
-                            AND sub_sd.sdgs IN ({sdgs_values})
+                        opp.name NOT IN (
+                            SELECT activity FROM `tabVolunteer Opportunity`
+                            WHERE volunteer = '{user}'
                         )
                     """)
 
-            # Final WHERE clause
-            combined_where_clause = " AND ".join(where_clauses)
+                order_by_fields = []
 
-            # Final ORDER BY clause
-            order_by_clause = f"ORDER BY {', '.join(order_by_fields)}" if order_by_fields else "ORDER BY opp.start_date ASC"
+                if filter:
+                    if "types" in filter and filter["types"]:
+                        types_list = ", ".join(f"'{t}'" for t in filter["types"])
+                        where_clauses.append(f"opp.opportunity_type IN ({types_list})")
 
-            # Final SQL Query
-            sql_query = f"""
-                SELECT 
-                    opp.name AS name,
-                    opp.opportunity_name AS activity_name,
-                    opp.karma_points AS karma_points,
-                    opp.opportunity_type AS types,
-                    opp.start_date AS start_date,
-                    opp.end_date AS end_date,
-                    opp.min_volunteering_time AS hours,
-                    opp.opportunity_description AS activity_description,
-                    opp.opportunity_image AS activity_image,
-                    opp.need_certificate AS need_certificate,
-                    vo.com_percent,
-                    vo.duration AS donet_hours,
-                    vo.workflow_state,
-                    vo.completion_wf_state,
-                    vo.rating,
-                    vo.remarks,
-                    COALESCE(
-                        JSON_ARRAYAGG(
-                            DISTINCT CASE 
-                                WHEN sdg.sdg IS NOT NULL 
-                                THEN JSON_OBJECT(
-                                    'sdgs_name', sdg.sdg,
-                                    'image', sdg.sdg_image
-                                )
-                            END
-                        ), JSON_ARRAY()
-                    ) AS sdgs,
-                    COALESCE(
-                        JSON_ARRAYAGG(
-                            DISTINCT JSON_OBJECT(
-                                'name', sva.name,
-                                'full_name', sva.full_name,
-                                'email', sva.email,
-                                'user_image', sva.user_image
+                    if "karma_points" in filter and filter["karma_points"]:
+                        sort_order = filter["karma_points"]
+                        if sort_order == "Low to High":
+                            order_by_fields.append("opp.karma_points ASC")
+                        elif sort_order == "High to Low":
+                            order_by_fields.append("opp.karma_points DESC")
+
+                    if "volunteering_hours" in filter and filter["volunteering_hours"]:
+                        sort_order = filter["volunteering_hours"]
+                        if sort_order == "Low to High":
+                            order_by_fields.append("opp.min_volunteering_time ASC")
+                        elif sort_order == "High to Low":
+                            order_by_fields.append("opp.min_volunteering_time DESC")
+
+                    if "sdgs" in filter and filter["sdgs"]:
+                        sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
+                        where_clauses.append(f"""
+                            EXISTS (
+                                SELECT 1 FROM `tabSDGs Child` AS sub_sd
+                                WHERE sub_sd.parent = opp.name
+                                AND sub_sd.sdgs IN ({sdgs_values})
                             )
-                        ), JSON_ARRAY()
-                    ) AS volunteers
-                FROM `tabOpportunity` AS opp
-                LEFT JOIN `tabVolunteer Opportunity` AS vo 
-                    ON vo.activity = opp.name AND vo.volunteer = '{user}'
-                LEFT JOIN `tabSVA User` AS sva ON sva.name = vo.volunteer
-                INNER JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
-                INNER JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
-                WHERE {combined_where_clause}
-                GROUP BY opp.name
-                {order_by_clause}
-            """
+                        """)
 
-            data = frappe.db.sql(sql_query, as_dict=True)
-            return data
+                combined_where_clause = " AND ".join(where_clauses)
+                order_by_clause = f"ORDER BY {', '.join(order_by_fields)}" if order_by_fields else "ORDER BY opp.start_date ASC"
 
-        except Exception as e:
-            frappe.log_error(frappe.get_traceback(), "ava_opportunities Error")
-            return []
+                sql_query = f"""
+                    SELECT 
+                        opp.name AS name,
+                        opp.opportunity_name AS activity_name,
+                        opp.karma_points AS karma_points,
+                        opp.opportunity_type AS types,
+                        opp.start_date AS start_date,
+                        opp.end_date AS end_date,
+                        opp.min_volunteering_time AS hours,
+                        opp.opportunity_description AS activity_description,
+                        opp.opportunity_image AS activity_image,
+                        opp.need_certificate AS need_certificate,
+                        vo.com_percent,
+                        vo.duration AS donet_hours,
+                        vo.workflow_state,
+                        vo.completion_wf_state,
+                        vo.rating,
+                        vo.remarks,
+                        COALESCE(
+                            JSON_ARRAYAGG(
+                                DISTINCT CASE 
+                                    WHEN sdg.sdg IS NOT NULL 
+                                    THEN JSON_OBJECT(
+                                        'sdgs_name', sdg.sdg,
+                                        'image', sdg.sdg_image
+                                    )
+                                END
+                            ), JSON_ARRAY()
+                        ) AS sdgs,
+                        COALESCE(
+                            JSON_ARRAYAGG(
+                                DISTINCT JSON_OBJECT(
+                                    'name', sva_all.name,
+                                    'full_name', sva_all.full_name,
+                                    'email', sva_all.email,
+                                    'user_image', sva_all.user_image
+                                )
+                            ), JSON_ARRAY()
+                        ) AS volunteers
+                    FROM `tabOpportunity` AS opp
+                    LEFT JOIN `tabVolunteer Opportunity` AS vo 
+                        ON vo.activity = opp.name AND vo.volunteer = '{user}'
+                    LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
+                    LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
+                    LEFT JOIN `tabVolunteer Opportunity` AS vo_all ON vo_all.activity = opp.name
+                    LEFT JOIN `tabSVA User` AS sva_all ON sva_all.name = vo_all.volunteer
+                    WHERE {combined_where_clause}
+                    GROUP BY opp.name
+                    {order_by_clause}
+                """
+
+                data = frappe.db.sql(sql_query, as_dict=True)
+                return data
+
+            except Exception as e:
+                frappe.log_error(frappe.get_traceback(), "ava_opportunities Error")
+                return []
+
 
     # Function to act now opportunity    
     def act_now_opp(activity, volunteer):
@@ -490,6 +482,7 @@ class Opportunity:
                 SELECT 
                     opp.name AS name,
                     opp.opportunity_name AS opportunity,
+                    opp.opportunity_name AS activity_name,
                     opp.karma_points AS karma_points,
                     opp.opportunity_type AS types,
                     opp.start_date AS start_date,
@@ -497,7 +490,6 @@ class Opportunity:
                     opp.min_volunteering_time AS hours,
                     opp.opportunity_description AS activity_description,
                     opp.opportunity_image AS activity_image,
-                
                     COALESCE(
                         JSON_ARRAYAGG(
                             DISTINCT CASE 
@@ -507,8 +499,20 @@ class Opportunity:
                                 )
                             END
                         ), JSON_ARRAY()
-                    ) AS sdgs
+                    ) AS sdgs,
+                    COALESCE(
+                            JSON_ARRAYAGG(
+                                DISTINCT JSON_OBJECT(
+                                    'name', sva.name,
+                                    'full_name', sva.full_name,
+                                    'email', sva.email,
+                                    'user_image', sva.user_image
+                                )
+                            ), JSON_ARRAY()
+                        ) as volunteers
                 FROM `tabOpportunity` AS opp
+                LEFT JOIN `tabVolunteer Opportunity` as vo ON vo.activity = opp.name
+                LEFT JOIN `tabSVA User` as sva ON sva.name = vo.volunteer
                 LEFT JOIN `tabSDGs Child` AS sd ON opp.name = sd.parent
                 LEFT JOIN `tabSDG` AS sdg ON sdg.name = sd.sdgs
                 {where_clause}

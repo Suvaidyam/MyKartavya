@@ -54,7 +54,7 @@ class Opportunity(Document):
         if start_date == today_date:
             if self.workflow_state == "Approved":
                 self.opportunity_status = "Published"
-        elif end_date == today_date:
+        elif end_date <= today_date:
             self.opportunity_status = "Ended"
         else:
             self.opportunity_status = "Draft"

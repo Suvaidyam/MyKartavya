@@ -300,7 +300,6 @@ const relatedOpportunities = async () => {
       if (response.length > 0) {
         if (route?.params?.name) {
           console.log("Filtering opportunities based on route params:", route?.params?.name);
-          
           opportunities.value = response.filter(item => item.name !== route?.params?.name)
           selectedOpportunity.value = response.find(item => item.name === route?.params?.name)
         } else {

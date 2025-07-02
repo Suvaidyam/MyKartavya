@@ -1,4 +1,7 @@
 <template>
+     <p class="text-lg md:text-2xl font-semibold font-poppins text-gray-800 tracking-tight pb-2">
+            Survey
+          </p>
     <div class="mx-auto py-2">
         <div v-if="jsonError" class="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
             <p class="text-sm text-red-800">{{ jsonError }}</p>

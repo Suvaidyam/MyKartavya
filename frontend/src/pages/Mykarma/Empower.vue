@@ -160,10 +160,6 @@
           </div>
         </div>
         <div class="">
-          <p class="text-lg md:text-2xl font-semibold font-poppins text-gray-800 tracking-tight pb-2">
-            Survey
-          </p>
-
           <Survey :formJson="item.form_json" v-for="item in surveyData" :title="item.title" :surveyId="item.name"
             :userId="user?.email" :activityId="route.params.name" :deadline="item.deadline" />
         </div>
@@ -313,7 +309,7 @@ const relatedOpportunities = async () => {
       sdgs = JSON.parse(sdgs)
     }
     let filter = { sdgs: sdgs?.map(item => item.sdgs_name) }
-    const response = await call('mykartavya.controllers.api.related_opportunities', { filter: filter });
+    const response = await call('mykartavya.controllers.api.public_opportunities', { filter: filter });
     if (response) {
       relatedactivity.value = response
     }
