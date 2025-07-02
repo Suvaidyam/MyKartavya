@@ -16,7 +16,8 @@ def get_survey(name):
         frappe.throw("This survey is no longer available as the deadline has passed.")
     return survey
 
-@frappe.whitelist(allow_guest=True)
+
+@frappe.whitelist()
 def submit_volunteer_survey():
     try:
         data = frappe.form_dict.get('data')
@@ -38,10 +39,19 @@ def submit_volunteer_survey():
         if not sva_user:
             frappe.throw(_("No matching SVA User found for email: {0}").format(email))
 
+        # Check if already submitted
+        already_submitted = frappe.db.exists("Volunteer Survey Log", {
+            "survey_id": survey_id,
+            "user": sva_user
+        })
+        if already_submitted:
+            frappe.throw(_("You have already submitted this survey."))
+
+        # Create new survey log
         doc = frappe.new_doc("Volunteer Survey Log")
         doc.survey_id = survey_id
         doc.user = sva_user
-        doc.activity = activity_id 
+        doc.activity = activity_id
 
         for a in answers:
             doc.append("answers", {
@@ -59,3 +69,17 @@ def submit_volunteer_survey():
     except Exception as e:
         frappe.log_error(frappe.get_traceback(), "Volunteer Survey Submission Error")
         return {"status": "error", "message": str(e)}
+    
+@frappe.whitelist()
+def has_submitted_survey(survey_id):
+    email = frappe.session.user
+    sva_user = frappe.get_value("SVA User", {"email": email}, "name")
+
+    if not sva_user:
+        return False
+
+    return bool(frappe.db.exists("Volunteer Survey Log", {
+        "user": sva_user,
+        "survey_id": survey_id
+    }))
+

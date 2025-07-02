@@ -106,7 +106,7 @@
             <div v-if="activities?.sdgs" v-for="item in JSON.parse(activities?.sdgs)">
               <img v-if="item?.image" :src="item.image" class="w-8 h-8" />
               <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item?.sdgs_name?.charAt(0)
-                }}</span>
+              }}</span>
             </div>
           </div>
 
@@ -159,9 +159,26 @@
             <Stepper v-else :activity="activities" :key="'stepper-' + activities?.activity" />
           </div>
         </div>
-        <div class="">
-          <Survey :formJson="item.form_json" v-for="item in surveyData" :title="item.title" :surveyId="item.name"
-            :userId="user?.email" :activityId="route.params.name" :deadline="item.deadline" />
+        <div class="border px-4 py-4 bg-white rounded-md">
+          <p class="text-xl md:text-2xl font-bold font-poppins text-gray-800 tracking-tight pb-2">
+            Survey
+          </p>
+          <template v-if="surveyData.length > 0">
+            <Survey v-for="item in surveyData" :key="item.name" :formJson="item.form_json" :title="item.title"
+              :surveyId="item.name" :userId="user?.email" :activityId="route.params.name" :deadline="item.deadline" />
+          </template>
+          <template v-else>
+            <div class="flex flex-col items-center justify-center text-gray-500 pb-10">
+              <!-- Heroicon: Exclamation Circle -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4 text-gray-400" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 9v2m0 4h.01M12 3.75a8.25 8.25 0 100 16.5 8.25 8.25 0 000-16.5z" />
+              </svg>
+              <p class="text-lg font-medium">No survey found</p>
+              <p class="text-sm text-gray-400">There are currently no surveys available for this activity.</p>
+            </div>
+          </template>
         </div>
         <!-- Related Opportunities -->
         <div class="mt-10">
