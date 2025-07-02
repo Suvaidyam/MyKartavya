@@ -154,9 +154,7 @@
                   </div>
                 </div>
               </div>
-
               <!-- Volunteer Role -->
-
             </div>
 
             <!-- Right Column - Activities -->
@@ -216,9 +214,9 @@
               </div>
             </div>
           </div>
-          <div class="mt-6 bg-white rounded-md p-6">
-            <div class="flex items-center justify-between mb-6">
-              <h2 class="text-lg font-medium px-10">Related Opportunities</h2>
+          <div class="mt-6 bg-white rounded-md p-4">
+            <div class="flex items-center justify-between mb-2">
+              <h2 class="text-lg font-medium ">Related Opportunities</h2>
               <div class="flex items-center gap-2">
                 <button @click="!isLeftDisabled && scrollLeft" :disabled="isLeftDisabled"
                   class="p-3 rounded-xl hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
@@ -297,7 +295,7 @@ const relatedOpportunities = async () => {
       sdgs = JSON.parse(sdgs)
     }
     let filter = { sdgs: sdgs?.map(item => item.sdgs_name) }
-    const response = await call('mykartavya.controllers.api.public_opportunities', { filter: filter });
+    const response = await call('mykartavya.controllers.api.related_opportunities', { filter: filter });
     if (response) {
       if (response.length > 0) {
         if (route?.params?.name) {

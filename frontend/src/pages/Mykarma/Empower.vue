@@ -132,7 +132,7 @@
     <section class="w-full bg-gray-700">
       <div class="p-6 md:p-10 bg-gray-100">
         <!-- Main Content -->
-        <div class="grid gap-6 lg:grid-cols-3">
+        <div class="grid gap-6 lg:grid-cols-3 pb-4">
           <!-- Left Section -->
           <div class="lg:col-span-2 flex flex-col justify-between items-start">
             <div class="text-[14px] text-[#666666] text-justify font-normal" v-html="activities?.activity_description">
@@ -159,7 +159,14 @@
             <Stepper v-else :activity="activities" :key="'stepper-' + activities?.activity" />
           </div>
         </div>
-        <Survey :formJson="item.form_json" v-for="item in surveyData"/>
+        <div class="">
+          <p class="text-lg md:text-2xl font-semibold font-poppins text-gray-800 tracking-tight pb-2">
+            Survey
+          </p>
+
+          <Survey :formJson="item.form_json" v-for="item in surveyData" :title="item.title" :surveyId="item.name"
+            :userId="user?.email" :activityId="route.params.name" :deadline="item.deadline" />
+        </div>
         <!-- Related Opportunities -->
         <div class="mt-10">
           <div class="flex justify-between">
@@ -259,18 +266,18 @@ const showReqForApproval = ref(false)
 const svaUserData = ref(null)
 const surveyData = ref([]);
 
-const survey = async() => {
-    console.log('Fetching survey for activity:', route.params.name);
+const survey = async () => {
+  console.log('Fetching survey for activity:', route.params.name);
 
   try {
     if (route.params.name) {
-      
-      const response = await call('mykartavya.controllers.api.get_survey',  { name: route?.params?.name });
+
+      const response = await call('mykartavya.controllers.api.get_survey', { name: route?.params?.name });
       console.log('response', response);
-      if(response){
+      if (response) {
         surveyData.value = response;
       }
-      
+
     }
   } catch (err) {
     console.error('Error fetching survey data:', err);

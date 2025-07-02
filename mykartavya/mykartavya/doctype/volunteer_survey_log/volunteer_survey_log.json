@@ -1,0 +1,74 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{##}survey_id",
+ "creation": "2025-06-30 23:44:29.541733",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "survey_id",
+  "user",
+  "activity",
+  "answers"
+ ],
+ "fields": [
+  {
+   "fieldname": "survey_id",
+   "fieldtype": "Link",
+   "label": "Survey",
+   "options": "Survey",
+   "read_only": 1
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Volunteer",
+   "options": "SVA User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "answers",
+   "fieldtype": "Table",
+   "label": "Answers",
+   "options": "Volunteer Survey Log Child"
+  },
+  {
+   "fieldname": "activity",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Activity",
+   "options": "Activity",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-07-01 15:17:28.289286",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Volunteer Survey Log",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "survey_id"
+}

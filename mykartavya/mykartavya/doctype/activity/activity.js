@@ -149,9 +149,9 @@ frappe.ui.form.on("Activity", {
             frm.image_uploaded = true;
         }
     },
-    onload: function (frm) {
+    onload: async function (frm)  {
         if (frm.is_new()) {
-            frappe.call({
+           await frappe.call({
                 method: 'frappe.client.get_value',
                 args: {
                     doctype: 'SVA User',
@@ -163,7 +163,7 @@ frappe.ui.form.on("Activity", {
                         frm.set_value('is_private', 1);
                     }
                     if (response.message.custom_ngo && response.message.role_profile === "NGO Admin") {
-
+                         console.log(response.message.role_profile);
                         frm.set_value('ngo', response.message.custom_ngo);
                         frm.set_df_property('is_private', 'read_only', 1);
                     }
