@@ -109,6 +109,12 @@ frappe.ui.form.on("Opportunity", {
                             });
                             d.show()
                         }
+                    },
+                    volunteer: {
+                        click: function (e, value, column, row) {
+                            if (!row || !row.name) return;
+                            window.location.href = `/app/volunteer-opportunity/${row.name}`;
+                        }
                     }
                 }
             },

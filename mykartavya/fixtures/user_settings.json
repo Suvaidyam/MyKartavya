@@ -4,7 +4,7 @@
   "doctype": "User Settings",
   "hide_user_table_view_settings": 0,
   "is_zone_mandatory": 0,
-  "modified": "2025-06-12 16:31:09.967048",
+  "modified": "2025-07-02 15:27:05.115766",
   "name": "User Settings",
   "restriction_role_profile": [],
   "role_level": [
@@ -22,6 +22,11 @@
     "is_multiselect": 0,
     "level": "SVA User",
     "role": "Company Admin"
+   },
+   {
+    "is_multiselect": 0,
+    "level": "Company",
+    "role": "Volunteer"
    }
   ]
  }

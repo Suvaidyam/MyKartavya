@@ -7,8 +7,16 @@ frappe.ui.form.on("Company", {
                 "after_render": (dt, mode) => {
                     let form_dialog = dt.form_dialog;
                     form_dialog.set_value("custom_volunteer_type", "Employee");
+                },
+                columnEvents: {
+                    full_name: {
+                        click: function (e, value, column, row) {
+                            if (!row || !row.name) return;
+                            window.location.href = `/app/sva-user/${row.name}`;
+                        }
+                    }
                 }
-            }
+            },
         }
     },
     refresh(frm){

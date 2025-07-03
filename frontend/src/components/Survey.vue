@@ -129,12 +129,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="mt-6 flex gap-4">
-                            <button type="submit" :disabled="isSubmitting"
-                                class="w-full md:w-44 bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-md transition duration-200 transform hover:scale-105 disabled:transform-none">
-                                {{ isSubmitting ? 'Submitting...' : 'Submit' }}
-                            </button>
-                        </div> -->
                         <button v-if="hasSubmittedLoaded" type="submit" :disabled="isSubmitting || hasSubmitted"
                             class="w-full md:w-44 bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-md transition duration-200 transform hover:scale-105 disabled:transform-none flex items-center justify-center gap-2 font-poppins">
                             <template v-if="isSubmitting">
@@ -184,7 +178,6 @@ import { toast } from 'vue3-toastify'
 const activeIndex = ref(null)
 const hasSubmitted = ref(false)
 const hasSubmittedLoaded = ref(false)
-
 
 const toggleAccordion = (index) => {
     activeIndex.value = activeIndex.value === index ? null : index
@@ -276,7 +269,6 @@ const validateForm = () => {
             }
         }
     })
-
     return errors
 }
 
@@ -317,12 +309,13 @@ const handleSubmit = async () => {
         }
         isSubmitting.value = false;
 
-    } catch (err) {
+    } catch (err) {                      
+
         console.error("Error submitting form", err);
         setTimeout(() => {
             toast.error('Error submitting form', { autoClose: 2000 });
             isSubmitting.value = false;
-        }, 5000);
+        }, 2000);
     }
 };
 onMounted(async () => {
