@@ -107,14 +107,13 @@ frappe.ui.form.on("Activity", {
                             });
                             d.show()
                         }
+                    },
+                    volunteer: {
+                        click: function (e, value, column,row) {
+                            if (!row || !row.name) return;
+                            window.location.href = `/app/volunteer-activity/${row.name}`;
+                        }
                     }
-                    // volunteer: {
-                    //     click: function (e, value, row, column) {
-                    //         if (!row || !row.name) return;
-                    //         console.log("Volunteer clicked:", value);
-                    //         window.location.href = `/app/volunteer-activity/${row.name}`;
-                    //     }
-                    // }
                 }
             },
             "Activity Volunteer Group": {

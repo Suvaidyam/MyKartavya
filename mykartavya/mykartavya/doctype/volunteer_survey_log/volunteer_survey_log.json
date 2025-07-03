@@ -17,7 +17,8 @@
    "fieldtype": "Link",
    "label": "Survey",
    "options": "Survey",
-   "read_only": 1
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "fieldname": "user",
@@ -25,7 +26,8 @@
    "in_list_view": 1,
    "label": "Volunteer",
    "options": "SVA User",
-   "read_only": 1
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "fieldname": "answers",
@@ -39,13 +41,15 @@
    "in_list_view": 1,
    "label": "Activity",
    "options": "Activity",
-   "read_only": 1
+   "read_only": 1,
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-01 15:17:28.289286",
+ "modified": "2025-07-03 15:46:11.732740",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Survey Log",
