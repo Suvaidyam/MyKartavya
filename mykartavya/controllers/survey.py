@@ -86,3 +86,27 @@ def has_submitted_survey(survey_id):
             "Volunteer Survey Log", {"user": sva_user, "survey_id": survey_id}
         )
     )
+
+
+@frappe.whitelist()
+def get_volunteer_survey_answers(survey_id):
+    email = frappe.session.user
+    sva_user = frappe.get_value("SVA User", {"email": email}, "name")
+    if not sva_user:
+        return {}
+
+    log = frappe.get_doc("Volunteer Survey Log", {"user": sva_user, "survey_id": survey_id})
+    if not log:
+        return {}
+
+    answers = {}
+    for ans in log.answers:
+        # If it's a checkbox, parse the JSON string
+        if ans.question_type == "Check":
+            try:
+                answers[ans.question_id] = json.loads(ans.answer)
+            except Exception:
+                answers[ans.question_id] = []
+        else:
+            answers[ans.question_id] = ans.answer
+    return answers
