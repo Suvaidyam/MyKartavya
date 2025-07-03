@@ -51,6 +51,12 @@ frappe.ui.form.on("Opportunity", {
                         }
                         return value
                     },
+                    volunteer: function (value, column, row) {
+                        if (value) {
+                            value =  `<a href="${frappe.utils.get_form_link('Volunteer Opportunity',row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
+                        }
+                        return value;
+                    }
                 },
                 columnEvents: {
                     action: {
@@ -108,12 +114,6 @@ frappe.ui.form.on("Opportunity", {
                                 }
                             });
                             d.show()
-                        }
-                    },
-                    volunteer: {
-                        click: function (e, value, column, row) {
-                            if (!row || !row.name) return;
-                            window.location.href = `/app/volunteer-opportunity/${row.name}`;
                         }
                     }
                 }

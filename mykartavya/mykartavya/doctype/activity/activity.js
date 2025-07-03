@@ -48,6 +48,12 @@ frappe.ui.form.on("Activity", {
                             return `<span class="badge badge-danger" style="padding:5px;font-size:12px;">${__('Rejected')}</span>`;
                         }
                         return value;
+                    },
+                    volunteer: function (value, column, row) {
+                        if (value) {
+                            value =  `<a href="${frappe.utils.get_form_link('Volunteer Activity',row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
+                        }
+                        return value;
                     }
                 },
                 columnEvents: {
@@ -107,12 +113,6 @@ frappe.ui.form.on("Activity", {
                             });
                             d.show()
                         }
-                    },
-                    volunteer: {
-                        click: function (e, value, column,row) {
-                            if (!row || !row.name) return;
-                            window.location.href = `/app/volunteer-activity/${row.name}`;
-                        }
                     }
                 }
             },
@@ -138,8 +138,18 @@ frappe.ui.form.on("Activity", {
                             dt.form_dialog.set_df_property('volunteer', 'data', group_doc.volunteers);
                         }
                     }
-                }
-            }
+                },
+            },
+            "Survey": {
+                formatter: {
+                    title: function(value, column, row) {
+                        if (value) {
+                            value = `<a href="${frappe.utils.get_form_link('Survey', row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
+                        }
+                        return value;
+                    }
+                },
+            },
         }
     },
     validate: function (frm) {

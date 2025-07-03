@@ -21,5 +21,19 @@ frappe.ui.form.on("Survey", {
            frm.set_value("form_json", JSON.stringify(frm.doc.questions));
            
         }
+    },
+    setup:function(frm) {
+        frm['dt_events'] = {
+            "Survey": {
+                formatter: {
+                    group: function(value, column, row) {
+                        if (value) {
+                            value = `<a href="${frappe.utils.get_form_link('Survey', row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
+                        }
+                        return value;
+                    }
+                },
+            },
+        };
     }
 });
