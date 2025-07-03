@@ -34,7 +34,7 @@
                                 @error="e => e.target.src = 'https://cms.mykartavya.org/assets/images/goal11.jpg'" />
                         </template>
                         <template v-else>
-                            No SDG
+                           <p class="text-sm"> No sdg</p>
                         </template>
                     </div>
                 </div>
