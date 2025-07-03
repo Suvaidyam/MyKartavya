@@ -44,7 +44,6 @@ frappe.query_reports["Volunteer Report"] = {
 	],
 
 	onload: function(report) {
-		// Add custom button for exporting data
 		report.page.add_inner_button(__("Export"), function() {
 			frappe.query_report.export_report();
 		});

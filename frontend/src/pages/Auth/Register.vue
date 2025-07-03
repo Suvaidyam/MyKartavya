@@ -125,10 +125,12 @@ const handleSubmit = async () => {
         pauseOnHover: true,
         draggable: true,
       })
-      router.push({
-        name: 'Verify',
-        query: { email: email.value, full_name: full_name.value },
-      })
+      setTimeout(() => {
+        router.push({
+          name: 'Verify',
+          query: { email: email.value, full_name: full_name.value },
+        })
+      }, 2000)
     } else {
       loading.value = false
       toast.error(response.message, {

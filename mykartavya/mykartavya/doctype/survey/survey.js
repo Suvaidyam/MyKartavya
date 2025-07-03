@@ -3,6 +3,16 @@
 
 frappe.ui.form.on("Survey", {
 	refresh(frm) {
+        let today = frappe.datetime.get_today();
+        frm.set_df_property('deadline_date', 'min_date', today);
+        const formatted_today = new Date(today);
+
+        // Set datepicker minDate for deadline_date
+        if (frm.fields_dict.deadline_date && frm.fields_dict.deadline_date.$input) {
+            $(frm.fields_dict.deadline_date.$input).datepicker({
+                minDate: formatted_today
+            });
+        }
 
 	},
     before_save(frm) {
