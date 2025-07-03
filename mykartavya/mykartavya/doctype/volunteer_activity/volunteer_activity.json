@@ -91,10 +91,9 @@
    "read_only": 1
   },
   {
-   "depends_on": " ",
    "fieldname": "certificate",
    "fieldtype": "Attach",
-   "label": "Certificate",
+   "label": "Certificates",
    "read_only": 1
   },
   {
@@ -149,7 +148,6 @@
   {
    "fieldname": "opportunity_activity",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Opportunity Activity",
    "options": "Opportunity Activity",
    "read_only": 1
@@ -196,7 +194,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-28 14:00:07.294750",
+ "modified": "2025-07-03 19:09:45.164334",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",
