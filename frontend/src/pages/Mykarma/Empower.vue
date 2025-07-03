@@ -106,7 +106,7 @@
             <div v-if="activities?.sdgs" v-for="item in JSON.parse(activities?.sdgs)">
               <img v-if="item?.image" :src="item.image" class="w-8 h-8" />
               <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item?.sdgs_name?.charAt(0)
-              }}</span>
+                }}</span>
             </div>
           </div>
 
@@ -160,23 +160,25 @@
           </div>
         </div>
         <div class="border px-4 py-4 bg-white rounded-md">
-          <p class="text-xl md:text-2xl font-bold font-poppins text-gray-800 tracking-tight pb-2">
-            Survey
-          </p>
+          <h2 class="text-heading4 font-medium font-poppins" style="color: #0b0b0b">
+            {{ surveyData.length > 0 ? 'Survey' : '' }}
+          </h2>
           <template v-if="surveyData.length > 0">
             <Survey v-for="item in surveyData" :key="item.name" :formJson="item.form_json" :title="item.title"
               :surveyId="item.name" :userId="user?.email" :activityId="route.params.name" :deadline="item.deadline" />
           </template>
           <template v-else>
-            <div class="flex flex-col items-center justify-center text-gray-500 pb-10">
-              <!-- Heroicon: Exclamation Circle -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4 text-gray-400" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <div
+              class="flex flex-col items-center justify-center pb-10 bg-orange-50 rounded-lg border border-orange-200 shadow-sm transition-all duration-300 animate-fade-in">
+              <!-- Custom/Colorful Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-4 text-orange-400 animate-bounce-slow"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10" fill="#FFF7ED" />
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M12 9v2m0 4h.01M12 3.75a8.25 8.25 0 100 16.5 8.25 8.25 0 000-16.5z" />
               </svg>
-              <p class="text-lg font-medium">No survey found</p>
-              <p class="text-sm text-gray-400">There are currently no surveys available for this activity.</p>
+              <p class="text-xl font-semibold text-orange-700 mb-1">No survey found</p>
+              <p class="text-base text-orange-500 mb-2">There are currently no surveys available for this activity.</p>
             </div>
           </template>
         </div>
@@ -492,5 +494,37 @@ button {
 
 .button-animation:active {
   transform: translateY(0);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.7s ease;
+}
+
+@keyframes bounce-slow {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s infinite;
 }
 </style>
