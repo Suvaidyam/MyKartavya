@@ -162,7 +162,7 @@
           <div class="bg-white rounded-lg shadow-lg p-6 w-[500px]">
             <div class="flex justify-between items-center border-b pb-2 mb-4">
               <h2 class="text-lg font-semibold">Activity Completion</h2>
-              <button @click="activityReportPopup = false" class="text-gray-500 hover:text-gray-700 button-animation">
+              <button @click="activityReportPopup = false" class="text-gray-500 hover:text-gray-700 button-animation"  style="font-size: 28px;">
                 &times;
               </button>
             </div>
@@ -443,6 +443,17 @@ const submitReport = async () => {
         images: uploadedImages.value,
       },
     });
+    if (res.status === 400) {
+      toast.error(res.error, {
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      loading.value = false;
+      return;
+    }
 
     if (res) {
       activity_log.value.progress = res.com_percent;
@@ -461,6 +472,7 @@ const submitReport = async () => {
       };
       store.refresh_step = true;
     }
+
   } catch (error) {
     loading.value = false;
     toast.error("Something went wrong", {

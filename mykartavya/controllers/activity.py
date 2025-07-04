@@ -442,9 +442,7 @@ class Activity:
     def submit_opportunity_activity_report(name, data):
         try:
             # Validate volunteer
-            volunteer = frappe.db.get_value(
-                "SVA User", {"email": frappe.session.user}, "name"
-            )
+            volunteer = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "name")
             if not volunteer:
                 return {
                     "status": "error",
@@ -454,19 +452,17 @@ class Activity:
 
             # Validate opportunity activity exists
             opportunity_activity = frappe.db.get_value(
-                "Opportunity Activity", 
-                name, 
-                ["name", "activity_name as title", "opportunity"], 
+                "Opportunity Activity", name,
+                ["name", "activity_name as title", "opportunity", "hours"],
                 as_dict=True
             )
             if not opportunity_activity:
                 return {
                     "status": "error",
-                    "error": f"Opportunity Activity '{name}' not found. It may have been deleted or is no longer available.",
+                    "error": f"Opportunity Activity '{name}' not found.",
                     "status_code": 404
                 }
 
-            # Get opportunity from activity
             opportunity = opportunity_activity.opportunity
             if not opportunity:
                 return {
@@ -475,138 +471,130 @@ class Activity:
                     "status_code": 404
                 }
 
-            # Validate Volunteer Opportunity exists and is correctly linked
+            # Validate Volunteer Opportunity exists
             volunteer_opportunity = frappe.db.get_value(
                 "Volunteer Opportunity",
                 {"volunteer": volunteer, "activity": opportunity},
-                ["name", "enrollment_wf_state", "workflow_state"],
+                ["name", "enrollment_wf_state"],
                 as_dict=True
             )
-            
             if not volunteer_opportunity:
                 return {
                     "status": "error",
-                    "error": f"You are not enrolled in the opportunity '{opportunity}'. Please enroll first before submitting reports.",
+                    "error": f"You are not enrolled in opportunity '{opportunity}'.",
                     "status_code": 403
                 }
 
-            # Validate enrollment workflow state
             if volunteer_opportunity.enrollment_wf_state != "Approved":
                 return {
                     "status": "error",
-                    "error": f"Your enrollment in opportunity '{opportunity}' is not approved. Current status: {volunteer_opportunity.enrollment_wf_state}",
+                    "error": f"Your enrollment is not approved. Status: {volunteer_opportunity.enrollment_wf_state}",
                     "status_code": 403
                 }
 
             # Validate required data
-            if not data.get("duration"):
+            submitted_duration = data.get("duration")
+            submitted_percent = data.get("percent")
+
+            if not submitted_duration:
                 return {
                     "status": "error",
-                    "error": "Duration is required. Please specify the time spent on the activity.",
+                    "error": "Duration is required.",
                     "status_code": 400
                 }
-            
-            if not data.get("percent"):
+            if submitted_percent is None:
                 return {
                     "status": "error",
-                    "error": "Completion percentage is required. Please specify how much of the activity you completed.",
+                    "error": "Completion percentage is required.",
+                    "status_code": 400
+                }
+            if submitted_percent < 0 or submitted_percent > 100:
+                return {
+                    "status": "error",
+                    "error": "Completion percentage must be between 0 and 100.",
                     "status_code": 400
                 }
 
-            # Validate percent is positive and not exceeding 100
-            if data.get("percent") < 0:
-                return {
-                    "status": "error",
-                    "error": "Completion percentage cannot be negative.",
-                    "status_code": 400
-                }
-            
-            if data.get("percent") > 100:
-                return {
-                    "status": "error",
-                    "error": "Completion percentage cannot exceed 100%.",
-                    "status_code": 400
-                }
-
-            # Check if log entry exists
+            # Check if log exists
             existing_log = frappe.db.exists(
                 "Volunteer Opportunity Activity Log", 
                 {"volunteer": volunteer, "opportunity_activity": name}
             )
 
             if existing_log:
-                # Update existing log
                 doc = frappe.get_doc("Volunteer Opportunity Activity Log", existing_log)
             else:
-                # Create new log
                 doc = frappe.new_doc("Volunteer Opportunity Activity Log")
                 doc.volunteer = volunteer
                 doc.opportunity_activity = name
                 doc.opportunity = opportunity
 
+            # Combine hours and minutes into total allowed seconds
+            activity_hours = int(opportunity_activity.hours or 0)
+            activity_minutes = int(opportunity_activity.total_minutes or 0)
+            activity_duration = (activity_hours * 3600) + (activity_minutes * 60)
+
+            # Calculate already logged duration
+            total_logged_duration = sum([entry.duration for entry in doc.volunteer_activity_log or []])
+            new_total_duration = total_logged_duration + submitted_duration
+
+            # Validation: Exceeding total allowed duration
+            if new_total_duration > activity_duration:
+                allowed_hrs = activity_duration // 3600
+                allowed_mins = (activity_duration % 3600) // 60
+                submitted_hrs = new_total_duration // 3600
+                submitted_mins = (new_total_duration % 3600) // 60
+
+                return {
+                    "status": "error",
+                    "error": f"Total submitted duration ({submitted_hrs} hrs {submitted_mins} min) exceeds allowed limit ({allowed_hrs} hrs {allowed_mins} min).",
+                    "status_code": 400
+                }
             # Handle image uploads
-            images = data.get("images", [])
-            if images:
-                for image in images:
-                    if not isinstance(image, dict) or not image.get("preview"):
-                        return {
-                            "status": "error",
-                            "error": "Invalid image data format. Please ensure all images are properly uploaded.",
-                            "status_code": 400
-                        }
-                    upload_result = Activity.upload_file(image, doc)
-                    if upload_result.get("status") == "error":
-                        return {
-                            "status": "error",
-                            "error": f"Failed to upload image: {upload_result.get('message')}",
-                            "status_code": 400
-                        }
+            for image in data.get("images", []):
+                if not isinstance(image, dict) or not image.get("preview"):
+                    return {
+                        "status": "error",
+                        "error": "Invalid image data format.",
+                        "status_code": 400
+                    }
+                upload_result = Activity.upload_file(image, doc)
+                if upload_result.get("status") == "error":
+                    return {
+                        "status": "error",
+                        "error": f"Failed to upload image: {upload_result.get('message')}",
+                        "status_code": 400
+                    }
 
-            # Add activity log entry
+            # Add new log entry
             current_date = frappe.utils.now()
-            doc.append(
-                "volunteer_activity_log",
-                {
-                    "date": current_date,
-                    "duration": data.get("duration"),
-                    "percent": data.get("percent"),
-                },
-            )
+            doc.append("volunteer_activity_log", {
+                "date": current_date,
+                "duration": submitted_duration,
+                "percent": submitted_percent,
+            })
 
-            # Update completion percentage
-            current_percent = doc.com_percent or 0
-            new_percent = current_percent + data.get("percent", 0)
-            doc.com_percent = min(new_percent, 100)  # Ensure it doesn't exceed 100%
+            # Update summary fields
+            doc.duration = new_total_duration
+            doc.com_percent = min((doc.com_percent or 0) + submitted_percent, 100)
+            doc.completion_wf_state = "Submitted" if doc.com_percent >= 100 else "Pending"
 
-            # Update total duration
-            current_duration = doc.duration or 0
-            doc.duration = current_duration + data.get("duration", 0)
-
-            # Set completion workflow state
-            if doc.com_percent >= 100:
-                doc.completion_wf_state = "Submitted"
-            else:
-                doc.completion_wf_state = "Pending"
-
-            # Save document
             doc.save(ignore_permissions=True)
-            # frappe.db.commit()
 
-            # Update Volunteer Opportunity Activity child table
+            # Update child table in Volunteer Opportunity
             volunteer_opportunity_doc = frappe.get_doc("Volunteer Opportunity", volunteer_opportunity.name)
-            
-            # Check if activity log entry exists in child table
-            existing_activity = False
+
+            existing_child = False
             for activity in volunteer_opportunity_doc.volunteer_opportunity_activity:
                 if activity.opportunity_activity == name:
-                    existing_activity = True
-                    activity.volunteer_opportunity_activity= doc.name
+                    activity.volunteer_opportunity_activity = doc.name
                     activity.duration = doc.duration
                     activity.percent = doc.com_percent
                     activity.date = current_date
+                    existing_child = True
                     break
-            
-            if not existing_activity:
+
+            if not existing_child:
                 volunteer_opportunity_doc.append("volunteer_opportunity_activity", {
                     "volunteer_opportunity_activity": doc.name,
                     "opportunity_activity": name,
@@ -614,11 +602,12 @@ class Activity:
                     "percent": doc.com_percent,
                     "date": current_date
                 })
+
             volunteer_opportunity_doc.save(ignore_permissions=True)
 
             return {
                 "status": "success",
-                "message": f"Activity report for '{opportunity_activity.title}' submitted successfully. Completion: {doc.com_percent}%",
+                "message": f"Report for '{opportunity_activity.title}' submitted successfully. Completion: {doc.com_percent}%",
                 "data": {
                     "com_percent": doc.com_percent,
                     "duration": doc.duration,
@@ -629,11 +618,11 @@ class Activity:
         except Exception as e:
             frappe.log_error(
                 f"Error in submit_opportunity_activity_report: {str(e)}\nActivity: {name}\nData: {data}",
-                "Activity Report Error"
+                "Opportunity Activity Report Error"
             )
             return {
                 "status": "error",
-                "error": f"An error occurred while submitting the activity report: {str(e)}",
+                "error": f"Internal server error: {str(e)}",
                 "status_code": 500
             }
 
@@ -647,25 +636,54 @@ class Activity:
         )
         if not exists:
             return {"error": "Activity not assigned to the volunteer", "status": 400}
-        doc = frappe.get_doc("Volunteer Activity", exists)
-        images = data.get("images")
-        if len(images):
 
+        doc = frappe.get_doc("Volunteer Activity", exists)
+        activity = frappe.get_doc("Activity", doc.activity)
+
+        submitted_duration = data.get("duration")  # in seconds
+        activity_duration = int(activity.max_hours) * 3600  # convert hours to seconds
+
+        # Calculate total logged duration so far
+        total_logged_duration = sum([entry.duration for entry in doc.volunteer_activity_log or []])
+        new_total_duration = total_logged_duration + submitted_duration
+
+        # Validation: Exceeding total activity hours
+        if new_total_duration > activity_duration:
+            return {
+                "error": f"Total submitted duration ({new_total_duration // 3600} hrs { (new_total_duration % 3600) // 60 } min) cannot exceed required activity hours ({activity.hours} hrs)",
+                "status": 400
+            }
+
+        # Upload files (if any)
+        images = data.get("images")
+        if images:
             for image in images:
                 Activity.upload_file(image, doc)
 
+        # Append the new log entry
         doc.append(
             "volunteer_activity_log",
             {
                 "date": frappe.utils.now(),
-                "duration": data.get("duration"),
+                "duration": submitted_duration,
                 "percent": data.get("percent"),
             },
         )
+
         doc.save(ignore_permissions=True)
         frappe.db.commit()
-        return doc
-    
+
+        # Completion message if fully done
+        if new_total_duration == activity_duration:
+            return {
+                "message": "Activity fully completed! Total duration matches required hours.",
+                "status": 200,
+            }
+
+        return {
+            "message": "Log added successfully.",
+            "status": 200,
+        }
 
     def upload_file(data, doc):
         try:
