@@ -136,6 +136,14 @@ frappe.ui.form.on("Opportunity", {
                         minDate: formatted_today
                     });
                 },
+                formatter: {
+                    activity_name: function (value, column, row) {
+                        if (value) {
+                            value = `<a href="${frappe.utils.get_form_link('Opportunity Activity', row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
+                        }
+                        return value;
+                    }
+                }
             }
         }
     },

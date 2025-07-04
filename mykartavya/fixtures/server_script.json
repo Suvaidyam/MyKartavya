@@ -93,5 +93,43 @@
   "reference_doctype": "Company",
   "script": "if not doc.remarks and doc.workflow_state=='Rejected':\n    doc.workflow_state='Pending Approval'",
   "script_type": "DocType Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Validate",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2025-07-04 18:00:56.303705",
+  "module": "Mykartavya",
+  "name": "Volunteer Activity Workflow Update",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Volunteer Activity",
+  "script": "if not doc.remarks and doc.completion_wf_state=='Rejected':\n    doc.completion_wf_state='Submitted'",
+  "script_type": "DocType Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Validate",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2025-07-04 18:07:34.539019",
+  "module": "Mykartavya",
+  "name": "Volunteer Opportunity Workflow Update",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Volunteer Opportunity",
+  "script": "if not doc.remarks and doc.completion_wf_state=='Rejected':\n    doc.completion_wf_state='Submitted'",
+  "script_type": "DocType Event"
  }
 ]

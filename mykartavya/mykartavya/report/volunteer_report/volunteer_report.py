@@ -29,38 +29,63 @@ def get_columns() -> list[dict]:
 		{"label": _("Portal Activity Status"), "fieldname": "active_status", "fieldtype": "Data", "width": 120},
 	]
 
+
 def get_data(filters: dict | None = None):
 	conditions = []
 	having_conditions = []
 
+	# Base condition: only volunteers
 	conditions.append("su.role_profile = 'Volunteer'")
 
+	# Company filtering based on current user
+	if frappe.session.user != "Administrator":
+		company = frappe.db.get_value("SVA User", {"email": frappe.session.user}, "custom_company")
+		companies = frappe.db.get_list(
+			"User Permission",
+			filters={"user": frappe.session.user, "allow": "Company"},
+			pluck="for_value",
+			limit=100,
+			ignore_permissions=True,
+		)
+
+		# Company condition
+		company_conditions = []
+		if company:
+			company_conditions.append(f"su.custom_company = {frappe.db.escape(company)}")
+		if companies:
+			escaped = ', '.join(f"{frappe.db.escape(c)}" for c in companies)
+			company_conditions.append(f"su.custom_company IN ({escaped})")
+		company_conditions.append("su.custom_company IS NULL OR su.custom_company = ''")
+
+		if company_conditions:
+			conditions.append(f"({ ' OR '.join(company_conditions) })")
+
+	# Apply additional filters
 	if filters:
 		if filters.get("full_name"):
-			full_name = str(filters.get("full_name")).replace("'", "''")
+			full_name = filters["full_name"].replace("'", "''")
 			conditions.append(f"su.full_name LIKE '%{full_name}%'")
 
 		if filters.get("status"):
-			status = str(filters.get("status")).replace("'", "''")
+			status = filters["status"].replace("'", "''")
 			conditions.append(f"su.workflow_state = '{status}'")
 
 		if filters.get("organisation"):
-			org_filter = str(filters.get("organisation")).replace("'", "''")
-			conditions.append(f"(su.custom_company LIKE '%{org_filter}%' OR su.custom_ngo LIKE '%{org_filter}%')")
+			org = filters["organisation"].replace("'", "''")
+			conditions.append(f"(su.custom_company LIKE '%{org}%' OR su.custom_ngo LIKE '%{org}%')")
 
 		if filters.get("gender"):
-			gender = str(filters.get("gender")).replace("'", "''")
+			gender = filters["gender"].replace("'", "''")
 			conditions.append(f"su.custom_gender = '{gender}'")
 
 		if filters.get("skill"):
-			skill = str(filters.get("skill")).replace("'", "''")
+			skill = filters["skill"].replace("'", "''")
 			conditions.append(f"s.name = '{skill}'")
 
 		if filters.get("active_status"):
-			status_filter = filters["active_status"]
-			if status_filter == "Active":
+			if filters["active_status"] == "Active":
 				conditions.append("u.last_login >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)")
-			elif status_filter == "Inactive":
+			else:
 				conditions.append("(u.last_login IS NULL OR u.last_login < DATE_SUB(CURDATE(), INTERVAL 6 MONTH))")
 
 	where_clause = "WHERE " + " AND ".join(conditions) if conditions else ""
@@ -88,20 +113,20 @@ def get_data(filters: dict | None = None):
 				WHEN u.last_login >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH) THEN 'Active'
 				ELSE 'Inactive'
 			END AS active_status
-		FROM `tabSVA User` AS su
-		LEFT JOIN `tabUser` AS u ON u.name = su.email
+		FROM `tabSVA User` su
+		LEFT JOIN `tabUser` u ON u.name = su.email
 		LEFT JOIN (
 			SELECT volunteer, SUM(karma_points) AS total_karma, SUM(duration) AS total_duration
 			FROM `tabVolunteer Activity` 
 			GROUP BY volunteer
-		) AS va ON va.volunteer = su.name
+		) va ON va.volunteer = su.name
 		LEFT JOIN (
 			SELECT volunteer, SUM(karma_points) AS total_karma, SUM(duration) AS total_duration
 			FROM `tabVolunteer Opportunity` 
 			GROUP BY volunteer
-		) AS vo ON vo.volunteer = su.name
-		LEFT JOIN `tabUser Skills Child` AS usc ON usc.parent = su.name
-		LEFT JOIN `tabSkills` AS s ON s.name = usc.skill
+		) vo ON vo.volunteer = su.name
+		LEFT JOIN `tabUser Skills Child` usc ON usc.parent = su.name
+		LEFT JOIN `tabSkills` s ON s.name = usc.skill
 		{where_clause}
 		GROUP BY 
 			su.name,

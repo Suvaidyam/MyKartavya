@@ -114,7 +114,6 @@ class Activity(Document):
          if self.end_date else None
          )
 
-
         if publish_date == today_date:
             if self.workflow_state == "Approved":
                 self.activity_status = "Published"
@@ -123,13 +122,10 @@ class Activity(Document):
                 self.activity_status = "Ongoing"
         elif end_date == today_date:
             self.activity_status = "Ended"
-        else:
-            self.activity_status = "Draft"
 
     def validate_image(self):
         for field in ["activity_image", "reward_image"]:
             image_url = getattr(self, field, None)
-
             if image_url:
                 file_doc = frappe.db.get_value("File", {"file_url": image_url}, ["file_size", "file_name"])
 

@@ -10,7 +10,7 @@
  "idx": 1,
  "is_standard": "Yes",
  "letterhead": null,
- "modified": "2025-07-01 10:13:37.109281",
+ "modified": "2025-07-04 10:05:13.627397",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Report",
@@ -23,16 +23,13 @@
  "report_type": "Script Report",
  "roles": [
   {
-   "role": "Company Admin"
-  },
-  {
    "role": "MyKartvya Admin"
   },
   {
    "role": "NGO Admin"
   },
   {
-   "role": "System Manager"
+   "role": "Company Admin"
   }
  ],
  "timeout": 0

@@ -39,7 +39,6 @@ fixtures=[
     # 'Email Template'
 ]
 
-
 # doc_events = {
 #     "Company": {
 #         "after_insert": "mykartavya.mykartavya.doctype.company.company.after_insert"
@@ -227,7 +226,8 @@ scheduler_events = {
     },
     "daily": [
         "mykartavya.controllers.cron.start_activities",
-        "mykartavya.controllers.cron.send_reporting_reminders"
+        "mykartavya.controllers.cron.send_reporting_reminders",
+        "mykartavya.controllers.cron.send_birthday_activity_email"
     ]
 }
 

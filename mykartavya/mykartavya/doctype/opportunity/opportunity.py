@@ -23,20 +23,7 @@ class Opportunity(Document):
         if self.opportunity_description:
             self.opportunity_description = frappe.utils.strip_html(self.opportunity_description)
 
-        # if self.is_global:
-        #     self.country = None
-        #     self.state = None
-        #     self.city = None
-        #     self.address = None
-
         today_date = today()
-        # publish_date = (
-        #     self.publish_date.strftime("%Y-%m-%d")
-        #     if isinstance(self.publish_date, datetime)
-        #     else str(self.publish_date).split(" ")[0]
-        #     if self.publish_date else None
-        # )
-
         start_date = (
             self.start_date.strftime("%Y-%m-%d")
             if isinstance(self.start_date, datetime)
@@ -56,8 +43,7 @@ class Opportunity(Document):
                 self.opportunity_status = "Published"
         elif end_date <= today_date:
             self.opportunity_status = "Ended"
-        else:
-            self.opportunity_status = "Draft"
+         
 
     def after_insert(doc):
         try:

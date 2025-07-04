@@ -196,6 +196,7 @@
    "fieldtype": "Datetime",
    "in_list_view": 1,
    "label": "Start Date",
+   "read_only_depends_on": "eval:doc.activity_published_date_starts",
    "reqd": 1
   },
   {
@@ -508,7 +509,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-07-01 18:33:32.088343",
+ "modified": "2025-07-04 17:53:29.608944",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Activity",

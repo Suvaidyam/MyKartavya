@@ -65,7 +65,6 @@
   {
    "fieldname": "form_json",
    "fieldtype": "Code",
-   "hidden": 1,
    "label": "Form JSON",
    "options": "JSON"
   },
@@ -80,7 +79,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-03 15:44:30.326650",
+ "modified": "2025-07-04 16:11:35.288146",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Survey",

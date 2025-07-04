@@ -19,7 +19,6 @@ frappe.ui.form.on("Survey", {
         // Ensure the survey is not submitted if it has no questions
         if (frm.doc.questions.length > 0) {
            frm.set_value("form_json", JSON.stringify(frm.doc.questions));
-           
         }
     },
     setup:function(frm) {

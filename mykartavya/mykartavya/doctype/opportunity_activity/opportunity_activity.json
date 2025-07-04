@@ -108,8 +108,9 @@
   {
    "default": "0",
    "fieldname": "total_minutes",
-   "fieldtype": "Int",
+   "fieldtype": "Float",
    "label": "Total Minutes",
+   "non_negative": 1,
    "reqd": 1
   },
   {
@@ -121,8 +122,9 @@
   {
    "default": "0",
    "fieldname": "hours",
-   "fieldtype": "Int",
+   "fieldtype": "Float",
    "label": "Total Hours",
+   "non_negative": 1,
    "reqd": 1
   },
   {
@@ -147,7 +149,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-05-29 17:33:44.018105",
+ "modified": "2025-07-04 18:42:44.911480",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity Activity",

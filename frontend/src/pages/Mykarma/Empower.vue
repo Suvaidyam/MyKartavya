@@ -159,11 +159,11 @@
             <Stepper v-else :activity="activities" :key="'stepper-' + activities?.activity" />
           </div>
         </div>
-        <div class="border px-4 py-4 bg-white rounded-md">
+        <div  v-if="!route.params.activity" class="border px-4 py-4 bg-white rounded-md">
           <h2 class="text-heading4 font-medium font-poppins" style="color: #0b0b0b">
             {{ surveyData.length > 0 ? 'Survey' : '' }}
           </h2>
-          <template v-if="surveyData.length > 0">
+         <template v-if="!route.params.activity && surveyData.length > 0">
             <Survey v-for="item in surveyData" :key="item.name" :formJson="item.form_json" :title="item.title"
               :surveyId="item.name" :userId="user?.email" :activityId="route.params.name" :deadline="item.deadline" />
           </template>
@@ -233,7 +233,6 @@ import {
 } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
 
-
 const icons = [
   {
     name: 'Facebook',
@@ -282,13 +281,10 @@ const svaUserData = ref(null)
 const surveyData = ref([]);
 
 const survey = async () => {
-  console.log('Fetching survey for activity:', route.params.name);
-
   try {
     if (route.params.name) {
-
       const response = await call('mykartavya.controllers.api.get_survey', { name: route?.params?.name });
-      console.log('response', response);
+      // console.log('response', response);
       if (response) {
         surveyData.value = response;
       }
@@ -300,7 +296,6 @@ const survey = async () => {
 }
 
 const activity = async () => {
-
   try {
     if (route.params.activity) {
       const response = await call('mykartavya.controllers.api.opportunity_activity_details', { name: route?.params?.activity });
