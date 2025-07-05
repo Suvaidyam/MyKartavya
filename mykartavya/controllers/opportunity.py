@@ -144,7 +144,7 @@ class Opportunity:
                     opp.opportunity_type as types,
                     opp.start_date as start_date,
                     opp.end_date as end_date,
-                    opp.min_volunteering_time as hours,
+                    opp.hours as hours,
                     opp.opportunity_description as activity_description,
                     opp.opportunity_image as activity_image,
                     opp.need_certificate as need_certificate,
@@ -253,7 +253,7 @@ class Opportunity:
                     opp.opportunity_type as types,
                     opp.start_date as start_date,
                     opp.end_date as end_date,
-                    opp.min_volunteering_time as hours,
+                    opp.hours as hours,
                     opp.opportunity_description as activity_description,
                     opp.opportunity_image as activity_image,
                     opp.need_certificate as need_certificate,
@@ -343,9 +343,9 @@ class Opportunity:
                     if "volunteering_hours" in filter and filter["volunteering_hours"]:
                         sort_order = filter["volunteering_hours"]
                         if sort_order == "Low to High":
-                            order_by_fields.append("opp.min_volunteering_time ASC")
+                            order_by_fields.append("opp.hours ASC")
                         elif sort_order == "High to Low":
-                            order_by_fields.append("opp.min_volunteering_time DESC")
+                            order_by_fields.append("opp.hours DESC")
 
                     if "sdgs" in filter and filter["sdgs"]:
                         sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
@@ -368,7 +368,7 @@ class Opportunity:
                         opp.opportunity_type AS types,
                         opp.start_date AS start_date,
                         opp.end_date AS end_date,
-                        opp.min_volunteering_time AS hours,
+                        opp.hours AS hours,
                         opp.opportunity_description AS activity_description,
                         opp.opportunity_image AS activity_image,
                         opp.need_certificate AS need_certificate,
@@ -487,7 +487,7 @@ class Opportunity:
                     opp.opportunity_type AS types,
                     opp.start_date AS start_date,
                     opp.end_date AS end_date,
-                    opp.min_volunteering_time AS hours,
+                    opp.hours AS hours,
                     opp.opportunity_description AS activity_description,
                     opp.opportunity_image AS activity_image,
                     COALESCE(
@@ -577,7 +577,7 @@ class Opportunity:
                     order_by_clauses.append(
                         "opp.hours ASC"
                         if filter["volunteering_hours"] == "Low to High"
-                        else "opp.min_volunteering_time DESC"
+                        else "opp.hours DESC"
                     )
 
             where_clause = " AND ".join(where_clauses)
@@ -596,7 +596,7 @@ class Opportunity:
                 opp.karma_points as karma_points,
                 opp.start_date as start_date,
                 opp.end_date as end_date,
-                opp.min_volunteering_time as hours,
+                opp.hours as hours,
                 vo.duration as donet_hours,
                 vo.completion_wf_state as completion_wf_state,
                 opp.opportunity_description as activity_description,
