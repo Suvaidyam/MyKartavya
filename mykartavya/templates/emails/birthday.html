@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday - MyKartavya</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f8ff, #e0f7fa);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .logo img {
+            max-width: 180px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .birthday-title {
+            font-size: 26px;
+            font-weight: bold;
+            margin: 20px 0 10px;
+        }
+
+        .birthday-emoji {
+            font-size: 30px;
+            margin: 10px 0;
+            animation: bounce 2s infinite;
+        }
+
+        .content {
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .greeting {
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .user-name {
+            color: #e74c3c;
+            font-size: 22px;
+            font-weight: bold;
+            margin: 5px 0 20px;
+        }
+
+        .birthday-message {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+            margin: 10px 0;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .activity-section {
+            background: #ff69b4;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .activity-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .activity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .activity-list li {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px;
+            margin: 6px 0;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffff00;
+        }
+
+        .cake-emoji {
+            font-size: 36px;
+            margin: 15px 0;
+            animation: bounce 3s infinite;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #636e72, #2d3436);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-message {
+            font-size: 14px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .team-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .balloons {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 25px;
+        }
+
+        .confetti {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+        }
+
+        .special-message {
+            background: #ff69b4;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @media (max-width: 540px) {
+            .container {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png"
+                    alt="MyKartavya Logo" />
+            </div>
+            <div class="birthday-title">Happy Birthday!</div>
+            <div class="birthday-emoji">🎉🎂🎉</div>
+        </div>
+        <div class="content">
+            <div class="greeting">Dear</div>
+            <div class="user-name">{{user_name}}</div>
+
+            <div class="birthday-message">
+                🌟 Today is your special day! We have prepared special activities for you to make your birthday
+                celebration meaningful.
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-title">🎁 Your Special Birthday Activities:</div>
+                <ul class="activity-list">
+                    {{activity_name}}
+                </ul>
+            </div>
+
+            <div class="birthday-message">
+                Thank you for being part of the MyKartavya community!<br />
+                <strong>Have a fantastic birthday! 🎉</strong>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-message">Wishing you a very Happy Birthday!</div>
+            <div class="team-name">❤️ MyKartavya Team ❤️</div>
+        </div>
+    </div>
+</body>
+
+</html>

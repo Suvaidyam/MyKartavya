@@ -25,7 +25,6 @@ frappe.ui.form.on("Activity", {
                         return element
                     },
                     duration: function (value, column, rows) {
-                        console.log(value, 'value');
                         let result = frappe.utils.seconds_to_duration(value, { hide_days: true });
                         value = '0 min'
                         if (result?.hours && result?.minutes) {
@@ -47,6 +46,12 @@ frappe.ui.form.on("Activity", {
                         }
                         if (value === "Rejected") {
                             return `<span class="badge badge-danger" style="padding:5px;font-size:12px;">${__('Rejected')}</span>`;
+                        }
+                        return value;
+                    },
+                    volunteer: function (value, column, row) {
+                        if (value) {
+                            value =  `<a href="${frappe.utils.get_form_link('Volunteer Activity',row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
                         }
                         return value;
                     }
@@ -133,8 +138,18 @@ frappe.ui.form.on("Activity", {
                             dt.form_dialog.set_df_property('volunteer', 'data', group_doc.volunteers);
                         }
                     }
-                }
-            }
+                },
+            },
+            "Survey": {
+                formatter: {
+                    title: function(value, column, row) {
+                        if (value) {
+                            value = `<a href="${frappe.utils.get_form_link('Survey', row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
+                        }
+                        return value;
+                    }
+                },
+            },
         }
     },
     validate: function (frm) {
@@ -149,9 +164,9 @@ frappe.ui.form.on("Activity", {
             frm.image_uploaded = true;
         }
     },
-    onload: function (frm) {
+    onload: async function (frm) {
         if (frm.is_new()) {
-            frappe.call({
+            await frappe.call({
                 method: 'frappe.client.get_value',
                 args: {
                     doctype: 'SVA User',
@@ -163,7 +178,7 @@ frappe.ui.form.on("Activity", {
                         frm.set_value('is_private', 1);
                     }
                     if (response.message.custom_ngo && response.message.role_profile === "NGO Admin") {
-
+                        console.log(response.message.role_profile);
                         frm.set_value('ngo', response.message.custom_ngo);
                         frm.set_df_property('is_private', 'read_only', 1);
                     }

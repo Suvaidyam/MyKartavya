@@ -29,12 +29,16 @@
                 <div class="mt-6">
                     <p class="font-semibold text-sm mb-2">SDGs Covered</p>
                     <div class="flex gap-2">
-                        <img v-for="(img, i) in [ngo.first_priority_goal_image, ngo.second_priority_goal_image, ngo.third_priority_goal_image]"
-                            :key="i" :src="img || 'https://cms.mykartavya.org/assets/images/goal13.jpg'" alt="SDG"
-                            class="h-20 w-auto"
-                            @error="e => e.target.src = 'https://cms.mykartavya.org/assets/images/goal11.jpg'" />
+                        <template v-if="hasAtLeastOneImage">
+                            <img v-for="(img, i) in validImages" :key="i" :src="img" alt="SDG" class="h-20 w-auto"
+                                @error="e => e.target.src = 'https://cms.mykartavya.org/assets/images/goal11.jpg'" />
+                        </template>
+                        <template v-else>
+                           <p class="text-sm"> No sdg</p>
+                        </template>
                     </div>
                 </div>
+
                 <!-- Activity Section -->
             </div>
         </div>
@@ -43,7 +47,8 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Show activities if they exist -->
-            <div v-for="act in activities" :key="act.id" class=" pt-4">
+            <div @click="handleActivityClick(act.name)" v-for="act in activities" :key="act.name"
+                class="pt-4  block cursor-pointer">
                 <div class="flex justify-center items-center">
                     <div class="w-full">
                         <div
@@ -115,7 +120,8 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Show activities if they exist -->
-            <div v-for="opp in opportunities" :key="opp.id" class=" h-auto pt-4">
+            <div @click="handleOpportunityClick(opp.name)" v-for="opp in opportunities" :key="opp.id"
+                class=" h-auto pt-4 cursor-pointer">
                 <div class="flex justify-center items-center">
                     <div class="h-auto w-full">
                         <div
@@ -187,34 +193,66 @@
     </div>
 </template>
 <script setup>
-import { ref, onMounted, inject } from 'vue';
-import { useRoute } from 'vue-router'
+import { ref, onMounted, inject, computed } from 'vue';
+import { useRoute } from 'vue-router';
 import Footer from '@/components/Footer.vue';
-const route = useRoute()
+import { useRouter } from 'vue-router';
+
+const auth = inject('auth');
+const route = useRoute();
 const call = inject('call');
 const ngos = ref([]);
 const formatDate = inject('formatDate');
+
 const activities = ref([]);
 const opportunities = ref([]);
 
+const validImages = computed(() => {
+    const ngo = ngos.value[0] || {};
+    return [
+        ngo.first_priority_goal_image,
+        ngo.second_priority_goal_image,
+        ngo.third_priority_goal_image
+    ].filter(img => !!img);
+});
+
+const hasAtLeastOneImage = computed(() => validImages.value.length > 0);
+
+const router = useRouter();
+
+// You can inject or use localStorage
+const isLoggedIn = auth?.isLoggedIn || localStorage.getItem('sva_user_id');
+
+function handleActivityClick(id) {
+    if (isLoggedIn) {
+        router.push(`/activity/${id}`);
+    } else {
+        router.push(`/kindness-volunteering`);
+    }
+}
+function handleOpportunityClick(id) {
+    if (isLoggedIn) {
+        router.push(`/opportunity/${id}`);
+    } else {
+        router.push(`/kindness-volunteering`);
+    }
+}
 async function get_ngos() {
     try {
         const response = await call('mykartavya.controllers.state.ngo', {
             name: route?.params?.name
         });
         if (response) {
-            console.log('Response  :', response);
-
+            console.log('Response:', response);
             ngos.value = response;
             activities.value = response[0].activities || [];
             opportunities.value = response[0].opportunity || [];
-            console.log('NGOs ', activities.value);
-
         }
     } catch (err) {
         console.error('Error fetching NGOs:', err);
     }
 }
+
 onMounted(() => {
     get_ngos();
 });

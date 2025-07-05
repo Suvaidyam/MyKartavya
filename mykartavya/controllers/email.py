@@ -472,8 +472,20 @@ def register_verify_otp(email, otp, full_name):
             "custom_registration_type":"Self Registered"
         })
         user.insert(ignore_permissions=True, ignore_mandatory=True)
+        if user.email:
+            email_domain = user.email.split('@')[-1].lower()
+        company = frappe.db.get_value("Company", {"company_domain": email_domain}, "name")
+        if company:
+            user.custom_company = company
+            user.append(
+                "table_pdop",
+                {
+                    "module": "Company",
+                    "value": company,
+                }
+            )
+            user.save(ignore_permissions=True)
         frappe.set_user(email)
-
         frappe.local.login_manager.login_as(email)
 
         return {

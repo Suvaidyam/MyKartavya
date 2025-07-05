@@ -204,7 +204,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject, watch, watchEffect,computed } from 'vue'
+import { onMounted, ref, inject, watch, watchEffect, computed } from 'vue'
 import Filters from '@/components/Filters.vue'
 import Sorting from '@/components/Sorting.vue'
 import MyDetails from './MyDetails.vue'
@@ -329,22 +329,42 @@ const volunteering_opportunities = async (filter) => {
 };
 
 const combinedSortedItems = computed(() => {
-  const commitments = current_commitments.value.map(item => ({
-    ...item,
-    doctype: 'Volunteer Activity'
-  }))
-  const opportunities = current_opportunities.value.map(item => ({
-    ...item,
-    doctype: 'Opportunity'
-  }))
+  const commitments = current_commitments.value.map(item => {
+    const hours = parseFloat(item.hours || item.total_hours || item.duration || 0);
+    return { ...item, doctype: 'Volunteer Activity', hours };
+  });
 
-  const combined = [...commitments, ...opportunities]
+  const opportunities = current_opportunities.value.map(item => {
+    const hours = parseFloat(item.hours || item.total_hours || item.duration || 0);
+    return { ...item, doctype: 'Opportunity', hours };
+  });
+
+  const combined = [...commitments, ...opportunities];
+
+  // Sort by Karma Points
+  const karmaSort = store.filters.karma_points;
+  if (karmaSort === 'Low to High') {
+    return combined.sort((a, b) => (a.karma_points || 0) - (b.karma_points || 0));
+  } else if (karmaSort === 'High to Low') {
+    return combined.sort((a, b) => (b.karma_points || 0) - (a.karma_points || 0));
+  }
+
+  // ✅ Sort by Volunteering Hours
+  const hourSort = store.filters.volunteering_hours;
+  if (hourSort === 'Low to High') {
+    return combined.sort((a, b) => (a.hours || 0) - (b.hours || 0));
+  } else if (hourSort === 'High to Low') {
+    return combined.sort((a, b) => (b.hours || 0) - (a.hours || 0));
+  }
+
+  // Default fallback: sort by completion %
   return combined.sort((a, b) => {
-    const aPercent = a.com_percent ?? -1
-    const bPercent = b.com_percent ?? -1
-    return aPercent-bPercent  
-  })
-})
+    const aPercent = a.com_percent ?? -1;
+    const bPercent = b.com_percent ?? -1;
+    return aPercent - bPercent;
+  });
+});
+
 // Add new scroll functions for Available Commitments
 const scrollLeftAvailable = () => {
   if (scrollContainerAvailable.value) {

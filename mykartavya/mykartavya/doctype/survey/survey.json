@@ -8,11 +8,14 @@
  "field_order": [
   "activity",
   "title",
-  "status",
   "column_break_mukx",
   "deadline_date",
   "section_break_honv",
-  "description"
+  "description",
+  "status",
+  "questions_section",
+  "questions",
+  "form_json"
  ],
  "fields": [
   {
@@ -41,25 +44,42 @@
    "options": "Activity"
   },
   {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Status",
-   "options": "Draft\nPublish\nCancel"
-  },
-  {
    "fieldname": "column_break_mukx",
    "fieldtype": "Column Break"
   },
   {
    "fieldname": "section_break_honv",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "questions_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "questions",
+   "fieldtype": "Table",
+   "label": "Questions",
+   "options": "Survey Form Builder",
+   "reqd": 1
+  },
+  {
+   "fieldname": "form_json",
+   "fieldtype": "Code",
+   "label": "Form JSON",
+   "options": "JSON"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nPublished\nCancel"
   }
  ],
  "grid_page_length": 50,
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-29 15:38:37.085830",
+ "modified": "2025-07-04 16:11:35.288146",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Survey",

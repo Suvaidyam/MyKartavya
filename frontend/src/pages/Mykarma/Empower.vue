@@ -132,7 +132,7 @@
     <section class="w-full bg-gray-700">
       <div class="p-6 md:p-10 bg-gray-100">
         <!-- Main Content -->
-        <div class="grid gap-6 lg:grid-cols-3">
+        <div class="grid gap-6 lg:grid-cols-3 pb-4">
           <!-- Left Section -->
           <div class="lg:col-span-2 flex flex-col justify-between items-start">
             <div class="text-[14px] text-[#666666] text-justify font-normal" v-html="activities?.activity_description">
@@ -159,7 +159,29 @@
             <Stepper v-else :activity="activities" :key="'stepper-' + activities?.activity" />
           </div>
         </div>
-
+        <div  v-if="!route.params.activity" class="border px-4 py-4 bg-white rounded-md">
+          <h2 class="text-heading4 font-medium font-poppins" style="color: #0b0b0b">
+            {{ surveyData.length > 0 ? 'Survey' : '' }}
+          </h2>
+         <template v-if="!route.params.activity && surveyData.length > 0">
+            <Survey v-for="item in surveyData" :key="item.name" :formJson="item.form_json" :title="item.title"
+              :surveyId="item.name" :userId="user?.email" :activityId="route.params.name" :deadline="item.deadline" />
+          </template>
+          <template v-else>
+            <div
+              class="flex flex-col items-center justify-center pb-10 bg-orange-50 rounded-lg border border-orange-200 shadow-sm transition-all duration-300 animate-fade-in">
+              <!-- Custom/Colorful Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-4 text-orange-400 animate-bounce-slow"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10" fill="#FFF7ED" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 9v2m0 4h.01M12 3.75a8.25 8.25 0 100 16.5 8.25 8.25 0 000-16.5z" />
+              </svg>
+              <p class="text-xl font-semibold text-orange-700 mb-1">No survey found</p>
+              <p class="text-base text-orange-500 mb-2">There are currently no surveys available for this activity.</p>
+            </div>
+          </template>
+        </div>
         <!-- Related Opportunities -->
         <div class="mt-10">
           <div class="flex justify-between">
@@ -188,6 +210,7 @@
         </div>
       </div>
     </section>
+
   </div>
 </template>
 
@@ -199,6 +222,7 @@ import SubmitFeedback from '../../components/SubmitFeedback.vue'
 import Card from '../../components/Card.vue'
 import NotFound from '../../components/NotFound.vue'
 import ReqForApproval from '../../components/ReqForApproval.vue'
+import Survey from '../../components/Survey.vue'
 // import CardLoader from "../../components/CardLoader.vue";
 import {
   Facebook,
@@ -208,7 +232,6 @@ import {
   Share2,
 } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
-
 
 const icons = [
   {
@@ -255,9 +278,24 @@ const isRightDisabled = ref(false);
 const isUserApproved = ref(false)
 const showReqForApproval = ref(false)
 const svaUserData = ref(null)
+const surveyData = ref([]);
+
+const survey = async () => {
+  try {
+    if (route.params.name) {
+      const response = await call('mykartavya.controllers.api.get_survey', { name: route?.params?.name });
+      // console.log('response', response);
+      if (response) {
+        surveyData.value = response;
+      }
+
+    }
+  } catch (err) {
+    console.error('Error fetching survey data:', err);
+  }
+}
 
 const activity = async () => {
-
   try {
     if (route.params.activity) {
       const response = await call('mykartavya.controllers.api.opportunity_activity_details', { name: route?.params?.activity });
@@ -285,7 +323,7 @@ const relatedOpportunities = async () => {
       sdgs = JSON.parse(sdgs)
     }
     let filter = { sdgs: sdgs?.map(item => item.sdgs_name) }
-    const response = await call('mykartavya.controllers.api.related_opportunities', { filter: filter });
+    const response = await call('mykartavya.controllers.api.public_opportunities', { filter: filter });
     if (response) {
       relatedactivity.value = response
     }
@@ -391,6 +429,7 @@ onMounted(() => {
   onUnmounted(() => {
     resizeObserver.disconnect();
   });
+  survey();
 });
 
 window.addEventListener('resize', () => {
@@ -450,5 +489,37 @@ button {
 
 .button-animation:active {
   transform: translateY(0);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.7s ease;
+}
+
+@keyframes bounce-slow {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s infinite;
 }
 </style>

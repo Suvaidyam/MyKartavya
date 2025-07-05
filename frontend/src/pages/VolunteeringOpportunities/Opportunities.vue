@@ -154,9 +154,7 @@
                   </div>
                 </div>
               </div>
-
               <!-- Volunteer Role -->
-
             </div>
 
             <!-- Right Column - Activities -->
@@ -212,13 +210,12 @@
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
-          <div class="mt-6 bg-white rounded-md p-6">
-            <div class="flex items-center justify-between mb-6">
-              <h2 class="text-lg font-medium px-10">Related Opportunities</h2>
+          <div class="mt-6 bg-white rounded-md p-4">
+            <div class="flex items-center justify-between mb-2">
+              <h2 class="text-lg font-medium ">Related Opportunities</h2>
               <div class="flex items-center gap-2">
                 <button @click="!isLeftDisabled && scrollLeft" :disabled="isLeftDisabled"
                   class="p-3 rounded-xl hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
@@ -301,6 +298,7 @@ const relatedOpportunities = async () => {
     if (response) {
       if (response.length > 0) {
         if (route?.params?.name) {
+          console.log("Filtering opportunities based on route params:", route?.params?.name);
           opportunities.value = response.filter(item => item.name !== route?.params?.name)
           selectedOpportunity.value = response.find(item => item.name === route?.params?.name)
         } else {
