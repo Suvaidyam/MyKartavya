@@ -28,7 +28,7 @@
   "end_date",
   "category_value_section",
   "work_value_points",
-  "min_volunteering_time",
+  "hours",
   "column_break_category",
   "karma_points",
   "is_team_opportunity",
@@ -269,13 +269,6 @@
    "options": "Draft\nPublished\nOngoing\nEnded"
   },
   {
-   "fieldname": "min_volunteering_time",
-   "fieldtype": "Float",
-   "label": "Min Volunteering Time",
-   "non_negative": 1,
-   "reqd": 1
-  },
-  {
    "default": "0",
    "fieldname": "is_team_opportunity",
    "fieldtype": "Check",
@@ -287,13 +280,20 @@
    "label": "Kind of Opportunity",
    "options": "Opportunity Kind",
    "reqd": 1
+  },
+  {
+   "fieldname": "hours",
+   "fieldtype": "Float",
+   "label": "Min Volunteering Time",
+   "non_negative": 1,
+   "reqd": 1
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
  "make_attachments_public": 1,
- "modified": "2025-06-13 14:48:00.688850",
+ "modified": "2025-07-05 11:25:04.345192",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity",
