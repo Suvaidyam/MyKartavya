@@ -55,7 +55,6 @@
                                     <div v-if="fieldErrors[field.name]" class="mt-1 text-sm text-red-600">{{
                                         fieldErrors[field.name] }}</div>
                                 </div>
-
                                 <div v-else-if="field.fieldtype === 'Select'" class=" relative">
                                     <label class="block text-sm font-medium text-gray-700 mb-4">
                                         <span class="font-bold mr-2">{{ idx + 1 }}.</span> <span class="font-bold">{{
@@ -63,26 +62,26 @@
                                             class="text-red-500 ml-1">*</span>
                                     </label>
                                     <div class="relative" :ref="el => dropdownRefs[field.name] = el">
-                                        <button type="button" @click="toggleDropdown(field.name)"
-                                            :class="['form-input', getInputClasses(field), 'bg-white text-left flex items-center justify-between focus:ring-2 focus:ring-orange-400 focus:border-orange-400 hover:border-orange-400 transition-all duration-200 shadow-sm hover:shadow-md']"
-                                            :disabled="hasSubmitted">
-                                            <span :class="formData[field.name] ? 'text-gray-900' : 'text-gray-500'">
-                                                {{ formData[field.name] || `Select ${field.label.toLowerCase()}` }}
-                                            </span>
-                                            <svg :class="['w-5 h-5 text-gray-400 transition-transform duration-200', openDropdowns[field.name] ? 'rotate-180' : '']"
-                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div class="relative">
+                                            <input v-model="formData[field.name]" type="text" :class="[
+                                                'form-input w-full pr-10 cursor-pointer', // `pr-10` adds space for the icon
+                                                getInputClasses(field)
+                                            ]" @click="toggleDropdown(field.name)" :required="isRequired(field)" :readonly="hasSubmitted" />
+
+                                            <svg :class="[
+                                                'w-4 h-4 text-gray-400 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none transition-transform duration-200',
+                                                openDropdowns[field.name] ? 'rotate-180' : ''
+                                            ]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M19 9l-7 7-7-7" />
                                             </svg>
-                                        </button>
+                                        </div>
+
                                         <teleport to="body">
                                             <div v-show="openDropdowns[field.name]"
                                                 :style="getDropdownStyle(field.name)"
-                                                class="absolute z-50 w-72 md:w-96 mt-1 bg-white border border-gray-300 rounded-md shadow-xl max-h-60 overflow-auto animate-slideDown">
-                                                <div @click="selectOption(field.name, '')"
-                                                    class="px-3 py-2 text-gray-500 hover:bg-gray-100 cursor-pointer border-b border-gray-200">
-                                                    Select {{ field.label.toLowerCase() }}
-                                                </div>
+                                                class="absolute z-50 w-72 md:w-96 mt-1 bg-white border border-gray-300 rounded-md shadow-xl max-h-40 overflow-auto animate-slideDown">
+
                                                 <div v-for="option in getSelectOptions(field.options)" :key="option"
                                                     @click="selectOption(field.name, option)" :class="[
                                                         'px-3 py-2 cursor-pointer hover:bg-orange-50 flex items-center justify-between transition-all',
@@ -309,7 +308,7 @@ const handleSubmit = async () => {
         }
         isSubmitting.value = false;
 
-    } catch (err) {                      
+    } catch (err) {
 
         console.error("Error submitting form", err);
         setTimeout(() => {

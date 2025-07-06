@@ -283,7 +283,7 @@ const surveyData = ref([]);
 const survey = async () => {
   try {
     if (route.params.name) {
-      const response = await call('mykartavya.controllers.api.get_survey', { name: route?.params?.name });
+      const response = await call('mykartavya.controllers.survey.get_survey', { name: route?.params?.name });
       // console.log('response', response);
       if (response) {
         surveyData.value = response;
