@@ -9,13 +9,13 @@
   "doctype_event": "After Save",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2025-07-03 11:06:33.931739",
+  "modified": "2025-07-06 13:04:37.532927",
   "module": "Mykartavya",
   "name": "Sva User",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "SVA User",
-  "script": "if doc.custom_volunteer_type in [\"Employee\", \"NGO Member\"]:\n    frappe.db.set_value(\"SVA User\", doc.name, \"workflow_state\", \"Approved\")",
+  "script": "if doc.custom_volunteer_type in [\"Employee\", \"NGO Member\"]:\n    frappe.db.set_value(\"SVA User\", doc.name, \"workflow_state\", \"Approved\")\nif doc.email:\n    email_domain = doc.email.split('@')[-1].lower()\n    \n    # Company domain match\n    company = frappe.db.get_value(\"Company\", {\"company_domain\": email_domain}, \"name\")\n    \n    if company:\n        doc.db_set(\"custom_company\", company)\n        doc.custom_company = company\n        doc.append(\"table_pdop\", {\n            \"module\": \"Company\",\n            \"value\": company,\n        })\n",
   "script_type": "DocType Event"
  },
  {
