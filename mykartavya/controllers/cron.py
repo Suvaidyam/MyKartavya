@@ -225,15 +225,18 @@ def send_birthday_activity_email():
         print("Activities for", birthday["name"], ":", activities)
 
         if not activities:
-            print("No activities found, skipping email for", birthday["name1"])
             continue
-
-        # Use only the first activity
-        first_activity = activities[0]
 
         context = {
             "user_name": birthday["name1"],
-            "activity_name": first_activity["title"]
+            "activities": [
+                {
+                    "name": activity["name"],  
+                    "title": activity["title"],   
+                }
+                for activity in activities
+            ],
+            "base_url": frappe.get_conf().get("hostname"),
         }
 
         try:
@@ -246,12 +249,13 @@ def send_birthday_activity_email():
                 recipients=[birthday["email_id"]],
                 subject="🎉 A Special Birthday Activity Just for You!",
                 message=message,
-                now=True
+                now=True,
             )
         except Exception as e:
             frappe.log_error(
                 title="Birthday Email Error", message=frappe.get_traceback()
             )
+
 @frappe.whitelist()
 def get_activities_for_birthdays(birthday_name):
     birthday_doc = frappe.get_doc("Birthdays", birthday_name)
