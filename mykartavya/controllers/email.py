@@ -52,7 +52,7 @@ def send_otp(email):
             raise OTPError(_("No user found with this email address"))
 
         if user_data.status == "Inactive":
-            raise OTPError(_("Your account is inactive. Please contact support."))
+            raise OTPError(_("Your account is inactive, please contact MyKartavya admin for further support."))
 
         # Check previous attempts
         attempts_key = get_attempt_cache_key(email)

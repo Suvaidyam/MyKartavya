@@ -25,9 +25,7 @@
   {
    "fieldname": "email_id",
    "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Email ID",
-   "read_only": 1,
+   "label": "Email",
    "reqd": 1,
    "unique": 1
   },
@@ -59,7 +57,7 @@
   {
    "fieldname": "choose_sdgs",
    "fieldtype": "Table MultiSelect",
-   "label": "Choose SDG's",
+   "label": "Choosen SDGs",
    "options": "SDGs Child",
    "read_only": 1
   }
@@ -68,7 +66,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-04 17:49:35.600145",
+ "modified": "2025-07-08 19:03:09.396206",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Birthdays",
@@ -103,5 +101,6 @@
  "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "email_id"
 }
