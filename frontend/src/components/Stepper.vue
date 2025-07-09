@@ -162,7 +162,8 @@
           <div class="bg-white rounded-lg shadow-lg p-6 w-[500px]">
             <div class="flex justify-between items-center border-b pb-2 mb-4">
               <h2 class="text-lg font-semibold">Activity Completion</h2>
-              <button @click="activityReportPopup = false" class="text-gray-500 hover:text-gray-700 button-animation"  style="font-size: 28px;">
+              <button @click="activityReportPopup = false" class="text-gray-500 hover:text-gray-700 button-animation"
+                style="font-size: 28px;">
                 &times;
               </button>
             </div>
@@ -274,6 +275,7 @@ const store = inject('store')
 const socket = inject('socket')
 const route = useRoute()
 const router = useRouter()
+const stepRejected = ref(false)
 const feedback = ref({
   rating: null,
   comments: '',
@@ -349,7 +351,6 @@ const nextStep = async (index) => {
         return
       }
       const res = await call('mykartavya.controllers.api.act_now', {
-
         activity: activityId,
         volunteer: auth.cookie.user_id
       })
@@ -577,7 +578,14 @@ watch(() => props.activity, (newVal, oldVal) => {
       steps.value[2].completed = true
       steps.value[3].completed = true
       currentStep.value = 4
+    } else if (newVal.completion_wf_state == 'Rejected') {
+      steps.value[0].completed = true;
+      steps.value[1].completed = false;
+      steps.value[1].button = 'Request Resubmission';
+      currentStep.value = 1;
+      stepRejected.value = true; 
     }
+
   }
 }, { immediate: true, deep: true })
 watch(() => activity_log.value.progress, (newVal, oldVal) => {
