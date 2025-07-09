@@ -4,17 +4,12 @@ from mykartavya.controllers.activity import Activity
 from mykartavya.controllers.filter import Filters
 from mykartavya.controllers.profile import Profile
 from mykartavya.controllers.opportunity import Opportunity
-from mykartavya.controllers.survey import survey
 from frappe.utils import validate_email_address
 from frappe.utils.pdf import get_pdf
 from frappe.utils.file_manager import save_file
 import frappe
 from frappe.utils.pdf import get_pdf
 
-
-@frappe.whitelist(allow_guest=True)
-def get_survey(name):  
-    return survey(name) 
 
 @frappe.whitelist(allow_guest=True)
 def get_opportunity_activity(opportunity):

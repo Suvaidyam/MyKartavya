@@ -200,7 +200,17 @@
             <div class="activity-section">
                 <div class="activity-title">🎁 Your Special Birthday Activities:</div>
                 <ul class="activity-list">
-                    {{activity_name}}
+                    <ul class="activity-list">
+                        {% for activity in activities %}
+                        <li>
+                            <a href="{{base_url}}/frontend/kindness-volunteering/{{ activity.name }}"
+                                style="color: #ffff00; text-decoration: none;">
+                                {{ activity.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+
                 </ul>
             </div>
 

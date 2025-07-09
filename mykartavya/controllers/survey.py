@@ -3,7 +3,8 @@ from frappe import _
 import json
 from frappe.utils import nowdate
 
-def survey(name):
+@frappe.whitelist(allow_guest=True)
+def get_survey(name):
     today = nowdate()
     survey_list = frappe.get_all(
         "Survey",
@@ -15,7 +16,6 @@ def survey(name):
         fields=["name", "title", "description", "deadline_date", "status", "form_json"],
     )
     return survey_list
-
 
 @frappe.whitelist()
 def submit_volunteer_survey():

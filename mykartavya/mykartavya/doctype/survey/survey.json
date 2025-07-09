@@ -65,6 +65,7 @@
   {
    "fieldname": "form_json",
    "fieldtype": "Code",
+   "hidden": 1,
    "label": "Form JSON",
    "options": "JSON"
   },
@@ -72,14 +73,14 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Draft\nPublished\nCancel"
+   "options": "Draft\nPublished"
   }
  ],
  "grid_page_length": 50,
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-04 16:11:35.288146",
+ "modified": "2025-07-08 14:53:55.151491",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Survey",
