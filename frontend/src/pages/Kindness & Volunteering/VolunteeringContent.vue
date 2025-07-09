@@ -144,7 +144,7 @@ const generateRandom = async () => {
 const relatedOpportunities = async (filter) => {
   try {
     const response = await call(
-      'mykartavya.controllers.api.public_opportunities',
+      'mykartavya.controllers.api.ava_opportunities',
       {
         filter: filter ?? {},
       } 
