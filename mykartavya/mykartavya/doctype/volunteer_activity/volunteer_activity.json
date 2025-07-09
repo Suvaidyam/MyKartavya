@@ -26,6 +26,7 @@
   "volunteer_activity_log",
   "rating",
   "remarks",
+  "rejection",
   "section_break_fpdd",
   "activity_name",
   "email",
@@ -189,12 +190,18 @@
    "fieldname": "volunteer_name",
    "fieldtype": "Data",
    "label": "Volunteer Name"
+  },
+  {
+   "fieldname": "rejection",
+   "fieldtype": "Small Text",
+   "label": "Rejection Reason",
+   "read_only": 1
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-03 19:09:45.164334",
+ "modified": "2025-07-09 19:24:37.223649",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",

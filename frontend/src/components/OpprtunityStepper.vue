@@ -44,8 +44,7 @@
                                         fill="white" />
                                 </svg>
                             </div>
-
-                            <!-- Opportunity Report Icon -->
+                                <!-- Opportunity Report Icon -->
                             <div v-if="step.title == 'Opportunity Report'"
                                 class="w-4 h-4 flex items-center justify-center">
                                 <svg width="19" height="19" viewBox="0 0 19 19" fill="none"
@@ -259,6 +258,15 @@ const nextStep = async (index) => {
 
     try {
         if (index == 0) {
+            if (!auth?.isLoggedIn) {
+                toast.info("Please login to request approval.", {
+                    autoClose: 2000,  
+                });
+                setTimeout(() => {
+                    router.push('/login');
+                }, 3000);
+                return;
+            }
             const activityId = route?.params?.activity || route?.params?.name;
             if (!activityId) {
                 toast.error("Activity ID not found", {
@@ -286,9 +294,9 @@ const nextStep = async (index) => {
                     pauseOnHover: true,
                     draggable: true,
                 });
-            } else if (res?.status == 201) {
-                showReqForApproval.value = true;
-                return;
+            // } else if (res?.status == 201) {
+            //     showReqForApproval.value = true;
+            //     return;
             } else {
                 toast.error(res?.msg || "Something went wrong", {
                     autoClose: 2000,
@@ -325,8 +333,7 @@ const nextStep = async (index) => {
             } else if (props.activity.workflow_state == 'Approved' && props.activity.completion_wf_state == 'Approved') {
                 steps.value[index].completed = true;
                 currentStep.value = Math.max(currentStep.value, 4);
-            }
-            else {
+            } else {
                 toast.error("You must complete the activity!", {
                     autoClose: 2000,
                     hideProgressBar: false,
@@ -438,11 +445,11 @@ const viewCertificate = async () => {
 
 
 const emojis = ref([
-    { icon: '😞', label: 0.2 },
-    { icon: '😐', label: 0.4 },
-    { icon: '😊', label: 0.6 },
-    { icon: '🙂', label: 0.8 },
-    { icon: '😀', label: 1 },
+    { icon: '😞', label: 1 },
+    { icon: '😐', label: 2 },
+    { icon: '😊', label: 3 },
+    { icon: '🙂', label: 4 },
+    { icon: '😀', label: 5 },
 ]);
 
 watch(() => props.activity, (newVal, oldVal) => {
@@ -486,15 +493,58 @@ watch(() => showKarmaPopup.value, (newValue) => {
 </script>
 
 <style scoped>
-.button-animation {
-    transition: all 0.2s ease-in-out;
+.border-l {
+  border-color: #E5E7EB;
 }
 
-.button-animation:hover {
-    transform: translateY(-2px);
+.step-button {
+  background-color: #FF5722;
+  height: 28px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.button-animation {
+  transition: all 0.2s ease;
 }
 
 .button-animation:active {
-    transform: translateY(0);
+  transform: scale(0.95);
 }
+
+.button-animation:active .w-4 {
+  transform: rotate(180deg);
+}
+
+.button-animation:disabled {
+  transform: none;
+  cursor: not-allowed;
+}
+
+.refresh-button {
+  transition: transform 0.2s ease;
+}
+
+.refresh-button:active {
+  transform: scale(0.95);
+}
+
+.refresh-button .w-4 {
+  transition: transform 0.3s ease;
+}
+
+.refresh-button:active .w-4 {
+  transform: rotate(180deg);
+}
+
 </style>
