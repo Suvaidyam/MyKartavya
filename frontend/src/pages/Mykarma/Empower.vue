@@ -44,7 +44,7 @@
               <h3 class="text-sm font-medium text-red-800">Rejection Reason</h3>
               <span class="text-xs text-red-600 bg-red-100 px-2 py-0.5 rounded-full">Account Rejected</span>
             </div>
-            <p class="text-sm text-red-700 mt-1 line-clamp-2">{{ svaUserData.custom_remarks }}</p>
+            <p class="text-sm text-red-700 mt-1 line-clamp-2">{{ svaUserData.custom_remark }}</p>
           </div>
         </div>
       </div>
@@ -106,7 +106,7 @@
             <div v-if="activities?.sdgs" v-for="item in JSON.parse(activities?.sdgs)">
               <img v-if="item?.image" :src="item.image" class="w-8 h-8" />
               <span v-else class="w-8 h-8 flex items-center justify-center bg-gray-50">{{ item?.sdgs_name?.charAt(0)
-                }}</span>
+              }}</span>
             </div>
           </div>
 
@@ -129,8 +129,16 @@
     </section>
     <!-- banner section image end -->
     <!-- main section start  -->
+    <div class="bg-gray-100 px-4 md:px-10 p-4">
+      <div v-if="auth.isLoggedIn && activities?.completion_wf_state == 'Rejected'" class="w-full bg-red-50/50 ">
+        <div class="reason-box">
+          <strong>Reason for Rejection:</strong>
+          {{ activities?.remarks }}
+        </div>
+      </div>
+    </div>
     <section class="w-full bg-gray-700">
-      <div class="p-6 md:p-10 bg-gray-100">
+      <div class="px-6 md:p-10 bg-gray-100">
         <!-- Main Content -->
         <div class="grid gap-6 lg:grid-cols-3 pb-4">
           <!-- Left Section -->
@@ -159,11 +167,11 @@
             <Stepper v-else :activity="activities" :key="'stepper-' + activities?.activity" />
           </div>
         </div>
-        <div  v-if="surveyData.length > 0" class="border px-4 py-4 bg-white rounded-md">
+        <div v-if="surveyData.length > 0" class="border px-4 py-4 bg-white rounded-md">
           <h2 class="text-heading4 font-medium font-poppins" style="color: #0b0b0b">
             {{ surveyData.length > 0 ? 'Survey' : '' }}
           </h2>
-         <template v-if="!route.params.activity && surveyData.length > 0">
+          <template v-if="!route.params.activity && surveyData.length > 0">
             <Survey v-for="item in surveyData" :key="item.name" :formJson="item.form_json" :title="item.title"
               :surveyId="item.name" :userId="user?.email" :activityId="route.params.name" :deadline="item.deadline" />
           </template>
@@ -231,7 +239,7 @@ import {
   Share2,
 } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
-
+const auth = inject('auth');
 const icons = [
   {
     name: 'Facebook',
@@ -461,6 +469,21 @@ watch(() => showReqForApproval, (newVal) => {
 /* @import "@fortawesome/fontawesome-free/css/all.min.css"; */
 </style>
 <style scoped>
+.reason-box {
+  background-color: #fff3f3;
+  border-left: 5px solid #e74c3c;
+  padding: 15px 20px;
+  margin: 10px 0;
+  border-radius: 6px;
+}
+
+.reason-box strong {
+  color: #c0392b;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
 .back-img {
   background-repeat: no-repeat;
   background-size: cover;

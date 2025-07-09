@@ -47,7 +47,7 @@
                             <input v-model="allType" type="checkbox"
                                 class="rounded-sm focus:ring-[#E86C13] h-4 w-4 min-w-4 max-h-4 focus:ring-0 checked:focus:bg-secondary checked:hover:bg-secondary checked:bg-secondary"
                                 id="both-activity_type">
-                            <label class="text-[12px] font-normal" for="both-activity_type">Both</label>
+                            <label class="text-[12px] font-normal cursor-pointer" for="both-activity_type">Both</label>
                         </div>
                     </div>
                 </div>

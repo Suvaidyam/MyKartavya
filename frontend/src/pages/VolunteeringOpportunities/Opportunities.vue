@@ -47,7 +47,7 @@
               <h3 class="text-sm font-medium text-red-800">Rejection Reason</h3>
               <span class="text-xs text-red-600 bg-red-100 px-2 py-0.5 rounded-full">Account Rejected</span>
             </div>
-            <p class="text-sm text-red-700 mt-1 line-clamp-2">{{ svaUserData.custom_remarks }}</p>
+            <p class="text-sm text-red-700 mt-1 line-clamp-2">{{ svaUserData.custom_remark }}</p>
           </div>
         </div>
       </div>
@@ -137,24 +137,24 @@
                       </div>
                     </div>
                   </div>
-
-                  <div v-if="auth?.isLoggedIn" class=" ">
-                    <div class="border "></div>
-                    <div class="">
+                  <div class="">
+                    <!-- Stepper Component -->
+                    <div class="border"></div>
+                    <div>
                       <Stepper :activity="selectedOpportunity" :key="selectedOpportunity?.activity" />
                     </div>
                   </div>
-                  <div v-else class="flex h-full justify-end">
+
+                  <!-- <div v-else class="flex h-full justify-end">
                     <router-link to="/login">
                       <button
                         class="h-[28px] uppercase px-3 rounded-sm text-caption font-medium text-white ml-6 bg-[#FF5722] button-animation">
                         ACT NOW
                       </button>
                     </router-link>
-                  </div>
+                  </div> -->
                 </div>
               </div>
-              <!-- Volunteer Role -->
             </div>
 
             <!-- Right Column - Activities -->
@@ -177,7 +177,14 @@
                   <NotFound />
                 </div>
               </div>
-
+              <div
+                v-if="auth?.isLoggedIn && selectedOpportunity?.workflow_state === 'Approved' && selectedOpportunity?.completion_wf_state === 'Rejected'"
+                class="w-full bg-red-50/50">
+                <div class="reason-box">
+                  <strong>Reason for Rejection:</strong>
+                  {{ selectedOpportunity?.remarks || "oijjjjjjjjjjjj" }}
+                </div>
+              </div>
               <!-- Related Opportunities -->
               <div class="bg-white rounded-md mt-6 p-6 h-[600px] flex flex-col">
                 <h2 class="text-lg font-medium mb-4">Volunteer Role</h2>
@@ -362,7 +369,16 @@ const opportunitiesActivity = async () => {
     opportunitiesActivities.value = [];
   }
 }
-
+const test = async () => {
+  try {
+    const response = await call('mykartavya.controllers.api.act_now_opp', {
+      opportunity: route?.params?.name
+    });
+    console.log('Test API response:', response);
+  } catch (err) {
+    console.error('Error in test API:', err);
+  }
+}
 // Handle card click to update route without refresh
 const handleCardClick = (item) => {
   if (item.name !== route.params.name) {
@@ -522,6 +538,21 @@ const shareToSocial = (platform) => {
 </script>
 
 <style scoped>
+.reason-box {
+  background-color: #fff3f3;
+  border-left: 5px solid #e74c3c;
+  padding: 15px 20px;
+  margin: 10px 0;
+  border-radius: 6px;
+}
+
+.reason-box strong {
+  color: #c0392b;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
 .back-img {
   background-repeat: no-repeat;
   background-size: cover;

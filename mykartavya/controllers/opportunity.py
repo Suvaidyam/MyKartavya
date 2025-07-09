@@ -431,6 +431,7 @@ class Opportunity:
         opp = frappe.get_list(
             "Volunteer Opportunity",
             filters={"activity": activity, "volunteer": volunteer},
+            fields=["completion_wf_state"],
             pluck="name",
         )
         if opp:
