@@ -6,10 +6,63 @@ frappe.ui.form.on("Company", {
             "SVA User": {
                 "after_render": (dt, mode) => {
                     let form_dialog = dt.form_dialog;
+                    // Set default volunteer type
                     form_dialog.set_value("custom_volunteer_type", "Employee");
+                    // Set max date to today and limit DOB to users 18+ years
+                    let today = new Date();
+                    let min_date = new Date();
+                    min_date.setFullYear(today.getFullYear() - 18);
+
+                    // Set max date for datepicker field
+                    dt.form_dialog.set_df_property(
+                        'custom_date_of_birth',
+                        'max_date',
+                        frappe.datetime.obj_to_str(today)
+                    );
+
+                    // jQuery datepicker settings
+                    $(dt.form_dialog.fields_dict.custom_date_of_birth.$input).datepicker({
+                        maxDate: today,
+                        yearRange: '-100:+0'
+                    });
                 },
-                formatter:{
-                    full_name:function(value, column, row) {
+                custom_date_of_birth: function (dt) {
+                    let raw_dob = dt.form_dialog.get_value('custom_date_of_birth');
+                    if (raw_dob) {
+                        let dob = new Date(raw_dob);
+                        let today = new Date();
+                        let min_date = new Date();
+                        min_date.setFullYear(today.getFullYear() - 18);
+
+                        if (dob > today) {
+                            frappe.show_alert({
+                                message: 'Date of birth cannot be in the future.',
+                                indicator: 'red'
+                            });
+                            dt.form_dialog.set_value('custom_date_of_birth', '');
+                        } else if (dob > min_date) {
+                            frappe.show_alert({
+                                message: 'User must be at least 18 years old.',
+                                indicator: 'red'
+                            });
+                            dt.form_dialog.set_value('custom_date_of_birth', '');
+                        }
+                    }
+                },
+                custom_phone_number: function (dt) {
+                    let phone = dt.form_dialog.get_value('custom_phone_number');
+                    if (phone) {
+                        const digits = phone.replace(/\D/g, '');  
+                        if (digits.length > 12) {
+                            frappe.show_alert({
+                                message: `Phone number should not exceed 10 digits.`,
+                                indicator: 'red'
+                            });
+                        }
+                    }
+                },
+                formatter: {
+                    full_name: function (value, column, row) {
                         if (value) {
                             value = `<a href="${frappe.utils.get_form_link('SVA User', row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
                         }
