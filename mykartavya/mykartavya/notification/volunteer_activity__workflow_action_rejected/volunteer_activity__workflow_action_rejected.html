@@ -15,24 +15,27 @@
       max-width: 520px;
       margin: auto;
       background: #ffffff;
-      padding: 20px 25px;
-      text-align: center;
+      padding: 25px 30px;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
-    .logo img {
-      max-width: 250px;
+    .main-logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .main-logo img {
+      max-width: 220px;
       height: auto;
     }
     .greeting,
     .message,
     .activity-name,
-    .reason,
-    .closing,
-    .team-signature {
-      color: #374151;
-      font-size: 16px;
-      margin: 6px 0;
+    .reason
+     {
+      font-size: 15px;
+      color: #555;
+      margin: 5px 0;
       line-height: 1.6;
     }
     .greeting strong {
@@ -40,8 +43,8 @@
     }
     .activity-name {
       font-weight: 600;
-      color: #111827;
-      font-size: 18px;
+      color: #1f2937;
+      font-size: 17px;
       margin-top: 5px;
     }
     .rejected {
@@ -52,16 +55,34 @@
       color: #991b1b;
       font-style: italic;
     }
-    .closing, .team-signature {
+    
+    
+    .closing,
+    .team-signature {
       color: #6b7280;
       font-size: 14px;
-      margin-top: 5px;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .reason-box {
+      background-color: #fff1f2;
+      border-left: 4px solid #dc2626;
+      padding: 15px 20px;
+      margin: 15px 0;
+      border-radius: 6px;
+      word-break: break-word;
+    }
+    .reason-box strong {
+      color: #b91c1c;
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="logo">
+    <div class="main-logo">
       <img src="https://res.cloudinary.com/dyt5jqnax/image/upload/v1742533366/mykartavya-logo_jptv31.png" alt="MyKartavya Logo" />
     </div>
 
@@ -70,15 +91,24 @@
     </div>
 
     <div class="message">
-      We regret to inform you that your application has been
-      <span class="rejected">rejected</span> for the following activity:
+      Thank you for applying to participate in the following activity:
     </div>
 
     <div class="activity-name">
       {{ doc.activity_name }}
     </div>
+
     <div class="message">
-      We appreciate your interest and encourage you to apply for other upcoming activities on MyKartavya.
+      After careful review, we regret to inform you that your application has been <span class="rejected">rejected</span>.
+    </div>
+
+    <div class="reason-box">
+      <strong>Reason for Rejection:</strong>
+      {{ doc.rejection }}
+    </div>
+
+    <div class="message">
+      We truly value your interest and encourage you to explore and apply for other upcoming opportunities on MyKartavya.
     </div>
 
     <div class="closing">

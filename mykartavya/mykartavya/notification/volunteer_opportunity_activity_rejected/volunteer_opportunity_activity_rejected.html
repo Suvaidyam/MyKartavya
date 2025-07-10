@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Application Rejected - MyKartavya</title>
+  <title>Opportunity Application Rejected - MyKartavya</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,53 +11,86 @@
       padding: 20px;
       background-color: #f9fafb;
     }
+
     .container {
       max-width: 520px;
       margin: auto;
       background: #ffffff;
-      padding: 20px 25px;
-      text-align: center;
+      padding: 25px 30px;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
     .logo img {
-      max-width: 250px;
+      max-width: 220px;
       height: auto;
     }
-    
-    .message,
-    .activity-name,
-    .reason,
-    .closing,
-    .team-signature {
-        font-size: 13px;
-      color: #555;
-      margin: 10px 0;
-      letter-spacing: 0.3px;  
-      line-height: 1.4;
-      text-align: center;
+
+    .greeting {
+      font-size: 14px;
+      color: #333;
+      margin: 12px 0;
     }
+
     .greeting strong {
       color: #111827;
     }
+
+    .message,
+    .activity-name,
+    .reason-box,
+    .closing,
+    .team-signature {
+      font-size: 14px;
+      color: #555;
+      margin: 10px 0;
+      letter-spacing: 0.3px;
+      line-height: 1.5;
+    }
+
     .activity-name {
       font-weight: 600;
       color: #111827;
-      font-size: 18px;
+      font-size: 16px;
       margin-top: 5px;
     }
+
     .rejected {
       color: #dc2626;
       font-weight: 600;
     }
-    .reason {
+
+    .reason-box {
+      background-color: #fff3f3;
+      border-left: 4px solid #e74c3c;
+      padding: 12px 16px;
+      border-radius: 6px;
       color: #991b1b;
       font-style: italic;
+      word-break:break-word;
     }
-    .closing, .team-signature {
+
+    .closing,
+    .team-signature {
       color: #6b7280;
-      font-size: 14px;
-      margin-top: 5px;
+      font-size: 13px;
+      margin-top: 8px;
+      text-align:center;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      .logo img {
+        max-width: 180px;
+      }
     }
   </style>
 </head>
@@ -72,20 +105,19 @@
     </div>
 
     <div class="message">
-      We regret to inform you that your application has been
-      <span class="rejected">rejected</span> for the following activity:
+      Thank you for showing interest in the following opportunity:<span  class="activity-name">  {{ doc.opportunity_name }}</span>
+    </div>
+    <div class="message">
+      After careful review, we regret to inform you that your application for this opportunity has been
+      <span class="rejected">rejected</span>.
     </div>
 
-    <div class="activity-name">
-      {{ doc.opportunity_name }}
-    </div>
-
-    <div class="reason">
+    <div class="reason-box">
       Reason: {{ doc.remarks }}
     </div>
 
     <div class="message">
-      We appreciate your interest and encourage you to apply for other upcoming activities on MyKartavya.
+      We truly appreciate your time and effort, and we encourage you to explore other volunteering opportunities available on MyKartavya.
     </div>
 
     <div class="closing">
