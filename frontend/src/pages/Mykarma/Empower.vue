@@ -88,7 +88,7 @@
           <div class="flex items-center text-gray-600 text-bodyh2 font-normal justify-between border-b pb-2">
             <span class="flex justify-center items-center gap-1" style="color: #0b0b0b">
               <FeatherIcon name="clock" class="size-4 text-[#666666]" />
-              {{ activities?.hours ?? '0' }} hr
+              {{ activities?.hours ?? '0' }} hr-
             </span>
             <span v-if="activities?.karma_points" class="flex items-center gap-2 justify-center" style="color: #0b0b0b">
               <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -129,7 +129,7 @@
     </section>
     <!-- banner section image end -->
     <!-- main section start  -->
-    <div class="bg-gray-100 px-4 md:px-10 p-4">
+    <div class="bg-gray-100 px-4 md:px-10 pt-4">
       <div v-if="auth.isLoggedIn && activities?.completion_wf_state == 'Rejected'" class="w-full bg-red-50/50 ">
         <div class="reason-box">
           <strong>Reason for Rejection:</strong>
@@ -473,7 +473,6 @@ watch(() => showReqForApproval, (newVal) => {
   background-color: #fff3f3;
   border-left: 5px solid #e74c3c;
   padding: 15px 20px;
-  margin: 10px 0;
   border-radius: 6px;
 }
 
