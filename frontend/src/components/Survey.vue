@@ -136,7 +136,7 @@
                         </button>
                         <!-- Submit / Submitting -->
                         <button v-else-if="hasSubmittedLoaded" type="submit" :disabled="isSubmitting"
-                            class="w-full md:w-44 bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-md transition duration-200 transform hover:scale-105 disabled:transform-none flex items-center justify-center gap-2 font-poppins">
+                            class="w-full md:w-44 bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white font-medium py-2 px-4 rounded-md transition duration-200 transform hover:scale-105 disabled:transform-none flex items-center justify-center  font-poppins">
 
                             <template v-if="isSubmitting">
                                 <span>Submitting</span>
@@ -152,10 +152,8 @@
                                 Submit
                             </template>
                         </button>
-
                         <!-- Loading Status -->
                         <div v-else class="text-gray-500 text-sm">Checking submission status...</div>
-
                     </form>
                 </div>
             </transition>
