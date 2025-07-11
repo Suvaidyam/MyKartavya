@@ -6,6 +6,8 @@ frappe.ui.form.on("Company", {
             "SVA User": {
                 "after_render": (dt, mode) => {
                     let form_dialog = dt.form_dialog;
+                    console.log("Form Dialog:", form_dialog);
+                    
                     // Set default volunteer type
                     form_dialog.set_value("custom_volunteer_type", "Employee");
                     // Set max date to today and limit DOB to users 18+ years

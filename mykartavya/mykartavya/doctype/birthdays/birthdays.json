@@ -26,6 +26,7 @@
    "fieldname": "email_id",
    "fieldtype": "Data",
    "label": "Email",
+   "read_only": 1,
    "reqd": 1,
    "unique": 1
   },
@@ -66,7 +67,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-08 19:03:09.396206",
+ "modified": "2025-07-11 11:50:00.936290",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Birthdays",
