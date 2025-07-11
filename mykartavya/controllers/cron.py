@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 from frappe.utils import getdate, add_days, nowdate, today
 from frappe.utils.jinja import render_template
 
-
 # Activity activity_status Change to sheduler
 @frappe.whitelist()
 def process_activities():
@@ -208,22 +207,28 @@ def send_reminder_to_applicants(activity):
             )
 
 
-@frappe.whitelist()
-def send_birthday_activity_email():
-    from frappe.utils import today
 
-    birthday_records = frappe.get_all(
+@frappe.whitelist(allow_guest=True)
+def send_birthday_activity_email():
+    today = getdate(nowdate())
+    today_day = today.day
+    today_month = today.month
+
+    all_birthdays = frappe.get_all(
         "Birthdays",
-        filters={"birth_date": today()},
         fields=["name", "name1", "email_id", "birth_date"],
+        filters={"email_id": ["!=", ""]},
     )
 
-    print("Birthday Records:", birthday_records)
-
+    birthday_records = []
+    for b in all_birthdays:
+        if b["birth_date"]:
+            b_date = getdate(b["birth_date"])
+            if b_date.day == today_day and b_date.month == today_month:
+                birthday_records.append(b)
+    frappe.log_error(birthday_records)
     for birthday in birthday_records:
         activities = get_activities_for_birthdays(birthday["name"])
-        print("Activities for", birthday["name"], ":", activities)
-
         if not activities:
             continue
 
@@ -231,8 +236,8 @@ def send_birthday_activity_email():
             "user_name": birthday["name1"],
             "activities": [
                 {
-                    "name": activity["name"],  
-                    "title": activity["title"],   
+                    "name": activity["name"],
+                    "title": activity["title"],
                 }
                 for activity in activities
             ],
@@ -240,18 +245,14 @@ def send_birthday_activity_email():
         }
 
         try:
-            # Step 1: Render the actual email message
             message = frappe.render_template("templates/emails/birthday.html", context)
-            print("Email message rendered successfully.")
-
-            # Step 2: Send the email using the rendered message
             frappe.sendmail(
                 recipients=[birthday["email_id"]],
                 subject="🎉 A Special Birthday Activity Just for You!",
                 message=message,
                 now=True,
             )
-        except Exception as e:
+        except Exception:
             frappe.log_error(
                 title="Birthday Email Error", message=frappe.get_traceback()
             )
