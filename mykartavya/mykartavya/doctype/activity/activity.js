@@ -139,6 +139,14 @@ frappe.ui.form.on("Activity", {
                         }
                     }
                 },
+                formatter: {
+                    activity: function(value, column, row) {
+                        if (value) {
+                            value = `<a href="${frappe.utils.get_form_link('Activity Volunteer Group', row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
+                        }
+                        return value;
+                    }
+                },
             },
             "Survey": {
                 formatter: {

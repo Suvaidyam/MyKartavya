@@ -264,9 +264,7 @@ import ReqForApproval from './ReqForApproval.vue'
 const currentStep = ref(0)
 const show_Feedback = ref(false)
 const showKarmaPopup = ref(false)
-
 const activityReportPopup = ref(false)
-
 const showLockedStepPopup = ref(false)
 const showReqForApproval = ref(false)
 const call = inject('call')
