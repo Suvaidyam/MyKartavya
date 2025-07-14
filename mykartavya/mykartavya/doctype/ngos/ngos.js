@@ -59,6 +59,14 @@ frappe.ui.form.on("NGOs", {
                         }
                     }
                 },
+                formatter: {
+                    full_name: function (value, column, row) {
+                        if (value) {
+                            value = `<a href="${frappe.utils.get_form_link('SVA User', row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
+                        }
+                        return value;
+                    }
+                },
             }
         }
     },
