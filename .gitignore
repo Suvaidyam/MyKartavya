@@ -8,7 +8,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 develop-eggs/
-# dist/
+dist/
 downloads/
 eggs/
 .eggs/
@@ -54,3 +54,5 @@ jspm_packages/
 # Aider AI Chat
 .aider*
 mykartavya/public/node_modules
+
+/public/
