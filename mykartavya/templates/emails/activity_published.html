@@ -61,6 +61,22 @@
             font-size: 14px;
             margin-top: 5px;
         }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #16a34a;
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .cta-button:hover {
+            background-color: #15803d;
+        }
     </style>
 </head>
 
@@ -87,6 +103,10 @@
         <div class="message">
             Visit MyKartavya to learn more and participate in this opportunity to make a difference.
         </div>
+
+        <a href="{{ opportunity_link }}/frontend/kindness-volunteering/{{id}}" class="cta-button" target="_blank">
+            View Activity
+        </a>
 
         <div class="closing">
             Warm regards,
