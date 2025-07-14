@@ -6,11 +6,11 @@ from frappe.utils.jinja import render_template
 @frappe.whitelist()
 def activity_status_notification(doc, method=None):
     if doc.activity_status == "Published":
-        send_notification_in_activity_users(doc.title, status="published")
+        send_notification_in_activity_users(doc.title, doc.name, status="published")
     elif doc.activity_status == "Ended":
         send_notification_in_activity_users(doc.title, status="ended")
 
-def send_notification_in_activity_users(activity_name, status):
+def send_notification_in_activity_users(activity_name,name, status):
     sva_users = frappe.get_all(
         "SVA User",
         filters={"email": ["not in", [None, ""]]},
@@ -25,7 +25,9 @@ def send_notification_in_activity_users(activity_name, status):
             subject = "New Activity Published"
             message = render_template("templates/emails/activity_published.html", {
                 "username": username,
-                "activity_name": activity_name
+                "activity_name": activity_name,
+                "id":name,
+                "opportunity_link": frappe.get_conf().get("hostname"),
             })
         elif status == "ended":
             subject = "Activity Closed"
