@@ -19,6 +19,7 @@ def process_activities():
             "end_date",
             "docstatus",
             "activity_published_date_starts",
+            "workflow_state"
         ],
     )
 
@@ -41,15 +42,18 @@ def process_activities():
         else:
             effective_start_date = start_date
 
-        if end_date and today >= end_date:
-            new_status = "Ended"
-        elif effective_start_date and today >= effective_start_date:
-            new_status = "Ongoing"
-        elif publish_date and today >= publish_date:
-            new_status = "Published"
+        if activity.workflow_state != "Approved":
+            if activity.activity_status != "Draft":
+                new_status = "Draft"
         else:
-            new_status = "Draft"
-
+            if end_date and today >= end_date:
+                new_status = "Ended"
+            elif effective_start_date and today >= effective_start_date:
+                new_status = "Ongoing"
+            elif publish_date and today >= publish_date:
+                new_status = "Published"
+            else:
+                new_status = "Draft"
         if new_status and new_status != activity.activity_status:
             update_fields["activity_status"] = new_status
 
@@ -89,12 +93,16 @@ def opportunity_publish():
             opportunity.end_date and frappe.utils.getdate(opportunity.end_date) or None
         )
 
-        if end_date and today >= end_date:
-            new_status = "Ended"
-        elif start_date and today >= start_date:
-            new_status = "Published"
+        if opportunity.workflow_state != "Approved":
+            if opportunity.opportunity_status != "Draft":
+                new_status = "Draft"
         else:
-            new_status = "Draft"
+            if end_date and today >= end_date:
+                new_status = "Ended"
+            elif start_date and today >= start_date:
+                new_status = "Published"
+            else:
+                new_status = "Draft"
 
         # Fixed: Compare with opportunity.opportunity_status instead of opportunity.status
         if new_status and new_status != opportunity.opportunity_status:

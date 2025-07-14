@@ -111,7 +111,7 @@ class Activity(Document):
             self.end_date.strftime("%Y-%m-%d")
             if isinstance(self.end_date, datetime)
             else str(self.end_date).split(" ")[0]
-         if self.end_date else None
+            if self.end_date else None
          )
 
         if publish_date == today_date:
@@ -156,10 +156,18 @@ class Activity(Document):
                 as_dict=True
             )
             # Check if user is MyKartvya Admin or Administrator
-            if sva_user and (sva_user.role_profile in ['MyKartvya Admin']) or frappe.session.user == 'Administrator':
+            if (sva_user and sva_user.role_profile in ['MyKartvya Admin']) or frappe.session.user == 'Administrator':
+                # Approve the activity
                 frappe.db.set_value("Activity", doc.name, "workflow_state", "Approved")
+
+                today_date = today()  
+                publish_date = str(doc.publish_date).split(" ")[0] if doc.publish_date else None
+
+                if publish_date == today_date:
+                    frappe.db.set_value("Activity", doc.name, "activity_status", "Published")
+                doc.reload()
             else:
                 print(f"User {frappe.session.user} with role {sva_user.role_profile if sva_user else 'No role'} - keeping default workflow state")
-                
+
         except Exception as e:
             frappe.log_error(f"Auto approval error: {str(e)}")
