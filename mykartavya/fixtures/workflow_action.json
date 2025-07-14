@@ -4,6 +4,447 @@
   "completed_by_role": "MyKartvya Admin",
   "docstatus": 0,
   "doctype": "Workflow Action",
+  "modified": "2025-07-05 11:28:28.603199",
+  "name": "theh4bsg2l",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "Opportunity",
+  "reference_name": "OPP-Opportunity1-0373",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "MyKartvya Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-06 12:52:32.707827",
+  "name": "qhn0kvs7mo",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0385",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "MyKartvya Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-06 12:53:35.878424",
+  "name": "r5ejsc7l6k",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0386",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "MyKartvya Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-06 13:05:15.783557",
+  "name": "205psoce6j",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0388",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "MyKartvya Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-06 13:06:19.457547",
+  "name": "2k2qo16h0h",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0389",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-06 19:01:11.301427",
+  "name": "ihprjpmkca",
+  "permitted_roles": [
+   {
+    "role": "MyKartavya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0385",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Rejected"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-06 19:24:40.699695",
+  "name": "0a70168o0l",
+  "permitted_roles": [
+   {
+    "role": "MyKartavya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0388",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Rejected"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-06 19:37:40.750500",
+  "name": "7tvmhuv1uh",
+  "permitted_roles": [
+   {
+    "role": "MyKartavya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0386",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Rejected"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "MyKartvya Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-08 16:47:41.277689",
+  "name": "rqks6nsrc0",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0396",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-08 16:47:50.847455",
+  "name": "rtk0hp0qac",
+  "permitted_roles": [
+   {
+    "role": "MyKartavya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0396",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Rejected"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "MyKartvya Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-08 16:59:26.554604",
+  "name": "2n1sq7gfcs",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0397",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-08 16:59:50.945909",
+  "name": "2ulv4a3j77",
+  "permitted_roles": [
+   {
+    "role": "MyKartavya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0397",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Rejected"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-08 19:12:31.031497",
+  "name": "gm6ru4q1i0",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0398",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-08 19:34:38.554460",
+  "name": "tl1mchcf6f",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0399",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "MyKartvya Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-08 20:08:35.540250",
+  "name": "hhj7756902",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0400",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "MyKartvya Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-08 20:53:24.298665",
+  "name": "bpripe7ujg",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0401",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-08 20:58:50.586902",
+  "name": "evp7bamu68",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0403",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "MyKartvya Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-08 21:23:25.802386",
+  "name": "tcqnpj2el5",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0404",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-08 21:24:30.002534",
+  "name": "u0s43gaf4u",
+  "permitted_roles": [
+   {
+    "role": "MyKartavya Admin"
+   }
+  ],
+  "reference_doctype": "SVA User",
+  "reference_name": "USER-25-0404",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Rejected"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "Company Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-09 16:32:25.847073",
+  "name": "ukinhr7tqn",
+  "permitted_roles": [
+   {
+    "role": "Company Admin"
+   },
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "Volunteer Opportunity",
+  "reference_name": "VO-00412",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Applied"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "Company Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-09 17:32:28.910283",
+  "name": "1qhl8b0utl",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   },
+   {
+    "role": "Company Admin"
+   }
+  ],
+  "reference_doctype": "Volunteer Opportunity",
+  "reference_name": "VO-00419",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Applied"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-09 19:27:51.461317",
+  "name": "5dq65ig523",
+  "permitted_roles": [
+   {
+    "role": "Volunteer"
+   }
+  ],
+  "reference_doctype": "Volunteer Opportunity",
+  "reference_name": "VO-00419",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Rejected"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "Company Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-10 10:53:12.601043",
+  "name": "3k66rseipj",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   },
+   {
+    "role": "Company Admin"
+   }
+  ],
+  "reference_doctype": "Volunteer Activity",
+  "reference_name": "VA-00426",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Applied"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-10 10:53:41.640471",
+  "name": "3t8gsss74n",
+  "permitted_roles": [
+   {
+    "role": "Volunteer"
+   }
+  ],
+  "reference_doctype": "Volunteer Activity",
+  "reference_name": "VA-00426",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Rejected"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "MyKartvya Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
   "modified": "2025-06-14 10:37:30.037115",
   "name": "8tkp79dpkm",
   "permitted_roles": [
@@ -992,6 +1433,12 @@
     "role": "Company Admin"
    },
    {
+    "role": "Company Admin"
+   },
+   {
+    "role": "MyKartvya Admin"
+   },
+   {
     "role": "MyKartvya Admin"
    }
   ],
@@ -1264,27 +1711,6 @@
   "status": "Completed",
   "user": null,
   "workflow_state": "Pending Approval"
- },
- {
-  "completed_by": null,
-  "completed_by_role": null,
-  "docstatus": 0,
-  "doctype": "Workflow Action",
-  "modified": "2025-07-02 16:20:18.906291",
-  "name": "59ddsdv3ep",
-  "permitted_roles": [
-   {
-    "role": "MyKartvya Admin"
-   },
-   {
-    "role": "Company Admin"
-   }
-  ],
-  "reference_doctype": "Volunteer Activity",
-  "reference_name": "VA-00314",
-  "status": "Open",
-  "user": null,
-  "workflow_state": "Applied"
  },
  {
   "completed_by": null,
@@ -2820,27 +3246,6 @@
   "workflow_state": "Pending Approval"
  },
  {
-  "completed_by": null,
-  "completed_by_role": null,
-  "docstatus": 0,
-  "doctype": "Workflow Action",
-  "modified": "2025-07-03 19:02:51.739932",
-  "name": "g95jvuttqs",
-  "permitted_roles": [
-   {
-    "role": "Company Admin"
-   },
-   {
-    "role": "MyKartvya Admin"
-   }
-  ],
-  "reference_doctype": "Volunteer Activity",
-  "reference_name": "VA-00339",
-  "status": "Open",
-  "user": null,
-  "workflow_state": "Applied"
- },
- {
   "completed_by": "Administrator",
   "completed_by_role": "Company Admin",
   "docstatus": 0,
@@ -2930,6 +3335,12 @@
     "role": "MyKartvya Admin"
    },
    {
+    "role": "MyKartvya Admin"
+   },
+   {
+    "role": "Company Admin"
+   },
+   {
     "role": "Company Admin"
    }
   ],
@@ -2938,5 +3349,224 @@
   "status": "Completed",
   "user": null,
   "workflow_state": "Applied"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "MyKartvya Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-11 14:36:20.613646",
+  "name": "i3uc7siv6u",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "Activity",
+  "reference_name": "ACT-QWAQ-0428",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-11 14:40:38.496817",
+  "name": "kkgnmc8gck",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   },
+   {
+    "role": "Company Admin"
+   }
+  ],
+  "reference_doctype": "Volunteer Activity",
+  "reference_name": "VA-00431",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Applied"
+ },
+ {
+  "completed_by": "vishwajeet.thakur@suvaidyam.com",
+  "completed_by_role": "Company Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-12 15:28:35.859302",
+  "name": "sfmje1c68u",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   },
+   {
+    "role": "Company Admin"
+   }
+  ],
+  "reference_doctype": "Volunteer Activity",
+  "reference_name": "VA-00455",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Applied"
+ },
+ {
+  "completed_by": "vishwajeet.thakur@suvaidyam.com",
+  "completed_by_role": "Company Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-12 17:50:00.329186",
+  "name": "fb3tss9s5k",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   },
+   {
+    "role": "Company Admin"
+   }
+  ],
+  "reference_doctype": "Volunteer Activity",
+  "reference_name": "VA-00464",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Applied"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "MyKartvya Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-14 11:39:24.909847",
+  "name": "dmh1qf03nv",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "Activity",
+  "reference_name": "ACT-t-0465",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-14 11:57:15.913909",
+  "name": "o576jhls7f",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   },
+   {
+    "role": "Company Admin"
+   }
+  ],
+  "reference_doctype": "Volunteer Activity",
+  "reference_name": "VA-00467",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Applied"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-14 11:57:15.965321",
+  "name": "o57t6qv6t5",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   },
+   {
+    "role": "Company Admin"
+   }
+  ],
+  "reference_doctype": "Volunteer Activity",
+  "reference_name": "VA-00468",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Applied"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-14 11:57:16.016675",
+  "name": "o586as8lmh",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   },
+   {
+    "role": "Company Admin"
+   }
+  ],
+  "reference_doctype": "Volunteer Activity",
+  "reference_name": "VA-00469",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Applied"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "Company Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-14 14:13:43.195398",
+  "name": "83nbqqltle",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   },
+   {
+    "role": "Company Admin"
+   }
+  ],
+  "reference_doctype": "Volunteer Activity",
+  "reference_name": "VA-00476",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Applied"
+ },
+ {
+  "completed_by": null,
+  "completed_by_role": null,
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-14 16:31:05.274820",
+  "name": "ojcgtgskgk",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "Opportunity",
+  "reference_name": "OPP-Opportunity2-0478",
+  "status": "Open",
+  "user": null,
+  "workflow_state": "Pending Approval"
+ },
+ {
+  "completed_by": "Administrator",
+  "completed_by_role": "MyKartvya Admin",
+  "docstatus": 0,
+  "doctype": "Workflow Action",
+  "modified": "2025-07-14 16:59:16.671454",
+  "name": "93uechbmrn",
+  "permitted_roles": [
+   {
+    "role": "MyKartvya Admin"
+   }
+  ],
+  "reference_doctype": "Opportunity",
+  "reference_name": "OPP-ss-0486",
+  "status": "Completed",
+  "user": null,
+  "workflow_state": "Pending Approval"
  }
 ]

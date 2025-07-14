@@ -7,25 +7,26 @@
     <title>Activity Published - MyKartavya</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, Arial, sans-serif;
             margin: 0;
             padding: 20px;
             background-color: #f9fafb;
         }
 
         .container {
-            max-width: 520px;
+            max-width: 540px;
             margin: auto;
             background: #ffffff;
-            padding: 20px 25px;
+            padding: 25px 30px;
             text-align: center;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .logo img {
-            max-width: 250px;
+            max-width: 220px;
             height: auto;
+            margin-bottom: 20px;
         }
 
         .greeting,
@@ -35,7 +36,7 @@
         .team-signature {
             color: #374151;
             font-size: 16px;
-            margin: 6px 0;
+            margin: 10px 0;
             line-height: 1.6;
         }
 
@@ -59,7 +60,22 @@
         .team-signature {
             color: #6b7280;
             font-size: 14px;
-            margin-top: 5px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #16a34a;
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .cta-button:hover {
+            background-color: #15803d;
         }
     </style>
 </head>
@@ -72,11 +88,11 @@
         </div>
 
         <div class="greeting">
-            Dear <strong>{{ username }}</strong>
+            Dear <strong>{{ username }}</strong>,
         </div>
 
         <div class="message">
-            We’re excited to inform you that a new activity has been
+            We’re excited to inform you that a new opportunity has been
             <span class="highlight">published</span> on MyKartavya!
         </div>
 
