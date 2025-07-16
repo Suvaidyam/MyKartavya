@@ -33,7 +33,8 @@
    "fieldname": "answers",
    "fieldtype": "Table",
    "label": "Answers",
-   "options": "Volunteer Survey Log Child"
+   "options": "Volunteer Survey Log Child",
+   "read_only": 1
   },
   {
    "fieldname": "activity",
@@ -49,7 +50,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-03 15:46:11.732740",
+ "modified": "2025-07-16 17:16:56.854326",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Survey Log",
