@@ -88,7 +88,7 @@
           <div class="flex items-center text-gray-600 text-bodyh2 font-normal justify-between border-b pb-2">
             <span class="flex justify-center items-center gap-1" style="color: #0b0b0b">
               <FeatherIcon name="clock" class="size-4 text-[#666666]" />
-              {{ activities?.hours ?? '0' }} hr-
+              {{ activities?.hours ?? '0' }} hr
             </span>
             <span v-if="activities?.karma_points" class="flex items-center gap-2 justify-center" style="color: #0b0b0b">
               <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">

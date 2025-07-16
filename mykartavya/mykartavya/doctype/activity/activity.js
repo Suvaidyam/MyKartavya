@@ -7,7 +7,7 @@ frappe.ui.form.on("Activity", {
             "Volunteer Activity": {
                 formatter: {
                     action: function (element, column, row) {
-                        if (!isAdmin || row.completion_wf_state === "Pending") {
+                        if (!isAdmin || ["Pending", "Approved", "Rejected"].includes(row.completion_wf_state)) {
                             element.setAttribute('disabled', true);
                             element.style.pointerEvents = 'none';
                             element.style.cursor = 'not-allowed';

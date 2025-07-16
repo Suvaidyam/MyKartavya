@@ -10,7 +10,7 @@ frappe.ui.form.on("Opportunity", {
             "Volunteer Opportunity": {
                 formatter: {
                     action: function (element, column, row) {
-                        if (!user_roles || row.completion_wf_state === "Pending") {
+                        if (!user_roles || ["Pending", "Approved", "Rejected"].includes(row.completion_wf_state)) {
                             element.setAttribute('disabled', true);
                         } else {
                             // if(row.completion_wf_state === "Submitted"){

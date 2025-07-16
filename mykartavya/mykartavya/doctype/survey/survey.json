@@ -15,7 +15,9 @@
   "status",
   "questions_section",
   "questions",
-  "form_json"
+  "form_json",
+  "volunteer_survey_log_tab",
+  "volunteer_survey_log"
  ],
  "fields": [
   {
@@ -74,13 +76,23 @@
    "fieldtype": "Select",
    "label": "Status",
    "options": "Draft\nPublished"
+  },
+  {
+   "fieldname": "volunteer_survey_log",
+   "fieldtype": "HTML",
+   "label": "Volunteer Survey Log"
+  },
+  {
+   "fieldname": "volunteer_survey_log_tab",
+   "fieldtype": "Tab Break",
+   "label": "Volunteer Survey Log"
   }
  ],
  "grid_page_length": 50,
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-08 14:53:55.151491",
+ "modified": "2025-07-16 15:50:39.551469",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Survey",
