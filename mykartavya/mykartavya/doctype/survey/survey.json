@@ -1,13 +1,14 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:SUR-{title}-{####}",
+ "autoname": "field:title",
  "creation": "2025-06-28 20:05:52.487985",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "activity",
   "title",
+  "titlecopy",
   "column_break_mukx",
   "deadline_date",
   "section_break_honv",
@@ -25,7 +26,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Title",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "description",
@@ -86,17 +88,24 @@
    "fieldname": "volunteer_survey_log_tab",
    "fieldtype": "Tab Break",
    "label": "Volunteer Survey Log"
+  },
+  {
+   "fieldname": "titlecopy",
+   "fieldtype": "Data",
+   "label": "Title",
+   "read_only": 1,
+   "unique": 1
   }
  ],
  "grid_page_length": 50,
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-16 15:50:39.551469",
+ "modified": "2025-07-17 15:41:22.996502",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Survey",
- "naming_rule": "Expression",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

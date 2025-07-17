@@ -51,7 +51,7 @@ frappe.ui.form.on("Activity", {
                     },
                     volunteer: function (value, column, row) {
                         if (value) {
-                            value =  `<a href="${frappe.utils.get_form_link('Volunteer Activity',row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
+                            value = `<a href="${frappe.utils.get_form_link('Volunteer Activity', row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
                         }
                         return value;
                     }
@@ -140,7 +140,7 @@ frappe.ui.form.on("Activity", {
                     }
                 },
                 formatter: {
-                    activity: function(value, column, row) {
+                    activity: function (value, column, row) {
                         if (value) {
                             value = `<a href="${frappe.utils.get_form_link('Activity Volunteer Group', row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
                         }
@@ -150,14 +150,211 @@ frappe.ui.form.on("Activity", {
             },
             "Survey": {
                 formatter: {
-                    title: function(value, column, row) {
+                    title: function (value, column, row) {
                         if (value) {
                             value = `<a href="${frappe.utils.get_form_link('Survey', row.name)}" class="text-muted px-2" style="cursor: pointer;">${value}</a>`;
                         }
                         return value;
                     }
                 },
-            },
+                after_render: function (dt, mode) {
+                    let today = frappe.datetime.get_today();
+
+                    // Set minimum date for deadline
+                    dt.form_dialog.set_df_property('deadline_date', 'min_date', today);
+                    $(dt.form_dialog.fields_dict.deadline_date.$input).datepicker({
+                        minDate: new Date(today)
+                    });
+
+                    if (typeof dt.rowIndex === "number" && dt.rows?.[dt.rowIndex]) {
+                        survey_id = dt.rows[dt.rowIndex].name || null;
+                        console.log("Editing Survey ID:", survey_id);
+                    }
+                    // Add Save button manually
+                    dt.form_dialog.set_primary_action(__('Save'), async function () {
+                    const formData = dt.form_dialog.get_values();
+                    let survey_id = formData.title || null;
+                    console.log(survey_id);
+                    
+                        if (!formData) {
+                            frappe.msgprint("Please fill all required fields.");
+                            return;
+                        }
+                        const questions = dt.form_dialog.fields_dict.questions.grid.get_data();
+
+                        // ✅ Validate that Select/Check have options
+                        for (let i = 0; i < questions.length; i++) {
+                            const row = questions[i];
+                            const needsOptions = ['Select', 'Check'].includes(row.fieldtype);
+                            if (needsOptions && (!row.options || !row.options.trim())) {
+                                frappe.throw(`"Options" is mandatory for fieldtype ${row.fieldtype} at row ${i + 1}`);
+                            }
+                        }
+
+                        try {
+                            if (survey_id) {
+                                // 🔁 UPDATE flow using get_doc + save
+                                let survey_doc = await frappe.db.get_doc('Survey', survey_id);
+
+                                survey_doc.activity = cur_frm.doc.name;
+                                survey_doc.title = formData.title;
+                                survey_doc.description = formData.description || "";
+                                survey_doc.deadline_date = formData.deadline_date;
+
+                                // Replace child table
+                                survey_doc.questions = questions.map(q => ({
+                                    fieldtype: q.fieldtype,
+                                    label: q.label,
+                                    options: q.options || "",
+                                    is_required: q.is_required || 0
+                                }));
+
+                                await frappe.call({
+                                    method: "frappe.client.save",
+                                    args: {
+                                        doc: survey_doc
+                                    },
+                                    freeze: true
+                                });
+
+                                frappe.msgprint("Survey updated successfully");
+                            } else {
+                                // 🆕 CREATE flow
+                                const new_survey = await frappe.db.insert({
+                                    doctype: "Survey",
+                                    activity: cur_frm.doc.name,
+                                    title: formData.title,
+                                    description: formData.description || "",
+                                    deadline_date: formData.deadline_date,
+                                    questions: questions.map(q => ({
+                                        fieldtype: q.fieldtype,
+                                        label: q.label,
+                                        options: q.options || "",
+                                        is_required: q.is_required || 0
+                                    }))
+                                });
+                                frappe.msgprint(`Survey <b>${new_survey.title}</b> created successfully.`);
+                            }
+
+                            dt.reloadTable();
+                            dt.form_dialog.hide();
+                            dt.editing_survey_id = null;
+
+                        } catch (error) {
+                            console.error(error);
+                            frappe.msgprint("Something went wrong while saving the Survey.");
+                        }
+                    });
+
+                    // Optional: Show Cancel button
+                    dt.form_dialog.set_secondary_action(__('Cancel'), () => {
+                        dt.form_dialog.hide();
+                    });
+                }
+
+
+                // after_render: function (dt, mode) {
+                //     let today = frappe.datetime.get_today();
+                //     dt.form_dialog.set_df_property('deadline_date', 'min_date', today);
+                //     $(dt.form_dialog.fields_dict.deadline_date.$input).datepicker({
+                //         minDate: new Date(today)
+                //     });
+
+                //     if (typeof dt.rowIndex === "number" && dt.rows && dt.rows.length > 0) {
+                //         const selectedRow = dt.rows[dt.rowIndex];
+                //         survey_id = selectedRow?.name || null;
+                //         console.log("Editing Survey ID:", survey_id);
+                //     }
+                //     const formData = dt.form_dialog.get_values();
+                //     const survey_id = formData.title || null;
+                //     console.log(survey_id);
+
+                //     dt.form_dialog.set_primary_action(__('Save'), async function () {
+                //         const formData = dt.form_dialog.get_values();
+                //         if (!formData) {
+                //             frappe.msgprint("Please fill all required fields.");
+                //             return;
+                //         }
+
+                //         const questions = dt.form_dialog.fields_dict.questions.grid.get_data();
+
+                //         for (let i = 0; i < questions.length; i++) {
+                //             const row = questions[i];
+                //             const needsOptions = ['Select', 'Check'].includes(row.fieldtype);
+                //             if (needsOptions && (!row.options || !row.options.trim())) {
+                //                 frappe.throw(`"Options" is mandatory for fieldtype ${row.fieldtype} at row ${i + 1}`);
+                //                 return;
+                //             }
+                //         }
+                //         try {
+                //             if (survey_id) {
+                //                 // 🔄 UPDATE existing Survey
+                //                 await frappe.call({
+                //                     method: "frappe.client.set_value",
+                //                     args: {
+                //                         doctype: "Survey",
+                //                         name: survey_id,
+                //                         fieldname: {
+                //                             activity: cur_frm.doc.name,
+                //                             title: formData.title,
+                //                             description: formData.description || "",
+                //                             deadline_date: formData.deadline_date
+                //                         }
+                //                     }
+                //                 });
+
+                //                 // 🧹 DELETE existing questions
+                //                 await frappe.call({
+                //                     method: "frappe.client.delete",
+                //                     args: {
+                //                         doctype: "Survey Form Builder",
+                //                         filters: { parent: survey_id }
+                //                     }
+                //                 });
+
+                //                 // ➕ INSERT new questions
+                //                 for (const q of questions) {
+                //                     await frappe.db.insert({
+                //                         doctype: "Survey Form Builder",
+                //                         parent: survey_id,
+                //                         parenttype: "Survey",
+                //                         parentfield: "questions",
+                //                         fieldtype: q.fieldtype,
+                //                         label: q.label,
+                //                         options: q.options || "",
+                //                         is_required: q.is_required || 0
+                //                     });
+                //                 }
+
+                //                 frappe.msgprint(`Survey <b>${formData.title}</b> updated successfully.`);
+                //             } else {
+                //                 // 🆕 CREATE new Survey
+                //                 const new_survey = await frappe.db.insert({
+                //                     doctype: "Survey",
+                //                     activity: cur_frm.doc.name,
+                //                     title: formData.title,
+                //                     description: formData.description || "",
+                //                     deadline_date: formData.deadline_date,
+                //                     questions: questions.map(q => ({
+                //                         fieldtype: q.fieldtype,
+                //                         label: q.label,
+                //                         options: q.options || "",
+                //                         is_required: q.is_required || 0
+                //                     }))
+                //                 });
+                //                 frappe.msgprint(`Survey <b>${new_survey.title}</b> created successfully.`);
+                //             }
+
+                //             dt.reloadTable();
+                //             dt.form_dialog.hide();
+                //         } catch (error) {
+                //             console.error(error);
+                //             frappe.msgprint("Something went wrong while saving the Survey.");
+                //         }
+                //     });
+                // }
+
+            }
         }
     },
     validate: function (frm) {
