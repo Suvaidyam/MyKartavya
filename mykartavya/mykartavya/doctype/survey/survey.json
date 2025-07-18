@@ -8,7 +8,7 @@
  "field_order": [
   "activity",
   "title",
-  "titlecopy",
+  "suv_id",
   "column_break_mukx",
   "deadline_date",
   "section_break_honv",
@@ -27,6 +27,7 @@
    "in_list_view": 1,
    "label": "Title",
    "reqd": 1,
+   "set_only_once": 1,
    "unique": 1
   },
   {
@@ -90,7 +91,7 @@
    "label": "Volunteer Survey Log"
   },
   {
-   "fieldname": "titlecopy",
+   "fieldname": "suv_id",
    "fieldtype": "Data",
    "label": "Title",
    "read_only": 1,
@@ -101,7 +102,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-17 15:41:22.996502",
+ "modified": "2025-07-18 15:55:19.599462",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Survey",

@@ -13,6 +13,11 @@ frappe.ui.form.on("Survey", {
                 minDate: formatted_today
             });
         }
+        if (frm.doc.name && !frm.doc.suv_id) {
+            frm.set_value("suv_id", frm.doc.name).then(() => {
+                frm.save();
+            });
+        }
     },
 
     before_save(frm) {
@@ -20,11 +25,6 @@ frappe.ui.form.on("Survey", {
         if (frm.doc.questions.length > 0) {
             frm.set_value("form_json", JSON.stringify(frm.doc.questions));
         }
-        if (frm.doc.title) {
-            frm.set_value("titlecopy", frm.doc.title);
-            frm.save()
-        }
-
     },
     
     setup: function (frm) {
