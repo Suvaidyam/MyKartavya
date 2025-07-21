@@ -1,14 +1,13 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:title",
+ "autoname": "format:SUR-{####}",
  "creation": "2025-06-28 20:05:52.487985",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "activity",
   "title",
-  "suv_id",
   "column_break_mukx",
   "deadline_date",
   "section_break_honv",
@@ -18,7 +17,9 @@
   "questions",
   "form_json",
   "volunteer_survey_log_tab",
-  "volunteer_survey_log"
+  "volunteer_survey_log",
+  "test_tab",
+  "test"
  ],
  "fields": [
   {
@@ -26,9 +27,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Title",
-   "reqd": 1,
-   "set_only_once": 1,
-   "unique": 1
+   "reqd": 1
   },
   {
    "fieldname": "description",
@@ -39,7 +38,7 @@
    "fieldname": "deadline_date",
    "fieldtype": "Date",
    "label": "Deadline Date",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.status==\"Published\""
   },
   {
    "fieldname": "activity",
@@ -64,8 +63,8 @@
    "fieldname": "questions",
    "fieldtype": "Table",
    "label": "Questions",
-   "options": "Survey Form Builder",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.status==\"Published\"",
+   "options": "Survey Form Builder"
   },
   {
    "fieldname": "form_json",
@@ -83,30 +82,34 @@
   {
    "fieldname": "volunteer_survey_log",
    "fieldtype": "HTML",
-   "label": "Volunteer Survey Log"
+   "label": "Response"
   },
   {
    "fieldname": "volunteer_survey_log_tab",
    "fieldtype": "Tab Break",
-   "label": "Volunteer Survey Log"
+   "label": "Response"
   },
   {
-   "fieldname": "suv_id",
-   "fieldtype": "Data",
-   "label": "Title",
-   "read_only": 1,
-   "unique": 1
+   "fieldname": "test_tab",
+   "fieldtype": "Tab Break",
+   "label": "Reports"
+  },
+  {
+   "depends_on": "eval:doc.status=='Published' && frappe.user_roles.includes('MyKartvya Admin');",
+   "fieldname": "test",
+   "fieldtype": "HTML",
+   "label": "Report"
   }
  ],
  "grid_page_length": 50,
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-18 15:55:19.599462",
+ "modified": "2025-07-21 17:57:04.790703",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Survey",
- "naming_rule": "By fieldname",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

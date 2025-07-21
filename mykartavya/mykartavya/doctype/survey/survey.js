@@ -13,11 +13,18 @@ frappe.ui.form.on("Survey", {
                 minDate: formatted_today
             });
         }
-        if (frm.doc.name && !frm.doc.suv_id) {
-            frm.set_value("suv_id", frm.doc.name).then(() => {
-                frm.save();
+        // if (frm.doc.name && !frm.doc.suv_id) {
+        //     frm.set_value("suv_id", frm.doc.name).then(() => {
+        //         frm.save();
+        //     });
+        // }
+        let report = document.createElement('div');
+        frm.set_df_property('test', 'options', report);
+        frappe.require("survey_vol.bundle.js").then(() => {
+            new frappe.ui.SurVolReport({
+                wrapper: report
             });
-        }
+        })
     },
 
     before_save(frm) {
@@ -26,7 +33,7 @@ frappe.ui.form.on("Survey", {
             frm.set_value("form_json", JSON.stringify(frm.doc.questions));
         }
     },
-    
+
     setup: function (frm) {
         frm['dt_events'] = {
             "Survey": {
@@ -50,20 +57,5 @@ frappe.ui.form.on("Survey", {
                 }
             },
         };
-    }
-});
-frappe.ui.form.on('Survey Form Builder', {
-    fieldtype: function (frm, cdt, cdn) {
-        const row = locals[cdt][cdn];
-        if (['Select', 'Check'].includes(row.fieldtype) && !row.options) {
-            frappe.msgprint(__('Options field is mandatory when fieldtype is Select or Check.'));
-            frappe.model.set_value(cdt, cdn, 'options', '');  // Or show validation msg
-        }
-    },
-    options: function (frm, cdt, cdn) {
-        const row = locals[cdt][cdn];
-        if (['Select', 'Check'].includes(row.fieldtype) && !row.options) {
-            frappe.msgprint(__('Please enter options for fieldtype Select or Check.'));
-        }
     }
 });

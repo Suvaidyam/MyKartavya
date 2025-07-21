@@ -15,6 +15,7 @@
   {
    "fieldname": "question_id",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Question Id"
   },
   {
@@ -26,7 +27,7 @@
   {
    "fieldname": "question_type",
    "fieldtype": "Select",
-   "in_list_view": 1,
+   "hidden": 1,
    "label": "Types",
    "options": "Text\nSelect\nCheck\nSmall Text"
   },
@@ -41,7 +42,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-07-03 15:46:32.518564",
+ "modified": "2025-07-21 12:33:29.467949",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Survey Log Child",
