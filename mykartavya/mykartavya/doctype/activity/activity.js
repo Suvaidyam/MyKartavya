@@ -165,21 +165,22 @@ frappe.ui.form.on("Activity", {
                         minDate: new Date(today)
                     });
 
-                        if (dt.form_dialog.fields_dict?.titlecopy?.wrapper) {
-                            $(dt.form_dialog.fields_dict.titlecopy.wrapper).hide();
-                        } 
+                    if (dt.form_dialog.fields_dict?.suv_id?.wrapper) {
+                        $(dt.form_dialog.fields_dict.suv_id.wrapper).hide();
+                    }
                     if (typeof dt.rowIndex === "number" && dt.rows?.[dt.rowIndex]) {
                         survey_id = dt.rows[dt.rowIndex].name || null;
                     }
-                    // Add Save button manually
+                    const formData = dt;
+                    console.log(formData);
                     dt.form_dialog.set_primary_action(__('Save'), async function () {
                         const formData = dt.form_dialog.get_values();
+                        console.log(formData);
                         if (!formData) {
                             frappe.msgprint("Please fill all required fields.");
                             return;
                         }
                         const questions = dt.form_dialog.fields_dict.questions.grid.get_data();
-
                         //Validate that Select/Check have options
                         for (let i = 0; i < questions.length; i++) {
                             const row = questions[i];
@@ -199,7 +200,6 @@ frappe.ui.form.on("Activity", {
                                 survey_doc.title = formData.title;
                                 survey_doc.description = formData.description || "";
                                 survey_doc.deadline_date = formData.deadline_date;
-
                                 // Replace child table
                                 survey_doc.questions = questions.map(q => ({
                                     fieldtype: q.fieldtype,
@@ -237,7 +237,6 @@ frappe.ui.form.on("Activity", {
                             dt.reloadTable();
                             dt.form_dialog.hide();
                             dt.editing_survey_id = null;
-
                         } catch (error) {
                             console.error(error);
                             frappe.msgprint("Something went wrong while saving the Survey.");
