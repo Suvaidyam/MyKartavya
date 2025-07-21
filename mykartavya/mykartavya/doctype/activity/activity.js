@@ -157,90 +157,24 @@ frappe.ui.form.on("Activity", {
                         return value;
                     }
                 },
+                async validate(dt) {
+                    let doc = await dt.form_dialog.get_values(true, false);
+                    const questions = doc.questions || [];
+                    for (let i = 0; i < questions.length; i++) {
+                        const q = questions[i];
+                        // Check for required options in Select or Check fields
+                        if ((q.fieldtype === "Select" || q.fieldtype === "Check") && (!q.options || q.options.trim() === "")) {
+                            frappe.throw(`Row ${i + 1}: <b>Options</b> is required for field type <b>${q.fieldtype}</b>.`);
+                        }
+                    }
+                    // If validation passes, set the JSON
+                    await dt.form_dialog.set_value("form_json", JSON.stringify(questions));
+                },
                 after_render: function (dt, mode) {
                     let today = frappe.datetime.get_today();
-                    // Set minimum date for deadline
                     dt.form_dialog.set_df_property('deadline_date', 'min_date', today);
                     $(dt.form_dialog.fields_dict.deadline_date.$input).datepicker({
                         minDate: new Date(today)
-                    });
-
-                    if (dt.form_dialog.fields_dict?.title?.wrapper) {
-                        $(dt.form_dialog.fields_dict.title.wrapper).hide();
-                    }
-                    if (typeof dt.rowIndex === "number" && dt.rows?.[dt.rowIndex]) {
-                        survey_id = dt.rows[dt.rowIndex].name || null;
-                    }
-                    const formData = dt;
-                    console.log(formData);
-                    dt.form_dialog.set_primary_action(__('Save'), async function () {
-                        const formData = dt.form_dialog.get_values();
-                        console.log(formData);
-                        if (!formData) {
-                            frappe.msgprint("Please fill all required fields.");
-                            return;
-                        }
-                        const questions = dt.form_dialog.fields_dict.questions.grid.get_data();
-                        //Validate that Select/Check have options
-                        for (let i = 0; i < questions.length; i++) {
-                            const row = questions[i];
-                            const needsOptions = ['Select', 'Check'].includes(row.fieldtype);
-                            if (needsOptions && (!row.options || !row.options.trim())) {
-                                frappe.throw(`"Options" is mandatory for fieldtype ${row.fieldtype} at row ${i + 1}`);
-                            }
-                        }
-                        try {
-                            let survey_id = null;
-                            const existing_survey = await frappe.db.exists('Survey', { title: formData.title });
-                            if (existing_survey) {
-                                //UPDATE flow using get_doc + save
-                                survey_id = formData.title;
-                                const survey_doc = await frappe.db.get_doc('Survey', survey_id);
-                                survey_doc.activity = cur_frm.doc.name;
-                                survey_doc.title = formData.title;
-                                survey_doc.description = formData.description || "";
-                                survey_doc.deadline_date = formData.deadline_date;
-                                // Replace child table
-                                survey_doc.questions = questions.map(q => ({
-                                    fieldtype: q.fieldtype,
-                                    label: q.label,
-                                    options: q.options || "",
-                                    is_required: q.is_required || 0
-                                }));
-
-                                await frappe.call({
-                                    method: "frappe.client.save",
-                                    args: {
-                                        doc: survey_doc
-                                    },
-                                    freeze: true
-                                });
-
-                                frappe.msgprint("Survey updated successfully");
-                            } else {
-                                // 🆕 CREATE flow
-                                const new_survey = await frappe.db.insert({
-                                    doctype: "Survey",
-                                    activity: cur_frm.doc.name,
-                                    title: formData.title,
-                                    description: formData.description || "",
-                                    deadline_date: formData.deadline_date,
-                                    questions: questions.map(q => ({
-                                        fieldtype: q.fieldtype,
-                                        label: q.label,
-                                        options: q.options || "",
-                                        is_required: q.is_required || 0
-                                    }))
-                                });
-                                frappe.msgprint(`Survey <b>${new_survey.title}</b> created successfully.`);
-                            }
-                            dt.reloadTable();
-                            dt.form_dialog.hide();
-                            dt.editing_survey_id = null;
-                        } catch (error) {
-                            console.error(error);
-                            frappe.msgprint("Something went wrong while saving the Survey.");
-                        }
                     });
                 }
             }
