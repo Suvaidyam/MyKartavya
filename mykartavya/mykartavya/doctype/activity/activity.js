@@ -165,8 +165,8 @@ frappe.ui.form.on("Activity", {
                         minDate: new Date(today)
                     });
 
-                    if (dt.form_dialog.fields_dict?.suv_id?.wrapper) {
-                        $(dt.form_dialog.fields_dict.suv_id.wrapper).hide();
+                    if (dt.form_dialog.fields_dict?.title?.wrapper) {
+                        $(dt.form_dialog.fields_dict.title.wrapper).hide();
                     }
                     if (typeof dt.rowIndex === "number" && dt.rows?.[dt.rowIndex]) {
                         survey_id = dt.rows[dt.rowIndex].name || null;
