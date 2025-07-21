@@ -95,7 +95,6 @@
    "label": "Reports"
   },
   {
-   "depends_on": "eval:doc.status=='Published' && frappe.user_roles.includes('MyKartvya Admin');",
    "fieldname": "test",
    "fieldtype": "HTML",
    "label": "Report"
@@ -105,7 +104,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-21 17:57:04.790703",
+ "modified": "2025-07-21 18:42:20.094436",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Survey",

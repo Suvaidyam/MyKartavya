@@ -213,6 +213,14 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.btn-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.5s ease;
+}
+.rotate-180 {
+  transform: rotate(360deg);
+}
 .report-container {
     font-family: "Inter", sans-serif;
     background: #fff;
@@ -265,10 +273,10 @@ onMounted(() => {
     border-color: #adb5bd;
 }
 
-.btn-icon {
+/* .btn-icon {
     width: 16px;
     height: 16px;
-}
+} */
 
 .table-wrapper {
     overflow-x: auto;
