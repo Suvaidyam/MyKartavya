@@ -120,9 +120,9 @@ const handleExport = () => {
   })
 
   const columns = [
-    { fieldname: 'volunteer_name', label: 'Volunteer Name' },
     { fieldname: 'activity', label: 'Activity Title' },
     { fieldname: 'survey', label: 'Survey Title' },
+    { fieldname: 'volunteer_name', label: 'Volunteer Name' },
     { fieldname: 'question_label', label: 'Question Label' },
     { fieldname: 'answer', label: 'Answer' }
   ]
