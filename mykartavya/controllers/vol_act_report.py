@@ -38,41 +38,55 @@ def vol_survey_report(survey_id=None):
     logs = frappe.db.sql(
         """
         SELECT 
-            vs.name,
             vs.name AS log_id,
-            vs.activity AS activity_name,
-            s.title AS survey_name,
-            u.full_name AS user_name,
-            a.title AS activity_title
+            TRIM(REPLACE(REPLACE(u.full_name, '\n', ''), '\r', '')) AS volunteer_name,
+            a.title AS activity_title,
+            s.title AS survey_title
         FROM `tabVolunteer Survey Log` AS vs
-        LEFT JOIN `tabActivity` AS a ON a.name = vs.activity
-        LEFT JOIN `tabSurvey` AS s ON s.name = vs.survey_id
         LEFT JOIN `tabSVA User` AS u ON u.name = vs.user
-        WHERE s.name = %s
-        ORDER BY vs.creation DESC
+        LEFT JOIN `tabSurvey` AS s ON s.name = vs.survey_id
+        LEFT Join `tabActivity` AS a ON vs.activity = a.name 
+        WHERE vs.survey_id = %s
         """,
-        (survey_id,),
+        survey_id,
         as_dict=True
     )
-
     if not logs:
         return []
 
-    log_ids = [log.log_id for log in logs]
-    answers = frappe.db.get_all(
-        "Volunteer Survey Log Child",
-        filters={"parent": ["in", log_ids]},
-        fields=["parent", "question_label", "answer"],
+    log_ids = [log["log_id"] for log in logs]
+
+    answers = frappe.db.sql(
+        """
+        SELECT 
+            parent,
+            question_label,
+            answer
+        FROM `tabVolunteer Survey Log Child`
+        WHERE parent IN %(log_ids)s
+        ORDER BY creation ASC
+        """,
+        {"log_ids": tuple(log_ids)},
+        as_dict=True
     )
 
     answer_map = {}
     for ans in answers:
-        answer_map.setdefault(ans.parent, []).append(
-            {"question_label": ans.question_label, "answer": ans.answer}
-        )
+        answer_map.setdefault(ans["parent"], []).append({
+            "question_label": ans["question_label"],
+            "answer": ans["answer"]
+        })
 
+    final_result = []
     for log in logs:
-        log["answers"] = answer_map.get(log.log_id, [])
+        final_result.append({
+            "log_id": log["log_id"],
+            "survey_title": log["survey_title"],
+            "volunteer_name": log["volunteer_name"],
+            "activity_title": log["activity_title"],
+            "questions": answer_map.get(log["log_id"], [])
+        })
 
-    return logs
+    return final_result
+
 
