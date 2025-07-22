@@ -27,7 +27,8 @@
    "fieldname": "title",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Title"
+   "label": "Title",
+   "mandatory_depends_on": "eval:doc.status==\"Published\""
   },
   {
    "fieldname": "description",
@@ -108,7 +109,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-22 14:22:05.417347",
+ "modified": "2025-07-22 14:27:07.640295",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Survey",
