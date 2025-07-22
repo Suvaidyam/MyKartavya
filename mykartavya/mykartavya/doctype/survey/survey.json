@@ -27,8 +27,7 @@
    "fieldname": "title",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Title",
-   "reqd": 1
+   "label": "Title"
   },
   {
    "fieldname": "description",
@@ -109,7 +108,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-22 13:53:10.613430",
+ "modified": "2025-07-22 14:22:05.417347",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Survey",
