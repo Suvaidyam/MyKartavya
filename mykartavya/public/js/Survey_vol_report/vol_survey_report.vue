@@ -89,7 +89,7 @@ const fetchData = async () => {
 // Export CSV
 const handleExport = () => {
   if (!volunteers.value.length) {
-    return frappe.msgprint('कोई डेटा नहीं है एक्सपोर्ट करने के लिए।');
+    return frappe.msgprint('No data to export.');
   }
 
   const flatData = []
@@ -105,7 +105,7 @@ const handleExport = () => {
           activity: entry.activity_title || '',
           survey: entry.survey_title || '',
           question_label: ans.question_label || '',
-          answer: ans.answer || ''
+          answer: formatAnswer(ans.answer)
         })
       })
     } else {
@@ -131,6 +131,32 @@ const handleExport = () => {
   downloadCSV(csvContent, 'volunteer_survey_report.csv')
 }
 
+const formatAnswer = (value) => {
+  if (Array.isArray(value)) {
+    return value.join(', ')
+  }
+  if (typeof value === 'string' && isJsonArray(value)) {
+    try {
+      const parsed = JSON.parse(value)
+      if (Array.isArray(parsed)) {
+        return parsed.map(s => String(s).trim()).join(', ')
+      }
+    } catch (e) {
+      return value
+    }
+  }
+  return value || ''
+}
+
+// Check if a string is a JSON array
+const isJsonArray = (str) => {
+  try {
+    const parsed = JSON.parse(str)
+    return Array.isArray(parsed)
+  } catch (e) {
+    return false
+  }
+}
 const convertToCSV = (data, columns) => {
   const headers = columns.map(col => col.label).join(',')
   const rows = data.map(row =>
