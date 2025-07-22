@@ -6,8 +6,8 @@
       <div class="flex gap-2">
         <!-- Refresh Button -->
         <button class="export-btn" @click="fetchData">
-          <svg class="btn-icon transition-transform duration-500 bg-red-500" :class="{ 'rotate-180': rotated }" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="btn-icon transition-transform duration-500 bg-red-500" :class="{ 'rotate-180': rotated }"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
             <path d="M21 3v5h-5" />
             <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
@@ -41,9 +41,9 @@
         <tbody>
           <tr v-for="(volunteer, index) in volunteers" :key="volunteer?.log_id || index">
             <td class="vol-index-cell" @click="RenderVolAct()">{{ index + 1 }}</td>
-            <td class="bold">{{ volunteer?.user_name }}</td>
+            <td class="bold">{{ volunteer?.volunteer_name }}</td>
             <td>{{ volunteer?.activity_title }}</td>
-            <td>{{ volunteer?.survey_name }}</td>
+            <td>{{ volunteer?.survey_title }}</td>
           </tr>
           <tr v-if="volunteers.length === 0">
             <td colspan="5" class="empty-msg-cell">
@@ -62,7 +62,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, onMounted } from 'vue'
 
@@ -71,7 +70,7 @@ const volunteers = ref([])
 const survey_id = ref('')
 const survey = ref([])
 
-// Fetch report data
+// Fetch data from backend
 const fetchData = async () => {
   rotated.value = !rotated.value
   await frappe.call({
@@ -80,25 +79,56 @@ const fetchData = async () => {
       survey_id: frappe.router.current_route[2]
     },
     callback: (r) => {
-      console.log(r);
-
       volunteers.value = r.message || []
-      survey_id.value = r.message?.[0]?.activity_name || ''
-      survey.value = r.message[0].name
+      survey_id.value = r.message?.[0]?.activity_title || ''
+      survey.value = r.message?.[0]?.log_id || ''
     }
   })
 }
+
 // Export CSV
 const handleExport = () => {
-  if (!volunteers.value.length) return frappe.msgprint('No data to export.')
+  if (!volunteers.value.length) {
+    return frappe.msgprint('कोई डेटा नहीं है एक्सपोर्ट करने के लिए।');
+  }
 
-  const columns = Object.keys(volunteers.value[0]).map(key => ({
-    fieldname: key,
-    label: key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' ')
-  }))
+  const flatData = []
 
-  const csvContent = convertToCSV(volunteers.value, columns)
-  downloadCSV(csvContent, 'volunteer_activity_report.csv')
+  volunteers.value.forEach(entry => {
+    const volunteerName = (entry.volunteer_name || '').replace(/,/g, '') // remove commas from name
+
+    const answers = entry.questions || []
+    if (answers.length) {
+      answers.forEach(ans => {
+        flatData.push({
+          volunteer_name: volunteerName,
+          activity: entry.activity_title || '',
+          survey: entry.survey_title || '',
+          question_label: ans.question_label || '',
+          answer: ans.answer || ''
+        })
+      })
+    } else {
+      flatData.push({
+        volunteer_name: volunteerName,
+        activity: entry.activity_title || '',
+        survey: entry.survey_title || '',
+        question_label: '',
+        answer: ''
+      })
+    }
+  })
+
+  const columns = [
+    { fieldname: 'volunteer_name', label: 'Volunteer Name' },
+    { fieldname: 'activity', label: 'Activity Title' },
+    { fieldname: 'survey', label: 'Survey Title' },
+    { fieldname: 'question_label', label: 'Question Label' },
+    { fieldname: 'answer', label: 'Answer' }
+  ]
+
+  const csvContent = convertToCSV(flatData, columns)
+  downloadCSV(csvContent, 'volunteer_survey_report.csv')
 }
 
 const convertToCSV = (data, columns) => {
@@ -106,33 +136,29 @@ const convertToCSV = (data, columns) => {
   const rows = data.map(row =>
     columns.map(col => {
       let val = row[col.fieldname] ?? ''
-
-      // 👉 Custom handling for `answers` field (array of objects)
-      if (col.fieldname === 'answers' && Array.isArray(val)) {
-        val = val.map(a => `${a.question_label}: ${a.answer}`).join(' | ')
-      }
-
-      val = String(val).replace(/"/g, '""') // escape quotes
+      val = String(val).replace(/"/g, '""')
       return /[",\n]/.test(val) ? `"${val}"` : val
     }).join(',')
   )
   return [headers, ...rows].join('\n')
 }
-const downloadCSV = (csvContent, filename) => {
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+
+const downloadCSV = (csv, filename) => {
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
   const link = document.createElement('a')
-  link.href = URL.createObjectURL(blob)
-  link.download = filename
+  const url = URL.createObjectURL(blob)
+
+  link.setAttribute('href', url)
+  link.setAttribute('download', filename)
+  link.style.visibility = 'hidden'
+
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)
-  URL.revokeObjectURL(link.href)
 }
 
-// Redirect to activity page
 const RenderVolAct = () => {
   if (survey.value) {
-    console.log(survey);
     frappe.set_route('volunteer-survey-log', survey.value)
   } else {
     frappe.msgprint('No activity selected.')
@@ -144,15 +170,18 @@ onMounted(() => {
 })
 </script>
 
+
 <style scoped>
 .btn-icon {
   width: 24px;
   height: 24px;
   transition: transform 0.5s ease;
 }
+
 .rotate-180 {
   transform: rotate(180deg);
 }
+
 .report-container {
   font-family: "Inter", sans-serif;
   background: #fff;
