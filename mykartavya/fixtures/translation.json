@@ -20,19 +20,6 @@
   "docstatus": 0,
   "doctype": "Translation",
   "language": "en",
-  "modified": "2025-06-09 20:02:20.402904",
-  "name": "hn0v46ctiq",
-  "source_text": "MyKartvya Admin",
-  "translated_text": "MyKartavya Admin\n"
- },
- {
-  "context": null,
-  "contributed": 0,
-  "contribution_docname": null,
-  "contribution_status": "",
-  "docstatus": 0,
-  "doctype": "Translation",
-  "language": "en",
   "modified": "2025-06-09 18:56:24.695080",
   "name": "ig6rtbbn3m",
   "source_text": "Company",
@@ -63,5 +50,18 @@
   "name": "i1gt387jm9",
   "source_text": "District",
   "translated_text": "City"
+ },
+ {
+  "context": null,
+  "contributed": 0,
+  "contribution_docname": null,
+  "contribution_status": "",
+  "docstatus": 0,
+  "doctype": "Translation",
+  "language": "en",
+  "modified": "2025-08-01 16:33:56.327304",
+  "name": "dorvrtpn0u",
+  "source_text": "MyKartvya Admin",
+  "translated_text": "MyKartavya Admin"
  }
 ]

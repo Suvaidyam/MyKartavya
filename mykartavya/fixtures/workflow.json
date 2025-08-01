@@ -4,7 +4,7 @@
   "doctype": "Workflow",
   "document_type": "SVA User",
   "is_active": 1,
-  "modified": "2025-06-18 11:05:23.626558",
+  "modified": "2025-08-01 16:29:21.465227",
   "name": "Sva_volunteer",
   "override_status": 0,
   "send_email_alert": 0,
@@ -75,7 +75,7 @@
    {
     "action": "Review",
     "allow_self_approval": 0,
-    "allowed": "MyKartavya Admin",
+    "allowed": "MyKartvya Admin",
     "condition": null,
     "custom_selected_fields": null,
     "next_state": "Pending Approval",
@@ -182,7 +182,7 @@
   "doctype": "Workflow",
   "document_type": "Company",
   "is_active": 1,
-  "modified": "2025-07-04 14:06:02.329237",
+  "modified": "2025-08-01 16:32:30.016316",
   "name": "Company Registration",
   "override_status": 0,
   "send_email_alert": 0,
@@ -227,7 +227,7 @@
     "workflow_builder_id": null
    },
    {
-    "allow_edit": "MyKartavya Admin",
+    "allow_edit": "MyKartvya Admin",
     "avoid_status_override": 0,
     "doc_status": "0",
     "is_optional_state": 0,
