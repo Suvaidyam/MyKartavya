@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "autoincrement",
  "creation": "2025-06-12 18:27:23.518452",
@@ -21,7 +22,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-14 09:02:01.229610",
+ "modified": "2025-09-16 16:12:07.024258",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Opportunity Kind",

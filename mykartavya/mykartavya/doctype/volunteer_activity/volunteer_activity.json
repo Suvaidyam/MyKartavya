@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:VA-{#####}",
  "creation": "2025-02-19 18:13:49.675773",
@@ -201,7 +202,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-09 19:24:37.223649",
+ "modified": "2025-09-15 18:26:17.849463",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Activity",

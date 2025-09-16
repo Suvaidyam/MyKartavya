@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:VO-{#####}",
  "creation": "2025-04-16 12:21:26.351272",
@@ -197,7 +198,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-09 19:25:51.185242",
+ "modified": "2025-09-15 18:28:10.846204",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Volunteer Opportunity",
