@@ -1,0 +1,40 @@
+{
+ "app": "mykartavya",
+ "charts": [],
+ "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Offline Volunteers\"}}]",
+ "creation": "2025-09-19 12:46:49.846042",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "share",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Offline Volunteers",
+ "link_to": "Offline Volunteering",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-09-19 12:48:46.195996",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Offline Volunteers",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "MyKartvya Admin"
+  },
+  {
+   "role": "MyKartavya Admin"
+  }
+ ],
+ "sequence_id": 34.0,
+ "shortcuts": [],
+ "title": "Offline Volunteers",
+ "type": "Link"
+}
