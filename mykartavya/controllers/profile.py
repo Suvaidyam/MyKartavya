@@ -40,21 +40,38 @@ class Profile:
                 "custom_linkedin",
                 "workflow_state",
                 "custom_gender",
-                "custom_remarks",
                 "custom_phone_number",
             ],
             ignore_permissions=True,
         )
 
-        # Get user skills
+        # Get user skills and languages
         if doc and len(doc) > 0:
-            skills = frappe.get_all(
-                "User Skills Child",
-                filters={"parent": doc[0].name},
-                fields=["skill"],
-                order_by="idx",
-            )
-            doc[0]["custom_skill"] = [skill.skill for skill in skills]
+            # Get skills
+            try:
+                skills = frappe.get_all(
+                    "User Skills Child",
+                    filters={"parent": doc[0].name},
+                    fields=["skill"],
+                    order_by="idx",
+                )
+                doc[0]["custom_skill"] = [skill.skill for skill in skills]
+            except Exception as e:
+                frappe.log_error(f"Error fetching skills: {str(e)}")
+                doc[0]["custom_skill"] = []
+
+            # Get languages
+            try:
+                languages = frappe.get_all(
+                    "Language Child",
+                    filters={"parent": doc[0].name},
+                    fields=["Language"],
+                    order_by="idx",
+                )
+                doc[0]["custom_languages_known"] = [language.Language for language in languages]
+            except Exception as e:
+                frappe.log_error(f"Error fetching languages: {str(e)}")
+                doc[0]["custom_languages_known"] = []
 
         return doc
 
@@ -282,17 +299,42 @@ class Profile:
 
             # Handle skills update
             if "custom_skill" in data:
-                # Delete existing skills
-                frappe.db.delete("User Skills Child", {"parent": name})
+                try:
+                    # Delete existing skills
+                    # frappe.db.delete("User Skills Child", {"parent": name})
 
-                # Add new skills
-                if len(data["custom_skill"]):
-                    skills = data["custom_skill"]
-                    data["custom_skill"] = []
-                    for skill in skills:
-                        data.custom_skill.append({"skill": skill})
-                # Remove skills from data to avoid update conflict
-                # del data['custom_skill']
+                    # Add new skills
+                    if len(data["custom_skill"]):
+                        skills = data["custom_skill"]
+                        for skill in skills:
+                            if skill:  # Make sure skill is not empty
+                                user_doc.append("custom_skill", {"skill": skill})
+
+                    # Remove skills from data to avoid update conflict
+                    del data['custom_skill']
+                except Exception as e:
+                    frappe.log_error(f"Error updating skills: {str(e)}")
+                    # Continue with other updates even if skills fail
+
+            # Handle languages update
+            if "custom_languages_known" in data:
+                try:
+                    # Delete existing languages
+                    # frappe.db.delete("Language Child", {"parent": name})
+
+                    # Add new languages
+                    if len(data["custom_languages_known"]):
+                        user_doc.set("custom_languages_known", [])
+                        for language in data["custom_languages_known"]:
+                            if language:  # Make sure language is not empty
+                                user_doc.append("custom_languages_known", {"language": language})
+                    # Remove languages from data to avoid update conflict
+                    del data['custom_languages_known']
+                except Exception as e:
+                    frappe.log_error(f"Error updating languages: {str(e)}")
+                    # Continue with other updates even if languages fail
+                
+                    
 
             # Handle phone number update
             if "custom_phone_number" in data:
