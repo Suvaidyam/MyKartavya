@@ -177,6 +177,19 @@
                   </Multiselect>
                 </div>
 
+                <!-- Add multi-select component for languages known -->
+                <div v-if="key === 'custom_languages_known'" class="w-full">
+                  <Multiselect v-model="formData.custom_languages_known" :options="getOptions('custom_languages_known')" :multiple="true"
+                    placeholder="Select languages" label="label" track-by="name" :preselect-first="false"
+                    class="multiselect-orange">
+                    <template slot="selection">
+                      <span class="multiselect__single" v-if="values.length && !isOpen">
+                        {{ values.length }} languages selected
+                      </span>
+                    </template>
+                  </Multiselect>
+                </div>
+
                 <!-- Validation Error Message -->
                 <p v-if="errors[key]" class="text-red-500 text-[11px] mt-1">
                   {{ errors[key] }}
@@ -293,6 +306,11 @@ const fields = ref({
     type: "multiselect",
     required: true
   },
+  custom_languages_known: {
+    label: "Languages Known",
+    type: "multiselect",
+    required: true
+  },
 });
 
 const formData = ref({
@@ -311,6 +329,7 @@ const formData = ref({
   custom_gender: "",
   custom_designation: "",
   custom_skill: [],
+  custom_languages_known: [],
 });
 
 // Computed property to filter out fields based on conditions
@@ -347,6 +366,7 @@ const states = ref([]);
 const cities = ref([]);
 const companies = ref([]);
 const skills = ref([]);
+const languages = ref([]);
 
 // First, add the loading state ref at the top with other refs
 const loading = ref(false);
@@ -385,14 +405,25 @@ const fetchSkills = async () => {
   }
 };
 
+const fetchLanguages = async () => {
+  try {
+    const res = await call("mykartavya.controllers.api.get_all_languages");
+    languages.value = res || [];
+  } catch (error) {
+    console.error('Error fetching languages:', error);
+    toast.error('Failed to load languages. Please try again.');
+  }
+};
+
 watch(() => formData.value.custom_country, fetchStates);
 watch(() => formData.value.custom_state, fetchCities);
 
 // Get user details
 const getDetails = async () => {
   try {
-    // First fetch skills to ensure we have the skill data
+    // First fetch skills and languages to ensure we have the data
     await fetchSkills();
+    await fetchLanguages();
 
     let res = await call("mykartavya.controllers.api.sva_user_data");
     if (res && res.length > 0) {
@@ -414,6 +445,17 @@ const getDetails = async () => {
         });
       } else {
         formData.value.custom_skill = []; // Ensure it's always an array
+      }
+
+      // Handle languages - map language IDs to language objects
+      if (formData.value.custom_languages_known && formData.value.custom_languages_known.length > 0) {
+        // Map language IDs to language objects
+        formData.value.custom_languages_known = formData.value.custom_languages_known.map(languageId => {
+          const language = languages.value.find(l => l.name === languageId);
+          return language ? { name: language.name, label: language.language_name } : languageId;
+        });
+      } else {
+        formData.value.custom_languages_known = []; // Ensure it's always an array
       }
 
       // Set the workflow state from the API response
@@ -449,7 +491,7 @@ const validateForm = () => {
     }
 
     // Required Field Validation
-    if (field.required && !value) {
+    if (field.required && (!value || (Array.isArray(value) && value.length === 0))) {
       errors.value[key] = `${field.label} is required.`;
       valid = false;
 
@@ -540,6 +582,12 @@ const onSubmit = async () => {
       return typeof skill === 'object' ? skill.name : skill;
     });
 
+    // Prepare languages data - ensure we're sending just the language names
+    const languagesData = formData.value.custom_languages_known.map(language => {
+      // If language is an object, use the name property, otherwise use the language directly
+      return typeof language === 'object' ? language.name : language;
+    });
+
     const formDataToSend = {
       name: formData.value.name,
       first_name: formData.value.first_name,
@@ -558,6 +606,7 @@ const onSubmit = async () => {
       user_image: formData.value.user_image || "",
       custom_background_image: formData.value.custom_background_image || "",
       custom_skill: skillsData || [], // Ensure we always send an array, even if empty
+      custom_languages_known: languagesData || [], // Ensure we always send an array, even if empty
     };
 
     let res = await call("mykartavya.controllers.api.update_sva_user", {
@@ -612,6 +661,8 @@ const getOptions = (key) => {
       return fields.value.country_code.options;
     case "custom_skill":
       return skills.value.map(skill => ({ name: skill.name, label: skill.skill_name }));
+    case "custom_languages_known":
+      return languages.value.map(language => ({ name: language.name, label: language.language_name }));
     default:
       return [];
   }
@@ -622,6 +673,7 @@ onMounted(async () => {
   fetchCountries();
   fetchCompanies();
   fetchSkills();
+  fetchLanguages();
   getDetails();
 
   if (localStorage.getItem('updateprofile') == 'true') {

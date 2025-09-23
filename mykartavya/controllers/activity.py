@@ -105,7 +105,7 @@ class Activity:
         )
         if user:
             where_clause += f" AND act.name NOT IN (SELECT activity FROM `tabVolunteer Activity` WHERE volunteer = '{user}')"
-            user_group = frappe.db.get_all("SVA User Child",{'parenttype':'Volunteer Groups','user':user},pluck='parent')
+            user_group = frappe.db.get_all("SVA User Child",{'parenttype':'Volunteer Groups','users':user},pluck='parent')
             if len(user_group):
                 group_act = frappe.db.get_all("Activity Volunteer Group",{'group':['IN',user_group]},pluck='activity')
                 if len(group_act):
@@ -137,7 +137,7 @@ class Activity:
                 elif filter["karma_points"] == "High to Low":
                     order_by_clause = " ORDER BY act.karma_points DESC"
 
-            if "sdgs" in filter and filter["sdgs"]:
+            if "sdgs" in filter and len(filter["sdgs"]):
                 sdgs_values = ", ".join(f"'{sdg}'" for sdg in filter["sdgs"])
                 where_clause += f"""
                 AND EXISTS (
@@ -151,7 +151,7 @@ class Activity:
                     order_by_clause = " ORDER BY act.hours ASC"
                 elif filter["volunteering_hours"] == "High to Low":
                     order_by_clause = " ORDER BY act.hours DESC"
-
+        print('============================================',where_clause)
         sql_query = f"""
                     SELECT 
                         va.name as name,
@@ -423,16 +423,16 @@ class Activity:
 
     def volunteer_act_count():
         sql_query = """
-        SELECT 
-            COUNT(va.activity) AS total_activity,
-            SUM(a.work_value_rupees) AS total_rupees,
-            SUM(a.hours) AS total_hours,
+        SELECT
+            (COUNT(va.activity) + (SELECT COUNT(*) FROM `tabOffline Volunteering`)) AS total_activity,
+            (COALESCE(SUM(a.work_value_rupees), 0) + COALESCE((SELECT SUM(money_saved) FROM `tabOffline Volunteering`), 0)) AS total_rupees,
+            (COALESCE(SUM(a.hours), 0) + COALESCE((SELECT SUM(hours_contributed) FROM `tabOffline Volunteering`), 0)) AS total_hours,
             (SELECT COUNT(*) FROM `tabNGOs`
                 WHERE workflow_state = 'Approved'
             ) AS total_ngo,
-            (SELECT COUNT(*) FROM `tabSVA User`
+            ((SELECT COUNT(*) FROM `tabSVA User`
                 WHERE workflow_state = 'Approved'
-            ) AS volunteer_count 
+            ) + (SELECT COUNT(*) FROM `tabOffline Volunteering`)) AS volunteer_count
         FROM `tabVolunteer Activity` AS va
         JOIN `tabActivity` AS a ON va.activity = a.name;
         """

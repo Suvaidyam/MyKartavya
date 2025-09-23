@@ -201,6 +201,15 @@
                         </div>
                     </div>
                     <div class="mt-8">
+                        <h3 class="text-sm font-medium mb-3">Languages Known</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span v-for="language in svaUserData?.custom_languages_known" :key="language"
+                                class="px-4 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">
+                                {{ language }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mt-8">
                         <h3 class="text-sm font-medium mb-3">Attachments</h3>
                         <div class="space-y-3">
                             <!-- Portfolio -->
@@ -397,6 +406,7 @@ const svaUserData = ref(null)
 const mappedCompanies = ref([]);
 const certificates = ref([]);
 const allSkills = ref([]);
+const allLanguages = ref([]);
 const opportunityctf = ref([]);
 
 const fetchAllSkills = async () => {
@@ -408,6 +418,15 @@ const fetchAllSkills = async () => {
     }
 };
 
+const fetchAllLanguages = async () => {
+    try {
+        const response = await call('mykartavya.controllers.api.get_all_languages');
+        allLanguages.value = response || [];
+    } catch (error) {
+        console.error('Error fetching all languages:', error);
+    }
+};
+
 const get = async () => {
     try {
         const response = await call('mykartavya.controllers.api.sva_user_data');
@@ -416,6 +435,10 @@ const get = async () => {
             svaUserData.value.custom_skill = svaUserData.value.custom_skill.map(skillId => {
                 const skill = allSkills.value.find(s => s.name === skillId);
                 return skill ? skill.skill_name : skillId;
+            });
+            svaUserData.value.custom_languages_known = svaUserData.value.custom_languages_known.map(languageId => {
+                const language = allLanguages.value.find(l => l.name === languageId);
+                return language ? language.language_name : languageId;
             });
         }
     } catch (err) {
@@ -508,6 +531,7 @@ const getInitials = (fullName) => {
 
 onMounted(() => {
     fetchAllSkills();
+    fetchAllLanguages();
     get();
     fetchCertificates();
     fetchMappedCompanies()

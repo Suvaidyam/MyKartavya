@@ -650,6 +650,15 @@ def get_all_skills():
     skills = frappe.get_all("Skills", fields=["name", "skill_name"])
     return skills
 
+@frappe.whitelist(allow_guest=True)
+def get_all_languages():
+    try:
+        languages = frappe.get_all("Languages", fields=["name", "language_name"])
+        return languages
+    except Exception as e:
+        frappe.log_error(f"Error fetching languages: {str(e)}")
+        
+
 
 @frappe.whitelist(allow_guest=True)
 def notify_admin_approval(volunteer):
