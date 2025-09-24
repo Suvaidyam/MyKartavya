@@ -5,6 +5,23 @@ frappe.ui.form.on("Offline Volunteering", {
 	refresh(frm) {
 		
 	},
+	validate: function (frm) {
+        if (frm.image_uploaded) {
+            frappe.validated = false;
+            frm.image_uploaded = false;
+        }
+    },
+ 
+    cv: function (frm) {
+        if (frm.doc.cv) {
+            frm.image_uploaded = true;
+        }
+    },
+	portfolio: function (frm) {
+        if (frm.doc.portfolio) {
+            frm.image_uploaded = true;
+        }
+    },
 
 	dob: function(frm) {
 		if (frm.doc.dob && frappe.datetime.get_diff(frappe.datetime.get_today(), frm.doc.dob) < 0) {

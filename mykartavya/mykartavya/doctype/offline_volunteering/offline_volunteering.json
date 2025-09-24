@@ -1,6 +1,5 @@
 {
  "actions": [],
- "allow_rename": 1,
  "autoname": "format:OV-{#########}",
  "creation": "2025-09-19 10:41:44.270877",
  "doctype": "DocType",
@@ -56,10 +55,12 @@
    "fieldtype": "Column Break"
   },
   {
+   "default": "+91-",
    "fieldname": "phone_no",
    "fieldtype": "Phone",
    "in_list_view": 1,
    "label": "Phone No.",
+   "options": "IND",
    "reqd": 1
   },
   {
@@ -167,7 +168,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-09-22 14:21:43.816961",
+ "modified": "2025-09-24 17:41:21.931136",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Offline Volunteering",
