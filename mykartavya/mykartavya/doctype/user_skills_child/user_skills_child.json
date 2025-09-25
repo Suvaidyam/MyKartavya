@@ -3,6 +3,7 @@
  "allow_rename": 1,
  "creation": "2025-04-05 12:35:53.100859",
  "doctype": "DocType",
+ "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "skill"
@@ -21,7 +22,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-06-05 16:23:56.107952",
+ "modified": "2025-09-21 17:23:44.432881",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "User Skills Child",

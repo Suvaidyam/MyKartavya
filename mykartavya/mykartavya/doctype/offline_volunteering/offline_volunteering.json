@@ -1,0 +1,219 @@
+{
+ "actions": [],
+ "autoname": "format:OV-{#########}",
+ "creation": "2025-09-19 10:41:44.270877",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_gpjj",
+  "first_name",
+  "country",
+  "dob",
+  "linkedin",
+  "skills",
+  "money_saved",
+  "column_break_1",
+  "last_name",
+  "state",
+  "gender",
+  "cv",
+  "languages_known",
+  "column_break_2",
+  "phone_no",
+  "city",
+  "designation",
+  "portfolio",
+  "hours_contributed",
+  "section_break_5",
+  "activities_participated_in",
+  "section_break_6",
+  "volunteer_feedback"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_gpjj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "First Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "+91-",
+   "fieldname": "phone_no",
+   "fieldtype": "Phone",
+   "in_list_view": 1,
+   "label": "Phone No.",
+   "options": "IND",
+   "reqd": 1
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "State",
+   "options": "State",
+   "reqd": 1
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Link",
+   "label": "City",
+   "options": "District",
+   "reqd": 1
+  },
+  {
+   "fieldname": "dob",
+   "fieldtype": "Date",
+   "label": "DOB",
+   "reqd": 1
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "Male\nFemale\nOthers",
+   "reqd": 1
+  },
+  {
+   "fieldname": "designation",
+   "fieldtype": "Data",
+   "label": "Designation"
+  },
+  {
+   "fieldname": "linkedin",
+   "fieldtype": "Data",
+   "label": "Linkedin"
+  },
+  {
+   "fieldname": "cv",
+   "fieldtype": "Attach",
+   "label": "CV"
+  },
+  {
+   "fieldname": "portfolio",
+   "fieldtype": "Attach",
+   "label": "Portfolio"
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "skills",
+   "fieldtype": "Table MultiSelect",
+   "label": "Skills",
+   "options": "User Skills Child",
+   "reqd": 1
+  },
+  {
+   "fieldname": "languages_known",
+   "fieldtype": "Table MultiSelect",
+   "label": "Languages Known",
+   "options": "Language Child"
+  },
+  {
+   "fieldname": "activities_participated_in",
+   "fieldtype": "Text",
+   "label": "Activities participated in",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "hours_contributed",
+   "fieldtype": "Int",
+   "label": "Hours contributed",
+   "reqd": 1
+  },
+  {
+   "fieldname": "money_saved",
+   "fieldtype": "Currency",
+   "label": "Money Saved",
+   "read_only": 1
+  },
+  {
+   "fieldname": "volunteer_feedback",
+   "fieldtype": "Text",
+   "label": "Volunteer feedback",
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-09-24 17:41:21.931136",
+ "modified_by": "Administrator",
+ "module": "Mykartavya",
+ "name": "Offline Volunteering",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "MyKartvya Admin",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "MyKartavya Admin",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

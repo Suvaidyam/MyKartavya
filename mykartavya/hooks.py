@@ -36,7 +36,8 @@ fixtures=[
     # 'Custom DocPerm',
     # 'My Theme',
     # 'Opportunity Kind',
-    # 'Email Template'
+    # 'Email Template',
+    # 'Languages'
 ]
 
 # doc_events = {
