@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "autoname": "format:OV-{#########}",
  "creation": "2025-09-19 10:41:44.270877",
  "doctype": "DocType",
@@ -166,9 +167,10 @@
   }
  ],
  "grid_page_length": 50,
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-09-24 17:41:21.931136",
+ "modified": "2025-09-25 14:56:33.807481",
  "modified_by": "Administrator",
  "module": "Mykartavya",
  "name": "Offline Volunteering",
