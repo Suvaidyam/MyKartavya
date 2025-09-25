@@ -2,22 +2,7 @@
  {
   "docstatus": 0,
   "doctype": "Role Profile",
-  "modified": "2025-02-06 19:10:32.010856",
-  "name": "NGO Admin",
-  "role_profile": "NGO Admin",
-  "roles": [
-   {
-    "role": "NGO Admin"
-   },
-   {
-    "role": "Volunteer"
-   }
-  ]
- },
- {
-  "docstatus": 0,
-  "doctype": "Role Profile",
-  "modified": "2025-02-06 19:11:55.309487",
+  "modified": "2025-09-25 16:09:43.134575",
   "name": "MyKartvya Admin",
   "role_profile": "MyKartvya Admin",
   "roles": [
@@ -26,6 +11,9 @@
    },
    {
     "role": "MyKartvya Admin"
+   },
+   {
+    "role": "System Manager"
    }
   ]
  },
@@ -38,6 +26,21 @@
   "roles": [
    {
     "role": "Company Admin"
+   },
+   {
+    "role": "Volunteer"
+   }
+  ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2025-02-06 19:10:32.010856",
+  "name": "NGO Admin",
+  "role_profile": "NGO Admin",
+  "roles": [
+   {
+    "role": "NGO Admin"
    },
    {
     "role": "Volunteer"
